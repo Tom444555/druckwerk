@@ -8,21 +8,22 @@ teil = "vorschau";
 $fn = 48;
 
 // ---------- Maße (mm) ----------
-B = 110;  T = 55;  H = 62;      // Korpus Breite (X), Tiefe (Y), Höhe (Z)
+B = 110;  T = 59;  H = 62;      // Korpus Breite (X), Tiefe (Y), Höhe (Z)
 R = 5;                          // Kantenradius
 fuss = 0;                       // Korpus steht direkt auf der Druckplatte (Füße nur als Ring-Andeutung)
 z0 = fuss;                      // Unterkante Korpus
 zt = z0 + H;                    // Oberkante Korpus
 // Front (Y = 0 ist die Vorderseite)
 gr_x = 47;  gr_z1 = z0 + 6;  gr_z2 = z0 + 38;   // Lautsprecher-Fenster
-gr_tief = 4;                                     // Tasche für Stoff + Gitter
+gr_tief = 4.6;                                   // Tasche für die Bespannung (sitzt ca. 1,8 mm tief)
 bd_z1 = z0 + 41.5;  bd_z2 = z0 + 55;             // Logo-Band
 // Bedienfeld oben
-pf_y1 = 3;  pf_y2 = 21;  pf_x = 48;  pf_d = 1.6;
-kn_y = 10;
+pf_y1 = 7;  pf_y2 = 25;  pf_x = 47;  pf_d = 1.6;
+kn_y = 14;
+paspel_y = 5.4;   // Ziernaht (Paspel) rundum hinter der Frontkante
 knoepfe = [[-31,"GAIN"],[-19,"BASS"],[-7,"MID"],[5,"TREBLE"],[17,"FX"],[29,"MASTER"]];
 // Plektrum-Fächer
-f_anz = 12;  f_teil = 7.6;  f_b = 2.4;  f_y1 = 25;  f_y2 = 52;  f_tief = 21;
+f_anz = 12;  f_teil = 7.6;  f_b = 2.4;  f_y1 = 29;  f_y2 = 56;  f_tief = 21;
 
 // ---------- Hilfsmodule ----------
 module rundbox(b,t,h,r){ hull() for(x=[-b/2+r,b/2-r], y=[r,t-r], z=[r,h-r]) translate([x,y,z]) sphere(r); }
@@ -35,11 +36,11 @@ module schraube(d=2.6){
 }
 
 // ---------- Korpus (schwarz) ----------
-module korpus(){
-  difference(){
-    translate([0,0,z0]) rundbox(B,T,H,R);
+module korpus_ausschnitte(){   // alles, was aus dem Korpus herausgenommen wird (für die Lederhaut)
     // Lautsprecher-Tasche
     translate([-gr_x,-1,gr_z1]) cube([2*gr_x, gr_tief+1, gr_z2-gr_z1]);
+    // Tasche für das versenkte Logo-Band
+    translate([0, 0.7, (bd_z1+bd_z2)/2]) rotate([90,0,0]) rundplatte(2*gr_x, bd_z2-bd_z1, 2, 2);
     // Plektrum-Fächer mit Einführtrichter
     for(i=[0:f_anz-1]) let(x = -(f_anz-1)*f_teil/2 + i*f_teil) {
       hull(){ translate([x-f_b/2, f_y1, zt-f_tief]) cube([f_b, f_y2-f_y1, 1]);
@@ -51,26 +52,49 @@ module korpus(){
     for(i=[0:7]) translate([-30, T-1.6, z0+12+i*4]) rundschlitz(60, 1.8);
     // Rückseite: Kabeldurchführung
     translate([38, T-3, z0+10]) rotate([-90,0,0]) cylinder(d=4.2, h=5);
+}
+module korpus_dazu(){ for(s=[-1,1]) seitengriff_riemen(s); }
+module korpus(){
+  difference(){
+    translate([0,0,z0]) rundbox(B,T,H,R);
+    korpus_ausschnitte();
   }
-  // Seitengriffe (Riemen) – schwarz
-  for(s=[-1,1]) seitengriff_riemen(s);
+  korpus_dazu();
 }
 module rundschlitz(l, h){ hull(){ translate([h/2,0,0]) rotate([-90,0,0]) cylinder(d=h, h=3, $fn=16);
                                   translate([l-h/2,0,0]) rotate([-90,0,0]) cylinder(d=h, h=3, $fn=16); } }
 
 // ---------- Lautsprecher: Stoff (rot) + Lochgitter (schwarz) + Keder (weiß) ----------
 module stoff(){   // Bespannung hinten in der Tasche, mit feiner Webstruktur
-  translate([-gr_x, 3, gr_z1]) cube([2*gr_x, 1.01, gr_z2-gr_z1]);
-  for(z=[gr_z1+0.6:0.9:gr_z2-0.5]) translate([-gr_x, 2.75, z]) cube([2*gr_x, 0.3, 0.35]);
+  translate([-gr_x, 3.6, gr_z1]) cube([2*gr_x, 1.01, gr_z2-gr_z1]);
+  for(z=[gr_z1+0.6:0.9:gr_z2-0.5]) translate([-gr_x, 3.35, z]) cube([2*gr_x, 0.3, 0.35]);
 }
 gl_r = 1.3;  gl_p = 3.15;   // Sechskant-Löcher: Umkreisradius, Raster
-module gitter(){
-  difference(){
-    translate([-gr_x, 0.9, gr_z1]) cube([2*gr_x, 1.9, gr_z2-gr_z1]);
-    for(row=[0:floor((gr_z2-gr_z1-2)/(gl_p*0.866))], col=[0:floor((2*gr_x-2)/gl_p)])
-      let(x = -gr_x + 2 + col*gl_p + (row%2)*gl_p/2, z = gr_z1 + 2 + row*gl_p*0.866)
-        if (x < gr_x-1.8 && z < gr_z2-1.6)
-          translate([x, 0, z]) rotate([-90,0,0]) rotate([0,0,30]) cylinder(r=gl_r, h=5, $fn=6);
+// Korbgeflecht-Bespannung: schwarzer Fadengrund mit senkrechten Fäden + helle Kissen im Versatz
+gw_px = 4.0;  gw_pz = 3.0;      // Raster der Kissen (X, Z)
+gw_kb = 2.8;  gw_kh = 1.6;      // Kissengröße
+gw_front = 1.8;                 // Vorderkante der Kissen (Abstand zur Korpusfront)
+module gitter(){   // schwarz: Grund + Fadenbündel
+  translate([-gr_x, gw_front+0.45, gr_z1]) cube([2*gr_x, gr_tief-gw_front-0.44, gr_z2-gr_z1]);
+  for(row=[0:floor((gr_z2-gr_z1)/gw_pz)], col=[-1:ceil(2*gr_x/gw_px)])
+    let(x = -gr_x + col*gw_px + (row%2)*gw_px/2 + gw_px/2, z = gr_z1 + row*gw_pz + gw_pz/2)
+      intersection(){
+        translate([-gr_x, 0, gr_z1]) cube([2*gr_x, 10, gr_z2-gr_z1]);
+        // 3 Fäden zwischen zwei Kissen, laufen senkrecht über die Lücke
+        for(dx=[-0.55,0,0.55]) translate([x+dx, gw_front+0.45, z-gw_pz/2-0.2]) rotate([-90,0,0])
+          hull(){ cylinder(d=0.42, h=0.01, $fn=8); translate([0,-gw_pz-0.4,0]) cylinder(d=0.42, h=0.01, $fn=8);
+                  translate([0,0,-0.35]) cylinder(d=0.3, h=0.01, $fn=8); translate([0,-gw_pz-0.4,-0.35]) cylinder(d=0.3, h=0.01, $fn=8); }
+      }
+}
+module gitter_kissen(){   // weiß: gewölbte Kissen
+  intersection(){
+    translate([-gr_x+0.3, 0, gr_z1+0.3]) cube([2*gr_x-0.6, 10, gr_z2-gr_z1-0.6]);
+    for(row=[0:floor((gr_z2-gr_z1)/gw_pz)], col=[-1:ceil(2*gr_x/gw_px)])
+      let(x = -gr_x + col*gw_px + (row%2)*gw_px/2 + gw_px, z = gr_z1 + row*gw_pz + gw_pz/2)
+        translate([x, gw_front+0.5, z]) hull(){
+          for(sx=[-1,1]) translate([sx*(gw_kb/2-gw_kh/2), 0, 0]) scale([1, 0.55, 1]) sphere(gw_kh/2, $fn=16);
+          translate([0, 0.6, 0]) cube([gw_kb, 0.1, gw_kh], center=true);
+        }
   }
 }
 module keder_rahmen(x1,z1,x2,z2,y,d=1.3,r=2.5){   // runder Keder um ein Rechteck (in XZ-Ebene)
@@ -84,15 +108,15 @@ module keder(){ keder_rahmen(-gr_x-0.6, gr_z1-0.6, gr_x+0.6, gr_z2+0.6, 0.15); }
 // ---------- Logo-Band (rot) + Schriftzug (weiß) ----------
 module band(){
   difference(){
-    translate([0, 1.2, (bd_z1+bd_z2)/2]) rotate([90,0,0]) rundplatte(2*gr_x, bd_z2-bd_z1, 1.6, 2);
+    translate([0, 2.3, (bd_z1+bd_z2)/2]) rotate([90,0,0]) rundplatte(2*gr_x, bd_z2-bd_z1, 1.75, 2);   // Vorderseite bei y=0.55 (versenkt, deckt die Tasche ganz)
   }
   // feine Zierlinien oben/unten (rot, erhaben)
 }
 module logo(){
-  translate([0, -0.35, (bd_z1+bd_z2)/2 - 2.6]) rotate([90,0,0]) linear_extrude(1.1)
+  translate([0, 0.75, (bd_z1+bd_z2)/2 - 2.6]) rotate([90,0,0]) linear_extrude(1.3)
     text("Loopsmiths", size=8.2, font="Pacifico", halign="center", valign="baseline");
   // Unterstrich-Schwung
-  translate([0,-0.35,bd_z1+2.1]) rotate([90,0,0]) linear_extrude(0.8)
+  translate([0,0.75,bd_z1+2.1]) rotate([90,0,0]) linear_extrude(1.0)
     hull(){ translate([-26,0]) circle(0.35,$fn=12); translate([26,0.25]) circle(0.6,$fn=12); }
 }
 
@@ -119,11 +143,11 @@ module panel_druck(){   // schwarze Einlagen, 0.6 mm tief, bündig mit der Oberf
       linear_extrude(0.6) square([i%5==0 ? 0.55 : 0.42, i%5==0 ? 1.3 : 0.9]);
     translate([k[0], kn_y-0.0, zz]) for(n=[0,10]) let(a=-135+n*27) rotate([0,0,-a]) translate([0,6.9,0]) rotate([0,0,a])
       linear_extrude(0.6) text(n==0?"0":"10", size=1.5, font="Oswald", halign="center", valign="center");
-    translate([k[0], 18.2, zz]) linear_extrude(0.6) text(k[1], size=2.3, font="Oswald", halign="center", valign="center");
+    translate([k[0], kn_y+8.2, zz]) linear_extrude(0.6) text(k[1], size=2.3, font="Oswald", halign="center", valign="center");
   }
-  translate([-42, 18.2, zz]) linear_extrude(0.6) text("INPUT", size=2.0, font="Oswald", halign="center", valign="center");
-  translate([40.5, 18.2, zz]) linear_extrude(0.6) text("ON", size=2.0, font="Oswald", halign="center", valign="center");
-  translate([45.6, 18.2, zz]) linear_extrude(0.6) text("PWR", size=1.6, font="Oswald", halign="center", valign="center");
+  translate([-42, kn_y+8.2, zz]) linear_extrude(0.6) text("INPUT", size=2.0, font="Oswald", halign="center", valign="center");
+  translate([40.5, kn_y+8.2, zz]) linear_extrude(0.6) text("ON", size=2.0, font="Oswald", halign="center", valign="center");
+  translate([45.6, kn_y+8.2, zz]) linear_extrude(0.6) text("PWR", size=1.6, font="Oswald", halign="center", valign="center");
 }
 
 // ---------- Regler: Rock (schwarz, Skala), Knopf (weiß, geriffelt), Kappe (rot), Zeiger (schwarz) ----------
@@ -179,10 +203,41 @@ module typenschild_text(){
   for(x=[-44,44], z=[z0+7, z0+56]) translate([x, T-0.1, z]) rotate([-90,0,0]) schraube(2.2);
 }
 
+// ---------- Paspel (weiß): Ziernaht rundum hinter der Frontkante ----------
+module paspel(){
+  intersection(){
+    translate([0,0,z0]) translate([0,-0.45,-0.45]) rundbox_o(B+0.9, T+0.9, H+0.9, R+0.45);
+    translate([-B, paspel_y-0.55, -5]) cube([2*B, 1.1, H+20]);
+  }
+}
+module rundbox_o(b,t,h,r){ hull() for(x=[-b/2+r,b/2-r], y=[r,t-r], z=[r,h-r]) translate([x,y,z]) sphere(r, $fn=40); }
+
+// ---------- Nähte (weiß): feine Stiche, halb eingebettet ----------
+stich_p = 1.8;  stich_l = 1.0;  stich_d = 0.5;
+module stichlinie(a, b){   // a, b: Punkte auf der Oberfläche
+  l = norm(b-a);  n = floor(l/stich_p);  u = (b-a)/l;
+  for(i=[0:n-1]) let(m = a + u*(i*stich_p + stich_p/2))
+    hull(){ translate(m - u*stich_l/2) sphere(stich_d/2, $fn=10); translate(m + u*stich_l/2) sphere(stich_d/2, $fn=10); }
+}
+module naehte(){
+  // vorne über dem Logo-Band
+  stichlinie([-gr_x, -0.02, bd_z2+1.5], [gr_x, -0.02, bd_z2+1.5]);
+  // oben: zwischen Bedienfeld und Fächern, seitlich an der Oberseite
+  stichlinie([-46, (pf_y2+f_y1)/2, zt+0.02], [46, (pf_y2+f_y1)/2, zt+0.02]);
+  for(sx=[-1,1]) stichlinie([sx*49.6, paspel_y+2, zt+0.02], [sx*49.6, T-6, zt+0.02]);
+  // Seiten: hinter der Paspel senkrecht
+  for(sx=[-1,1]) stichlinie([sx*(B/2+0.02), paspel_y+1.9, z0+6], [sx*(B/2+0.02), paspel_y+1.9, zt-6]);
+  // hinten: rund um das Typenschild
+  for(z=[z0+47-7.3, z0+47+7.3]) stichlinie([-30, T+0.02, z], [30, T+0.02, z]);
+}
+
 // ---------- Ausgabe ----------
 if (teil=="korpus") korpus();
+else if (teil=="korpus_aus") korpus_ausschnitte();
+else if (teil=="korpus_dazu") korpus_dazu();
 else if (teil=="stoff") stoff();
 else if (teil=="gitter") gitter();
+else if (teil=="kissen") gitter_kissen();
 else if (teil=="keder") keder();
 else if (teil=="band") band();
 else if (teil=="logo") logo();
@@ -203,6 +258,8 @@ else if (teil=="lampe_r") lampe_rot();
 else if (teil=="griff_kappen") seitengriff_kappen();
 else if (teil=="schild") typenschild();
 else if (teil=="schild_text") typenschild_text();
+else if (teil=="paspel") paspel();
+else if (teil=="naehte") naehte();
 else {
   color([0.12,0.12,0.12]) { korpus(); gitter(); panel_druck(); regler_rock(); regler_zeiger(); buchse_schwarz(); schalter_schwarz(); }
   color([0.8,0.1,0.1]) { stoff(); band(); regler_kappe(); lampe_rot(); typenschild(); }

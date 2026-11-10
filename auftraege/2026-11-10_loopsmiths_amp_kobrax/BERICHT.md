@@ -2,8 +2,8 @@
 
 **Drucker:** Anycubic Kobra X  
 **Datei für USB:** `loopsmiths_amp_kobrax.gcode`  
-**Druckzeit (geschätzt):** 12h 13m 26s  
-**Filament:** 141.74, 17.31, 19.36 g (47.52 m, 5.80 m, 6.49 m)  
+**Druckzeit (geschätzt):** 15h 42m 27s  
+**Filament:** 161.84, 8.45, 12.60, 22.70 g (54.26 m, 2.83 m, 4.23 m, 7.61 m)  
 
 
 ## Spulen / Köpfe einlegen
@@ -13,6 +13,7 @@
 | 1 | PLA | schwarz | Anycubic PLA @Anycubic Kobra X 0.4 nozzle |
 | 2 | PLA | rot | Anycubic PLA @Anycubic Kobra X 0.4 nozzle |
 | 3 | PLA | weiß | Anycubic PLA @Anycubic Kobra X 0.4 nozzle |
+| 4 | PLA | gold | Anycubic PLA @Anycubic Kobra X 0.4 nozzle |
 
 ## Einstellungen
 
@@ -21,13 +22,14 @@
 - Wände: 3
 - Stützen: auto
 - Brim: auto
-- Düsentemperatur: 205,205,205 °C, Bett: 60,60,60 °C
+- Düsentemperatur: 205,205,205,205 °C, Bett: 60,60,60,60 °C
 
 ## Teile
 
 - `loopsmiths_amp_schwarz.stl` → Slot 1 (PLA)
 - `loopsmiths_amp_rot.stl` → Slot 2 (PLA)
 - `loopsmiths_amp_weiss.stl` → Slot 3 (PLA)
+- `loopsmiths_amp_gold.stl` → Slot 4 (PLA)
 
 ## Am Drucker
 
