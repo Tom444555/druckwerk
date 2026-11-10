@@ -1,0 +1,243 @@
+#!/usr/bin/env python3
+"""druckwerk – Modell(e) + Drucker + Einstellungen -> fertige USB-Druckdatei (.gcode) + Bericht.
+
+Beispiel:
+  python3 werkzeug/druck.py --drucker kobrax --name halter \
+      --teil modelle/halter.scad:PLA --teil modelle/schrift.scad:PLA \
+      --farben "schwarz,rot" --schicht 0.20 --infill 20
+"""
+import argparse, json, os, re, shutil, subprocess, sys, tempfile, datetime
+from pathlib import Path
+
+WURZEL = Path(__file__).resolve().parent.parent
+WERKZEUG = WURZEL / "werkzeug"
+ORCA = Path(os.environ.get("ORCA", WERKZEUG / "orca" / "squashfs-root" / "AppRun"))
+PROFILE = Path(os.environ.get("ORCA_PROFILE", WERKZEUG / "orca" / "profile" / "resources" / "profiles"))
+
+
+# ---------- Profile auflösen (inherits-Kette -> vollständige JSON) ----------
+_index = {}
+
+def _baue_index():
+    if _index:
+        return
+    for f in PROFILE.rglob("*.json"):
+        try:
+            d = json.loads(f.read_text(encoding="utf-8"))
+        except Exception:
+            continue
+        if isinstance(d, dict) and "name" in d and "type" in d:
+            # Hersteller-Ordner bevorzugen, Bibliothek nur als Rückfall
+            alt = _index.get((d["type"], d["name"]))
+            if alt is None or "OrcaFilamentLibrary" in str(alt):
+                _index[(d["type"], d["name"])] = f
+            _index.setdefault((d["type"], f.stem), f)
+
+def aufloesen(typ, name, tiefe=0):
+    _baue_index()
+    f = _index.get((typ, name))
+    if f is None:
+        raise SystemExit(f"Profil nicht gefunden: {typ} '{name}'")
+    d = json.loads(f.read_text(encoding="utf-8"))
+    eltern = d.get("inherits")
+    basis = aufloesen(typ, eltern, tiefe + 1) if eltern else {}
+    basis.update(d)
+    if tiefe == 0:
+        basis.pop("inherits", None)
+        basis["from"] = "system"
+        basis["instantiation"] = "true"
+    return basis
+
+
+# ---------- Modelle vorbereiten ----------
+def nach_stl(pfad: Path, ziel: Path) -> Path:
+    if pfad.suffix.lower() == ".scad":
+        out = ziel / (pfad.stem + ".stl")
+        r = subprocess.run(["openscad", "-o", str(out), str(pfad)], capture_output=True, text=True)
+        if r.returncode != 0 or not out.exists():
+            raise SystemExit(f"OpenSCAD-Fehler bei {pfad}:\n{r.stderr[-2000:]}")
+        return out
+    return pfad
+
+
+def main():
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--drucker", required=True, help="kobrax | c5pro")
+    ap.add_argument("--name", required=True, help="Auftragsname (ohne Leerzeichen)")
+    ap.add_argument("--teil", action="append", required=True,
+                    help="Datei[:Material[:Slot]]  z. B. modelle/a.scad:PLA:1  (Slot 1–4 = Farbe/Kopf)")
+    ap.add_argument("--farben", default="", help="Farbnamen je Slot für den Bericht, z. B. 'schwarz,rot'")
+    ap.add_argument("--schicht", default="0.20")
+    ap.add_argument("--stufe", default="Standard")
+    ap.add_argument("--infill", type=int, default=15, help="Füllung in %%")
+    ap.add_argument("--waende", type=int, default=None, help="Anzahl Wände")
+    ap.add_argument("--stuetzen", choices=["aus", "auto", "baum"], default="aus")
+    ap.add_argument("--brim", choices=["aus", "auto", "an"], default="auto")
+    ap.add_argument("--anordnen", action="store_true", default=True)
+    ap.add_argument("--zusammen", action="store_true",
+                    help="Teile als EIN Objekt behandeln (mehrfarbiges Teil aus mehreren Dateien)")
+    ap.add_argument("--ausgabe", default=None, help="Zielordner (Standard: auftraege/<datum>_<name>)")
+    a = ap.parse_args()
+
+    cfg = json.loads((WURZEL / "drucker" / f"{a.drucker}.json").read_text(encoding="utf-8"))
+    if a.schicht not in cfg["schichten"]:
+        raise SystemExit(f"Schicht {a.schicht} gibt es für {cfg['name']} nicht. Möglich: {cfg['schichten']}")
+
+    teile = []  # (pfad, material, slot)
+    for i, t in enumerate(a.teil):
+        bits = t.split(":")
+        pfad = Path(bits[0])
+        mat = (bits[1] if len(bits) > 1 and bits[1] else "PLA").upper()
+        slot = int(bits[2]) if len(bits) > 2 else None
+        teile.append([pfad, mat, slot])
+
+    # Slots vergeben: gleiches Material ohne Slotangabe -> Slot 1, sonst fortlaufend
+    belegt = {}
+    naechster = 1
+    for t in teile:
+        if t[2] is None:
+            t[2] = 1 if len(teile) == 1 else None
+    for t in teile:
+        if t[2] is None:
+            t[2] = naechster
+        naechster = max(naechster, t[2] + 1)
+        if t[2] in belegt and belegt[t[2]] != t[1]:
+            raise SystemExit(f"Slot {t[2]} ist schon mit {belegt[t[2]]} belegt, nicht {t[1]}.")
+        belegt[t[2]] = t[1]
+    slots = max(belegt)
+    if slots > cfg["farben_max"]:
+        raise SystemExit(f"{cfg['name']} kann max. {cfg['farben_max']} Farben/Köpfe.")
+    for s in range(1, slots + 1):
+        belegt.setdefault(s, belegt[1])
+        if belegt[s] not in cfg["filamente"]:
+            raise SystemExit(f"Material {belegt[s]} unbekannt für {cfg['name']}. Möglich: {list(cfg['filamente'])}")
+
+    datum = datetime.date.today().isoformat()
+    ziel = Path(a.ausgabe) if a.ausgabe else WURZEL / "auftraege" / f"{datum}_{a.name}_{cfg['kurz']}"
+    ziel.mkdir(parents=True, exist_ok=True)
+    tmp = Path(tempfile.mkdtemp(prefix="druckwerk_"))
+
+    # Profile
+    maschine = aufloesen("machine", cfg["maschine"])
+    prozess = aufloesen("process", cfg["prozess_vorlage"].format(schicht=a.schicht, stufe=a.stufe))
+    prozess["sparse_infill_density"] = f"{a.infill}%"
+    if a.waende:
+        prozess["wall_loops"] = str(a.waende)
+    if a.stuetzen == "aus":
+        prozess["enable_support"] = "0"
+    else:
+        prozess["enable_support"] = "1"
+        prozess["support_type"] = "tree(auto)" if a.stuetzen == "baum" else "normal(auto)"
+    prozess["brim_type"] = {"aus": "no_brim", "auto": "auto_brim", "an": "outer_only"}[a.brim]
+    prozess["compatible_printers"] = []  # Kompatibilitätsprüfung abschalten
+    fil_pfade = []
+    for s in range(1, slots + 1):
+        f = aufloesen("filament", cfg["filamente"][belegt[s]])
+        f["compatible_printers"] = []
+        f.setdefault("filament_is_support", ["0"])  # fehlt in manchen Herstellerprofilen
+        p = tmp / f"filament{s}.json"
+        p.write_text(json.dumps(f), encoding="utf-8")
+        fil_pfade.append(str(p))
+    mp, pp = tmp / "maschine.json", tmp / "prozess.json"
+    mp.write_text(json.dumps(maschine), encoding="utf-8")
+    pp.write_text(json.dumps(prozess), encoding="utf-8")
+
+    stls = [nach_stl(t[0], tmp) for t in teile]
+    for s in stls:
+        if Path(s).resolve().parent != ziel.resolve():
+            shutil.copy(s, ziel / Path(s).name)
+
+    cmd = [str(ORCA), "--slice", "0", "--arrange", "1", "--orient", "0",
+           "--load-settings", f"{mp};{pp}",
+           "--load-filaments", ";".join(fil_pfade),
+           "--load-filament-ids", ",".join(str(t[2]) for t in teile),
+           "--allow-multicolor-oneplate", "--export-statistics",
+           "--outputdir", str(tmp / "out")]
+    gemischt = len(set(belegt.values())) > 1
+    if gemischt:
+        cmd.append("--allow-mix-temp")
+    if a.zusammen and len(stls) > 1:
+        cmd.append("--assemble")
+    cmd += [str(s) for s in stls]
+    env = dict(os.environ)
+    if not env.get("DISPLAY"):
+        cmd = ["xvfb-run", "-a"] + cmd
+    # Bis zu 5 Durchläufe: Werte außerhalb des erlaubten Bereichs (Profil-Altlasten) automatisch korrigieren
+    korrigiert = []
+    for _ in range(5):
+        r = subprocess.run(cmd, capture_output=True, text=True, env=env, timeout=1200)
+        fehler = re.findall(r"(\w+): (\S+) not in range \[([\d.\-]+), ([\d.\-]+)\]", r.stdout + r.stderr)
+        if r.returncode == 0 or not fehler:
+            break
+        for schluessel, wert_alt, lo, hi in fehler:
+            for pfad in [mp, pp] + [Path(x) for x in fil_pfade]:
+                d = json.loads(pfad.read_text(encoding="utf-8"))
+                if schluessel in d:
+                    neu_w = lo if "." not in lo else lo
+                    d[schluessel] = [neu_w] * len(d[schluessel]) if isinstance(d[schluessel], list) else neu_w
+                    pfad.write_text(json.dumps(d), encoding="utf-8")
+                    korrigiert.append(f"{schluessel}: {wert_alt} -> {neu_w}")
+    (ziel / "slicer.log").write_text("\n".join(korrigiert) + "\n---\n" + r.stdout[-20000:] + "\n---\n" + r.stderr[-20000:], encoding="utf-8")
+    gcodes = sorted((tmp / "out").glob("*.gcode"))
+    if not gcodes:
+        raise SystemExit(f"Slicen fehlgeschlagen (Code {r.returncode}). Siehe {ziel/'slicer.log'}")
+
+    gname = f"{a.name}_{cfg['kurz']}.gcode"
+    shutil.copy(gcodes[0], ziel / gname)
+    stat = {}
+    for sf in (tmp / "out").glob("*statistics.json"):
+        try:
+            stat = json.loads(sf.read_text(encoding="utf-8"))
+        except Exception:
+            pass
+
+    # Werte aus G-Code-Kommentaren (zuverlässig für alle Versionen)
+    txt = (ziel / gname).read_text(encoding="utf-8", errors="ignore")
+    def wert(muster):
+        m = re.search(muster, txt)
+        return m.group(1).strip() if m else "?"
+    zeit = wert(r";\s*(?:estimated printing time \(normal mode\)|model printing time)\s*=\s*([^\n;]+)")
+    gramm = wert(r";\s*filament used \[g\]\s*=\s*([^\n]+)")
+    meter = wert(r";\s*filament used \[mm\]\s*=\s*([^\n]+)")
+    try:
+        meter = ", ".join(f"{float(x)/1000:.2f} m" for x in meter.split(","))
+    except Exception:
+        pass
+
+    zeit = re.sub(r"^(0d\s*)?(0h\s*)?", "", zeit)
+    duese = wert(r"; nozzle_temperature = ([^\n]+)")
+    bett = wert(r"; (?:hot_plate_temp|textured_plate_temp|bed_temperature) = ([^\n]+)")
+    farben = [x.strip() for x in a.farben.split(",")] if a.farben else []
+    zeilen = [f"# Druckauftrag: {a.name}", "",
+              f"**Drucker:** {cfg['name']}  ",
+              f"**Datei für USB:** `{gname}`  ",
+              f"**Druckzeit (geschätzt):** {zeit}  ",
+              f"**Filament:** {gramm} g ({meter})", "",
+              "## Spulen / Köpfe einlegen", "",
+              "| Slot | Material | Farbe | Profil |", "|---|---|---|---|"]
+    for s in range(1, slots + 1):
+        fb = farben[s - 1] if s - 1 < len(farben) else "-"
+        zeilen.append(f"| {s} | {belegt[s]} | {fb} | {cfg['filamente'][belegt[s]]} |")
+    zeilen += ["", "## Einstellungen", "",
+               f"- Schichthöhe: {a.schicht} mm ({a.stufe})",
+               f"- Füllung: {a.infill} %",
+               f"- Wände: {a.waende or 'Profil-Standard'}",
+               f"- Stützen: {a.stuetzen}",
+               f"- Brim: {a.brim}",
+               f"- Düsentemperatur: {duese} °C, Bett: {bett} °C", "",
+               "## Teile", ""]
+    for t in teile:
+        zeilen.append(f"- `{t[0].name}` → Slot {t[2]} ({t[1]})")
+    zeilen += ["", "## Am Drucker", ""] + [f"- {h}" for h in cfg["hinweise"]] + [
+        "- Vor dem Start: Druckplatte sauber und leer, richtige Spulen in den Slots."]
+    if gemischt:
+        zeilen += ["", "> ⚠ Unterschiedliche Materialien in einem Druck "
+                   f"({', '.join(sorted(set(belegt.values())))}) – Haftung zwischen den Materialien "
+                   "und Temperaturen prüfen."]
+    (ziel / "BERICHT.md").write_text("\n".join(zeilen) + "\n", encoding="utf-8")
+    shutil.rmtree(tmp, ignore_errors=True)
+    print(f"OK  {ziel/gname}\n    Zeit {zeit} | {gramm} g")
+
+
+if __name__ == "__main__":
+    main()

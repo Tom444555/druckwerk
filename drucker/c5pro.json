@@ -1,0 +1,33 @@
+{
+  "kurz": "c5pro",
+  "name": "Flashforge Creator 5 Pro",
+  "hersteller_ordner": "Flashforge",
+  "maschine": "Flashforge Creator 5 Pro 0.4 nozzle",
+  "prozess_vorlage": "{schicht}mm {stufe} @FF C5",
+  "stufen": ["Standard"],
+  "schichten": ["0.12", "0.20", "0.24"],
+  "filamente": {
+    "PLA": "Flashforge PLA Basic @FF C5P",
+    "PLA-PRO": "Flashforge PLA Pro @FF C5P",
+    "PLA-HS": "Flashforge HS PLA @FF C5P",
+    "PLA-MATT": "Flashforge PLA Matte @FF C5P",
+    "PLA-SILK": "Flashforge PLA Silk @FF C5P",
+    "PLA-CF": "Flashforge PLA-CF @FF C5P",
+    "PETG": "Flashforge HS PETG @FF C5P",
+    "PETG-PRO": "Flashforge PETG Pro @FF C5P",
+    "PETG-CF": "Flashforge PETG-CF @FF C5P",
+    "ABS": "Flashforge ABS Basic @FF C5P",
+    "ASA": "Flashforge ASA Basic @FF C5P",
+    "ASA-CF": "Flashforge ASA-CF @FF C5P",
+    "PA-CF": "Flashforge PA-CF @FF C5P",
+    "TPU": "Flashforge TPU-95A @FF C5P",
+    "PVA": "Flashforge PVA @FF C5P"
+  },
+  "bauraum_mm": [256, 256, 256],
+  "farben_max": 4,
+  "hinweise": [
+    "Geschlossen + Kammerheizung bis 65 °C: erste Wahl für ABS, ASA, Nylon/CF.",
+    "4 echte Druckköpfe: Farbwechsel ohne Spülabfall, Kopf 1–4 = Farbe 1–4.",
+    "USB: .gcode auf FAT32-Stick, am Drucker unter Dateien/USB auswählen."
+  ]
+}
