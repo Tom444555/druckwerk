@@ -134,5 +134,109 @@
     "slot": 2
    }
   ]
+ },
+ {
+  "name": "loopsmiths_amp",
+  "drucker": "kobrax",
+  "drucker_name": "Anycubic Kobra X",
+  "datum": "2026-11-10",
+  "ordner": "2026-11-10_loopsmiths_amp_kobrax",
+  "gcode": "loopsmiths_amp_kobrax.gcode",
+  "zeit": "12h 13m 26s",
+  "gramm": "141.74, 17.31, 19.36",
+  "meter": "47.52 m, 5.80 m, 6.49 m",
+  "duese": "205,205,205",
+  "bett": "60,60,60",
+  "schicht": "0.12",
+  "stufe": "Standard",
+  "infill": 15,
+  "waende": 3,
+  "stuetzen": "auto",
+  "brim": "auto",
+  "gemischt": false,
+  "slots": [
+   {
+    "slot": 1,
+    "material": "PLA",
+    "farbe": "schwarz"
+   },
+   {
+    "slot": 2,
+    "material": "PLA",
+    "farbe": "rot"
+   },
+   {
+    "slot": 3,
+    "material": "PLA",
+    "farbe": "weiß"
+   }
+  ],
+  "teile": [
+   {
+    "datei": "loopsmiths_amp_schwarz.stl",
+    "slot": 1
+   },
+   {
+    "datei": "loopsmiths_amp_rot.stl",
+    "slot": 2
+   },
+   {
+    "datei": "loopsmiths_amp_weiss.stl",
+    "slot": 3
+   }
+  ],
+  "quelle": ""
+ },
+ {
+  "name": "loopsmiths_amp",
+  "drucker": "c5pro",
+  "drucker_name": "Flashforge Creator 5 Pro",
+  "datum": "2026-11-10",
+  "ordner": "2026-11-10_loopsmiths_amp_c5pro",
+  "gcode": "loopsmiths_amp_c5pro.gcode",
+  "zeit": "11h 2m 17s",
+  "gramm": "147.80, 21.69, 24.86",
+  "meter": "49.56 m, 7.27 m, 8.34 m",
+  "duese": "210,210,210",
+  "bett": "60,60,60",
+  "schicht": "0.12",
+  "stufe": "Standard",
+  "infill": 15,
+  "waende": 3,
+  "stuetzen": "auto",
+  "brim": "auto",
+  "gemischt": false,
+  "slots": [
+   {
+    "slot": 1,
+    "material": "PLA",
+    "farbe": "schwarz"
+   },
+   {
+    "slot": 2,
+    "material": "PLA",
+    "farbe": "rot"
+   },
+   {
+    "slot": 3,
+    "material": "PLA",
+    "farbe": "weiß"
+   }
+  ],
+  "teile": [
+   {
+    "datei": "loopsmiths_amp_schwarz.stl",
+    "slot": 1
+   },
+   {
+    "datei": "loopsmiths_amp_rot.stl",
+    "slot": 2
+   },
+   {
+    "datei": "loopsmiths_amp_weiss.stl",
+    "slot": 3
+   }
+  ],
+  "quelle": ""
  }
 ]
