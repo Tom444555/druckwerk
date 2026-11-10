@@ -53,6 +53,7 @@ Hat Tom keinen Drucker genannt: **kurz fragen** (eine Frage, mit Empfehlung). Ni
 - OrcaSlicer v2.5.0 CLI unter `xvfb-run`. Profile werden aus den Hersteller-JSON (inherits-Kette)
   aufgelöst; Werte außerhalb des erlaubten Bereichs korrigiert das Skript selbst (steht in slicer.log).
 - Flashforge-Filamente: `filament_is_support` fehlt im Profil → Skript ergänzt es.
-- Vorschaubild (Thumbnail) wird headless noch nicht erzeugt → Drucker zeigt kein Bild. Offen.
+- `druck.py` rendert automatisch `vorschau.png` (OpenSCAD, Farben je Spule) → App zeigt es sofort, 3D lädt dahinter nach.
+- Drucker-Thumbnail im .gcode wird headless noch nicht erzeugt → Drucker zeigt kein Bild. Offen.
 - Später (Stufe 2): Senden per LAN über Heim-Brücke (Kobra X: MQTT, grunna/ha-anycubic-kobra-x-lan;
   Flashforge: HTTP 8898, Parallel-7/flashforge-api-docs). Erst nach Kauf am echten Gerät testen.

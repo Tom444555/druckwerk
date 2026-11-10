@@ -49,7 +49,8 @@
     "slot": 2
    }
   ],
-  "quelle": "https://makerworld.com/de/models/1485935-vox-guitar-pick-holder-9-picks"
+  "quelle": "https://makerworld.com/de/models/1485935-vox-guitar-pick-holder-9-picks",
+  "vorschau": "vorschau.png"
  },
  {
   "name": "testwuerfel",
@@ -91,7 +92,8 @@
     "datei": "test_buchstabe.stl",
     "slot": 2
    }
-  ]
+  ],
+  "vorschau": "vorschau.png"
  },
  {
   "name": "testwuerfel",
@@ -133,7 +135,8 @@
     "datei": "test_buchstabe.stl",
     "slot": 2
    }
-  ]
+  ],
+  "vorschau": "vorschau.png"
  },
  {
   "name": "loopsmiths_amp",
@@ -185,7 +188,8 @@
     "slot": 3
    }
   ],
-  "quelle": ""
+  "quelle": "",
+  "vorschau": "vorschau.png"
  },
  {
   "name": "loopsmiths_amp",
@@ -237,6 +241,7 @@
     "slot": 3
    }
   ],
-  "quelle": ""
+  "quelle": "",
+  "vorschau": "vorschau.png"
  }
 ]

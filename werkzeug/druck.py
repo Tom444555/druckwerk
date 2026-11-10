@@ -72,6 +72,29 @@ def index_neu(ordner: Path):
     (ordner / "index.json").write_text(json.dumps(liste, ensure_ascii=False, indent=1), encoding="utf-8")
 
 
+FARB_RGB = {"weiss": "[0.95,0.94,0.9]", "weiß": "[0.95,0.94,0.9]", "schwarz": "[0.13,0.13,0.13]", "rot": "[0.8,0.1,0.1]",
+            "blau": "[0.15,0.35,0.9]", "gruen": "[0.13,0.64,0.28]", "grün": "[0.13,0.64,0.28]", "gelb": "[0.96,0.77,0.1]",
+            "orange": "[0.97,0.45,0.09]", "grau": "[0.56,0.56,0.58]", "silber": "[0.75,0.75,0.75]", "gold": "[0.83,0.63,0.09]"}
+
+
+def vorschau_bild(ziel: Path, teile_stl, slots_farben):
+    """vorschau.png (900×700) aus den STLs, schräg von vorn – für die App und den Chat."""
+    try:
+        zeilen = []
+        for st, fb in zip(teile_stl, slots_farben):
+            rgb = FARB_RGB.get((fb or "").lower().strip(), "[0.6,0.6,0.62]")
+            zeilen.append(f'color({rgb}) import("{Path(st).resolve()}");')
+        scad = ziel / "_vorschau.scad"
+        scad.write_text("\n".join(zeilen), encoding="utf-8")
+        subprocess.run(["xvfb-run", "-a", "openscad", "-o", str(ziel / "vorschau.png"), "--viewall", "--autocenter",
+                        "--camera=0,0,0,62,0,335,0", "--imgsize=900,700", "--colorscheme=Tomorrow", str(scad)],
+                       capture_output=True, timeout=300)
+        scad.unlink(missing_ok=True)
+        return (ziel / "vorschau.png").exists()
+    except Exception:
+        return False
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--drucker", required=True, help="kobrax | c5pro")
@@ -257,6 +280,9 @@ def main():
                        "farbe": farben[s_ - 1] if s_ - 1 < len(farben) else ""} for s_ in range(1, slots + 1)],
             "teile": [{"datei": Path(st).name, "slot": t[2]} for t, st in zip(teile, stls)],
             "quelle": a.quelle}
+    if vorschau_bild(ziel, [ziel / Path(st).name for st in stls],
+                     [farben[t[2] - 1] if t[2] - 1 < len(farben) else "" for t in teile]):
+        info["vorschau"] = "vorschau.png"
     (ziel / "auftrag.json").write_text(json.dumps(info, ensure_ascii=False, indent=1), encoding="utf-8")
     index_neu(ziel.parent)
     (ziel / "BERICHT.md").write_text("\n".join(zeilen) + "\n", encoding="utf-8")

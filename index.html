@@ -189,7 +189,8 @@ function detail(ordner){
   app.innerHTML = `
   <button class="back" id="zur">‹ Aufträge</button>
   <h1>${esc(a.name)}</h1>
-  <div id="viewer"><span class="small">3D-Vorschau · drehen mit Finger</span></div>
+  <div id="viewer">${a.vorschau ? `<img id="vbild" src="${pfad}${esc(a.vorschau)}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;border-radius:12px">` : ""}
+    <span class="small" id="vtext" style="position:absolute;left:12px;bottom:10px">3D-Modell wird geladen …</span></div>
   <div class="stats">
     <div class="stat"><span class="small">Druckzeit</span><b>${esc(a.zeit)}</b></div>
     <div class="stat"><span class="small">Filament</span><b>${summeGramm(a).toFixed(1)} g</b></div>
@@ -235,27 +236,33 @@ async function vorschau(pfad, a){
     const { OrbitControls } = await import("three/addons/controls/OrbitControls.js");
     const w = el.clientWidth, h = el.clientHeight;
     const r = new THREE.WebGLRenderer({antialias:true, alpha:true});
-    r.setPixelRatio(devicePixelRatio); r.setSize(w,h); el.prepend(r.domElement);
+    r.setPixelRatio(Math.min(devicePixelRatio, 2)); r.setSize(w,h);
+    r.domElement.style.cssText = "position:absolute;inset:0;border-radius:12px";
     const sc = new THREE.Scene();
     sc.add(new THREE.HemisphereLight(0xffffff, 0x666666, 1.6));
     const dl = new THREE.DirectionalLight(0xffffff, 1.4); dl.position.set(1,2,1.5); sc.add(dl);
     const cam = new THREE.PerspectiveCamera(40, w/h, 0.1, 5000);
     const grp = new THREE.Group(); sc.add(grp);
     const ld = new STLLoader();
-    for (const t of a.teile) {
-      const geo = await ld.loadAsync(pfad + encodeURIComponent(t.datei));
+    const vt = $("#vtext");
+    for (const [i, t] of a.teile.entries()) {
+      const geo = await ld.loadAsync(pfad + encodeURIComponent(t.datei), ev => {
+        if (vt && ev.total) vt.textContent = `3D-Modell wird geladen … Teil ${i+1}/${a.teile.length} · ${Math.round(100*ev.loaded/ev.total)} %`; });
       geo.computeVertexNormals();
       const slot = a.slots.find(s => s.slot === t.slot) || {};
       grp.add(new THREE.Mesh(geo, new THREE.MeshStandardMaterial({color: farbe(slot.farbe), roughness:.6})));
     }
     grp.rotation.x = -Math.PI/2;           // Z nach oben (Druckkoordinaten)
+    el.appendChild(r.domElement);
+    const vb = $("#vbild"); if (vb) vb.remove();
+    if (vt) vt.textContent = "3D-Vorschau · drehen mit Finger";
     const box = new THREE.Box3().setFromObject(grp), c = box.getCenter(new THREE.Vector3());
     const size = box.getSize(new THREE.Vector3()).length();
     grp.position.sub(c);
     cam.position.set(size*.8, size*.6, size*.9); cam.lookAt(0,0,0);
     const ctl = new OrbitControls(cam, r.domElement); ctl.enableDamping = true; ctl.autoRotate = true; ctl.autoRotateSpeed = 1.5;
     (function lauf(){ if (!document.body.contains(r.domElement)) return; ctl.update(); r.render(sc,cam); requestAnimationFrame(lauf); })();
-  } catch(e) { el.innerHTML = `<div class="empty">Vorschau nicht verfügbar</div>`; }
+  } catch(e) { const vt = $("#vtext"); if (vt) vt.textContent = $("#vbild") ? "Bild-Vorschau (3D nicht verfügbar)" : "Vorschau nicht verfügbar"; }
 }
 
 /* ---------- Neuer Auftrag (erzeugt den Prompt für Claude) ---------- */

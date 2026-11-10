@@ -29,3 +29,6 @@
 - Löschen nur lokal (kein Token mehr nötig, Token-Code entfernt).
 - `druck.py --quelle URL` → Knopf „Original auf MakerWorld/Printables … öffnen“; Tab Neu: Liste „Modelle finden“.
 - Getestet mit Playwright (390×844).
+
+## 2026-11-10 – Vorschaubild
+- druck.py erzeugt vorschau.png, auftrag.json Feld "vorschau"; App zeigt Bild sofort + Ladeanzeige in %, 3D ersetzt es danach. Bestehende Aufträge nachgerüstet.
