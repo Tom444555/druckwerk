@@ -1,5 +1,5 @@
 {
- "name": "vox_amp",
+ "name": "vox_plektrumhalter",
  "drucker": "kobrax",
  "drucker_name": "Anycubic Kobra X",
  "datum": "2026-11-10",
@@ -47,5 +47,6 @@
    "datei": "vox_amp_regler.stl",
    "slot": 2
   }
- ]
+ ],
+ "quelle": "https://makerworld.com/de/models/1485935-vox-guitar-pick-holder-9-picks"
 }
