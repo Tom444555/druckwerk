@@ -2,8 +2,8 @@
 
 **Drucker:** Anycubic Kobra X  
 **Datei für USB:** `loopsmiths_amp_kobrax.gcode`  
-**Druckzeit (geschätzt):** 15h 42m 27s  
-**Filament:** 161.84, 8.45, 12.60, 22.70 g (54.26 m, 2.83 m, 4.23 m, 7.61 m)  
+**Druckzeit (geschätzt):** 10h 48m 26s  
+**Filament:** 99.30, 6.68, 9.80, 15.44 g (33.29 m, 2.24 m, 3.29 m, 5.18 m)  
 
 
 ## Spulen / Köpfe einlegen

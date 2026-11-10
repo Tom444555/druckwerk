@@ -50,7 +50,11 @@ def lederhaut(B=110, T=59, H=62, R=5, z0=0.0, raster=0.3, zelle=1.45, rille=0.28
     return t
 def zu_mf(t):
     return mf.Manifold(mf.Mesh(vert_properties=np.asarray(t.vertices, np.float32), tri_verts=np.asarray(t.faces, np.uint32)))
-korpus = zu_mf(lederhaut()) - M('korpus_aus') + M('korpus_dazu')
+import subprocess, os, json as _json
+_scad = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'modelle', 'loopsmiths_amp.scad')
+subprocess.run(['openscad', '-o', '/tmp/_ls_masse.echo', '-D', 'teil="nichts"', _scad], capture_output=True)
+B_, T_, H_, R_ = _json.loads(open('/tmp/_ls_masse.echo').read().split('LS_MASSE = ')[1].split('\n')[0])
+korpus = zu_mf(lederhaut(B=B_, T=T_, H=H_, R=R_, zelle=1.35)) - M('korpus_aus') + M('korpus_dazu')
 if korpus.status() != mf.Error.NoError: raise SystemExit(f'Leder-Korpus: {korpus.status()}')
 einlage = U(['panel_druck', 'zeiger', 'rock', 'buchse_s', 'schalter_s', 'gitter'])
 gold    = U(['paspel', 'naehte']) - einlage

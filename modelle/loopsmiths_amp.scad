@@ -8,22 +8,24 @@ teil = "vorschau";
 $fn = 48;
 
 // ---------- Maße (mm) ----------
-B = 110;  T = 59;  H = 62;      // Korpus Breite (X), Tiefe (Y), Höhe (Z)
-R = 5;                          // Kantenradius
+B = 84;  T = 55;  H = 48;       // Korpus Breite (X), Tiefe (Y), Höhe (Z) – außen mit Ecken ca. 88 mm breit
+R = 4.5;                        // Kantenradius
 fuss = 0;                       // Korpus steht direkt auf der Druckplatte (Füße nur als Ring-Andeutung)
 z0 = fuss;                      // Unterkante Korpus
 zt = z0 + H;                    // Oberkante Korpus
 // Front (Y = 0 ist die Vorderseite)
-gr_x = 47;  gr_z1 = z0 + 6;  gr_z2 = z0 + 38;   // Lautsprecher-Fenster
+gr_x = 36;  gr_z1 = z0 + 5;  gr_z2 = z0 + 28.5; // Lautsprecher-Fenster
 gr_tief = 4.6;                                   // Tasche für die Bespannung (sitzt ca. 1,8 mm tief)
-bd_z1 = z0 + 41.5;  bd_z2 = z0 + 55;             // Logo-Band
+bd_z1 = z0 + 31;  bd_z2 = z0 + 41.5;            // Logo-Band
 // Bedienfeld oben
-pf_y1 = 7;  pf_y2 = 25;  pf_x = 47;  pf_d = 1.6;
-kn_y = 14;
-paspel_y = 5.4;   // Ziernaht (Paspel) rundum hinter der Frontkante
-knoepfe = [[-31,"GAIN"],[-19,"BASS"],[-7,"MID"],[5,"TREBLE"],[17,"FX"],[29,"MASTER"]];
+pf_y1 = 6.4;  pf_y2 = 21.4;  pf_x = 37;  pf_d = 1.6;
+kn_y = 12.3;
+paspel_y = 4.9;   // Ziernaht (Paspel) rundum hinter der Frontkante
+knoepfe = [[-20,"GAIN"],[-10,"BASS"],[0,"MID"],[10,"TREBLE"],[20,"MASTER"]];
+x_buchse = -30.5;  x_schalter = 28.6;  x_lampe = 33.6;   // Eingang, Kippschalter, Lampe
+sch_z = z0 + 34;                                          // Typenschild hinten (Mitte)
 // Plektrum-Fächer
-f_anz = 12;  f_teil = 7.6;  f_b = 2.4;  f_y1 = 29;  f_y2 = 56;  f_tief = 21;
+f_anz = 8;  f_teil = 8.4;  f_b = 2.4;  f_y1 = 23.6;  f_y2 = 51.6;  f_tief = 21;   // 8 Fächer, 28 mm lang
 
 // ---------- Hilfsmodule ----------
 module rundbox(b,t,h,r){ hull() for(x=[-b/2+r,b/2-r], y=[r,t-r], z=[r,h-r]) translate([x,y,z]) sphere(r); }
@@ -49,9 +51,9 @@ module korpus_ausschnitte(){   // alles, was aus dem Korpus herausgenommen wird 
               translate([x-f_b/2-0.9, f_y1-0.9, zt+0.01]) cube([f_b+1.8, f_y2-f_y1+1.8, 0.1]); }
     }
     // Rückseite: Lüftungsschlitze
-    for(i=[0:7]) translate([-30, T-1.6, z0+12+i*4]) rundschlitz(60, 1.8);
+    for(i=[0:5]) translate([-24, T-1.6, z0+6+i*3.6]) rundschlitz(48, 1.6);
     // Rückseite: Kabeldurchführung
-    translate([38, T-3, z0+10]) rotate([-90,0,0]) cylinder(d=4.2, h=5);
+    translate([31, T-3, z0+9]) rotate([-90,0,0]) cylinder(d=3.8, h=5);
 }
 module korpus_dazu(){ for(s=[-1,1]) seitengriff_riemen(s); }
 module korpus(){
@@ -113,11 +115,11 @@ module band(){
   // feine Zierlinien oben/unten (rot, erhaben)
 }
 module logo(){
-  translate([0, 0.75, (bd_z1+bd_z2)/2 - 2.6]) rotate([90,0,0]) linear_extrude(1.3)
-    text("Loopsmiths", size=8.2, font="Pacifico", halign="center", valign="baseline");
+  translate([0, 0.75, (bd_z1+bd_z2)/2 - 2.0]) rotate([90,0,0]) linear_extrude(1.3)
+    text("Loopsmiths", size=6.6, font="Pacifico", halign="center", valign="baseline");
   // Unterstrich-Schwung
-  translate([0,0.75,bd_z1+2.1]) rotate([90,0,0]) linear_extrude(1.0)
-    hull(){ translate([-26,0]) circle(0.35,$fn=12); translate([26,0.25]) circle(0.6,$fn=12); }
+  translate([0,0.75,bd_z1+1.7]) rotate([90,0,0]) linear_extrude(1.0)
+    hull(){ translate([-21,0]) circle(0.35,$fn=12); translate([21,0.25]) circle(0.55,$fn=12); }
 }
 
 // ---------- Ecken-Schoner (weiß) mit Schrauben ----------
@@ -139,68 +141,68 @@ module panel(){ translate([0,(pf_y1+pf_y2)/2,zt-pf_d+0.3]) rundplatte(2*pf_x, pf
 module panel_druck(){   // schwarze Einlagen, 0.6 mm tief, bündig mit der Oberfläche
   zz = zt+0.3-0.6;
   for(k=knoepfe){
-    for(i=[0:10]) let(a = -135 + i*27) translate([k[0], kn_y, zz]) rotate([0,0,-a]) translate([-0.22, 4.6, 0])
-      linear_extrude(0.6) square([i%5==0 ? 0.55 : 0.42, i%5==0 ? 1.3 : 0.9]);
-    translate([k[0], kn_y-0.0, zz]) for(n=[0,10]) let(a=-135+n*27) rotate([0,0,-a]) translate([0,6.9,0]) rotate([0,0,a])
-      linear_extrude(0.6) text(n==0?"0":"10", size=1.5, font="Oswald", halign="center", valign="center");
-    translate([k[0], kn_y+8.2, zz]) linear_extrude(0.6) text(k[1], size=2.3, font="Oswald", halign="center", valign="center");
+    for(i=[0:10]) let(a = -135 + i*27) translate([k[0], kn_y, zz]) rotate([0,0,-a]) translate([-0.2, 3.9, 0])
+      linear_extrude(0.6) square([i%5==0 ? 0.5 : 0.42, i%5==0 ? 1.1 : 0.8]);
+    translate([k[0], kn_y-0.0, zz]) for(n=[0,10]) let(a=-135+n*27) rotate([0,0,-a]) translate([0,5.8,0]) rotate([0,0,a])
+      linear_extrude(0.6) text(n==0?"0":"10", size=1.3, font="Oswald", halign="center", valign="center");
+    translate([k[0], kn_y+7.0, zz]) linear_extrude(0.6) text(k[1], size=1.9, font="Oswald", halign="center", valign="center");
   }
-  translate([-42, kn_y+8.2, zz]) linear_extrude(0.6) text("INPUT", size=2.0, font="Oswald", halign="center", valign="center");
-  translate([40.5, kn_y+8.2, zz]) linear_extrude(0.6) text("ON", size=2.0, font="Oswald", halign="center", valign="center");
-  translate([45.6, kn_y+8.2, zz]) linear_extrude(0.6) text("PWR", size=1.6, font="Oswald", halign="center", valign="center");
+  translate([x_buchse, kn_y+7.0, zz]) linear_extrude(0.6) text("INPUT", size=1.7, font="Oswald", halign="center", valign="center");
+  translate([x_schalter, kn_y+7.0, zz]) linear_extrude(0.6) text("ON", size=1.7, font="Oswald", halign="center", valign="center");
+  translate([x_lampe+0.4, kn_y+7.0, zz]) linear_extrude(0.6) text("PWR", size=1.4, font="Oswald", halign="center", valign="center");
 }
 
 // ---------- Regler: Rock (schwarz, Skala), Knopf (weiß, geriffelt), Kappe (rot), Zeiger (schwarz) ----------
-kn_h = 5.2;  kn_d = 6.6;
-module regler_rock(){ for(k=knoepfe) translate([k[0],kn_y,zt+0.3]) { cylinder(d1=8.0, d2=7.6, h=0.9);
-    for(i=[0:23]) rotate([0,0,i*15]) translate([3.75,0,0.45]) cube([0.5,0.35,0.9], center=true); } }
+kn_h = 4.6;  kn_d = 5.6;
+module regler_rock(){ for(k=knoepfe) translate([k[0],kn_y,zt+0.3]) { cylinder(d1=6.9, d2=6.6, h=0.9);
+    for(i=[0:23]) rotate([0,0,i*15]) translate([3.25,0,0.45]) cube([0.45,0.35,0.9], center=true); } }
 module regler_knopf(){ for(k=knoepfe) translate([k[0],kn_y,zt+1.2]) difference(){
     union(){ cylinder(d1=kn_d+0.3, d2=kn_d-0.5, h=kn_h);
              // Riffelung
-             for(i=[0:29]) rotate([0,0,i*12]) translate([kn_d/2-0.15,0,0]) cylinder(d1=0.7, d2=0.45, h=kn_h-0.8, $fn=8); }
+             for(i=[0:23]) rotate([0,0,i*15]) translate([kn_d/2-0.15,0,0]) cylinder(d1=0.7, d2=0.45, h=kn_h-0.8, $fn=8); }
     // Mulde für die Kappe
-    translate([0,0,kn_h-0.5]) cylinder(d=3.8, h=1);
+    translate([0,0,kn_h-0.5]) cylinder(d=3.2, h=1);
     // Zeigernut
     translate([0, kn_d/4+0.3, kn_h-0.4]) cube([0.7, kn_d/2+0.6, 1], center=true);
   } }
-module regler_kappe(){ for(k=knoepfe) translate([k[0],kn_y,zt+1.2+kn_h-0.5]) { cylinder(d=3.8, h=0.5); translate([0,0,0.5]) scale([1,1,0.25]) sphere(1.9,$fn=32); } }
+module regler_kappe(){ for(k=knoepfe) translate([k[0],kn_y,zt+1.2+kn_h-0.5]) { cylinder(d=3.2, h=0.5); translate([0,0,0.5]) scale([1,1,0.25]) sphere(1.6,$fn=32); } }
 module regler_zeiger(){ for(k=knoepfe) translate([k[0], kn_y + kn_d/4+0.3, zt+1.2+kn_h-0.4]) translate([0,0,0.2]) cube([0.7, kn_d/2-0.2, 0.6], center=true); }
 
 // ---------- Buchse, Schalter, Lampe ----------
-module buchse_schwarz(){ translate([-42,kn_y,zt+0.3]) difference(){ cylinder(d=6.6, h=1.0, $fn=6); translate([0,0,-1]) cylinder(d=2.7,h=5); } }
-module buchse_weiss(){ translate([-42,kn_y,zt+1.3]) difference(){ cylinder(d=4.6, h=1.3); translate([0,0,-1]) cylinder(d=2.7,h=5);
-    for(i=[0:11]) rotate([0,0,i*30]) translate([2.3,0,0.65]) cube([0.4,0.3,1.4],center=true); } }
-module buchse_loch(){ translate([-42,kn_y,zt-2.5]) cylinder(d=2.7,h=5.2); }
-module schalter_schwarz(){ translate([40.5,kn_y,zt+0.3]) cylinder(d=5.2, h=1.1, $fn=6); }
-module schalter_weiss(){ translate([40.5,kn_y,zt+1.4]) { cylinder(d=3.4,h=0.9);
-    translate([0,0,0.9]) rotate([18,0,0]) { cylinder(d1=1.5, d2=1.1, h=5.2, $fn=20); translate([0,0,5.2]) sphere(0.75,$fn=16); } } }
-module lampe_weiss(){ translate([45.6,kn_y,zt+0.3]) difference(){ cylinder(d=4.2,h=0.9); translate([0,0,-1]) cylinder(d=2.8,h=3); } }
-module lampe_rot(){ translate([45.6,kn_y,zt+0.3]) { cylinder(d=2.8,h=0.9); translate([0,0,0.9]) scale([1,1,0.8]) sphere(1.4,$fn=24); } }
+module buchse_schwarz(){ translate([x_buchse,kn_y,zt+0.3]) difference(){ cylinder(d=5.6, h=1.0, $fn=6); translate([0,0,-1]) cylinder(d=2.7,h=5); } }
+module buchse_weiss(){ translate([x_buchse,kn_y,zt+1.3]) difference(){ cylinder(d=4.0, h=1.3); translate([0,0,-1]) cylinder(d=2.5,h=5);
+    for(i=[0:11]) rotate([0,0,i*30]) translate([2.0,0,0.65]) cube([0.4,0.3,1.4],center=true); } }
+module buchse_loch(){ translate([x_buchse,kn_y,zt-2.5]) cylinder(d=2.7,h=5.2); }
+module schalter_schwarz(){ translate([x_schalter,kn_y,zt+0.3]) cylinder(d=4.6, h=1.1, $fn=6); }
+module schalter_weiss(){ translate([x_schalter,kn_y,zt+1.4]) { cylinder(d=3.0,h=0.9);
+    translate([0,0,0.9]) rotate([18,0,0]) { cylinder(d1=1.4, d2=1.1, h=4.4, $fn=20); translate([0,0,4.4]) sphere(0.75,$fn=16); } } }
+module lampe_weiss(){ translate([x_lampe,kn_y,zt+0.3]) difference(){ cylinder(d=3.8,h=0.9); translate([0,0,-1]) cylinder(d=2.5,h=3); } }
+module lampe_rot(){ translate([x_lampe,kn_y,zt+0.3]) { cylinder(d=2.5,h=0.9); translate([0,0,0.9]) scale([1,1,0.8]) sphere(1.25,$fn=24); } }
 
 // ---------- Seitengriffe: Riemen (schwarz) + Endkappen (weiß) ----------
 module seitengriff_riemen(s){
-  translate([s*(B/2-0.6), T/2, z0+H-17]) rotate([0,s*90,0]) {
+  translate([s*(B/2-0.6), T/2, z0+H-14]) rotate([0,s*90,0]) {
     // Riemen mit leichtem Bogen
-    hull(){ for(y=[-14,14]) translate([0,y,0]) cylinder(d=6, h=1.6); }
-    translate([0,0,1.2]) hull(){ for(y=[-11,11]) translate([0,y,0]) scale([1,1,0.6]) cylinder(d=5.2, h=2.4); }
+    hull(){ for(y=[-12,12]) translate([0,y,0]) cylinder(d=5.4, h=1.6); }
+    translate([0,0,1.2]) hull(){ for(y=[-9.5,9.5]) translate([0,y,0]) scale([1,1,0.6]) cylinder(d=4.6, h=2.4); }
   }
 }
 module seitengriff_kappen(){
-  for(s=[-1,1], y=[-14,14]) translate([s*(B/2-0.6), T/2+y, z0+H-17]) rotate([0,s*90,0]) {
-    translate([0,0,1.1]) cube([8,7,2.6],center=true);
+  for(s=[-1,1], y=[-12,12]) translate([s*(B/2-0.6), T/2+y, z0+H-14]) rotate([0,s*90,0]) {
+    translate([0,0,1.1]) cube([7,6,2.6],center=true);
     for(d=[-2,2]) translate([d,0,2.4]) schraube(1.6);
   }
 }
 
 // ---------- Rückseite: Typenschild (rot) + Schrift/Schrauben (weiß) ----------
-module typenschild(){ translate([0,T-0.6,z0+47]) rotate([-90,0,0]) rundplatte(56, 11, 1.4, 1.5); }
+module typenschild(){ translate([0,T-0.6,sch_z]) rotate([-90,0,0]) rundplatte(46, 10, 1.4, 1.5); }
 module typenschild_text(){
-  translate([0,T+0.75,z0+48.8]) rotate([90,0,180]) linear_extrude(0.7)
-    text("LOOPSMITHS", size=3.6, font="Oswald", halign="center", valign="center", spacing=1.25);
-  translate([0,T+0.75,z0+44.2]) rotate([90,0,180]) linear_extrude(0.7)
-    text("PICK AMP 12  ·  HANDMADE  ·  No. 001", size=1.9, font="Oswald", halign="center", valign="center");
-  for(x=[-25,25]) translate([x, T+0.7, z0+47]) rotate([-90,0,0]) schraube(1.8);
-  for(x=[-44,44], z=[z0+7, z0+56]) translate([x, T-0.1, z]) rotate([-90,0,0]) schraube(2.2);
+  translate([0,T+0.75,sch_z+1.8]) rotate([90,0,180]) linear_extrude(0.7)
+    text("LOOPSMITHS", size=3.2, font="Oswald", halign="center", valign="center", spacing=1.25);
+  translate([0,T+0.75,sch_z-2.6]) rotate([90,0,180]) linear_extrude(0.7)
+    text("PICK AMP 8  ·  HANDMADE  ·  No. 001", size=1.6, font="Oswald", halign="center", valign="center");
+  for(x=[-20.5,20.5]) translate([x, T+0.7, sch_z]) rotate([-90,0,0]) schraube(1.8);
+  for(x=[-(B/2-7),B/2-7], z=[z0+6.5, zt-6.5]) translate([x, T-0.1, z]) rotate([-90,0,0]) schraube(2.0);
 }
 
 // ---------- Paspel (weiß): Ziernaht rundum hinter der Frontkante ----------
@@ -223,12 +225,12 @@ module naehte(){
   // vorne über dem Logo-Band
   stichlinie([-gr_x, -0.02, bd_z2+1.5], [gr_x, -0.02, bd_z2+1.5]);
   // oben: zwischen Bedienfeld und Fächern, seitlich an der Oberseite
-  stichlinie([-46, (pf_y2+f_y1)/2, zt+0.02], [46, (pf_y2+f_y1)/2, zt+0.02]);
-  for(sx=[-1,1]) stichlinie([sx*49.6, paspel_y+2, zt+0.02], [sx*49.6, T-6, zt+0.02]);
+  stichlinie([-(B/2-9), (pf_y2+f_y1)/2, zt+0.02], [B/2-9, (pf_y2+f_y1)/2, zt+0.02]);
+  for(sx=[-1,1]) stichlinie([sx*(B/2-5.4), paspel_y+2, zt+0.02], [sx*(B/2-5.4), T-6, zt+0.02]);
   // Seiten: hinter der Paspel senkrecht
   for(sx=[-1,1]) stichlinie([sx*(B/2+0.02), paspel_y+1.9, z0+6], [sx*(B/2+0.02), paspel_y+1.9, zt-6]);
   // hinten: rund um das Typenschild
-  for(z=[z0+47-7.3, z0+47+7.3]) stichlinie([-30, T+0.02, z], [30, T+0.02, z]);
+  for(z=[sch_z-6.8, sch_z+6.8]) stichlinie([-25, T+0.02, z], [25, T+0.02, z]);
 }
 
 // ---------- Ausgabe ----------
@@ -265,3 +267,5 @@ else {
   color([0.8,0.1,0.1]) { stoff(); band(); regler_kappe(); lampe_rot(); typenschild(); }
   color([0.95,0.95,0.93]) { keder(); logo(); ecken(); ecken_schrauben(); panel(); regler_knopf(); buchse_weiss(); schalter_weiss(); lampe_weiss(); seitengriff_kappen(); typenschild_text(); }
 }
+
+echo(LS_MASSE=[B, T, H, R]);
