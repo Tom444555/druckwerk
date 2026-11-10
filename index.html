@@ -98,7 +98,12 @@ ol.steps{margin:0;padding:6px 16px 10px 38px}ol.steps li{padding:6px 0}
 const $ = s => document.querySelector(s);
 const app = $("#app");
 const DRUCKER = {};
-let AUFTRAEGE = [];
+let LAGER = [];        // alle Aufträge im Repo (auftraege/index.json)
+let AUFTRAEGE = [];    // eigene, auf diesem Gerät gespeicherte Aufträge (wie die Ideen im Looper)
+const SPEICHER = "druckwerk_meine";
+let _speicherNotfall = null;   // falls das Gerät keinen Speicher erlaubt
+const meineLaden = () => { try { return JSON.parse(localStorage.getItem(SPEICHER) || "[]"); } catch(e) { return _speicherNotfall || []; } };
+const meineSichern = l => { _speicherNotfall = l; try { localStorage.setItem(SPEICHER, JSON.stringify(l)); } catch(e) {} };
 let tab = "auftraege";
 
 // Farbnamen -> Farbe (für Punkte und 3D-Vorschau)
@@ -114,8 +119,26 @@ async function laden(){
   for (const k of ["kobrax","c5pro"]) {
     try { DRUCKER[k] = await (await fetch(`drucker/${k}.json`, {cache:"no-store"})).json(); } catch(e) {}
   }
-  try { AUFTRAEGE = await (await fetch("auftraege/index.json", {cache:"no-store"})).json(); } catch(e) { AUFTRAEGE = []; }
+  try { LAGER = await (await fetch("auftraege/index.json", {cache:"no-store"})).json(); } catch(e) { LAGER = []; }
+  AUFTRAEGE = meineLaden();
+  // aktuelle Daten aus dem Lager übernehmen (falls neu gesliced)
+  AUFTRAEGE = AUFTRAEGE.map(a => LAGER.find(x => x.ordner === a.ordner) || a);
+  // Link von Claude: …/#hinzu=<ordner>[,<ordner>]
+  const m = location.hash.match(/hinzu=([^&]+)/);
+  if (m) {
+    const neu = decodeURIComponent(m[1]).split(",").map(o => LAGER.find(x => x.ordner === o)).filter(Boolean);
+    hinzufuegen(neu);
+    history.replaceState(null, "", location.pathname);
+    if (neu.length === 1) tab = "auftrag:" + neu[0].ordner;
+    toast(neu.length ? (neu.length === 1 ? "Auftrag gespeichert" : neu.length + " Aufträge gespeichert") : "Auftrag nicht gefunden – evtl. 1 Min. warten");
+  }
+  meineSichern(AUFTRAEGE);
   zeige();
+}
+function hinzufuegen(liste){
+  for (const a of liste) if (!AUFTRAEGE.some(x => x.ordner === a.ordner)) AUFTRAEGE.unshift(a);
+  AUFTRAEGE.sort((x,y) => (y.datum + y.ordner).localeCompare(x.datum + x.ordner));
+  meineSichern(AUFTRAEGE);
 }
 
 function zeige(){
@@ -139,7 +162,7 @@ function listeAuftraege(){
     <div class="stat"><span class="small">Filament</span><b>${gesamt.toFixed(0)} g</b></div>
     <div class="stat"><span class="small">Drucker</span><b>2</b></div>
   </div>`;
-  if (!AUFTRAEGE.length) h += `<div class="empty">Noch keine Aufträge.<br>Lege unter „Neu“ einen an.</div>`;
+  if (!AUFTRAEGE.length) h += `<div class="empty">Noch keine Aufträge gespeichert.<br>Unter „Neu“ einen Auftrag zusammenstellen – Claude schickt dir danach einen Link, der ihn hier speichert.</div>`;
   else {
     h += `<h2>Neueste zuerst</h2><div class="card">`;
     for (const a of AUFTRAEGE) h += `
@@ -151,8 +174,11 @@ function listeAuftraege(){
       </div>`;
     h += `</div>`;
   }
+  const offen = LAGER.filter(x => !AUFTRAEGE.some(a => a.ordner === x.ordner));
+  if (offen.length) h += `<div style="height:16px"></div><button class="btn grey" id="lager">Aus dem Lager hinzufügen (${offen.length})</button>`;
   app.innerHTML = h;
   app.querySelectorAll("[data-o]").forEach(r => r.onclick = () => { tab = "auftrag:" + r.dataset.o; zeige(); });
+  const l = $("#lager"); if (l) l.onclick = () => lagerZeigen(offen);
 }
 
 function detail(ordner){
@@ -191,6 +217,7 @@ function detail(ordner){
   <h2>Datei für den USB-Stick</h2>
   <a class="btn" href="${pfad}${encodeURIComponent(a.gcode)}" download="${esc(a.gcode)}">${esc(a.gcode)} laden</a>
   <a class="btn grey" href="${pfad}BERICHT.md" target="_blank">Bericht öffnen</a>
+  ${a.quelle ? `<a class="btn grey" href="${esc(a.quelle)}" target="_blank" rel="noopener">Original auf ${esc(quellName(a.quelle))} öffnen</a>` : ""}
   <p class="hint">Datei auf einen FAT32-USB-Stick kopieren → am Drucker unter USB auswählen → Platte frei? → Start.</p>
   <h2>Verwalten</h2>
   <button class="btn rot" id="loeschen">Auftrag löschen</button>
@@ -247,6 +274,11 @@ function neu(){
   <h2>Was soll gedruckt werden?</h2>
   <div class="card"><textarea id="txt" placeholder="z. B. Wandhalter für 3 Schraubendreher, 2 Schrauben, Logo vorne">${esc(F.text)}</textarea>
     <div class="row"><input type="text" id="lnk" placeholder="Link zu Modell (optional)" value="${esc(F.link)}"></div></div>
+  <p class="hint">Fertiges Modell gefunden? Link oben einfügen – Claude lädt nichts selbst herunter, schick die STL-Datei bei Bedarf mit.</p>
+  <h2>Modelle finden</h2>
+  <div class="card">${[["MakerWorld","https://makerworld.com/de"],["Printables","https://www.printables.com"],["Thangs (sucht überall)","https://thangs.com"],
+    ["MyMiniFactory – Scan the World","https://www.myminifactory.com/scantheworld/"],["Thingiverse","https://www.thingiverse.com"]].map(([n,u]) =>
+    `<a class="row chev" href="${u}" target="_blank" rel="noopener" style="color:inherit;text-decoration:none"><div class="grow">${n}</div></a>`).join("")}</div>
   <h2>Farben &amp; Material (${F.slots.length}/4)</h2>
   <div class="card">${F.slots.map((s,i) => `
     <div class="row"><span class="dot" style="background:${farbe(s.farbe)};width:22px;height:22px"></span>
@@ -260,7 +292,7 @@ function neu(){
   <h2>Stützen</h2>${seg("stuetzen", [["aus","Keine"],["auto","Automatisch"],["baum","Baum"]])}
   <h2>Auftrag für Claude</h2>
   <div class="card"><pre class="prompt" id="pr"></pre></div>
-  <p class="hint">Kopieren und an Claude schicken – du bekommst die fertige .gcode-Datei zurück, sie erscheint danach auch unter „Aufträge“.</p>
+  <p class="hint">Kopieren und an Claude schicken – du bekommst die fertige .gcode-Datei und einen Link zurück, der den Auftrag unter „Aufträge“ speichert.</p>
   <button class="btn" id="kop" style="margin-top:12px">Auftrag kopieren</button>
   <a class="btn grey" id="oeffnen" target="_blank">In Claude öffnen</a>`;
   const prompt = () => {
@@ -306,63 +338,36 @@ function drucker(){
   app.innerHTML = h;
 }
 
-/* ---------- Löschen (über die GitHub-API, Zugang einmalig im Gerät gespeichert) ---------- */
-const REPO = "Tom444555/druckwerk", ZWEIG = "main";
-const tokenHolen = () => { try { return localStorage.getItem("druckwerk_token") || ""; } catch(e) { return ""; } };
-const tokenSetzen = t => { try { t ? localStorage.setItem("druckwerk_token", t) : localStorage.removeItem("druckwerk_token"); } catch(e) {} };
+/* ---------- Löschen (nur auf diesem Gerät) & Lager ---------- */
+const quellName = u => { try { const h = new URL(u).hostname.replace(/^www\./, "");
+  return {"makerworld.com":"MakerWorld","printables.com":"Printables","thingiverse.com":"Thingiverse","thangs.com":"Thangs",
+          "myminifactory.com":"MyMiniFactory","cults3d.com":"Cults3D","cgtrader.com":"CGTrader","sketchfab.com":"Sketchfab"}[h] || h; }
+  catch(e) { return "Webseite"; } };
 function sheet(html){
   const d = document.createElement("div"); d.className = "sheet"; d.innerHTML = `<div>${html}</div>`;
   d.onclick = e => { if (e.target === d) d.remove(); };
   document.body.appendChild(d); return d;
 }
-function zugangFragen(weiter){
-  const d = sheet(`<h3>GitHub-Zugang einrichten</h3>
-    <p>Einmalig nötig, damit die App Aufträge löschen darf.</p>
-    <ol><li>github.com → Settings → Developer settings → Personal access tokens → <b>Fine-grained tokens</b> → Generate.</li>
-    <li>Repository access: <b>Only select → druckwerk</b>.</li>
-    <li>Permissions → Repository → <b>Contents: Read and write</b> → Generate.</li>
-    <li>Token kopieren und hier einfügen.</li></ol>
-    <input type="text" id="tok" placeholder="github_pat_…" autocomplete="off" autocapitalize="off" spellcheck="false">
-    <button class="btn" id="tokOk">Speichern</button><button class="btn grey" id="tokAb">Abbrechen</button>`);
-  d.querySelector("#tokAb").onclick = () => d.remove();
-  d.querySelector("#tokOk").onclick = () => { const t = d.querySelector("#tok").value.trim(); if (!t) return; tokenSetzen(t); d.remove(); weiter && weiter(); };
-}
 function loeschenFragen(a){
-  if (!tokenHolen()) return zugangFragen(() => loeschenFragen(a));
-  const d = sheet(`<h3>„${esc(a.name)}“ löschen?</h3><p>${esc(a.datum)} · ${esc(a.drucker_name)}<br>Der Auftrag und seine Dateien werden aus druckwerk entfernt.</p>
+  const d = sheet(`<h3>„${esc(a.name)}“ löschen?</h3><p>${esc(a.datum)} · ${esc(a.drucker_name)}<br>Der Auftrag wird aus deiner Liste entfernt.</p>
     <button class="btn rotvoll" id="jaL">Löschen</button><button class="btn grey" id="neinL">Abbrechen</button>`);
   d.querySelector("#neinL").onclick = () => d.remove();
-  d.querySelector("#jaL").onclick = async () => {
-    const b = d.querySelector("#jaL"); b.disabled = true; b.textContent = "Wird gelöscht …";
-    try { await loeschen(a); d.remove(); AUFTRAEGE = AUFTRAEGE.filter(x => x.ordner !== a.ordner);
-      tab = "auftraege"; zeige(); toast("Gelöscht – App aktualisiert sich in ca. 1 Min."); }
-    catch(e) { d.remove();
-      if (e.status === 401 || e.status === 403) { tokenSetzen(""); toast("Zugang ungültig – bitte neu einrichten"); }
-      else toast("Löschen fehlgeschlagen: " + (e.message || e)); }
+  d.querySelector("#jaL").onclick = () => {
+    AUFTRAEGE = AUFTRAEGE.filter(x => x.ordner !== a.ordner); meineSichern(AUFTRAEGE);
+    d.remove(); tab = "auftraege"; zeige(); toast("Gelöscht");
   };
 }
-async function gh(pfad, opt = {}){
-  const r = await fetch(`https://api.github.com/repos/${REPO}/${pfad}`, {...opt, headers:{
-    "Authorization": "Bearer " + tokenHolen(), "Accept": "application/vnd.github+json", "Content-Type": "application/json"}});
-  if (!r.ok) { const e = new Error(r.status + " " + r.statusText); e.status = r.status; throw e; }
-  return r.json();
-}
-async function loeschen(a){
-  // Ein Commit: alle Dateien des Auftrags entfernen + index.json ohne den Auftrag
-  const ref = await gh(`git/ref/heads/${ZWEIG}`);
-  const commit = await gh(`git/commits/${ref.object.sha}`);
-  const baum = await gh(`git/trees/${commit.tree.sha}?recursive=1`);
-  const praefix = `auftraege/${a.ordner}/`;
-  const weg = baum.tree.filter(t => t.type === "blob" && t.path.startsWith(praefix))
-                       .map(t => ({path: t.path, mode: "100644", type: "blob", sha: null}));
-  let idx = AUFTRAEGE;
-  try { const f = await gh(`contents/auftraege/index.json?ref=${ref.object.sha}`);
-        idx = JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(f.content.replace(/\n/g, "")), ch => ch.charCodeAt(0)))); } catch(e) {}
-  const neu = idx.filter(x => x.ordner !== a.ordner);
-  const eintraege = [...weg, {path: "auftraege/index.json", mode: "100644", type: "blob", content: JSON.stringify(neu, null, 1)}];
-  const t = await gh("git/trees", {method: "POST", body: JSON.stringify({base_tree: commit.tree.sha, tree: eintraege})});
-  const c = await gh("git/commits", {method: "POST", body: JSON.stringify({message: `Auftrag ${a.name} gelöscht (App)`, tree: t.sha, parents: [ref.object.sha]})});
-  await gh(`git/refs/heads/${ZWEIG}`, {method: "PATCH", body: JSON.stringify({sha: c.sha})});
+function lagerZeigen(offen){
+  const d = sheet(`<h3>Aus dem Lager hinzufügen</h3><p>Aufträge, die Claude erstellt hat und die noch nicht in deiner Liste sind.</p>
+    <div class="card" style="max-height:50vh;overflow:auto">${offen.map(a => `
+      <div class="row" data-h="${esc(a.ordner)}" style="cursor:pointer"><div class="grow"><b>${esc(a.name)}</b>
+        <div class="small">${esc(a.datum)} · ${a.drucker === "kobrax" ? "Kobra X" : "C5 Pro"} · ${esc(a.zeit)}</div></div>
+        <span style="color:var(--blue);font-size:24px">＋</span></div>`).join("")}</div>
+    <div style="height:12px"></div><button class="btn grey" id="zuL">Fertig</button>`);
+  d.querySelector("#zuL").onclick = () => { d.remove(); zeige(); };
+  d.querySelectorAll("[data-h]").forEach(r => r.onclick = () => {
+    hinzufuegen([LAGER.find(x => x.ordner === r.dataset.h)]); r.remove(); toast("Hinzugefügt");
+    if (!d.querySelector("[data-h]")) { d.remove(); zeige(); } });
 }
 
 /* ---------- USB-Anleitung ---------- */
@@ -380,16 +385,10 @@ function hilfe(){
     <li>Erste Schicht kurz beobachten.</li>
   </ol></div>
   <p class="hint">Später geplant: Senden direkt über WLAN, ohne Stick.</p>
-  <h2>GitHub-Zugang (zum Löschen)</h2>
-  <div class="card"><div class="row"><div class="grow">Status</div><span class="val">${tokenHolen() ? "eingerichtet" : "nicht eingerichtet"}</span></div></div>
-  <div style="height:10px"></div>
-  ${tokenHolen() ? `<button class="btn rot" id="tokWeg">Zugang entfernen</button>` : `<button class="btn grey" id="tokNeu">Zugang einrichten</button>`}
   <div style="height:20px"></div>`;
-  const w = $("#tokWeg"), n = $("#tokNeu");
-  if (w) w.onclick = () => { tokenSetzen(""); toast("Zugang entfernt"); hilfe(); };
-  if (n) n.onclick = () => zugangFragen(() => { toast("Zugang gespeichert"); hilfe(); });
 }
 
+window.addEventListener("hashchange", () => { if (/hinzu=/.test(location.hash)) laden(); });
 laden();
 </script>
 </body>

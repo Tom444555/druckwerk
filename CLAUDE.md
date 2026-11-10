@@ -29,16 +29,18 @@ Hat Tom keinen Drucker genannt: **kurz fragen** (eine Frage, mit Empfehlung). Ni
    - `--zusammen` = mehrere Dateien bilden EIN mehrfarbiges Teil. Ohne = getrennte Teile, werden verteilt.
    - Schichten: Kobra 0.08–0.28, Creator 0.12/0.20/0.24.
 5. Ergebnis (auch `auftrag.json`; `auftraege/index.json` wird automatisch neu gebaut → erscheint in der App) liegt in `auftraege/<datum>_<name>_<drucker>/`: `.gcode`, `BERICHT.md`, STL, `slicer.log`.
-6. An Tom: `.gcode` per SendUserFile schicken + Kurzfassung aus BERICHT.md (Spulen, Zeit, Gramm).
-   Dann committen + pushen.
+6. Committen + pushen. An Tom: `.gcode` per SendUserFile + Kurzfassung aus BERICHT.md (Spulen, Zeit, Gramm)
+   + **App-Link** `https://tom444555.github.io/druckwerk/#hinzu=<ordner>` (speichert den Auftrag in seiner App; Pages braucht ~1 Min.).
 
 ## App (index.html, GitHub Pages)
 - Live: https://tom444555.github.io/druckwerk/ – liest `drucker/*.json` und `auftraege/index.json`.
 - Tabs: Aufträge (3D-Vorschau der STL, Spulen, Einstellungen, .gcode-Download), Neu (klickt den Prompt zusammen),
   Drucker, USB. iOS-Stil, hell/dunkel. Prompts aus der App beginnen mit `druckwerk:`.
-- Löschen: im Auftrag „Auftrag löschen“ → ein Commit über die GitHub-API (Ordner weg + index.json neu).
-  Braucht einmalig Toms Fine-grained-Token (nur Repo druckwerk, Contents: Read and write), gespeichert im Gerät (localStorage);
-  verwalten im Tab USB. Löschen per Chat: `git rm -r auftraege/<ordner>` + `druck.index_neu(Path('auftraege'))`.
+- Aufträge sind wie die Ideen im Looper **pro Gerät gespeichert** (localStorage `druckwerk_meine`): neue Besucher
+  sehen eine leere Liste. Tom speichert einen Auftrag über den Link `https://tom444555.github.io/druckwerk/#hinzu=<ordner>`
+  (mehrere mit Komma) oder über „Aus dem Lager hinzufügen“. „Auftrag löschen“ entfernt ihn nur aus seiner Liste.
+  Dateien endgültig aus dem Repo löschen (nur auf Wunsch): `git rm -r auftraege/<ordner>` + `druck.index_neu(Path('auftraege'))`.
+- Original-Modell verlinken: `--quelle <URL>` (MakerWorld, Printables …) → Knopf „Original auf … öffnen“ im Auftrag.
 - Nach Änderung an index.html: lokal mit Playwright (390×844) prüfen, dann pushen.
 
 ## Faustregeln Einstellungen

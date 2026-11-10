@@ -23,3 +23,9 @@
 - App: Knopf „Auftrag löschen“ (Detailansicht) mit Abfrage; GitHub-Zugang (Fine-grained-Token) einmalig, Verwaltung im Tab USB.
 - Getestet mit Playwright + gemockter GitHub-API (390×844).
 - Gelöscht: ftz_fritz, ftz_fritz_3d, ftz_hand, ftz_hand_real (Modelle in modelle/ bleiben erhalten).
+
+## 2026-11-10 – App wie Looper: Aufträge pro Gerät
+- Eigene Liste im Gerät (localStorage), neue Besucher starten leer; Speichern per Link `#hinzu=<ordner>` oder „Aus dem Lager hinzufügen“.
+- Löschen nur lokal (kein Token mehr nötig, Token-Code entfernt).
+- `druck.py --quelle URL` → Knopf „Original auf MakerWorld/Printables … öffnen“; Tab Neu: Liste „Modelle finden“.
+- Getestet mit Playwright (390×844).

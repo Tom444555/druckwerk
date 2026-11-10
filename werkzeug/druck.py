@@ -88,6 +88,7 @@ def main():
     ap.add_argument("--anordnen", action="store_true", default=True)
     ap.add_argument("--zusammen", action="store_true",
                     help="Teile als EIN Objekt behandeln (mehrfarbiges Teil aus mehreren Dateien)")
+    ap.add_argument("--quelle", default="", help="Link zum Original-Modell (MakerWorld, Printables …)")
     ap.add_argument("--ausgabe", default=None, help="Zielordner (Standard: auftraege/<datum>_<name>)")
     a = ap.parse_args()
 
@@ -224,7 +225,8 @@ def main():
               f"**Drucker:** {cfg['name']}  ",
               f"**Datei für USB:** `{gname}`  ",
               f"**Druckzeit (geschätzt):** {zeit}  ",
-              f"**Filament:** {gramm} g ({meter})", "",
+              f"**Filament:** {gramm} g ({meter})  ",
+              (f"**Original-Modell:** {a.quelle}" if a.quelle else ""), "",
               "## Spulen / Köpfe einlegen", "",
               "| Slot | Material | Farbe | Profil |", "|---|---|---|---|"]
     for s in range(1, slots + 1):
@@ -253,7 +255,8 @@ def main():
             "waende": a.waende, "stuetzen": a.stuetzen, "brim": a.brim, "gemischt": gemischt,
             "slots": [{"slot": s_, "material": belegt[s_],
                        "farbe": farben[s_ - 1] if s_ - 1 < len(farben) else ""} for s_ in range(1, slots + 1)],
-            "teile": [{"datei": Path(st).name, "slot": t[2]} for t, st in zip(teile, stls)]}
+            "teile": [{"datei": Path(st).name, "slot": t[2]} for t, st in zip(teile, stls)],
+            "quelle": a.quelle}
     (ziel / "auftrag.json").write_text(json.dumps(info, ensure_ascii=False, indent=1), encoding="utf-8")
     index_neu(ziel.parent)
     (ziel / "BERICHT.md").write_text("\n".join(zeilen) + "\n", encoding="utf-8")
