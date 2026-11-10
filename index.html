@@ -41,6 +41,13 @@ h2{font-size:13px;font-weight:400;text-transform:uppercase;color:var(--sub);marg
 .btn{display:block;width:100%;border:0;border-radius:12px;padding:15px;font:600 17px -apple-system,sans-serif;
   background:var(--blue);color:#fff;text-align:center;text-decoration:none;cursor:pointer}
 .btn.grey{background:var(--fill);color:var(--blue)}
+.btn.rot{background:var(--fill);color:var(--red)}
+.btn.rotvoll{background:var(--red);color:#fff}
+.sheet{position:fixed;inset:0;background:rgba(0,0,0,.4);display:flex;align-items:flex-end;z-index:50}
+.sheet>div{background:var(--bg);width:100%;max-width:640px;margin:0 auto;border-radius:14px 14px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom))}
+.sheet h3{margin:0 0 6px;font-size:17px;text-align:center}.sheet p{margin:0 0 14px;text-align:center;color:var(--sub);font-size:14px}
+.sheet input{background:var(--card);border-radius:10px;padding:12px;margin-bottom:12px;box-sizing:border-box}
+.sheet ol{margin:0 0 12px;padding-left:20px;font-size:14px;color:var(--sub)}
 .btn+.btn{margin-top:10px}
 .seg{display:flex;background:var(--fill);border-radius:9px;padding:2px;gap:2px}
 .seg button{flex:1;border:0;background:none;color:var(--text);font:500 14px -apple-system,sans-serif;
@@ -184,8 +191,12 @@ function detail(ordner){
   <h2>Datei für den USB-Stick</h2>
   <a class="btn" href="${pfad}${encodeURIComponent(a.gcode)}" download="${esc(a.gcode)}">${esc(a.gcode)} laden</a>
   <a class="btn grey" href="${pfad}BERICHT.md" target="_blank">Bericht öffnen</a>
-  <p class="hint">Datei auf einen FAT32-USB-Stick kopieren → am Drucker unter USB auswählen → Platte frei? → Start.</p>`;
+  <p class="hint">Datei auf einen FAT32-USB-Stick kopieren → am Drucker unter USB auswählen → Platte frei? → Start.</p>
+  <h2>Verwalten</h2>
+  <button class="btn rot" id="loeschen">Auftrag löschen</button>
+  <div style="height:20px"></div>`;
   $("#zur").onclick = () => { tab = "auftraege"; zeige(); };
+  $("#loeschen").onclick = () => loeschenFragen(a);
   vorschau(pfad, a);
 }
 
@@ -295,6 +306,65 @@ function drucker(){
   app.innerHTML = h;
 }
 
+/* ---------- Löschen (über die GitHub-API, Zugang einmalig im Gerät gespeichert) ---------- */
+const REPO = "Tom444555/druckwerk", ZWEIG = "main";
+const tokenHolen = () => { try { return localStorage.getItem("druckwerk_token") || ""; } catch(e) { return ""; } };
+const tokenSetzen = t => { try { t ? localStorage.setItem("druckwerk_token", t) : localStorage.removeItem("druckwerk_token"); } catch(e) {} };
+function sheet(html){
+  const d = document.createElement("div"); d.className = "sheet"; d.innerHTML = `<div>${html}</div>`;
+  d.onclick = e => { if (e.target === d) d.remove(); };
+  document.body.appendChild(d); return d;
+}
+function zugangFragen(weiter){
+  const d = sheet(`<h3>GitHub-Zugang einrichten</h3>
+    <p>Einmalig nötig, damit die App Aufträge löschen darf.</p>
+    <ol><li>github.com → Settings → Developer settings → Personal access tokens → <b>Fine-grained tokens</b> → Generate.</li>
+    <li>Repository access: <b>Only select → druckwerk</b>.</li>
+    <li>Permissions → Repository → <b>Contents: Read and write</b> → Generate.</li>
+    <li>Token kopieren und hier einfügen.</li></ol>
+    <input type="text" id="tok" placeholder="github_pat_…" autocomplete="off" autocapitalize="off" spellcheck="false">
+    <button class="btn" id="tokOk">Speichern</button><button class="btn grey" id="tokAb">Abbrechen</button>`);
+  d.querySelector("#tokAb").onclick = () => d.remove();
+  d.querySelector("#tokOk").onclick = () => { const t = d.querySelector("#tok").value.trim(); if (!t) return; tokenSetzen(t); d.remove(); weiter && weiter(); };
+}
+function loeschenFragen(a){
+  if (!tokenHolen()) return zugangFragen(() => loeschenFragen(a));
+  const d = sheet(`<h3>„${esc(a.name)}“ löschen?</h3><p>${esc(a.datum)} · ${esc(a.drucker_name)}<br>Der Auftrag und seine Dateien werden aus druckwerk entfernt.</p>
+    <button class="btn rotvoll" id="jaL">Löschen</button><button class="btn grey" id="neinL">Abbrechen</button>`);
+  d.querySelector("#neinL").onclick = () => d.remove();
+  d.querySelector("#jaL").onclick = async () => {
+    const b = d.querySelector("#jaL"); b.disabled = true; b.textContent = "Wird gelöscht …";
+    try { await loeschen(a); d.remove(); AUFTRAEGE = AUFTRAEGE.filter(x => x.ordner !== a.ordner);
+      tab = "auftraege"; zeige(); toast("Gelöscht – App aktualisiert sich in ca. 1 Min."); }
+    catch(e) { d.remove();
+      if (e.status === 401 || e.status === 403) { tokenSetzen(""); toast("Zugang ungültig – bitte neu einrichten"); }
+      else toast("Löschen fehlgeschlagen: " + (e.message || e)); }
+  };
+}
+async function gh(pfad, opt = {}){
+  const r = await fetch(`https://api.github.com/repos/${REPO}/${pfad}`, {...opt, headers:{
+    "Authorization": "Bearer " + tokenHolen(), "Accept": "application/vnd.github+json", "Content-Type": "application/json"}});
+  if (!r.ok) { const e = new Error(r.status + " " + r.statusText); e.status = r.status; throw e; }
+  return r.json();
+}
+async function loeschen(a){
+  // Ein Commit: alle Dateien des Auftrags entfernen + index.json ohne den Auftrag
+  const ref = await gh(`git/ref/heads/${ZWEIG}`);
+  const commit = await gh(`git/commits/${ref.object.sha}`);
+  const baum = await gh(`git/trees/${commit.tree.sha}?recursive=1`);
+  const praefix = `auftraege/${a.ordner}/`;
+  const weg = baum.tree.filter(t => t.type === "blob" && t.path.startsWith(praefix))
+                       .map(t => ({path: t.path, mode: "100644", type: "blob", sha: null}));
+  let idx = AUFTRAEGE;
+  try { const f = await gh(`contents/auftraege/index.json?ref=${ref.object.sha}`);
+        idx = JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(f.content.replace(/\n/g, "")), ch => ch.charCodeAt(0)))); } catch(e) {}
+  const neu = idx.filter(x => x.ordner !== a.ordner);
+  const eintraege = [...weg, {path: "auftraege/index.json", mode: "100644", type: "blob", content: JSON.stringify(neu, null, 1)}];
+  const t = await gh("git/trees", {method: "POST", body: JSON.stringify({base_tree: commit.tree.sha, tree: eintraege})});
+  const c = await gh("git/commits", {method: "POST", body: JSON.stringify({message: `Auftrag ${a.name} gelöscht (App)`, tree: t.sha, parents: [ref.object.sha]})});
+  await gh(`git/refs/heads/${ZWEIG}`, {method: "PATCH", body: JSON.stringify({sha: c.sha})});
+}
+
 /* ---------- USB-Anleitung ---------- */
 function hilfe(){
   app.innerHTML = `<h1>Per USB drucken</h1>
@@ -309,7 +379,15 @@ function hilfe(){
     <li>Creator 5 Pro bei ABS/ASA: Deckel zu, Kammer heizt selbst.</li>
     <li>Erste Schicht kurz beobachten.</li>
   </ol></div>
-  <p class="hint">Später geplant: Senden direkt über WLAN, ohne Stick.</p>`;
+  <p class="hint">Später geplant: Senden direkt über WLAN, ohne Stick.</p>
+  <h2>GitHub-Zugang (zum Löschen)</h2>
+  <div class="card"><div class="row"><div class="grow">Status</div><span class="val">${tokenHolen() ? "eingerichtet" : "nicht eingerichtet"}</span></div></div>
+  <div style="height:10px"></div>
+  ${tokenHolen() ? `<button class="btn rot" id="tokWeg">Zugang entfernen</button>` : `<button class="btn grey" id="tokNeu">Zugang einrichten</button>`}
+  <div style="height:20px"></div>`;
+  const w = $("#tokWeg"), n = $("#tokNeu");
+  if (w) w.onclick = () => { tokenSetzen(""); toast("Zugang entfernt"); hilfe(); };
+  if (n) n.onclick = () => zugangFragen(() => { toast("Zugang gespeichert"); hilfe(); });
 }
 
 laden();

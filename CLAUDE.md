@@ -36,6 +36,9 @@ Hat Tom keinen Drucker genannt: **kurz fragen** (eine Frage, mit Empfehlung). Ni
 - Live: https://tom444555.github.io/druckwerk/ – liest `drucker/*.json` und `auftraege/index.json`.
 - Tabs: Aufträge (3D-Vorschau der STL, Spulen, Einstellungen, .gcode-Download), Neu (klickt den Prompt zusammen),
   Drucker, USB. iOS-Stil, hell/dunkel. Prompts aus der App beginnen mit `druckwerk:`.
+- Löschen: im Auftrag „Auftrag löschen“ → ein Commit über die GitHub-API (Ordner weg + index.json neu).
+  Braucht einmalig Toms Fine-grained-Token (nur Repo druckwerk, Contents: Read and write), gespeichert im Gerät (localStorage);
+  verwalten im Tab USB. Löschen per Chat: `git rm -r auftraege/<ordner>` + `druck.index_neu(Path('auftraege'))`.
 - Nach Änderung an index.html: lokal mit Playwright (390×844) prüfen, dann pushen.
 
 ## Faustregeln Einstellungen
