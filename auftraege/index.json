@@ -50,7 +50,21 @@
    }
   ],
   "quelle": "https://makerworld.com/de/models/1485935-vox-guitar-pick-holder-9-picks",
-  "vorschau": "vorschau.png"
+  "vorschau": "vorschau.png",
+  "teile_app": [
+   {
+    "datei": "vox_amp_korpus.stl",
+    "slot": 1
+   },
+   {
+    "datei": "vox_amp_grill.stl",
+    "slot": 3
+   },
+   {
+    "datei": "vox_amp_regler.stl",
+    "slot": 2
+   }
+  ]
  },
  {
   "name": "testwuerfel",
@@ -93,7 +107,17 @@
     "slot": 2
    }
   ],
-  "vorschau": "vorschau.png"
+  "vorschau": "vorschau.png",
+  "teile_app": [
+   {
+    "datei": "test_wuerfel.stl",
+    "slot": 1
+   },
+   {
+    "datei": "test_buchstabe.stl",
+    "slot": 2
+   }
+  ]
  },
  {
   "name": "testwuerfel",
@@ -136,7 +160,17 @@
     "slot": 2
    }
   ],
-  "vorschau": "vorschau.png"
+  "vorschau": "vorschau.png",
+  "teile_app": [
+   {
+    "datei": "test_wuerfel.stl",
+    "slot": 1
+   },
+   {
+    "datei": "test_buchstabe.stl",
+    "slot": 2
+   }
+  ]
  },
  {
   "name": "loopsmiths_amp",
@@ -198,6 +232,24 @@
    }
   ],
   "quelle": "",
-  "vorschau": "vorschau.png"
+  "vorschau": "vorschau.png",
+  "teile_app": [
+   {
+    "datei": "loopsmiths_amp_schwarz.app.stl",
+    "slot": 1
+   },
+   {
+    "datei": "loopsmiths_amp_rot.stl",
+    "slot": 2
+   },
+   {
+    "datei": "loopsmiths_amp_weiss.app.stl",
+    "slot": 3
+   },
+   {
+    "datei": "loopsmiths_amp_gold.stl",
+    "slot": 4
+   }
+  ]
  }
 ]

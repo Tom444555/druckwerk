@@ -95,6 +95,20 @@ def vorschau_bild(ziel: Path, teile_stl, slots_farben):
         return False
 
 
+def app_stl(st: Path, ziel_flaechen=60000):
+    """Leichte Kopie für die 3D-Vorschau in der App (Handy): große Netze auf ~60.000 Dreiecke reduzieren."""
+    try:
+        import pymeshlab
+        ms = pymeshlab.MeshSet(); ms.load_new_mesh(str(st))
+        if ms.current_mesh().face_number() <= ziel_flaechen * 1.3:
+            return st.name
+        ms.meshing_decimation_quadric_edge_collapse(targetfacenum=ziel_flaechen, preservenormal=True, preserveboundary=True)
+        aus = st.with_name(st.stem + ".app.stl"); ms.save_current_mesh(str(aus), binary=True)
+        return aus.name
+    except Exception:
+        return st.name
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--drucker", required=True, help="kobrax | c5pro")
@@ -279,7 +293,8 @@ def main():
             "slots": [{"slot": s_, "material": belegt[s_],
                        "farbe": farben[s_ - 1] if s_ - 1 < len(farben) else ""} for s_ in range(1, slots + 1)],
             "teile": [{"datei": Path(st).name, "slot": t[2]} for t, st in zip(teile, stls)],
-            "quelle": a.quelle}
+            "quelle": a.quelle,
+            "teile_app": [{"datei": app_stl(ziel / Path(st).name), "slot": t[2]} for t, st in zip(teile, stls)]}
     if vorschau_bild(ziel, [ziel / Path(st).name for st in stls],
                      [farben[t[2] - 1] if t[2] - 1 < len(farben) else "" for t in teile]):
         info["vorschau"] = "vorschau.png"

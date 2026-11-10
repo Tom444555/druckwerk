@@ -39,5 +39,15 @@
    "slot": 2
   }
  ],
- "vorschau": "vorschau.png"
+ "vorschau": "vorschau.png",
+ "teile_app": [
+  {
+   "datei": "test_wuerfel.stl",
+   "slot": 1
+  },
+  {
+   "datei": "test_buchstabe.stl",
+   "slot": 2
+  }
+ ]
 }

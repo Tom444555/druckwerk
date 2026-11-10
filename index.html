@@ -245,22 +245,27 @@ async function vorschau(pfad, a){
     const grp = new THREE.Group(); sc.add(grp);
     const ld = new STLLoader();
     const vt = $("#vtext");
-    for (const [i, t] of a.teile.entries()) {
+    const teile = a.teile_app || a.teile;          // leichte Kopien fürs Handy, falls vorhanden
+    for (const [i, t] of teile.entries()) {
       const geo = await ld.loadAsync(pfad + encodeURIComponent(t.datei), ev => {
-        if (vt && ev.total) vt.textContent = `3D-Modell wird geladen … Teil ${i+1}/${a.teile.length} · ${Math.round(100*ev.loaded/ev.total)} %`; });
+        if (vt && ev.total) vt.textContent = `3D-Modell wird geladen … Teil ${i+1}/${teile.length} · ${Math.round(100*ev.loaded/ev.total)} %`; });
       geo.computeVertexNormals();
       const slot = a.slots.find(s => s.slot === t.slot) || {};
       grp.add(new THREE.Mesh(geo, new THREE.MeshStandardMaterial({color: farbe(slot.farbe), roughness:.6})));
     }
     grp.rotation.x = -Math.PI/2;           // Z nach oben (Druckkoordinaten)
-    el.appendChild(r.domElement);
-    const vb = $("#vbild"); if (vb) vb.remove();
-    if (vt) vt.textContent = "3D-Vorschau · drehen mit Finger";
     const box = new THREE.Box3().setFromObject(grp), c = box.getCenter(new THREE.Vector3());
     const size = box.getSize(new THREE.Vector3()).length();
     grp.position.sub(c);
     cam.position.set(size*.8, size*.6, size*.9); cam.lookAt(0,0,0);
     const ctl = new OrbitControls(cam, r.domElement); ctl.enableDamping = true; ctl.autoRotate = true; ctl.autoRotateSpeed = 1.5;
+    // Bild erst entfernen, wenn das 3D-Modell wirklich gezeichnet wurde; bei Grafikproblemen zurück zum Bild
+    r.domElement.style.opacity = "0"; el.appendChild(r.domElement);
+    r.domElement.addEventListener("webglcontextlost", e => { e.preventDefault(); r.domElement.remove();
+      const vb = $("#vbild"); if (vb) vb.style.display = ""; if (vt) vt.textContent = "Bild-Vorschau (3D zu groß für dieses Gerät)"; });
+    r.render(sc, cam);
+    requestAnimationFrame(() => { r.domElement.style.opacity = "1"; const vb = $("#vbild"); if (vb) vb.style.display = "none";
+      if (vt) vt.textContent = "3D-Vorschau · drehen mit Finger"; });
     (function lauf(){ if (!document.body.contains(r.domElement)) return; ctl.update(); r.render(sc,cam); requestAnimationFrame(lauf); })();
   } catch(e) { const vt = $("#vtext"); if (vt) vt.textContent = $("#vbild") ? "Bild-Vorschau (3D nicht verfügbar)" : "Vorschau nicht verfügbar"; }
 }

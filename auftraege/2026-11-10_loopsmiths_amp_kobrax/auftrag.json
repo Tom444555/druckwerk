@@ -58,5 +58,23 @@
   }
  ],
  "quelle": "",
- "vorschau": "vorschau.png"
+ "vorschau": "vorschau.png",
+ "teile_app": [
+  {
+   "datei": "loopsmiths_amp_schwarz.app.stl",
+   "slot": 1
+  },
+  {
+   "datei": "loopsmiths_amp_rot.stl",
+   "slot": 2
+  },
+  {
+   "datei": "loopsmiths_amp_weiss.app.stl",
+   "slot": 3
+  },
+  {
+   "datei": "loopsmiths_amp_gold.stl",
+   "slot": 4
+  }
+ ]
 }
