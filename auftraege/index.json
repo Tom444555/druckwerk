@@ -133,5 +133,56 @@
     "slot": 3
    }
   ]
+ },
+ {
+  "name": "ftz_fritz_3d",
+  "drucker": "kobrax",
+  "drucker_name": "Anycubic Kobra X",
+  "datum": "2026-11-10",
+  "ordner": "2026-11-10_ftz_fritz_3d_kobrax",
+  "gcode": "ftz_fritz_3d_kobrax.gcode",
+  "zeit": "2h 21m 32s",
+  "gramm": "47.68, 24.38, 10.23",
+  "meter": "15.99 m, 8.18 m, 3.43 m",
+  "duese": "205,205,205",
+  "bett": "60,60,60",
+  "schicht": "0.28",
+  "stufe": "Standard",
+  "infill": 50,
+  "waende": 5,
+  "stuetzen": "auto",
+  "brim": "auto",
+  "gemischt": false,
+  "slots": [
+   {
+    "slot": 1,
+    "material": "PLA",
+    "farbe": "schwarz"
+   },
+   {
+    "slot": 2,
+    "material": "PLA",
+    "farbe": "rot"
+   },
+   {
+    "slot": 3,
+    "material": "PLA",
+    "farbe": "weiß"
+   }
+  ],
+  "teile": [
+   {
+    "datei": "ftz_fritz3d_sockel.stl",
+    "slot": 1
+   },
+   {
+    "datei": "ftz_fritz3d_schrift.stl",
+    "slot": 2
+   },
+   {
+    "datei": "ftz_fritz3d_rand.stl",
+    "slot": 3
+   }
+  ]
  }
 ]
