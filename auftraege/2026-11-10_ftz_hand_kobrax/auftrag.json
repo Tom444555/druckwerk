@@ -1,0 +1,51 @@
+{
+ "name": "ftz_hand",
+ "drucker": "kobrax",
+ "drucker_name": "Anycubic Kobra X",
+ "datum": "2026-11-10",
+ "ordner": "2026-11-10_ftz_hand_kobrax",
+ "gcode": "ftz_hand_kobrax.gcode",
+ "zeit": "3h 29m 43s",
+ "gramm": "30.71, 30.67, 40.80",
+ "meter": "10.30 m, 10.28 m, 13.68 m",
+ "duese": "205,205,205",
+ "bett": "60,60,60",
+ "schicht": "0.28",
+ "stufe": "Standard",
+ "infill": 50,
+ "waende": 5,
+ "stuetzen": "auto",
+ "brim": "auto",
+ "gemischt": false,
+ "slots": [
+  {
+   "slot": 1,
+   "material": "PLA",
+   "farbe": "schwarz"
+  },
+  {
+   "slot": 2,
+   "material": "PLA",
+   "farbe": "rot"
+  },
+  {
+   "slot": 3,
+   "material": "PLA",
+   "farbe": "weiß"
+  }
+ ],
+ "teile": [
+  {
+   "datei": "ftz_hand_sockel.stl",
+   "slot": 1
+  },
+  {
+   "datei": "ftz_hand_schrift.stl",
+   "slot": 2
+  },
+  {
+   "datei": "ftz_hand_weiss.stl",
+   "slot": 3
+  }
+ ]
+}
