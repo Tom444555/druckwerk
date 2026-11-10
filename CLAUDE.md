@@ -28,9 +28,15 @@ Hat Tom keinen Drucker genannt: **kurz fragen** (eine Frage, mit Empfehlung). Ni
    - `Datei:Material:Slot` – Slot 1–4 = Spule (Kobra) bzw. Kopf (Creator). Materialien: siehe `drucker/*.json`.
    - `--zusammen` = mehrere Dateien bilden EIN mehrfarbiges Teil. Ohne = getrennte Teile, werden verteilt.
    - Schichten: Kobra 0.08–0.28, Creator 0.12/0.20/0.24.
-5. Ergebnis liegt in `auftraege/<datum>_<name>_<drucker>/`: `.gcode`, `BERICHT.md`, STL, `slicer.log`.
+5. Ergebnis (auch `auftrag.json`; `auftraege/index.json` wird automatisch neu gebaut → erscheint in der App) liegt in `auftraege/<datum>_<name>_<drucker>/`: `.gcode`, `BERICHT.md`, STL, `slicer.log`.
 6. An Tom: `.gcode` per SendUserFile schicken + Kurzfassung aus BERICHT.md (Spulen, Zeit, Gramm).
    Dann committen + pushen.
+
+## App (index.html, GitHub Pages)
+- Live: https://tom444555.github.io/druckwerk/ – liest `drucker/*.json` und `auftraege/index.json`.
+- Tabs: Aufträge (3D-Vorschau der STL, Spulen, Einstellungen, .gcode-Download), Neu (klickt den Prompt zusammen),
+  Drucker, USB. iOS-Stil, hell/dunkel. Prompts aus der App beginnen mit `druckwerk:`.
+- Nach Änderung an index.html: lokal mit Playwright (390×844) prüfen, dann pushen.
 
 ## Faustregeln Einstellungen
 - Deko/Figur: 0.16–0.20, Infill 10–15 %, Baumstützen bei Überhängen.

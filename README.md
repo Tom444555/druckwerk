@@ -1,5 +1,7 @@
 # druckwerk
 
+**App:** https://tom444555.github.io/druckwerk/ (Aufträge mit 3D-Vorschau + Download, neuen Auftrag zusammenklicken, Drucker, USB-Anleitung)
+
 Prompt rein → fertige USB-Druckdatei raus. Für **Anycubic Kobra X** und **Flashforge Creator 5 Pro**.
 
 **So benutzt du es:** Schreib Claude z. B.

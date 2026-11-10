@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Druckwerk">
+<meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<title>Druckwerk</title>
+<style>
+:root{
+  --bg:#f2f2f7;--card:#fff;--text:#000;--sub:#6c6c70;--sep:rgba(60,60,67,.18);
+  --blue:#007aff;--green:#34c759;--orange:#ff9500;--red:#ff3b30;--fill:rgba(120,120,128,.12);
+  --kobrax:#5e5ce6;--c5pro:#ff9f0a;
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#000;--card:#1c1c1e;--text:#fff;--sub:#98989f;--sep:rgba(84,84,88,.6);
+  --blue:#0a84ff;--green:#30d158;--orange:#ff9f0a;--red:#ff453a;--fill:rgba(120,120,128,.24);
+}}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--text);
+  font:17px/1.35 -apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",sans-serif}
+main{max-width:720px;margin:0 auto;padding:calc(env(safe-area-inset-top) + 8px) 16px 110px}
+h1{font-size:34px;font-weight:700;letter-spacing:.3px;margin:8px 4px 14px}
+h2{font-size:13px;font-weight:400;text-transform:uppercase;color:var(--sub);margin:22px 16px 7px}
+.card{background:var(--card);border-radius:12px;overflow:hidden}
+.row{display:flex;align-items:center;gap:12px;padding:11px 16px;min-height:44px;position:relative}
+.row+.row::before{content:"";position:absolute;top:0;left:16px;right:0;border-top:.5px solid var(--sep)}
+.row .grow{flex:1;min-width:0}
+.row .val{color:var(--sub);text-align:right}
+.chev::after{content:"›";color:var(--sub);font-size:22px;margin-left:4px}
+.small{font-size:13px;color:var(--sub)}
+.badge{font-size:12px;font-weight:600;color:#fff;border-radius:6px;padding:2px 7px;white-space:nowrap}
+.b-kobrax{background:var(--kobrax)}.b-c5pro{background:var(--c5pro)}
+.dots{display:flex;gap:4px}.dot{width:14px;height:14px;border-radius:50%;border:.5px solid var(--sep)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}
+.stat{background:var(--card);border-radius:12px;padding:12px}
+.stat b{display:block;font-size:22px;font-weight:600}
+.btn{display:block;width:100%;border:0;border-radius:12px;padding:15px;font:600 17px -apple-system,sans-serif;
+  background:var(--blue);color:#fff;text-align:center;text-decoration:none;cursor:pointer}
+.btn.grey{background:var(--fill);color:var(--blue)}
+.btn+.btn{margin-top:10px}
+.seg{display:flex;background:var(--fill);border-radius:9px;padding:2px;gap:2px}
+.seg button{flex:1;border:0;background:none;color:var(--text);font:500 14px -apple-system,sans-serif;
+  padding:7px 4px;border-radius:7px;cursor:pointer}
+.seg button.on{background:var(--card);box-shadow:0 1px 3px rgba(0,0,0,.15);font-weight:600}
+textarea,input[type=text],select{width:100%;border:0;background:transparent;color:var(--text);
+  font:17px -apple-system,sans-serif;outline:none}
+textarea{min-height:90px;resize:vertical;padding:12px 16px}
+select{appearance:none;-webkit-appearance:none;text-align:right;color:var(--blue);width:auto;max-width:60%}
+input[type=color]{width:34px;height:34px;border:0;background:none;padding:0}
+input[type=range]{flex:1;accent-color:var(--blue)}
+.hint{margin:7px 16px 0;font-size:13px;color:var(--sub)}
+.warn{margin:10px 0 0;padding:10px 14px;border-radius:12px;background:rgba(255,149,0,.15);font-size:15px}
+pre.prompt{white-space:pre-wrap;font:15px/1.4 ui-monospace,Menlo,monospace;margin:0;padding:14px 16px}
+#viewer{height:300px;background:linear-gradient(var(--card),var(--bg));border-radius:12px;position:relative}
+#viewer .small{position:absolute;bottom:8px;left:12px}
+.empty{text-align:center;color:var(--sub);padding:40px 20px}
+nav{position:fixed;bottom:0;left:0;right:0;display:flex;justify-content:center;
+  background:color-mix(in srgb,var(--card) 82%,transparent);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-top:.5px solid var(--sep);padding:6px 0 calc(env(safe-area-inset-bottom) + 4px)}
+nav button{flex:1;max-width:140px;border:0;background:none;color:var(--sub);font:500 10px -apple-system,sans-serif;
+  display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer}
+nav button svg{width:26px;height:26px}
+nav button.on{color:var(--blue)}
+.back{color:var(--blue);background:none;border:0;font:17px -apple-system,sans-serif;padding:8px 0;cursor:pointer}
+.toast{position:fixed;left:50%;bottom:100px;transform:translateX(-50%);background:rgba(0,0,0,.8);color:#fff;
+  padding:10px 18px;border-radius:20px;font-size:15px;opacity:0;transition:.3s;pointer-events:none}
+.toast.show{opacity:1}
+ol.steps{margin:0;padding:6px 16px 10px 38px}ol.steps li{padding:6px 0}
+</style>
+</head>
+<body>
+<main id="app"></main>
+
+<nav>
+  <button data-tab="auftraege" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7l8-4 8 4-8 4-8-4z"/><path d="M4 7v10l8 4 8-4V7"/><path d="M12 11v10"/></svg>Aufträge</button>
+  <button data-tab="neu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>Neu</button>
+  <button data-tab="drucker"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M4 8h16M9 13h6M12 8v5"/></svg>Drucker</button>
+  <button data-tab="hilfe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="7" y="2" width="10" height="13" rx="1.5"/><path d="M9 15v5h6v-5M10 6h1M13 6h1"/></svg>USB</button>
+</nav>
+<div class="toast" id="toast"></div>
+
+<script type="importmap">
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+"three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}
+</script>
+<script type="module">
+const $ = s => document.querySelector(s);
+const app = $("#app");
+const DRUCKER = {};
+let AUFTRAEGE = [];
+let tab = "auftraege";
+
+// Farbnamen -> Farbe (für Punkte und 3D-Vorschau)
+const FARBEN = {weiss:"#f5f5f5",weiß:"#f5f5f5",schwarz:"#222",rot:"#e0352b",blau:"#2563eb",gruen:"#22a447",grün:"#22a447",
+  gelb:"#f5c518",orange:"#f97316",grau:"#8e8e93",silber:"#c0c0c0",gold:"#d4a017",lila:"#8b5cf6",violett:"#8b5cf6",
+  pink:"#ec4899",rosa:"#f9a8d4",braun:"#8b5a2b",tuerkis:"#14b8a6",türkis:"#14b8a6",natur:"#efe6d2",transparent:"#cfe8ff"};
+const farbe = n => FARBEN[(n||"").toLowerCase().trim()] || (/^#/.test(n||"") ? n : "#9a9aa0");
+const uniq = v => [...new Set(String(v ?? "").split(","))].join(" / ");
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const toast = t => { const e = $("#toast"); e.textContent = t; e.classList.add("show"); setTimeout(() => e.classList.remove("show"), 1600); };
+
+async function laden(){
+  for (const k of ["kobrax","c5pro"]) {
+    try { DRUCKER[k] = await (await fetch(`drucker/${k}.json`, {cache:"no-store"})).json(); } catch(e) {}
+  }
+  try { AUFTRAEGE = await (await fetch("auftraege/index.json", {cache:"no-store"})).json(); } catch(e) { AUFTRAEGE = []; }
+  zeige();
+}
+
+function zeige(){
+  document.querySelectorAll("nav button").forEach(b => b.classList.toggle("on", b.dataset.tab === tab.split(":")[0]));
+  window.scrollTo(0,0);
+  if (tab === "auftraege") listeAuftraege();
+  else if (tab.startsWith("auftrag:")) detail(tab.slice(8));
+  else if (tab === "neu") neu();
+  else if (tab === "drucker") drucker();
+  else hilfe();
+}
+document.querySelectorAll("nav button").forEach(b => b.onclick = () => { tab = b.dataset.tab; zeige(); });
+
+/* ---------- Aufträge ---------- */
+const summeGramm = a => String(a.gramm).split(",").reduce((s,x) => s + (parseFloat(x)||0), 0);
+function listeAuftraege(){
+  const gesamt = AUFTRAEGE.reduce((s,a) => s + summeGramm(a), 0);
+  let h = `<h1>Aufträge</h1>
+  <div class="stats">
+    <div class="stat"><span class="small">Aufträge</span><b>${AUFTRAEGE.length}</b></div>
+    <div class="stat"><span class="small">Filament</span><b>${gesamt.toFixed(0)} g</b></div>
+    <div class="stat"><span class="small">Drucker</span><b>2</b></div>
+  </div>`;
+  if (!AUFTRAEGE.length) h += `<div class="empty">Noch keine Aufträge.<br>Lege unter „Neu“ einen an.</div>`;
+  else {
+    h += `<h2>Neueste zuerst</h2><div class="card">`;
+    for (const a of AUFTRAEGE) h += `
+      <div class="row chev" data-o="${esc(a.ordner)}" style="cursor:pointer">
+        <div class="grow"><div><b>${esc(a.name)}</b></div>
+          <div class="small">${esc(a.datum)} · ${esc(a.zeit)} · ${summeGramm(a).toFixed(1)} g</div></div>
+        <div class="dots">${a.slots.map(s => `<span class="dot" style="background:${farbe(s.farbe)}"></span>`).join("")}</div>
+        <span class="badge b-${a.drucker}">${a.drucker === "kobrax" ? "Kobra X" : "C5 Pro"}</span>
+      </div>`;
+    h += `</div>`;
+  }
+  app.innerHTML = h;
+  app.querySelectorAll("[data-o]").forEach(r => r.onclick = () => { tab = "auftrag:" + r.dataset.o; zeige(); });
+}
+
+function detail(ordner){
+  const a = AUFTRAEGE.find(x => x.ordner === ordner);
+  if (!a) { tab = "auftraege"; return zeige(); }
+  const pfad = `auftraege/${a.ordner}/`;
+  const gr = String(a.gramm).split(",");
+  app.innerHTML = `
+  <button class="back" id="zur">‹ Aufträge</button>
+  <h1>${esc(a.name)}</h1>
+  <div id="viewer"><span class="small">3D-Vorschau · drehen mit Finger</span></div>
+  <div class="stats">
+    <div class="stat"><span class="small">Druckzeit</span><b>${esc(a.zeit)}</b></div>
+    <div class="stat"><span class="small">Filament</span><b>${summeGramm(a).toFixed(1)} g</b></div>
+    <div class="stat"><span class="small">Schicht</span><b>${esc(a.schicht)}</b></div>
+  </div>
+  <h2>Drucker</h2>
+  <div class="card"><div class="row"><div class="grow">${esc(a.drucker_name)}</div>
+    <span class="badge b-${a.drucker}">${a.drucker === "kobrax" ? "Kobra X" : "C5 Pro"}</span></div></div>
+  <h2>${a.drucker === "kobrax" ? "Spulen einlegen" : "Köpfe bestücken"}</h2>
+  <div class="card">${a.slots.map((s,i) => `
+    <div class="row"><span class="dot" style="background:${farbe(s.farbe)};width:22px;height:22px"></span>
+      <div class="grow">${a.drucker === "kobrax" ? "Spule" : "Kopf"} ${s.slot}: <b>${esc(s.material)}</b> ${esc(s.farbe)}</div>
+      <span class="val">${(parseFloat(gr[i])||0).toFixed(1)} g</span></div>`).join("")}
+  </div>
+  ${a.gemischt ? `<div class="warn">⚠ Unterschiedliche Materialien – Haftung und Temperaturen prüfen.</div>` : ""}
+  <h2>Einstellungen</h2>
+  <div class="card">
+    <div class="row"><div class="grow">Schichthöhe</div><span class="val">${esc(a.schicht)} mm (${esc(a.stufe)})</span></div>
+    <div class="row"><div class="grow">Füllung</div><span class="val">${esc(a.infill)} %</span></div>
+    <div class="row"><div class="grow">Wände</div><span class="val">${esc(a.waende ?? "Standard")}</span></div>
+    <div class="row"><div class="grow">Stützen</div><span class="val">${esc(a.stuetzen)}</span></div>
+    <div class="row"><div class="grow">Brim</div><span class="val">${esc(a.brim)}</span></div>
+    <div class="row"><div class="grow">Düse / Bett</div><span class="val">${esc(uniq(a.duese))} °C · ${esc(uniq(a.bett))} °C</span></div>
+  </div>
+  <h2>Datei für den USB-Stick</h2>
+  <a class="btn" href="${pfad}${encodeURIComponent(a.gcode)}" download="${esc(a.gcode)}">${esc(a.gcode)} laden</a>
+  <a class="btn grey" href="${pfad}BERICHT.md" target="_blank">Bericht öffnen</a>
+  <p class="hint">Datei auf einen FAT32-USB-Stick kopieren → am Drucker unter USB auswählen → Platte frei? → Start.</p>`;
+  $("#zur").onclick = () => { tab = "auftraege"; zeige(); };
+  vorschau(pfad, a);
+}
+
+async function vorschau(pfad, a){
+  const el = $("#viewer");
+  try {
+    const THREE = await import("three");
+    const { STLLoader } = await import("three/addons/loaders/STLLoader.js");
+    const { OrbitControls } = await import("three/addons/controls/OrbitControls.js");
+    const w = el.clientWidth, h = el.clientHeight;
+    const r = new THREE.WebGLRenderer({antialias:true, alpha:true});
+    r.setPixelRatio(devicePixelRatio); r.setSize(w,h); el.prepend(r.domElement);
+    const sc = new THREE.Scene();
+    sc.add(new THREE.HemisphereLight(0xffffff, 0x666666, 1.6));
+    const dl = new THREE.DirectionalLight(0xffffff, 1.4); dl.position.set(1,2,1.5); sc.add(dl);
+    const cam = new THREE.PerspectiveCamera(40, w/h, 0.1, 5000);
+    const grp = new THREE.Group(); sc.add(grp);
+    const ld = new STLLoader();
+    for (const t of a.teile) {
+      const geo = await ld.loadAsync(pfad + encodeURIComponent(t.datei));
+      geo.computeVertexNormals();
+      const slot = a.slots.find(s => s.slot === t.slot) || {};
+      grp.add(new THREE.Mesh(geo, new THREE.MeshStandardMaterial({color: farbe(slot.farbe), roughness:.6})));
+    }
+    grp.rotation.x = -Math.PI/2;           // Z nach oben (Druckkoordinaten)
+    const box = new THREE.Box3().setFromObject(grp), c = box.getCenter(new THREE.Vector3());
+    const size = box.getSize(new THREE.Vector3()).length();
+    grp.position.sub(c);
+    cam.position.set(size*.8, size*.6, size*.9); cam.lookAt(0,0,0);
+    const ctl = new OrbitControls(cam, r.domElement); ctl.enableDamping = true; ctl.autoRotate = true; ctl.autoRotateSpeed = 1.5;
+    (function lauf(){ if (!document.body.contains(r.domElement)) return; ctl.update(); r.render(sc,cam); requestAnimationFrame(lauf); })();
+  } catch(e) { el.innerHTML = `<div class="empty">Vorschau nicht verfügbar</div>`; }
+}
+
+/* ---------- Neuer Auftrag (erzeugt den Prompt für Claude) ---------- */
+const F = { drucker:"kobrax", text:"", link:"", zweck:"deko", qualitaet:"standard", stuetzen:"auto",
+  slots:[{material:"PLA", farbe:"schwarz"}] };
+function neu(){
+  const d = DRUCKER[F.drucker] || {filamente:{PLA:1}};
+  const mats = Object.keys(d.filamente);
+  F.slots.forEach(s => { if (!mats.includes(s.material)) s.material = "PLA"; });
+  const seg = (k, opts) => `<div class="seg">${opts.map(([v,l]) => `<button data-k="${k}" data-v="${v}" class="${F[k]===v?"on":""}">${l}</button>`).join("")}</div>`;
+  const hitze = F.slots.some(s => /ABS|ASA|PA/.test(s.material));
+  app.innerHTML = `
+  <h1>Neuer Auftrag</h1>
+  <h2>Drucker</h2>${seg("drucker", [["kobrax","Kobra X"],["c5pro","Creator 5 Pro"]])}
+  ${hitze && F.drucker === "kobrax" ? `<div class="warn">ABS/ASA/Nylon besser auf dem geschlossenen Creator 5 Pro drucken.</div>` : ""}
+  <h2>Was soll gedruckt werden?</h2>
+  <div class="card"><textarea id="txt" placeholder="z. B. Wandhalter für 3 Schraubendreher, 2 Schrauben, Logo vorne">${esc(F.text)}</textarea>
+    <div class="row"><input type="text" id="lnk" placeholder="Link zu Modell (optional)" value="${esc(F.link)}"></div></div>
+  <h2>Farben &amp; Material (${F.slots.length}/4)</h2>
+  <div class="card">${F.slots.map((s,i) => `
+    <div class="row"><span class="dot" style="background:${farbe(s.farbe)};width:22px;height:22px"></span>
+      <input type="text" data-f="${i}" value="${esc(s.farbe)}" style="flex:1" placeholder="Farbe">
+      <select data-m="${i}">${mats.map(m => `<option ${m===s.material?"selected":""}>${m}</option>`).join("")}</select>
+      ${F.slots.length > 1 ? `<button class="back" data-x="${i}" style="color:var(--red)">−</button>` : ""}</div>`).join("")}
+    ${F.slots.length < 4 ? `<div class="row"><button class="back" id="plus">＋ Farbe hinzufügen</button></div>` : ""}
+  </div>
+  <h2>Zweck</h2>${seg("zweck", [["deko","Deko/Figur"],["funktion","Funktionsteil"],["stabil","Sehr stabil"]])}
+  <h2>Qualität</h2>${seg("qualitaet", [["fein","Fein"],["standard","Standard"],["schnell","Schnell"]])}
+  <h2>Stützen</h2>${seg("stuetzen", [["aus","Keine"],["auto","Automatisch"],["baum","Baum"]])}
+  <h2>Auftrag für Claude</h2>
+  <div class="card"><pre class="prompt" id="pr"></pre></div>
+  <p class="hint">Kopieren und an Claude schicken – du bekommst die fertige .gcode-Datei zurück, sie erscheint danach auch unter „Aufträge“.</p>
+  <button class="btn" id="kop" style="margin-top:12px">Auftrag kopieren</button>
+  <a class="btn grey" id="oeffnen" target="_blank">In Claude öffnen</a>`;
+  const prompt = () => {
+    const sch = {kobrax:{fein:"0.12",standard:"0.20",schnell:"0.28"}, c5pro:{fein:"0.12",standard:"0.20",schnell:"0.24"}}[F.drucker][F.qualitaet];
+    const z = {deko:"Deko – 15 % Füllung", funktion:"Funktionsteil – 30 % Füllung, 4 Wände", stabil:"sehr stabil – 50 % Füllung, 5 Wände"}[F.zweck];
+    const st = {aus:"keine Stützen", auto:"Stützen automatisch", baum:"Baumstützen"}[F.stuetzen];
+    return `druckwerk: ${F.text || "…"}\n` + (F.link ? `Modell: ${F.link}\n` : "") +
+      `Drucker: ${d.name || F.drucker}\n` +
+      F.slots.map((s,i) => `${F.drucker==="kobrax"?"Spule":"Kopf"} ${i+1}: ${s.material} ${s.farbe}`).join("\n") +
+      `\nZweck: ${z}\nSchicht: ${sch} mm, ${st}`;
+  };
+  $("#pr").textContent = prompt();
+  $("#oeffnen").href = "https://claude.ai/new?q=" + encodeURIComponent(prompt());
+  app.querySelectorAll(".seg button").forEach(b => b.onclick = () => { F[b.dataset.k] = b.dataset.v; neu(); });
+  $("#txt").oninput = e => { F.text = e.target.value; $("#pr").textContent = prompt(); $("#oeffnen").href = "https://claude.ai/new?q=" + encodeURIComponent(prompt()); };
+  $("#lnk").oninput = e => { F.link = e.target.value; $("#pr").textContent = prompt(); };
+  app.querySelectorAll("[data-f]").forEach(e => e.onchange = () => { F.slots[e.dataset.f].farbe = e.value; neu(); });
+  app.querySelectorAll("[data-m]").forEach(e => e.onchange = () => { F.slots[e.dataset.m].material = e.value; neu(); });
+  app.querySelectorAll("[data-x]").forEach(e => e.onclick = () => { F.slots.splice(+e.dataset.x, 1); neu(); });
+  const p = $("#plus"); if (p) p.onclick = () => { F.slots.push({material:F.slots[0].material, farbe:""}); neu(); };
+  $("#kop").onclick = async () => { try { await navigator.clipboard.writeText(prompt()); toast("Kopiert"); } catch(e) { toast("Bitte markieren und kopieren"); } };
+}
+
+/* ---------- Drucker ---------- */
+function drucker(){
+  let h = `<h1>Drucker</h1>`;
+  for (const k of ["kobrax","c5pro"]) {
+    const d = DRUCKER[k]; if (!d) continue;
+    h += `<h2>${esc(d.name)}</h2><div class="card">
+      <div class="row"><div class="grow">Bauraum</div><span class="val">${d.bauraum_mm.join(" × ")} mm</span></div>
+      <div class="row"><div class="grow">Farben</div><span class="val">bis ${d.farben_max}</span></div>
+      <div class="row"><div class="grow">Schichthöhen</div><span class="val">${d.schichten.join(" · ")}</span></div>
+      <div class="row"><div class="grow small">${Object.keys(d.filamente).join(" · ")}</div></div>
+      ${d.hinweise.map(x => `<div class="row"><div class="grow small">${esc(x)}</div></div>`).join("")}
+    </div>`;
+  }
+  h += `<h2>Welcher Drucker?</h2><div class="card">
+    <div class="row"><div class="grow">Bunt, PLA/PETG/TPU</div><span class="badge b-kobrax">Kobra X</span></div>
+    <div class="row"><div class="grow">ABS/ASA, Hitze, draußen, Auto</div><span class="badge b-c5pro">C5 Pro</span></div>
+    <div class="row"><div class="grow">Zwei Materialien gemischt</div><span class="badge b-c5pro">C5 Pro</span></div>
+    <div class="row"><div class="grow">Wenig Abfall bei Farbwechsel</div><span class="badge b-c5pro">C5 Pro</span></div>
+  </div>`;
+  app.innerHTML = h;
+}
+
+/* ---------- USB-Anleitung ---------- */
+function hilfe(){
+  app.innerHTML = `<h1>Per USB drucken</h1>
+  <h2>iPhone</h2><div class="card"><ol class="steps">
+    <li>Auftrag öffnen → „.gcode laden“ → in „Dateien“ sichern.</li>
+    <li>USB-C-Stick (FAT32) anstecken, Datei in „Dateien“ auf den Stick bewegen.</li>
+    <li>Stick in den Drucker → Dateien/USB → Datei wählen.</li>
+  </ol></div>
+  <h2>Vor dem Start</h2><div class="card"><ol class="steps">
+    <li>Druckplatte sauber und leer.</li>
+    <li>Spulen/Köpfe wie im Auftrag angegeben bestücken.</li>
+    <li>Creator 5 Pro bei ABS/ASA: Deckel zu, Kammer heizt selbst.</li>
+    <li>Erste Schicht kurz beobachten.</li>
+  </ol></div>
+  <p class="hint">Später geplant: Senden direkt über WLAN, ohne Stick.</p>`;
+}
+
+laden();
+</script>
+</body>
+</html>

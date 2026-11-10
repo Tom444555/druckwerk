@@ -60,6 +60,18 @@ def nach_stl(pfad: Path, ziel: Path) -> Path:
     return pfad
 
 
+def index_neu(ordner: Path):
+    """auftraege/index.json – Liste aller Aufträge, neueste zuerst (für die App)."""
+    liste = []
+    for f in ordner.glob("*/auftrag.json"):
+        try:
+            liste.append(json.loads(f.read_text(encoding="utf-8")))
+        except Exception:
+            pass
+    liste.sort(key=lambda x: (x.get("datum", ""), x.get("ordner", "")), reverse=True)
+    (ordner / "index.json").write_text(json.dumps(liste, ensure_ascii=False, indent=1), encoding="utf-8")
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--drucker", required=True, help="kobrax | c5pro")
@@ -234,6 +246,16 @@ def main():
         zeilen += ["", "> ⚠ Unterschiedliche Materialien in einem Druck "
                    f"({', '.join(sorted(set(belegt.values())))}) – Haftung zwischen den Materialien "
                    "und Temperaturen prüfen."]
+    # Daten für die App
+    info = {"name": a.name, "drucker": cfg["kurz"], "drucker_name": cfg["name"], "datum": datum,
+            "ordner": ziel.name, "gcode": gname, "zeit": zeit, "gramm": gramm, "meter": meter,
+            "duese": duese, "bett": bett, "schicht": a.schicht, "stufe": a.stufe, "infill": a.infill,
+            "waende": a.waende, "stuetzen": a.stuetzen, "brim": a.brim, "gemischt": gemischt,
+            "slots": [{"slot": s_, "material": belegt[s_],
+                       "farbe": farben[s_ - 1] if s_ - 1 < len(farben) else ""} for s_ in range(1, slots + 1)],
+            "teile": [{"datei": Path(st).name, "slot": t[2]} for t, st in zip(teile, stls)]}
+    (ziel / "auftrag.json").write_text(json.dumps(info, ensure_ascii=False, indent=1), encoding="utf-8")
+    index_neu(ziel.parent)
     (ziel / "BERICHT.md").write_text("\n".join(zeilen) + "\n", encoding="utf-8")
     shutil.rmtree(tmp, ignore_errors=True)
     print(f"OK  {ziel/gname}\n    Zeit {zeit} | {gramm} g")
