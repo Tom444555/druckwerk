@@ -1,0 +1,55 @@
+{
+ "name": "staender_note",
+ "drucker": "kobrax",
+ "drucker_name": "Anycubic Kobra X",
+ "datum": "2026-11-11",
+ "ordner": "2026-11-11_staender_note_kobrax",
+ "gcode": "staender_note_kobrax.gcode",
+ "zeit": "1h 58m 2s",
+ "gramm": "36.33, 1.38",
+ "meter": "12.18 m, 0.46 m",
+ "duese": "205,205",
+ "bett": "60,60",
+ "schicht": "0.16",
+ "stufe": "Standard",
+ "infill": 40,
+ "waende": 4,
+ "stuetzen": "auto",
+ "brim": "an",
+ "gemischt": false,
+ "slots": [
+  {
+   "slot": 1,
+   "material": "PLA",
+   "farbe": "schwarz"
+  },
+  {
+   "slot": 2,
+   "material": "PLA",
+   "farbe": "gold"
+  }
+ ],
+ "teile": [
+  {
+   "datei": "staender_note_schwarz.stl",
+   "slot": 1
+  },
+  {
+   "datei": "staender_note_gold.stl",
+   "slot": 2
+  }
+ ],
+ "quelle": "",
+ "teile_app": [
+  {
+   "datei": "staender_note_schwarz.stl",
+   "slot": 1
+  },
+  {
+   "datei": "staender_note_gold.stl",
+   "slot": 2
+  }
+ ],
+ "vorschau": "vorschau.png",
+ "projekt": "staender_note_kobrax.3mf"
+}

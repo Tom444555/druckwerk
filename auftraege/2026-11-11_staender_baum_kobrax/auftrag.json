@@ -1,0 +1,55 @@
+{
+ "name": "staender_baum",
+ "drucker": "kobrax",
+ "drucker_name": "Anycubic Kobra X",
+ "datum": "2026-11-11",
+ "ordner": "2026-11-11_staender_baum_kobrax",
+ "gcode": "staender_baum_kobrax.gcode",
+ "zeit": "3h 7m 40s",
+ "gramm": "31.19, 20.68",
+ "meter": "10.46 m, 6.93 m",
+ "duese": "205,205",
+ "bett": "60,60",
+ "schicht": "0.16",
+ "stufe": "Standard",
+ "infill": 40,
+ "waende": 4,
+ "stuetzen": "auto",
+ "brim": "an",
+ "gemischt": false,
+ "slots": [
+  {
+   "slot": 1,
+   "material": "PLA",
+   "farbe": "schwarz"
+  },
+  {
+   "slot": 2,
+   "material": "PLA",
+   "farbe": "gold"
+  }
+ ],
+ "teile": [
+  {
+   "datei": "staender_baum_schwarz.stl",
+   "slot": 1
+  },
+  {
+   "datei": "staender_baum_gold.stl",
+   "slot": 2
+  }
+ ],
+ "quelle": "",
+ "teile_app": [
+  {
+   "datei": "staender_baum_schwarz.stl",
+   "slot": 1
+  },
+  {
+   "datei": "staender_baum_gold.stl",
+   "slot": 2
+  }
+ ],
+ "vorschau": "vorschau.png",
+ "projekt": "staender_baum_kobrax.3mf"
+}
