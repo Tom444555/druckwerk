@@ -5,11 +5,11 @@
  "datum": "2026-11-11",
  "ordner": "2026-11-11_staender_baum_kobrax",
  "gcode": "staender_baum_kobrax.gcode",
- "zeit": "6h 41m 34s",
- "gramm": "33.62, 29.64, 1.99",
- "meter": "11.27 m, 9.94 m, 0.67 m",
- "duese": "205,205,205",
- "bett": "60,60,60",
+ "zeit": "6h 9m 29s",
+ "gramm": "28.56, 19.71, 6.95, 3.25",
+ "meter": "9.58 m, 6.61 m, 2.33 m, 1.09 m",
+ "duese": "205,205,205,205",
+ "bett": "60,60,60,60",
  "schicht": "0.12",
  "stufe": "Standard",
  "infill": 40,
@@ -26,12 +26,17 @@
   {
    "slot": 2,
    "material": "PLA",
-   "farbe": "gold"
+   "farbe": "holz"
   },
   {
    "slot": 3,
    "material": "PLA",
-   "farbe": "silber"
+   "farbe": "grün"
+  },
+  {
+   "slot": 4,
+   "material": "PLA",
+   "farbe": "gold"
   }
  ],
  "teile": [
@@ -40,12 +45,16 @@
    "slot": 1
   },
   {
-   "datei": "staender_baum_gold.stl",
+   "datei": "staender_baum_holz.stl",
    "slot": 2
   },
   {
    "datei": "staender_baum_blatt.stl",
    "slot": 3
+  },
+  {
+   "datei": "staender_baum_gold.stl",
+   "slot": 4
   }
  ],
  "quelle": "",
@@ -55,12 +64,16 @@
    "slot": 1
   },
   {
-   "datei": "staender_baum_gold.stl",
+   "datei": "staender_baum_holz.app.stl",
    "slot": 2
   },
   {
-   "datei": "staender_baum_blatt.stl",
+   "datei": "staender_baum_blatt.app.stl",
    "slot": 3
+  },
+  {
+   "datei": "staender_baum_gold.stl",
+   "slot": 4
   }
  ],
  "vorschau": "vorschau.png",
