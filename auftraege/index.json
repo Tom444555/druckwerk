@@ -81,6 +81,61 @@
   "projekt": "stratocaster_kobrax.3mf"
  },
  {
+  "name": "staender_schleife",
+  "drucker": "kobrax",
+  "drucker_name": "Anycubic Kobra X",
+  "datum": "2026-11-11",
+  "ordner": "2026-11-11_staender_schleife_kobrax",
+  "gcode": "staender_schleife_kobrax.gcode",
+  "zeit": "2h 26m 45s",
+  "gramm": "31.08, 9.77",
+  "meter": "10.42 m, 3.28 m",
+  "duese": "205,205",
+  "bett": "60,60",
+  "schicht": "0.16",
+  "stufe": "Standard",
+  "infill": 40,
+  "waende": 4,
+  "stuetzen": "auto",
+  "brim": "an",
+  "gemischt": false,
+  "slots": [
+   {
+    "slot": 1,
+    "material": "PLA",
+    "farbe": "schwarz"
+   },
+   {
+    "slot": 2,
+    "material": "PLA",
+    "farbe": "gold"
+   }
+  ],
+  "teile": [
+   {
+    "datei": "staender_schleife_schwarz.stl",
+    "slot": 1
+   },
+   {
+    "datei": "staender_schleife_gold.stl",
+    "slot": 2
+   }
+  ],
+  "quelle": "",
+  "teile_app": [
+   {
+    "datei": "staender_schleife_schwarz.stl",
+    "slot": 1
+   },
+   {
+    "datei": "staender_schleife_gold.stl",
+    "slot": 2
+   }
+  ],
+  "vorschau": "vorschau.png",
+  "projekt": "staender_schleife_kobrax.3mf"
+ },
+ {
   "name": "gitarrenstaender",
   "drucker": "kobrax",
   "drucker_name": "Anycubic Kobra X",
