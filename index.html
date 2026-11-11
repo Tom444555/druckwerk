@@ -77,12 +77,32 @@ nav button.on{color:var(--blue)}
   padding:10px 18px;border-radius:20px;font-size:15px;opacity:0;transition:.3s;pointer-events:none}
 .toast.show{opacity:1}
 ol.steps{margin:0;padding:6px 16px 10px 38px}ol.steps li{padding:6px 0}
+.mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.mk{background:var(--card);border-radius:12px;overflow:hidden;cursor:pointer}
+.mk .mb{aspect-ratio:4/3;background:var(--fill)}.mk .mb img{width:100%;height:100%;object-fit:cover;display:block}
+.mk .mt{padding:9px 11px 11px}.mk .mt b{display:block;font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mk .dots{margin-top:6px}
+#wview{height:min(40vh,340px);background:var(--card);border-radius:12px;position:sticky;top:calc(env(safe-area-inset-top) + 6px);z-index:5;overflow:hidden;box-shadow:0 6px 14px rgba(0,0,0,.12)}
+#wview .small{position:absolute;bottom:8px;left:12px;z-index:2;pointer-events:none}
+.wrow{display:flex;gap:8px;margin-top:10px}
+.wb{flex:1;border:0;border-radius:10px;padding:11px 6px;background:var(--card);color:var(--blue);font:600 15px -apple-system,sans-serif;cursor:pointer}
+.wb:disabled{opacity:.35}.wb.an{background:var(--blue);color:#fff}.wb.klein{flex:none;padding:7px 12px;background:var(--fill)}
+input.zahl{width:84px;text-align:right;background:var(--fill);border-radius:8px;padding:6px 8px}
+.seg.mini{flex:none}.seg.mini button{padding:5px 9px}
+.tname{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:15px}
+.spule{border:0;background:none;color:var(--text);font:500 12px -apple-system,sans-serif;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer}
+.spule span{width:40px;height:40px;border-radius:50%;border:.5px solid var(--sep);display:block}
+.palette{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.palette button{border:0;background:none;color:var(--text);font:500 11px -apple-system,sans-serif;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer}
+.palette span{width:38px;height:38px;border-radius:50%;border:.5px solid var(--sep);display:block}
+.sheet>div{max-height:86vh;overflow:auto}
 </style>
 </head>
 <body>
 <main id="app"></main>
 
 <nav>
+  <button data-tab="bibliothek"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1.5"/></svg>Bibliothek</button>
   <button data-tab="auftraege" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7l8-4 8 4-8 4-8-4z"/><path d="M4 7v10l8 4 8-4V7"/><path d="M12 11v10"/></svg>Aufträge</button>
   <button data-tab="neu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>Neu</button>
   <button data-tab="drucker"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M4 8h16M9 13h6M12 8v5"/></svg>Drucker</button>
@@ -109,7 +129,7 @@ let tab = "auftraege";
 // Farbnamen -> Farbe (für Punkte und 3D-Vorschau)
 const FARBEN = {weiss:"#f5f5f5",weiß:"#f5f5f5",schwarz:"#222",rot:"#e0352b",blau:"#2563eb",gruen:"#22a447",grün:"#22a447",
   gelb:"#f5c518",orange:"#f97316",grau:"#8e8e93",silber:"#c0c0c0",gold:"#d4a017",lila:"#8b5cf6",violett:"#8b5cf6",
-  pink:"#ec4899",rosa:"#f9a8d4",braun:"#8b5a2b",tuerkis:"#14b8a6",türkis:"#14b8a6",natur:"#efe6d2",transparent:"#cfe8ff"};
+  pink:"#ec4899",rosa:"#f9a8d4",braun:"#8b5a2b",tuerkis:"#14b8a6",türkis:"#14b8a6",natur:"#efe6d2",creme:"#f3e9c6",holz:"#b98a4e",transparent:"#cfe8ff"};
 const farbe = n => FARBEN[(n||"").toLowerCase().trim()] || (/^#/.test(n||"") ? n : "#9a9aa0");
 const uniq = v => [...new Set(String(v ?? "").split(","))].join(" / ");
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -142,8 +162,10 @@ function hinzufuegen(liste){
 }
 
 function zeige(){
-  document.querySelectorAll("nav button").forEach(b => b.classList.toggle("on", b.dataset.tab === tab.split(":")[0]));
+  const haupt = {auftrag:"auftraege", werkstatt:"bibliothek"}[tab.split(":")[0]] || tab.split(":")[0];
+  document.querySelectorAll("nav button").forEach(b => b.classList.toggle("on", b.dataset.tab === haupt));
   window.scrollTo(0,0);
+  if (tab === "bibliothek" || tab.startsWith("werkstatt:")) return werkstattTab();
   if (tab === "auftraege") listeAuftraege();
   else if (tab.startsWith("auftrag:")) detail(tab.slice(8));
   else if (tab === "neu") neu();
@@ -151,6 +173,18 @@ function zeige(){
   else hilfe();
 }
 document.querySelectorAll("nav button").forEach(b => b.onclick = () => { tab = b.dataset.tab; zeige(); });
+
+/* ---------- Bibliothek & Werkstatt (werkstatt.js) ---------- */
+async function werkstattTab(){
+  const meinTab = tab;
+  if (!app.querySelector("#wview")) app.innerHTML = `<h1>${tab === "bibliothek" ? "Bibliothek" : "Werkstatt"}</h1><div class="empty">Wird geladen …</div>`;
+  try {
+    const W = await import("./werkstatt.js");
+    if (tab !== meinTab) return;
+    const ctx = {LAGER, FARBEN, farbe, esc, toast, sheet, go: t => { tab = t; zeige(); }};
+    if (tab === "bibliothek") await W.bibliothek(app, ctx); else await W.werkstatt(app, ctx, tab.slice(10));
+  } catch(e) { console.error(e); app.innerHTML = `<h1>Bibliothek</h1><div class="empty">Konnte nicht geladen werden – Internet prüfen.</div>`; }
+}
 
 /* ---------- Aufträge ---------- */
 const summeGramm = a => String(a.gramm).split(",").reduce((s,x) => s + (parseFloat(x)||0), 0);
@@ -217,6 +251,7 @@ function detail(ordner){
   </div>
   <h2>Datei für den USB-Stick</h2>
   <a class="btn" href="${pfad}${encodeURIComponent(a.gcode)}" download="${esc(a.gcode)}">${esc(a.gcode)} laden</a>
+  <button class="btn grey" id="inWerk">In der Werkstatt umbauen</button>
   ${a.projekt ? `<a class="btn grey" href="${pfad}${encodeURIComponent(a.projekt)}" download="${esc(a.projekt)}">3MF-Projekt laden (für Anycubic Slicer / OrcaSlicer)</a>` : ""}
   <a class="btn grey" href="${pfad}BERICHT.md" target="_blank">Bericht öffnen</a>
   ${a.quelle ? `<a class="btn grey" href="${esc(a.quelle)}" target="_blank" rel="noopener">Original auf ${esc(quellName(a.quelle))} öffnen</a>` : ""}
@@ -225,6 +260,7 @@ function detail(ordner){
   <button class="btn rot" id="loeschen">Auftrag löschen</button>
   <div style="height:20px"></div>`;
   $("#zur").onclick = () => { tab = "auftraege"; zeige(); };
+  $("#inWerk").onclick = () => { tab = "werkstatt:l:" + a.ordner; zeige(); };
   $("#loeschen").onclick = () => loeschenFragen(a);
   vorschau(pfad, a);
 }

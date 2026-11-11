@@ -43,6 +43,20 @@ Hat Tom keinen Drucker genannt: **kurz fragen** (eine Frage, mit Empfehlung). Ni
 - Original-Modell verlinken: `--quelle <URL>` (MakerWorld, Printables …) → Knopf „Original auf … öffnen“ im Auftrag.
 - Nach Änderung an index.html: lokal mit Playwright (390×844) prüfen, dann pushen.
 
+## Bibliothek & Werkstatt (werkstatt.js, seit 11.11.2026)
+- Tab **Bibliothek**: alle Modelle aus `auftraege/index.json` (je Name einmal) + „Meine Modelle“ (IndexedDB `druckwerk/modelle`
+  auf dem Gerät; Import STL/3MF/OBJ). Tippen öffnet die **Werkstatt** (`werkstatt:l:<ordner>` bzw. `werkstatt:e:<id>`).
+- Werkstatt: skalieren (% oder mm, proportional/frei), drehen (X/Y/Z ±15/±90°), auf angetippte Fläche legen, spiegeln,
+  4 Spulenfarben, Teil → Spule, Teile aus-/entfernen, Rückgängig. Alle Änderungen werden direkt in die Geometrie gerechnet
+  und das Modell danach mittig auf die Platte gesetzt.
+- Export: 3MF (Teile als eine Baugruppe, Spule je Teil in `Metadata/model_settings.config` – in OrcaSlicer 2.5 getestet,
+  slict mehrfarbig), STL gesamt, STL einzeln (ZIP), OBJ+MTL (ZIP), GLB.
+- **Auftrag aus der Werkstatt** („An Claude zum Slicen schicken“): Prompt nennt Lager-Ordner, Änderungsliste und eine
+  3×4-Matrix (Zeilen mit ` | ` getrennt). Diese Matrix mit trimesh auf **alle** Original-STL des Ordners anwenden
+  (`mesh.apply_transform`, 4. Zeile 0 0 0 1; bei negativer Determinante dreht trimesh die Flächen selbst), dann normal slicen.
+  Bei eigenen Modellen hängt Tom die exportierte 3MF an.
+- Noch offen (Stufe 1b): schneiden, Teile zusammensetzen, Text aufprägen. Stufe 2: Slice-Knopf über GitHub Actions.
+
 ## Faustregeln Einstellungen
 - Deko/Figur: 0.16–0.20, Infill 10–15 %, Baumstützen bei Überhängen.
 - Funktionsteil/Halter: 0.20, Infill 25–40 %, `--waende 4`.
