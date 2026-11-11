@@ -1,0 +1,2 @@
+{"name":"probe","drucker":"kobrax","schicht":0.2,"infill":15,"stuetzen":"aus","brim":"auto","farben":["weiss","rot"],
+ "teile":[{"name":"test_wuerfel","aus":"auftraege/2026-11-10_testwuerfel_kobrax/test_wuerfel.stl","material":"PLA","slot":1},{"name":"test_buchstabe","aus":"auftraege/2026-11-10_testwuerfel_kobrax/test_buchstabe.stl","material":"PLA","slot":2}]}
