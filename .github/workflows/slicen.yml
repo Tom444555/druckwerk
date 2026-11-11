@@ -1,0 +1,39 @@
+name: Slicen
+# Startet, wenn die App einen Auftrag in eingang/<id>/auftrag.json ablegt.
+on:
+  push:
+    branches: [main]
+    paths: ['eingang/*/auftrag.json']
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: slicen
+  cancel-in-progress: false
+jobs:
+  slicen:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/cache@v4
+        with:
+          path: werkzeug/orca
+          key: orca-v2.5.0-a
+      - name: Pakete
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq --no-install-recommends openscad xvfb libwebkit2gtk-4.1-0 libgl1 libegl1 libgl1-mesa-dri libgstreamer-plugins-base1.0-0 python3-numpy
+      - name: Werkzeug
+        run: bash werkzeug/setup.sh
+      - name: Slicen
+        run: python3 werkzeug/eingang.py
+      - name: Ergebnis speichern
+        if: always()
+        run: |
+          git config user.name "druckwerk"
+          git config user.email "druckwerk@users.noreply.github.com"
+          git add -A auftraege eingang status
+          git diff --cached --quiet && exit 0
+          git commit -q -m "Slicen aus der App"
+          for i in 1 2 3; do git pull -q --rebase && git push -q && break; sleep 5; done
