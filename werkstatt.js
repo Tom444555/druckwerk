@@ -216,7 +216,7 @@ async function modellLaden(id, fortschritt){
     const ld = new STLLoader();
     for (const [i, t] of a.teile.entries()) {
       const g = await ld.loadAsync(`auftraege/${a.ordner}/${encodeURIComponent(t.datei)}`, ev => { if (ev.total) fortschritt(`Teil ${i+1}/${a.teile.length} · ${Math.round(100*ev.loaded/ev.total)} %`); });
-      m.teile.push({name: t.datei.replace(/\.stl$/i, ""), slot: Math.min(t.slot, 4), geo: sauber(g)});
+      m.teile.push({name: t.datei.replace(/\.stl$/i, ""), datei: t.datei, slot: Math.min(t.slot, 4), geo: sauber(g)});
     }
   } else {
     const e = await eigenesHolen(id.slice(2)); if (!e) throw new Error("nicht gefunden");
@@ -336,7 +336,8 @@ function ui(){
     </div>
 
     <h2>Speichern</h2>
-    <button class="btn" id="expo">Speichern / Exportieren …</button>
+    <button class="btn" id="slice">Slicen – Druckdatei erstellen</button>
+    <button class="btn grey" id="expo">Speichern / Exportieren …</button>
     <button class="btn grey" id="merken">In „Meine Modelle“ sichern</button>
     <button class="btn grey" id="claude">An Claude zum Slicen schicken</button>
     ${M.eigen ? `<button class="btn grey" id="weg" style="color:var(--red)">Aus „Meine Modelle“ löschen</button>` : ""}
@@ -366,6 +367,7 @@ function ui(){
   u.querySelectorAll("[data-auge]").forEach(b => b.onclick = () => { const t = M.teile[+b.dataset.auge]; t.aus = !t.aus; t.mesh.visible = !t.aus; neu(); });
   u.querySelectorAll("[data-del]").forEach(b => b.onclick = () => { const t = M.teile[+b.dataset.del]; t.weg = true; t.mesh.visible = false; M.ops.push(`Teil „${t.name}“ entfernt`); M.undo.push(new THREE.Matrix4()); setzen(new THREE.Matrix4()); neu(); });
   $("#expo").onclick = exportWahl;
+  $("#slice").onclick = sliceWahl;
   $("#merken").onclick = merken;
   $("#claude").onclick = anClaude;
   const w = $("#weg"); if (w) w.onclick = async () => { await eigenesLoeschen(M.eigen.id); C.toast("Gelöscht"); C.go("bibliothek"); };
@@ -430,6 +432,144 @@ function anClaude(){
     ${M.lager ? "" : `<p>Erst als 3MF speichern und im Chat anhängen.</p>`}
     <button class="btn" id="cKop">Kopieren</button><a class="btn grey" target="_blank" href="https://claude.ai/new?q=${encodeURIComponent(p)}">In Claude öffnen</a>`);
   d.querySelector("#cKop").onclick = async () => { try { await navigator.clipboard.writeText(p); C.toast("Kopiert"); } catch (e) { C.toast("Bitte markieren und kopieren"); } };
+}
+
+/* ---------- Slicen über GitHub (Actions) ---------- */
+const REPO = "Tom444555/druckwerk", TOK = "druckwerk_token", SL = "druckwerk_slice", OFFEN = "druckwerk_laeuft";
+const ls = { get: k => { try { return localStorage.getItem(k); } catch (e) { return null; } },
+  set: (k, v) => { try { v == null ? localStorage.removeItem(k) : localStorage.setItem(k, v); } catch (e) {} } };
+async function gh(pfad, opt = {}){
+  return fetch(`https://api.github.com/repos/${REPO}${pfad}`, {...opt, cache: "no-store",
+    headers: {Authorization: "Bearer " + ls.get(TOK), Accept: opt.roh ? "application/vnd.github.raw+json" : "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28"}});
+}
+function b64(buf){ const u = new Uint8Array(buf); let s = ""; for (let i = 0; i < u.length; i += 32768) s += String.fromCharCode.apply(null, u.subarray(i, i + 32768)); return btoa(s); }
+const ablegen = async (pfad, inhalt, text) => { const r = await gh("/contents/" + pfad, {method: "PUT", body: JSON.stringify({message: text, content: inhalt})});
+  if (!r.ok) throw new Error("Hochladen fehlgeschlagen (" + r.status + ")"); };
+
+const VOREIN = { deko: {schicht: "0.20", infill: 15, waende: 2, decke: 4, muster: "gyroid"}, funktion: {schicht: "0.20", infill: 30, waende: 4, decke: 5, muster: "gyroid"},
+  stabil: {schicht: "0.20", infill: 50, waende: 5, decke: 6, muster: "cubic"}, fein: {schicht: "0.12", infill: 15, waende: 3, decke: 6, muster: "gyroid"} };
+function sliceWahl(){
+  let E = {vor: "deko", ...VOREIN.deko, stuetzen: "auto", brim: "auto", naht: "aligned", glaetten: false, mat: ["PLA","PLA","PLA","PLA"]};
+  try { E = {...E, ...JSON.parse(ls.get(SL) || "{}")}; } catch (e) {}
+  if (M.material) M.material.forEach((m, i) => { if (m) E.mat[i] = m; });
+  const mats = Object.keys(((C.DRUCKER || {}).kobrax || {}).filamente || {PLA: 1});
+  const benutzt = [...new Set(M.teile.filter(t => !t.weg).map(t => t.slot))].sort();
+  const d = C.sheet(""), box = d.firstElementChild;
+  const opt = (liste, akt) => liste.map(([v, l]) => `<option value="${v}" ${String(v) === String(akt) ? "selected" : ""}>${l}</option>`).join("");
+  const seg = (k, liste) => `<div class="seg">${liste.map(([v, l]) => `<button data-k="${k}" data-v="${v}" class="${E[k] === v ? "on" : ""}">${l}</button>`).join("")}</div>`;
+  const mal = () => {
+    const y = box.scrollTop;
+    box.innerHTML = `<h3>„${C.esc(M.name)}“ slicen</h3><p>Anycubic Kobra X · fertige Datei für den USB-Stick</p>
+    <h2>Voreinstellung</h2>${seg("vor", [["deko","Deko"],["fein","Fein"],["funktion","Funktion"],["stabil","Stabil"]])}
+    <h2>Qualität &amp; Festigkeit</h2><div class="card">
+      <div class="row"><div class="grow">Schichthöhe</div><select data-e="schicht">${opt(["0.08","0.12","0.16","0.20","0.24","0.28"].map(v => [v, v + " mm"]), E.schicht)}</select></div>
+      <div class="row"><div class="grow">Wände</div><select data-e="waende">${opt([2,3,4,5,6,8].map(v => [v, v]), E.waende)}</select></div>
+      <div class="row"><div class="grow">Füllung</div><input type="range" min="0" max="100" step="5" value="${E.infill}" data-e="infill"><span class="val" id="sInf">${E.infill} %</span></div>
+      <div class="row"><div class="grow">Füllmuster</div><select data-e="muster">${opt([["gyroid","Gyroid"],["grid","Gitter"],["cubic","Würfel"],["honeycomb","Waben"],["triangles","Dreiecke"],["line","Linien"]], E.muster)}</select></div>
+      <div class="row"><div class="grow">Deck- / Bodenschichten</div><select data-e="decke">${opt([3,4,5,6,8].map(v => [v, v]), E.decke)}</select></div>
+    </div>
+    <h2>Stützen</h2>${seg("stuetzen", [["aus","Keine"],["auto","Automatisch"],["baum","Baum"]])}
+    <h2>Brim (Haftrand)</h2>${seg("brim", [["aus","Aus"],["auto","Automatisch"],["an","An"]])}
+    <h2>Oberfläche</h2><div class="card">
+      <div class="row"><div class="grow">Naht</div><select data-e="naht">${opt([["aligned","Ausgerichtet"],["back","Hinten"],["nearest","Nächste"],["random","Zufällig"]], E.naht)}</select></div>
+      <div class="row"><div class="grow">Oberseite glätten (Bügeln)</div><input type="checkbox" data-e="glaetten" ${E.glaetten ? "checked" : ""}></div>
+    </div>
+    <h2>Material je Spule</h2><div class="card">${benutzt.map(n => `
+      <div class="row"><span class="dot" style="background:${M.slots[n-1]};width:22px;height:22px"></span><div class="grow">Spule ${n} · ${C.esc(farbName(M.slots[n-1]))}</div>
+        <select data-mat="${n-1}">${opt(mats.map(m => [m, m]), E.mat[n-1])}</select></div>`).join("")}</div>
+    <button class="btn" id="sLos" style="margin-top:16px">Jetzt slicen</button>
+    <button class="btn grey" id="sZu">Abbrechen</button>
+    ${ls.get(TOK) ? `<p class="hint" style="text-align:center"><a href="#" id="sTok" style="color:var(--sub)">GitHub-Zugang auf diesem Gerät entfernen</a></p>` : ""}`;
+    box.scrollTop = y;
+    box.querySelectorAll(".seg button").forEach(b => b.onclick = () => { E[b.dataset.k] = b.dataset.v; if (b.dataset.k === "vor") Object.assign(E, VOREIN[E.vor]); mal(); });
+    box.querySelectorAll("[data-e]").forEach(e => { const k = e.dataset.e;
+      if (e.type === "range") e.oninput = () => { E[k] = +e.value; box.querySelector("#sInf").textContent = e.value + " %"; };
+      else e.onchange = () => { E[k] = e.type === "checkbox" ? e.checked : (isNaN(+e.value) || k === "schicht" ? e.value : +e.value); }; });
+    box.querySelectorAll("[data-mat]").forEach(e => e.onchange = () => { E.mat[+e.dataset.mat] = e.value; });
+    box.querySelector("#sZu").onclick = () => d.remove();
+    const t = box.querySelector("#sTok"); if (t) t.onclick = ev => { ev.preventDefault(); ls.set(TOK, null); C.toast("Zugang entfernt"); mal(); };
+    box.querySelector("#sLos").onclick = () => { ls.set(SL, JSON.stringify(E)); d.remove(); ls.get(TOK) ? sliceStart(E) : zugang(() => sliceStart(E)); };
+  };
+  mal();
+}
+
+function zugang(weiter){
+  const d = C.sheet(`<h3>Einmalig: GitHub-Zugang</h3><p>Damit die App Slice-Aufträge in dein Lager legen darf.</p>
+    <ol><li><a href="https://github.com/settings/personal-access-tokens/new" target="_blank" style="color:var(--blue)">Diese GitHub-Seite öffnen</a> (anmelden)</li>
+    <li>Name: <b>druckwerk</b>, Ablauf: z. B. 1 Jahr</li>
+    <li>„Only select repositories“ → <b>druckwerk</b></li>
+    <li>Permissions → Repository → <b>Contents: Read and write</b></li>
+    <li>„Generate token“ → Token kopieren und hier einfügen</li></ol>
+    <input type="text" id="zTok" placeholder="github_pat_…" autocomplete="off" autocapitalize="off" style="width:100%">
+    <button class="btn" id="zOk">Speichern</button><button class="btn grey" id="zZu">Abbrechen</button>
+    <p style="margin-top:10px">Der Zugang bleibt nur auf diesem Gerät gespeichert.</p>`);
+  d.querySelector("#zZu").onclick = () => d.remove();
+  d.querySelector("#zOk").onclick = async () => {
+    const t = d.querySelector("#zTok").value.trim(); if (!t) return;
+    ls.set(TOK, t); const b = d.querySelector("#zOk"); b.textContent = "Wird geprüft …";
+    try { const r = await gh(""); const j = r.ok ? await r.json() : null;
+      if (!j || !j.permissions || !j.permissions.push) throw new Error("x");
+      d.remove(); C.toast("Zugang gespeichert"); weiter();
+    } catch (e) { ls.set(TOK, null); b.textContent = "Speichern"; C.toast("Token passt nicht – Contents: Read and write?"); }
+  };
+}
+
+async function sliceStart(E){
+  const teile = M.teile.filter(t => !t.weg), id = "a" + Date.now().toString(36);
+  const d = C.sheet(`<h3>Slicen läuft</h3><p id="slText">Auftrag wird vorbereitet …</p><div class="balken"><i id="slBalken"></i></div>
+    <p class="small" style="margin-top:10px">Dauert meist 1–3 Minuten. Du kannst die App offen lassen oder später wiederkommen.</p>
+    <button class="btn grey" id="slZu">Im Hintergrund weiter</button>`);
+  d.onclick = null; d.querySelector("#slZu").onclick = () => d.remove();
+  const sag = (t, p) => { const e = d.querySelector("#slText"); if (e) { e.textContent = t; d.querySelector("#slBalken").style.width = p + "%"; } };
+  try {
+    const max = Math.max(...teile.map(t => t.slot));
+    const job = { name: M.name.replace(/\s*\(bearbeitet\)$/, ""), drucker: "kobrax", schicht: +E.schicht, infill: E.infill, waende: E.waende, stuetzen: E.stuetzen, brim: E.brim,
+      extra: {sparse_infill_pattern: E.muster, top_shell_layers: E.decke, bottom_shell_layers: E.decke, seam_position: E.naht, ironing_type: E.glaetten ? "top" : "no ironing"},
+      farben: M.slots.slice(0, max).map(farbName), quelle: (M.lager && M.lager.quelle) || "", teile: [] };
+    if (M.lager && teile.every(t => t.datei)) {            // Dateien liegen schon im Lager -> nur die Änderung schicken
+      const e = M.kum.elements; job.matrix = [0,1,2].flatMap(r => [0,1,2,3].map(c => e[c*4+r]));
+      job.teile = teile.map(t => ({name: t.name, aus: `auftraege/${M.lager.ordner}/${t.datei}`, material: E.mat[t.slot-1], slot: t.slot}));
+    } else {
+      for (const [i, t] of teile.entries()) {
+        sag(`Teil ${i+1} von ${teile.length} wird hochgeladen …`, 5 + 40 * i / teile.length);
+        await ablegen(`eingang/${id}/${i+1}.stl`, b64(stlBinaer([t.geo])), `App: Teil ${i+1} für ${job.name}`);
+        job.teile.push({name: t.name, stl: `${i+1}.stl`, material: E.mat[t.slot-1], slot: t.slot});
+      }
+    }
+    sag("Auftrag wird abgeschickt …", 48);
+    await ablegen(`eingang/${id}/auftrag.json`, btoa(unescape(encodeURIComponent(JSON.stringify(job)))), `App: ${job.name} slicen`);
+    ls.set(OFFEN, JSON.stringify({id, name: job.name, start: Date.now()}));
+    await warten(id, sag);
+    d.remove();
+  } catch (e) { console.error(e); sag("Fehler: " + (e.message || e), 0); const b = d.querySelector("#slZu"); if (b) b.textContent = "Schließen"; }
+}
+
+// wartet auf status/<id>.json (vom Slicer) und danach darauf, dass der Auftrag in der App sichtbar ist
+async function warten(id, sag){
+  const pause = ms => new Promise(r => setTimeout(r, ms));
+  let st = null;
+  for (let i = 0; i < 150 && !st; i++) {
+    sag(`Slicer arbeitet … (${Math.round(i * 8 / 60 * 10) / 10} Min.)`, Math.min(50 + i * 1.5, 88));
+    await pause(8000);
+    try { const r = await gh(`/contents/status/${id}.json`, {roh: true}); if (r.ok) st = await r.json(); } catch (e) {}
+  }
+  if (!st) throw new Error("Keine Antwort vom Slicer – später unter Aufträge nachsehen.");
+  ls.set(OFFEN, null);
+  if (!st.ok) throw new Error("Slicen fehlgeschlagen: " + String(st.fehler || "").split("\n").filter(Boolean).pop());
+  for (let i = 0; i < 40; i++) {
+    sag("Fertig – Auftrag wird in die App übernommen …", 94);
+    try { const l = await (await fetch("auftraege/index.json?t=" + Date.now(), {cache: "no-store"})).json();
+      if (l.some(a => a.ordner === st.ordner)) { C.fertig(st.ordner, l); return; } } catch (e) {}
+    await pause(6000);
+  }
+  throw new Error("Fertig gesliced – erscheint gleich unter „Aus dem Lager hinzufügen“.");
+}
+// beim App-Start: läuft noch ein Auftrag von vorhin?
+export async function offenePruefen(ctx){
+  C = ctx; let o = null; try { o = JSON.parse(ls.get(OFFEN) || "null"); } catch (e) {}
+  if (!o || !ls.get(TOK)) return;
+  if (Date.now() - o.start > 3600e3) return ls.set(OFFEN, null);
+  try { await warten(o.id, () => {}); } catch (e) { C.toast(String(e.message || e).slice(0, 80)); }
 }
 
 // nur für Tests

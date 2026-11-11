@@ -55,7 +55,14 @@ Hat Tom keinen Drucker genannt: **kurz fragen** (eine Frage, mit Empfehlung). Ni
   3×4-Matrix (Zeilen mit ` | ` getrennt). Diese Matrix mit trimesh auf **alle** Original-STL des Ordners anwenden
   (`mesh.apply_transform`, 4. Zeile 0 0 0 1; bei negativer Determinante dreht trimesh die Flächen selbst), dann normal slicen.
   Bei eigenen Modellen hängt Tom die exportierte 3MF an.
-- Noch offen (Stufe 1b): schneiden, Teile zusammensetzen, Text aufprägen. Stufe 2: Slice-Knopf über GitHub Actions.
+- **Slicen aus der App (Stufe 2, seit 11.11.2026):** Werkstatt → „Slicen“ → Einstellungen (Voreinstellung, Schicht, Wände,
+  Füllung/Muster, Deck-/Bodenschichten, Stützen, Brim, Naht, Bügeln, Material je Spule) → App legt per GitHub-API
+  `eingang/<id>/auftrag.json` ab (Lager-Modelle: nur Pfade + Matrix; eigene: STL-Teile dazu). Workflow
+  `.github/workflows/slicen.yml` startet `werkzeug/eingang.py` → `druck.py` → Ergebnis in `auftraege/`, Rückmeldung in
+  `status/<id>.json`, App übernimmt den Auftrag automatisch (~1–3 Min.). Token (Fine-grained, Contents RW) liegt nur
+  im Gerät (localStorage `druckwerk_token`). Erlaubte Extra-Schlüssel stehen in `EXTRA_OK` (eingang.py) – dort erweitern.
+- Schichtvorschau: `schichten.js` (Knopf „Schichten ansehen“ im Auftrag) liest die .gcode und zeichnet jede Schicht.
+- Noch offen: 1b schneiden/zusammensetzen/Text · 3 Filamentlager + Druckprotokoll · 4 „Mit Claude bauen“.
 
 ## Faustregeln Einstellungen
 - Deko/Figur: 0.16–0.20, Infill 10–15 %, Baumstützen bei Überhängen.

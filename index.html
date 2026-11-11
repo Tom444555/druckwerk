@@ -96,6 +96,9 @@ input.zahl{width:84px;text-align:right;background:var(--fill);border-radius:8px;
 .palette button{border:0;background:none;color:var(--text);font:500 11px -apple-system,sans-serif;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer}
 .palette span{width:38px;height:38px;border-radius:50%;border:.5px solid var(--sep);display:block}
 .sheet>div{max-height:86vh;overflow:auto}
+.balken{height:6px;border-radius:3px;background:var(--fill);overflow:hidden}.balken i{display:block;height:100%;width:0;background:var(--blue);transition:width .6s}
+.sheet h2{margin:16px 4px 7px}.sheet select{font-size:16px}
+#sview{width:100%;aspect-ratio:1;background:#6b6b70;border-radius:12px;display:block}
 </style>
 </head>
 <body>
@@ -154,6 +157,7 @@ async function laden(){
   }
   meineSichern(AUFTRAEGE);
   zeige();
+  try { if (localStorage.getItem("druckwerk_laeuft")) (await import("./werkstatt.js")).offenePruefen(wctx()); } catch(e) {}
 }
 function hinzufuegen(liste){
   for (const a of liste) if (!AUFTRAEGE.some(x => x.ordner === a.ordner)) AUFTRAEGE.unshift(a);
@@ -175,13 +179,15 @@ function zeige(){
 document.querySelectorAll("nav button").forEach(b => b.onclick = () => { tab = b.dataset.tab; zeige(); });
 
 /* ---------- Bibliothek & Werkstatt (werkstatt.js) ---------- */
+const wctx = () => ({LAGER, DRUCKER, FARBEN, farbe, esc, toast, sheet, go: t => { tab = t; zeige(); },
+  fertig: (ordner, liste) => { LAGER = liste; hinzufuegen(LAGER.filter(a => a.ordner === ordner)); tab = "auftrag:" + ordner; zeige(); toast("Druckdatei ist fertig"); }});
 async function werkstattTab(){
   const meinTab = tab;
   if (!app.querySelector("#wview")) app.innerHTML = `<h1>${tab === "bibliothek" ? "Bibliothek" : "Werkstatt"}</h1><div class="empty">Wird geladen …</div>`;
   try {
     const W = await import("./werkstatt.js");
     if (tab !== meinTab) return;
-    const ctx = {LAGER, FARBEN, farbe, esc, toast, sheet, go: t => { tab = t; zeige(); }};
+    const ctx = wctx();
     if (tab === "bibliothek") await W.bibliothek(app, ctx); else await W.werkstatt(app, ctx, tab.slice(10));
   } catch(e) { console.error(e); app.innerHTML = `<h1>Bibliothek</h1><div class="empty">Konnte nicht geladen werden – Internet prüfen.</div>`; }
 }
@@ -251,6 +257,7 @@ function detail(ordner){
   </div>
   <h2>Datei für den USB-Stick</h2>
   <a class="btn" href="${pfad}${encodeURIComponent(a.gcode)}" download="${esc(a.gcode)}">${esc(a.gcode)} laden</a>
+  <button class="btn grey" id="schichten">Schichten ansehen</button>
   <button class="btn grey" id="inWerk">In der Werkstatt umbauen</button>
   ${a.projekt ? `<a class="btn grey" href="${pfad}${encodeURIComponent(a.projekt)}" download="${esc(a.projekt)}">3MF-Projekt laden (für Anycubic Slicer / OrcaSlicer)</a>` : ""}
   <a class="btn grey" href="${pfad}BERICHT.md" target="_blank">Bericht öffnen</a>
@@ -261,6 +268,7 @@ function detail(ordner){
   <div style="height:20px"></div>`;
   $("#zur").onclick = () => { tab = "auftraege"; zeige(); };
   $("#inWerk").onclick = () => { tab = "werkstatt:l:" + a.ordner; zeige(); };
+  $("#schichten").onclick = async () => { try { (await import("./schichten.js")).zeigen(pfad + encodeURIComponent(a.gcode), a.slots.map(s => farbe(s.farbe)), sheet); } catch(e) { toast("Konnte nicht geladen werden"); } };
   $("#loeschen").onclick = () => loeschenFragen(a);
   vorschau(pfad, a);
 }
