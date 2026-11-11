@@ -217,6 +217,7 @@ function detail(ordner){
   </div>
   <h2>Datei für den USB-Stick</h2>
   <a class="btn" href="${pfad}${encodeURIComponent(a.gcode)}" download="${esc(a.gcode)}">${esc(a.gcode)} laden</a>
+  ${a.projekt ? `<a class="btn grey" href="${pfad}${encodeURIComponent(a.projekt)}" download="${esc(a.projekt)}">3MF-Projekt laden (für Anycubic Slicer / OrcaSlicer)</a>` : ""}
   <a class="btn grey" href="${pfad}BERICHT.md" target="_blank">Bericht öffnen</a>
   ${a.quelle ? `<a class="btn grey" href="${esc(a.quelle)}" target="_blank" rel="noopener">Original auf ${esc(quellName(a.quelle))} öffnen</a>` : ""}
   <p class="hint">Datei auf einen FAT32-USB-Stick kopieren → am Drucker unter USB auswählen → Platte frei? → Start.</p>

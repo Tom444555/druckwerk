@@ -2,7 +2,7 @@
  "name": "testwuerfel",
  "drucker": "c5pro",
  "drucker_name": "Flashforge Creator 5 Pro",
- "datum": "2026-11-10",
+ "datum": "2026-11-11",
  "ordner": "2026-11-10_testwuerfel_c5pro",
  "gcode": "testwuerfel_c5pro.gcode",
  "zeit": "22m 44s",
@@ -39,7 +39,7 @@
    "slot": 2
   }
  ],
- "vorschau": "vorschau.png",
+ "quelle": "",
  "teile_app": [
   {
    "datei": "test_wuerfel.stl",
@@ -49,5 +49,7 @@
    "datei": "test_buchstabe.stl",
    "slot": 2
   }
- ]
+ ],
+ "vorschau": "vorschau.png",
+ "projekt": "testwuerfel_c5pro.3mf"
 }

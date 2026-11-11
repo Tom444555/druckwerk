@@ -3,7 +3,7 @@
   "name": "vox_plektrumhalter",
   "drucker": "kobrax",
   "drucker_name": "Anycubic Kobra X",
-  "datum": "2026-11-10",
+  "datum": "2026-11-11",
   "ordner": "2026-11-10_vox_amp_kobrax",
   "gcode": "vox_amp_kobrax.gcode",
   "zeit": "4h 13m 37s",
@@ -50,7 +50,6 @@
    }
   ],
   "quelle": "https://makerworld.com/de/models/1485935-vox-guitar-pick-holder-9-picks",
-  "vorschau": "vorschau.png",
   "teile_app": [
    {
     "datei": "vox_amp_korpus.stl",
@@ -64,13 +63,15 @@
     "datei": "vox_amp_regler.stl",
     "slot": 2
    }
-  ]
+  ],
+  "vorschau": "vorschau.png",
+  "projekt": "vox_amp_kobrax.3mf"
  },
  {
   "name": "testwuerfel",
   "drucker": "kobrax",
   "drucker_name": "Anycubic Kobra X",
-  "datum": "2026-11-10",
+  "datum": "2026-11-11",
   "ordner": "2026-11-10_testwuerfel_kobrax",
   "gcode": "testwuerfel_kobrax.gcode",
   "zeit": "22m 3s",
@@ -107,7 +108,7 @@
     "slot": 2
    }
   ],
-  "vorschau": "vorschau.png",
+  "quelle": "",
   "teile_app": [
    {
     "datei": "test_wuerfel.stl",
@@ -117,13 +118,15 @@
     "datei": "test_buchstabe.stl",
     "slot": 2
    }
-  ]
+  ],
+  "vorschau": "vorschau.png",
+  "projekt": "testwuerfel_kobrax.3mf"
  },
  {
   "name": "testwuerfel",
   "drucker": "c5pro",
   "drucker_name": "Flashforge Creator 5 Pro",
-  "datum": "2026-11-10",
+  "datum": "2026-11-11",
   "ordner": "2026-11-10_testwuerfel_c5pro",
   "gcode": "testwuerfel_c5pro.gcode",
   "zeit": "22m 44s",
@@ -160,7 +163,7 @@
     "slot": 2
    }
   ],
-  "vorschau": "vorschau.png",
+  "quelle": "",
   "teile_app": [
    {
     "datei": "test_wuerfel.stl",
@@ -170,13 +173,15 @@
     "datei": "test_buchstabe.stl",
     "slot": 2
    }
-  ]
+  ],
+  "vorschau": "vorschau.png",
+  "projekt": "testwuerfel_c5pro.3mf"
  },
  {
   "name": "loopsmiths_amp",
   "drucker": "kobrax",
   "drucker_name": "Anycubic Kobra X",
-  "datum": "2026-11-10",
+  "datum": "2026-11-11",
   "ordner": "2026-11-10_loopsmiths_amp_kobrax",
   "gcode": "loopsmiths_amp_kobrax.gcode",
   "zeit": "10h 48m 26s",
@@ -232,7 +237,6 @@
    }
   ],
   "quelle": "",
-  "vorschau": "vorschau.png",
   "teile_app": [
    {
     "datei": "loopsmiths_amp_schwarz.app.stl",
@@ -250,6 +254,8 @@
     "datei": "loopsmiths_amp_gold.stl",
     "slot": 4
    }
-  ]
+  ],
+  "vorschau": "vorschau.png",
+  "projekt": "loopsmiths_amp_kobrax.3mf"
  }
 ]

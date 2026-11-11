@@ -1,10 +1,10 @@
-# Druckauftrag: vox_plektrumhalter (VOX-Verstärker, Halter für 9 Plektren)
+# Druckauftrag: vox_amp
 
 **Drucker:** Anycubic Kobra X  
 **Datei für USB:** `vox_amp_kobrax.gcode`  
 **Druckzeit (geschätzt):** 4h 13m 37s  
-**Original-Modell:** https://makerworld.com/de/models/1485935-vox-guitar-pick-holder-9-picks  
-**Filament:** 56.08, 0.82, 9.78 g (18.80 m, 0.27 m, 3.28 m)
+**Filament:** 56.08, 0.82, 9.78 g (18.80 m, 0.27 m, 3.28 m)  
+**Original-Modell:** https://makerworld.com/de/models/1485935-vox-guitar-pick-holder-9-picks
 
 ## Spulen / Köpfe einlegen
 

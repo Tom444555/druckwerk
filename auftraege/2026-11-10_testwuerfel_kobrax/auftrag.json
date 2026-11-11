@@ -2,7 +2,7 @@
  "name": "testwuerfel",
  "drucker": "kobrax",
  "drucker_name": "Anycubic Kobra X",
- "datum": "2026-11-10",
+ "datum": "2026-11-11",
  "ordner": "2026-11-10_testwuerfel_kobrax",
  "gcode": "testwuerfel_kobrax.gcode",
  "zeit": "22m 3s",
@@ -39,7 +39,7 @@
    "slot": 2
   }
  ],
- "vorschau": "vorschau.png",
+ "quelle": "",
  "teile_app": [
   {
    "datei": "test_wuerfel.stl",
@@ -49,5 +49,7 @@
    "datei": "test_buchstabe.stl",
    "slot": 2
   }
- ]
+ ],
+ "vorschau": "vorschau.png",
+ "projekt": "testwuerfel_kobrax.3mf"
 }

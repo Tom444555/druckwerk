@@ -180,6 +180,10 @@ def main():
         prozess["support_type"] = "tree(auto)" if a.stuetzen == "baum" else "normal(auto)"
     prozess["brim_type"] = {"aus": "no_brim", "auto": "auto_brim", "an": "outer_only"}[a.brim]
     prozess["compatible_printers"] = []  # Kompatibilitätsprüfung abschalten
+    # Druckplatte: bestimmt die Betttemperatur (Cool Plate = 35 °C bei PLA!). Kommt aus drucker/*.json.
+    platte = cfg.get("platte", "Textured PEI Plate")
+    maschine["default_bed_type"] = platte
+    prozess["curr_bed_type"] = platte
     fil_pfade = []
     for s in range(1, slots + 1):
         f = aufloesen("filament", cfg["filamente"][belegt[s]])
@@ -202,7 +206,8 @@ def main():
            "--load-filaments", ";".join(fil_pfade),
            "--load-filament-ids", ",".join(str(t[2]) for t in teile),
            "--allow-multicolor-oneplate", "--export-statistics",
-           "--outputdir", str(tmp / "out")]
+           "--outputdir", str(tmp / "out"),
+           "--export-3mf", "projekt.3mf"]   # Projektdatei (öffnen in Anycubic Slicer Next / OrcaSlicer)
     gemischt = len(set(belegt.values())) > 1
     if gemischt:
         cmd.append("--allow-mix-temp")
@@ -233,6 +238,9 @@ def main():
         raise SystemExit(f"Slicen fehlgeschlagen (Code {r.returncode}). Siehe {ziel/'slicer.log'}")
 
     gname = f"{a.name}_{cfg['kurz']}.gcode"
+    for kandidat in [tmp / "out" / "projekt.3mf", tmp / "projekt.3mf", Path.cwd() / "projekt.3mf"]:
+        if kandidat.exists():
+            shutil.move(str(kandidat), ziel / f"{a.name}_{cfg['kurz']}.3mf"); break
     shutil.copy(gcodes[0], ziel / gname)
     stat = {}
     for sf in (tmp / "out").glob("*statistics.json"):
@@ -298,6 +306,9 @@ def main():
     if vorschau_bild(ziel, [ziel / Path(st).name for st in stls],
                      [farben[t[2] - 1] if t[2] - 1 < len(farben) else "" for t in teile]):
         info["vorschau"] = "vorschau.png"
+    pj = ziel / f"{a.name}_{cfg['kurz']}.3mf"
+    if pj.exists():
+        info["projekt"] = pj.name
     (ziel / "auftrag.json").write_text(json.dumps(info, ensure_ascii=False, indent=1), encoding="utf-8")
     index_neu(ziel.parent)
     (ziel / "BERICHT.md").write_text("\n".join(zeilen) + "\n", encoding="utf-8")

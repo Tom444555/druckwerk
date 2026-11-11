@@ -3,7 +3,8 @@
 **Drucker:** Anycubic Kobra X  
 **Datei für USB:** `testwuerfel_kobrax.gcode`  
 **Druckzeit (geschätzt):** 22m 3s  
-**Filament:** 5.34, 0.25 g (1.79 m, 0.08 m)
+**Filament:** 5.34, 0.25 g (1.79 m, 0.08 m)  
+
 
 ## Spulen / Köpfe einlegen
 

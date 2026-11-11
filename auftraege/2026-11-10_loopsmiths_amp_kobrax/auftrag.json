@@ -2,7 +2,7 @@
  "name": "loopsmiths_amp",
  "drucker": "kobrax",
  "drucker_name": "Anycubic Kobra X",
- "datum": "2026-11-10",
+ "datum": "2026-11-11",
  "ordner": "2026-11-10_loopsmiths_amp_kobrax",
  "gcode": "loopsmiths_amp_kobrax.gcode",
  "zeit": "10h 48m 26s",
@@ -58,7 +58,6 @@
   }
  ],
  "quelle": "",
- "vorschau": "vorschau.png",
  "teile_app": [
   {
    "datei": "loopsmiths_amp_schwarz.app.stl",
@@ -76,5 +75,7 @@
    "datei": "loopsmiths_amp_gold.stl",
    "slot": 4
   }
- ]
+ ],
+ "vorschau": "vorschau.png",
+ "projekt": "loopsmiths_amp_kobrax.3mf"
 }

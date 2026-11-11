@@ -1,29 +1,44 @@
 {
-  "kurz": "kobrax",
-  "name": "Anycubic Kobra X",
-  "hersteller_ordner": "Anycubic",
-  "maschine": "Anycubic Kobra X 0.4 nozzle",
-  "prozess_vorlage": "{schicht}mm {stufe} @Anycubic Kobra X 0.4 nozzle",
-  "stufen": ["Standard", "High Quality"],
-  "schichten": ["0.08", "0.12", "0.16", "0.20", "0.24", "0.28"],
-  "filamente": {
-    "PLA": "Anycubic PLA @Anycubic Kobra X 0.4 nozzle",
-    "PLA+": "Anycubic PLA+ @Anycubic Kobra X 0.4 nozzle",
-    "PLA-HS": "Anycubic PLA High Speed @Anycubic Kobra X 0.4 nozzle",
-    "PLA-MATT": "Anycubic PLA Matte @Anycubic Kobra X 0.4 nozzle",
-    "PLA-SILK": "Anycubic PLA Silk @Anycubic Kobra X 0.4 nozzle",
-    "PLA-GLOW": "Anycubic PLA Glow @Anycubic Kobra X 0.4 nozzle",
-    "PETG": "Anycubic PETG @Anycubic Kobra X 0.4 nozzle",
-    "ABS": "Anycubic ABS @Anycubic Kobra X 0.4 nozzle",
-    "ASA": "Anycubic ASA @Anycubic Kobra X 0.4 nozzle",
-    "TPU": "Anycubic TPU for ACE @Anycubic Kobra X 0.4 nozzle",
-    "PVA": "Anycubic PVA @Anycubic Kobra X 0.4 nozzle"
-  },
-  "bauraum_mm": [260, 260, 260],
-  "farben_max": 4,
-  "hinweise": [
-    "Offener Drucker: ABS/ASA nur kleine Teile, Verzug möglich – dafür besser Creator 5 Pro.",
-    "Farbwechsel im Druckkopf (ACE Gen 2) – kleiner Spülturm/Abfall pro Wechsel.",
-    "USB: .gcode auf FAT32-Stick, am Drucker unter Dateien/USB auswählen."
-  ]
+ "kurz": "kobrax",
+ "name": "Anycubic Kobra X",
+ "hersteller_ordner": "Anycubic",
+ "maschine": "Anycubic Kobra X 0.4 nozzle",
+ "prozess_vorlage": "{schicht}mm {stufe} @Anycubic Kobra X 0.4 nozzle",
+ "stufen": [
+  "Standard",
+  "High Quality"
+ ],
+ "schichten": [
+  "0.08",
+  "0.12",
+  "0.16",
+  "0.20",
+  "0.24",
+  "0.28"
+ ],
+ "filamente": {
+  "PLA": "Anycubic PLA @Anycubic Kobra X 0.4 nozzle",
+  "PLA+": "Anycubic PLA+ @Anycubic Kobra X 0.4 nozzle",
+  "PLA-HS": "Anycubic PLA High Speed @Anycubic Kobra X 0.4 nozzle",
+  "PLA-MATT": "Anycubic PLA Matte @Anycubic Kobra X 0.4 nozzle",
+  "PLA-SILK": "Anycubic PLA Silk @Anycubic Kobra X 0.4 nozzle",
+  "PLA-GLOW": "Anycubic PLA Glow @Anycubic Kobra X 0.4 nozzle",
+  "PETG": "Anycubic PETG @Anycubic Kobra X 0.4 nozzle",
+  "ABS": "Anycubic ABS @Anycubic Kobra X 0.4 nozzle",
+  "ASA": "Anycubic ASA @Anycubic Kobra X 0.4 nozzle",
+  "TPU": "Anycubic TPU for ACE @Anycubic Kobra X 0.4 nozzle",
+  "PVA": "Anycubic PVA @Anycubic Kobra X 0.4 nozzle"
+ },
+ "bauraum_mm": [
+  260,
+  260,
+  260
+ ],
+ "farben_max": 4,
+ "hinweise": [
+  "Offener Drucker: ABS/ASA nur kleine Teile, Verzug möglich – dafür besser Creator 5 Pro.",
+  "Farbwechsel im Druckkopf (ACE Gen 2) – kleiner Spülturm/Abfall pro Wechsel.",
+  "USB: .gcode auf FAT32-Stick, am Drucker unter Dateien/USB auswählen."
+ ],
+ "platte": "Textured PEI Plate"
 }

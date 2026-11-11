@@ -53,6 +53,10 @@ Hat Tom keinen Drucker genannt: **kurz fragen** (eine Frage, mit Empfehlung). Ni
 - OrcaSlicer v2.5.0 CLI unter `xvfb-run`. Profile werden aus den Hersteller-JSON (inherits-Kette)
   aufgelöst; Werte außerhalb des erlaubten Bereichs korrigiert das Skript selbst (steht in slicer.log).
 - Flashforge-Filamente: `filament_is_support` fehlt im Profil → Skript ergänzt es.
+- **Druckplatte** (`platte` in drucker/*.json, Standard „Textured PEI Plate“) setzt `curr_bed_type` – sonst nimmt Orca
+  „Cool Plate“ und heizt PLA nur auf 35 °C (Fehler vom 10.11.2026, Druck misslungen). Nach dem Slicen prüfen:
+  Kobra `G9111 bedTemp=60`, Creator `M140 S55/60`.
+- Jeder Auftrag bekommt zusätzlich `<name>_<drucker>.3mf` (Projekt mit Einstellungen, Feld `projekt`) – App-Knopf „3MF-Projekt laden“.
 - `druck.py` rendert automatisch `vorschau.png` (OpenSCAD, Farben je Spule) → App zeigt es sofort, 3D lädt dahinter nach.
 - Große Netze bekommen eine leichte Kopie `*.app.stl` (~60.000 Dreiecke, Feld `teile_app`) nur für die 3D-Ansicht am Handy.
 - Drucker-Thumbnail im .gcode wird headless noch nicht erzeugt → Drucker zeigt kein Bild. Offen.
