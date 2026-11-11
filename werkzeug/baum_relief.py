@@ -175,7 +175,7 @@ def main():
         hh = np.maximum(np.maximum(hholz, hblatt), 0); ls = LightSource(azdeg=315, altdeg=40)
         sch = ls.hillshade(hh, vert_exag=2.2, dx=RES, dy=RES)
         farbe = np.zeros(hh.shape + (3,)); farbe[:] = (0.93, 0.93, 0.93)
-        farbe[hholz > 0] = (0.86, 0.66, 0.18); farbe[hblatt > 0] = (0.78, 0.10, 0.10)
+        farbe[hholz > 0] = (0.22, 0.22, 0.24); farbe[hblatt > 0] = (0.88, 0.68, 0.18)
         bild = (np.clip(farbe * (0.35 + 0.75 * sch[..., None]), 0, 1) * 255).astype(np.uint8)[::-1]
         Image.fromarray(bild).save(a.nur_bild); return
 
