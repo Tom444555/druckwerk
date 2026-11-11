@@ -12,8 +12,13 @@ G = 3000.0
 def box(x0, x1, y0, y1, z0, z1): return mf.Manifold.cube([x1-x0, y1-y0, z1-z0]).translate([x0, y0, z0])
 def ellipse(cx, cy, a, b, winkel, z0, z1):
     return mf.Manifold.cylinder(z1-z0, 1, 1, 64).scale([a, b, 1]).rotate([0, 0, winkel]).translate([cx, cy, z0])
-# Rippenbogen (Bauchausschnitt) auf der Rückseite, Bass-Seite an der Taille: sanfte Mulde bis 22 mm tief am Rand
-M = M - mf.Manifold.sphere(1, 96).scale([62, 100, 22]).translate([-72, -850, 0])
+# Rippenbogen (Bauchausschnitt) auf der Rückseite, Bass-Seite an der Taille: flache Mulde, am Rand ca. 11 mm tief
+M = M - mf.Manifold.sphere(1, 96).scale([48, 85, 11.5]).translate([-70, -850, 0])
+# Armauflage vorne: Decke am unteren Bass-Bogen schräg abgeflacht (75 mm breit, am Rand 13 mm tiefer)
+_w = np.radians(25); _u = np.array([-np.cos(_w), -np.sin(_w)]); _v = np.array([_u[1], -_u[0]]); _P = np.array([-105.0, -1060.0])
+_keil = mf.Manifold.extrude(mf.CrossSection([np.array([[-75, 44.0], [80, 44.0-13*155/75], [80, 120], [-75, 120]])]), 800).translate([0, 0, -400])
+_keil = _keil.transform(np.array([[_u[0], 0, _v[0], _P[0]], [_u[1], 0, _v[1], _P[1]], [0, 1, 0, 0]]))
+M = M - _keil
 ZK, ZP = 44.02, 45.65              # Korpus-Oberseite, Schlagbrett-Oberseite
 NX0, NX1 = 23.5, 80.5              # Halsband in X
 Y_HEEL, Y_PG, Y_FB, Y_NUT, Y_KOPF = -733, -770, -806, -322, -300
