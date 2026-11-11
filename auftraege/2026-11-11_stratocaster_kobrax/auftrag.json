@@ -1,0 +1,81 @@
+{
+ "name": "stratocaster",
+ "drucker": "kobrax",
+ "drucker_name": "Anycubic Kobra X",
+ "datum": "2026-11-11",
+ "ordner": "2026-11-11_stratocaster_kobrax",
+ "gcode": "stratocaster_kobrax.gcode",
+ "zeit": "2h 7m 40s",
+ "gramm": "20.20, 1.13, 6.76, 2.39",
+ "meter": "6.77 m, 0.38 m, 2.27 m, 0.80 m",
+ "duese": "205,205,205,205",
+ "bett": "60,60,60,60",
+ "schicht": "0.12",
+ "stufe": "Standard",
+ "infill": 15,
+ "waende": 3,
+ "stuetzen": "baum",
+ "brim": "auto",
+ "gemischt": false,
+ "slots": [
+  {
+   "slot": 1,
+   "material": "PLA",
+   "farbe": "creme"
+  },
+  {
+   "slot": 2,
+   "material": "PLA",
+   "farbe": "weiß"
+  },
+  {
+   "slot": 3,
+   "material": "PLA",
+   "farbe": "holz"
+  },
+  {
+   "slot": 4,
+   "material": "PLA",
+   "farbe": "silber"
+  }
+ ],
+ "teile": [
+  {
+   "datei": "strat_korpus.stl",
+   "slot": 1
+  },
+  {
+   "datei": "strat_weiss.stl",
+   "slot": 2
+  },
+  {
+   "datei": "strat_hals.stl",
+   "slot": 3
+  },
+  {
+   "datei": "strat_metall.stl",
+   "slot": 4
+  }
+ ],
+ "quelle": "",
+ "teile_app": [
+  {
+   "datei": "strat_korpus.stl",
+   "slot": 1
+  },
+  {
+   "datei": "strat_weiss.stl",
+   "slot": 2
+  },
+  {
+   "datei": "strat_hals.stl",
+   "slot": 3
+  },
+  {
+   "datei": "strat_metall.app.stl",
+   "slot": 4
+  }
+ ],
+ "vorschau": "vorschau.png",
+ "projekt": "stratocaster_kobrax.3mf"
+}
