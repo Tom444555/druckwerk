@@ -36,4 +36,5 @@ jobs:
           git add -A auftraege eingang status
           git diff --cached --quiet && exit 0
           git commit -q -m "Slicen aus der App"
-          for i in 1 2 3; do git pull -q --rebase && git push -q && break; sleep 5; done
+          for i in 1 2 3 4; do git pull -q --rebase --autostash && git push -q && exit 0; sleep 5; done
+          exit 1
