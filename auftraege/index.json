@@ -81,6 +81,48 @@
   "projekt": "stratocaster_kobrax.3mf"
  },
  {
+  "name": "gitarrenstaender",
+  "drucker": "kobrax",
+  "drucker_name": "Anycubic Kobra X",
+  "datum": "2026-11-11",
+  "ordner": "2026-11-11_gitarrenstaender_kobrax",
+  "gcode": "gitarrenstaender_kobrax.gcode",
+  "zeit": "1h 15m 6s",
+  "gramm": "32.65",
+  "meter": "10.95 m",
+  "duese": "205",
+  "bett": "60",
+  "schicht": "0.20",
+  "stufe": "Standard",
+  "infill": 40,
+  "waende": 4,
+  "stuetzen": "auto",
+  "brim": "an",
+  "gemischt": false,
+  "slots": [
+   {
+    "slot": 1,
+    "material": "PLA",
+    "farbe": "schwarz"
+   }
+  ],
+  "teile": [
+   {
+    "datei": "gitarrenstaender.stl",
+    "slot": 1
+   }
+  ],
+  "quelle": "",
+  "teile_app": [
+   {
+    "datei": "gitarrenstaender.stl",
+    "slot": 1
+   }
+  ],
+  "vorschau": "vorschau.png",
+  "projekt": "gitarrenstaender_kobrax.3mf"
+ },
+ {
   "name": "vox_plektrumhalter",
   "drucker": "kobrax",
   "drucker_name": "Anycubic Kobra X",
