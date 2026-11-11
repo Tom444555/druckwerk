@@ -2,8 +2,8 @@
 
 **Drucker:** Anycubic Kobra X  
 **Datei für USB:** `staender_baum_kobrax.gcode`  
-**Druckzeit (geschätzt):** 6h 9m 29s  
-**Filament:** 28.56, 19.71, 6.95, 3.25 g (9.58 m, 6.61 m, 2.33 m, 1.09 m)  
+**Druckzeit (geschätzt):** 7h 40m 4s  
+**Filament:** 28.92, 20.72, 8.27, 3.25 g (9.70 m, 6.95 m, 2.77 m, 1.09 m)  
 
 
 ## Spulen / Köpfe einlegen
@@ -11,9 +11,9 @@
 | Slot | Material | Farbe | Profil |
 |---|---|---|---|
 | 1 | PLA | schwarz | Anycubic PLA @Anycubic Kobra X 0.4 nozzle |
-| 2 | PLA | holz | Anycubic PLA @Anycubic Kobra X 0.4 nozzle |
-| 3 | PLA | grün | Anycubic PLA @Anycubic Kobra X 0.4 nozzle |
-| 4 | PLA | gold | Anycubic PLA @Anycubic Kobra X 0.4 nozzle |
+| 2 | PLA | gold | Anycubic PLA @Anycubic Kobra X 0.4 nozzle |
+| 3 | PLA | rot | Anycubic PLA @Anycubic Kobra X 0.4 nozzle |
+| 4 | PLA | weiß | Anycubic PLA @Anycubic Kobra X 0.4 nozzle |
 
 ## Einstellungen
 

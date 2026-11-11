@@ -278,9 +278,9 @@
   "datum": "2026-11-11",
   "ordner": "2026-11-11_staender_baum_kobrax",
   "gcode": "staender_baum_kobrax.gcode",
-  "zeit": "6h 9m 29s",
-  "gramm": "28.56, 19.71, 6.95, 3.25",
-  "meter": "9.58 m, 6.61 m, 2.33 m, 1.09 m",
+  "zeit": "7h 40m 4s",
+  "gramm": "28.92, 20.72, 8.27, 3.25",
+  "meter": "9.70 m, 6.95 m, 2.77 m, 1.09 m",
   "duese": "205,205,205,205",
   "bett": "60,60,60,60",
   "schicht": "0.12",
@@ -299,17 +299,17 @@
    {
     "slot": 2,
     "material": "PLA",
-    "farbe": "holz"
+    "farbe": "gold"
    },
    {
     "slot": 3,
     "material": "PLA",
-    "farbe": "grün"
+    "farbe": "rot"
    },
    {
     "slot": 4,
     "material": "PLA",
-    "farbe": "gold"
+    "farbe": "weiß"
    }
   ],
   "teile": [

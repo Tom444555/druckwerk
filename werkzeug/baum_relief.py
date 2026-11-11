@@ -19,12 +19,12 @@ spalt = hals_b + 0.8; zinke_r = 2.5; zg = fuss_d + luft_unten + sattel_h      # 
 zx = spalt / 2 + zinke_r                                                     # Achse der Zinken
 gabel_z = zg - 22                                                            # hier endet der Leitast im Relief
 
-RES = 0.16; X0, X1, Z0, Z1 = -50.0, 50.0, 0.0, 182.0
+RES = 0.125; X0, X1, Z0, Z1 = -50.0, 50.0, 0.0, 182.0
 HMAX = 5.3                                                                   # hinter der Gitarre max. 5,5 mm
 
 
 def main():
-    ap = argparse.ArgumentParser(); ap.add_argument("--saat", type=int, default=5); ap.add_argument("--nur-bild")
+    ap = argparse.ArgumentParser(); ap.add_argument("--saat", type=int, default=17); ap.add_argument("--nur-bild")
     a = ap.parse_args(); rng = np.random.default_rng(a.saat)
     nx = int(round((X1 - X0) / RES)) + 1; nz = int(round((Z1 - Z0) / RES)) + 1
     xs = X0 + np.arange(nx) * RES; zs = Z0 + np.arange(nz) * RES
@@ -51,7 +51,7 @@ def main():
         if 0 <= bj < belegt.shape[0] and 0 <= bi < 52: belegt[bj, bi] += r
 
     def innen(x, z):                                # unregelmäßige Kronenform
-        w = 43 + 3 * math.sin(z / 9.0) ; return (x / w) ** 2 + ((z - 127) / 52.0) ** 2 < 1 and 56 < z < 179.5 and abs(x) < 48.5
+        w = 43 + 3 * math.sin(z / 9.0) ; return (x / w) ** 2 + ((z - 124) / 55.0) ** 2 < 1 and 62 < z < 179.5 and abs(x) < 48.5
 
     def frei(x, z, th, weit=12):
         t = 0.0
@@ -64,8 +64,8 @@ def main():
     blaetter = []
 
     def blatt(x, z, th, gross=1.0):
-        if abs(x - stamm_x(z)) < stamm_r(z) + 1.5 and z < gabel_z: return
-        blaetter.append((x, z, th, rng.uniform(6.0, 8.6) * gross, rng.uniform(1.7, 3.3), rng.uniform(-0.6, 0.6), rng.uniform(-0.25, 0.25)))
+        if (abs(x) < 6.0 and z < gabel_z + 4) or z < zo + 4: return
+        blaetter.append((x, z, th, rng.uniform(4.8, 7.4) * gross, rng.uniform(1.6, 3.2), rng.uniform(-0.6, 0.6), rng.uniform(-0.25, 0.25)))
 
     def wachse(x, z, th, r, wurzel=False, sstart=0.0):
         stapel = [(x, z, th, r, 0)]
@@ -79,24 +79,25 @@ def main():
                     th += 0.03 * (math.copysign(2.05, th) - th)                    # Wurzeln kriechen nach unten/außen
                     if z < 0.3 or abs(x) > 37: tot = True; break
                 else:
-                    th -= 0.006 * th                                              # leichter Zug nach oben
+                    th -= (0.0015 if r > 1.3 else 0.006) * th                                              # leichter Zug nach oben
                     ax = x + math.sin(th) * 5; az = z + math.cos(th) * 5
                     if not innen(ax, az):
                         zur = math.atan2(-x, 127 - z); dth = (zur - th + math.pi) % (2 * math.pi) - math.pi
                         th += 0.09 * np.sign(dth)
                     if not innen(x, z): tot = True; break
                 x += math.sin(th) * 0.4; z += math.cos(th) * 0.4; s += 0.4; r *= 0.9985
-                stempel(x, z, th, r, s)
+                stempel(x, z, th, r * (1 + 0.09 * math.sin(s * 0.9) + 0.05 * math.sin(s * 2.3)) if r > 0.8 else r, s)
                 if not wurzel and r < 0.8:
                     naechst -= 0.4
                     if naechst <= 0:
-                        naechst = rng.uniform(3.5, 6.5); seite = -seite
-                        if rng.random() < 0.7: blatt(x, z, th + seite * rng.uniform(0.6, 1.1), 0.9)
+                        naechst = rng.uniform(3.0, 5.0); seite = -seite
+                        if rng.random() < 0.8: blatt(x, z, th + seite * rng.uniform(0.6, 1.1), 0.9)
             if wurzel:
                 if tot or r < 0.75: continue
             elif tot or r < 0.52:
-                blatt(x, z, th + rng.uniform(-0.3, 0.3))
-                if rng.random() < 0.5: blatt(x, z, th + rng.choice([-1, 1]) * rng.uniform(0.6, 1.0), 0.85)
+                blatt(x, z, th + rng.uniform(-0.25, 0.25))
+                for sd in (-1, 1):
+                    if rng.random() < 0.75: blatt(x, z, th + sd * rng.uniform(0.6, 1.0), 0.85)
                 continue
             f = rng.uniform(0.24, 0.5); r1 = r * math.sqrt(1 - f); r2 = r * math.sqrt(f)
             beste = None
@@ -108,33 +109,43 @@ def main():
             stapel.append((x, z, th + beste[1], r1, tiefe + 1))
             if r2 > 0.42: stapel.append((x, z, th + beste[2], r2, tiefe + 1))
 
-    # ---- Stamm (Leitast) ----
-    def stamm_x(z): return 3.2 * math.sin(2 * math.pi * (z - 12) / 100.0) * min(1.0, max(0.0, (gabel_z - z) / 45.0))
-    def stamm_r(z): return 3.0 + 2.3 * (gabel_z - z) / (gabel_z - 20) + 4.5 * math.exp(-max(z - 3, 0) / 7.0)
-    z = 0.4; s = 0.0
-    while z <= gabel_z + 3:
-        th = math.atan2(stamm_x(z + 0.5) - stamm_x(z - 0.5), 1.0)
-        stempel(stamm_x(z), z, th, stamm_r(z), s); z += 0.4; s += 0.4
-    # ---- Hauptäste ----
-    hoehen = [60, 73, 86, 98, 110, 121, 132, 142]; radien = [2.9, 2.7, 2.55, 2.4, 2.2, 2.05, 1.85, 1.7]
+    # ---- Lebensbaum-Stamm: Stränge winden sich umeinander, werden unten zu Wurzeln und oben zu Ästen ----
+    zu, zo, P = 19.0, 70.0, 46.0
+    def amp(z):
+        t = (z - (zu + zo) / 2) / ((zo - zu) / 2); return 3.3 + (2.4 if t > 0 else 7.0) * abs(t) ** 3
+    def strang(pos, r, ziel, wziel):
+        ph = math.asin(pos); z = zu; s = rng.uniform(0, 300); pts = []
+        while z <= zo + 0.01:
+            arg = 2 * math.pi * (z - zo) / P + ph; x = amp(z) * math.sin(arg)
+            dxdz = (amp(z + 0.3) * math.sin(2 * math.pi * (z + 0.3 - zo) / P + ph) - x) / 0.3
+            th = math.atan2(dxdz, 1.0); rr = r * (1 + 0.08 * math.sin(s * 0.8))
+            stempel(x, z, th, rr, s, hmax=min(HMAX, 3.5 + 1.8 * math.cos(arg))); pts.append((x, z, th)); z += 0.3; s += 0.35
+        x, z, th = pts[-1]; wachse(x, z, 0.3 * th + 0.7 * math.radians(ziel), r)
+        x, z, th = pts[0]; wachse(x, z, math.radians(wziel), r * 0.95, wurzel=True)
+    for pos, r, ziel, wziel in [(-0.97, 2.7, -78, 0), (-0.55, 2.6, -42, 0), (0.5, 2.6, 40, 0), (0.96, 2.7, 76, 0), (-0.2, 2.2, -18, 0), (0.25, 2.2, 22, 0)]:
+        x_u = amp(zu) * math.sin(2 * math.pi * (zu - zo) / P + math.asin(pos))
+        strang(pos, r, ziel, math.copysign(100 + 45 * (1 - min(1, abs(x_u) / 10)), x_u if abs(x_u) > 0.5 else rng.choice([-1, 1])))
+    # Leitast: zwei Stränge, die sich bis zur Gabel umeinander drehen
+    for k in (0, 1):
+        z = zu - 6; s = rng.uniform(0, 300)
+        while z <= gabel_z + 2:
+            arg = 2 * math.pi * z / 38.0 + k * math.pi; a_ = 2.0 + 3.0 * math.exp(-max(z - 4, 0) / 6.0); x = a_ * math.sin(arg)
+            th = math.atan2(a_ * math.cos(arg) * 2 * math.pi / 38.0, 1.0); r = 2.55 - 0.45 * max(0, z - zo) / (gabel_z - zo)
+            stempel(x, z, th, r * (1 + 0.07 * math.sin(s * 0.7)), s, hmax=min(HMAX, 3.9 + 1.4 * math.cos(arg))); z += 0.3; s += 0.33
     s0 = 1 if rng.random() < 0.5 else -1
-    for i, (zz, rr) in enumerate(zip(hoehen, radien)):
-        zz += rng.uniform(-3, 3); sd = s0 * (1 if i % 2 == 0 else -1)
-        w = math.radians(82 - 5.5 * i + rng.uniform(-8, 8))
-        wachse(stamm_x(zz) + sd * stamm_r(zz) * 0.5, zz, sd * w, rr * rng.uniform(0.93, 1.07))
-    for sd in (-1, 1):                                                         # zwei Äste oben neben der Gabel
-        wachse(sd * 1.5, gabel_z - 4, sd * math.radians(rng.uniform(28, 40)), 1.45)
-    # ---- Wurzeln hinten ----
-    for w, rr in [(105, 2.9), (-112, 2.7), (138, 2.4), (-142, 2.5), (165, 1.9), (-80, 1.9), (78, 1.7)]:
-        wachse(stamm_x(15) + math.copysign(3.5, w), rng.uniform(12, 20), math.radians(w + rng.uniform(-6, 6)), rr, wurzel=True)
+    for i, (zz, rr) in enumerate([(92, 2.0), (106, 1.9), (119, 1.8), (131, 1.65), (142, 1.5), (149, 1.4)]):
+        sd = s0 * (1 if i % 2 == 0 else -1); wachse(sd * 2.5, zz + rng.uniform(-2, 2), sd * math.radians(62 - 6 * i + rng.uniform(-8, 8)), rr)
+    for w, rr in [(150, 2.2), (-152, 2.2), (172, 1.7), (-170, 1.6)]:                 # zusätzliche Wurzeln
+        wachse(math.copysign(3.0, w), rng.uniform(10, 16), math.radians(w), rr, wurzel=True)
 
     # ---- Borke: Furchen längs des Astes ----
     tex = ndimage.zoom(rng.random((96, 96)).astype(np.float32), 8, order=3, mode="wrap")
     def rausch(a, b): return ndimage.map_coordinates(tex, [(a * 8) % 760, (b * 8) % 760], order=1, mode="wrap")
-    staerke = np.clip((mr - 0.9) / 2.0, 0, 1) * 0.5
-    n1 = rausch(ms / 9.0 + mr * 3.1, mu / 1.25 + 40); n2 = rausch(ms / 3.0 + 11, mu / 0.6 + 7)
-    furche = np.exp(-((n1 - 0.5) / 0.07) ** 2) + 0.35 * np.exp(-((n2 - 0.5) / 0.08) ** 2)
-    hw = np.where(hw > 0, np.maximum(0.6, hw - staerke * furche), hw).astype(np.float32)
+    staerke = np.clip((mr - 0.7) / 1.6, 0, 1) * 0.62
+    n1 = rausch(ms / 8.0 + mr * 3.1, mu / 1.15 + 40); n2 = rausch(ms / 3.2 + 11, mu / 0.62 + 7); n3 = rausch(ms / 1.6 + 5, mu / 2.4 + 90)
+    furche = np.exp(-((n1 - 0.5) / 0.075) ** 2) + 0.45 * np.exp(-((n2 - 0.5) / 0.09) ** 2) + 0.3 * np.exp(-((n3 - 0.5) / 0.05) ** 2)
+    schuppe = (rausch(ms / 5.0 + 70, mu / 1.6 + 3) - 0.5) * 0.5                      # Borkenplatten leicht versetzt
+    hw = np.where(hw > 0, np.maximum(0.6, hw - staerke * (furche - schuppe)), hw).astype(np.float32)
 
     # ---- Blätter: spitz-oval, gewölbt, Mittelrippe + Seitenadern ----
     for (x, z, th, L, h0, neig, kr) in blaetter:
@@ -148,10 +159,10 @@ def main():
         tt = np.clip(t, 0, 1); halb = W / 2 * np.sin(math.pi * tt ** 0.72) ** 0.85 * (1 - 0.25 * tt)
         m = (t > 0) & (t < 1) & (np.abs(v) < halb)
         q = np.clip(np.abs(v) / np.maximum(halb, 1e-3), 0, 1)
-        h = h0 + neig * (tt - 0.5) + 0.45 * np.sqrt(1 - q * q) - 0.25
-        h -= 0.36 * np.exp(-(v / 0.26) ** 2)                                       # Mittelrippe
-        ader = np.cos(2 * math.pi * (tt * L - np.abs(v) * 0.9) / 1.35)
-        h -= 0.16 * np.clip(ader - 0.55, 0, 1) / 0.45 * (q < 0.9)
+        h = h0 + neig * (tt - 0.5) + 0.42 * q - 0.5 * np.clip(q - 0.8, 0, 1) / 0.2 * 0.6
+        h -= 0.34 * np.exp(-(v / 0.24) ** 2)                                       # Mittelrippe
+        ader = np.cos(2 * math.pi * (tt * L - np.abs(v) * 1.1) / 1.25)
+        h -= 0.24 * np.clip(ader - 0.55, 0, 1) / 0.45 * (q < 0.9)
         h = np.maximum(h, 0.7); sub = hl[j0:j1, i0:i1]; m &= h > sub; sub[m] = h[m]
         mst = (t > -stiel / L - 0.02) & (t <= 0.05) & (np.abs(v) < 0.3)             # Blattstiel
         sub[mst & (sub < 0.9)] = 0.9
@@ -164,7 +175,7 @@ def main():
         hh = np.maximum(np.maximum(hholz, hblatt), 0); ls = LightSource(azdeg=315, altdeg=40)
         sch = ls.hillshade(hh, vert_exag=2.2, dx=RES, dy=RES)
         farbe = np.zeros(hh.shape + (3,)); farbe[:] = (0.93, 0.93, 0.93)
-        farbe[hholz > 0] = (0.72, 0.52, 0.30); farbe[hblatt > 0] = (0.25, 0.60, 0.22)
+        farbe[hholz > 0] = (0.86, 0.66, 0.18); farbe[hblatt > 0] = (0.78, 0.10, 0.10)
         bild = (np.clip(farbe * (0.35 + 0.75 * sch[..., None]), 0, 1) * 255).astype(np.uint8)[::-1]
         Image.fromarray(bild).save(a.nur_bild); return
 
