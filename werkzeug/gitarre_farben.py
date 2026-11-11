@@ -12,6 +12,8 @@ G = 3000.0
 def box(x0, x1, y0, y1, z0, z1): return mf.Manifold.cube([x1-x0, y1-y0, z1-z0]).translate([x0, y0, z0])
 def ellipse(cx, cy, a, b, winkel, z0, z1):
     return mf.Manifold.cylinder(z1-z0, 1, 1, 64).scale([a, b, 1]).rotate([0, 0, winkel]).translate([cx, cy, z0])
+# Rippenbogen (Bauchausschnitt) auf der Rückseite, Bass-Seite an der Taille: sanfte Mulde bis 22 mm tief am Rand
+M = M - mf.Manifold.sphere(1, 96).scale([62, 100, 22]).translate([-72, -850, 0])
 ZK, ZP = 44.02, 45.65              # Korpus-Oberseite, Schlagbrett-Oberseite
 NX0, NX1 = 23.5, 80.5              # Halsband in X
 Y_HEEL, Y_PG, Y_FB, Y_NUT, Y_KOPF = -733, -770, -806, -322, -300
@@ -23,10 +25,11 @@ def saiten_x(y):
     return [float(g.mean()) for g in gr if len(g) > 20]
 ya, yb = -790.0, -390.0; xa, xb = saiten_x(ya), saiten_x(yb)
 assert len(xa) == 6 and len(xb) == 6, (xa, xb)
-bs = 0.5 / s                       # Stegbreite: 0,5 mm im fertigen Modell
+breiten = [0.6, 0.55, 0.5, 0.42, 0.36, 0.3]   # Stegbreite je Saite im fertigen Modell (mm): E A D dick, g h e dünn
 saiten = mf.Manifold()
 y_s0, y_s1 = -996.0, Y_NUT
-for x0, x1 in zip(xa, xb):
+for x0, x1, br in zip(xa, xb, breiten):
+    bs = br / s
     f = lambda y: x0 + (x1-x0)*(y-ya)/(yb-ya)
     ecken = np.array([[f(y_s0)-bs/2, y_s0], [f(y_s0)+bs/2, y_s0], [f(y_s1)+bs/2, y_s1], [f(y_s1)-bs/2, y_s1]])
     st = mf.Manifold.extrude(mf.CrossSection([ecken]), 51.7-43.5).translate([0, 0, 43.5])

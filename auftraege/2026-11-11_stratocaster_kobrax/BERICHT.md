@@ -2,8 +2,8 @@
 
 **Drucker:** Anycubic Kobra X  
 **Datei für USB:** `stratocaster_kobrax.gcode`  
-**Druckzeit (geschätzt):** 2h 3m 12s  
-**Filament:** 20.96, 1.13, 6.68, 2.36 g (7.03 m, 0.38 m, 2.24 m, 0.79 m)  
+**Druckzeit (geschätzt):** 2h 6m 50s  
+**Filament:** 20.86, 1.13, 6.96, 2.06 g (6.99 m, 0.38 m, 2.33 m, 0.69 m)  
 
 
 ## Spulen / Köpfe einlegen

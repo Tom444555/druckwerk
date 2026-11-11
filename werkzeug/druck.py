@@ -125,6 +125,7 @@ def main():
     ap.add_argument("--anordnen", action="store_true", default=True)
     ap.add_argument("--zusammen", action="store_true",
                     help="Teile als EIN Objekt behandeln (mehrfarbiges Teil aus mehreren Dateien)")
+    ap.add_argument("--extra", action="append", default=[], help="Slicer-Einstellung überschreiben: schluessel=wert (mehrfach)")
     ap.add_argument("--quelle", default="", help="Link zum Original-Modell (MakerWorld, Printables …)")
     ap.add_argument("--ausgabe", default=None, help="Zielordner (Standard: auftraege/<datum>_<name>)")
     a = ap.parse_args()
@@ -180,6 +181,8 @@ def main():
         prozess["support_type"] = "tree(auto)" if a.stuetzen == "baum" else "normal(auto)"
     prozess["brim_type"] = {"aus": "no_brim", "auto": "auto_brim", "an": "outer_only"}[a.brim]
     prozess["compatible_printers"] = []  # Kompatibilitätsprüfung abschalten
+    for ex in a.extra:
+        k, v = ex.split("=", 1); prozess[k.strip()] = v.strip()
     # Druckplatte: bestimmt die Betttemperatur (Cool Plate = 35 °C bei PLA!). Kommt aus drucker/*.json.
     platte = cfg.get("platte", "Textured PEI Plate")
     maschine["default_bed_type"] = platte
