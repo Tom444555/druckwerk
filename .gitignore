@@ -2,3 +2,4 @@ werkzeug/orca/
 __pycache__/
 *.AppImage
 modelle/staender_baum_*.stl
+00000.log
