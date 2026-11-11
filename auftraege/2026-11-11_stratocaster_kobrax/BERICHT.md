@@ -2,8 +2,8 @@
 
 **Drucker:** Anycubic Kobra X  
 **Datei für USB:** `stratocaster_kobrax.gcode`  
-**Druckzeit (geschätzt):** 2h 7m 40s  
-**Filament:** 20.20, 1.13, 6.76, 2.39 g (6.77 m, 0.38 m, 2.27 m, 0.80 m)  
+**Druckzeit (geschätzt):** 2h 3m 12s  
+**Filament:** 20.96, 1.13, 6.68, 2.36 g (7.03 m, 0.38 m, 2.24 m, 0.79 m)  
 
 
 ## Spulen / Köpfe einlegen
@@ -20,7 +20,7 @@
 - Schichthöhe: 0.12 mm (Standard)
 - Füllung: 15 %
 - Wände: 3
-- Stützen: baum
+- Stützen: auto
 - Brim: auto
 - Düsentemperatur: 205,205,205,205 °C, Bett: 60,60,60,60 °C
 
