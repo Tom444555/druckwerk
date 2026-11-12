@@ -1,5 +1,22 @@
 # Übergabe druckwerk
 
+## STAND 12.11.2026 – hier einsteigen (neuer Chat: „druckwerk: …“)
+- **Läuft:** Slicen für Kobra X (Tom druckt selbst, PLA, strukturierte PEI-Platte, Bett 60 °C wird geprüft), App mit Bibliothek/Werkstatt/Slice-Knopf (zweiter Chat), Aufträge pro Gerät.
+- **Gitarren-Reihe (zusammengehörig, Farben schwarz/gold/rot/weiß):**
+  - `2026-11-10_loopsmiths_amp_kobrax` – Verstärker-Plektrumhalter, 8,8 cm.
+  - `2026-11-11_stratocaster_kobrax` – Strat 20 cm, 4 Farben (`werkzeug/gitarre_farben.py`).
+  - `2026-11-12_staender_baum_kobrax` – Hänge-Ständer „Lebensbaum“ v5 (`werkzeug/baum_relief.py`), 11 h 55 min. **Noch nicht gedruckt, Tom hat v5 noch nicht bewertet.**
+  - Ältere Ständer im Lager: `…_gitarrenstaender` (schlicht), `…_staender_note`, `…_staender_schleife` (von Tom abgelehnt – kann gelöscht werden, nur auf Wunsch).
+- **Toms Geschmack (aus den Rückmeldungen):** detailreich, geschwungen, naturnah/realistisch, nichts Schlichtes oder Symmetrisch-Künstliches; breite statt hohe Formen;
+  schickt gern Fotos als Vorlage; will schnelle Vorschau und kurze Antworten.
+- **Nächste Schritte:** 1) Rückmeldung zu v5 abwarten (mögliche Wünsche: anderer Wuchs = `--saat`, Farbtausch = nur neu slicen, weniger Druckzeit = Laub/Schicht gröber).
+  2) Erster echter Druck des Ständers: prüfen, ob Blattadern/Borke bei 0,4-mm-Düse sichtbar sind und ob die Gitarre in der Astgabel sitzt. 3) Repo ist durch große Aufträge gewachsen –
+  bei Gelegenheit alte Ständer-Aufträge löschen (nur auf Toms Wunsch).
+- **Arbeitsregeln/Erfahrungen:** stehen in CLAUDE.md, Abschnitt „Organische/feine Modelle“. Abschnitte unten nur bei Bedarf lesen.
+
+---
+## Verlauf (älter)
+
 **Stand 10.11.2026 – Stufe 1 (USB) fertig und getestet (Slicen, ohne echten Drucker)**
 - OrcaSlicer v2.5.0 CLI + Herstellerprofile Kobra X / Creator 5 Pro laufen headless.
 - `werkzeug/druck.py`: mehrere Teile/Farben, Material je Slot, Schicht/Infill/Wände/Stützen/Brim, Bericht.
