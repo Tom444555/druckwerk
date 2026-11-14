@@ -72,6 +72,7 @@ function filamentBlatt(m){
     <p class="hint">${m.druckwerk.length ? "In druckwerk wählbar als: " + m.druckwerk.join(", ") : "Noch nicht in druckwerk hinterlegt – auf Wunsch ergänzt Claude das Profil."}</p>
     <div style="height:12px"></div>
     ${m.druckwerk.length ? `<button class="btn" id="fAuf">Auftrag mit ${C.esc(m.druckwerk[0])} beginnen</button>` : ""}
+    <a class="btn grey" id="fPreis" target="_blank" href="https://claude.ai/new?q=${encodeURIComponent("filament-preise: " + m.name + ", 1,75 mm, 1 kg, Farbe: ")}">Günstigsten Preis suchen</a>
     <button class="btn grey" id="fZu">Schließen</button>`);
   d.querySelector("#fZu").onclick = () => d.remove();
   const a = d.querySelector("#fAuf"); if (a) a.onclick = () => { d.remove(); C.neuStart("", "", m.druckwerk[0]); };
