@@ -39,7 +39,7 @@
    "vorlage": "KI-Rohling aufbereiten: …\nDatei (STL/GLB/3MF) hänge ich an.\nGröße: …\nFarben: …\nBitte reparieren, Standfläche anlegen, in Farben zerlegen und zuerst ein Bild zeigen.", "zweck": "deko",
    "schritte": [
     {"t": "Gutes Bild", "wer": "Du", "d": "Motiv freigestellt, neutraler Hintergrund, gleichmäßiges Licht. Mehrere Ansichten verbessern die Rückseite deutlich. Nur eigene oder freie Motive."},
-    {"t": "Rohling erzeugen", "wer": "Du", "d": "Meshy gilt als stärkstes Werkzeug für druckfertige Netze, Tripo ist schnell und großzügig im Gratis-Kontingent, Hunyuan3D ist kostenlos nutzbar."},
+    {"t": "Rohling erzeugen", "wer": "Du", "d": "Meshy gilt als stärkstes Werkzeug für druckfertige Netze, Tripo ist schnell, Hunyuan3D ist kostenlos nutzbar."},
     {"t": "Datei an Claude", "wer": "Du", "d": "STL, 3MF oder GLB anhängen."},
     {"t": "Aufbereiten", "wer": "Claude", "d": "Löcher schließen, glätten, Standfläche anlegen, dünne Stellen verstärken, in bis zu vier Farben zerlegen."},
     {"t": "Bild → Druckdatei", "wer": "Claude", "d": "Wie bei Kunst & Deko: erst Vorschau, dann slicen."}
@@ -47,7 +47,7 @@
   {"id": "scan", "name": "Echtes Ding scannen", "kurz": "Etwas Vorhandenes nachbilden oder passgenau umbauen.",
    "vorlage": "Scan verarbeiten: …\nDatei (OBJ/STL) hänge ich an.\nEin echtes Maß zur Kontrolle (mm): …\nZiel: Kopie / passgenauer Halter dazu / Ersatzteil", "zweck": "funktion",
    "schritte": [
-    {"t": "Scannen", "wer": "Du", "d": "Mit iPad Pro oder iPhone rundherum aufnehmen (Scaniverse arbeitet kostenlos direkt auf dem Gerät, Polycam und KIRI Engine haben Gratis-Stufen). Mattes Objekt, viel Licht."},
+    {"t": "Scannen", "wer": "Du", "d": "Mit iPad Pro oder iPhone rundherum aufnehmen (Scaniverse rechnet direkt auf dem Gerät und hat eine Gratis-Stufe, Polycam und KIRI Engine haben Gratis-Stufen). Mattes Objekt, viel Licht."},
     {"t": "Ein Maß mitgeben", "wer": "Du", "d": "Scans sind selten maßstäblich. Ein gemessenes Maß reicht, damit ich die Größe festlege."},
     {"t": "Säubern", "wer": "Claude", "d": "Boden und Fremdteile weg, Löcher zu, Netz vereinfachen."},
     {"t": "Nutzen", "wer": "Claude", "d": "Als Kopie drucken – oder als Negativform: Ich ziehe den Scan von einem Halter ab, dann sitzt das Original satt darin."}
@@ -57,7 +57,7 @@
   {"gruppe": "Technisch konstruieren", "liste": [
    {"name": "OpenSCAD", "wo": "Claude · Mac", "preis": "kostenlos", "url": "https://openscad.org", "d": "Modelle als Text mit Maßen – damit baue ich heute alle technischen Teile."},
    {"name": "build123d", "wo": "Claude", "preis": "kostenlos", "url": "https://build123d.readthedocs.io", "d": "CAD in Python: saubere Rundungen und Fasen, STEP-Export. Mein Vorschlag als nächste Stufe für anspruchsvolle Teile."},
-   {"name": "Onshape", "wo": "iPad · Browser", "preis": "kostenlos für privat", "url": "https://www.onshape.com", "d": "Vollwertiges CAD im Browser und als iPad-App, falls du selbst konstruieren willst."},
+   {"name": "Onshape", "wo": "iPad · Browser", "preis": "kostenlos für nicht-gewerbliche Nutzung, Entwürfe sind dann öffentlich", "url": "https://www.onshape.com", "d": "Vollwertiges CAD im Browser und als iPad-App, falls du selbst konstruieren willst."},
    {"name": "Shapr3D", "wo": "iPad · Mac", "preis": "kostenlos mit Grenzen, sonst Abo", "url": "https://www.shapr3d.com", "d": "Konstruieren mit dem Apple Pencil – am schnellsten zu lernen."},
    {"name": "Fusion", "wo": "Mac", "preis": "kostenlos für privat", "url": "https://www.autodesk.com/products/fusion-360/personal", "d": "Der verbreitete Standard im Hobbybereich, viele Anleitungen."},
    {"name": "Tinkercad", "wo": "Browser", "preis": "kostenlos", "url": "https://www.tinkercad.com", "d": "Klötzchen-Prinzip für ganz einfache Teile."}
@@ -71,12 +71,12 @@
   ]},
   {"gruppe": "KI: Bild oder Text zu 3D", "liste": [
    {"name": "Meshy", "wo": "Browser", "preis": "Gratis-Kontingent, Pro rund 20 $/Monat", "url": "https://www.meshy.ai", "d": "In Vergleichen meist vorn für den Druck: geschlossene Netze, Druck-Prüfung, STL- und 3MF-Export."},
-   {"name": "Tripo", "wo": "Browser", "preis": "Gratis-Kontingent, Pro rund 20 $/Monat", "url": "https://www.tripo3d.ai", "d": "Schnell, saubere Netze, mehrere Ansichten möglich."},
+   {"name": "Tripo", "wo": "Browser", "preis": "Gratis-Stufe, Bezahlpläne – Preise schwanken je nach Quelle", "url": "https://www.tripo3d.ai", "d": "Schnell, saubere Netze, mehrere Ansichten möglich."},
    {"name": "Hunyuan3D", "wo": "Browser", "preis": "kostenlos nutzbar", "url": "https://3d.hunyuan.tencent.com", "d": "Offenes Modell von Tencent, gut für erste Versuche."},
    {"name": "Rodin (Hyper3D)", "wo": "Browser", "preis": "Bezahlmodell", "url": "https://hyper3d.ai", "d": "Gilt als das detailreichste – wenn ein Rohling besonders fein sein soll."}
   ]},
   {"gruppe": "Scannen", "liste": [
-   {"name": "Scaniverse", "wo": "iPad · iPhone", "preis": "kostenlos", "url": "https://scaniverse.com", "d": "Rechnet auf dem Gerät, nutzt den LiDAR-Sensor."},
+   {"name": "Scaniverse", "wo": "iPad · iPhone", "preis": "Gratis-Stufe", "url": "https://scaniverse.com", "d": "Rechnet auf dem Gerät, nutzt den LiDAR-Sensor."},
    {"name": "Polycam", "wo": "iPad · iPhone", "preis": "Gratis-Stufe, sonst Abo", "url": "https://poly.cam", "d": "Fotos oder LiDAR, gute Nachbearbeitung."},
    {"name": "KIRI Engine", "wo": "iPad · iPhone", "preis": "Gratis-Stufe", "url": "https://www.kiriengine.app", "d": "Foto-Scan kleiner Gegenstände, ausdrücklich auch für 3D-Druck."}
   ]},

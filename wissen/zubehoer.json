@@ -6,7 +6,7 @@
    {"id": "trockner4", "name": "Filamenttrockner für 4 Spulen", "prio": "Sinnvoll", "preis": "ca. 100–200 €",
     "wozu": "Trocknet und füttert alle vier Köpfe gleichzeitig. Sunlu FilaDryer S4: 4 Spulen, bis 70 °C, rund 100 €. Creality Space Pi X4: 4 Spulen in 2 getrennten Kammern, bis 85 °C (reicht auch für Nylon), etwa 140–200 €."},
    {"id": "vds", "name": "Flashforge VDS (Original-Trockenbox)", "prio": "Später", "preis": "179 € Vorbestellung (regulär 229 €)", "link": "https://eu.flashforge.com/en-eu/products/flashforge-vds",
-    "wozu": "Zwei getrennte Kammern, 45–85 °C, bis 500 W, wird über den Drucker-Bildschirm gesteuert (Firmware ab 1.9.6). Oberer Ausgang für TPU und Faserfilament. Auslieferung laut Shop ab etwa 30.11.2026."},
+    "wozu": "Zwei getrennte Kammern, 45–85 °C, bis 500 W. Bedienung am Gerät oder – laut Berichten – über den Drucker-Bildschirm (Firmware ab 1.9.6). Oberer Ausgang für TPU, Faserfilament und 2,85 mm. Auslieferung laut Shop ab etwa 30.11.2026."},
    {"id": "dichtbox", "name": "Dichte Boxen + Silicagel + Hygrometer", "prio": "Muss", "preis": "ca. 20–30 €",
     "wozu": "Angebrochene Spulen luftdicht lagern. Ziel: unter 15 % Feuchte, Trockenmittel tauschen, sobald der Wert darüber liegt."},
    {"id": "ptfe", "name": "PTFE-Schlauch 2 × 4 mm + PC4-M10-Kupplungen", "prio": "Später", "preis": "ca. 10–15 €",

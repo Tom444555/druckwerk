@@ -50,11 +50,11 @@
    "achtung": "Vor dem Druck trocknen. Größere Düse (0,6 mm) läuft entspannter, 0,4 mm geht."},
   {"id": "tpu", "name": "TPU 95A (auch 90A, 64D)", "gruppe": "Flexibel", "druckwerk": ["TPU"],
    "kurz": "Gummiartig: Füße, Dichtungen, Griffe.",
-   "duese": "230", "bett": "40–50 (unter 70)", "kammer": "aus, Deckel ab, Tür auf", "luefter": "70 %", "trocknen": "Pflicht – z. B. 60 °C, 4 h", "flow": "sehr gering (90A: 2,8)",
-   "herkunft": {"duese": "Profil", "bett": "Wiki", "kammer": "Wiki", "luefter": "Profil", "trocknen": "Wiki", "flow": "Profil"},
+   "duese": "230", "bett": "40–50 (unter 70)", "kammer": "aus, Deckel ab, Tür auf", "luefter": "70 %", "trocknen": "Pflicht – Richtwert 60 °C, 4 h", "flow": "sehr gering (90A: 2,8)",
+   "herkunft": {"duese": "Profil", "bett": "Wiki", "kammer": "Wiki", "luefter": "Profil", "trocknen": "Richtwert", "flow": "Profil"},
    "eignung": ["biegsam"],
    "wofuer": "Gummifüße, Stoßschutz, Kabeltüllen, weiche Einlagen im Gitarrenhalter. Mit vier Köpfen auch hart + weich in einem Teil.",
-   "achtung": "Immer trocken drucken, am besten direkt aus der Trockenbox (unter 15 % Feuchte). Weg zum Kopf kurz halten; weiches 90A von oben zuführen. Der eingebaute Schneider rutscht bei TPU oft ab – mit dem Seitenschneider abknipsen. Leiser Modus (50 %) gibt saubere Ergebnisse. Sehr weiches TPU (unter 90A) verstopft leicht."},
+   "achtung": "Immer trocken drucken, am besten direkt aus der Trockenbox (unter 15 % Feuchte). Weg zum Kopf kurz halten; weiches 90A von oben zuführen. Der eingebaute Schneider rutscht bei TPU oft ab – mit dem Seitenschneider abknipsen. Ein Test empfiehlt für TPU den leisen Modus (50 %) und stellte fest: ungetrocknet druckt es schlecht. Sehr weiches TPU (unter 90A) verstopft leicht."},
   {"id": "abs", "name": "ABS", "gruppe": "Technik", "druckwerk": ["ABS"],
    "kurz": "Hitzefest, gut zu schleifen und zu kleben.",
    "duese": "270 (1. Schicht 265)", "bett": "110 (Oberfläche real ≈ 100)", "kammer": "60 (40–60)", "luefter": "0–20 %, max. 40", "trocknen": "75–85 °C, 8–12 h", "flow": "–",
@@ -137,6 +137,8 @@
   {"titel": "Flashforge-Wiki: Fragen und Antworten Creator 5 Pro", "url": "https://wiki.flashforge.com/en/creator-series/creator-5-series/faq_c5p"},
   {"titel": "Flashforge: ABS/ASA-Anleitung (PDF)", "url": "https://wiki.flashforge.com/resource/pictures/filament/print_defect_and_solution/abs_and_asa_usage_guide-en.pdf"},
   {"titel": "Flashforge: Kohlefaser-Filament (PDF)", "url": "https://wiki.flashforge.com/resource/pictures/filament/carbon_fiber_filament_usage_guide.pdf"},
-  {"titel": "Flashforge: Glasfaser-Filament (PDF)", "url": "https://wiki.flashforge.com/resource/pictures/filament/glass_fiber_filament_usage_guide.pdf"}
+  {"titel": "Flashforge: Glasfaser-Filament (PDF)", "url": "https://wiki.flashforge.com/resource/pictures/filament/glass_fiber_filament_usage_guide.pdf"},
+  {"titel": "Notebookcheck: Creator 5 Pro im Test (TPU, Spülmengen)", "url": "https://www.notebookcheck.net/Four-print-heads-less-waste-Creator-5-Pro-tested.1364964.0.html"},
+  {"titel": "printer-hub: Bekannte Probleme (Spülmengen, Spulenarme)", "url": "https://printer-hub.com/posts/flashforge-creator-5-known-issues"}
  ]
 }

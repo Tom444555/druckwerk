@@ -18,7 +18,7 @@
   ["Kamera", "1280 × 720, mit Fehler-Erkennung"],
   ["Sensoren", "Filament-Ende, Knoten, Tür offen, Kammertemperatur"],
   ["Verbindung", "WLAN 2,4 / 5 GHz, USB-Stick (FAT32)"],
-  ["Größe / Gewicht", "52 × 44 × 71 cm mit Spulen, 18 kg"],
+  ["Größe / Gewicht", "52 × 44 × 71 cm mit Schlauch und Spulenhaltern, 18 kg"],
   ["Platz drumherum", "links/hinten 1 cm, rechts 20 cm, vorne 50 cm"],
   ["Lautstärke", "leiser Modus unter 55 dB"],
   ["Slicer", "Flash Studio Desktop (Orca-Ableger), OrcaSlicer"]
@@ -37,10 +37,10 @@
   "Keine automatische Düsenreinigung.",
   "Bett-Wärme ungleichmäßig: am offenen Schwestermodell wurden bei 60 °C Soll fast 8 °C weniger gemessen.",
   "Höchstens vier Filamente pro Druck.",
-  "Die Kamera-Ansicht im Slicer ist langsam (2–3 Bilder pro Sekunde, Übertragung nach 4 Minuten gekappt)."
+  "Die Kamera-Ansicht im Slicer ist laut Test langsam (2–3 Bilder pro Sekunde); ein Leser berichtet zudem, dass die Übertragung nach 4 Minuten endet."
  ],
  "software": [
-  "Flash Studio Desktop (Mac/Windows) ist der Hersteller-Slicer, Flash Studio Mobile die App fürs Handy. Download: flashforge.com → Download Center.",
+  "Flash Studio Desktop (Mac/Windows) ist der Hersteller-Slicer. Die Handy-App heißt im Handbuch Flash Studio Mobile, im Wiki noch Flash Maker. Download: flashforge.com → Download Center.",
   "Mac: Ein Test vom September 2026 nennt Flash Studio nur als Intel-Programm – auf deinem MacBook Air läuft es dann über Rosetta. Vor dem Einrichten prüfen, ob es inzwischen eine Apple-Silicon-Fassung gibt.",
   "OrcaSlicer kann Dateien per WLAN schicken (Host-Typ „Flashforge“, am Drucker „LAN only“ einschalten, Geräte-ID als Schlüssel, Seriennummer mit „SN“ davor) – aber ohne Steuerung und Kamera.",
   "Im reinen LAN-Modus funktioniert die Handy-App nicht.",
@@ -56,12 +56,12 @@
  ],
  "einrichten": [
   {"id": "e1", "t": "Transportsicherungen entfernen", "d": "Auch die drei Schrauben, die das Bett festklemmen – sonst bleibt das Bett schief (Fehler E0148)."},
-  {"id": "e2", "t": "Standplatz", "d": "Fester Tisch, rechts 20 cm und vorne 50 cm frei. Mit vier Spulen braucht er etwa 52 × 61 × 72 cm."},
+  {"id": "e2", "t": "Standplatz", "d": "Fester Tisch, rechts 20 cm und vorne 50 cm frei. Mit vier aufgesteckten Spulen wurden in einem Bericht etwa 52 × 61 × 72 cm gemessen."},
   {"id": "e3", "t": "Firmware aktualisieren", "d": "Mindestens 1.9.7; bekannt ist 1.9.9 vom 07.09.2026. Während des Updates nicht ausschalten."},
   {"id": "e4", "t": "Schmierung prüfen", "d": "X-Schiene, Y-Stangen, die drei Z-Spindeln und die X-Lager mit dem beiliegenden Fett versorgen – viele Geräte kommen fast trocken an."},
   {"id": "e5", "t": "WLAN verbinden", "d": "2,4 GHz nehmen (5 GHz bricht bei manchen ab); Netzname und Passwort ohne Sonderzeichen."},
   {"id": "e6", "t": "Kopf-Versatz kalibrieren", "d": "Vorher die PEI-Platte abnehmen und alle Düsen säubern – die Mess-Scheibe liegt unter der Platte. Dauert 15–20 Minuten."},
-  {"id": "e7", "t": "Leveling und Schwingungs-Ausgleich", "d": "Einmal bei der Einrichtung, danach nur bei schlechter erster Schicht, nach Düsenwechsel oder Umstellen."},
+  {"id": "e7", "t": "Leveling und Schwingungs-Ausgleich", "d": "Beides einmal bei der Einrichtung. Leveling danach nur bei schlechter erster Schicht, nach Düsenwechsel oder Umstellen; Schwingungs-Ausgleich nur bei Geisterbildern oder lockeren Riemen."},
   {"id": "e8", "t": "Rechtwinkligkeit prüfen", "d": "Ein 100-mm-Quadrat drucken und beide Diagonalen messen. Mehr als 0,1 mm Unterschied je 100 mm: innerhalb der Rückgabefrist reklamieren."},
   {"id": "e9", "t": "Kabel-Clip und Abfallbehälter drucken", "d": "Beides aus PETG. Schützt das Kabel von Kopf 4 und hält den Bauraum sauber."},
   {"id": "e10", "t": "druckwerk-Testwürfel von USB", "d": "Auftrag „testwuerfel“ für den Creator 5 Pro drucken und mir sagen: Haftung, Betttemperatur am Bildschirm, Farbversatz. Danach trage ich die bestätigten Werte ein."}
@@ -136,6 +136,8 @@
   {"titel": "drucktipps3d.de: Creator 5 Pro – ein 4-fach Toolchanger", "url": "https://drucktipps3d.de/flashforge-creator-5-pro-ein-4-fach-toolchanger/"},
   {"titel": "China-Gadgets: Creator 5 im Test", "url": "https://www.china-gadgets.de/flashforge-creator-5-pro-multicolor-multitoolhead-3d-drucker-test-snapmaker-u1-konkurrent/"},
   {"titel": "printer-hub: Bekannte Probleme und Lösungen", "url": "https://printer-hub.com/posts/flashforge-creator-5-known-issues"},
-  {"titel": "Flashforge-Wiki: Wartung", "url": "https://wiki.flashforge.com/en/creator-ser/creator-5m-series/maintenance"}
+  {"titel": "Flashforge-Wiki: Wartung", "url": "https://wiki.flashforge.com/en/creator-ser/creator-5m-series/maintenance"},
+  {"titel": "Flashforge-Wiki: Reinigen und Schmieren (1500 Druckstunden)", "url": "https://wiki.flashforge.com/en/creator-ser/creator-5m-series/maintenance/mtc7"},
+  {"titel": "Flashforge-Wiki: Filament-Leitfaden (Deckel/Tür bei PLA + PETG, TPU)", "url": "https://wiki.flashforge.com/en/creator-series/creator-5-series/filament_usage_guide"}
  ]
 }
