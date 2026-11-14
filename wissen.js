@@ -93,7 +93,8 @@ function lager(app, kopf){
     return `<div class="row chev" data-s="${s.id}" style="cursor:pointer"><span class="dot" style="background:${C.farbe(s.farbe)};width:22px;height:22px"></span>
       <div class="grow"><div><b>${C.esc(spName(s))}</b>${s.kopf ? ` <span class="pill">Kopf ${s.kopf}</span>` : ""}</div>
         <div class="small">${zahl(s.rest).toFixed(0)} g von ${zahl(s.start).toFixed(0)} g${s.marke ? " · " + C.esc(s.marke) : ""}</div>
-        <div class="balken" style="margin-top:6px"><i style="width:${p}%;background:${p < 15 ? "var(--red)" : p < 35 ? "var(--orange)" : "var(--green)"}"></i></div></div></div>`; }).join("")}</div>`;
+        <div class="balken" style="margin-top:6px"><i style="width:${p}%;background:${p < 15 ? "var(--red)" : p < 35 ? "var(--orange)" : "var(--green)"}"></i></div>
+        ${zahl(s.start) && p < 15 ? `<div class="small" style="color:var(--red);margin-top:4px">Bald leer – nur noch ${p.toFixed(0)} %</div>` : ""}</div></div>`; }).join("")}</div>`;
   h += `<div style="height:16px"></div><button class="btn" id="spNeu">Spule hinzufügen</button>
     <p class="hint">Das Lager liegt nur in diesem Gerät. Verbrauch buchst du im Auftrag über „Verbrauch vom Filamentlager abbuchen“.</p><div style="height:20px"></div>`;
   app.innerHTML = h;
@@ -128,6 +129,29 @@ function spuleBlatt(s, fertig){
   };
   const w = q("#sWeg"); if (w) w.onclick = () => { lsSet(SP, spulen().filter(x => x.id !== s.id)); d.remove(); C.toast("Gelöscht"); fertig(); };
 }
+// Passende Spule für einen Kopf des Auftrags: erst Kopf-Zuordnung, dann Material + Farbe
+const gleich = (x, y) => (x || "").toLowerCase().replace(/ß/g, "ss").trim() === (y || "").toLowerCase().replace(/ß/g, "ss").trim();
+export function spuleFuer(L, s){
+  const mat = x => x.material.toUpperCase().startsWith(String(s.material).split("-")[0].toUpperCase());
+  return L.find(x => x.kopf === s.slot && mat(x)) || L.find(x => gleich(x.farbe, s.farbe) && mat(x)) || null;
+}
+// Filament-Check im Auftrag: reicht das Lager, was kostet das Material? (leer, wenn keine Spulen eingetragen)
+export function filamentCheck(a, ctx){
+  C = ctx;
+  const L = spulen(); if (!L.length) return "";
+  const gr = String(a.gramm).split(",").map(zahl), zu = a.slots.map(s => spuleFuer(L, s)), bedarf = {};
+  zu.forEach((x, i) => { if (x) bedarf[x.id] = (bedarf[x.id] || 0) + gr[i]; });
+  let kosten = 0, mitPreis = 0; const ohne = [];
+  const zeilen = a.slots.map((s, i) => { const x = zu[i], g = gr[i] || 0;
+    if (x && zahl(x.preis) && zahl(x.start)) { kosten += g * zahl(x.preis) / zahl(x.start); mitPreis++; } else ohne.push(s.slot);
+    const fehlt = x ? bedarf[x.id] - zahl(x.rest) : 0;
+    return `<div class="row"><span class="dot" style="background:${C.farbe(s.farbe)};width:22px;height:22px"></span>
+      <div class="grow"><div>Kopf ${s.slot}: ${g.toFixed(1)} g</div><div class="small">${x ? C.esc(spName(x)) + " · " + zahl(x.rest).toFixed(0) + " g da" : "keine passende Spule im Lager"}</div></div>
+      <span class="val" style="color:${!x ? "var(--sub)" : fehlt > 0 ? "var(--red)" : "var(--green)"}">${!x ? "–" : fehlt > 0 ? `es fehlen ${Math.ceil(fehlt)} g` : "reicht"}</span></div>`; }).join("");
+  return `<h2>Filament-Check</h2><div class="card">${zeilen}
+    ${mitPreis ? `<div class="row"><div class="grow">Materialkosten${ohne.length ? `<div class="small">ohne Kopf ${ohne.join(", ")} (kein Preis hinterlegt)</div>` : ""}</div><span class="val">ca. ${kosten.toFixed(2).replace(".", ",")} €</span></div>` : ""}</div>
+    <p class="hint">Aus „Mein Lager“ (Material). Mehrere Köpfe auf derselben Spule werden zusammengezählt.</p>`;
+}
 // Aus dem Auftrag: Gramm je Kopf von den passenden Spulen abziehen
 export function abbuchen(a, ctx){
   C = ctx;
@@ -139,9 +163,7 @@ export function abbuchen(a, ctx){
     d.querySelector("#bL").onclick = () => { d.remove(); U.mat = "lager"; C.go("material"); };
     return;
   }
-  const gleich = (x, y) => (x || "").toLowerCase().replace(/ß/g, "ss").trim() === (y || "").toLowerCase().replace(/ß/g, "ss").trim();
-  const vor = s => (L.find(x => x.kopf === s.slot && x.material.toUpperCase().startsWith(String(s.material).split("-")[0].toUpperCase()))
-    || L.find(x => gleich(x.farbe, s.farbe) && x.material.toUpperCase().startsWith(String(s.material).split("-")[0].toUpperCase())) || {}).id || "";
+  const vor = s => (spuleFuer(L, s) || {}).id || "";
   const d = C.sheet(`<h3>Verbrauch abbuchen</h3><p>${C.esc(a.name)}${schon ? `<br><b>Schon abgebucht am ${de(schon)}</b> – nur noch einmal buchen, wenn du erneut gedruckt hast.` : ""}</p>
     <div class="card">${a.slots.map((s, i) => { const v = vor(s);
       return `<div class="row"><span class="dot" style="background:${C.farbe(s.farbe)};width:22px;height:22px"></span>
@@ -161,7 +183,7 @@ export function abbuchen(a, ctx){
     const bedarf = pruefen(); if (!Object.keys(bedarf).length) return C.toast("Keine Spule gewählt");
     for (const [id, g] of Object.entries(bedarf)) { const x = L.find(y => y.id === id); x.rest = Math.max(0, +(zahl(x.rest) - g).toFixed(1)); }
     lsSet(SP, L); const G = ls("druckwerk_gebucht", {}); G[a.ordner] = heute(); lsSet("druckwerk_gebucht", G);
-    d.remove(); C.toast("Abgebucht");
+    d.remove(); C.toast("Abgebucht"); if (C.fertig) C.fertig();
   };
 }
 
@@ -191,7 +213,14 @@ function zubehoer(app, kopf){
 /* ================= Drucker ================= */
 function drucker(app){
   const c = D.c, neu = () => drucker(app);
-  let h = `<h1>Creator 5 Pro</h1>${seg("dr", [["ueberblick", "Überblick"], ["einrichten", "Einrichten"], ["wartung", "Wartung"], ["hilfe", "Hilfe"]])}`;
+  let h = `<h1>Creator 5 Pro</h1>${seg("dr", [["ueberblick", "Überblick"], ["einrichten", "Einrichten"], ["wartung", "Wartung"], ["hilfe", "Hilfe"], ["tagebuch", "Tagebuch"]]).replace('class="seg"', 'class="seg fuenf"')}`;
+  if (U.dr === "tagebuch") {
+    app.innerHTML = h + `<div id="tbListe" style="margin-top:12px"><div class="empty">Wird geladen …</div></div>`;
+    binden(app, neu);
+    import("./tagebuch.js").then(T => { const el = $("#tbListe", app); if (el && U.dr === "tagebuch") T.liste(el, C, neu); })
+      .catch(() => { const el = $("#tbListe", app); if (el) el.innerHTML = `<div class="empty">Konnte nicht geladen werden.</div>`; });
+    return;
+  }
   if (U.dr === "ueberblick") {
     const k = C.DRUCKER.kobrax;
     h += `<h2>Steckbrief</h2><div class="card">${c.steckbrief.map(([a, b]) => `<div class="row"><div class="grow">${C.esc(a)}</div><span class="val" style="max-width:62%">${C.esc(b)}</span></div>`).join("")}</div>
@@ -243,7 +272,7 @@ function workflow(app){
     <h2>${g.schritte.length} Schritte</h2><div class="card">${g.schritte.map((s, i) => `<div class="row oben"><span class="nr">${i + 1}</span>
       <div class="grow"><div><b>${C.esc(s.t)}</b> <span class="pill">${C.esc(s.wer)}</span></div><div class="small">${C.esc(s.d)}</div></div></div>`).join("")}</div>
     <div style="height:16px"></div><button class="btn" id="wStart">Auftrag so beginnen</button>
-    <p class="hint">Füllt unter „Neu“ eine Vorlage aus, die genau die Angaben abfragt, die Claude für diesen Weg braucht.</p><div style="height:20px"></div>`;
+    <p class="hint">Öffnet unter „Neu“ den geführten Auftrag mit genau den Fragen, die Claude für diesen Weg braucht.</p><div style="height:20px"></div>`;
   } else if (U.wf === "werkzeuge") {
     h += w.werkzeuge.map(g => `<h2>${C.esc(g.gruppe)}</h2><div class="card">${g.liste.map(t => { const innen = `<div class="grow"><div><b>${C.esc(t.name)}</b> <span class="pill">${C.esc(t.wo)}</span></div>
         <div class="small">${C.esc(t.d)}</div>${t.preis && t.preis !== "–" ? `<div class="small" style="color:var(--text);margin-top:3px">${C.esc(t.preis)}</div>` : ""}</div>`;
@@ -261,7 +290,7 @@ function workflow(app){
   }
   app.innerHTML = h;
   binden(app, neu);
-  const st = $("#wStart"); if (st) st.onclick = () => { const g = w.wege.find(x => x.id === U.weg) || w.wege[0]; C.neuStart(g.vorlage, g.zweck); };
+  const st = $("#wStart"); if (st) st.onclick = () => { const g = w.wege.find(x => x.id === U.weg) || w.wege[0]; C.neuStart("", g.zweck, "", g.id); };
   $$("[data-v2]", app).forEach(b => b.onclick = () => { let L = ls("druckwerk_wunsch", []); L = L.includes(b.dataset.v2) ? L.filter(x => x !== b.dataset.v2) : [...L, b.dataset.v2];
     lsSet("druckwerk_wunsch", L); const y = scrollY; neu(); scrollTo(0, y); });
   const text = () => "druckwerk: Bitte diese Vorschläge aus der App umsetzen:\n" + w.vorschlaege.filter(v => ls("druckwerk_wunsch", []).includes(v.id)).map(v => "- " + v.t).join("\n");

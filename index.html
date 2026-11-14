@@ -115,6 +115,9 @@ input.zahl{width:84px;text-align:right;background:var(--fill);border-radius:8px;
 ul.liste{margin:0;padding:8px 16px 8px 34px}ul.liste li{padding:5px 0;font-size:15px}
 .sheet .row input,.sheet .row select{margin:0;padding:0;background:none;text-align:right;border-radius:0}
 .seg+h2{margin-top:18px}
+.seg.fuenf button{font-size:13px;padding:7px 1px;letter-spacing:-.2px}
+.row.frage{display:block}
+.frage textarea{min-height:64px;padding:6px 0 0}.frage .chips{margin:8px 0 0}.frage .chip{background:var(--fill)}.frage .chip.on{background:var(--blue)}
 </style>
 </head>
 <body>
@@ -211,8 +214,8 @@ async function werkstattTab(){
 
 /* ---------- Material, Drucker, Workflow (wissen.js + wissen/*.json) ---------- */
 const kctx = () => ({DRUCKER, farbe, esc, toast, sheet, go: t => { tab = t; zeige(); },
-  neuStart: (text, zweck, material) => { if (text) F.text = text; if (zweck) F.zweck = zweck; F.drucker = "c5pro";
-    if (material) F.slots[0].material = material; tab = "neu"; zeige(); }});
+  neuStart: (text, zweck, material, weg) => { if (text) F.text = text; if (zweck) F.zweck = zweck; F.drucker = "c5pro";
+    if (material) F.slots[0].material = material; if (weg) { F.modus = "gefuehrt"; F.weg = weg; F._farben = ""; } tab = "neu"; zeige(); }});
 async function wissenTab(){
   const meinTab = tab;
   try { const K = await import("./wissen.js"); if (tab !== meinTab) return; await K.seite(app, kctx(), tab); }
@@ -273,6 +276,7 @@ function detail(ordner){
       <span class="val">${(parseFloat(gr[i])||0).toFixed(1)} g</span></div>`).join("")}
   </div>
   ${a.gemischt ? `<div class="warn">⚠ Unterschiedliche Materialien – Haftung und Temperaturen prüfen.</div>` : ""}
+  <div id="fcheck"></div>
   <h2>Einstellungen</h2>
   <div class="card">
     <div class="row"><div class="grow">Schichthöhe</div><span class="val">${esc(a.schicht)} mm (${esc(a.stufe)})</span></div>
@@ -291,13 +295,17 @@ function detail(ordner){
   <a class="btn grey" href="${pfad}BERICHT.md" target="_blank">Bericht öffnen</a>
   ${a.quelle ? `<a class="btn grey" href="${esc(a.quelle)}" target="_blank" rel="noopener">Original auf ${esc(quellName(a.quelle))} öffnen</a>` : ""}
   <p class="hint">Datei auf einen FAT32-USB-Stick kopieren → am Drucker unter USB auswählen → Platte frei? → Start.</p>
+  <div id="tbAuf"></div>
   <h2>Verwalten</h2>
   <button class="btn rot" id="loeschen">Auftrag löschen</button>
   <div style="height:20px"></div>`;
   $("#zur").onclick = () => { tab = "auftraege"; zeige(); };
   $("#inWerk").onclick = () => { tab = "werkstatt:l:" + a.ordner; zeige(); };
   $("#schichten").onclick = async () => { try { (await import("./schichten.js")).zeigen(pfad + encodeURIComponent(a.gcode), a.slots.map(s => farbe(s.farbe)), sheet); } catch(e) { toast("Konnte nicht geladen werden"); } };
-  $("#buchen").onclick = async () => { try { (await import("./wissen.js")).abbuchen(a, kctx()); } catch(e) { toast("Konnte nicht geladen werden"); } };
+  const check = async () => { try { const el = $("#fcheck"); if (el) el.innerHTML = (await import("./wissen.js")).filamentCheck(a, kctx()); } catch(e) {} };
+  check();
+  $("#buchen").onclick = async () => { try { (await import("./wissen.js")).abbuchen(a, {...kctx(), fertig: check}); } catch(e) { toast("Konnte nicht geladen werden"); } };
+  import("./tagebuch.js").then(T => { const el = $("#tbAuf"); if (el) T.imAuftrag(el, a, kctx()); }).catch(() => {});
   $("#loeschen").onclick = () => loeschenFragen(a);
   vorschau(pfad, a);
 }
@@ -346,26 +354,68 @@ async function vorschau(pfad, a){
 
 /* ---------- Neuer Auftrag (erzeugt den Prompt für Claude) ---------- */
 const F = { drucker:"c5pro", text:"", link:"", zweck:"deko", qualitaet:"standard", stuetzen:"auto",
-  slots:[{material:"PLA", farbe:"schwarz"}] };
+  slots:[{material:"PLA", farbe:"schwarz"}], modus:"frei", weg:"technik", antw:{}, _farben:"" };
+let WF = null;   // wissen/workflow.json – Wege und Fragen für den geführten Auftrag
+const ANHANG = {technik:"Fotos mit Maßband hänge ich an.", kunst:"Fotos als Stilvorlage hänge ich an.",
+  fertig:"STL/3MF hänge ich an, falls der Link nicht reicht.", foto:"Bild und KI-Datei (STL/GLB/3MF) hänge ich an.", scan:"Scan-Datei (OBJ/STL) und Fotos hänge ich an."};
 function neu(){
+  if (F.modus === "gefuehrt" && !WF) {
+    app.innerHTML = `<h1>Neuer Auftrag</h1><div class="empty">Wird geladen …</div>`;
+    fetch("wissen/workflow.json", {cache:"no-store"}).then(r => r.json()).then(w => { WF = w; if (tab === "neu") neu(); })
+      .catch(() => { F.modus = "frei"; toast("Fragen konnten nicht geladen werden"); if (tab === "neu") neu(); });
+    return;
+  }
+  const gef = F.modus === "gefuehrt";
+  if (gef) F.drucker = "c5pro";
+  const weg = gef ? (WF.wege.find(x => x.id === F.weg) || WF.wege[0]) : null;
+  const fragen = weg ? (weg.fragen || []) : [];
+  if (weg) {
+    F.weg = weg.id;
+    const fv = fragen.find(q => q.typ === "farben" && q.vorgabe);   // Farbvorgabe des Wegs (Kunst) einmal übernehmen
+    if (fv && F._farben !== weg.id && F.slots.length === 1) F.slots = fv.vorgabe.slice(0, 4).map(f => ({material:F.slots[0].material, farbe:f}));
+    F._farben = weg.id;
+  }
+  const A = weg ? (F.antw[weg.id] = F.antw[weg.id] || {}) : {};
+  const wert = q => A[q.id] ?? (q.typ === "schalter" ? !!q.standard : "");
   const d = DRUCKER[F.drucker] || {filamente:{PLA:1}};
   const mats = Object.keys(d.filamente);
   F.slots.forEach(s => { if (!mats.includes(s.material)) s.material = "PLA"; });
   const seg = (k, opts) => `<div class="seg">${opts.map(([v,l]) => `<button data-k="${k}" data-v="${v}" class="${F[k]===v?"on":""}">${l}</button>`).join("")}</div>`;
   const hitze = F.slots.some(s => /ABS|ASA|PA/.test(s.material));
+  const frage = q => {
+    const ph = esc(q.platzhalter || ""), lab = `<div class="small">${esc(q.label)}</div>`;
+    if (q.typ === "farben") return "";   // steht unten unter „Farben & Material“
+    if (q.typ === "lang") return `<label class="row frage">${lab}<textarea data-q="${q.id}" placeholder="${ph}">${esc(wert(q))}</textarea></label>`;
+    if (q.typ === "wahl") return `<div class="row frage">${lab}<div class="chips">${q.optionen.map(o =>
+      `<button class="chip ${wert(q) === o ? "on" : ""}" data-qw="${q.id}" data-v="${esc(o)}">${esc(o)}</button>`).join("")}</div></div>`;
+    if (q.typ === "schalter") return `<div class="row"><div class="grow">${esc(q.label)}</div>
+      <button class="haken ${wert(q) ? "on" : ""}" data-qs="${q.id}" aria-label="${esc(q.label)}">${wert(q) ? "✓" : ""}</button></div>`;
+    if (q.typ === "zahl") return `<div class="row"><div class="grow">${esc(q.label)}</div>
+      <input type="text" inputmode="decimal" class="zahl" data-q="${q.id}" value="${esc(wert(q))}" placeholder="${ph}"><span class="small" style="width:26px">${esc(q.einheit || "")}</span></div>`;
+    return `<label class="row frage">${lab}<input type="text" data-q="${q.id}" value="${esc(wert(q))}" placeholder="${ph}" style="margin-top:4px"></label>`;
+  };
+  const farbFrage = fragen.find(q => q.typ === "farben");
+  const draussen = gef && /draußen|Auto|Hitze/.test(A.ort || "") && F.slots.some(s => /PLA/.test(s.material));
+  const modelleFinden = `<h2>Modelle finden</h2>
+  <div class="card">${[["MakerWorld","https://makerworld.com/de"],["Printables","https://www.printables.com"],["Thangs (sucht überall)","https://thangs.com"],
+    ["MyMiniFactory – Scan the World","https://www.myminifactory.com/scantheworld/"],["Thingiverse","https://www.thingiverse.com"]].map(([n,u]) =>
+    `<a class="row chev" href="${u}" target="_blank" rel="noopener" style="color:inherit;text-decoration:none"><div class="grow">${n}</div></a>`).join("")}</div>`;
   app.innerHTML = `
   <h1>Neuer Auftrag</h1>
+  ${seg("modus", [["frei","Frei"],["gefuehrt","Geführt"]])}
+  ${gef ? `
+  <h2>Womit fängst du an?</h2><div class="chips">${WF.wege.map(x => `<button class="chip ${x.id === weg.id ? "on" : ""}" data-weg="${x.id}">${esc(x.name)}</button>`).join("")}</div>
+  <p class="hint">${esc(weg.kurz)} Nur ausfüllen, was du weißt – leere Felder fragt Claude nach.</p>
+  <h2>${esc(weg.name)}</h2><div class="card">${fragen.map(frage).join("")}</div>
+  ${weg.id === "fertig" ? modelleFinden : ""}` : `
   <h2>Drucker</h2>${seg("drucker", [["c5pro","Creator 5 Pro"],["kobrax","Kobra X (früher)"]])}
   ${hitze && F.drucker === "kobrax" ? `<div class="warn">ABS/ASA/Nylon besser auf dem geschlossenen Creator 5 Pro drucken.</div>` : ""}
   <h2>Was soll gedruckt werden?</h2>
   <div class="card"><textarea id="txt" placeholder="z. B. Wandhalter für 3 Schraubendreher, 2 Schrauben, Logo vorne">${esc(F.text)}</textarea>
     <div class="row"><input type="text" id="lnk" placeholder="Link zu Modell (optional)" value="${esc(F.link)}"></div></div>
   <p class="hint">Fertiges Modell gefunden? Link oben einfügen – Claude lädt nichts selbst herunter, schick die STL-Datei bei Bedarf mit.</p>
-  <h2>Modelle finden</h2>
-  <div class="card">${[["MakerWorld","https://makerworld.com/de"],["Printables","https://www.printables.com"],["Thangs (sucht überall)","https://thangs.com"],
-    ["MyMiniFactory – Scan the World","https://www.myminifactory.com/scantheworld/"],["Thingiverse","https://www.thingiverse.com"]].map(([n,u]) =>
-    `<a class="row chev" href="${u}" target="_blank" rel="noopener" style="color:inherit;text-decoration:none"><div class="grow">${n}</div></a>`).join("")}</div>
-  <h2>Farben &amp; Material (${F.slots.length}/4)</h2>
+  ${modelleFinden}`}
+  <h2>${gef && farbFrage ? esc(farbFrage.label.replace(/\s*\(.*\)/, "")) + " &amp; Material" : "Farben &amp; Material"} (${F.slots.length}/4)</h2>
   <div class="card">${F.slots.map((s,i) => `
     <div class="row"><span class="dot" style="background:${farbe(s.farbe)};width:22px;height:22px"></span>
       <input type="text" data-f="${i}" value="${esc(s.farbe)}" style="flex:1" placeholder="Farbe">
@@ -373,6 +423,7 @@ function neu(){
       ${F.slots.length > 1 ? `<button class="back" data-x="${i}" style="color:var(--red)">−</button>` : ""}</div>`).join("")}
     ${F.slots.length < 4 ? `<div class="row"><button class="back" id="plus">＋ Farbe hinzufügen</button></div>` : ""}
   </div>
+  ${draussen ? `<div class="warn">Für ${esc(A.ort)} besser ASA statt PLA wählen – PLA wird ab etwa 55 °C weich.</div>` : ""}
   <h2>Zweck</h2>${seg("zweck", [["deko","Deko/Figur"],["funktion","Funktionsteil"],["stabil","Sehr stabil"]])}
   <h2>Qualität</h2>${seg("qualitaet", [["fein","Fein"],["standard","Standard"],["schnell","Schnell"]])}
   <h2>Stützen</h2>${seg("stuetzen", [["aus","Keine"],["auto","Automatisch"],["baum","Baum"]])}
@@ -385,16 +436,27 @@ function neu(){
     const sch = {kobrax:{fein:"0.12",standard:"0.20",schnell:"0.28"}, c5pro:{fein:"0.12",standard:"0.20",schnell:"0.24"}}[F.drucker][F.qualitaet];
     const z = {deko:"Deko – 15 % Füllung", funktion:"Funktionsteil – 30 % Füllung, 4 Wände", stabil:"sehr stabil – 50 % Füllung, 5 Wände"}[F.zweck];
     const st = {aus:"keine Stützen", auto:"Stützen automatisch", baum:"Baumstützen"}[F.stuetzen];
+    const koepfe = F.slots.map((s,i) => `${F.drucker==="kobrax"?"Spule":"Kopf"} ${i+1}: ${s.material} ${s.farbe}`).join("\n");
+    if (gef) {
+      const zeilen = fragen.filter(q => q.typ !== "farben").map(q => { const v = wert(q);
+        if (q.typ === "schalter") return v ? (q.text || q.label) : "";
+        const s = String(v).trim(); return s ? `${q.label.replace(/\?$/, "")}: ${s}${q.einheit ? " " + q.einheit : ""}` : ""; }).filter(Boolean);
+      return `druckwerk: ${weg.name} (geführter Auftrag)\nDrucker: ${d.name || "Creator 5 Pro"}\n` + (zeilen.length ? zeilen.join("\n") + "\n" : "") +
+        koepfe + `\nZweck: ${z}\nSchicht: ${sch} mm, ${st}\n` + (ANHANG[weg.id] || "Fotos/Dateien hänge ich an.");
+    }
     return `druckwerk: ${F.text || "…"}\n` + (F.link ? `Modell: ${F.link}\n` : "") +
-      `Drucker: ${d.name || F.drucker}\n` +
-      F.slots.map((s,i) => `${F.drucker==="kobrax"?"Spule":"Kopf"} ${i+1}: ${s.material} ${s.farbe}`).join("\n") +
-      `\nZweck: ${z}\nSchicht: ${sch} mm, ${st}`;
+      `Drucker: ${d.name || F.drucker}\n` + koepfe + `\nZweck: ${z}\nSchicht: ${sch} mm, ${st}`;
   };
-  $("#pr").textContent = prompt();
-  $("#oeffnen").href = "https://claude.ai/new?q=" + encodeURIComponent(prompt());
+  const aktuell = () => { $("#pr").textContent = prompt(); $("#oeffnen").href = "https://claude.ai/new?q=" + encodeURIComponent(prompt()); };
+  aktuell();
   app.querySelectorAll(".seg button").forEach(b => b.onclick = () => { F[b.dataset.k] = b.dataset.v; neu(); });
-  $("#txt").oninput = e => { F.text = e.target.value; $("#pr").textContent = prompt(); $("#oeffnen").href = "https://claude.ai/new?q=" + encodeURIComponent(prompt()); };
-  $("#lnk").oninput = e => { F.link = e.target.value; $("#pr").textContent = prompt(); };
+  const txt = $("#txt"); if (txt) txt.oninput = e => { F.text = e.target.value; aktuell(); };
+  const lnk = $("#lnk"); if (lnk) lnk.oninput = e => { F.link = e.target.value; aktuell(); };
+  app.querySelectorAll("[data-weg]").forEach(b => b.onclick = () => { const w = WF.wege.find(x => x.id === b.dataset.weg);
+    F.weg = w.id; if (w.zweck) F.zweck = w.zweck; neu(); });
+  app.querySelectorAll("[data-q]").forEach(e => e.oninput = () => { A[e.dataset.q] = e.value; aktuell(); });
+  app.querySelectorAll("[data-qw]").forEach(b => b.onclick = () => { A[b.dataset.qw] = A[b.dataset.qw] === b.dataset.v ? "" : b.dataset.v; neu(); });
+  app.querySelectorAll("[data-qs]").forEach(b => b.onclick = () => { const q = fragen.find(x => x.id === b.dataset.qs); A[q.id] = !wert(q); neu(); });
   app.querySelectorAll("[data-f]").forEach(e => e.onchange = () => { F.slots[e.dataset.f].farbe = e.value; neu(); });
   app.querySelectorAll("[data-m]").forEach(e => e.onchange = () => { F.slots[e.dataset.m].material = e.value; neu(); });
   app.querySelectorAll("[data-x]").forEach(e => e.onclick = () => { F.slots.splice(+e.dataset.x, 1); neu(); });

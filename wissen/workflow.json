@@ -3,6 +3,7 @@
  "wege": [
   {"id": "technik", "name": "Technisches Teil", "kurz": "Halter, Adapter, Gehäuse – muss passen und halten.",
    "vorlage": "Technisches Teil: …\nMaße (mm): …\nBelastung / Gewicht: …\nEinsatzort (drinnen, draußen, Auto, Hitze): …\nBefestigung (Schrauben, Kleben, Klemmen): …\nFotos mit Maßband hänge ich an.", "zweck": "funktion",
+   "fragen": [{"id": "zweck", "label": "Wozu dient das Teil?", "typ": "lang", "platzhalter": "z. B. Wandhalter für 3 Schraubendreher, hängt neben der Werkbank"}, {"id": "breite", "label": "Breite", "typ": "zahl", "einheit": "mm", "platzhalter": "80"}, {"id": "tiefe", "label": "Tiefe", "typ": "zahl", "einheit": "mm", "platzhalter": "40"}, {"id": "hoehe", "label": "Höhe", "typ": "zahl", "einheit": "mm", "platzhalter": "30"}, {"id": "last", "label": "Belastung / Gewicht", "typ": "text", "platzhalter": "z. B. 2 kg, wird oft angefasst"}, {"id": "ort", "label": "Einsatzort", "typ": "wahl", "optionen": ["drinnen", "Werkstatt", "draußen", "Auto", "Hitze"]}, {"id": "befestigung", "label": "Befestigung", "typ": "wahl", "optionen": ["Schrauben", "Kleben", "Klemmen", "Stecken", "Magnet", "steht frei"]}, {"id": "passung", "label": "Muss passen zu", "typ": "lang", "platzhalter": "vorhandenes Teil, Maße davon (z. B. Rohr Ø 22 mm, Spiel 0,2 mm)"}, {"id": "sonst", "label": "Weitere Wünsche", "typ": "lang", "platzhalter": "z. B. Logo vorne, abgerundete Kanten"}],
    "schritte": [
     {"t": "Aufgabe beschreiben", "wer": "Du", "d": "Wozu dient das Teil, was trägt es, wo sitzt es? Maße mit dem Messschieber abnehmen, Foto mit Maßband dazu."},
     {"t": "Rückfragen und Vorschlag", "wer": "Claude", "d": "Ich frage nur, was fehlt, und schlage Material, Druckrichtung und Befestigung vor (z. B. ASA fürs Auto, PETG für die Werkstatt)."},
@@ -16,6 +17,7 @@
    ]},
   {"id": "kunst", "name": "Kunst & Deko", "kurz": "Reliefs, Figuren, Schmuckstücke – muss gut aussehen.",
    "vorlage": "Deko / Kunst: …\nStimmung und Stil (detailreich, geschwungen, naturnah): …\nGröße (breit × hoch): …\nFarben (bis 4): schwarz, gold, rot, weiß\nFotos als Stilvorlage hänge ich an.\nBitte zuerst 3–4 Varianten als Bild.", "zweck": "deko",
+   "fragen": [{"id": "motiv", "label": "Motiv", "typ": "lang", "platzhalter": "z. B. Lebensbaum mit Gitarre in der Krone"}, {"id": "stil", "label": "Stil und Stimmung", "typ": "text", "platzhalter": "detailreich, geschwungen, naturnah"}, {"id": "breite", "label": "Breite", "typ": "zahl", "einheit": "mm", "platzhalter": "150"}, {"id": "hoehe", "label": "Höhe", "typ": "zahl", "einheit": "mm", "platzhalter": "200"}, {"id": "bauart", "label": "Bauart", "typ": "wahl", "optionen": ["Relief", "Figur"]}, {"id": "farben", "label": "Farben (bis 4)", "typ": "farben", "vorgabe": ["schwarz", "gold", "rot", "weiß"]}, {"id": "varianten", "label": "Erst 3–4 Varianten als Bild", "typ": "schalter", "standard": true, "text": "Bitte zuerst 3–4 Varianten als Bild zeigen."}, {"id": "sonst", "label": "Weitere Wünsche", "typ": "lang", "platzhalter": "z. B. Schriftzug unten, zum Aufhängen"}],
    "schritte": [
     {"t": "Vorlage sammeln", "wer": "Du", "d": "Fotos, Stimmung, Größe, bis zu vier Farben. Fotos sind Stilvorlage – ich baue einen eigenen Entwurf, keinen Nachbau fremder Motive oder Marken."},
     {"t": "3–4 Varianten als Bild", "wer": "Claude", "d": "In Sekunden gerechnet, nebeneinander. Du wählst oder mischst („Krone von 2, Wurzeln von 4“)."},
@@ -28,6 +30,7 @@
    ]},
   {"id": "fertig", "name": "Fertiges Modell", "kurz": "Aus dem Netz laden, anpassen, drucken.",
    "vorlage": "Fertiges Modell drucken: …\nLink: …\nGröße ändern auf: …\nFarben: …", "zweck": "deko",
+   "fragen": [{"id": "link", "label": "Link zum Modell", "typ": "text", "platzhalter": "https://makerworld.com/…"}, {"id": "groesse", "label": "Zielgröße", "typ": "text", "platzhalter": "z. B. 120 mm hoch oder 150 %"}, {"id": "farben", "label": "Farben", "typ": "farben"}, {"id": "sonst", "label": "Weitere Wünsche", "typ": "lang", "platzhalter": "z. B. Sockel weglassen, Teile einzeln drucken"}],
    "schritte": [
     {"t": "Finden", "wer": "Du", "d": "MakerWorld, Printables, Thangs (sucht überall). Auf die Lizenz achten, wenn du etwas weitergeben willst."},
     {"t": "Link oder Datei schicken", "wer": "Du", "d": "Ich kann nichts selbst herunterladen: STL oder 3MF bitte anhängen oder in der App unter Bibliothek importieren."},
@@ -37,6 +40,7 @@
    ]},
   {"id": "foto", "name": "Aus Foto per KI", "kurz": "Ein Bild wird zum 3D-Rohling.",
    "vorlage": "KI-Rohling aufbereiten: …\nDatei (STL/GLB/3MF) hänge ich an.\nGröße: …\nFarben: …\nBitte reparieren, Standfläche anlegen, in Farben zerlegen und zuerst ein Bild zeigen.", "zweck": "deko",
+   "fragen": [{"id": "motiv", "label": "Was zeigt das Bild?", "typ": "text", "platzhalter": "z. B. Figur meines Hundes"}, {"id": "groesse", "label": "Zielgröße", "typ": "text", "platzhalter": "z. B. 100 mm hoch"}, {"id": "farben", "label": "Farben", "typ": "farben"}, {"id": "standflaeche", "label": "Standfläche anlegen", "typ": "wahl", "optionen": ["ja", "nein"]}, {"id": "sonst", "label": "Weitere Wünsche", "typ": "lang", "platzhalter": "z. B. dünne Stellen verstärken"}],
    "schritte": [
     {"t": "Gutes Bild", "wer": "Du", "d": "Motiv freigestellt, neutraler Hintergrund, gleichmäßiges Licht. Mehrere Ansichten verbessern die Rückseite deutlich. Nur eigene oder freie Motive."},
     {"t": "Rohling erzeugen", "wer": "Du", "d": "Meshy gilt als stärkstes Werkzeug für druckfertige Netze, Tripo ist schnell, Hunyuan3D ist kostenlos nutzbar."},
@@ -46,6 +50,7 @@
    ]},
   {"id": "scan", "name": "Echtes Ding scannen", "kurz": "Etwas Vorhandenes nachbilden oder passgenau umbauen.",
    "vorlage": "Scan verarbeiten: …\nDatei (OBJ/STL) hänge ich an.\nEin echtes Maß zur Kontrolle (mm): …\nZiel: Kopie / passgenauer Halter dazu / Ersatzteil", "zweck": "funktion",
+   "fragen": [{"id": "was", "label": "Was wurde gescannt?", "typ": "text", "platzhalter": "z. B. Griff vom Gartentor"}, {"id": "mass", "label": "Kontrollmaß", "typ": "text", "platzhalter": "z. B. Breite 64 mm"}, {"id": "ziel", "label": "Ziel", "typ": "wahl", "optionen": ["Kopie", "Halter", "Ersatzteil"]}, {"id": "sonst", "label": "Weitere Wünsche", "typ": "lang", "platzhalter": "z. B. Halter für die Wand, Spiel 0,3 mm"}],
    "schritte": [
     {"t": "Scannen", "wer": "Du", "d": "Mit iPad Pro oder iPhone rundherum aufnehmen (Scaniverse rechnet direkt auf dem Gerät und hat eine Gratis-Stufe, Polycam und KIRI Engine haben Gratis-Stufen). Mattes Objekt, viel Licht."},
     {"t": "Ein Maß mitgeben", "wer": "Du", "d": "Scans sind selten maßstäblich. Ein gemessenes Maß reicht, damit ich die Größe festlege."},
