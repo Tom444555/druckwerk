@@ -1,0 +1,43 @@
+{
+ "name": "kalibrier_4_passung",
+ "drucker": "c5pro",
+ "drucker_name": "Flashforge Creator 5 Pro",
+ "datum": "2026-11-14",
+ "ordner": "2026-11-14_kalibrier_4_passung_c5pro",
+ "gcode": "kalibrier_4_passung_c5pro.gcode",
+ "zeit": "18m 13s",
+ "gramm": "7.26",
+ "meter": "2.43 m",
+ "duese": "210",
+ "bett": "60",
+ "schicht": "0.20",
+ "stufe": "Standard",
+ "infill": 20,
+ "duese_mm": "0.4",
+ "waende": null,
+ "stuetzen": "aus",
+ "brim": "auto",
+ "gemischt": false,
+ "slots": [
+  {
+   "slot": 1,
+   "material": "PLA",
+   "farbe": "schwarz"
+  }
+ ],
+ "teile": [
+  {
+   "datei": "passung.stl",
+   "slot": 1
+  }
+ ],
+ "quelle": "",
+ "teile_app": [
+  {
+   "datei": "passung.stl",
+   "slot": 1
+  }
+ ],
+ "vorschau": "vorschau.png",
+ "projekt": "kalibrier_4_passung_c5pro.3mf"
+}

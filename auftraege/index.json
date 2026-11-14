@@ -160,5 +160,259 @@
   ],
   "vorschau": "vorschau.png",
   "projekt": "loopsmiths_amp_c5pro.3mf"
+ },
+ {
+  "name": "kalibrier_5_bruecke",
+  "drucker": "c5pro",
+  "drucker_name": "Flashforge Creator 5 Pro",
+  "datum": "2026-11-14",
+  "ordner": "2026-11-14_kalibrier_5_bruecke_c5pro",
+  "gcode": "kalibrier_5_bruecke_c5pro.gcode",
+  "zeit": "49m 58s",
+  "gramm": "29.75",
+  "meter": "9.98 m",
+  "duese": "210",
+  "bett": "60",
+  "schicht": "0.20",
+  "stufe": "Standard",
+  "infill": 15,
+  "duese_mm": "0.4",
+  "waende": null,
+  "stuetzen": "aus",
+  "brim": "auto",
+  "gemischt": false,
+  "slots": [
+   {
+    "slot": 1,
+    "material": "PLA",
+    "farbe": "schwarz"
+   }
+  ],
+  "teile": [
+   {
+    "datei": "bruecke.stl",
+    "slot": 1
+   }
+  ],
+  "quelle": "",
+  "teile_app": [
+   {
+    "datei": "bruecke.stl",
+    "slot": 1
+   }
+  ],
+  "vorschau": "vorschau.png",
+  "projekt": "kalibrier_5_bruecke_c5pro.3mf"
+ },
+ {
+  "name": "kalibrier_4_passung",
+  "drucker": "c5pro",
+  "drucker_name": "Flashforge Creator 5 Pro",
+  "datum": "2026-11-14",
+  "ordner": "2026-11-14_kalibrier_4_passung_c5pro",
+  "gcode": "kalibrier_4_passung_c5pro.gcode",
+  "zeit": "18m 13s",
+  "gramm": "7.26",
+  "meter": "2.43 m",
+  "duese": "210",
+  "bett": "60",
+  "schicht": "0.20",
+  "stufe": "Standard",
+  "infill": 20,
+  "duese_mm": "0.4",
+  "waende": null,
+  "stuetzen": "aus",
+  "brim": "auto",
+  "gemischt": false,
+  "slots": [
+   {
+    "slot": 1,
+    "material": "PLA",
+    "farbe": "schwarz"
+   }
+  ],
+  "teile": [
+   {
+    "datei": "passung.stl",
+    "slot": 1
+   }
+  ],
+  "quelle": "",
+  "teile_app": [
+   {
+    "datei": "passung.stl",
+    "slot": 1
+   }
+  ],
+  "vorschau": "vorschau.png",
+  "projekt": "kalibrier_4_passung_c5pro.3mf"
+ },
+ {
+  "name": "kalibrier_3_versatz",
+  "drucker": "c5pro",
+  "drucker_name": "Flashforge Creator 5 Pro",
+  "datum": "2026-11-14",
+  "ordner": "2026-11-14_kalibrier_3_versatz_c5pro",
+  "gcode": "kalibrier_3_versatz_c5pro.gcode",
+  "zeit": "23m 34s",
+  "gramm": "14.95, 0.24, 0.19, 0.19",
+  "meter": "5.01 m, 0.08 m, 0.06 m, 0.06 m",
+  "duese": "210,210,210,210",
+  "bett": "60,60,60,60",
+  "schicht": "0.20",
+  "stufe": "Standard",
+  "infill": 15,
+  "duese_mm": "0.4",
+  "waende": null,
+  "stuetzen": "aus",
+  "brim": "aus",
+  "gemischt": false,
+  "slots": [
+   {
+    "slot": 1,
+    "material": "PLA",
+    "farbe": "schwarz"
+   },
+   {
+    "slot": 2,
+    "material": "PLA",
+    "farbe": "weiß"
+   },
+   {
+    "slot": 3,
+    "material": "PLA",
+    "farbe": "rot"
+   },
+   {
+    "slot": 4,
+    "material": "PLA",
+    "farbe": "gold"
+   }
+  ],
+  "teile": [
+   {
+    "datei": "versatz_k1.stl",
+    "slot": 1
+   },
+   {
+    "datei": "versatz_k2.stl",
+    "slot": 2
+   },
+   {
+    "datei": "versatz_k3.stl",
+    "slot": 3
+   },
+   {
+    "datei": "versatz_k4.stl",
+    "slot": 4
+   }
+  ],
+  "quelle": "",
+  "teile_app": [
+   {
+    "datei": "versatz_k1.stl",
+    "slot": 1
+   },
+   {
+    "datei": "versatz_k2.stl",
+    "slot": 2
+   },
+   {
+    "datei": "versatz_k3.stl",
+    "slot": 3
+   },
+   {
+    "datei": "versatz_k4.stl",
+    "slot": 4
+   }
+  ],
+  "vorschau": "vorschau.png",
+  "projekt": "kalibrier_3_versatz_c5pro.3mf"
+ },
+ {
+  "name": "kalibrier_2_winkel",
+  "drucker": "c5pro",
+  "drucker_name": "Flashforge Creator 5 Pro",
+  "datum": "2026-11-14",
+  "ordner": "2026-11-14_kalibrier_2_winkel_c5pro",
+  "gcode": "kalibrier_2_winkel_c5pro.gcode",
+  "zeit": "12m 27s",
+  "gramm": "5.43",
+  "meter": "1.82 m",
+  "duese": "210",
+  "bett": "60",
+  "schicht": "0.20",
+  "stufe": "Standard",
+  "infill": 15,
+  "duese_mm": "0.4",
+  "waende": null,
+  "stuetzen": "aus",
+  "brim": "aus",
+  "gemischt": false,
+  "slots": [
+   {
+    "slot": 1,
+    "material": "PLA",
+    "farbe": "schwarz"
+   }
+  ],
+  "teile": [
+   {
+    "datei": "winkel.stl",
+    "slot": 1
+   }
+  ],
+  "quelle": "",
+  "teile_app": [
+   {
+    "datei": "winkel.stl",
+    "slot": 1
+   }
+  ],
+  "vorschau": "vorschau.png",
+  "projekt": "kalibrier_2_winkel_c5pro.3mf"
+ },
+ {
+  "name": "kalibrier_1_haftung",
+  "drucker": "c5pro",
+  "drucker_name": "Flashforge Creator 5 Pro",
+  "datum": "2026-11-14",
+  "ordner": "2026-11-14_kalibrier_1_haftung_c5pro",
+  "gcode": "kalibrier_1_haftung_c5pro.gcode",
+  "zeit": "3m 34s",
+  "gramm": "1.42",
+  "meter": "0.48 m",
+  "duese": "210",
+  "bett": "60",
+  "schicht": "0.20",
+  "stufe": "Standard",
+  "infill": 15,
+  "duese_mm": "0.4",
+  "waende": null,
+  "stuetzen": "aus",
+  "brim": "aus",
+  "gemischt": false,
+  "slots": [
+   {
+    "slot": 1,
+    "material": "PLA",
+    "farbe": "schwarz"
+   }
+  ],
+  "teile": [
+   {
+    "datei": "haftung.stl",
+    "slot": 1
+   }
+  ],
+  "quelle": "",
+  "teile_app": [
+   {
+    "datei": "haftung.stl",
+    "slot": 1
+   }
+  ],
+  "vorschau": "vorschau.png",
+  "projekt": "kalibrier_1_haftung_c5pro.3mf"
  }
 ]

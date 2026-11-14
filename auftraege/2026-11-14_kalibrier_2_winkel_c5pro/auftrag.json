@@ -1,0 +1,43 @@
+{
+ "name": "kalibrier_2_winkel",
+ "drucker": "c5pro",
+ "drucker_name": "Flashforge Creator 5 Pro",
+ "datum": "2026-11-14",
+ "ordner": "2026-11-14_kalibrier_2_winkel_c5pro",
+ "gcode": "kalibrier_2_winkel_c5pro.gcode",
+ "zeit": "12m 27s",
+ "gramm": "5.43",
+ "meter": "1.82 m",
+ "duese": "210",
+ "bett": "60",
+ "schicht": "0.20",
+ "stufe": "Standard",
+ "infill": 15,
+ "duese_mm": "0.4",
+ "waende": null,
+ "stuetzen": "aus",
+ "brim": "aus",
+ "gemischt": false,
+ "slots": [
+  {
+   "slot": 1,
+   "material": "PLA",
+   "farbe": "schwarz"
+  }
+ ],
+ "teile": [
+  {
+   "datei": "winkel.stl",
+   "slot": 1
+  }
+ ],
+ "quelle": "",
+ "teile_app": [
+  {
+   "datei": "winkel.stl",
+   "slot": 1
+  }
+ ],
+ "vorschau": "vorschau.png",
+ "projekt": "kalibrier_2_winkel_c5pro.3mf"
+}

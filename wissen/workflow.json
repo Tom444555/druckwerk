@@ -1,121 +1,751 @@
 {
  "stand": "14.11.2026",
  "wege": [
-  {"id": "technik", "name": "Technisches Teil", "kurz": "Halter, Adapter, Gehäuse – muss passen und halten.",
-   "vorlage": "Technisches Teil: …\nMaße (mm): …\nBelastung / Gewicht: …\nEinsatzort (drinnen, draußen, Auto, Hitze): …\nBefestigung (Schrauben, Kleben, Klemmen): …\nFotos mit Maßband hänge ich an.", "zweck": "funktion",
-   "fragen": [{"id": "zweck", "label": "Wozu dient das Teil?", "typ": "lang", "platzhalter": "z. B. Wandhalter für 3 Schraubendreher, hängt neben der Werkbank"}, {"id": "breite", "label": "Breite", "typ": "zahl", "einheit": "mm", "platzhalter": "80"}, {"id": "tiefe", "label": "Tiefe", "typ": "zahl", "einheit": "mm", "platzhalter": "40"}, {"id": "hoehe", "label": "Höhe", "typ": "zahl", "einheit": "mm", "platzhalter": "30"}, {"id": "last", "label": "Belastung / Gewicht", "typ": "text", "platzhalter": "z. B. 2 kg, wird oft angefasst"}, {"id": "ort", "label": "Einsatzort", "typ": "wahl", "optionen": ["drinnen", "Werkstatt", "draußen", "Auto", "Hitze"]}, {"id": "befestigung", "label": "Befestigung", "typ": "wahl", "optionen": ["Schrauben", "Kleben", "Klemmen", "Stecken", "Magnet", "steht frei"]}, {"id": "passung", "label": "Muss passen zu", "typ": "lang", "platzhalter": "vorhandenes Teil, Maße davon (z. B. Rohr Ø 22 mm, Spiel 0,2 mm)"}, {"id": "sonst", "label": "Weitere Wünsche", "typ": "lang", "platzhalter": "z. B. Logo vorne, abgerundete Kanten"}],
+  {
+   "id": "technik",
+   "name": "Technisches Teil",
+   "kurz": "Halter, Adapter, Gehäuse – muss passen und halten.",
+   "vorlage": "Technisches Teil: …\nMaße (mm): …\nBelastung / Gewicht: …\nEinsatzort (drinnen, draußen, Auto, Hitze): …\nBefestigung (Schrauben, Kleben, Klemmen): …\nFotos mit Maßband hänge ich an.",
+   "zweck": "funktion",
+   "fragen": [
+    {
+     "id": "zweck",
+     "label": "Wozu dient das Teil?",
+     "typ": "lang",
+     "platzhalter": "z. B. Wandhalter für 3 Schraubendreher, hängt neben der Werkbank"
+    },
+    {
+     "id": "breite",
+     "label": "Breite",
+     "typ": "zahl",
+     "einheit": "mm",
+     "platzhalter": "80"
+    },
+    {
+     "id": "tiefe",
+     "label": "Tiefe",
+     "typ": "zahl",
+     "einheit": "mm",
+     "platzhalter": "40"
+    },
+    {
+     "id": "hoehe",
+     "label": "Höhe",
+     "typ": "zahl",
+     "einheit": "mm",
+     "platzhalter": "30"
+    },
+    {
+     "id": "last",
+     "label": "Belastung / Gewicht",
+     "typ": "text",
+     "platzhalter": "z. B. 2 kg, wird oft angefasst"
+    },
+    {
+     "id": "ort",
+     "label": "Einsatzort",
+     "typ": "wahl",
+     "optionen": [
+      "drinnen",
+      "Werkstatt",
+      "draußen",
+      "Auto",
+      "Hitze"
+     ]
+    },
+    {
+     "id": "befestigung",
+     "label": "Befestigung",
+     "typ": "wahl",
+     "optionen": [
+      "Schrauben",
+      "Kleben",
+      "Klemmen",
+      "Stecken",
+      "Magnet",
+      "steht frei"
+     ]
+    },
+    {
+     "id": "passung",
+     "label": "Muss passen zu",
+     "typ": "lang",
+     "platzhalter": "vorhandenes Teil, Maße davon (z. B. Rohr Ø 22 mm, Spiel 0,2 mm)"
+    },
+    {
+     "id": "sonst",
+     "label": "Weitere Wünsche",
+     "typ": "lang",
+     "platzhalter": "z. B. Logo vorne, abgerundete Kanten"
+    }
+   ],
    "schritte": [
-    {"t": "Aufgabe beschreiben", "wer": "Du", "d": "Wozu dient das Teil, was trägt es, wo sitzt es? Maße mit dem Messschieber abnehmen, Foto mit Maßband dazu."},
-    {"t": "Rückfragen und Vorschlag", "wer": "Claude", "d": "Ich frage nur, was fehlt, und schlage Material, Druckrichtung und Befestigung vor (z. B. ASA fürs Auto, PETG für die Werkstatt)."},
-    {"t": "Modell mit Maßen als Stellschrauben", "wer": "Claude", "d": "Bau in OpenSCAD: jedes Maß ist eine Zahl, die sich später in Sekunden ändern lässt. Mehrfarbig = eine Datei pro Farbe."},
-    {"t": "Vorschau", "wer": "Claude → Du", "d": "Bild mit den wichtigsten Maßen, dazu das drehbare 3D-Modell in der App. Du sagst, was nicht stimmt."},
-    {"t": "Prüfung vor dem Druck", "wer": "Claude", "d": "Wasserdicht? Wände mindestens 1,2 mm? Überhänge unter 45°? Passt in 256 mm? Zwei Teile zusammen: Überschneidung muss 0 mm³ sein, Spiel 0,15–0,2 mm."},
-    {"t": "Passprobe", "wer": "Du", "d": "Bei engen Passungen erst einen kleinen Ausschnitt drucken (10–20 Minuten) statt des ganzen Teils."},
-    {"t": "Slicen", "wer": "Claude oder App", "d": "Funktionsteil: Schicht 0,20, vier Wände, 25–40 % Füllung. Die Last sollte entlang der Schichten laufen, nicht quer."},
-    {"t": "Drucken und zurückmelden", "wer": "Du", "d": "Foto und Messwert schicken. Abweichung korrigiere ich über die Zahl im Modell."},
-    {"t": "Fertig machen", "wer": "Du", "d": "Entgraten, Einschmelzmuttern setzen, bei Bedarf kleben."}
-   ]},
-  {"id": "kunst", "name": "Kunst & Deko", "kurz": "Reliefs, Figuren, Schmuckstücke – muss gut aussehen.",
-   "vorlage": "Deko / Kunst: …\nStimmung und Stil (detailreich, geschwungen, naturnah): …\nGröße (breit × hoch): …\nFarben (bis 4): schwarz, gold, rot, weiß\nFotos als Stilvorlage hänge ich an.\nBitte zuerst 3–4 Varianten als Bild.", "zweck": "deko",
-   "fragen": [{"id": "motiv", "label": "Motiv", "typ": "lang", "platzhalter": "z. B. Lebensbaum mit Gitarre in der Krone"}, {"id": "stil", "label": "Stil und Stimmung", "typ": "text", "platzhalter": "detailreich, geschwungen, naturnah"}, {"id": "breite", "label": "Breite", "typ": "zahl", "einheit": "mm", "platzhalter": "150"}, {"id": "hoehe", "label": "Höhe", "typ": "zahl", "einheit": "mm", "platzhalter": "200"}, {"id": "bauart", "label": "Bauart", "typ": "wahl", "optionen": ["Relief", "Figur"]}, {"id": "farben", "label": "Farben (bis 4)", "typ": "farben", "vorgabe": ["schwarz", "gold", "rot", "weiß"]}, {"id": "varianten", "label": "Erst 3–4 Varianten als Bild", "typ": "schalter", "standard": true, "text": "Bitte zuerst 3–4 Varianten als Bild zeigen."}, {"id": "sonst", "label": "Weitere Wünsche", "typ": "lang", "platzhalter": "z. B. Schriftzug unten, zum Aufhängen"}],
+    {
+     "t": "Aufgabe beschreiben",
+     "wer": "Du",
+     "d": "Wozu dient das Teil, was trägt es, wo sitzt es? Maße mit dem Messschieber abnehmen, Foto mit Maßband dazu."
+    },
+    {
+     "t": "Rückfragen und Vorschlag",
+     "wer": "Claude",
+     "d": "Ich frage nur, was fehlt, und schlage Material, Druckrichtung und Befestigung vor (z. B. ASA fürs Auto, PETG für die Werkstatt)."
+    },
+    {
+     "t": "Modell mit Maßen als Stellschrauben",
+     "wer": "Claude",
+     "d": "Bau in OpenSCAD: jedes Maß ist eine Zahl, die sich später in Sekunden ändern lässt. Mehrfarbig = eine Datei pro Farbe."
+    },
+    {
+     "t": "Vorschau",
+     "wer": "Claude → Du",
+     "d": "Bild mit den wichtigsten Maßen, dazu das drehbare 3D-Modell in der App. Du sagst, was nicht stimmt."
+    },
+    {
+     "t": "Prüfung vor dem Druck",
+     "wer": "Claude",
+     "d": "Wasserdicht? Wände mindestens 1,2 mm? Überhänge unter 45°? Passt in 256 mm? Zwei Teile zusammen: Überschneidung muss 0 mm³ sein, Spiel 0,15–0,2 mm."
+    },
+    {
+     "t": "Passprobe",
+     "wer": "Du",
+     "d": "Bei engen Passungen erst einen kleinen Ausschnitt drucken (10–20 Minuten) statt des ganzen Teils."
+    },
+    {
+     "t": "Slicen",
+     "wer": "Claude oder App",
+     "d": "Funktionsteil: Schicht 0,20, vier Wände, 25–40 % Füllung. Die Last sollte entlang der Schichten laufen, nicht quer."
+    },
+    {
+     "t": "Drucken und zurückmelden",
+     "wer": "Du",
+     "d": "Foto und Messwert schicken. Abweichung korrigiere ich über die Zahl im Modell."
+    },
+    {
+     "t": "Fertig machen",
+     "wer": "Du",
+     "d": "Entgraten, Einschmelzmuttern setzen, bei Bedarf kleben."
+    }
+   ]
+  },
+  {
+   "id": "kunst",
+   "name": "Kunst & Deko",
+   "kurz": "Reliefs, Figuren, Schmuckstücke – muss gut aussehen.",
+   "vorlage": "Deko / Kunst: …\nStimmung und Stil (detailreich, geschwungen, naturnah): …\nGröße (breit × hoch): …\nFarben (bis 4): schwarz, gold, rot, weiß\nFotos als Stilvorlage hänge ich an.\nBitte zuerst 3–4 Varianten als Bild.",
+   "zweck": "deko",
+   "fragen": [
+    {
+     "id": "motiv",
+     "label": "Motiv",
+     "typ": "lang",
+     "platzhalter": "z. B. Lebensbaum mit Gitarre in der Krone"
+    },
+    {
+     "id": "stil",
+     "label": "Stil und Stimmung",
+     "typ": "text",
+     "platzhalter": "detailreich, geschwungen, naturnah"
+    },
+    {
+     "id": "breite",
+     "label": "Breite",
+     "typ": "zahl",
+     "einheit": "mm",
+     "platzhalter": "150"
+    },
+    {
+     "id": "hoehe",
+     "label": "Höhe",
+     "typ": "zahl",
+     "einheit": "mm",
+     "platzhalter": "200"
+    },
+    {
+     "id": "bauart",
+     "label": "Bauart",
+     "typ": "wahl",
+     "optionen": [
+      "Relief",
+      "Figur"
+     ]
+    },
+    {
+     "id": "farben",
+     "label": "Farben (bis 4)",
+     "typ": "farben",
+     "vorgabe": [
+      "schwarz",
+      "gold",
+      "rot",
+      "weiß"
+     ]
+    },
+    {
+     "id": "varianten",
+     "label": "Erst 3–4 Varianten als Bild",
+     "typ": "schalter",
+     "standard": true,
+     "text": "Bitte zuerst 3–4 Varianten als Bild zeigen."
+    },
+    {
+     "id": "sonst",
+     "label": "Weitere Wünsche",
+     "typ": "lang",
+     "platzhalter": "z. B. Schriftzug unten, zum Aufhängen"
+    }
+   ],
    "schritte": [
-    {"t": "Vorlage sammeln", "wer": "Du", "d": "Fotos, Stimmung, Größe, bis zu vier Farben. Fotos sind Stilvorlage – ich baue einen eigenen Entwurf, keinen Nachbau fremder Motive oder Marken."},
-    {"t": "3–4 Varianten als Bild", "wer": "Claude", "d": "In Sekunden gerechnet, nebeneinander. Du wählst oder mischst („Krone von 2, Wurzeln von 4“)."},
-    {"t": "Bauart wählen", "wer": "Claude", "d": "Relief über Höhenkarten (Baum, Blätter, Borke, Leder), Skulptur aus Grundformen oder ein KI-Rohling, den ich nacharbeite."},
-    {"t": "In Farben zerlegen", "wer": "Claude", "d": "Je Farbe ein eigener, überlappungsfreier Körper. Reihenfolge hell → dunkel, Gold sparsam für Linien und Kanten."},
-    {"t": "Details sichern", "wer": "Claude", "d": "Schicht 0,12 mm, feine Stege mit dem Arachne-Wandmodus; für Adern unter 0,45 mm lohnt die 0,25-mm-Düse auf einem Kopf."},
-    {"t": "Druckdatei mit Zeit und Gramm", "wer": "Claude", "d": "Erst wenn dir das Bild gefällt. Dazu der Link, der den Auftrag in der App speichert."},
-    {"t": "Drucken und Foto schicken", "wer": "Du", "d": "Ich sehe am Foto, was kommt und was nicht (Adern, Kanten, Farbversatz) und stelle nach."},
-    {"t": "Veredeln", "wer": "Du", "d": "Fäden abziehen, bei Schaustücken matt lackieren; Akzente von Hand sind erlaubt."}
-   ]},
-  {"id": "fertig", "name": "Fertiges Modell", "kurz": "Aus dem Netz laden, anpassen, drucken.",
-   "vorlage": "Fertiges Modell drucken: …\nLink: …\nGröße ändern auf: …\nFarben: …", "zweck": "deko",
-   "fragen": [{"id": "link", "label": "Link zum Modell", "typ": "text", "platzhalter": "https://makerworld.com/…"}, {"id": "groesse", "label": "Zielgröße", "typ": "text", "platzhalter": "z. B. 120 mm hoch oder 150 %"}, {"id": "farben", "label": "Farben", "typ": "farben"}, {"id": "sonst", "label": "Weitere Wünsche", "typ": "lang", "platzhalter": "z. B. Sockel weglassen, Teile einzeln drucken"}],
+    {
+     "t": "Vorlage sammeln",
+     "wer": "Du",
+     "d": "Fotos, Stimmung, Größe, bis zu vier Farben. Fotos sind Stilvorlage – ich baue einen eigenen Entwurf, keinen Nachbau fremder Motive oder Marken."
+    },
+    {
+     "t": "3–4 Varianten als Bild",
+     "wer": "Claude",
+     "d": "In Sekunden gerechnet, nebeneinander. Du wählst oder mischst („Krone von 2, Wurzeln von 4“)."
+    },
+    {
+     "t": "Bauart wählen",
+     "wer": "Claude",
+     "d": "Relief über Höhenkarten (Baum, Blätter, Borke, Leder), Skulptur aus Grundformen oder ein KI-Rohling, den ich nacharbeite."
+    },
+    {
+     "t": "In Farben zerlegen",
+     "wer": "Claude",
+     "d": "Je Farbe ein eigener, überlappungsfreier Körper. Reihenfolge hell → dunkel, Gold sparsam für Linien und Kanten."
+    },
+    {
+     "t": "Details sichern",
+     "wer": "Claude",
+     "d": "Schicht 0,12 mm, feine Stege mit dem Arachne-Wandmodus; für Adern unter 0,45 mm lohnt die 0,25-mm-Düse auf einem Kopf."
+    },
+    {
+     "t": "Druckdatei mit Zeit und Gramm",
+     "wer": "Claude",
+     "d": "Erst wenn dir das Bild gefällt. Dazu der Link, der den Auftrag in der App speichert."
+    },
+    {
+     "t": "Drucken und Foto schicken",
+     "wer": "Du",
+     "d": "Ich sehe am Foto, was kommt und was nicht (Adern, Kanten, Farbversatz) und stelle nach."
+    },
+    {
+     "t": "Veredeln",
+     "wer": "Du",
+     "d": "Fäden abziehen, bei Schaustücken matt lackieren; Akzente von Hand sind erlaubt."
+    }
+   ]
+  },
+  {
+   "id": "fertig",
+   "name": "Fertiges Modell",
+   "kurz": "Aus dem Netz laden, anpassen, drucken.",
+   "vorlage": "Fertiges Modell drucken: …\nLink: …\nGröße ändern auf: …\nFarben: …",
+   "zweck": "deko",
+   "fragen": [
+    {
+     "id": "link",
+     "label": "Link zum Modell",
+     "typ": "text",
+     "platzhalter": "https://makerworld.com/…"
+    },
+    {
+     "id": "groesse",
+     "label": "Zielgröße",
+     "typ": "text",
+     "platzhalter": "z. B. 120 mm hoch oder 150 %"
+    },
+    {
+     "id": "farben",
+     "label": "Farben",
+     "typ": "farben"
+    },
+    {
+     "id": "sonst",
+     "label": "Weitere Wünsche",
+     "typ": "lang",
+     "platzhalter": "z. B. Sockel weglassen, Teile einzeln drucken"
+    }
+   ],
    "schritte": [
-    {"t": "Finden", "wer": "Du", "d": "MakerWorld, Printables, Thangs (sucht überall). Auf die Lizenz achten, wenn du etwas weitergeben willst."},
-    {"t": "Link oder Datei schicken", "wer": "Du", "d": "Ich kann nichts selbst herunterladen: STL oder 3MF bitte anhängen oder in der App unter Bibliothek importieren."},
-    {"t": "Anpassen in der Werkstatt", "wer": "App", "d": "Größe, drehen, auf eine Fläche legen, spiegeln, Farben den vier Köpfen zuweisen."},
-    {"t": "Einfarbiges Modell bunt machen", "wer": "Claude", "d": "Ich zerlege einen Körper in Farbbereiche (wie bei der Stratocaster)."},
-    {"t": "Slicen und drucken", "wer": "App oder Claude", "d": "Slice-Knopf in der Werkstatt oder Auftrag an mich."}
-   ]},
-  {"id": "foto", "name": "Aus Foto per KI", "kurz": "Ein Bild wird zum 3D-Rohling.",
-   "vorlage": "KI-Rohling aufbereiten: …\nDatei (STL/GLB/3MF) hänge ich an.\nGröße: …\nFarben: …\nBitte reparieren, Standfläche anlegen, in Farben zerlegen und zuerst ein Bild zeigen.", "zweck": "deko",
-   "fragen": [{"id": "motiv", "label": "Was zeigt das Bild?", "typ": "text", "platzhalter": "z. B. Figur meines Hundes"}, {"id": "groesse", "label": "Zielgröße", "typ": "text", "platzhalter": "z. B. 100 mm hoch"}, {"id": "farben", "label": "Farben", "typ": "farben"}, {"id": "standflaeche", "label": "Standfläche anlegen", "typ": "wahl", "optionen": ["ja", "nein"]}, {"id": "sonst", "label": "Weitere Wünsche", "typ": "lang", "platzhalter": "z. B. dünne Stellen verstärken"}],
+    {
+     "t": "Finden",
+     "wer": "Du",
+     "d": "MakerWorld, Printables, Thangs (sucht überall). Auf die Lizenz achten, wenn du etwas weitergeben willst."
+    },
+    {
+     "t": "Link oder Datei schicken",
+     "wer": "Du",
+     "d": "Ich kann nichts selbst herunterladen: STL oder 3MF bitte anhängen oder in der App unter Bibliothek importieren."
+    },
+    {
+     "t": "Anpassen in der Werkstatt",
+     "wer": "App",
+     "d": "Größe, drehen, auf eine Fläche legen, spiegeln, Farben den vier Köpfen zuweisen."
+    },
+    {
+     "t": "Einfarbiges Modell bunt machen",
+     "wer": "Claude",
+     "d": "Ich zerlege einen Körper in Farbbereiche (wie bei der Stratocaster)."
+    },
+    {
+     "t": "Slicen und drucken",
+     "wer": "App oder Claude",
+     "d": "Slice-Knopf in der Werkstatt oder Auftrag an mich."
+    }
+   ]
+  },
+  {
+   "id": "foto",
+   "name": "Aus Foto per KI",
+   "kurz": "Ein Bild wird zum 3D-Rohling.",
+   "vorlage": "KI-Rohling aufbereiten: …\nDatei (STL/GLB/3MF) hänge ich an.\nGröße: …\nFarben: …\nBitte reparieren, Standfläche anlegen, in Farben zerlegen und zuerst ein Bild zeigen.",
+   "zweck": "deko",
+   "fragen": [
+    {
+     "id": "motiv",
+     "label": "Was zeigt das Bild?",
+     "typ": "text",
+     "platzhalter": "z. B. Figur meines Hundes"
+    },
+    {
+     "id": "groesse",
+     "label": "Zielgröße",
+     "typ": "text",
+     "platzhalter": "z. B. 100 mm hoch"
+    },
+    {
+     "id": "farben",
+     "label": "Farben",
+     "typ": "farben"
+    },
+    {
+     "id": "standflaeche",
+     "label": "Standfläche anlegen",
+     "typ": "wahl",
+     "optionen": [
+      "ja",
+      "nein"
+     ]
+    },
+    {
+     "id": "sonst",
+     "label": "Weitere Wünsche",
+     "typ": "lang",
+     "platzhalter": "z. B. dünne Stellen verstärken"
+    }
+   ],
    "schritte": [
-    {"t": "Gutes Bild", "wer": "Du", "d": "Motiv freigestellt, neutraler Hintergrund, gleichmäßiges Licht. Mehrere Ansichten verbessern die Rückseite deutlich. Nur eigene oder freie Motive."},
-    {"t": "Rohling erzeugen", "wer": "Du", "d": "Meshy gilt als stärkstes Werkzeug für druckfertige Netze, Tripo ist schnell, Hunyuan3D ist kostenlos nutzbar."},
-    {"t": "Datei an Claude", "wer": "Du", "d": "STL, 3MF oder GLB anhängen."},
-    {"t": "Aufbereiten", "wer": "Claude", "d": "Löcher schließen, glätten, Standfläche anlegen, dünne Stellen verstärken, in bis zu vier Farben zerlegen."},
-    {"t": "Bild → Druckdatei", "wer": "Claude", "d": "Wie bei Kunst & Deko: erst Vorschau, dann slicen."}
-   ]},
-  {"id": "scan", "name": "Echtes Ding scannen", "kurz": "Etwas Vorhandenes nachbilden oder passgenau umbauen.",
-   "vorlage": "Scan verarbeiten: …\nDatei (OBJ/STL) hänge ich an.\nEin echtes Maß zur Kontrolle (mm): …\nZiel: Kopie / passgenauer Halter dazu / Ersatzteil", "zweck": "funktion",
-   "fragen": [{"id": "was", "label": "Was wurde gescannt?", "typ": "text", "platzhalter": "z. B. Griff vom Gartentor"}, {"id": "mass", "label": "Kontrollmaß", "typ": "text", "platzhalter": "z. B. Breite 64 mm"}, {"id": "ziel", "label": "Ziel", "typ": "wahl", "optionen": ["Kopie", "Halter", "Ersatzteil"]}, {"id": "sonst", "label": "Weitere Wünsche", "typ": "lang", "platzhalter": "z. B. Halter für die Wand, Spiel 0,3 mm"}],
+    {
+     "t": "Gutes Bild",
+     "wer": "Du",
+     "d": "Motiv freigestellt, neutraler Hintergrund, gleichmäßiges Licht. Mehrere Ansichten verbessern die Rückseite deutlich. Nur eigene oder freie Motive."
+    },
+    {
+     "t": "Rohling erzeugen",
+     "wer": "Du",
+     "d": "Meshy gilt als stärkstes Werkzeug für druckfertige Netze, Tripo ist schnell, Hunyuan3D ist kostenlos nutzbar."
+    },
+    {
+     "t": "Datei an Claude",
+     "wer": "Du",
+     "d": "STL, 3MF oder GLB anhängen."
+    },
+    {
+     "t": "Aufbereiten",
+     "wer": "Claude",
+     "d": "Löcher schließen, glätten, Standfläche anlegen, dünne Stellen verstärken, in bis zu vier Farben zerlegen."
+    },
+    {
+     "t": "Bild → Druckdatei",
+     "wer": "Claude",
+     "d": "Wie bei Kunst & Deko: erst Vorschau, dann slicen."
+    }
+   ]
+  },
+  {
+   "id": "scan",
+   "name": "Echtes Ding scannen",
+   "kurz": "Etwas Vorhandenes nachbilden oder passgenau umbauen.",
+   "vorlage": "Scan verarbeiten: …\nDatei (OBJ/STL) hänge ich an.\nEin echtes Maß zur Kontrolle (mm): …\nZiel: Kopie / passgenauer Halter dazu / Ersatzteil",
+   "zweck": "funktion",
+   "fragen": [
+    {
+     "id": "was",
+     "label": "Was wurde gescannt?",
+     "typ": "text",
+     "platzhalter": "z. B. Griff vom Gartentor"
+    },
+    {
+     "id": "mass",
+     "label": "Kontrollmaß",
+     "typ": "text",
+     "platzhalter": "z. B. Breite 64 mm"
+    },
+    {
+     "id": "ziel",
+     "label": "Ziel",
+     "typ": "wahl",
+     "optionen": [
+      "Kopie",
+      "Halter",
+      "Ersatzteil"
+     ]
+    },
+    {
+     "id": "sonst",
+     "label": "Weitere Wünsche",
+     "typ": "lang",
+     "platzhalter": "z. B. Halter für die Wand, Spiel 0,3 mm"
+    }
+   ],
    "schritte": [
-    {"t": "Scannen", "wer": "Du", "d": "Mit iPad Pro oder iPhone rundherum aufnehmen (Scaniverse rechnet direkt auf dem Gerät und hat eine Gratis-Stufe, Polycam und KIRI Engine haben Gratis-Stufen). Mattes Objekt, viel Licht."},
-    {"t": "Ein Maß mitgeben", "wer": "Du", "d": "Scans sind selten maßstäblich. Ein gemessenes Maß reicht, damit ich die Größe festlege."},
-    {"t": "Säubern", "wer": "Claude", "d": "Boden und Fremdteile weg, Löcher zu, Netz vereinfachen."},
-    {"t": "Nutzen", "wer": "Claude", "d": "Als Kopie drucken – oder als Negativform: Ich ziehe den Scan von einem Halter ab, dann sitzt das Original satt darin."}
-   ]}
+    {
+     "t": "Scannen",
+     "wer": "Du",
+     "d": "Mit iPad Pro oder iPhone rundherum aufnehmen (Scaniverse rechnet direkt auf dem Gerät und hat eine Gratis-Stufe, Polycam und KIRI Engine haben Gratis-Stufen). Mattes Objekt, viel Licht."
+    },
+    {
+     "t": "Ein Maß mitgeben",
+     "wer": "Du",
+     "d": "Scans sind selten maßstäblich. Ein gemessenes Maß reicht, damit ich die Größe festlege."
+    },
+    {
+     "t": "Säubern",
+     "wer": "Claude",
+     "d": "Boden und Fremdteile weg, Löcher zu, Netz vereinfachen."
+    },
+    {
+     "t": "Nutzen",
+     "wer": "Claude",
+     "d": "Als Kopie drucken – oder als Negativform: Ich ziehe den Scan von einem Halter ab, dann sitzt das Original satt darin."
+    }
+   ]
+  }
  ],
  "werkzeuge": [
-  {"gruppe": "Technisch konstruieren", "liste": [
-   {"name": "OpenSCAD", "wo": "Claude · Mac", "preis": "kostenlos", "url": "https://openscad.org", "d": "Modelle als Text mit Maßen – damit baue ich heute alle technischen Teile."},
-   {"name": "build123d", "wo": "Claude", "preis": "kostenlos", "url": "https://build123d.readthedocs.io", "d": "CAD in Python: saubere Rundungen und Fasen, STEP-Export. Mein Vorschlag als nächste Stufe für anspruchsvolle Teile."},
-   {"name": "Onshape", "wo": "iPad · Browser", "preis": "kostenlos für nicht-gewerbliche Nutzung, Entwürfe sind dann öffentlich", "url": "https://www.onshape.com", "d": "Vollwertiges CAD im Browser und als iPad-App, falls du selbst konstruieren willst."},
-   {"name": "Shapr3D", "wo": "iPad · Mac", "preis": "kostenlos mit Grenzen, sonst Abo", "url": "https://www.shapr3d.com", "d": "Konstruieren mit dem Apple Pencil – am schnellsten zu lernen."},
-   {"name": "Fusion", "wo": "Mac", "preis": "kostenlos für privat", "url": "https://www.autodesk.com/products/fusion-360/personal", "d": "Der verbreitete Standard im Hobbybereich, viele Anleitungen."},
-   {"name": "Tinkercad", "wo": "Browser", "preis": "kostenlos", "url": "https://www.tinkercad.com", "d": "Klötzchen-Prinzip für ganz einfache Teile."}
-  ]},
-  {"gruppe": "Kunst & freie Formen", "liste": [
-   {"name": "Relief-Werkzeug in druckwerk", "wo": "Claude", "preis": "–", "d": "Höhenkarten in Python (baum_relief.py): Bäume, Blätter, Borke, Leder – liegt flach, braucht keine Stützen."},
-   {"name": "Nomad Sculpt", "wo": "iPad", "preis": "einmalig rund 20 €", "url": "https://nomadsculpt.com", "d": "Modellieren wie mit Ton, mit Pencil. Export als STL/OBJ direkt an mich oder in die Bibliothek."},
-   {"name": "Blender", "wo": "Mac", "preis": "kostenlos", "url": "https://www.blender.org", "d": "Alles von Skulptur bis Reparatur; mächtig, aber mit Lernkurve."},
-   {"name": "HueForge", "wo": "Mac", "preis": "einmalig rund 24 $ (privat)", "url": "https://shop.thehueforge.com", "d": "Macht aus einem Bild ein „Filament-Gemälde“: dünne Farbschichten mischen sich optisch. Mit vier Köpfen ganz ohne Handwechsel."},
-   {"name": "MakerWorld MakerLab", "wo": "Browser", "preis": "kostenlos", "url": "https://makerworld.com/makerlab", "d": "Kleine Generatoren (Bild zu Relief, Schilder, Vasen) als Ideenquelle."}
-  ]},
-  {"gruppe": "KI: Bild oder Text zu 3D", "liste": [
-   {"name": "Meshy", "wo": "Browser", "preis": "Gratis-Kontingent, Pro rund 20 $/Monat", "url": "https://www.meshy.ai", "d": "In Vergleichen meist vorn für den Druck: geschlossene Netze, Druck-Prüfung, STL- und 3MF-Export."},
-   {"name": "Tripo", "wo": "Browser", "preis": "Gratis-Stufe, Bezahlpläne – Preise schwanken je nach Quelle", "url": "https://www.tripo3d.ai", "d": "Schnell, saubere Netze, mehrere Ansichten möglich."},
-   {"name": "Hunyuan3D", "wo": "Browser", "preis": "kostenlos nutzbar", "url": "https://3d.hunyuan.tencent.com", "d": "Offenes Modell von Tencent, gut für erste Versuche."},
-   {"name": "Rodin (Hyper3D)", "wo": "Browser", "preis": "Bezahlmodell", "url": "https://hyper3d.ai", "d": "Gilt als das detailreichste – wenn ein Rohling besonders fein sein soll."}
-  ]},
-  {"gruppe": "Scannen", "liste": [
-   {"name": "Scaniverse", "wo": "iPad · iPhone", "preis": "Gratis-Stufe", "url": "https://scaniverse.com", "d": "Rechnet auf dem Gerät, nutzt den LiDAR-Sensor."},
-   {"name": "Polycam", "wo": "iPad · iPhone", "preis": "Gratis-Stufe, sonst Abo", "url": "https://poly.cam", "d": "Fotos oder LiDAR, gute Nachbearbeitung."},
-   {"name": "KIRI Engine", "wo": "iPad · iPhone", "preis": "Gratis-Stufe", "url": "https://www.kiriengine.app", "d": "Foto-Scan kleiner Gegenstände, ausdrücklich auch für 3D-Druck."}
-  ]},
-  {"gruppe": "Modelle finden", "liste": [
-   {"name": "MakerWorld", "wo": "Browser", "preis": "kostenlos", "url": "https://makerworld.com/de", "d": "Größte Auswahl, auch Zubehör für den Creator 5 Pro."},
-   {"name": "Printables", "wo": "Browser", "preis": "kostenlos", "url": "https://www.printables.com", "d": "Gut gepflegt, klare Lizenzen."},
-   {"name": "Thangs", "wo": "Browser", "preis": "kostenlos", "url": "https://thangs.com", "d": "Suchmaschine über viele Seiten hinweg."},
-   {"name": "Scan the World", "wo": "Browser", "preis": "kostenlos", "url": "https://www.myminifactory.com/scantheworld/", "d": "Gescannte Skulpturen aus Museen."}
-  ]},
-  {"gruppe": "Prüfen, slicen, drucken", "liste": [
-   {"name": "druckwerk-Prüfung", "wo": "Claude", "preis": "–", "d": "Wasserdichtheit, Wandstärke, Überhänge, Passung zweier Teile, Bauraum – vor jedem Slicen."},
-   {"name": "Werkstatt in dieser App", "wo": "App", "preis": "–", "d": "Umbauen, Farben zuweisen, exportieren, slicen lassen, Schichten ansehen."},
-   {"name": "Flash Studio Desktop", "wo": "Mac", "preis": "kostenlos", "url": "https://www.flashforge.com/pages/download-center", "d": "Hersteller-Slicer; öffnet die 3MF-Projekte aus druckwerk, sendet per WLAN, zeigt die Kamera."},
-   {"name": "MeshLab", "wo": "Mac", "preis": "kostenlos", "url": "https://www.meshlab.net", "d": "Netze ansehen, messen, reparieren – wenn du selbst nachsehen willst."}
-  ]}
+  {
+   "gruppe": "Technisch konstruieren",
+   "liste": [
+    {
+     "name": "OpenSCAD",
+     "wo": "Claude · Mac",
+     "preis": "kostenlos",
+     "url": "https://openscad.org",
+     "d": "Modelle als Text mit Maßen – damit baue ich heute alle technischen Teile."
+    },
+    {
+     "name": "build123d",
+     "wo": "Claude",
+     "preis": "kostenlos",
+     "url": "https://build123d.readthedocs.io",
+     "d": "CAD in Python: saubere Rundungen und Fasen, STEP-Export. Seit 14.11. eingebaut – ich nehme es für anspruchsvolle Teile."
+    },
+    {
+     "name": "Technik-Baukasten in druckwerk",
+     "wo": "Claude",
+     "preis": "–",
+     "d": "Geprüfte Bausteine für Schrauben, Muttern, Schnapphaken, Gewinde und Halter."
+    },
+    {
+     "name": "Onshape",
+     "wo": "iPad · Browser",
+     "preis": "kostenlos für nicht-gewerbliche Nutzung, Entwürfe sind dann öffentlich",
+     "url": "https://www.onshape.com",
+     "d": "Vollwertiges CAD im Browser und als iPad-App, falls du selbst konstruieren willst."
+    },
+    {
+     "name": "Shapr3D",
+     "wo": "iPad · Mac",
+     "preis": "kostenlos mit Grenzen, sonst Abo",
+     "url": "https://www.shapr3d.com",
+     "d": "Konstruieren mit dem Apple Pencil – am schnellsten zu lernen."
+    },
+    {
+     "name": "Fusion",
+     "wo": "Mac",
+     "preis": "kostenlos für privat",
+     "url": "https://www.autodesk.com/products/fusion-360/personal",
+     "d": "Der verbreitete Standard im Hobbybereich, viele Anleitungen."
+    },
+    {
+     "name": "Tinkercad",
+     "wo": "Browser",
+     "preis": "kostenlos",
+     "url": "https://www.tinkercad.com",
+     "d": "Klötzchen-Prinzip für ganz einfache Teile."
+    }
+   ]
+  },
+  {
+   "gruppe": "Kunst & freie Formen",
+   "liste": [
+    {
+     "name": "Relief-Werkzeug in druckwerk",
+     "wo": "Claude",
+     "preis": "–",
+     "d": "Höhenkarten in Python (baum_relief.py): Bäume, Blätter, Borke, Leder – liegt flach, braucht keine Stützen."
+    },
+    {
+     "name": "Bild-zu-Farbrelief in druckwerk",
+     "wo": "Claude",
+     "preis": "–",
+     "d": "Aus einem Bild wird ein Wandbild in bis zu vier Farben – eine Farbe je Kopf, ohne Zusatzprogramm."
+    },
+    {
+     "name": "Nomad Sculpt",
+     "wo": "iPad",
+     "preis": "einmalig rund 20 €",
+     "url": "https://nomadsculpt.com",
+     "d": "Modellieren wie mit Ton, mit Pencil. Export als STL/OBJ direkt an mich oder in die Bibliothek."
+    },
+    {
+     "name": "Blender",
+     "wo": "Mac",
+     "preis": "kostenlos",
+     "url": "https://www.blender.org",
+     "d": "Alles von Skulptur bis Reparatur; mächtig, aber mit Lernkurve."
+    },
+    {
+     "name": "HueForge",
+     "wo": "Mac",
+     "preis": "einmalig rund 24 $ (privat)",
+     "url": "https://shop.thehueforge.com",
+     "d": "Macht aus einem Bild ein „Filament-Gemälde“: dünne Farbschichten mischen sich optisch. Mit vier Köpfen ganz ohne Handwechsel."
+    },
+    {
+     "name": "MakerWorld MakerLab",
+     "wo": "Browser",
+     "preis": "kostenlos",
+     "url": "https://makerworld.com/makerlab",
+     "d": "Kleine Generatoren (Bild zu Relief, Schilder, Vasen) als Ideenquelle."
+    }
+   ]
+  },
+  {
+   "gruppe": "KI: Bild oder Text zu 3D",
+   "liste": [
+    {
+     "name": "Meshy",
+     "wo": "Browser",
+     "preis": "Gratis-Kontingent, Pro rund 20 $/Monat",
+     "url": "https://www.meshy.ai",
+     "d": "In Vergleichen meist vorn für den Druck: geschlossene Netze, Druck-Prüfung, STL- und 3MF-Export."
+    },
+    {
+     "name": "Tripo",
+     "wo": "Browser",
+     "preis": "Gratis-Stufe, Bezahlpläne – Preise schwanken je nach Quelle",
+     "url": "https://www.tripo3d.ai",
+     "d": "Schnell, saubere Netze, mehrere Ansichten möglich."
+    },
+    {
+     "name": "Hunyuan3D",
+     "wo": "Browser",
+     "preis": "kostenlos nutzbar",
+     "url": "https://3d.hunyuan.tencent.com",
+     "d": "Offenes Modell von Tencent, gut für erste Versuche."
+    },
+    {
+     "name": "Rodin (Hyper3D)",
+     "wo": "Browser",
+     "preis": "Bezahlmodell",
+     "url": "https://hyper3d.ai",
+     "d": "Gilt als das detailreichste – wenn ein Rohling besonders fein sein soll."
+    }
+   ]
+  },
+  {
+   "gruppe": "Scannen",
+   "liste": [
+    {
+     "name": "Scaniverse",
+     "wo": "iPad · iPhone",
+     "preis": "Gratis-Stufe",
+     "url": "https://scaniverse.com",
+     "d": "Rechnet auf dem Gerät, nutzt den LiDAR-Sensor."
+    },
+    {
+     "name": "Polycam",
+     "wo": "iPad · iPhone",
+     "preis": "Gratis-Stufe, sonst Abo",
+     "url": "https://poly.cam",
+     "d": "Fotos oder LiDAR, gute Nachbearbeitung."
+    },
+    {
+     "name": "KIRI Engine",
+     "wo": "iPad · iPhone",
+     "preis": "Gratis-Stufe",
+     "url": "https://www.kiriengine.app",
+     "d": "Foto-Scan kleiner Gegenstände, ausdrücklich auch für 3D-Druck."
+    }
+   ]
+  },
+  {
+   "gruppe": "Modelle finden",
+   "liste": [
+    {
+     "name": "MakerWorld",
+     "wo": "Browser",
+     "preis": "kostenlos",
+     "url": "https://makerworld.com/de",
+     "d": "Größte Auswahl, auch Zubehör für den Creator 5 Pro."
+    },
+    {
+     "name": "Printables",
+     "wo": "Browser",
+     "preis": "kostenlos",
+     "url": "https://www.printables.com",
+     "d": "Gut gepflegt, klare Lizenzen."
+    },
+    {
+     "name": "Thangs",
+     "wo": "Browser",
+     "preis": "kostenlos",
+     "url": "https://thangs.com",
+     "d": "Suchmaschine über viele Seiten hinweg."
+    },
+    {
+     "name": "Scan the World",
+     "wo": "Browser",
+     "preis": "kostenlos",
+     "url": "https://www.myminifactory.com/scantheworld/",
+     "d": "Gescannte Skulpturen aus Museen."
+    }
+   ]
+  },
+  {
+   "gruppe": "Prüfen, slicen, drucken",
+   "liste": [
+    {
+     "name": "druckwerk-Prüfung",
+     "wo": "Claude",
+     "preis": "–",
+     "d": "Wasserdichtheit, Wandstärke, Überhänge, Passung zweier Teile, Bauraum – vor jedem Slicen."
+    },
+    {
+     "name": "Werkstatt in dieser App",
+     "wo": "App",
+     "preis": "–",
+     "d": "Umbauen, Farben zuweisen, exportieren, slicen lassen, Schichten ansehen."
+    },
+    {
+     "name": "Flash Studio Desktop",
+     "wo": "Mac",
+     "preis": "kostenlos",
+     "url": "https://www.flashforge.com/pages/download-center",
+     "d": "Hersteller-Slicer; öffnet die 3MF-Projekte aus druckwerk, sendet per WLAN, zeigt die Kamera."
+    },
+    {
+     "name": "MeshLab",
+     "wo": "Mac",
+     "preis": "kostenlos",
+     "url": "https://www.meshlab.net",
+     "d": "Netze ansehen, messen, reparieren – wenn du selbst nachsehen willst."
+    }
+   ]
+  }
  ],
  "vorschlaege": [
-  {"id": "v1", "t": "Gitarren-Reihe für den Creator 5 Pro neu rechnen", "nutzen": "Verstärker, Stratocaster und Lebensbaum sind noch für die Kobra X gesliced und so nicht druckbar.", "aufwand": "klein", "status": "bereit"},
-  {"id": "v2", "t": "Kalibrier-Set für den ersten Tag", "nutzen": "Fünf kurze Drucke: Haftung, Rechtwinkligkeit, Farbversatz, Passung, Brücken. Aus deinen Ergebnissen entstehen bestätigte Profile statt Annahmen.", "aufwand": "klein", "status": "bereit"},
-  {"id": "v3", "t": "Druck-Tagebuch mit Foto", "nutzen": "Nach jedem Druck Foto + Note in der App. Ich lese mit und passe Einstellungen je Filament an – das Programm lernt deinen Drucker.", "aufwand": "mittel", "status": "Idee"},
-  {"id": "v4", "t": "Geführter Auftrag „Mit Claude bauen“", "nutzen": "Statt freiem Text fragt die App je nach Weg die richtigen Dinge ab (Maße, Last, Ort, Stil) und nimmt Fotos mit – weniger Rückfragen, bessere erste Entwürfe.", "aufwand": "mittel", "status": "erste Stufe eingebaut"},
-  {"id": "v5", "t": "Technik-Baukasten", "nutzen": "Geprüfte Bausteine für Schraublöcher, Einschmelzmuttern, Schnapphaken, Gewinde, Scharniere, Wandhalter – mit erprobten Toleranzen. Teile passen beim ersten Mal.", "aufwand": "mittel", "status": "Idee"},
-  {"id": "v6", "t": "CAD-Stufe mit build123d", "nutzen": "Saubere Rundungen, Fasen und STEP-Dateien – technische Teile sehen aus wie gekauft und lassen sich in jedem CAD weiterbearbeiten.", "aufwand": "mittel", "status": "Idee"},
-  {"id": "v7", "t": "Bild-zu-Farbrelief für vier Köpfe", "nutzen": "Eigener Generator: Foto oder Zeichnung wird zum vierfarbigen Wandbild in Schwarz, Gold, Rot, Weiß – ohne Zusatzprogramm.", "aufwand": "mittel", "status": "Idee"},
-  {"id": "v8", "t": "Feine Düse als fester Gold-Kopf", "nutzen": "Ein Kopf mit 0,25 mm für Adern und Schrift, drei mit 0,4 mm für Flächen. Dazu binde ich die 0,25-mm-Profile ein.", "aufwand": "klein (plus 29,90 € Düse)", "status": "Idee"},
-  {"id": "v9", "t": "Filamentlager rechnet automatisch", "nutzen": "Schon drin: Spulen anlegen und Verbrauch je Auftrag abbuchen. Nächste Stufe: Warnung „Spule reicht nicht“ vor dem Druck und Kosten je Auftrag.", "aufwand": "klein", "status": "erste Stufe eingebaut"},
-  {"id": "v10", "t": "Direkt an den Drucker senden", "nutzen": "Ohne USB-Stick: über den Mac im Heimnetz an den Drucker schicken und per Kamera prüfen.", "aufwand": "groß, erst am echten Gerät testbar", "status": "später"},
-  {"id": "v11", "t": "Wissen ins Offline-Paket", "nutzen": "Filament-, Zubehör- und Druckerseiten auch ohne Internet am Mac und iPad.", "aufwand": "klein", "status": "Idee"}
+  {
+   "id": "v1",
+   "t": "Gitarren-Reihe für den Creator 5 Pro neu rechnen",
+   "nutzen": "Stratocaster und Verstärker sind für den Creator 5 Pro neu gerechnet und liegen im Lager. Die Ständer sind auf deinen Wunsch entfernt.",
+   "aufwand": "klein",
+   "status": "erledigt 14.11."
+  },
+  {
+   "id": "v2",
+   "t": "Kalibrier-Set für den ersten Tag",
+   "nutzen": "Fünf kurze Drucke liegen im Lager: Haftung, Rechtwinkligkeit, Kopf-Versatz, Passung, Brücken. Aus deinen Ergebnissen werden bestätigte Profile statt Annahmen.",
+   "aufwand": "klein",
+   "status": "erledigt 14.11. – wartet auf deinen Druck"
+  },
+  {
+   "id": "v3",
+   "t": "Druck-Tagebuch mit Foto",
+   "nutzen": "Im Auftrag „Ergebnis eintragen“: Sterne, Mängel, Notiz, Foto. Alle Einträge unter Drucker → Tagebuch, von dort an Claude schicken – so lernt das Programm deinen Drucker.",
+   "aufwand": "mittel",
+   "status": "eingebaut 14.11."
+  },
+  {
+   "id": "v4",
+   "t": "Geführter Auftrag „Mit Claude bauen“",
+   "nutzen": "Unter „Neu“ der Umschalter „Geführt“: je Weg die passenden Fragen (Maße, Last, Ort, Stil) – weniger Rückfragen, bessere erste Entwürfe.",
+   "aufwand": "mittel",
+   "status": "eingebaut 14.11."
+  },
+  {
+   "id": "v5",
+   "t": "Technik-Baukasten",
+   "nutzen": "13 geprüfte Bausteine: Schraublöcher, Senkungen, Einschmelzmuttern, Mutterntaschen, Langloch, Schnapphaken, Schwalbenschwanz, Gewinde M6–M12, Wandlasche, Schlüsselloch, Kabel-Clip. Das Spiel stelle ich nach deinem Passungs-Test ein.",
+   "aufwand": "mittel",
+   "status": "eingebaut 14.11., am Drucker noch nicht erprobt"
+  },
+  {
+   "id": "v6",
+   "t": "CAD-Stufe mit build123d",
+   "nutzen": "Saubere Rundungen, Fasen und STEP-Dateien für technische Teile – lassen sich in jedem CAD weiterbearbeiten.",
+   "aufwand": "mittel",
+   "status": "eingebaut 14.11."
+  },
+  {
+   "id": "v7",
+   "t": "Bild-zu-Farbrelief für vier Köpfe",
+   "nutzen": "Foto oder Zeichnung wird zum vierfarbigen Wandbild in Schwarz, Gold, Rot, Weiß, mit Rahmen und Aufhängelöchern. Schick mir ein Bild und die Breite.",
+   "aufwand": "mittel",
+   "status": "eingebaut 14.11."
+  },
+  {
+   "id": "v8",
+   "t": "Feine Düse 0,25 mm",
+   "nutzen": "Die Profile für 0,25, 0,6 und 0,8 mm sind eingebunden – bisher nur, wenn alle benutzten Köpfe die gleiche Düse tragen. Ein einzelner feiner Gold-Kopf neben 0,4 mm ist noch offen.",
+   "aufwand": "klein (plus 29,90 € Düse)",
+   "status": "teilweise eingebaut 14.11."
+  },
+  {
+   "id": "v9",
+   "t": "Filamentlager rechnet automatisch",
+   "nutzen": "Im Auftrag zeigt der Filament-Check je Kopf „reicht“ oder „es fehlen x g“ und die Materialkosten; Spulen unter 15 % sind markiert.",
+   "aufwand": "klein",
+   "status": "eingebaut 14.11."
+  },
+  {
+   "id": "v10",
+   "t": "Direkt an den Drucker senden",
+   "nutzen": "Ohne USB-Stick: über den Mac im Heimnetz an den Drucker schicken und per Kamera prüfen.",
+   "aufwand": "groß, erst am echten Gerät testbar",
+   "status": "später – erst am echten Gerät testbar"
+  },
+  {
+   "id": "v11",
+   "t": "Wissen ins Offline-Paket",
+   "nutzen": "Filament-, Zubehör-, Drucker- und Workflow-Wissen liegt als Text im Offline-Paket für Mac und iPad.",
+   "aufwand": "klein",
+   "status": "erledigt 14.11."
+  }
  ],
  "quellen": [
-  {"titel": "Meshy: KI-Werkzeuge für den 3D-Druck im Vergleich", "url": "https://www.meshy.ai/blog/best-ai-tools-for-3d-printing"},
-  {"titel": "coruzant: Meshy, Tripo, Rodin, Hunyuan3D im Vergleich", "url": "https://coruzant.com/ai/best-ai-for-3d-models-honest-comparison/"},
-  {"titel": "All3DP: iPad- und Android-Apps zum Modellieren", "url": "https://all3dp.com/2/3d-design-app-3d-modeling-ipad-android/"},
-  {"titel": "huepick: Was kostet HueForge?", "url": "https://huepick.app/articles/hueforge-basics/is-hueforge-free"},
-  {"titel": "skyebrowse: Scan-Apps 2026", "url": "https://www.skyebrowse.com/news/posts/best-photogrammetry-app"}
+  {
+   "titel": "Meshy: KI-Werkzeuge für den 3D-Druck im Vergleich",
+   "url": "https://www.meshy.ai/blog/best-ai-tools-for-3d-printing"
+  },
+  {
+   "titel": "coruzant: Meshy, Tripo, Rodin, Hunyuan3D im Vergleich",
+   "url": "https://coruzant.com/ai/best-ai-for-3d-models-honest-comparison/"
+  },
+  {
+   "titel": "All3DP: iPad- und Android-Apps zum Modellieren",
+   "url": "https://all3dp.com/2/3d-design-app-3d-modeling-ipad-android/"
+  },
+  {
+   "titel": "huepick: Was kostet HueForge?",
+   "url": "https://huepick.app/articles/hueforge-basics/is-hueforge-free"
+  },
+  {
+   "titel": "skyebrowse: Scan-Apps 2026",
+   "url": "https://www.skyebrowse.com/news/posts/best-photogrammetry-app"
+  }
  ]
 }

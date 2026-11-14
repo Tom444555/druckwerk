@@ -1,24 +1,22 @@
 # Übergabe druckwerk
 
-## STAND 14.11.2026 – hier einsteigen (neuer Chat: „druckwerk: …“)
-- **Drucker:** nur noch Flashforge Creator 5 Pro (`c5pro` ist Standard in CLAUDE.md und in der App). Werte stammen aus Hersteller-Profilen, Wiki und Tests –
-  **am echten Gerät ist noch nichts bestätigt** (Betttemperatur PLA 60 °C laut Profil, Farbversatz, Haftung).
-- **Neu in der App (14.11.):** Tabs **Material** (Filamente mit Finder, Mein Lager mit Spulen und Abbuchen, Zubehör mit Haken), **Drucker** (Creator 5 Pro:
-  Überblick, Einrichten, Wartung, Hilfe; USB-Anleitung steht jetzt hier), **Workflow** (fünf Wege Idee → Modell, Werkzeuge, Ausbau-Vorschläge zum Antippen).
-  Code `wissen.js`, Inhalte `wissen/*.json` (Pflege-Regeln in CLAUDE.md, Abschnitt „Wissen“). Mit Playwright 390×844 geprüft, Fakten von einem
-  unabhängigen Agenten gegen die Quellen gegengelesen.
-- **Gitarren-Reihe (Farben schwarz/gold/rot/weiß) – alle noch für die Kobra X gesliced, für den Creator 5 Pro neu rechnen:**
-  - `2026-11-10_loopsmiths_amp_kobrax` – Verstärker-Plektrumhalter, 8,8 cm.
-  - `2026-11-11_stratocaster_kobrax` – Strat 20 cm, 4 Farben (`werkzeug/gitarre_farben.py`).
-  - `2026-11-12_staender_baum_kobrax` – Hänge-Ständer „Lebensbaum“ v5 (`werkzeug/baum_relief.py`, Saat 6). **Noch nicht gedruckt, von Tom noch nicht bewertet.**
-  - Ältere Ständer im Lager: `…_gitarrenstaender`, `…_staender_note`, `…_staender_schleife` (abgelehnt – löschen nur auf Wunsch).
-- **Toms Geschmack:** detailreich, geschwungen, naturnah/realistisch, breit statt hoch; schickt gern Fotos als Vorlage; erst schnelle Vorschau, kurze Antworten.
-- **Ausbau-Vorschläge (stehen in `wissen/workflow.json`, Tom wählt in der App):** v1 Gitarren-Reihe neu rechnen · v2 Kalibrier-Set · v3 Druck-Tagebuch mit Foto ·
-  v4 geführter Auftrag · v5 Technik-Baukasten · v6 build123d · v7 Bild-zu-Farbrelief · v8 0,25-mm-Düse als Gold-Kopf (Profile einbinden) · v9 Lager automatisch ·
-  v10 Senden per WLAN · v11 Wissen ins Offline-Paket. Nach Umsetzung `status` dort ändern.
-- **Nächste Schritte:** 1) Toms Auswahl der Vorschläge abwarten. 2) Erster echter Druck (Testwürfel `2026-11-10_testwuerfel_c5pro`): Ergebnis in `wissen/c5pro.json`
-  und CLAUDE.md eintragen. 3) Rückmeldung zum Lebensbaum v5.
-- **Arbeitsregeln/Erfahrungen:** CLAUDE.md, Abschnitte „Wissen“ und „Organische/feine Modelle“. Abschnitte unten nur bei Bedarf lesen.
+## STAND 14.11.2026 (Nachmittag) – hier einsteigen (neuer Chat: „druckwerk: …“)
+- **Drucker:** nur noch Flashforge Creator 5 Pro (`c5pro` Standard). **Am echten Gerät ist noch nichts bestätigt** – alle Werte aus Hersteller-Profilen, Wiki, Tests.
+- **Lager (auf Toms Wunsch aufgeräumt):** nur noch `2026-11-14_stratocaster_c5pro` (1 h 56 min, 32 g, creme/weiß/holz/silber) und
+  `2026-11-14_loopsmiths_amp_c5pro` (9 h 26 min, 139 g, schwarz/rot/weiß + Gold als PLA-SILK), dazu das Kalibrier-Set
+  `2026-11-14_kalibrier_1…5_c5pro` (Haftung 4 min, Winkel 12 min, Versatz 24 min/4 Köpfe, Passung 18 min, Brücke 50 min). Alle Ständer, Vox-Amp,
+  Testwürfel und alle `_kobrax`-Aufträge sind gelöscht (Modelle in `modelle/` und `werkzeug/baum_relief.py` bleiben als Vorlage).
+- **App:** Tabs Bibliothek, Aufträge, Neu (Frei/Geführt), Material (Filamente, Mein Lager, Zubehör), Drucker (Überblick, Einrichten, Wartung, Hilfe, Tagebuch),
+  Workflow (Weg, Werkzeuge, Vorschläge). Im Auftrag: Filament-Check mit Kosten, Abbuchen, „Ergebnis eintragen“ mit Foto.
+- **Werkzeuge neu:** Technik-Baukasten, build123d (`cad.py`), Bild-zu-Farbrelief (`bild_relief.py`), Kalibrier-Modelle, `druck.py --duese`. Siehe CLAUDE.md „Weitere Werkzeuge“.
+- **Vorschläge v1–v11:** erledigt/eingebaut bis auf v8 (nur teilweise: gleiche Düse auf allen Köpfen; einzelner 0,25-mm-Gold-Kopf offen) und v10 (Senden per WLAN, erst am Gerät testbar).
+  Stand je Vorschlag in `wissen/workflow.json`.
+- **Geprüft:** App mit Playwright 390×844 (alle Tabs, neue Blätter), Fakten der Wissensseiten durch unabhängigen Agenten, Baukasten/Kalibrier/Relief wasserdicht und
+  überschneidungsfrei, Kette Bild → Relief → Druckdatei und build123d → STL/STEP einmal durchgespielt, Düsen 0,25/0,6/0,8 probe-gesliced.
+  **Nicht geprüft:** alles am echten Drucker (Spiel, Gewinde, Betttemperatur, Kopf-Versatz), Foto-Aufnahme am echten iPhone.
+- **Toms Geschmack:** detailreich, geschwungen, naturnah, breit statt hoch; Farben schwarz/gold/rot/weiß; erst schnelle Vorschau, kurze Antworten.
+- **Nächste Schritte:** 1) Tom druckt das Kalibrier-Set und meldet über das Tagebuch → Werte bestätigen, `spiel` im Baukasten setzen, Herkunft „Gerät“ eintragen.
+  2) Wunsch-Teile: Bild fürs Farbrelief, neuer Gitarren-Ständer (frühere Entwürfe verworfen). 3) Offen: gemischte Düsengrößen, WLAN-Senden, Drucker-Vorschaubild.
 
 ---
 ## Verlauf (älter)
@@ -116,3 +114,9 @@
 - Quellen der Recherche stehen je Datei unter `quellen` (Flashforge-Seite/Wiki/PDFs, Notebookcheck, drucktipps3d, China-Gadgets, printer-hub, EU-Shop).
 - Filament-Sollwerte kommen aus den Profilen `resources/profiles/Flashforge/filament/* @FF C5P.json` (Orca v2.5.0, inherits-Kette aufgelöst).
 - Früherer Einstiegsblock (Stand 12.11.) ist im neuen Block oben aufgegangen.
+
+## 2026-11-14 (Nachmittag) – Aufräumen und Ausbau
+- Gelöscht: 8 Aufträge (Ständer ×4, Vox-Amp, Stratocaster 2, beide Testwürfel), danach die Kobra-Fassungen von Strat und Verstärker durch c5pro-Fassungen ersetzt.
+- `druck.py`: `--duese`, mehr Vorschaufarben (creme, holz …). `drucker/c5pro.json`: `duesen`, Hinweis Kammer aus bei PLA.
+- Zwei Helfer (opus) parallel: App (tagebuch.js, geführter Auftrag, Filament-Check) und Werkzeug (Baukasten, Kalibrier, cad.py, bild_relief.py).
+- Wissen als Markdown ins Offline-Paket (`offline-paket/werkzeuge/druckwissen_bauen.py`).

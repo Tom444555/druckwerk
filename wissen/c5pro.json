@@ -48,11 +48,11 @@
  ],
  "druckwerk": [
   "Profile für 15 Materialien hinterlegt (PLA-Sorten, PETG, ABS, ASA, ASA-CF, PA-CF, TPU, PVA).",
-  "Schichthöhen 0,12 / 0,20 / 0,24 mm mit 0,4-mm-Düse; Profile für 0,25 / 0,6 / 0,8 mm sind vorhanden, aber noch nicht eingebunden.",
+  "Schichthöhen 0,12 / 0,20 / 0,24 mm mit 0,4-mm-Düse. Auch 0,25 / 0,6 / 0,8 mm sind eingebunden – bisher nur mit gleicher Düse auf allen benutzten Köpfen.",
   "Betttemperatur für PLA auf der strukturierten Platte: 55–60 °C laut Profil – am echten Gerät noch bestätigen.",
   "Vorschaubild auf dem Drucker-Bildschirm fehlt noch.",
   "Senden per WLAN ist noch nicht gebaut (bisher nur USB).",
-  "Die Gitarren-Reihe ist noch für die Kobra X gesliced und muss für den Creator 5 Pro neu gerechnet werden."
+  "Stratocaster und Verstärker sind für den Creator 5 Pro gesliced; dazu ein Kalibrier-Set aus fünf kurzen Drucken."
  ],
  "einrichten": [
   {"id": "e1", "t": "Transportsicherungen entfernen", "d": "Auch die drei Schrauben, die das Bett festklemmen – sonst bleibt das Bett schief (Fehler E0148)."},
@@ -62,9 +62,9 @@
   {"id": "e5", "t": "WLAN verbinden", "d": "2,4 GHz nehmen (5 GHz bricht bei manchen ab); Netzname und Passwort ohne Sonderzeichen."},
   {"id": "e6", "t": "Kopf-Versatz kalibrieren", "d": "Vorher die PEI-Platte abnehmen und alle Düsen säubern – die Mess-Scheibe liegt unter der Platte. Dauert 15–20 Minuten."},
   {"id": "e7", "t": "Leveling und Schwingungs-Ausgleich", "d": "Beides einmal bei der Einrichtung. Leveling danach nur bei schlechter erster Schicht, nach Düsenwechsel oder Umstellen; Schwingungs-Ausgleich nur bei Geisterbildern oder lockeren Riemen."},
-  {"id": "e8", "t": "Rechtwinkligkeit prüfen", "d": "Ein 100-mm-Quadrat drucken und beide Diagonalen messen. Mehr als 0,1 mm Unterschied je 100 mm: innerhalb der Rückgabefrist reklamieren."},
+  {"id": "e8", "t": "Rechtwinkligkeit prüfen", "d": "Den Auftrag „kalibrier 2 winkel“ (100-mm-Rahmen) drucken und beide Diagonalen messen. Mehr als 0,1 mm Unterschied je 100 mm: innerhalb der Rückgabefrist reklamieren."},
   {"id": "e9", "t": "Kabel-Clip und Abfallbehälter drucken", "d": "Beides aus PETG. Schützt das Kabel von Kopf 4 und hält den Bauraum sauber."},
-  {"id": "e10", "t": "druckwerk-Testwürfel von USB", "d": "Auftrag „testwuerfel“ für den Creator 5 Pro drucken und mir sagen: Haftung, Betttemperatur am Bildschirm, Farbversatz. Danach trage ich die bestätigten Werte ein."}
+  {"id": "e10", "t": "Kalibrier-Set von USB drucken", "d": "Die fünf Aufträge „kalibrier 1–5“ nacheinander drucken (zusammen knapp 2 Stunden) und das Ergebnis je Auftrag über „Ergebnis eintragen“ melden. Danach trage ich die bestätigten Werte ein."}
  ],
  "vorDruck": [
   "Platte sauber und fettfrei, richtig eingelegt.",

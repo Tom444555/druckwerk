@@ -28,4 +28,14 @@ if [ ! -d profile/resources/profiles/Anycubic ]; then
   git -C profile sparse-checkout set --no-cone 'resources/profiles/Anycubic*' \
     'resources/profiles/Flashforge*' 'resources/profiles/OrcaFilamentLibrary*'
 fi
+# 4) Optional: Python-Geometrie (Reliefs, Prüfungen) und CAD-Stufe build123d (werkzeug/cad.py).
+#    Ein Fehlschlag bricht das Setup nicht ab.
+python3 -c "import trimesh, manifold3d, scipy, PIL, skimage" 2>/dev/null || \
+  pip install --break-system-packages -q trimesh manifold3d scipy pillow scikit-image fast-simplification >/dev/null 2>&1 || \
+  echo "Hinweis: trimesh/manifold3d nicht installiert (bild_relief.py, Prüfungen)"
+python3 -c "import build123d" 2>/dev/null || \
+  pip install --break-system-packages -q build123d >/dev/null 2>&1 || \
+  echo "Hinweis: build123d nicht installiert – werkzeug/cad.py nicht nutzbar"
+# Leichte 3D-Vorschau fürs Handy (*.app.stl) – ohne pymeshlab lädt die App die großen Netze
+python3 -c "import pymeshlab" 2>/dev/null || pip install -q --break-system-packages pymeshlab >/dev/null 2>&1 || echo "Hinweis: pymeshlab fehlt – keine leichten Vorschau-Netze"
 echo "druckwerk bereit: OrcaSlicer $VER, $(openscad --version 2>&1 | head -1)"

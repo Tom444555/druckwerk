@@ -22,13 +22,16 @@ Alte `_kobrax`-Aufträge laufen nicht auf dem Creator 5 Pro – bei Bedarf aus d
 3. Druckbarkeit prüfen: liegt flach auf, Überhänge < 45° oder Stützen, Wandstärke ≥ 1,2 mm, passt in 256 mm.
 4. Slicen:
    ```
-   python3 werkzeug/druck.py --drucker kobrax --name <name> \
+   python3 werkzeug/druck.py --drucker c5pro --name <name> \
      --teil modelle/a.scad:PLA:1 --teil modelle/b.scad:PLA:2 --farben "schwarz,rot" \
-     --zusammen --schicht 0.20 --infill 15 [--waende 3] [--stuetzen auto|baum] [--brim an|aus]
+     --zusammen --schicht 0.20 --infill 15 [--waende 3] [--stuetzen auto|baum] [--brim an|aus] [--duese 0.25|0.6|0.8]
    ```
    - `Datei:Material:Slot` – Slot 1–4 = Spule (Kobra) bzw. Kopf (Creator). Materialien: siehe `drucker/*.json`.
    - `--zusammen` = mehrere Dateien bilden EIN mehrfarbiges Teil. Ohne = getrennte Teile, werden verteilt.
-   - Schichten: Kobra 0.08–0.28, Creator 0.12/0.20/0.24.
+   - Schichten: Creator 0.12/0.20/0.24 (0,4-mm-Düse), Kobra 0.08–0.28.
+   - `--duese` (nur c5pro, gilt für ALLE Köpfe): 0.25 → Schicht 0.08/0.10/0.12/0.14 · 0.6 → 0.18/0.30/0.42 · 0.8 → 0.32/0.4/0.48
+     (Profile in `drucker/c5pro.json → duesen`). Gemischte Düsengrößen in einem Druck gehen headless noch nicht.
+   - Gold = `PLA-SILK` (230 °C, langsamer); mit normalem PLA zusammen meldet der Bericht „gemischt“ – das ist in Ordnung.
 5. Ergebnis (auch `auftrag.json`; `auftraege/index.json` wird automatisch neu gebaut → erscheint in der App) liegt in `auftraege/<datum>_<name>_<drucker>/`: `.gcode`, `BERICHT.md`, STL, `slicer.log`.
 6. Committen + pushen. An Tom: `.gcode` per SendUserFile + Kurzfassung aus BERICHT.md (Spulen, Zeit, Gramm)
    + **App-Link** `https://tom444555.github.io/druckwerk/#hinzu=<ordner>` (speichert den Auftrag in seiner App; Pages braucht ~1 Min.).
@@ -63,7 +66,7 @@ Alte `_kobrax`-Aufträge laufen nicht auf dem Creator 5 Pro – bei Bedarf aus d
   `status/<id>.json`, App übernimmt den Auftrag automatisch (~1–3 Min.). Token (Fine-grained, Contents RW) liegt nur
   im Gerät (localStorage `druckwerk_token`). Erlaubte Extra-Schlüssel stehen in `EXTRA_OK` (eingang.py) – dort erweitern.
 - Schichtvorschau: `schichten.js` (Knopf „Schichten ansehen“ im Auftrag) liest die .gcode und zeichnet jede Schicht.
-- Noch offen: 1b schneiden/zusammensetzen/Text · 3 Druckprotokoll (Filamentlager: erste Stufe seit 14.11. in wissen.js) · 4 „Mit Claude bauen“ (erste Stufe: Vorlagen je Weg im Tab Workflow).
+- Noch offen: 1b schneiden/zusammensetzen/Text · gemischte Düsengrößen · Senden per WLAN. Erledigt am 14.11.: Filamentlager mit Check und Kosten, Druck-Tagebuch, geführter Auftrag.
 
 ## Wissen: Material, Drucker, Workflow (wissen.js + wissen/*.json, seit 14.11.2026)
 - **Inhalte stehen in `wissen/*.json`, nicht im Code.** Neue Erkenntnisse (Toms Druckergebnisse, neue Preise, Firmware) dort eintragen und
@@ -77,10 +80,26 @@ Alte `_kobrax`-Aufträge laufen nicht auf dem Creator 5 Pro – bei Bedarf aus d
   - `workflow.json` – fünf Wege Idee → Modell (mit `vorlage` für den Tab Neu), Werkzeugliste, Ausbau-Vorschläge (`status` pflegen!).
 - Tab **Material**: Filamente (Finder + Karten), **Mein Lager** (Spulen im Gerät, `druckwerk_spulen`; Kopf-Zuordnung), Zubehör (Haken `druckwerk_habe`).
   Im Auftrag: „Verbrauch vom Filamentlager abbuchen“ (`wissen.abbuchen`, merkt sich `druckwerk_gebucht`).
-- Tab **Drucker**: Überblick, Einrichten (`druckwerk_c5_ein`), Wartung (`druckwerk_c5_wartung`), Hilfe. Die frühere USB-Seite steht jetzt hier.
+- Tab **Drucker**: Überblick, Einrichten (`druckwerk_c5_ein`), Wartung (`druckwerk_c5_wartung`), Hilfe, Tagebuch (`druckwerk_tagebuch`, Fotos in IndexedDB `druckwerk_fotos`). Die frühere USB-Seite steht jetzt hier.
 - Tab **Workflow**: Weg (Knopf „Auftrag so beginnen“ füllt Tab Neu über `neuStart`), Werkzeuge, Vorschläge (Auswahl `druckwerk_wunsch` → Prompt).
   Kommt ein Prompt „Bitte diese Vorschläge aus der App umsetzen“, sind die Titel aus `workflow.json → vorschlaege` gemeint.
 - Prüfskript-Muster: Playwright 390×844, alle drei Tabs und Unterseiten durchklicken, `scrollWidth` muss 390 bleiben.
+
+## Weitere Werkzeuge (seit 14.11.2026)
+- **Technik-Baukasten** `modelle/baukasten/baukasten.scad` (`use <baukasten/baukasten.scad>`): Durchgangs-/Senklöcher M3–M8, Einschmelzmuttern M3–M5,
+  Mutterntaschen, Langloch, Schnapphaken, Schwalbenschwanz, Gewinde M6–M12, Kantenrundung/Fase, Wandlasche, Schlüsselloch, Kabel-Clip.
+  Globales `spiel=0.2` – nach Toms Passungs-Test (Kalibrier-Teil 4) anpassen. Tabelle: `modelle/baukasten/LIESMICH.md`. Für Funktionsteile zuerst hier nachsehen.
+- **CAD-Stufe build123d** `werkzeug/cad.py <modell.py> --name <n>` → `modelle/<n>.stl` (je Farbe) + `.step`; Beispiel `modelle/beispiel_winkel.py`.
+  Nehmen, wenn Rundungen/Fasen/STEP gefragt sind; einfache Teile weiter in OpenSCAD.
+- **Bild-zu-Farbrelief** `werkzeug/bild_relief.py bild.png --name <n> --breite 180 --rahmen 6 [--nur-bild /tmp/v.png]` → bis zu vier überlappungsfreie STL
+  (schwarz/gold/rot/weiß oder `--farben auto`); gibt den passenden druck.py-Aufruf aus. Erst `--nur-bild` zeigen, dann Netze.
+- **Kalibrier-Set** `modelle/kalibrier/` (haftung, winkel, versatz_k1–k4, passung, bruecke) – als Aufträge `…_kalibrier_1…5_c5pro` gesliced.
+  Was Tom je Teil meldet und wie daraus Werte werden: `modelle/kalibrier/LIESMICH.md`. Bestätigte Werte in `wissen/c5pro.json`, `wissen/filamente.json`
+  (Herkunft dann „Gerät“) und hier unter Technik-Notizen eintragen.
+- **Druck-Tagebuch** (`tagebuch.js`): Tom schickt „druckwerk: Druckergebnis …“ aus der App (Auftrag, Einstellungen, Note, Mängel, Notiz, Foto im Chat).
+  Daraus Einstellungen ableiten, neu slicen und die Erkenntnis in `wissen/*.json` festhalten.
+- **Geführter Auftrag**: Fragen je Weg stehen in `wissen/workflow.json → wege[].fragen` (Tab Neu, Umschalter „Geführt“).
+- `setup.sh` installiert zusätzlich trimesh/manifold3d/scikit-image, build123d und pymeshlab (ohne pymeshlab entstehen keine `*.app.stl`).
 
 ## Organische/feine Modelle (Erfahrung Gitarren-Reihe, 11.–12.11.2026)
 - **Erst Bild, dann Druckdatei:** bei Deko/Entwürfen zuerst eine schnelle Vorschau schicken (Sekunden), Tom entscheidet, dann slicen (bis 10 Min.).
