@@ -1,18 +1,24 @@
 # Übergabe druckwerk
 
-## STAND 12.11.2026 – hier einsteigen (neuer Chat: „druckwerk: …“)
-- **Läuft:** Slicen für Kobra X (Tom druckt selbst, PLA, strukturierte PEI-Platte, Bett 60 °C wird geprüft), App mit Bibliothek/Werkstatt/Slice-Knopf (zweiter Chat), Aufträge pro Gerät.
-- **Gitarren-Reihe (zusammengehörig, Farben schwarz/gold/rot/weiß):**
+## STAND 14.11.2026 – hier einsteigen (neuer Chat: „druckwerk: …“)
+- **Drucker:** nur noch Flashforge Creator 5 Pro (`c5pro` ist Standard in CLAUDE.md und in der App). Werte stammen aus Hersteller-Profilen, Wiki und Tests –
+  **am echten Gerät ist noch nichts bestätigt** (Betttemperatur PLA 60 °C laut Profil, Farbversatz, Haftung).
+- **Neu in der App (14.11.):** Tabs **Material** (Filamente mit Finder, Mein Lager mit Spulen und Abbuchen, Zubehör mit Haken), **Drucker** (Creator 5 Pro:
+  Überblick, Einrichten, Wartung, Hilfe; USB-Anleitung steht jetzt hier), **Workflow** (fünf Wege Idee → Modell, Werkzeuge, Ausbau-Vorschläge zum Antippen).
+  Code `wissen.js`, Inhalte `wissen/*.json` (Pflege-Regeln in CLAUDE.md, Abschnitt „Wissen“). Mit Playwright 390×844 geprüft, Fakten von einem
+  unabhängigen Agenten gegen die Quellen gegengelesen.
+- **Gitarren-Reihe (Farben schwarz/gold/rot/weiß) – alle noch für die Kobra X gesliced, für den Creator 5 Pro neu rechnen:**
   - `2026-11-10_loopsmiths_amp_kobrax` – Verstärker-Plektrumhalter, 8,8 cm.
   - `2026-11-11_stratocaster_kobrax` – Strat 20 cm, 4 Farben (`werkzeug/gitarre_farben.py`).
-  - `2026-11-12_staender_baum_kobrax` – Hänge-Ständer „Lebensbaum“ v5 (`werkzeug/baum_relief.py`), 11 h 55 min. **Noch nicht gedruckt, Tom hat v5 noch nicht bewertet.**
-  - Ältere Ständer im Lager: `…_gitarrenstaender` (schlicht), `…_staender_note`, `…_staender_schleife` (von Tom abgelehnt – kann gelöscht werden, nur auf Wunsch).
-- **Toms Geschmack (aus den Rückmeldungen):** detailreich, geschwungen, naturnah/realistisch, nichts Schlichtes oder Symmetrisch-Künstliches; breite statt hohe Formen;
-  schickt gern Fotos als Vorlage; will schnelle Vorschau und kurze Antworten.
-- **Nächste Schritte:** 1) Rückmeldung zu v5 abwarten (mögliche Wünsche: anderer Wuchs = `--saat`, Farbtausch = nur neu slicen, weniger Druckzeit = Laub/Schicht gröber).
-  2) Erster echter Druck des Ständers: prüfen, ob Blattadern/Borke bei 0,4-mm-Düse sichtbar sind und ob die Gitarre in der Astgabel sitzt. 3) Repo ist durch große Aufträge gewachsen –
-  bei Gelegenheit alte Ständer-Aufträge löschen (nur auf Toms Wunsch).
-- **Arbeitsregeln/Erfahrungen:** stehen in CLAUDE.md, Abschnitt „Organische/feine Modelle“. Abschnitte unten nur bei Bedarf lesen.
+  - `2026-11-12_staender_baum_kobrax` – Hänge-Ständer „Lebensbaum“ v5 (`werkzeug/baum_relief.py`, Saat 6). **Noch nicht gedruckt, von Tom noch nicht bewertet.**
+  - Ältere Ständer im Lager: `…_gitarrenstaender`, `…_staender_note`, `…_staender_schleife` (abgelehnt – löschen nur auf Wunsch).
+- **Toms Geschmack:** detailreich, geschwungen, naturnah/realistisch, breit statt hoch; schickt gern Fotos als Vorlage; erst schnelle Vorschau, kurze Antworten.
+- **Ausbau-Vorschläge (stehen in `wissen/workflow.json`, Tom wählt in der App):** v1 Gitarren-Reihe neu rechnen · v2 Kalibrier-Set · v3 Druck-Tagebuch mit Foto ·
+  v4 geführter Auftrag · v5 Technik-Baukasten · v6 build123d · v7 Bild-zu-Farbrelief · v8 0,25-mm-Düse als Gold-Kopf (Profile einbinden) · v9 Lager automatisch ·
+  v10 Senden per WLAN · v11 Wissen ins Offline-Paket. Nach Umsetzung `status` dort ändern.
+- **Nächste Schritte:** 1) Toms Auswahl der Vorschläge abwarten. 2) Erster echter Druck (Testwürfel `2026-11-10_testwuerfel_c5pro`): Ergebnis in `wissen/c5pro.json`
+  und CLAUDE.md eintragen. 3) Rückmeldung zum Lebensbaum v5.
+- **Arbeitsregeln/Erfahrungen:** CLAUDE.md, Abschnitte „Wissen“ und „Organische/feine Modelle“. Abschnitte unten nur bei Bedarf lesen.
 
 ---
 ## Verlauf (älter)
@@ -103,3 +109,10 @@
   mit goldenem Wurzelgeflecht, Blume des Lebens weiß. Dateien: staender_baum_{schwarz,gold,blatt,weiss}.stl, Saat 6.
   Slots: 1 schwarz, 2 gold, 3 rot, 4 weiß. 11 h 55 min, 60/11/14/3 g (resolution=0.06, sonst wird die .gcode > 100 MB und GitHub lehnt sie ab). Passung geprüft (0 mm³). Auftrag jetzt `2026-11-12_staender_baum_kobrax`
   (der Ordner vom 11.11. wurde ersetzt). Eigenentwurf in der Optik des Bildes, kein Nachbau des Motivs.
+
+## 2026-11-14 – Material, Drucker, Workflow in der App
+- Neu: `wissen.js` + `wissen/filamente.json`, `zubehoer.json`, `c5pro.json`, `workflow.json`; index.html: Navigation mit 6 Tabs, alte Funktionen `drucker()`/`hilfe()` entfernt,
+  Standarddrucker im Tab Neu = c5pro, Knopf „Verbrauch vom Filamentlager abbuchen“ im Auftrag, 3MF-Knopf nennt Flash Studio.
+- Quellen der Recherche stehen je Datei unter `quellen` (Flashforge-Seite/Wiki/PDFs, Notebookcheck, drucktipps3d, China-Gadgets, printer-hub, EU-Shop).
+- Filament-Sollwerte kommen aus den Profilen `resources/profiles/Flashforge/filament/* @FF C5P.json` (Orca v2.5.0, inherits-Kette aufgelöst).
+- Früherer Einstiegsblock (Stand 12.11.) ist im neuen Block oben aufgegangen.

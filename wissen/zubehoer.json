@@ -1,0 +1,76 @@
+{
+ "stand": "14.11.2026",
+ "hinweis": "Preise sind Listenpreise vom genannten Tag (EU-Shop von Flashforge bzw. Tests) und ändern sich. „Muss“ = ohne das hakt es bald, „Sinnvoll“ = spart Ärger, „Später“ = wenn der Bedarf da ist.",
+ "gruppen": [
+  {"name": "Trocknen & Lagern", "text": "Der Creator 5 Pro hat keine eingebaute Trocknung, vier Spulen hängen offen. Trockenes Filament ist der größte Hebel für saubere Drucke.", "teile": [
+   {"id": "trockner4", "name": "Filamenttrockner für 4 Spulen", "prio": "Sinnvoll", "preis": "ca. 100–200 €",
+    "wozu": "Trocknet und füttert alle vier Köpfe gleichzeitig. Sunlu FilaDryer S4: 4 Spulen, bis 70 °C, rund 100 €. Creality Space Pi X4: 4 Spulen in 2 getrennten Kammern, bis 85 °C (reicht auch für Nylon), etwa 140–200 €."},
+   {"id": "vds", "name": "Flashforge VDS (Original-Trockenbox)", "prio": "Später", "preis": "179 € Vorbestellung (regulär 229 €)", "link": "https://eu.flashforge.com/en-eu/products/flashforge-vds",
+    "wozu": "Zwei getrennte Kammern, 45–85 °C, bis 500 W, wird über den Drucker-Bildschirm gesteuert (Firmware ab 1.9.6). Oberer Ausgang für TPU und Faserfilament. Auslieferung laut Shop ab etwa 30.11.2026."},
+   {"id": "dichtbox", "name": "Dichte Boxen + Silicagel + Hygrometer", "prio": "Muss", "preis": "ca. 20–30 €",
+    "wozu": "Angebrochene Spulen luftdicht lagern. Ziel: unter 15 % Feuchte, Trockenmittel tauschen, sobald der Wert darüber liegt."},
+   {"id": "ptfe", "name": "PTFE-Schlauch 2 × 4 mm + PC4-M10-Kupplungen", "prio": "Später", "preis": "ca. 10–15 €",
+    "wozu": "Führt das Filament direkt aus dem Trockner in die vier Einlässe (passende Halter gibt es zum Selbstdrucken)."}
+  ]},
+  {"name": "Düsen & Platten", "text": "Alle Düsen sind gehärteter Stahl bis 320 °C und in Sekunden gewechselt. Nach jedem Wechsel: Leveling und Kopf-Versatz neu kalibrieren. Beim Kauf auf „Creator 5“ achten, nicht AD5X.", "teile": [
+   {"id": "d025", "name": "Düse 0,25 mm", "prio": "Sinnvoll", "preis": "29,90 €", "link": "https://eu.flashforge.com/en-eu/products/flashforge-nozzle-assembly-for-creator-5-series",
+    "wozu": "Für feine Reliefs: Blattadern, Borke, kleine Schrift. Passt zu deinem Geschmack – z. B. nur der Gold-Kopf mit 0,25 mm, die anderen mit 0,4 mm."},
+   {"id": "d04", "name": "Ersatzdüse 0,4 mm", "prio": "Sinnvoll", "preis": "34,90 €", "link": "https://eu.flashforge.com/en-eu/products/flashforge-nozzle-assembly-for-creator-5-series",
+    "wozu": "Eine in Reserve, damit ein verstopfter Kopf den Druck nicht tagelang aufhält."},
+   {"id": "d06", "name": "Düse 0,6 mm", "prio": "Später", "preis": "29,90 €", "link": "https://eu.flashforge.com/en-eu/products/flashforge-nozzle-assembly-for-creator-5-series",
+    "wozu": "Empfohlen für Kohle- und Glasfaser (ASA-CF, PA-CF) und für schnelle, große Funktionsteile."},
+   {"id": "d08", "name": "Düse 0,8 mm", "prio": "Später", "preis": "34,90 €", "link": "https://eu.flashforge.com/en-eu/products/flashforge-nozzle-assembly-for-creator-5-series",
+    "wozu": "Sehr schnelle, grobe Drucke (Vasen, große Kästen)."},
+   {"id": "platte2", "name": "Zweite PEI-Druckplatte (strukturiert)", "prio": "Sinnvoll", "preis": "25,90 €", "link": "https://eu.flashforge.com/en-eu/products/pei-coated-build-plate-for-creator-5-series",
+    "wozu": "Nächster Druck startet sofort, während der letzte noch abkühlt. Eine Platte nur für ABS/ASA mit Klebestift hält die andere sauber."},
+   {"id": "sock", "name": "Silikonsocken (Ersatz)", "prio": "Später", "preis": "8,90 €", "link": "https://eu.flashforge.com/en-eu/products/silicone-sock-for-creator-5-series",
+    "wozu": "Schützt den Heizblock vor Filamentresten; reißt irgendwann ein."}
+  ]},
+  {"name": "Original-Ersatzteile", "text": "Laut Flashforge passen die Teile für Creator 5 und Creator 5 Pro gleich. Im EU-Shop sind 15 Teile gelistet.", "teile": [
+   {"id": "hepa", "name": "HEPA-Filter Creator 5 Pro", "prio": "Sinnvoll", "preis": "12,90 €", "link": "https://eu.flashforge.com/en-eu/products/hepa-filter-for-creator-5-pro",
+    "wozu": "Wechselteil – wichtig, sobald du ABS/ASA druckst. Ein festes Wechselintervall für den Creator 5 Pro habe ich nicht gefunden; ältere Flashforge-Anleitungen nennen 3–6 Monate."},
+   {"id": "cutter", "name": "Filamentschneider", "prio": "Später", "preis": "12,90 €", "link": "https://eu.flashforge.com/en-eu/products/filament-cutter-for-creator-5-series", "wozu": "Verschleißteil im Kopf."},
+   {"id": "blocker", "name": "Düsen-Verschluss (Nozzle Blocker)", "prio": "Später", "preis": "16,90 €", "link": "https://eu.flashforge.com/en-eu/products/nozzle-blocker-assembly-for-creator-5-series", "wozu": "Verschließt geparkte Düsen gegen Nachtropfen."},
+   {"id": "wischer", "name": "Silikon-Wischpad", "prio": "Später", "preis": "8,90 €", "link": "https://eu.flashforge.com/en-eu/products/silicone-nozzle-wiping-pad-for-creator-5-series", "wozu": "Wischt die Düse ab – der Drucker hat keine automatische Düsenreinigung."},
+   {"id": "extruder", "name": "Kompletter Druckkopf (Extruder)", "prio": "Später", "preis": "68,90 €", "link": "https://eu.flashforge.com/en-eu/products/extruder-assembly-for-creator-5-series", "wozu": "Nur bei Defekt."},
+   {"id": "schlauch", "name": "Filament-Führungsschlauch", "prio": "Später", "preis": "14,90 €", "link": "https://eu.flashforge.com/en-eu/products/filament-guide-tube-with-outlet-collet-for-creator-5-series", "wozu": "Ersatz, wenn der Schlauch knickt oder innen rau wird."},
+   {"id": "rest", "name": "Kopf-Kabel · Kammerlicht · Kamera", "prio": "Später", "preis": "14,90 € · 12,90 € · 25,90 €", "link": "https://eu.flashforge.com/en-eu/collections/creator-5-series-accessories", "wozu": "Nur bei Defekt."}
+  ]},
+  {"name": "Werkzeug", "text": "Kleines Besteck, das am Drucker liegen sollte.", "teile": [
+   {"id": "usb", "name": "USB-Stick, FAT32, USB 2.0", "prio": "Muss", "preis": "ca. 8 €", "wozu": "Für Druckdateien und Firmware. USB-3-Sticks und andere Formatierungen machen beim Update Probleme."},
+   {"id": "schneider", "name": "Seitenschneider (bündig)", "prio": "Muss", "preis": "ca. 8 €", "wozu": "Filament gerade abschneiden vor dem Einführen; TPU, bei dem der eingebaute Schneider abrutscht."},
+   {"id": "kleber", "name": "Klebestift / Haftmittel", "prio": "Muss", "preis": "ca. 5 €", "wozu": "Pflicht für ABS, ASA und Nylon; bei TPU als Trennschicht, damit es nicht zu fest klebt."},
+   {"id": "ipa", "name": "Isopropanol + Mikrofasertuch", "prio": "Muss", "preis": "ca. 8 €", "wozu": "Fett und Fingerabdrücke von der Platte – häufigster Grund für schlechte Haftung."},
+   {"id": "messschieber", "name": "Digitaler Messschieber", "prio": "Muss", "preis": "ca. 15–30 €", "wozu": "Maße für technische Teile abnehmen, Passungen prüfen, Rechtwinkligkeit des Druckers kontrollieren (Diagonalen-Test)."},
+   {"id": "nadel", "name": "Düsennadeln + Messingbürste", "prio": "Sinnvoll", "preis": "ca. 6 €", "wozu": "Verstopfte Düse freimachen, Düsenspitze vor der Kalibrierung säubern."},
+   {"id": "fett", "name": "Lithiumfett (weiß)", "prio": "Sinnvoll", "preis": "ca. 6 €", "wozu": "3 g liegen dem Drucker bei; die Schienen kommen oft fast trocken an."},
+   {"id": "alu", "name": "Alu-Klebeband (hitzefest)", "prio": "Sinnvoll", "preis": "ca. 6 €", "wozu": "Auskleidung für den Abfallbehälter im Bauraum."},
+   {"id": "entgrater", "name": "Entgrater + Bastelmesser + Pinzette", "prio": "Sinnvoll", "preis": "ca. 12 €", "wozu": "Kanten brechen, Fäden und Stützreste entfernen."}
+  ]},
+  {"name": "Nachbearbeitung", "text": "Vom Druck zum fertigen Stück – für Technik und Kunst.", "teile": [
+   {"id": "schleif", "name": "Schleifpapier 240–1000 + Schleifschwamm", "prio": "Sinnvoll", "preis": "ca. 10 €", "wozu": "Flächen glätten, bevor grundiert oder lackiert wird."},
+   {"id": "filler", "name": "Spritzfüller / Grundierung", "prio": "Später", "preis": "ca. 10 €", "wozu": "Schließt Schichtlinien – für Figuren und Schaustücke."},
+   {"id": "farbe", "name": "Acrylfarben + Klarlack matt", "prio": "Später", "preis": "ca. 20 €", "wozu": "Feine Akzente, die auch mit vier Farben nicht druckbar sind; Lack schützt die Oberfläche."},
+   {"id": "skleber", "name": "Sekundenkleber + Aktivator", "prio": "Sinnvoll", "preis": "ca. 10 €", "wozu": "Teile fügen, die größer als der Bauraum (256 mm) sind."},
+   {"id": "muttern", "name": "Einschmelzmuttern M3/M4 + Lötkolben-Spitze", "prio": "Sinnvoll", "preis": "ca. 20 €", "wozu": "Dauerhafte Metallgewinde in Funktionsteilen statt Schrauben direkt im Kunststoff."},
+   {"id": "magnete", "name": "Magnete 6 × 3 mm", "prio": "Später", "preis": "ca. 8 €", "wozu": "Für Deckel, Halter und einige Drucker-Umbauten (Abfall-Rampe)."}
+  ]},
+  {"name": "Selbst drucken", "text": "Verbesserungen aus der Gemeinschaft – kosten nur Filament. Teile im Bauraum aus PETG oder ABS drucken, PLA wird in der beheizten Kammer weich.", "teile": [
+   {"id": "m-clip", "name": "Kabel-Clip für den Kopfträger", "prio": "Muss", "preis": "ein paar Gramm PETG", "wozu": "Bei frühen Geräten drückt das Trägerkabel vorne links auf das Kabel von Kopf 4. Der offizielle Clip entlastet es."},
+   {"id": "m-abfall", "name": "Abfallbehälter mit Halter", "prio": "Muss", "preis": "Filament + Alu-Klebeband", "wozu": "Der Drucker hat keinen Auffangbehälter; die Reste fallen sonst in den Bauraum. Offizielle Dateien im Flashforge-Wiki, nach jedem Druck leeren."},
+   {"id": "m-spule", "name": "Spulen-Distanzringe / Arm-Verlängerung", "prio": "Sinnvoll", "preis": "unter 55 g", "wozu": "Gegen Quietschen und Abrieb bei Fremdspulen; Verlängerung für breite 1-kg-Spulen."},
+   {"id": "m-box", "name": "Aufbewahrung für Wechseldüsen", "prio": "Später", "preis": "Filament", "wozu": "Hält die Düsen-Baugruppen staubfrei und sortiert."},
+   {"id": "m-griff", "name": "Plattengriff · Krümelschale · Kopf-Abziehhilfe", "prio": "Später", "preis": "ca. 10 g je Teil", "wozu": "Kleine Alltagshelfer."},
+   {"id": "m-riser", "name": "Aufsatz mit Ablage (Utilities Riser, Pro)", "prio": "Später", "preis": "Filament, Magnet Ø 4 × 2 mm", "wozu": "Stauraum oben auf dem Drucker; der Deckel-Sensor bleibt funktionsfähig. Gibt zugleich mehr Luft für die Schläuche unter der Haube."},
+   {"id": "m-fuss", "name": "Adapter für Dämpfungsfüße", "prio": "Später", "preis": "Filament + Füße", "wozu": "Weniger Schwingung im Tisch, weniger Geisterbilder an den Wänden."}
+  ]}
+ ],
+ "quellen": [
+  {"titel": "Flashforge EU-Shop: Zubehör Creator 5", "url": "https://eu.flashforge.com/en-eu/collections/creator-5-series-accessories"},
+  {"titel": "Flashforge EU-Shop: VDS-Trockenbox", "url": "https://eu.flashforge.com/en-eu/products/flashforge-vds"},
+  {"titel": "printer-hub: Die besten Umbauten für den Creator 5", "url": "https://printer-hub.com/posts/flashforge-creator-5-best-mods"},
+  {"titel": "techtest.org: Sunlu S4 im Test", "url": "https://techtest.org/der-sunlu-s4-filamenttrockner-2026-im-test-wie-hoch-ist-der-stromverbrauch-und-die-effektivitaet/"},
+  {"titel": "All3DP: Kaufberatung Filamenttrockner", "url": "https://all3dp.com/de/2/besten-filamenttrockner-kaufberatung-vergleich/"},
+  {"titel": "Flashforge-Wiki: Fragen und Antworten Creator 5 Pro", "url": "https://wiki.flashforge.com/en/creator-series/creator-5-series/faq_c5p"}
+ ]
+}

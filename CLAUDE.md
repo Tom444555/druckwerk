@@ -4,13 +4,14 @@ Ziel: Tom gibt einen Prompt („Halter für …, rot/schwarz, auf der Kobra“) 
 **fertige USB-Druckdatei (.gcode)** plus **BERICHT.md** (Spulen, Einstellungen, Zeit, Gramm).
 Tom muss nur noch die Datei auf den USB-Stick ziehen und am Drucker starten.
 
-## Drucker (Tom wählt vorher!)
+## Drucker (Standard seit 13.11.2026: `c5pro`)
 | Kürzel | Drucker | Stärken |
 |---|---|---|
 | `kobrax` | Anycubic Kobra X (offen, 4 Farben im Kopf, ACE Gen 2) | PLA/PETG/TPU bunt, günstig |
 | `c5pro` | Flashforge Creator 5 Pro (geschlossen, 4 Köpfe, Kammer 65 °C) | ABS/ASA/CF, Mischmaterial, kein Spülabfall |
 
-Hat Tom keinen Drucker genannt: **kurz fragen** (eine Frage, mit Empfehlung). Nicht selbst wählen.
+Tom arbeitet nur noch mit dem Creator 5 Pro: ohne Angabe **immer `c5pro`**, nicht nachfragen. `kobrax` nur, wenn Tom ihn ausdrücklich nennt.
+Alte `_kobrax`-Aufträge laufen nicht auf dem Creator 5 Pro – bei Bedarf aus dem Modell neu slicen.
 
 ## Ablauf
 1. `bash werkzeug/setup.sh` (einmal pro Sitzung, ~2 Min.)
@@ -34,8 +35,8 @@ Hat Tom keinen Drucker genannt: **kurz fragen** (eine Frage, mit Empfehlung). Ni
 
 ## App (index.html, GitHub Pages)
 - Live: https://tom444555.github.io/druckwerk/ – liest `drucker/*.json` und `auftraege/index.json`.
-- Tabs: Aufträge (3D-Vorschau der STL, Spulen, Einstellungen, .gcode-Download), Neu (klickt den Prompt zusammen),
-  Drucker, USB. iOS-Stil, hell/dunkel. Prompts aus der App beginnen mit `druckwerk:`.
+- Tabs: Bibliothek, Aufträge (3D-Vorschau der STL, Köpfe, Einstellungen, .gcode-Download), Neu (klickt den Prompt zusammen),
+  Material, Drucker, Workflow. iOS-Stil, hell/dunkel. Prompts aus der App beginnen mit `druckwerk:`.
 - Aufträge sind wie die Ideen im Looper **pro Gerät gespeichert** (localStorage `druckwerk_meine`): neue Besucher
   sehen eine leere Liste. Tom speichert einen Auftrag über den Link `https://tom444555.github.io/druckwerk/#hinzu=<ordner>`
   (mehrere mit Komma) oder über „Aus dem Lager hinzufügen“. „Auftrag löschen“ entfernt ihn nur aus seiner Liste.
@@ -62,7 +63,24 @@ Hat Tom keinen Drucker genannt: **kurz fragen** (eine Frage, mit Empfehlung). Ni
   `status/<id>.json`, App übernimmt den Auftrag automatisch (~1–3 Min.). Token (Fine-grained, Contents RW) liegt nur
   im Gerät (localStorage `druckwerk_token`). Erlaubte Extra-Schlüssel stehen in `EXTRA_OK` (eingang.py) – dort erweitern.
 - Schichtvorschau: `schichten.js` (Knopf „Schichten ansehen“ im Auftrag) liest die .gcode und zeichnet jede Schicht.
-- Noch offen: 1b schneiden/zusammensetzen/Text · 3 Filamentlager + Druckprotokoll · 4 „Mit Claude bauen“.
+- Noch offen: 1b schneiden/zusammensetzen/Text · 3 Druckprotokoll (Filamentlager: erste Stufe seit 14.11. in wissen.js) · 4 „Mit Claude bauen“ (erste Stufe: Vorlagen je Weg im Tab Workflow).
+
+## Wissen: Material, Drucker, Workflow (wissen.js + wissen/*.json, seit 14.11.2026)
+- **Inhalte stehen in `wissen/*.json`, nicht im Code.** Neue Erkenntnisse (Toms Druckergebnisse, neue Preise, Firmware) dort eintragen und
+  `stand` + `quellen` mitziehen. `herkunft` je Wert: „Profil“ (Hersteller-Profil Orca 2.5), „Wiki“ (Flashforge), „Richtwert“. Nichts erfinden –
+  was am echten Gerät bestätigt ist, im Text auch so nennen.
+  - `filamente.json` – Materialkarten (Düse/Bett/Kammer/Lüfter/Trocknen/Durchfluss, Wofür, Achtung), Finder-Schlagworte `eignung`,
+    Mischregeln, Grundausstattung. Feld `druckwerk` = Schlüssel aus `drucker/c5pro.json` (leer = Profil fehlt noch).
+  - `zubehoer.json` – Gruppen mit Teilen (`prio` Muss/Sinnvoll/Später, Preis, Shop-Link).
+  - `c5pro.json` – Steckbrief, Stärken/Grenzen, Programme, Einrichtungs-Liste, Vor-dem-Druck, Wartung (`tage` = Erinnerungs-Abstand),
+    Probleme+Lösungen (durchsuchbar), Firmware-Verlauf, USB-Schritte.
+  - `workflow.json` – fünf Wege Idee → Modell (mit `vorlage` für den Tab Neu), Werkzeugliste, Ausbau-Vorschläge (`status` pflegen!).
+- Tab **Material**: Filamente (Finder + Karten), **Mein Lager** (Spulen im Gerät, `druckwerk_spulen`; Kopf-Zuordnung), Zubehör (Haken `druckwerk_habe`).
+  Im Auftrag: „Verbrauch vom Filamentlager abbuchen“ (`wissen.abbuchen`, merkt sich `druckwerk_gebucht`).
+- Tab **Drucker**: Überblick, Einrichten (`druckwerk_c5_ein`), Wartung (`druckwerk_c5_wartung`), Hilfe. Die frühere USB-Seite steht jetzt hier.
+- Tab **Workflow**: Weg (Knopf „Auftrag so beginnen“ füllt Tab Neu über `neuStart`), Werkzeuge, Vorschläge (Auswahl `druckwerk_wunsch` → Prompt).
+  Kommt ein Prompt „Bitte diese Vorschläge aus der App umsetzen“, sind die Titel aus `workflow.json → vorschlaege` gemeint.
+- Prüfskript-Muster: Playwright 390×844, alle drei Tabs und Unterseiten durchklicken, `scrollWidth` muss 390 bleiben.
 
 ## Organische/feine Modelle (Erfahrung Gitarren-Reihe, 11.–12.11.2026)
 - **Erst Bild, dann Druckdatei:** bei Deko/Entwürfen zuerst eine schnelle Vorschau schicken (Sekunden), Tom entscheidet, dann slicen (bis 10 Min.).

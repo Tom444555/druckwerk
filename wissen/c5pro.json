@@ -1,0 +1,141 @@
+{
+ "stand": "14.11.2026",
+ "hinweis": "Zusammengetragen aus Herstellerangaben, Flashforge-Wiki und unabhängigen Tests. Am eigenen Gerät noch nicht nachgemessen – eigene Erfahrungen bitte melden, dann trage ich sie hier ein.",
+ "steckbrief": [
+  ["Bauraum", "256 × 256 × 256 mm"],
+  ["Druckköpfe", "4 eigenständige, werden gewechselt"],
+  ["Farbwechsel", "ohne Spülen, nur kleiner Reinigungsturm"],
+  ["Düsen", "gehärteter Stahl, 0,4 mm (0,25 / 0,6 / 0,8 wechselbar)"],
+  ["Düse max.", "320 °C"],
+  ["Bett max.", "120 °C eingestellt ≈ 100 °C an der Oberfläche"],
+  ["Kammer", "aktiv beheizt bis 65 °C"],
+  ["Aufheizen Kammer", "50 °C in ≈ 10 Min., 65 °C in ≈ 50 Min."],
+  ["Durchfluss max.", "32 mm³/s"],
+  ["Tempo", "Druck bis 300 mm/s, Fahrt bis 600 mm/s"],
+  ["Schichthöhe", "0,1–0,4 mm"],
+  ["Platte", "PEI-Federstahl, strukturiert, magnetisch"],
+  ["Filter", "HEPA 13 + Aktivkohle"],
+  ["Kamera", "1280 × 720, mit Fehler-Erkennung"],
+  ["Sensoren", "Filament-Ende, Knoten, Tür offen, Kammertemperatur"],
+  ["Verbindung", "WLAN 2,4 / 5 GHz, USB-Stick (FAT32)"],
+  ["Größe / Gewicht", "52 × 44 × 71 cm mit Spulen, 18 kg"],
+  ["Platz drumherum", "links/hinten 1 cm, rechts 20 cm, vorne 50 cm"],
+  ["Lautstärke", "leiser Modus unter 55 dB"],
+  ["Slicer", "Flash Studio Desktop (Orca-Ableger), OrcaSlicer"]
+ ],
+ "staerken": [
+  "Vier Farben oder Materialien in einem Druck, Wechsel in Sekunden statt Minuten – ein vierfarbiges Testboot war in einem Test nach 3 h 41 min fertig.",
+  "Kaum Abfall beim Farbwechsel, weil jeder Kopf seine Farbe behält.",
+  "Geschlossen und beheizt: ABS, ASA und Nylon mit wenig Verzug.",
+  "Vier gleiche Köpfe mit kurzem, geradem Filamentweg – gut für TPU und für hart + weich in einem Teil.",
+  "Feine Details und saubere Übergänge mit PLA schon in den Standard-Einstellungen."
+ ],
+ "grenzen": [
+  "Filament wird von Hand eingeführt und entnommen, für jeden Kopf einzeln (Hebel am Kopf).",
+  "Lange Vorbereitung: mit Leveling und Fluss-Kalibrierung rund 28 Minuten bis zum ersten Strich bei vier Farben.",
+  "Keine eingebaute Trocknung und kein Auffangbehälter für Reste.",
+  "Keine automatische Düsenreinigung.",
+  "Bett-Wärme ungleichmäßig: am offenen Schwestermodell wurden bei 60 °C Soll fast 8 °C weniger gemessen.",
+  "Höchstens vier Filamente pro Druck.",
+  "Die Kamera-Ansicht im Slicer ist langsam (2–3 Bilder pro Sekunde, Übertragung nach 4 Minuten gekappt)."
+ ],
+ "software": [
+  "Flash Studio Desktop (Mac/Windows) ist der Hersteller-Slicer, Flash Studio Mobile die App fürs Handy. Download: flashforge.com → Download Center.",
+  "Mac: Ein Test vom September 2026 nennt Flash Studio nur als Intel-Programm – auf deinem MacBook Air läuft es dann über Rosetta. Vor dem Einrichten prüfen, ob es inzwischen eine Apple-Silicon-Fassung gibt.",
+  "OrcaSlicer kann Dateien per WLAN schicken (Host-Typ „Flashforge“, am Drucker „LAN only“ einschalten, Geräte-ID als Schlüssel, Seriennummer mit „SN“ davor) – aber ohne Steuerung und Kamera.",
+  "Im reinen LAN-Modus funktioniert die Handy-App nicht.",
+  "druckwerk slict mit denselben Hersteller-Profilen (OrcaSlicer 2.5). Die .gcode kommt per USB-Stick, die .3mf lässt sich in Flash Studio öffnen."
+ ],
+ "druckwerk": [
+  "Profile für 15 Materialien hinterlegt (PLA-Sorten, PETG, ABS, ASA, ASA-CF, PA-CF, TPU, PVA).",
+  "Schichthöhen 0,12 / 0,20 / 0,24 mm mit 0,4-mm-Düse; Profile für 0,25 / 0,6 / 0,8 mm sind vorhanden, aber noch nicht eingebunden.",
+  "Betttemperatur für PLA auf der strukturierten Platte: 55–60 °C laut Profil – am echten Gerät noch bestätigen.",
+  "Vorschaubild auf dem Drucker-Bildschirm fehlt noch.",
+  "Senden per WLAN ist noch nicht gebaut (bisher nur USB).",
+  "Die Gitarren-Reihe ist noch für die Kobra X gesliced und muss für den Creator 5 Pro neu gerechnet werden."
+ ],
+ "einrichten": [
+  {"id": "e1", "t": "Transportsicherungen entfernen", "d": "Auch die drei Schrauben, die das Bett festklemmen – sonst bleibt das Bett schief (Fehler E0148)."},
+  {"id": "e2", "t": "Standplatz", "d": "Fester Tisch, rechts 20 cm und vorne 50 cm frei. Mit vier Spulen braucht er etwa 52 × 61 × 72 cm."},
+  {"id": "e3", "t": "Firmware aktualisieren", "d": "Mindestens 1.9.7; bekannt ist 1.9.9 vom 07.09.2026. Während des Updates nicht ausschalten."},
+  {"id": "e4", "t": "Schmierung prüfen", "d": "X-Schiene, Y-Stangen, die drei Z-Spindeln und die X-Lager mit dem beiliegenden Fett versorgen – viele Geräte kommen fast trocken an."},
+  {"id": "e5", "t": "WLAN verbinden", "d": "2,4 GHz nehmen (5 GHz bricht bei manchen ab); Netzname und Passwort ohne Sonderzeichen."},
+  {"id": "e6", "t": "Kopf-Versatz kalibrieren", "d": "Vorher die PEI-Platte abnehmen und alle Düsen säubern – die Mess-Scheibe liegt unter der Platte. Dauert 15–20 Minuten."},
+  {"id": "e7", "t": "Leveling und Schwingungs-Ausgleich", "d": "Einmal bei der Einrichtung, danach nur bei schlechter erster Schicht, nach Düsenwechsel oder Umstellen."},
+  {"id": "e8", "t": "Rechtwinkligkeit prüfen", "d": "Ein 100-mm-Quadrat drucken und beide Diagonalen messen. Mehr als 0,1 mm Unterschied je 100 mm: innerhalb der Rückgabefrist reklamieren."},
+  {"id": "e9", "t": "Kabel-Clip und Abfallbehälter drucken", "d": "Beides aus PETG. Schützt das Kabel von Kopf 4 und hält den Bauraum sauber."},
+  {"id": "e10", "t": "druckwerk-Testwürfel von USB", "d": "Auftrag „testwuerfel“ für den Creator 5 Pro drucken und mir sagen: Haftung, Betttemperatur am Bildschirm, Farbversatz. Danach trage ich die bestätigten Werte ein."}
+ ],
+ "vorDruck": [
+  "Platte sauber und fettfrei, richtig eingelegt.",
+  "Köpfe so bestücken, wie der Auftrag es zeigt (Kopf 1–4 = Farbe 1–4).",
+  "Filament gerade abschneiden, einführen, Hebel am Kopf drücken; beim Laden mindestens 5 cm Abstand zwischen Düse und Bett.",
+  "PLA / PETG / TPU: Kammerheizung aus. Bei PLA + PETG gemischt oder TPU zusätzlich Deckel ab und Tür auf.",
+  "ABS / ASA / Nylon: Deckel und Tür zu, Kammer vorheizen, Klebestift auf die Platte.",
+  "Abfallbehälter leer, Düsenspitzen sauber.",
+  "Erste Schicht ansehen – haftet sie überall?"
+ ],
+ "zeitSparen": [
+  "Gleiches Material, gleiche Platte, Folgedruck: Leveling und Fluss-Kalibrierung abschalten – in einem Test sank die Vorbereitung von 28 auf etwa 10 Minuten.",
+  "Reinigungsturm nicht abschalten. Stattdessen Spülmengen bei Fremdfilament halbieren und „in die Füllung spülen“ einschalten. In einem Test sank der Abfall beim vierfarbigen Boot durch angepasste Einstellungen von 36 g auf 8 g.",
+  "Farben im Slicer von hell nach dunkel ordnen.",
+  "Kammer rechtzeitig vorheizen: 50 °C sind schnell erreicht, 65 °C brauchen fast eine Stunde.",
+  "Runde Oberseiten: adaptive Schichthöhe einschalten."
+ ],
+ "wartung": [
+  {"id": "w1", "t": "Abfallbehälter leeren, Platte abwischen", "i": "nach jedem Druck", "tage": 0},
+  {"id": "w2", "t": "Düsenspitzen und Wischpad reinigen", "i": "etwa wöchentlich bzw. vor Mehrfarb-Drucken", "tage": 7},
+  {"id": "w3", "t": "Platte mit Isopropanol entfetten", "i": "bei nachlassender Haftung", "tage": 14},
+  {"id": "w4", "t": "Trockenmittel prüfen (unter 15 % Feuchte)", "i": "monatlich", "tage": 30},
+  {"id": "w5", "t": "Riemenspannung und Schwingungs-Ausgleich", "i": "bei Geisterbildern oder Streifen", "tage": 90},
+  {"id": "w6", "t": "Schienen, Stangen und Spindeln reinigen und fetten", "i": "alle 1500 Druckstunden (Flashforge-Wiki)", "tage": 180},
+  {"id": "w7", "t": "HEPA-Filter wechseln", "i": "Richtwert 3–6 Monate, bei ABS/ASA eher früher", "tage": 120},
+  {"id": "w8", "t": "Nach Düsen- oder Kopfwechsel: Leveling + Kopf-Versatz", "i": "jedes Mal", "tage": 0},
+  {"id": "w9", "t": "Firmware prüfen", "i": "etwa alle 2 Monate", "tage": 60}
+ ],
+ "probleme": [
+  {"t": "Ein Kopf druckt versetzt zu den anderen", "u": "Kalibrierung fehlgeschlagen, nach Umbau nicht wiederholt oder schmutzige Düse.", "l": "Filament entladen, alle Düsenspitzen säubern, PEI-Platte abnehmen, Kopf-Versatz neu kalibrieren."},
+  {"t": "Düse stößt bei der Kalibrierung in die Platte (E0147)", "u": "Die PEI-Platte lag noch auf der Mess-Scheibe.", "l": "Platte abnehmen, Düsen reinigen, Versatz-Kalibrierung neu starten."},
+  {"t": "Bett schief oder gewölbt (E0148)", "u": "Transportschrauben noch drin oder Bett verstellt.", "l": "Die drei Transportschrauben entfernen, dann an den vier Stellmuttern in Viertelumdrehungen ausrichten."},
+  {"t": "Kopf wird nicht aufgenommen oder abgelegt (E0127–E0146)", "u": "Kopf im falschen Platz, Magnet fehlt, Verriegelung oder Kabel defekt.", "l": "Jeden Kopf an seinen Platz, Magnete prüfen, Verriegelung lösen, Home fahren, erneut versuchen. Firmware aktuell halten; sonst Kundendienst."},
+  {"t": "Quadrate werden zu Rauten", "u": "Rahmen leicht verzogen, ab Werk nicht einstellbar.", "l": "Bei Lieferung Diagonalen messen; über 0,1 mm je 100 mm innerhalb der Frist reklamieren."},
+  {"t": "Streifen/Absätze nur bei einer Farbe", "u": "Dieser Kopf sitzt nicht fest genug in seiner Aufnahme.", "l": "Positions-Kalibrierung für diesen Kopf; kommt es wieder, Verriegelung und Magnete prüfen."},
+  {"t": "Reinigungsturm schwerer als das Modell", "u": "Spülmengen sind nur auf Flashforge-Filament abgestimmt.", "l": "Spülmengen halbieren und testen, in Füllung/Objekt spülen, Farben hell → dunkel. Turm nicht abschalten."},
+  {"t": "Reinigungsturm kippt um", "u": "Schlechte Haftung, feuchtes Filament oder Materialien, die nicht aufeinander halten.", "l": "Beide Materialien trocknen, Platte reinigen, neu leveln. Bei PLA + PETG Bett 60–65 °C."},
+  {"t": "Reste liegen im Bauraum", "u": "Kein Auffangbehälter ab Werk.", "l": "Firmware ab 1.9.4 (Abwurf nach hinten), offiziellen Behälter drucken und nach jedem Druck leeren."},
+  {"t": "Düse verstopft", "u": "Weiches TPU, PLA in heißer Kammer (über 45 °C), feuchtes Filament.", "l": "Mit Nadel und Kaltzug reinigen, sonst Düse tauschen und neu kalibrieren. Materialregeln beachten, trocknen."},
+  {"t": "Erste Schicht haftet nicht", "u": "Fettige Platte, zu kühles Bett, Leveling.", "l": "Platte reinigen, Bett 5–10 °C höher und durchwärmen lassen, Brim, Klebestift, Leveling."},
+  {"t": "Senkrechte Streifen an Wänden", "u": "Schwingungen, Riemenspannung.", "l": "Firmware ab 1.9.6, Riemen prüfen, Schwingungs- und Streifen-Ausgleich laufen lassen."},
+  {"t": "Lautes Schlagen bei schnellen Fahrten", "u": "Leichter Rahmen, schwerer Kopf, trockene Führungen.", "l": "Schmieren, leisen Modus einschalten, fester Untergrund, Firmware ab 1.9.3."},
+  {"t": "WLAN bricht ab", "u": "5-GHz-Verbindung instabil, Sonderzeichen im Netznamen.", "l": "2,4 GHz verwenden, Name und Passwort ohne Sonderzeichen."},
+  {"t": "Slicer findet den Drucker nicht", "u": "LAN-Modus oder fehlerhafte Slicer-Version.", "l": "Flash Studio statt reinem OrcaSlicer, Meldung am Drucker bestätigen, notfalls ältere Slicer-Version. USB-Stick geht immer."},
+  {"t": "Firmware-Update per USB startet nicht", "u": "Stick nicht FAT32 oder USB 3.", "l": "USB-2.0-Stick, FAT32. Oder Update über WLAN."},
+  {"t": "Bildschirm friert ein", "u": "Softwarefehler in alter Firmware oder lockeres Flachkabel.", "l": "Firmware ab 1.7.8; hilft das nicht, Kabel neu stecken bzw. Kundendienst."},
+  {"t": "Fehler E0116 / E0117 / E0119 bei Rundungen", "u": "Zu viele Mini-Bögen („Arc fitting“) oder Wackelkontakt am Kopf-Kabel.", "l": "„Arc fitting“ im Slicer abschalten und neu slicen; Kabel prüfen."},
+  {"t": "TPU lässt sich nicht laden oder entladen", "u": "Zu weich für den langen Schlauchweg, Schneider rutscht ab.", "l": "Schlauch am Kopf abziehen und von oben einführen; zum Entladen mit dem Seitenschneider abknipsen und den Rest durchdrücken."},
+  {"t": "Spule quietscht am Halter", "u": "Scharfe Kanten in Fremdspulen.", "l": "Zwei Distanzringe drucken, je einen pro Seite."}
+ ],
+ "firmware": [
+  ["1.7.8", "27.04.2026", "Bildschirm-Hänger behoben, klarere Fehlermeldungen beim Kopfwechsel"],
+  ["1.9.3", "15.06.2026", "Geräusche bei hohem Tempo, Einrichtungs-Assistent"],
+  ["1.9.4", "Juli 2026", "Reste werden hinten abgeworfen, einzelne Objekte abbrechen"],
+  ["1.9.5", "28.07.2026", "Überhitzungsschutz Düse, Wiederaufnahme nach Stromausfall"],
+  ["1.9.6", "07.08.2026", "VDS-Trockenbox, Streifen-Ausgleich, leiser Modus, Wartungs-Menü"],
+  ["1.9.7", "15.08.2026", "Drucken mit einem Tipp aus der App, neue Magnetplatte"],
+  ["1.9.9", "07.09.2026", "Bildschirm reagiert besser (laut Test)"]
+ ],
+ "usb": [
+  "Auftrag öffnen → „.gcode laden“ → in „Dateien“ sichern.",
+  "USB-C-Stick (FAT32) anstecken, Datei in „Dateien“ auf den Stick bewegen.",
+  "Stick in den Drucker → Dateien/USB → Datei wählen → Start."
+ ],
+ "quellen": [
+  {"titel": "Flashforge: Creator 5 Pro (Herstellerseite)", "url": "https://www.flashforge.com/products/flashforge-creator-5-pro-1"},
+  {"titel": "Flashforge-Wiki: Fragen und Antworten Creator 5 Pro", "url": "https://wiki.flashforge.com/en/creator-series/creator-5-series/faq_c5p"},
+  {"titel": "Notebookcheck: Creator 5 Pro im Test", "url": "https://www.notebookcheck.net/Four-print-heads-less-waste-Creator-5-Pro-tested.1364964.0.html"},
+  {"titel": "drucktipps3d.de: Creator 5 Pro – ein 4-fach Toolchanger", "url": "https://drucktipps3d.de/flashforge-creator-5-pro-ein-4-fach-toolchanger/"},
+  {"titel": "China-Gadgets: Creator 5 im Test", "url": "https://www.china-gadgets.de/flashforge-creator-5-pro-multicolor-multitoolhead-3d-drucker-test-snapmaker-u1-konkurrent/"},
+  {"titel": "printer-hub: Bekannte Probleme und Lösungen", "url": "https://printer-hub.com/posts/flashforge-creator-5-known-issues"},
+  {"titel": "Flashforge-Wiki: Wartung", "url": "https://wiki.flashforge.com/en/creator-ser/creator-5m-series/maintenance"}
+ ]
+}

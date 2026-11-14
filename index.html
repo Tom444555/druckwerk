@@ -68,7 +68,7 @@ pre.prompt{white-space:pre-wrap;font:15px/1.4 ui-monospace,Menlo,monospace;margi
 nav{position:fixed;bottom:0;left:0;right:0;display:flex;justify-content:center;
   background:color-mix(in srgb,var(--card) 82%,transparent);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
   border-top:.5px solid var(--sep);padding:6px 0 calc(env(safe-area-inset-bottom) + 4px)}
-nav button{flex:1;max-width:140px;border:0;background:none;color:var(--sub);font:500 10px -apple-system,sans-serif;
+nav button{flex:1;max-width:120px;min-width:0;padding:0;border:0;background:none;color:var(--sub);font:500 10px -apple-system,sans-serif;
   display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer}
 nav button svg{width:26px;height:26px}
 nav button.on{color:var(--blue)}
@@ -99,6 +99,22 @@ input.zahl{width:84px;text-align:right;background:var(--fill);border-radius:8px;
 .balken{height:6px;border-radius:3px;background:var(--fill);overflow:hidden}.balken i{display:block;height:100%;width:0;background:var(--blue);transition:width .6s}
 .sheet h2{margin:16px 4px 7px}.sheet select{font-size:16px}
 #sview{width:100%;aspect-ratio:1;background:#6b6b70;border-radius:12px;display:block}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 2px}
+.chip{border:0;border-radius:16px;padding:7px 13px;background:var(--card);color:var(--text);font:500 14px -apple-system,sans-serif;cursor:pointer}
+.chip.on{background:var(--blue);color:#fff}
+.werte{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.werte span,.pill{font-size:12px;background:var(--fill);border-radius:6px;padding:2px 7px;color:var(--text);font-weight:400}
+.pill{white-space:nowrap}
+.pr{font-size:11px;font-weight:600;border-radius:6px;padding:1px 6px;color:#fff;margin-left:6px;vertical-align:1px;white-space:nowrap}
+.pr.p1{background:var(--red)}.pr.p2{background:var(--orange)}.pr.p3{background:var(--sub)}
+.haken{flex:none;width:26px;height:26px;border-radius:50%;border:1.5px solid var(--sub);background:none;color:#fff;font:600 15px/1 -apple-system,sans-serif;cursor:pointer;padding:0;margin-top:1px}
+.haken.on{background:var(--green);border-color:var(--green)}
+.nr{flex:none;width:26px;height:26px;border-radius:50%;background:var(--fill);font:600 13px/26px -apple-system,sans-serif;text-align:center}
+.row.oben{align-items:flex-start}
+.row .val{overflow-wrap:anywhere}
+ul.liste{margin:0;padding:8px 16px 8px 34px}ul.liste li{padding:5px 0;font-size:15px}
+.sheet .row input,.sheet .row select{margin:0;padding:0;background:none;text-align:right;border-radius:0}
+.seg+h2{margin-top:18px}
 </style>
 </head>
 <body>
@@ -108,8 +124,9 @@ input.zahl{width:84px;text-align:right;background:var(--fill);border-radius:8px;
   <button data-tab="bibliothek"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1.5"/></svg>Bibliothek</button>
   <button data-tab="auftraege" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7l8-4 8 4-8 4-8-4z"/><path d="M4 7v10l8 4 8-4V7"/><path d="M12 11v10"/></svg>Aufträge</button>
   <button data-tab="neu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>Neu</button>
+  <button data-tab="material"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="8"/><circle cx="11" cy="11" r="2.5"/><path d="M11 19h10"/></svg>Material</button>
   <button data-tab="drucker"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M4 8h16M9 13h6M12 8v5"/></svg>Drucker</button>
-  <button data-tab="hilfe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="7" y="2" width="10" height="13" rx="1.5"/><path d="M9 15v5h6v-5M10 6h1M13 6h1"/></svg>USB</button>
+  <button data-tab="workflow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="5" cy="6" r="2.2"/><circle cx="19" cy="18" r="2.2"/><path d="M7.2 6H14a3.5 3.5 0 0 1 0 7h-4a3.5 3.5 0 0 0 0 7h6.8"/></svg>Workflow</button>
 </nav>
 <div class="toast" id="toast"></div>
 
@@ -173,8 +190,8 @@ function zeige(){
   if (tab === "auftraege") listeAuftraege();
   else if (tab.startsWith("auftrag:")) detail(tab.slice(8));
   else if (tab === "neu") neu();
-  else if (tab === "drucker") drucker();
-  else hilfe();
+  else if (["material","drucker","workflow"].includes(tab)) wissenTab();
+  else { tab = "auftraege"; listeAuftraege(); }
 }
 document.querySelectorAll("nav button").forEach(b => b.onclick = () => { tab = b.dataset.tab; zeige(); });
 
@@ -190,6 +207,16 @@ async function werkstattTab(){
     const ctx = wctx();
     if (tab === "bibliothek") await W.bibliothek(app, ctx); else await W.werkstatt(app, ctx, tab.slice(10));
   } catch(e) { console.error(e); app.innerHTML = `<h1>Bibliothek</h1><div class="empty">Konnte nicht geladen werden – Internet prüfen.</div>`; }
+}
+
+/* ---------- Material, Drucker, Workflow (wissen.js + wissen/*.json) ---------- */
+const kctx = () => ({DRUCKER, farbe, esc, toast, sheet, go: t => { tab = t; zeige(); },
+  neuStart: (text, zweck, material) => { if (text) F.text = text; if (zweck) F.zweck = zweck; F.drucker = "c5pro";
+    if (material) F.slots[0].material = material; tab = "neu"; zeige(); }});
+async function wissenTab(){
+  const meinTab = tab;
+  try { const K = await import("./wissen.js"); if (tab !== meinTab) return; await K.seite(app, kctx(), tab); }
+  catch(e) { console.error(e); app.innerHTML = `<h1>Druckwerk</h1><div class="empty">Konnte nicht geladen werden – Internet prüfen.</div>`; }
 }
 
 /* ---------- Aufträge ---------- */
@@ -259,7 +286,8 @@ function detail(ordner){
   <a class="btn" href="${pfad}${encodeURIComponent(a.gcode)}" download="${esc(a.gcode)}">${esc(a.gcode)} laden</a>
   <button class="btn grey" id="schichten">Schichten ansehen</button>
   <button class="btn grey" id="inWerk">In der Werkstatt umbauen</button>
-  ${a.projekt ? `<a class="btn grey" href="${pfad}${encodeURIComponent(a.projekt)}" download="${esc(a.projekt)}">3MF-Projekt laden (für Anycubic Slicer / OrcaSlicer)</a>` : ""}
+  <button class="btn grey" id="buchen">Verbrauch vom Filamentlager abbuchen</button>
+  ${a.projekt ? `<a class="btn grey" href="${pfad}${encodeURIComponent(a.projekt)}" download="${esc(a.projekt)}">3MF-Projekt laden (für ${a.drucker === "kobrax" ? "Anycubic Slicer" : "Flash Studio"} / OrcaSlicer)</a>` : ""}
   <a class="btn grey" href="${pfad}BERICHT.md" target="_blank">Bericht öffnen</a>
   ${a.quelle ? `<a class="btn grey" href="${esc(a.quelle)}" target="_blank" rel="noopener">Original auf ${esc(quellName(a.quelle))} öffnen</a>` : ""}
   <p class="hint">Datei auf einen FAT32-USB-Stick kopieren → am Drucker unter USB auswählen → Platte frei? → Start.</p>
@@ -269,6 +297,7 @@ function detail(ordner){
   $("#zur").onclick = () => { tab = "auftraege"; zeige(); };
   $("#inWerk").onclick = () => { tab = "werkstatt:l:" + a.ordner; zeige(); };
   $("#schichten").onclick = async () => { try { (await import("./schichten.js")).zeigen(pfad + encodeURIComponent(a.gcode), a.slots.map(s => farbe(s.farbe)), sheet); } catch(e) { toast("Konnte nicht geladen werden"); } };
+  $("#buchen").onclick = async () => { try { (await import("./wissen.js")).abbuchen(a, kctx()); } catch(e) { toast("Konnte nicht geladen werden"); } };
   $("#loeschen").onclick = () => loeschenFragen(a);
   vorschau(pfad, a);
 }
@@ -316,7 +345,7 @@ async function vorschau(pfad, a){
 }
 
 /* ---------- Neuer Auftrag (erzeugt den Prompt für Claude) ---------- */
-const F = { drucker:"kobrax", text:"", link:"", zweck:"deko", qualitaet:"standard", stuetzen:"auto",
+const F = { drucker:"c5pro", text:"", link:"", zweck:"deko", qualitaet:"standard", stuetzen:"auto",
   slots:[{material:"PLA", farbe:"schwarz"}] };
 function neu(){
   const d = DRUCKER[F.drucker] || {filamente:{PLA:1}};
@@ -326,7 +355,7 @@ function neu(){
   const hitze = F.slots.some(s => /ABS|ASA|PA/.test(s.material));
   app.innerHTML = `
   <h1>Neuer Auftrag</h1>
-  <h2>Drucker</h2>${seg("drucker", [["kobrax","Kobra X"],["c5pro","Creator 5 Pro"]])}
+  <h2>Drucker</h2>${seg("drucker", [["c5pro","Creator 5 Pro"],["kobrax","Kobra X (früher)"]])}
   ${hitze && F.drucker === "kobrax" ? `<div class="warn">ABS/ASA/Nylon besser auf dem geschlossenen Creator 5 Pro drucken.</div>` : ""}
   <h2>Was soll gedruckt werden?</h2>
   <div class="card"><textarea id="txt" placeholder="z. B. Wandhalter für 3 Schraubendreher, 2 Schrauben, Logo vorne">${esc(F.text)}</textarea>
@@ -373,28 +402,6 @@ function neu(){
   $("#kop").onclick = async () => { try { await navigator.clipboard.writeText(prompt()); toast("Kopiert"); } catch(e) { toast("Bitte markieren und kopieren"); } };
 }
 
-/* ---------- Drucker ---------- */
-function drucker(){
-  let h = `<h1>Drucker</h1>`;
-  for (const k of ["kobrax","c5pro"]) {
-    const d = DRUCKER[k]; if (!d) continue;
-    h += `<h2>${esc(d.name)}</h2><div class="card">
-      <div class="row"><div class="grow">Bauraum</div><span class="val">${d.bauraum_mm.join(" × ")} mm</span></div>
-      <div class="row"><div class="grow">Farben</div><span class="val">bis ${d.farben_max}</span></div>
-      <div class="row"><div class="grow">Schichthöhen</div><span class="val">${d.schichten.join(" · ")}</span></div>
-      <div class="row"><div class="grow small">${Object.keys(d.filamente).join(" · ")}</div></div>
-      ${d.hinweise.map(x => `<div class="row"><div class="grow small">${esc(x)}</div></div>`).join("")}
-    </div>`;
-  }
-  h += `<h2>Welcher Drucker?</h2><div class="card">
-    <div class="row"><div class="grow">Bunt, PLA/PETG/TPU</div><span class="badge b-kobrax">Kobra X</span></div>
-    <div class="row"><div class="grow">ABS/ASA, Hitze, draußen, Auto</div><span class="badge b-c5pro">C5 Pro</span></div>
-    <div class="row"><div class="grow">Zwei Materialien gemischt</div><span class="badge b-c5pro">C5 Pro</span></div>
-    <div class="row"><div class="grow">Wenig Abfall bei Farbwechsel</div><span class="badge b-c5pro">C5 Pro</span></div>
-  </div>`;
-  app.innerHTML = h;
-}
-
 /* ---------- Löschen (nur auf diesem Gerät) & Lager ---------- */
 const quellName = u => { try { const h = new URL(u).hostname.replace(/^www\./, "");
   return {"makerworld.com":"MakerWorld","printables.com":"Printables","thingiverse.com":"Thingiverse","thangs.com":"Thangs",
@@ -425,24 +432,6 @@ function lagerZeigen(offen){
   d.querySelectorAll("[data-h]").forEach(r => r.onclick = () => {
     hinzufuegen([LAGER.find(x => x.ordner === r.dataset.h)]); r.remove(); toast("Hinzugefügt");
     if (!d.querySelector("[data-h]")) { d.remove(); zeige(); } });
-}
-
-/* ---------- USB-Anleitung ---------- */
-function hilfe(){
-  app.innerHTML = `<h1>Per USB drucken</h1>
-  <h2>iPhone</h2><div class="card"><ol class="steps">
-    <li>Auftrag öffnen → „.gcode laden“ → in „Dateien“ sichern.</li>
-    <li>USB-C-Stick (FAT32) anstecken, Datei in „Dateien“ auf den Stick bewegen.</li>
-    <li>Stick in den Drucker → Dateien/USB → Datei wählen.</li>
-  </ol></div>
-  <h2>Vor dem Start</h2><div class="card"><ol class="steps">
-    <li>Druckplatte sauber und leer.</li>
-    <li>Spulen/Köpfe wie im Auftrag angegeben bestücken.</li>
-    <li>Creator 5 Pro bei ABS/ASA: Deckel zu, Kammer heizt selbst.</li>
-    <li>Erste Schicht kurz beobachten.</li>
-  </ol></div>
-  <p class="hint">Später geplant: Senden direkt über WLAN, ohne Stick.</p>
-  <div style="height:20px"></div>`;
 }
 
 window.addEventListener("hashchange", () => { if (/hinzu=/.test(location.hash)) laden(); });
