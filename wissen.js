@@ -3,7 +3,7 @@
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 let D = null, C = null;
-const U = { mat: "filamente", gruppe: "Alle", ziel: "", zub: "alle", dr: "ueberblick", wf: "weg", weg: "technik" };
+const U = { mat: "filamente", gruppe: "Alle", ziel: "", zub: "alle", vk: "temp", dr: "ueberblick", wf: "weg", weg: "technik" };
 const ls = (k, d) => { try { const v = JSON.parse(localStorage.getItem(k)); return v ?? d; } catch (e) { return d; } };
 const lsSet = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} };
 const zahl = v => { const n = parseFloat(String(v ?? "").replace(",", ".")); return isFinite(n) ? n : 0; };
@@ -35,7 +35,8 @@ export async function seite(app, ctx, welche){
 
 /* ================= Material ================= */
 function material(app){
-  const kopf = `<h1>Material</h1>${seg("mat", [["filamente", "Filamente"], ["lager", "Mein Lager"], ["zubehoer", "Zubehör"]])}`;
+  const kopf = `<h1>Material</h1>${seg("mat", [["filamente", "Filamente"], ["vergleich", "Vergleich"], ["lager", "Mein Lager"], ["zubehoer", "Zubehör"]])}`;
+  if (U.mat === "vergleich") return vergleich(app, kopf);
   if (U.mat === "lager") return lager(app, kopf);
   if (U.mat === "zubehoer") return zubehoer(app, kopf);
   const f = D.f;
@@ -74,6 +75,29 @@ function filamentBlatt(m){
     <button class="btn grey" id="fZu">Schließen</button>`);
   d.querySelector("#fZu").onclick = () => d.remove();
   const a = d.querySelector("#fAuf"); if (a) a.onclick = () => { d.remove(); C.neuStart("", "", m.druckwerk[0]); };
+}
+
+/* ---------- Vergleich (Richtwerte, wissen/filamente.json → vergleich) ---------- */
+const vWert = (z, k) => k === "temp" ? `${z.temp} °C` : `${z[k]} / 5`;
+const vProz = (z, k) => k === "temp" ? Math.min(100, z.temp / 2) : z[k] * 20;
+function vergleich(app, kopf){
+  const v = D.f.vergleich, k = v.kriterien.find(x => x.id === U.vk) || v.kriterien[0];
+  const sort = [...v.zeilen].sort((a, b) => b[k.id] - a[k.id]);
+  app.innerHTML = kopf + `<h2>Sortieren nach</h2>${chips("vk", v.kriterien.map(x => [x.id, x.name]))}
+  <h2>${C.esc(k.name)} – ${C.esc(k.d)}</h2>
+  <div class="card">${sort.map((z, i) => `<div class="row chev" data-vz="${C.esc(z.name)}" style="cursor:pointer"><span class="nr">${i + 1}</span>
+    <div class="grow"><div style="display:flex;justify-content:space-between;gap:8px"><b>${C.esc(z.name)}</b><span style="white-space:nowrap">${vWert(z, k.id)}</span></div>
+      <div class="small">${C.esc(z.art)}</div>
+      <div class="balken" style="margin-top:6px"><i style="width:${vProz(z, k.id)}%"></i></div></div></div>`).join("")}</div>
+  <p class="hint">Antippen zeigt alle Werte eines Materials. ${C.esc(v.hinweis)}</p><div style="height:20px"></div>`;
+  binden(app, () => material(app));
+  $$("[data-vz]", app).forEach(r => r.onclick = () => { const z = v.zeilen.find(x => x.name === r.dataset.vz);
+    const d = C.sheet(`<h3>${C.esc(z.name)}</h3><p>${C.esc(z.art)}</p>
+      <div class="card">${v.kriterien.map(x => `<div class="row"><div class="grow"><div style="display:flex;justify-content:space-between"><span>${C.esc(x.name)}</span><span class="val">${vWert(z, x.id)}</span></div>
+        <div class="balken" style="margin-top:6px"><i style="width:${vProz(z, x.id)}%"></i></div></div></div>`).join("")}
+        <div class="row"><div class="grow">Kammer am Creator 5 Pro</div><span class="val">${C.esc(z.kammer)}</span></div></div>
+      <p class="hint">${C.esc(z.notiz)}</p><div style="height:12px"></div><button class="btn grey" id="vZu">Schließen</button>`);
+    d.querySelector("#vZu").onclick = () => d.remove(); });
 }
 
 /* ---------- Mein Lager (Spulen, nur auf diesem Gerät) ---------- */

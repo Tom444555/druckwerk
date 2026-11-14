@@ -74,11 +74,13 @@ Alte `_kobrax`-Aufträge laufen nicht auf dem Creator 5 Pro – bei Bedarf aus d
   was am echten Gerät bestätigt ist, im Text auch so nennen.
   - `filamente.json` – Materialkarten (Düse/Bett/Kammer/Lüfter/Trocknen/Durchfluss, Wofür, Achtung), Finder-Schlagworte `eignung`,
     Mischregeln, Grundausstattung. Feld `druckwerk` = Schlüssel aus `drucker/c5pro.json` (leer = Profil fehlt noch).
+    Dazu `vergleich` (Segment „Vergleich“: 15 Materialien, Hitze in °C und Punkte 1–5 für Festigkeit, Steifigkeit, Zähigkeit, Weichheit, Wetter, Einfachheit –
+    alles Richtwerte, nach Toms Drucken nachschärfen), `stabil` (Kurzantwort „Was ist am stabilsten?“) und `shops` (Filamentor, Flashforge).
   - `zubehoer.json` – Gruppen mit Teilen (`prio` Muss/Sinnvoll/Später, Preis, Shop-Link).
   - `c5pro.json` – Steckbrief, Stärken/Grenzen, Programme, Einrichtungs-Liste, Vor-dem-Druck, Wartung (`tage` = Erinnerungs-Abstand),
     Probleme+Lösungen (durchsuchbar), Firmware-Verlauf, USB-Schritte.
   - `workflow.json` – fünf Wege Idee → Modell (mit `vorlage` für den Tab Neu), Werkzeugliste, Ausbau-Vorschläge (`status` pflegen!).
-- Tab **Material**: Filamente (Finder + Karten), **Mein Lager** (Spulen im Gerät, `druckwerk_spulen`; Kopf-Zuordnung), Zubehör (Haken `druckwerk_habe`).
+- Tab **Material**: Filamente (Finder + Karten), Vergleich (sortierbare Rangliste), **Mein Lager** (Spulen im Gerät, `druckwerk_spulen`; Kopf-Zuordnung), Zubehör (Haken `druckwerk_habe`).
   Im Auftrag: „Verbrauch vom Filamentlager abbuchen“ (`wissen.abbuchen`, merkt sich `druckwerk_gebucht`).
 - Tab **Drucker**: Überblick, Einrichten (`druckwerk_c5_ein`), Wartung (`druckwerk_c5_wartung`), Hilfe, Tagebuch (`druckwerk_tagebuch`, Fotos in IndexedDB `druckwerk_fotos`). Die frühere USB-Seite steht jetzt hier.
 - Tab **Workflow**: Weg (Knopf „Auftrag so beginnen“ füllt Tab Neu über `neuStart`), Werkzeuge, Vorschläge (Auswahl `druckwerk_wunsch` → Prompt).

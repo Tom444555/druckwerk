@@ -555,5 +555,242 @@
    "d": "Original-Filament mit fertigen Profilen und abgestimmten Spülmengen für den Creator 5 Pro, dazu alle Ersatzteile."
   }
  ],
- "shopHinweis": "Fremdmarken (alles außer Flashforge) laufen mit dem nächstliegenden Profil: Temperaturen vom Spulenetikett übernehmen, Spülmengen etwa halbieren und testen. Spulenbreite prüfen – die Arme am Drucker sind 66 mm lang."
+ "shopHinweis": "Fremdmarken (alles außer Flashforge) laufen mit dem nächstliegenden Profil: Temperaturen vom Spulenetikett übernehmen, Spülmengen etwa halbieren und testen. Spulenbreite prüfen – die Arme am Drucker sind 66 mm lang.",
+ "vergleich": {
+  "hinweis": "Richtwerte aus üblichen Datenblättern und Erfahrung – nicht am eigenen Gerät gemessen. Marken unterscheiden sich; für ein wichtiges Teil gilt das Datenblatt der Spule. Punkte von 1 (schwach) bis 5 (stark). „Hitze“ ist die Temperatur, bis zu der ein Teil unter leichter Last seine Form behält.",
+  "kriterien": [
+   {
+    "id": "temp",
+    "name": "Hitze",
+    "d": "formstabil bis etwa"
+   },
+   {
+    "id": "fest",
+    "name": "Festigkeit",
+    "d": "trägt viel Last"
+   },
+   {
+    "id": "steif",
+    "name": "Steifigkeit",
+    "d": "biegt sich nicht"
+   },
+   {
+    "id": "zaeh",
+    "name": "Zähigkeit",
+    "d": "bricht nicht bei Schlag"
+   },
+   {
+    "id": "weich",
+    "name": "Weich wie Gummi",
+    "d": "elastisch"
+   },
+   {
+    "id": "wetter",
+    "name": "Wetterfest",
+    "d": "Sonne und Regen"
+   },
+   {
+    "id": "einfach",
+    "name": "Einfach zu drucken",
+    "d": "gelingt leicht"
+   }
+  ],
+  "zeilen": [
+   {
+    "name": "PLA",
+    "art": "hart, spröde",
+    "temp": 55,
+    "fest": 3,
+    "steif": 4,
+    "zaeh": 1,
+    "weich": 1,
+    "wetter": 2,
+    "einfach": 5,
+    "kammer": "aus",
+    "notiz": "Für Deko und Innenräume; wird im Auto weich."
+   },
+   {
+    "name": "PLA Silk",
+    "art": "hart, spröde, glänzend",
+    "temp": 55,
+    "fest": 2,
+    "steif": 3,
+    "zaeh": 1,
+    "weich": 1,
+    "wetter": 2,
+    "einfach": 4,
+    "kammer": "aus",
+    "notiz": "Für die Optik, nicht für Last."
+   },
+   {
+    "name": "PLA-CF",
+    "art": "sehr steif, spröde",
+    "temp": 55,
+    "fest": 3,
+    "steif": 5,
+    "zaeh": 1,
+    "weich": 1,
+    "wetter": 2,
+    "einfach": 4,
+    "kammer": "aus",
+    "notiz": "Steif und matt, aber nicht hitzefest."
+   },
+   {
+    "name": "PETG",
+    "art": "zäh-hart, federt leicht",
+    "temp": 70,
+    "fest": 3,
+    "steif": 2,
+    "zaeh": 4,
+    "weich": 2,
+    "wetter": 3,
+    "einfach": 4,
+    "kammer": "aus",
+    "notiz": "Der Allrounder für Halter."
+   },
+   {
+    "name": "PETG-CF",
+    "art": "steif, zäh",
+    "temp": 75,
+    "fest": 3,
+    "steif": 4,
+    "zaeh": 2,
+    "weich": 1,
+    "wetter": 3,
+    "einfach": 4,
+    "kammer": "aus",
+    "notiz": "Steifer als PETG, matte Fläche."
+   },
+   {
+    "name": "PCTG",
+    "art": "sehr zäh, leicht federnd",
+    "temp": 75,
+    "fest": 3,
+    "steif": 2,
+    "zaeh": 5,
+    "weich": 2,
+    "wetter": 3,
+    "einfach": 4,
+    "kammer": "aus",
+    "notiz": "Wie PETG, verträgt Schläge noch besser. Kein Hersteller-Profil – läuft mit PETG-Einstellungen."
+   },
+   {
+    "name": "TPU 95A",
+    "art": "gummiartig, biegsam",
+    "temp": 80,
+    "fest": 2,
+    "steif": 1,
+    "zaeh": 5,
+    "weich": 5,
+    "wetter": 3,
+    "einfach": 2,
+    "kammer": "aus, Tür auf",
+    "notiz": "Weich wie eine Schuhsohle; reißt praktisch nicht. Wird bei Wärme weicher."
+   },
+   {
+    "name": "ABS",
+    "art": "hart, mäßig zäh",
+    "temp": 95,
+    "fest": 3,
+    "steif": 3,
+    "zaeh": 3,
+    "weich": 1,
+    "wetter": 2,
+    "einfach": 2,
+    "kammer": "heiß",
+    "notiz": "Hitzefest, gut zu schleifen und zu kleben."
+   },
+   {
+    "name": "ASA",
+    "art": "hart, mäßig zäh",
+    "temp": 95,
+    "fest": 3,
+    "steif": 3,
+    "zaeh": 3,
+    "weich": 1,
+    "wetter": 5,
+    "einfach": 2,
+    "kammer": "heiß",
+    "notiz": "Wie ABS, dazu UV-fest: draußen und Auto."
+   },
+   {
+    "name": "ASA-CF",
+    "art": "steif, formstabil",
+    "temp": 100,
+    "fest": 4,
+    "steif": 4,
+    "zaeh": 2,
+    "weich": 1,
+    "wetter": 5,
+    "einfach": 2,
+    "kammer": "heiß",
+    "notiz": "Maßhaltige Außenteile, kaum Verzug."
+   },
+   {
+    "name": "Nylon PA12",
+    "art": "zäh, gleitet gut",
+    "temp": 90,
+    "fest": 3,
+    "steif": 2,
+    "zaeh": 5,
+    "weich": 2,
+    "wetter": 3,
+    "einfach": 2,
+    "kammer": "warm",
+    "notiz": "Zahnräder, Scharniere, Clips. Zieht Wasser – trocken drucken. Kein Hersteller-Profil."
+   },
+   {
+    "name": "PC",
+    "art": "sehr fest und zäh",
+    "temp": 115,
+    "fest": 4,
+    "steif": 3,
+    "zaeh": 4,
+    "weich": 1,
+    "wetter": 3,
+    "einfach": 1,
+    "kammer": "so heiß wie möglich",
+    "notiz": "Laut Flashforge „machbar“, ohne fertiges Profil."
+   },
+   {
+    "name": "PA-CF",
+    "art": "sehr fest, sehr steif",
+    "temp": 150,
+    "fest": 5,
+    "steif": 5,
+    "zaeh": 3,
+    "weich": 1,
+    "wetter": 3,
+    "einfach": 1,
+    "kammer": "heiß",
+    "notiz": "Für echte Lasten; frisch getrocknet, 0,6-mm-Düse."
+   },
+   {
+    "name": "PET-CF",
+    "art": "sehr steif",
+    "temp": 150,
+    "fest": 4,
+    "steif": 5,
+    "zaeh": 2,
+    "weich": 1,
+    "wetter": 4,
+    "einfach": 2,
+    "kammer": "heiß",
+    "notiz": "Steif und hitzefest, nimmt kaum Wasser auf."
+   },
+   {
+    "name": "PAHT-CF / PPA-CF",
+    "art": "sehr fest, sehr steif",
+    "temp": 180,
+    "fest": 5,
+    "steif": 5,
+    "zaeh": 2,
+    "weich": 1,
+    "wetter": 4,
+    "einfach": 1,
+    "kammer": "heiß",
+    "notiz": "Hochleistung für Dauerhitze; teuer."
+   }
+  ]
+ }
 }
