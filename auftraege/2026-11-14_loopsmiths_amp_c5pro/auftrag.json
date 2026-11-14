@@ -1,14 +1,14 @@
 {
  "name": "loopsmiths_amp",
- "drucker": "kobrax",
- "drucker_name": "Anycubic Kobra X",
- "datum": "2026-11-11",
- "ordner": "2026-11-10_loopsmiths_amp_kobrax",
- "gcode": "loopsmiths_amp_kobrax.gcode",
- "zeit": "10h 48m 26s",
- "gramm": "99.30, 6.68, 9.80, 15.44",
- "meter": "33.29 m, 2.24 m, 3.29 m, 5.18 m",
- "duese": "205,205,205,205",
+ "drucker": "c5pro",
+ "drucker_name": "Flashforge Creator 5 Pro",
+ "datum": "2026-11-14",
+ "ordner": "2026-11-14_loopsmiths_amp_c5pro",
+ "gcode": "loopsmiths_amp_c5pro.gcode",
+ "zeit": "9h 25m 30s",
+ "gramm": "103.34, 6.89, 11.00, 17.98",
+ "meter": "34.65 m, 2.31 m, 3.69 m, 6.03 m",
+ "duese": "210,210,210,230",
  "bett": "60,60,60,60",
  "schicht": "0.12",
  "stufe": "Standard",
@@ -16,7 +16,7 @@
  "waende": 3,
  "stuetzen": "auto",
  "brim": "auto",
- "gemischt": false,
+ "gemischt": true,
  "slots": [
   {
    "slot": 1,
@@ -35,7 +35,7 @@
   },
   {
    "slot": 4,
-   "material": "PLA",
+   "material": "PLA-SILK",
    "farbe": "gold"
   }
  ],
@@ -77,5 +77,5 @@
   }
  ],
  "vorschau": "vorschau.png",
- "projekt": "loopsmiths_amp_kobrax.3mf"
+ "projekt": "loopsmiths_amp_c5pro.3mf"
 }

@@ -1,15 +1,15 @@
 [
  {
   "name": "stratocaster",
-  "drucker": "kobrax",
-  "drucker_name": "Anycubic Kobra X",
-  "datum": "2026-11-11",
-  "ordner": "2026-11-11_stratocaster_kobrax",
-  "gcode": "stratocaster_kobrax.gcode",
-  "zeit": "2h 6m 16s",
-  "gramm": "20.78, 1.13, 6.80, 1.99",
-  "meter": "6.97 m, 0.38 m, 2.28 m, 0.67 m",
-  "duese": "205,205,205,205",
+  "drucker": "c5pro",
+  "drucker_name": "Flashforge Creator 5 Pro",
+  "datum": "2026-11-14",
+  "ordner": "2026-11-14_stratocaster_c5pro",
+  "gcode": "stratocaster_c5pro.gcode",
+  "zeit": "1h 55m 31s",
+  "gramm": "21.17, 1.13, 7.20, 2.24",
+  "meter": "7.10 m, 0.38 m, 2.42 m, 0.75 m",
+  "duese": "210,210,210,210",
   "bett": "60,60,60,60",
   "schicht": "0.12",
   "stufe": "Standard",
@@ -78,19 +78,19 @@
    }
   ],
   "vorschau": "vorschau.png",
-  "projekt": "stratocaster_kobrax.3mf"
+  "projekt": "stratocaster_c5pro.3mf"
  },
  {
   "name": "loopsmiths_amp",
-  "drucker": "kobrax",
-  "drucker_name": "Anycubic Kobra X",
-  "datum": "2026-11-11",
-  "ordner": "2026-11-10_loopsmiths_amp_kobrax",
-  "gcode": "loopsmiths_amp_kobrax.gcode",
-  "zeit": "10h 48m 26s",
-  "gramm": "99.30, 6.68, 9.80, 15.44",
-  "meter": "33.29 m, 2.24 m, 3.29 m, 5.18 m",
-  "duese": "205,205,205,205",
+  "drucker": "c5pro",
+  "drucker_name": "Flashforge Creator 5 Pro",
+  "datum": "2026-11-14",
+  "ordner": "2026-11-14_loopsmiths_amp_c5pro",
+  "gcode": "loopsmiths_amp_c5pro.gcode",
+  "zeit": "9h 25m 30s",
+  "gramm": "103.34, 6.89, 11.00, 17.98",
+  "meter": "34.65 m, 2.31 m, 3.69 m, 6.03 m",
+  "duese": "210,210,210,230",
   "bett": "60,60,60,60",
   "schicht": "0.12",
   "stufe": "Standard",
@@ -98,7 +98,7 @@
   "waende": 3,
   "stuetzen": "auto",
   "brim": "auto",
-  "gemischt": false,
+  "gemischt": true,
   "slots": [
    {
     "slot": 1,
@@ -117,7 +117,7 @@
    },
    {
     "slot": 4,
-    "material": "PLA",
+    "material": "PLA-SILK",
     "farbe": "gold"
    }
   ],
@@ -159,6 +159,6 @@
    }
   ],
   "vorschau": "vorschau.png",
-  "projekt": "loopsmiths_amp_kobrax.3mf"
+  "projekt": "loopsmiths_amp_c5pro.3mf"
  }
 ]

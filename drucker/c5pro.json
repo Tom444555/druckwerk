@@ -38,7 +38,38 @@
  "hinweise": [
   "Geschlossen + Kammerheizung bis 65 °C: erste Wahl für ABS, ASA, Nylon/CF.",
   "4 echte Druckköpfe: Farbwechsel ohne Spülabfall, Kopf 1–4 = Farbe 1–4.",
+  "PLA/PETG/TPU: Kammerheizung aus (unter 45 °C), sonst kann die Düse verstopfen.",
   "USB: .gcode auf FAT32-Stick, am Drucker unter Dateien/USB auswählen."
  ],
- "platte": "Textured PEI Plate"
+ "platte": "Textured PEI Plate",
+ "duesen": {
+  "0.25": {
+   "maschine": "Flashforge Creator 5 Pro 0.25 nozzle",
+   "prozess_vorlage": "{schicht}mm {stufe} @FF C5 0.25 nozzle",
+   "schichten": [
+    "0.08",
+    "0.10",
+    "0.12",
+    "0.14"
+   ]
+  },
+  "0.6": {
+   "maschine": "Flashforge Creator 5 Pro 0.6 nozzle",
+   "prozess_vorlage": "{schicht}mm {stufe} @FF C5 0.6 nozzle",
+   "schichten": [
+    "0.18",
+    "0.30",
+    "0.42"
+   ]
+  },
+  "0.8": {
+   "maschine": "Flashforge Creator 5 Pro 0.8 nozzle",
+   "prozess_vorlage": "{schicht}mm {stufe} @FF C5 0.8 nozzle",
+   "schichten": [
+    "0.32",
+    "0.4",
+    "0.48"
+   ]
+  }
+ }
 }

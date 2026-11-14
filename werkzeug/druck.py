@@ -74,7 +74,9 @@ def index_neu(ordner: Path):
 
 FARB_RGB = {"weiss": "[0.95,0.94,0.9]", "weiß": "[0.95,0.94,0.9]", "schwarz": "[0.13,0.13,0.13]", "rot": "[0.8,0.1,0.1]",
             "blau": "[0.15,0.35,0.9]", "gruen": "[0.13,0.64,0.28]", "grün": "[0.13,0.64,0.28]", "gelb": "[0.96,0.77,0.1]",
-            "orange": "[0.97,0.45,0.09]", "grau": "[0.56,0.56,0.58]", "silber": "[0.75,0.75,0.75]", "gold": "[0.83,0.63,0.09]"}
+            "orange": "[0.97,0.45,0.09]", "grau": "[0.56,0.56,0.58]", "silber": "[0.75,0.75,0.75]", "gold": "[0.83,0.63,0.09]",
+            "creme": "[0.95,0.91,0.78]", "holz": "[0.73,0.54,0.31]", "braun": "[0.55,0.35,0.17]", "natur": "[0.94,0.9,0.82]",
+            "lila": "[0.55,0.36,0.96]", "pink": "[0.93,0.28,0.6]", "türkis": "[0.08,0.72,0.65]", "tuerkis": "[0.08,0.72,0.65]"}
 
 
 def vorschau_bild(ziel: Path, teile_stl, slots_farben):
@@ -126,11 +128,16 @@ def main():
     ap.add_argument("--zusammen", action="store_true",
                     help="Teile als EIN Objekt behandeln (mehrfarbiges Teil aus mehreren Dateien)")
     ap.add_argument("--extra", action="append", default=[], help="Slicer-Einstellung überschreiben: schluessel=wert (mehrfach)")
+    ap.add_argument("--duese", default=None, help="Düsengröße in mm für ALLE Köpfe (c5pro: 0.25 | 0.4 | 0.6 | 0.8; Standard 0.4)")
     ap.add_argument("--quelle", default="", help="Link zum Original-Modell (MakerWorld, Printables …)")
     ap.add_argument("--ausgabe", default=None, help="Zielordner (Standard: auftraege/<datum>_<name>)")
     a = ap.parse_args()
 
     cfg = json.loads((WURZEL / "drucker" / f"{a.drucker}.json").read_text(encoding="utf-8"))
+    if a.duese and a.duese != "0.4":      # andere Düse = andere Maschinen-/Prozessprofile und Schichthöhen (drucker/*.json → "duesen")
+        if a.duese not in cfg.get("duesen", {}):
+            raise SystemExit(f"Düse {a.duese} mm ist für {cfg['name']} nicht hinterlegt. Möglich: 0.4, {', '.join(cfg.get('duesen', {}))}")
+        cfg = {**cfg, **cfg["duesen"][a.duese]}
     if a.schicht not in cfg["schichten"]:
         raise SystemExit(f"Schicht {a.schicht} gibt es für {cfg['name']} nicht. Möglich: {cfg['schichten']}")
 
@@ -281,6 +288,7 @@ def main():
         fb = farben[s - 1] if s - 1 < len(farben) else "-"
         zeilen.append(f"| {s} | {belegt[s]} | {fb} | {cfg['filamente'][belegt[s]]} |")
     zeilen += ["", "## Einstellungen", "",
+               f"- Düse: {a.duese or '0.4'} mm (alle Köpfe)",
                f"- Schichthöhe: {a.schicht} mm ({a.stufe})",
                f"- Füllung: {a.infill} %",
                f"- Wände: {a.waende or 'Profil-Standard'}",
@@ -300,7 +308,7 @@ def main():
     info = {"name": a.name, "drucker": cfg["kurz"], "drucker_name": cfg["name"], "datum": datum,
             "ordner": ziel.name, "gcode": gname, "zeit": zeit, "gramm": gramm, "meter": meter,
             "duese": duese, "bett": bett, "schicht": a.schicht, "stufe": a.stufe, "infill": a.infill,
-            "waende": a.waende, "stuetzen": a.stuetzen, "brim": a.brim, "gemischt": gemischt,
+            "duese_mm": a.duese or "0.4", "waende": a.waende, "stuetzen": a.stuetzen, "brim": a.brim, "gemischt": gemischt,
             "slots": [{"slot": s_, "material": belegt[s_],
                        "farbe": farben[s_ - 1] if s_ - 1 < len(farben) else ""} for s_ in range(1, slots + 1)],
             "teile": [{"datei": Path(st).name, "slot": t[2]} for t, st in zip(teile, stls)],
