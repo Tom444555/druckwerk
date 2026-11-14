@@ -51,6 +51,11 @@ function material(app){
     : `<div class="empty">Keine Übereinstimmung – Auswahl oben lockern.</div>`}
   <p class="hint">${C.esc(f.hinweis)}</p>
   <h2>Mischen in einem Druck</h2>${liste(f.mischen)}
+  ${f.stabil ? `<h2>Was ist am stabilsten?</h2><div class="card">${f.stabil.liste.map(x => `<div class="row"><div class="grow"><div><b>${C.esc(x.t)}</b></div>
+    <div style="font-size:15px;color:var(--blue)">${C.esc(x.m)}</div><div class="small">${C.esc(x.d)}</div></div></div>`).join("")}</div>
+  <p class="hint">${C.esc(f.stabil.regel)} ${C.esc(f.stabil.hinweis.replace(/ „Stabil“.*$/, ""))}</p>` : ""}
+  ${f.shops ? `<h2>Filament kaufen</h2><div class="card">${f.shops.map(x => `<a class="row chev" href="${C.esc(x.url)}" target="_blank" rel="noopener" style="color:inherit;text-decoration:none"><div class="grow"><div><b>${C.esc(x.name)}</b></div>
+    <div class="small">${C.esc(x.d)}</div></div></a>`).join("")}</div><p class="hint">${C.esc(f.shopHinweis || "")}</p>` : ""}
   <h2>Grundausstattung</h2><div class="card">${f.starter.map(s => `<div class="row"><div class="grow"><b>${C.esc(s.name)}</b><div class="small">${C.esc(s.wozu)}</div></div></div>`).join("")}</div>
   <p class="hint">${C.esc(f.spulen)}</p>
   ${quellen(f.quellen, f.stand)}`;

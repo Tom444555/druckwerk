@@ -1,116 +1,438 @@
 {
  "stand": "14.11.2026",
  "hinweis": "Werte mit „Profil“ stammen aus den Hersteller-Profilen für den Creator 5 Pro (OrcaSlicer 2.5, gleiche Basis wie Flash Studio). „Wiki“ = Flashforge-Wiki/Anleitungen. „Richtwert“ = übliche Erfahrungswerte, auf der Spule gegenprüfen. Am eigenen Gerät noch nicht bestätigt.",
- "gruppen": ["Alltag", "Flexibel", "Technik", "Faser", "Stütze"],
+ "gruppen": [
+  "Alltag",
+  "Flexibel",
+  "Technik",
+  "Faser",
+  "Stütze"
+ ],
  "finder": [
-  {"id": "deko", "name": "Deko / Figur"},
-  {"id": "fein", "name": "Feine Details"},
-  {"id": "stabil", "name": "Halter, stabil"},
-  {"id": "draussen", "name": "Draußen / Auto"},
-  {"id": "hitze", "name": "Hitze"},
-  {"id": "biegsam", "name": "Biegsam"},
-  {"id": "steif", "name": "Sehr steif"},
-  {"id": "stuetze", "name": "Lösliche Stützen"}
+  {
+   "id": "deko",
+   "name": "Deko / Figur"
+  },
+  {
+   "id": "fein",
+   "name": "Feine Details"
+  },
+  {
+   "id": "stabil",
+   "name": "Halter, stabil"
+  },
+  {
+   "id": "draussen",
+   "name": "Draußen / Auto"
+  },
+  {
+   "id": "hitze",
+   "name": "Hitze"
+  },
+  {
+   "id": "biegsam",
+   "name": "Biegsam"
+  },
+  {
+   "id": "steif",
+   "name": "Sehr steif"
+  },
+  {
+   "id": "stuetze",
+   "name": "Lösliche Stützen"
+  }
  ],
  "materialien": [
-  {"id": "pla", "name": "PLA (Basic / Pro / Matt)", "gruppe": "Alltag", "druckwerk": ["PLA", "PLA-PRO", "PLA-MATT", "PLA-HS"],
+  {
+   "id": "pla",
+   "name": "PLA (Basic / Pro / Matt)",
+   "gruppe": "Alltag",
+   "druckwerk": [
+    "PLA",
+    "PLA-PRO",
+    "PLA-MATT",
+    "PLA-HS"
+   ],
    "kurz": "Der Standard: einfach, sauber, viele Farben.",
-   "duese": "210", "bett": "55–60", "kammer": "aus (unter 45 °C)", "luefter": "70 %", "trocknen": "45–50 °C, 4–6 h", "flow": "18 (HS: 21)",
-   "herkunft": {"duese": "Profil", "bett": "Profil", "kammer": "Wiki", "luefter": "Profil", "trocknen": "Richtwert", "flow": "Profil"},
-   "eignung": ["deko", "fein"],
+   "duese": "210",
+   "bett": "55–60",
+   "kammer": "aus (unter 45 °C)",
+   "luefter": "70 %",
+   "trocknen": "45–50 °C, 4–6 h",
+   "flow": "18 (HS: 21)",
+   "herkunft": {
+    "duese": "Profil",
+    "bett": "Profil",
+    "kammer": "Wiki",
+    "luefter": "Profil",
+    "trocknen": "Richtwert",
+    "flow": "Profil"
+   },
+   "eignung": [
+    "deko",
+    "fein"
+   ],
    "wofuer": "Figuren, Deko, Reliefs, Gehäuse im Wohnraum, Prototypen. Matt verdeckt Schichtlinien am besten – gut für Schwarz und Weiß der Gitarren-Reihe.",
-   "achtung": "Wird ab etwa 55 °C weich (Richtwert): nichts fürs Auto oder die Fensterbank. Im Creator 5 Pro nie mit heißer Kammer drucken – über 45 °C kann es im Kopf erweichen und die Düse verstopfen. Teile, die im Drucker selbst sitzen (Halter, Clips), deshalb nicht aus PLA."},
-  {"id": "pla-silk", "name": "PLA Silk (Glanz, Gold)", "gruppe": "Alltag", "druckwerk": ["PLA-SILK"],
+   "achtung": "Wird ab etwa 55 °C weich (Richtwert): nichts fürs Auto oder die Fensterbank. Im Creator 5 Pro nie mit heißer Kammer drucken – über 45 °C kann es im Kopf erweichen und die Düse verstopfen. Teile, die im Drucker selbst sitzen (Halter, Clips), deshalb nicht aus PLA."
+  },
+  {
+   "id": "pla-silk",
+   "name": "PLA Silk (Glanz, Gold)",
+   "gruppe": "Alltag",
+   "druckwerk": [
+    "PLA-SILK"
+   ],
    "kurz": "Metallischer Glanz – dein Gold.",
-   "duese": "230", "bett": "55–60", "kammer": "aus (unter 45 °C)", "luefter": "70 %", "trocknen": "45–50 °C, 4–6 h", "flow": "12",
-   "herkunft": {"duese": "Profil", "bett": "Profil", "kammer": "Wiki", "luefter": "Profil", "trocknen": "Richtwert", "flow": "Profil"},
-   "eignung": ["deko"],
+   "duese": "230",
+   "bett": "55–60",
+   "kammer": "aus (unter 45 °C)",
+   "luefter": "70 %",
+   "trocknen": "45–50 °C, 4–6 h",
+   "flow": "12",
+   "herkunft": {
+    "duese": "Profil",
+    "bett": "Profil",
+    "kammer": "Wiki",
+    "luefter": "Profil",
+    "trocknen": "Richtwert",
+    "flow": "Profil"
+   },
+   "eignung": [
+    "deko"
+   ],
    "wofuer": "Goldene Adern, Zierleisten, Schrift, Akzente. Wirkt am besten auf großen, ruhigen Flächen und in Rundungen.",
-   "achtung": "Läuft heißer und langsamer als normales PLA (Durchfluss 12 statt 18 mm³/s). Schichten halten etwas schwächer – nicht für tragende Teile. Sehr feine Stege werden eher unsauber: lieber etwas breiter modellieren."},
-  {"id": "pla-cf", "name": "PLA-CF", "gruppe": "Faser", "druckwerk": ["PLA-CF"],
+   "achtung": "Läuft heißer und langsamer als normales PLA (Durchfluss 12 statt 18 mm³/s). Schichten halten etwas schwächer – nicht für tragende Teile. Sehr feine Stege werden eher unsauber: lieber etwas breiter modellieren."
+  },
+  {
+   "id": "pla-cf",
+   "name": "PLA-CF",
+   "gruppe": "Faser",
+   "druckwerk": [
+    "PLA-CF"
+   ],
    "kurz": "Matt, steif, edel – druckt fast wie PLA.",
-   "duese": "210–230", "bett": "55–60", "kammer": "aus (unter 45 °C)", "luefter": "70 %", "trocknen": "50 °C, 4–8 h", "flow": "–",
-   "herkunft": {"duese": "Richtwert", "bett": "Profil", "kammer": "Wiki", "luefter": "Profil", "trocknen": "Richtwert"},
-   "eignung": ["steif", "deko"],
+   "duese": "210–230",
+   "bett": "55–60",
+   "kammer": "aus (unter 45 °C)",
+   "luefter": "70 %",
+   "trocknen": "50 °C, 4–8 h",
+   "flow": "–",
+   "herkunft": {
+    "duese": "Richtwert",
+    "bett": "Profil",
+    "kammer": "Wiki",
+    "luefter": "Profil",
+    "trocknen": "Richtwert"
+   },
+   "eignung": [
+    "steif",
+    "deko"
+   ],
    "wofuer": "Steife Halter und Gehäuse mit matter Kohle-Optik, wenn es nicht heiß wird.",
-   "achtung": "Schleift Düsen – die gehärteten Stahldüsen des Creator 5 Pro sind dafür gemacht. Spröder als PLA, bricht statt sich zu biegen. Hitzefest ist es nicht."},
-  {"id": "petg", "name": "PETG (HS / Pro)", "gruppe": "Alltag", "druckwerk": ["PETG", "PETG-PRO"],
+   "achtung": "Schleift Düsen – die gehärteten Stahldüsen des Creator 5 Pro sind dafür gemacht. Spröder als PLA, bricht statt sich zu biegen. Hitzefest ist es nicht."
+  },
+  {
+   "id": "petg",
+   "name": "PETG (HS / Pro)",
+   "gruppe": "Alltag",
+   "druckwerk": [
+    "PETG",
+    "PETG-PRO"
+   ],
    "kurz": "Zäh und wärmefester als PLA – für Funktionsteile.",
-   "duese": "235", "bett": "85 (mit PLA zusammen: 60–65)", "kammer": "aus (unter 45 °C)", "luefter": "30–50 %", "trocknen": "65 °C, 4–6 h", "flow": "18",
-   "herkunft": {"duese": "Profil", "bett": "Profil", "kammer": "Wiki", "luefter": "Profil", "trocknen": "Richtwert", "flow": "Profil"},
-   "eignung": ["stabil"],
+   "duese": "235",
+   "bett": "85 (mit PLA zusammen: 60–65)",
+   "kammer": "aus (unter 45 °C)",
+   "luefter": "30–50 %",
+   "trocknen": "65 °C, 4–6 h",
+   "flow": "18",
+   "herkunft": {
+    "duese": "Profil",
+    "bett": "Profil",
+    "kammer": "Wiki",
+    "luefter": "Profil",
+    "trocknen": "Richtwert",
+    "flow": "Profil"
+   },
+   "eignung": [
+    "stabil"
+   ],
    "wofuer": "Halter, Clips, Werkstatt-Teile, alles mit etwas Federung. Erste Wahl für selbst gedruckte Teile, die im Creator 5 Pro sitzen (Kabel-Clip, Abfallbehälter).",
-   "achtung": "Zieht Fäden, vor allem bei kleinen Teilen – trocknen hilft deutlich. Haftet sehr stark auf PEI: Platte abkühlen lassen, dann erst lösen. Formstabil bis etwa 70 °C (Richtwert)."},
-  {"id": "petg-cf", "name": "PETG-CF", "gruppe": "Faser", "druckwerk": ["PETG-CF"],
+   "achtung": "Zieht Fäden, vor allem bei kleinen Teilen – trocknen hilft deutlich. Haftet sehr stark auf PEI: Platte abkühlen lassen, dann erst lösen. Formstabil bis etwa 70 °C (Richtwert)."
+  },
+  {
+   "id": "petg-cf",
+   "name": "PETG-CF",
+   "gruppe": "Faser",
+   "druckwerk": [
+    "PETG-CF"
+   ],
    "kurz": "Steifes PETG mit matter Oberfläche.",
-   "duese": "250", "bett": "85", "kammer": "aus (unter 45 °C)", "luefter": "20–50 %", "trocknen": "65 °C, 6–8 h", "flow": "12",
-   "herkunft": {"duese": "Profil", "bett": "Profil", "kammer": "Wiki", "luefter": "Profil", "trocknen": "Richtwert", "flow": "Profil"},
-   "eignung": ["stabil", "steif"],
+   "duese": "250",
+   "bett": "85",
+   "kammer": "aus (unter 45 °C)",
+   "luefter": "20–50 %",
+   "trocknen": "65 °C, 6–8 h",
+   "flow": "12",
+   "herkunft": {
+    "duese": "Profil",
+    "bett": "Profil",
+    "kammer": "Wiki",
+    "luefter": "Profil",
+    "trocknen": "Richtwert",
+    "flow": "Profil"
+   },
+   "eignung": [
+    "stabil",
+    "steif"
+   ],
    "wofuer": "Winkel, Träger, Werkzeughalter – steifer als PETG, weniger Fäden, schöne matte Fläche.",
-   "achtung": "Vor dem Druck trocknen. Größere Düse (0,6 mm) läuft entspannter, 0,4 mm geht."},
-  {"id": "tpu", "name": "TPU 95A (auch 90A, 64D)", "gruppe": "Flexibel", "druckwerk": ["TPU"],
+   "achtung": "Vor dem Druck trocknen. Größere Düse (0,6 mm) läuft entspannter, 0,4 mm geht."
+  },
+  {
+   "id": "tpu",
+   "name": "TPU 95A (auch 90A, 64D)",
+   "gruppe": "Flexibel",
+   "druckwerk": [
+    "TPU"
+   ],
    "kurz": "Gummiartig: Füße, Dichtungen, Griffe.",
-   "duese": "230", "bett": "40–50 (unter 70)", "kammer": "aus, Deckel ab, Tür auf", "luefter": "70 %", "trocknen": "Pflicht – Richtwert 60 °C, 4 h", "flow": "sehr gering (90A: 2,8)",
-   "herkunft": {"duese": "Profil", "bett": "Wiki", "kammer": "Wiki", "luefter": "Profil", "trocknen": "Richtwert", "flow": "Profil"},
-   "eignung": ["biegsam"],
+   "duese": "230",
+   "bett": "40–50 (unter 70)",
+   "kammer": "aus, Deckel ab, Tür auf",
+   "luefter": "70 %",
+   "trocknen": "Pflicht – Richtwert 60 °C, 4 h",
+   "flow": "sehr gering (90A: 2,8)",
+   "herkunft": {
+    "duese": "Profil",
+    "bett": "Wiki",
+    "kammer": "Wiki",
+    "luefter": "Profil",
+    "trocknen": "Richtwert",
+    "flow": "Profil"
+   },
+   "eignung": [
+    "biegsam"
+   ],
    "wofuer": "Gummifüße, Stoßschutz, Kabeltüllen, weiche Einlagen im Gitarrenhalter. Mit vier Köpfen auch hart + weich in einem Teil.",
-   "achtung": "Immer trocken drucken, am besten direkt aus der Trockenbox (unter 15 % Feuchte). Weg zum Kopf kurz halten; weiches 90A von oben zuführen. Der eingebaute Schneider rutscht bei TPU oft ab – mit dem Seitenschneider abknipsen. Ein Test empfiehlt für TPU den leisen Modus (50 %) und stellte fest: ungetrocknet druckt es schlecht. Sehr weiches TPU (unter 90A) verstopft leicht."},
-  {"id": "abs", "name": "ABS", "gruppe": "Technik", "druckwerk": ["ABS"],
+   "achtung": "Immer trocken drucken, am besten direkt aus der Trockenbox (unter 15 % Feuchte). Weg zum Kopf kurz halten; weiches 90A von oben zuführen. Der eingebaute Schneider rutscht bei TPU oft ab – mit dem Seitenschneider abknipsen. Ein Test empfiehlt für TPU den leisen Modus (50 %) und stellte fest: ungetrocknet druckt es schlecht. Sehr weiches TPU (unter 90A) verstopft leicht."
+  },
+  {
+   "id": "abs",
+   "name": "ABS",
+   "gruppe": "Technik",
+   "druckwerk": [
+    "ABS"
+   ],
    "kurz": "Hitzefest, gut zu schleifen und zu kleben.",
-   "duese": "270 (1. Schicht 265)", "bett": "110 (Oberfläche real ≈ 100)", "kammer": "60 (40–60)", "luefter": "0–20 %, max. 40", "trocknen": "75–85 °C, 8–12 h", "flow": "–",
-   "herkunft": {"duese": "Profil", "bett": "Profil", "kammer": "Profil", "luefter": "Wiki", "trocknen": "Wiki"},
-   "eignung": ["hitze", "stabil"],
+   "duese": "270 (1. Schicht 265)",
+   "bett": "110 (Oberfläche real ≈ 100)",
+   "kammer": "60 (40–60)",
+   "luefter": "0–20 %, max. 40",
+   "trocknen": "75–85 °C, 8–12 h",
+   "flow": "–",
+   "herkunft": {
+    "duese": "Profil",
+    "bett": "Profil",
+    "kammer": "Profil",
+    "luefter": "Wiki",
+    "trocknen": "Wiki"
+   },
+   "eignung": [
+    "hitze",
+    "stabil"
+   ],
    "wofuer": "Gehäuse nah an Wärme, Teile zum Schleifen/Lackieren, Halter im Motorraum-Umfeld. Formstabil bis etwa 95 °C (Richtwert).",
-   "achtung": "Nur mit geschlossener, vorgeheizter Kammer (bis 50 °C dauert es etwa 10 Min., bis 65 °C etwa 50 Min.). Klebestift auf die Platte. Gibt Dämpfe ab: Filter drin lassen und Raum lüften. Schrumpft – große flache Teile mit Brim drucken."},
-  {"id": "asa", "name": "ASA", "gruppe": "Technik", "druckwerk": ["ASA"],
+   "achtung": "Nur mit geschlossener, vorgeheizter Kammer (bis 50 °C dauert es etwa 10 Min., bis 65 °C etwa 50 Min.). Klebestift auf die Platte. Gibt Dämpfe ab: Filter drin lassen und Raum lüften. Schrumpft – große flache Teile mit Brim drucken."
+  },
+  {
+   "id": "asa",
+   "name": "ASA",
+   "gruppe": "Technik",
+   "druckwerk": [
+    "ASA"
+   ],
    "kurz": "Wie ABS, aber UV- und wetterfest.",
-   "duese": "270 (1. Schicht 265)", "bett": "110 (Oberfläche real ≈ 100)", "kammer": "60 (40–60)", "luefter": "0–20 %, max. 40", "trocknen": "75–85 °C, 8–12 h", "flow": "–",
-   "herkunft": {"duese": "Profil", "bett": "Profil", "kammer": "Profil", "luefter": "Wiki", "trocknen": "Wiki"},
-   "eignung": ["draussen", "hitze", "stabil"],
+   "duese": "270 (1. Schicht 265)",
+   "bett": "110 (Oberfläche real ≈ 100)",
+   "kammer": "60 (40–60)",
+   "luefter": "0–20 %, max. 40",
+   "trocknen": "75–85 °C, 8–12 h",
+   "flow": "–",
+   "herkunft": {
+    "duese": "Profil",
+    "bett": "Profil",
+    "kammer": "Profil",
+    "luefter": "Wiki",
+    "trocknen": "Wiki"
+   },
+   "eignung": [
+    "draussen",
+    "hitze",
+    "stabil"
+   ],
    "wofuer": "Alles für draußen und fürs Auto: Halter am Armaturenbrett, Gartenteile, Schilder, Abdeckungen.",
-   "achtung": "Gleiche Regeln wie ABS: Kammer zu und heiß, Klebestift, lüften. Nicht zusammen mit PLA/PETG/TPU in einem Druck – die vertragen die heiße Kammer nicht."},
-  {"id": "asa-cf", "name": "ASA-CF / ASA-GF / ABS-GF", "gruppe": "Faser", "druckwerk": ["ASA-CF"],
+   "achtung": "Gleiche Regeln wie ABS: Kammer zu und heiß, Klebestift, lüften. Nicht zusammen mit PLA/PETG/TPU in einem Druck – die vertragen die heiße Kammer nicht."
+  },
+  {
+   "id": "asa-cf",
+   "name": "ASA-CF / ASA-GF / ABS-GF",
+   "gruppe": "Faser",
+   "druckwerk": [
+    "ASA-CF"
+   ],
    "kurz": "Wetterfest und formstabil, kaum Verzug.",
-   "duese": "270 (1. Schicht 265)", "bett": "110", "kammer": "60 (50–60)", "luefter": "max. 40 %", "trocknen": "80 °C, 6–8 h", "flow": "10",
-   "herkunft": {"duese": "Profil", "bett": "Profil", "kammer": "Profil", "luefter": "Profil", "trocknen": "Wiki", "flow": "Profil"},
-   "eignung": ["draussen", "hitze", "steif"],
+   "duese": "270 (1. Schicht 265)",
+   "bett": "110",
+   "kammer": "60 (50–60)",
+   "luefter": "max. 40 %",
+   "trocknen": "80 °C, 6–8 h",
+   "flow": "10",
+   "herkunft": {
+    "duese": "Profil",
+    "bett": "Profil",
+    "kammer": "Profil",
+    "luefter": "Profil",
+    "trocknen": "Wiki",
+    "flow": "Profil"
+   },
+   "eignung": [
+    "draussen",
+    "hitze",
+    "steif"
+   ],
    "wofuer": "Maßhaltige Außenteile, Halterungen am Fahrzeug, Träger.",
-   "achtung": "Flashforge empfiehlt die 0,6-mm-Düse. Faserfilament ist spröde: mit großem Bogen und möglichst von oben zuführen. Klebestift, Kammer zu, lüften."},
-  {"id": "pa-cf", "name": "PA-CF (Nylon mit Kohlefaser)", "gruppe": "Faser", "druckwerk": ["PA-CF"],
+   "achtung": "Flashforge empfiehlt die 0,6-mm-Düse. Faserfilament ist spröde: mit großem Bogen und möglichst von oben zuführen. Klebestift, Kammer zu, lüften."
+  },
+  {
+   "id": "pa-cf",
+   "name": "PA-CF (Nylon mit Kohlefaser)",
+   "gruppe": "Faser",
+   "druckwerk": [
+    "PA-CF"
+   ],
    "kurz": "Sehr fest und zäh – für echte Lasten.",
-   "duese": "290", "bett": "nach Profil", "kammer": "60 (40–60)", "luefter": "gering", "trocknen": "80 °C, 8–12 h", "flow": "6",
-   "herkunft": {"duese": "Profil", "kammer": "Profil", "trocknen": "Wiki", "flow": "Profil"},
-   "eignung": ["stabil", "steif", "hitze"],
+   "duese": "290",
+   "bett": "nach Profil",
+   "kammer": "60 (40–60)",
+   "luefter": "gering",
+   "trocknen": "80 °C, 8–12 h",
+   "flow": "6",
+   "herkunft": {
+    "duese": "Profil",
+    "kammer": "Profil",
+    "trocknen": "Wiki",
+    "flow": "Profil"
+   },
+   "eignung": [
+    "stabil",
+    "steif",
+    "hitze"
+   ],
    "wofuer": "Tragende Halter, Werkzeug, Zahnräder, Teile mit Schlag- und Dauerbelastung.",
-   "achtung": "Nimmt sehr schnell Wasser auf: frisch trocknen und aus der Trockenbox drucken, sonst Blasen und schwache Schichten. 0,6-mm-Düse empfohlen, Klebestift nötig. Langsam (Durchfluss 6 mm³/s)."},
-  {"id": "pet-cf", "name": "PET-CF / PAHT-CF / PPA-CF / PPS-CF", "gruppe": "Faser", "druckwerk": [],
+   "achtung": "Nimmt sehr schnell Wasser auf: frisch trocknen und aus der Trockenbox drucken, sonst Blasen und schwache Schichten. 0,6-mm-Düse empfohlen, Klebestift nötig. Langsam (Durchfluss 6 mm³/s)."
+  },
+  {
+   "id": "pet-cf",
+   "name": "PET-CF / PAHT-CF / PPA-CF / PPS-CF",
+   "gruppe": "Faser",
+   "druckwerk": [],
    "kurz": "Hochleistung: steif, hitzefest, teuer.",
-   "duese": "270–320", "bett": "80–110", "kammer": "50–60", "luefter": "gering", "trocknen": "80 °C und mehr, 8–12 h", "flow": "4–7",
-   "herkunft": {"duese": "Profil", "bett": "Profil", "kammer": "Profil", "trocknen": "Richtwert", "flow": "Profil"},
-   "eignung": ["steif", "hitze"],
+   "duese": "270–320",
+   "bett": "80–110",
+   "kammer": "50–60",
+   "luefter": "gering",
+   "trocknen": "80 °C und mehr, 8–12 h",
+   "flow": "4–7",
+   "herkunft": {
+    "duese": "Profil",
+    "bett": "Profil",
+    "kammer": "Profil",
+    "trocknen": "Richtwert",
+    "flow": "Profil"
+   },
+   "eignung": [
+    "steif",
+    "hitze"
+   ],
    "wofuer": "Sonderfälle mit hoher Dauertemperatur oder sehr hoher Steifigkeit. PET-CF 270 °C/Bett 100/Kammer 50 · PAHT-CF 310 °C/Bett 80/Kammer 60 · PPS-CF 320 °C/Bett 110/Kammer 60.",
-   "achtung": "PPS-CF läuft an der Temperaturgrenze des Druckers (320 °C); Flashforge nennt es nur für kleine Modelle. Diese Materialien sind in druckwerk noch nicht als Auswahl hinterlegt – bei Bedarf ergänze ich das Profil."},
-  {"id": "pc-pa", "name": "PC · PA · PC-ABS", "gruppe": "Technik", "druckwerk": [],
+   "achtung": "PPS-CF läuft an der Temperaturgrenze des Druckers (320 °C); Flashforge nennt es nur für kleine Modelle. Diese Materialien sind in druckwerk noch nicht als Auswahl hinterlegt – bei Bedarf ergänze ich das Profil."
+  },
+  {
+   "id": "pc-pa",
+   "name": "PC · PA · PC-ABS",
+   "gruppe": "Technik",
+   "druckwerk": [],
    "kurz": "Druckbar, aber ohne Hersteller-Garantie auf volle Leistung.",
-   "duese": "Spule beachten", "bett": "Spule beachten", "kammer": "so hoch wie möglich", "luefter": "gering", "trocknen": "Spule beachten", "flow": "–",
-   "herkunft": {"kammer": "Wiki"},
-   "eignung": ["hitze", "stabil"],
+   "duese": "Spule beachten",
+   "bett": "Spule beachten",
+   "kammer": "so hoch wie möglich",
+   "luefter": "gering",
+   "trocknen": "Spule beachten",
+   "flow": "–",
+   "herkunft": {
+    "kammer": "Wiki"
+   },
+   "eignung": [
+    "hitze",
+    "stabil"
+   ],
    "wofuer": "Wenn ein bestimmtes Datenblatt verlangt ist. Für den Alltag reichen ASA und PA-CF fast immer.",
-   "achtung": "Flashforge führt diese Gruppe als „machbar“: Die Kammer schafft 65 °C, manche dieser Kunststoffe wollen mehr. Kein fertiges Profil im Slicer – erst kleine Teile testen."},
-  {"id": "pva", "name": "PVA / BVOH (wasserlöslich)", "gruppe": "Stütze", "druckwerk": ["PVA"],
+   "achtung": "Flashforge führt diese Gruppe als „machbar“: Die Kammer schafft 65 °C, manche dieser Kunststoffe wollen mehr. Kein fertiges Profil im Slicer – erst kleine Teile testen."
+  },
+  {
+   "id": "pva",
+   "name": "PVA / BVOH (wasserlöslich)",
+   "gruppe": "Stütze",
+   "druckwerk": [
+    "PVA"
+   ],
    "kurz": "Stützen, die sich im Wasser auflösen.",
-   "duese": "240", "bett": "60", "kammer": "aus (unter 45 °C)", "luefter": "70 %", "trocknen": "Pflicht, dauerhaft trocken halten", "flow": "3,2–3,5",
-   "herkunft": {"duese": "Profil", "bett": "Profil", "kammer": "Wiki", "luefter": "Profil", "trocknen": "Wiki", "flow": "Profil"},
-   "eignung": ["stuetze", "fein"],
+   "duese": "240",
+   "bett": "60",
+   "kammer": "aus (unter 45 °C)",
+   "luefter": "70 %",
+   "trocknen": "Pflicht, dauerhaft trocken halten",
+   "flow": "3,2–3,5",
+   "herkunft": {
+    "duese": "Profil",
+    "bett": "Profil",
+    "kammer": "Wiki",
+    "luefter": "Profil",
+    "trocknen": "Wiki",
+    "flow": "Profil"
+   },
+   "eignung": [
+    "stuetze",
+    "fein"
+   ],
    "wofuer": "Figuren mit Hohlräumen und Unterschnitten aus PLA: ein Kopf druckt nur die Stützen, danach ins Wasserbad – keine Narben am Modell.",
-   "achtung": "Zieht Feuchtigkeit wie ein Schwamm. Stützkörper und Kontaktfläche aus demselben Material drucken, Stützart „normal“ (nicht Baum), langsam. Der geschlossene Creator 5 Pro ist dafür besser geeignet als ein offener Drucker."},
-  {"id": "hips", "name": "HIPS", "gruppe": "Stütze", "druckwerk": [],
+   "achtung": "Zieht Feuchtigkeit wie ein Schwamm. Stützkörper und Kontaktfläche aus demselben Material drucken, Stützart „normal“ (nicht Baum), langsam. Der geschlossene Creator 5 Pro ist dafür besser geeignet als ein offener Drucker."
+  },
+  {
+   "id": "hips",
+   "name": "HIPS",
+   "gruppe": "Stütze",
+   "druckwerk": [],
    "kurz": "Stützmaterial passend zu ABS/ASA.",
-   "duese": "270 (1. Schicht 265)", "bett": "110", "kammer": "ohne Heizung möglich", "luefter": "gering", "trocknen": "Spule beachten", "flow": "6",
-   "herkunft": {"duese": "Profil", "bett": "Profil", "kammer": "Wiki", "flow": "Profil"},
-   "eignung": ["stuetze"],
+   "duese": "270 (1. Schicht 265)",
+   "bett": "110",
+   "kammer": "ohne Heizung möglich",
+   "luefter": "gering",
+   "trocknen": "Spule beachten",
+   "flow": "6",
+   "herkunft": {
+    "duese": "Profil",
+    "bett": "Profil",
+    "kammer": "Wiki",
+    "flow": "Profil"
+   },
+   "eignung": [
+    "stuetze"
+   ],
    "wofuer": "Stützen unter ABS/ASA, weil es die gleichen Temperaturen verträgt (PLA oder PVA würden in der heißen Kammer weich).",
-   "achtung": "Noch nicht in druckwerk hinterlegt. Leicht abbrechbar; chemisch lösen nur mit Limonen (Richtwert) – meist reicht Abbrechen."}
+   "achtung": "Noch nicht in druckwerk hinterlegt. Leicht abbrechbar; chemisch lösen nur mit Limonen (Richtwert) – meist reicht Abbrechen."
+  }
  ],
  "mischen": [
   "Nur Materialien mit ähnlichem Kammer-Bedarf in einem Druck mischen.",
@@ -122,23 +444,116 @@
   "Flashforge-Filament hat abgestimmte Spülmengen. Bei Fremdmarken die Spülmengen etwa halbieren und testen, Farben von hell nach dunkel ordnen."
  ],
  "starter": [
-  {"name": "PLA matt schwarz", "wozu": "Grundfarbe der Gitarren-Reihe, verdeckt Schichtlinien"},
-  {"name": "PLA weiß", "wozu": "Schrift, Kanten, helle Flächen"},
-  {"name": "PLA rot", "wozu": "Akzente wie am Verstärker"},
-  {"name": "PLA Silk gold", "wozu": "Adern, Zierleisten, Logos"},
-  {"name": "PETG schwarz", "wozu": "Funktionsteile und alle Teile, die im Drucker sitzen"},
-  {"name": "ASA schwarz", "wozu": "Draußen, Auto – nutzt die Kammerheizung"},
-  {"name": "TPU 95A schwarz", "wozu": "Füße, Polster im Gitarrenhalter"}
+  {
+   "name": "PLA matt schwarz",
+   "wozu": "Grundfarbe der Gitarren-Reihe, verdeckt Schichtlinien"
+  },
+  {
+   "name": "PLA weiß",
+   "wozu": "Schrift, Kanten, helle Flächen"
+  },
+  {
+   "name": "PLA rot",
+   "wozu": "Akzente wie am Verstärker"
+  },
+  {
+   "name": "PLA Silk gold",
+   "wozu": "Adern, Zierleisten, Logos"
+  },
+  {
+   "name": "PETG schwarz",
+   "wozu": "Funktionsteile und alle Teile, die im Drucker sitzen"
+  },
+  {
+   "name": "ASA schwarz",
+   "wozu": "Draußen, Auto – nutzt die Kammerheizung"
+  },
+  {
+   "name": "TPU 95A schwarz",
+   "wozu": "Füße, Polster im Gitarrenhalter"
+  }
  ],
  "spulen": "Die Spulenarme des Druckers sind 66 mm lang – manche 1-kg-Spulen fremder Marken sind dafür zu breit (dann Arm-Verlängerung drucken oder aus der Trockenbox zuführen). Die Flashforge-Trockenbox VDS nimmt Spulen bis 202 mm Durchmesser und 72 mm Breite.",
  "quellen": [
-  {"titel": "Hersteller-Profile Creator 5 Pro (OrcaSlicer 2.5)", "url": "https://github.com/SoftFever/OrcaSlicer/tree/v2.5.0/resources/profiles/Flashforge"},
-  {"titel": "Flashforge-Wiki: Filament-Leitfaden Creator 5", "url": "https://wiki.flashforge.com/en/creator-series/creator-5-series/filament_usage_guide"},
-  {"titel": "Flashforge-Wiki: Fragen und Antworten Creator 5 Pro", "url": "https://wiki.flashforge.com/en/creator-series/creator-5-series/faq_c5p"},
-  {"titel": "Flashforge: ABS/ASA-Anleitung (PDF)", "url": "https://wiki.flashforge.com/resource/pictures/filament/print_defect_and_solution/abs_and_asa_usage_guide-en.pdf"},
-  {"titel": "Flashforge: Kohlefaser-Filament (PDF)", "url": "https://wiki.flashforge.com/resource/pictures/filament/carbon_fiber_filament_usage_guide.pdf"},
-  {"titel": "Flashforge: Glasfaser-Filament (PDF)", "url": "https://wiki.flashforge.com/resource/pictures/filament/glass_fiber_filament_usage_guide.pdf"},
-  {"titel": "Notebookcheck: Creator 5 Pro im Test (TPU, Spülmengen)", "url": "https://www.notebookcheck.net/Four-print-heads-less-waste-Creator-5-Pro-tested.1364964.0.html"},
-  {"titel": "printer-hub: Bekannte Probleme (Spülmengen, Spulenarme)", "url": "https://printer-hub.com/posts/flashforge-creator-5-known-issues"}
- ]
+  {
+   "titel": "Hersteller-Profile Creator 5 Pro (OrcaSlicer 2.5)",
+   "url": "https://github.com/SoftFever/OrcaSlicer/tree/v2.5.0/resources/profiles/Flashforge"
+  },
+  {
+   "titel": "Flashforge-Wiki: Filament-Leitfaden Creator 5",
+   "url": "https://wiki.flashforge.com/en/creator-series/creator-5-series/filament_usage_guide"
+  },
+  {
+   "titel": "Flashforge-Wiki: Fragen und Antworten Creator 5 Pro",
+   "url": "https://wiki.flashforge.com/en/creator-series/creator-5-series/faq_c5p"
+  },
+  {
+   "titel": "Flashforge: ABS/ASA-Anleitung (PDF)",
+   "url": "https://wiki.flashforge.com/resource/pictures/filament/print_defect_and_solution/abs_and_asa_usage_guide-en.pdf"
+  },
+  {
+   "titel": "Flashforge: Kohlefaser-Filament (PDF)",
+   "url": "https://wiki.flashforge.com/resource/pictures/filament/carbon_fiber_filament_usage_guide.pdf"
+  },
+  {
+   "titel": "Flashforge: Glasfaser-Filament (PDF)",
+   "url": "https://wiki.flashforge.com/resource/pictures/filament/glass_fiber_filament_usage_guide.pdf"
+  },
+  {
+   "titel": "Notebookcheck: Creator 5 Pro im Test (TPU, Spülmengen)",
+   "url": "https://www.notebookcheck.net/Four-print-heads-less-waste-Creator-5-Pro-tested.1364964.0.html"
+  },
+  {
+   "titel": "printer-hub: Bekannte Probleme (Spülmengen, Spulenarme)",
+   "url": "https://printer-hub.com/posts/flashforge-creator-5-known-issues"
+  },
+  {
+   "titel": "Filamentor (Shop, Angaben der Startseite vom 14.11.2026)",
+   "url": "https://filamentor.io"
+  }
+ ],
+ "stabil": {
+  "hinweis": "Einordnung nach üblichen Erfahrungswerten (Richtwert), nicht am eigenen Gerät gemessen. „Stabil“ heißt je nach Teil etwas anderes:",
+  "liste": [
+   {
+    "t": "Am festesten und steifsten",
+    "m": "PA-CF, PAHT-CF, PPA-CF",
+    "d": "Nylon mit Kohlefaser trägt am meisten und bleibt auch warm formstabil. Preis dafür: teuer, langsam, muss frisch getrocknet sein, 0,6-mm-Düse und heiße Kammer."
+   },
+   {
+    "t": "Am zähesten (bricht nicht, federt)",
+    "m": "Nylon (PA12), PCTG, PETG",
+    "d": "Für Teile, die Schläge, Stöße oder Biegen aushalten müssen: Clips, Scharniere, Halter mit Federung."
+   },
+   {
+    "t": "Stabil und einfach zu drucken",
+    "m": "PETG",
+    "d": "Die beste Wahl für die meisten Halter in Haus und Werkstatt."
+   },
+   {
+    "t": "Stabil draußen und im Auto",
+    "m": "ASA, ASA-CF",
+    "d": "Hält Sonne und Hitze aus, ASA-CF verzieht sich kaum."
+   },
+   {
+    "t": "Hart, aber spröde",
+    "m": "PLA, PLA-CF",
+    "d": "Sehr steif und maßhaltig, bricht aber schlagartig, wird ab etwa 55 °C weich und gibt unter Dauerlast langsam nach."
+   }
+  ],
+  "regel": "Wichtiger als das Material: Die Last soll entlang der Schichten laufen, nie die Schichten auseinanderziehen. Dazu 4–6 Wände und 30–50 % Füllung – mehr Wände bringen mehr als mehr Füllung."
+ },
+ "shops": [
+  {
+   "name": "Filamentor",
+   "url": "https://filamentor.io",
+   "d": "Filament-Shop aus Prag (Filamentor s.r.o.), Seite auf Deutsch. PLA, PLA+, PLA Silk, HS-PLA, PLA-CF, PETG (auch matt und CF), PCTG, ABS+, ASA, TPU, PA12; Marken u. a. Polymaker, eSUN, Smart Print. Mengenrabatt ab 5 Spulen, Versand 7,99 €, Rückgabe unbenutzt 30 Tage, technische Datenblätter auf der Seite. Preise und Spulengewicht je Artikel prüfen."
+  },
+  {
+   "name": "Flashforge EU-Shop",
+   "url": "https://eu.flashforge.com",
+   "d": "Original-Filament mit fertigen Profilen und abgestimmten Spülmengen für den Creator 5 Pro, dazu alle Ersatzteile."
+  }
+ ],
+ "shopHinweis": "Fremdmarken (alles außer Flashforge) laufen mit dem nächstliegenden Profil: Temperaturen vom Spulenetikett übernehmen, Spülmengen etwa halbieren und testen. Spulenbreite prüfen – die Arme am Drucker sind 66 mm lang."
 }
