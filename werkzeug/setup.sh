@@ -38,4 +38,8 @@ python3 -c "import build123d" 2>/dev/null || \
   echo "Hinweis: build123d nicht installiert – werkzeug/cad.py nicht nutzbar"
 # Leichte 3D-Vorschau fürs Handy (*.app.stl) – ohne pymeshlab lädt die App die großen Netze
 python3 -c "import pymeshlab" 2>/dev/null || pip install -q --break-system-packages pymeshlab >/dev/null 2>&1 || echo "Hinweis: pymeshlab fehlt – keine leichten Vorschau-Netze"
+# Profi-CAD (profi.py, pruefen.py, ansichten.py) – Fehlschlag bricht das Setup nicht ab
+pip install -q --break-system-packages bd_warehouse==0.4.0 py_gearworks==0.0.24 pyvista==0.49.2 embreex rtree >/dev/null 2>&1 || echo "Hinweis: Profi-CAD-Pakete unvollständig – siehe werkzeug/QUALITAET.md"
+# Foto-Vorschau (werkzeug/foto.py) braucht Blender als Modul – groß (ca. 430 MB), deshalb nur bei Bedarf:
+#   pip install --break-system-packages bpy
 echo "druckwerk bereit: OrcaSlicer $VER, $(openscad --version 2>&1 | head -1)"

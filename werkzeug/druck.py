@@ -5,8 +5,13 @@ Beispiel:
   python3 werkzeug/druck.py --drucker kobrax --name halter \
       --teil modelle/halter.scad:PLA --teil modelle/schrift.scad:PLA \
       --farben "schwarz,rot" --schicht 0.20 --infill 20
+
+Bemalt (Farbe je Dreieck, z. B. aus werkzeug/textur_farben.py):
+  python3 werkzeug/druck.py --drucker c5pro --name figur --bemalt /tmp/fig/figur_bemalt.3mf \
+      --farben "schwarz,gold,rot,weiss" [--materialien "PLA,PLA-SILK,PLA,PLA"] --schicht 0.12 --stuetzen auto
 """
 import argparse, json, os, re, shutil, subprocess, sys, tempfile, datetime
+import numpy as np
 from pathlib import Path
 
 WURZEL = Path(__file__).resolve().parent.parent
@@ -115,7 +120,7 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--drucker", required=True, help="kobrax | c5pro")
     ap.add_argument("--name", required=True, help="Auftragsname (ohne Leerzeichen)")
-    ap.add_argument("--teil", action="append", required=True,
+    ap.add_argument("--teil", action="append", default=[],
                     help="Datei[:Material[:Slot]]  z. B. modelle/a.scad:PLA:1  (Slot 1–4 = Farbe/Kopf)")
     ap.add_argument("--farben", default="", help="Farbnamen je Slot für den Bericht, z. B. 'schwarz,rot'")
     ap.add_argument("--schicht", default="0.20")
@@ -131,7 +136,23 @@ def main():
     ap.add_argument("--duese", default=None, help="Düsengröße in mm für ALLE Köpfe (c5pro: 0.25 | 0.4 | 0.6 | 0.8; Standard 0.4)")
     ap.add_argument("--quelle", default="", help="Link zum Original-Modell (MakerWorld, Printables …)")
     ap.add_argument("--ausgabe", default=None, help="Zielordner (Standard: auftraege/<datum>_<name>)")
+    ap.add_argument("--bemalt", default=None,
+                    help="3MF mit Farbe je Dreieck (paint_color, Köpfe 1–4) statt --teil, z. B. aus textur_farben.py")
+    ap.add_argument("--materialien", default="", help="nur mit --bemalt: Material je Kopf, z. B. 'PLA,PLA-SILK,PLA,PLA' (Standard PLA)")
     a = ap.parse_args()
+    if bool(a.teil) == bool(a.bemalt):
+        raise SystemExit("Entweder --teil … (eine oder mehrere Dateien) oder --bemalt <datei.3mf> angeben.")
+    bemalt = None
+    if a.bemalt:                          # Köpfe aus der Bemalung lesen (0 = Grundfarbe = Kopf 1)
+        sys.path.insert(0, str(WERKZEUG))
+        from textur_farben import lese_3mf
+        bV, bF, bS = lese_3mf(a.bemalt)
+        bS = np.where(bS == 0, 1, bS)
+        mats = [x.strip().upper() for x in a.materialien.split(",") if x.strip()]
+        n_kopf = int(bS.max())
+        bemalt = {"V": bV, "F": bF, "S": bS, "koepfe": n_kopf,
+                  "mat": [mats[i] if i < len(mats) else (mats[0] if mats else "PLA") for i in range(n_kopf)]}
+        a.teil = [f"{a.bemalt}:{bemalt['mat'][0]}:1"]
 
     cfg = json.loads((WURZEL / "drucker" / f"{a.drucker}.json").read_text(encoding="utf-8"))
     if a.duese and a.duese != "0.4":      # andere Düse = andere Maschinen-/Prozessprofile und Schichthöhen (drucker/*.json → "duesen")
@@ -163,6 +184,10 @@ def main():
             raise SystemExit(f"Slot {t[2]} ist schon mit {belegt[t[2]]} belegt, nicht {t[1]}.")
         belegt[t[2]] = t[1]
     slots = max(belegt)
+    if bemalt:
+        for s_ in range(1, bemalt["koepfe"] + 1):
+            belegt[s_] = bemalt["mat"][s_ - 1]
+        slots = bemalt["koepfe"]
     if slots > cfg["farben_max"]:
         raise SystemExit(f"{cfg['name']} kann max. {cfg['farben_max']} Farben/Köpfe.")
     for s in range(1, slots + 1):
@@ -188,6 +213,8 @@ def main():
         prozess["support_type"] = "tree(auto)" if a.stuetzen == "baum" else "normal(auto)"
     prozess["brim_type"] = {"aus": "no_brim", "auto": "auto_brim", "an": "outer_only"}[a.brim]
     prozess["compatible_printers"] = []  # Kompatibilitätsprüfung abschalten
+    if bemalt:   # Farbe nur als Schale (1,2 mm) statt keilförmig bis in den Kern – spart Farbfilament, sauberere Kanten
+        prozess["mmu_segmented_region_max_width"] = "1.2"
     for ex in a.extra:
         k, v = ex.split("=", 1); prozess[k.strip()] = v.strip()
     # Druckplatte: bestimmt die Betttemperatur (Cool Plate = 35 °C bei PLA!). Kommt aus drucker/*.json.
@@ -214,11 +241,13 @@ def main():
     cmd = [str(ORCA), "--slice", "0", "--arrange", "1", "--orient", "0",
            "--load-settings", f"{mp};{pp}",
            "--load-filaments", ";".join(fil_pfade),
-           "--load-filament-ids", ",".join(str(t[2]) for t in teile),
            "--allow-multicolor-oneplate", "--export-statistics",
            "--outputdir", str(tmp / "out"),
            "--export-3mf", "projekt.3mf"]   # Projektdatei (öffnen in Anycubic Slicer Next / OrcaSlicer)
     gemischt = len(set(belegt.values())) > 1
+    if not bemalt:                       # bei bemalter 3MF bricht Orca mit --load-filament-ids ab (Code -2)
+        cmd[cmd.index("--allow-multicolor-oneplate"):cmd.index("--allow-multicolor-oneplate")] = [
+            "--load-filament-ids", ",".join(str(t[2]) for t in teile)]
     if gemischt:
         cmd.append("--allow-mix-temp")
     if a.zusammen and len(stls) > 1:
@@ -297,7 +326,15 @@ def main():
                f"- Düsentemperatur: {duese} °C, Bett: {bett} °C", "",
                "## Teile", ""]
     for t in teile:
-        zeilen.append(f"- `{t[0].name}` → Slot {t[2]} ({t[1]})")
+        zeilen.append(f"- `{t[0].name}` → " + (f"bemalt, Köpfe 1–{slots}" if bemalt else f"Slot {t[2]} ({t[1]})"))
+    # Kontrolle: Welche Köpfe benutzt die .gcode wirklich? (Tn = Kopf n+1)
+    t_befehle = re.findall(r"^T(\d+)\s*$", txt, re.M)
+    benutzt = sorted({int(x) + 1 for x in t_befehle})
+    fehlt = [s_ for s_ in range(1, slots + 1) if s_ not in benutzt]
+    wechsel = sum(1 for x, y in zip(t_befehle, t_befehle[1:]) if x != y)
+    zeilen += ["", f"Kopfwechsel in der .gcode: {wechsel}, benutzte Köpfe: {', '.join(map(str, benutzt)) or '-'}"]
+    if fehlt:
+        zeilen.append(f"> ⚠ Kopf {', '.join(map(str, fehlt))} wird nicht benutzt – Farbe/Slot prüfen.")
     zeilen += ["", "## Am Drucker", ""] + [f"- {h}" for h in cfg["hinweise"]] + [
         "- Vor dem Start: Druckplatte sauber und leer, richtige Spulen in den Slots."]
     if gemischt:
@@ -305,7 +342,8 @@ def main():
                    f"({', '.join(sorted(set(belegt.values())))}) – Haftung zwischen den Materialien "
                    "und Temperaturen prüfen."]
     # Daten für die App
-    info = {"name": a.name, "drucker": cfg["kurz"], "drucker_name": cfg["name"], "datum": datum,
+    info_koepfe = {"kopfwechsel": wechsel, "koepfe_benutzt": benutzt}
+    info = {**info_koepfe, "name": a.name, "drucker": cfg["kurz"], "drucker_name": cfg["name"], "datum": datum,
             "ordner": ziel.name, "gcode": gname, "zeit": zeit, "gramm": gramm, "meter": meter,
             "duese": duese, "bett": bett, "schicht": a.schicht, "stufe": a.stufe, "infill": a.infill,
             "duese_mm": a.duese or "0.4", "waende": a.waende, "stuetzen": a.stuetzen, "brim": a.brim, "gemischt": gemischt,
@@ -313,9 +351,23 @@ def main():
                        "farbe": farben[s_ - 1] if s_ - 1 < len(farben) else ""} for s_ in range(1, slots + 1)],
             "teile": [{"datei": Path(st).name, "slot": t[2]} for t, st in zip(teile, stls)],
             "quelle": a.quelle,
-            "teile_app": [{"datei": app_stl(ziel / Path(st).name), "slot": t[2]} for t, st in zip(teile, stls)]}
-    if vorschau_bild(ziel, [ziel / Path(st).name for st in stls],
-                     [farben[t[2] - 1] if t[2] - 1 < len(farben) else "" for t in teile]):
+            "teile_app": [] if bemalt else [{"datei": app_stl(ziel / Path(st).name), "slot": t[2]} for t, st in zip(teile, stls)]}
+    vorschau_teile = [(ziel / Path(st).name, t[2]) for t, st in zip(teile, stls)]
+    if bemalt:
+        # Die App zeigt Teile je Slot (STL): je Kopf die bemalte Oberfläche als offene Schale (nur zur Ansicht)
+        import trimesh
+        info["bemalt"] = Path(a.bemalt).name; vorschau_teile = []; info["teile"] = []; info["teile_app"] = []
+        for s_ in range(1, slots + 1):
+            sel = bemalt["F"][bemalt["S"] == s_]
+            if not len(sel):
+                continue
+            p_ = ziel / f"{a.name}_kopf{s_}.stl"
+            trimesh.Trimesh(bemalt["V"], sel, process=True).export(p_)
+            info["teile"].append({"datei": p_.name, "slot": s_})
+            info["teile_app"].append({"datei": app_stl(p_), "slot": s_})
+            vorschau_teile.append((p_, s_))
+    if vorschau_bild(ziel, [p_ for p_, _ in vorschau_teile],
+                     [farben[s_ - 1] if s_ - 1 < len(farben) else "" for _, s_ in vorschau_teile]):
         info["vorschau"] = "vorschau.png"
     pj = ziel / f"{a.name}_{cfg['kurz']}.3mf"
     if pj.exists():

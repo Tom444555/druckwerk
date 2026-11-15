@@ -1,22 +1,24 @@
 # Übergabe druckwerk
 
-## STAND 14.11.2026 (Nachmittag) – hier einsteigen (neuer Chat: „druckwerk: …“)
-- **Drucker:** nur noch Flashforge Creator 5 Pro (`c5pro` Standard). **Am echten Gerät ist noch nichts bestätigt** – alle Werte aus Hersteller-Profilen, Wiki, Tests.
-- **Lager (auf Toms Wunsch aufgeräumt):** nur noch `2026-11-14_stratocaster_c5pro` (1 h 56 min, 32 g, creme/weiß/holz/silber) und
-  `2026-11-14_loopsmiths_amp_c5pro` (9 h 26 min, 139 g, schwarz/rot/weiß + Gold als PLA-SILK), dazu das Kalibrier-Set
-  `2026-11-14_kalibrier_1…5_c5pro` (Haftung 4 min, Winkel 12 min, Versatz 24 min/4 Köpfe, Passung 18 min, Brücke 50 min). Alle Ständer, Vox-Amp,
-  Testwürfel und alle `_kobrax`-Aufträge sind gelöscht (Modelle in `modelle/` und `werkzeug/baum_relief.py` bleiben als Vorlage).
-- **App:** Tabs Bibliothek, Aufträge, Neu (Frei/Geführt), Material (Filamente, Mein Lager, Zubehör), Drucker (Überblick, Einrichten, Wartung, Hilfe, Tagebuch),
-  Workflow (Weg, Werkzeuge, Vorschläge). Im Auftrag: Filament-Check mit Kosten, Abbuchen, „Ergebnis eintragen“ mit Foto.
-- **Werkzeuge neu:** Technik-Baukasten, build123d (`cad.py`), Bild-zu-Farbrelief (`bild_relief.py`), Kalibrier-Modelle, `druck.py --duese`. Siehe CLAUDE.md „Weitere Werkzeuge“.
-- **Vorschläge v1–v11:** erledigt/eingebaut bis auf v8 (nur teilweise: gleiche Düse auf allen Köpfen; einzelner 0,25-mm-Gold-Kopf offen) und v10 (Senden per WLAN, erst am Gerät testbar).
-  Stand je Vorschlag in `wissen/workflow.json`.
-- **Geprüft:** App mit Playwright 390×844 (alle Tabs, neue Blätter), Fakten der Wissensseiten durch unabhängigen Agenten, Baukasten/Kalibrier/Relief wasserdicht und
-  überschneidungsfrei, Kette Bild → Relief → Druckdatei und build123d → STL/STEP einmal durchgespielt, Düsen 0,25/0,6/0,8 probe-gesliced.
-  **Nicht geprüft:** alles am echten Drucker (Spiel, Gewinde, Betttemperatur, Kopf-Versatz), Foto-Aufnahme am echten iPhone.
-- **Toms Geschmack:** detailreich, geschwungen, naturnah, breit statt hoch; Farben schwarz/gold/rot/weiß; erst schnelle Vorschau, kurze Antworten.
-- **Nächste Schritte:** 1) Tom druckt das Kalibrier-Set und meldet über das Tagebuch → Werte bestätigen, `spiel` im Baukasten setzen, Herkunft „Gerät“ eintragen.
-  2) Wunsch-Teile: Bild fürs Farbrelief, neuer Gitarren-Ständer (frühere Entwürfe verworfen). 3) Offen: gemischte Düsengrößen, WLAN-Senden, Drucker-Vorschaubild.
+## STAND 15.11.2026 – hier einsteigen (neuer Chat: „druckwerk: …“)
+- **Drucker:** nur Flashforge Creator 5 Pro (`c5pro`). **Am echten Gerät ist weiterhin nichts bestätigt** (Werte aus Profilen, Wiki, Tests; Spiele nur gerechnet).
+- **Lager:** `2026-11-14_stratocaster_c5pro`, `2026-11-14_loopsmiths_amp_c5pro`, `2026-11-15_vox_plektrumhalter_c5pro` (3 h 38 min, 73 g, schwarz/rot/weiß),
+  Kalibrier-Set `2026-11-14_kalibrier_1…5_c5pro`. Keine `_kobrax`-Aufträge mehr. Tom wollte von den gelöschten Kobra-Modellen nur den Vox-Amp zurück.
+- **App (15.11.):** Tabs Start · Aufträge · Neu · Bibliothek · Material · Drucker. Neu: Startseite mit „Nächster Schritt“ und Suche (`start.js`), gedruckt-Haken/Filter,
+  Sicherung/Wiederherstellung (`sicherung.js`), Offline/PWA (`sw.js`, CACHE `druckwerk-v3` – bei App-Änderungen hochzählen), Zurück-Navigation, KI-Ablauf in 6 Schritten
+  (`kiweg.js`) mit Bild-Idee-Baukasten und Prüflisten, „Aus Foto erzeugen (KI)“ (`ki.js` → Action `generieren.yml` → `werkzeug/generieren.py`, braucht Repo-Secret `FAL_KEY`),
+  „Videos ausgewertet“ (`videos/`). Prüfbefund der App-Durchsicht (37 Punkte) ist eingearbeitet; vier schwere Fehler behoben (u. a. Werkstatt-Slicen ging noch an die Kobra).
+- **Qualität (15.11.):** `werkzeug/QUALITAET.md` (Regeln + Pflicht-Schleife bauen → pruefen.py → ansichten.py ansehen → korrigieren), `profi.py`, `pruefen.py`, `ansichten.py`,
+  Muster `modelle/profi/` (Gitarrenhalter, Zahnradpaar, Dose). KI-Modelle: `ki_rohling.py`, `textur_farben.py` (Weg A bemalte 3MF über `druck.py --bemalt`, Weg B Farbkörper),
+  `foto.py` (Blender-Foto, `pip install bpy` nur bei Bedarf), `werkzeug/KI_MODELLE.md`. Recherche mit Quellen: `wissen/recherche_modellqualitaet.md`.
+- **Getestet:** App mit Playwright (390×844 hell/dunkel, 820×1180), Profi-Teile 0 Fehler in pruefen.py, Farbwege A und B mit Orca-CLI (Testpinguin: 736/757 Kopfwechsel, alle 4 Köpfe > 0 g),
+  altes Slicen läuft weiter. **Nicht getestet:** echter fal-Aufruf (kein Schlüssel), echtes KI-Modell (nur selbst gebautes Testmodell), MakerLab, alles am Drucker, iPhone-Tastatur,
+  Offline-Speicher auf GitHub Pages.
+- **Bekannte Lücken:** App/`eingang.py` können bemalte 3MF (Weg A) nicht aus der Werkstatt slicen → für App-Slicen Weg B nehmen. Stützen kommen vom gerade aktiven Kopf.
+  Gemischte Düsengrößen, WLAN-Senden, Abgleich iPhone↔iPad, Auftrag ohne Chat offen (Vorschläge v8, v10, v12–v18 in `wissen/workflow.json`).
+- **Toms Geschmack:** detailreich, geschwungen, naturnah, breit statt hoch; Farben schwarz/gold/rot/weiß; erst schnelle Vorschau, kurze Antworten. Will Modellqualität „wie Hyper3D“.
+- **Nächste Schritte:** 1) Tom legt fal.ai-Schlüssel als `FAL_KEY` an → ersten echten KI-Lauf begleiten. 2) Kalibrier-Set drucken → Spiele in `profi.py`/`baukasten.scad` einstellen,
+  Herkunft „Gerät“ eintragen. 3) Gitarrenhalter aus `modelle/profi/` slicen, wenn Tom ihn will (PETG + TPU). 4) Kleiner Probedruck Farbmischung (v18), wenn gewünscht.
 
 ---
 ## Verlauf (älter)
@@ -120,3 +122,8 @@
 - `druck.py`: `--duese`, mehr Vorschaufarben (creme, holz …). `drucker/c5pro.json`: `duesen`, Hinweis Kammer aus bei PLA.
 - Zwei Helfer (opus) parallel: App (tagebuch.js, geführter Auftrag, Filament-Check) und Werkzeug (Baukasten, Kalibrier, cad.py, bild_relief.py).
 - Wissen als Markdown ins Offline-Paket (`offline-paket/werkzeuge/druckwissen_bauen.py`).
+
+## 2026-11-15 – Programm-Durchsicht, Qualitäts-Werkzeuge, KI-Weg
+- Fünf Helfer (opus): Recherche Modellqualität · App-Prüfung mit Umsetzung · Profi-CAD · KI-Rohling/Textur/Foto · KI-Erzeugung über Action + App · zwei Video-Auswertungen mit KI-Ablauf.
+- Vox-Plektrumhalter für c5pro neu gesliced (Einstellungen aus der Historie von b2f109f^).
+- CLAUDE.md um die Abschnitte „Qualität: technische Teile“ und „Qualität: Figuren und freie Formen über KI“ ergänzt.

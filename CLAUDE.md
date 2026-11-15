@@ -38,8 +38,14 @@ Alte `_kobrax`-Aufträge laufen nicht auf dem Creator 5 Pro – bei Bedarf aus d
 
 ## App (index.html, GitHub Pages)
 - Live: https://tom444555.github.io/druckwerk/ – liest `drucker/*.json` und `auftraege/index.json`.
-- Tabs: Bibliothek, Aufträge (3D-Vorschau der STL, Köpfe, Einstellungen, .gcode-Download), Neu (klickt den Prompt zusammen),
-  Material, Drucker, Workflow. iOS-Stil, hell/dunkel. Prompts aus der App beginnen mit `druckwerk:`.
+- Tabs (seit 15.11.2026): **Start** (`start.js`: nächster Schritt, offene Drucke, Suche über alles, Schnellknöpfe, Gerät & Daten),
+  Aufträge (3D-Vorschau, Köpfe, .gcode-Download, „gedruckt“-Haken `druckwerk_gedruckt`, Filter/Sortierung/Suche), Neu (Frei/Geführt; „So geht's“ = frühere
+  Workflow-Seite), Bibliothek, Material, Drucker. iOS-Stil, hell/dunkel. Prompts aus der App beginnen mit `druckwerk:`.
+- Jede Ansicht hat eine Adresse (`#start`, `#auftrag:<ordner>`, `#werkstatt:…`, `#kiweg:<schritt>`); Zurück/Vor funktionieren.
+- **Sicherung** (`sicherung.js`): alle `druckwerk_*`-Schlüssel + IndexedDB (eigene Modelle, Tagebuch-Fotos) als eine Datei; `druckwerk_gesichert` = Datum.
+- **Offline/PWA**: `manifest.webmanifest`, `symbol-*.png`, `sw.js` (immer zuerst Netz, Zwischenspeicher nur ohne Netz; .gcode/STL nie).
+  **Bei jeder Änderung an App-Dateien `CACHE` in `sw.js` hochzählen** (Stand `druckwerk-v3`) und neue Dateien dort eintragen.
+- „Aus dem Lager hinzufügen“ heißt in der App jetzt „Weitere Aufträge von Claude“. Überall „Kopf 1–4“, nie „Spule“; Werkstatt-Slicen sendet `c5pro`.
 - Aufträge sind wie die Ideen im Looper **pro Gerät gespeichert** (localStorage `druckwerk_meine`): neue Besucher
   sehen eine leere Liste. Tom speichert einen Auftrag über den Link `https://tom444555.github.io/druckwerk/#hinzu=<ordner>`
   (mehrere mit Komma) oder über „Aus dem Lager hinzufügen“. „Auftrag löschen“ entfernt ihn nur aus seiner Liste.
@@ -66,7 +72,7 @@ Alte `_kobrax`-Aufträge laufen nicht auf dem Creator 5 Pro – bei Bedarf aus d
   `status/<id>.json`, App übernimmt den Auftrag automatisch (~1–3 Min.). Token (Fine-grained, Contents RW) liegt nur
   im Gerät (localStorage `druckwerk_token`). Erlaubte Extra-Schlüssel stehen in `EXTRA_OK` (eingang.py) – dort erweitern.
 - Schichtvorschau: `schichten.js` (Knopf „Schichten ansehen“ im Auftrag) liest die .gcode und zeichnet jede Schicht.
-- Noch offen: 1b schneiden/zusammensetzen/Text · gemischte Düsengrößen · Senden per WLAN. Erledigt am 14.11.: Filamentlager mit Check und Kosten, Druck-Tagebuch, geführter Auftrag.
+- Noch offen: 1b schneiden/zusammensetzen/Text · gemischte Düsengrößen · Senden per WLAN · Abgleich iPhone↔iPad über das Repo · Auftrag ohne Chat. Erledigt: Filamentlager mit Check und Kosten, Druck-Tagebuch, geführter Auftrag (14.11.), Start/Sicherung/Offline/KI-Weg (15.11.).
 
 ## Wissen: Material, Drucker, Workflow (wissen.js + wissen/*.json, seit 14.11.2026)
 - **Inhalte stehen in `wissen/*.json`, nicht im Code.** Neue Erkenntnisse (Toms Druckergebnisse, neue Preise, Firmware) dort eintragen und
@@ -84,9 +90,36 @@ Alte `_kobrax`-Aufträge laufen nicht auf dem Creator 5 Pro – bei Bedarf aus d
   Im Auftrag: „Verbrauch vom Filamentlager abbuchen“ (`wissen.abbuchen`, merkt sich `druckwerk_gebucht`).
   Im Filament-Blatt öffnet „Günstigsten Preis suchen“ Claude mit `filament-preise: <Material> …` (Skill `filament-preise`, sucht Preise nur auf Abruf; keine Preise im Lager speichern).
 - Tab **Drucker**: Überblick, Einrichten (`druckwerk_c5_ein`), Wartung (`druckwerk_c5_wartung`), Hilfe, Tagebuch (`druckwerk_tagebuch`, Fotos in IndexedDB `druckwerk_fotos`). Die frühere USB-Seite steht jetzt hier.
-- Tab **Workflow**: Weg (Knopf „Auftrag so beginnen“ füllt Tab Neu über `neuStart`), Werkzeuge, Vorschläge (Auswahl `druckwerk_wunsch` → Prompt).
+- **„So geht's“** (früher Tab Workflow; erreichbar über Neu und Start): Weg (Knopf „Auftrag so beginnen“ öffnet den geführten Auftrag), Werkzeuge, Vorschläge (Auswahl `druckwerk_wunsch` → Prompt).
   Kommt ein Prompt „Bitte diese Vorschläge aus der App umsetzen“, sind die Titel aus `workflow.json → vorschlaege` gemeint.
 - Prüfskript-Muster: Playwright 390×844, alle drei Tabs und Unterseiten durchklicken, `scrollWidth` muss 390 bleiben.
+
+## Qualität: technische Teile wie konstruiert (seit 15.11.2026) – Regeln in `werkzeug/QUALITAET.md`
+- **Pflicht-Schleife vor jedem Slicen eines neuen Teils:** bauen → `python3 werkzeug/pruefen.py <stl…>` (0 Fehler) → `python3 werkzeug/ansichten.py <stl…> --aus bild.png`
+  und das Bild SELBST ansehen → korrigieren (höchstens 3 Runden) → Bild an Tom → erst dann slicen. Kurz: `cad.py <skript> --name n --pruefen --bild /tmp/n.png`.
+- `werkzeug/profi.py` (build123d): Tabellen (Wand = Vielfache 0,45 mm, Spiel-Klassen, Lochaufmaß) und Helfer – sichere Rundung/Fase, Fase unten gegen Elefantenfuß,
+  Senk-/Schraubloch (waagrecht automatisch Tropfenform), Einschmelzmutter, Rippe, Rändelung, Waben, Schrift mit Mindeststrich, Schnapphaken, Schwalbenschwanz,
+  Scharnier, Gewinde/Normteile (`bd_warehouse`), Zahnräder (`py_gearworks`), 45°-Druckgewinde, Teilung mit Passstiften. Selbsttest: `python3 werkzeug/profi.py`.
+- Vorzeige-Teile als Muster: `modelle/profi/gitarrenhalter.py` (PETG + TPU-Auflage), `zahnradpaar.py`, `dose.py` (Gewindedeckel, Waben, Gold-Einlage).
+- `cad.py` neu: `--arg k=v`, `--pruefen`, `--bild`, `--ohne-step`; vernetzt vor dem Export frisch (vorher teils offene STL).
+- Wann was: einfache Klötze/Halter → OpenSCAD + Baukasten; alles mit Rundungen, Gewinden, Zahnrädern, STEP → build123d + profi.py.
+- Alle Spiele/Passungen sind gerechnet, nicht gedruckt – nach Toms Kalibrier-Teil 4 in `profi.py` und `baukasten.scad` nachstellen.
+
+## Qualität: Figuren und freie Formen über KI (seit 15.11.2026) – Recherche in `wissen/recherche_modellqualitaet.md`
+- Kein KI-Generator ist maßhaltig; technische Teile immer per CAD. Für Figuren/Deko liefern Rodin, Tripo, Meshy, Hunyuan, TRELLIS.2 das heutige Maximum.
+- **Weg in der App** (`kiweg.js`, Adresse `#kiweg:1…6`, Speicher `druckwerk_kiweg`): 1 Bild-Idee (erzeugt den Text für eine Bild-KI – Claude erzeugt keine Bilder) →
+  2 Bild extern → 3 Prüfliste Bild → 4 Umwandeln: `ki.js` „Aus Foto erzeugen (KI)“ über GitHub Action `generieren.yml` + `werkzeug/generieren.py`
+  (fal.ai mit Repo-Secret `FAL_KEY`: TRELLIS.2 0,25–0,35 $, Rodin 0,40 $, Hunyuan 0,375 $; gratis-experimentell Hugging Face mit `HF_TOKEN`) ODER extern
+  (MakerWorld MakerLab) + STL-Import → 5 Prüfliste Modell in Grau → 6 Werkstatt/Auftrag. Ergebnis der Action: `ki/<id>/` (GLB, STL, info.json), Status `status/<id>.json`.
+  **Der echte Dienst-Aufruf ist ungetestet (kein Schlüssel)** – beim ersten Lauf von Tom Status/Log ansehen. Fotos liegen im (öffentlichen) Repo.
+- Schickt Tom ein KI-Modell (GLB/STL): `werkzeug/ki_rohling.py` (aufrichten, skalieren, schließen, Boden plan, Info) → Bild zeigen → bei Farbe
+  `werkzeug/textur_farben.py` (Textur → 4 Köpfe) → slicen. Abschlussbild: `werkzeug/foto.py` (Blender). Details und Grenzen: `werkzeug/KI_MODELLE.md`.
+- **Lehren aus Toms Videos** (Auswertungen unter `videos/`, Bastlwastl): Eingabebild = ein Objekt, neutraler Hintergrund, einfarbig grau und matt, leicht schräg von
+  oben, kompakt, nichts Schwebendes, wenig Hinterschneidungen, Aufstellung klären; **Zielgröße immer nennen** (15–20 cm statt 5–6 cm bringt Details);
+  abstehende Teile getrennt erzeugen und kleben; 3D-Ergebnis in Grau auf Fehler prüfen (Finger, krumme Klingen, erfundene Rückseite); Boden plan schneiden;
+  Fehler lieber im Bild als im Netz beheben; jede Umwandlung kostet. Hohle Objekte (Vase, Helm, Maske) gelingen der KI kaum → CAD.
+- Foto/Farbverlauf auf Modell (Primed3D + Farbmischung im Slicer, 5 Filamente, 0,08 mm, Tage Druckzeit): für den Creator 5 Pro nur mit 4 Farben denkbar,
+  **nicht erprobt und nicht eingebaut**; druckwerk nutzt feste 4-Farben-Zerlegung (`textur_farben.py`, `bild_relief.py`).
 
 ## Weitere Werkzeuge (seit 14.11.2026)
 - **Technik-Baukasten** `modelle/baukasten/baukasten.scad` (`use <baukasten/baukasten.scad>`): Durchgangs-/Senklöcher M3–M8, Einschmelzmuttern M3–M5,

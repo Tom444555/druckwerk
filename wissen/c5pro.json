@@ -52,6 +52,7 @@
   "Betttemperatur für PLA auf der strukturierten Platte: 55–60 °C laut Profil – am echten Gerät noch bestätigen.",
   "Vorschaubild auf dem Drucker-Bildschirm fehlt noch.",
   "Senden per WLAN ist noch nicht gebaut (bisher nur USB).",
+  "Neu am 15.11.: Prüfung und Prüfbild vor jedem Slicen, Profi-Bausteine für technische Teile, Aufbereitung und Vierfarb-Zerlegung für KI-Modelle.",
   "Stratocaster und Verstärker sind für den Creator 5 Pro gesliced; dazu ein Kalibrier-Set aus fünf kurzen Drucken."
  ],
  "einrichten": [
