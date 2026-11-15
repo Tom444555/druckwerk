@@ -100,3 +100,23 @@ Geht auch mit den `*_kopf<n>.stl` eines bemalten Auftrags. Braucht `pip install 
 - Slicer: Bambu Studio „Farbmischung“ ab 2.5.3 (14.04.2026); OrcaSlicer „mixed filaments“ ab 2.5.0 Alpha (experimentell); Primed3D nennt Orca inkl. Flashforge-Variante kompatibel.
 
 Auswertungen mit Fundstellen: `videos/ki-stl-bastlwastl.html`, `videos/foto-in-3d-bastlwastl.html`.
+
+
+## Gratis-Weg direkt im Chat: `ki_lokal.py` (seit 15.11.2026)
+
+`python3 werkzeug/ki_lokal.py bild.png --name figur --ziel-mm 120 --aus /tmp/figur`
+
+- Freies Modell **TripoSR** (Tripo AI & Stability AI, MIT-Lizenz, 1,7 GB von Hugging Face). Läuft ohne Grafikkarte in der Claude-Sitzung
+  (2 Kerne, 7 GB): Einrichten beim ersten Mal ~2 Min., danach Freistellen ~10 s, Form ~15 s, Netz ~50 s (Auflösung 320), `ki_rohling.py` ~50 s.
+- Getestet am 15.11.2026 mit zwei Beispielbildern des Modells (gerenderter Roboter, Foto eines Stofftiers): erkennbar, dicht, mit Punktfarben,
+  Rückseite plausibel geraten. Grenzen: Oberfläche wellig/treppig, dünne Teile (Antennen, Finger) fehlen, Gesichter weich. **Noch nichts davon gedruckt.**
+- Die großen Modelle (TRELLIS.2, Hunyuan3D, Rodin, Meshy) brauchen eine Grafikkarte mit 16–24 GB und laufen hier nicht – dafür weiter fal.ai,
+  MakerLab oder Meshy. `ki_lokal.py` ist der Entwurfs-Weg: prüfen, ob ein Bild taugt, bevor eine bezahlte Umwandlung läuft.
+- Technik: `torchmcubes` wird durch scikit-image ersetzt, die Gewichte des Bild-Teils werden für neuere `transformers` umbenannt, vor `ki_rohling.py`
+  ersetzt sich der Prozess selbst (`os.execv`), sonst reicht der Speicher nicht. Eingabe wie bei jeder Bild-KI: ein Objekt, neutraler Hintergrund.
+- Offen: Hunyuan3D-2mini (deutlich besser) könnte mit Umbau auf 7 GB passen – ungetestet.
+
+## Meshy „Multi-Color Print“ (aus dem Video von Der Druckt Schon Wieder, 15.11.2026)
+- Meshy liefert direkt eine bemalte 3MF (Weg A ohne `textur_farben.py`); Farbanzahl in Meshy auf höchstens 4 stellen, Farbtöne lassen sich dort und im Slicer ändern.
+- Ungetestet: ob `lese_3mf` in `druck.py` Meshys Farbcodierung liest – beim ersten echten File Werkzeugwechsel und Gramm je Kopf im Bericht prüfen.
+- Größe: Meshy exportiert ohne Angabe 50 mm hoch; im Video wurde im Slicer etwa vierfach vergrößert, ohne dass das Netz grob wirkte. Skalieren vor `--bemalt` ist noch offen.

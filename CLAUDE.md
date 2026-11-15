@@ -44,7 +44,7 @@ Alte `_kobrax`-Aufträge laufen nicht auf dem Creator 5 Pro – bei Bedarf aus d
 - Jede Ansicht hat eine Adresse (`#start`, `#auftrag:<ordner>`, `#werkstatt:…`, `#kiweg:<schritt>`); Zurück/Vor funktionieren.
 - **Sicherung** (`sicherung.js`): alle `druckwerk_*`-Schlüssel + IndexedDB (eigene Modelle, Tagebuch-Fotos) als eine Datei; `druckwerk_gesichert` = Datum.
 - **Offline/PWA**: `manifest.webmanifest`, `symbol-*.png`, `sw.js` (immer zuerst Netz, Zwischenspeicher nur ohne Netz; .gcode/STL nie).
-  **Bei jeder Änderung an App-Dateien `CACHE` in `sw.js` hochzählen** (Stand `druckwerk-v5`) und neue Dateien dort eintragen.
+  **Bei jeder Änderung an App-Dateien `CACHE` in `sw.js` hochzählen** (Stand `druckwerk-v6`) und neue Dateien dort eintragen.
 - „Aus dem Lager hinzufügen“ heißt in der App jetzt „Weitere Aufträge von Claude“. Überall „Kopf 1–4“, nie „Spule“; Werkstatt-Slicen sendet `c5pro`.
 - Aufträge sind wie die Ideen im Looper **pro Gerät gespeichert** (localStorage `druckwerk_meine`): neue Besucher
   sehen eine leere Liste. Tom speichert einen Auftrag über den Link `https://tom444555.github.io/druckwerk/#hinzu=<ordner>`
@@ -118,6 +118,9 @@ Alte `_kobrax`-Aufträge laufen nicht auf dem Creator 5 Pro – bei Bedarf aus d
   (fal.ai mit Repo-Secret `FAL_KEY`: TRELLIS.2 0,25–0,35 $, Rodin 0,40 $, Hunyuan 0,375 $; gratis-experimentell Hugging Face mit `HF_TOKEN`) ODER extern
   (MakerWorld MakerLab) + STL-Import → 5 Prüfliste Modell in Grau → 6 Werkstatt/Auftrag. Ergebnis der Action: `ki/<id>/` (GLB, STL, info.json), Status `status/<id>.json`.
   **Der echte Dienst-Aufruf ist ungetestet (kein Schlüssel)** – beim ersten Lauf von Tom Status/Log ansehen. Fotos liegen im (öffentlichen) Repo.
+- **Gratis hier im Chat (seit 15.11.2026):** `python3 werkzeug/ki_lokal.py bild.png --name n --ziel-mm 120 --aus /tmp/n` – freies Modell TripoSR ohne Grafikkarte
+  (Einrichten ~2 Min., dann ~2 Min. je Bild inkl. `ki_rohling.py`), kein Schlüssel, keine Kosten. Qualität grob (Entwurf, einfache kompakte Figuren; dünne Teile fehlen) –
+  Tom vorher sagen, Vorschau zeigen. Schickt Tom ein Foto mit „hier umwandeln“/„ki_lokal“, diesen Weg nehmen. TRELLIS.2/Hunyuan/Rodin gehen hier nicht (brauchen GPU).
 - Schickt Tom ein KI-Modell (GLB/STL): `werkzeug/ki_rohling.py` (aufrichten, skalieren, schließen, Boden plan, Info) → Bild zeigen → bei Farbe
   `werkzeug/textur_farben.py` (Textur → 4 Köpfe) → slicen. Abschlussbild: `werkzeug/foto.py` (Blender). Details und Grenzen: `werkzeug/KI_MODELLE.md`.
 - **Lehren aus Toms Videos** (Auswertungen unter `videos/`, Bastlwastl): Eingabebild = ein Objekt, neutraler Hintergrund, einfarbig grau und matt, leicht schräg von
@@ -126,6 +129,16 @@ Alte `_kobrax`-Aufträge laufen nicht auf dem Creator 5 Pro – bei Bedarf aus d
   Fehler lieber im Bild als im Netz beheben; jede Umwandlung kostet. Hohle Objekte (Vase, Helm, Maske) gelingen der KI kaum → CAD.
 - Foto/Farbverlauf auf Modell (Primed3D + Farbmischung im Slicer, 5 Filamente, 0,08 mm, Tage Druckzeit): für den Creator 5 Pro nur mit 4 Farben denkbar,
   **nicht erprobt und nicht eingebaut**; druckwerk nutzt feste 4-Farben-Zerlegung (`textur_farben.py`, `bild_relief.py`).
+
+## Lehren aus Videos zum Creator 5 Pro (Auswertungen unter `videos/`)
+- **My Engines DE, „Technische Filamente“** (ein Tester, Leihgerät, nichts an Toms Gerät bestätigt): PA12-CF, PC-PBT-CF, ASA-CF mit wenig Verzug bei Bett 120 / Kammer 65 / Düse 320 °C;
+  PETG außen + TPU innen hielt von Hand untrennbar (andere Quellen: haften kaum → große Kontaktfläche + Beam Interlocking); Stützen bei Faser-Material kaum lösbar →
+  **stützfrei konstruieren** oder Stützmaterial in eigenen Kopf; TPU zieht Fäden; druckdicht erst nach Versiegelung. Steht auch in `wissen/filamente.json` und `wissen/c5pro.json`.
+
+- **Der Druckt Schon Wieder, „Meshy AI … 3D Agent“** (Werbe-Video, Snapmaker U1): Agent fragt erst nach (Form, Farben), zeigt ein Konzeptbild, baut dann 3D – so auch selbst vorgehen.
+  Meshy „Multi-Color Print“ liefert eine **bemalte 3MF** (Farbanzahl dort auf ≤ 4 stellen) → `druck.py --bemalt`; mit echter Meshy-Datei **ungetestet**: beim ersten Mal prüfen, ob
+  `lese_3mf` die Farbcodierung liest (sonst alles auf Kopf 1) und die Größe stimmt (Meshy-Standard 50 mm; Skalieren vor `--bemalt` fehlt noch). Baumstützen sind im Video umgerissen
+  → bei `--stuetzen auto` bleiben; Stringing kam von fehlender Kalibrierung → erst Kalibrier-Set. KI bleibt Deko, kein CAD-Ersatz.
 
 ## Weitere Werkzeuge (seit 14.11.2026)
 - **Technik-Baukasten** `modelle/baukasten/baukasten.scad` (`use <baukasten/baukasten.scad>`): Durchgangs-/Senklöcher M3–M8, Einschmelzmuttern M3–M5,

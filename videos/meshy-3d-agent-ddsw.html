@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<title>Auswertung: Meshy AI – vom Bild zum 3D-Druck (Der Druckt Schon Wieder) – Druckwerk</title>
+<link rel="icon" href="../symbol-192.png" type="image/png">
+<link rel="apple-touch-icon" href="../symbol-180.png">
+<style>
+:root{--bg:#f2f2f7;--card:#fff;--text:#000;--sub:#6c6c70;--sep:rgba(60,60,67,.18);--blue:#007aff;--green:#34c759;--orange:#ff9500;--red:#ff3b30;--fill:rgba(120,120,128,.12);--grau:#a7a7ad}
+@media (prefers-color-scheme:dark){:root{--bg:#000;--card:#1c1c1e;--text:#fff;--sub:#98989f;--sep:rgba(84,84,88,.6);--blue:#0a84ff;--green:#30d158;--orange:#ff9f0a;--red:#ff453a;--fill:rgba(120,120,128,.24);--grau:#8e8e93}}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--text);font:17px/1.4 -apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",sans-serif}
+main{max-width:720px;margin:0 auto;padding:calc(env(safe-area-inset-top) + 8px) 16px 60px}
+a{color:var(--blue)}
+h1{font-size:30px;font-weight:700;letter-spacing:.2px;margin:6px 4px 6px;line-height:1.15}
+h2{font-size:13px;font-weight:400;text-transform:uppercase;color:var(--sub);margin:28px 16px 8px}
+h3{font-size:18px;margin:0 0 6px}
+.card{background:var(--card);border-radius:12px;overflow:hidden;padding:14px 16px;margin-bottom:10px;overflow-wrap:anywhere}
+.card p{margin:0 0 8px}.card p:last-child{margin-bottom:0}
+.small,.fs{font-size:13px;color:var(--sub)}
+.fs{white-space:nowrap}
+.top{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;padding:8px 0}
+.top a{text-decoration:none;font-size:17px}
+.pill{font-size:12px;background:var(--fill);border-radius:6px;padding:2px 7px;white-space:nowrap;color:var(--text)}
+.e{background:rgba(52,199,89,.13);border-radius:10px;padding:8px 12px;margin-top:8px;font-size:15px}
+.q{background:rgba(255,149,0,.15);border-radius:10px;padding:8px 12px;margin-top:8px;font-size:15px}
+ul,ol{margin:4px 0 8px;padding-left:20px}li{margin:4px 0}
+.tag{font-size:11px;font-weight:600;border-radius:5px;padding:1px 6px;margin-right:4px;color:#fff;white-space:nowrap}
+.t-f{background:var(--blue)}.t-b{background:var(--orange)}.t-m{background:#af52de}.t-bsp{background:var(--green)}
+pre.baum{font:13px/1.5 ui-monospace,Menlo,monospace;white-space:pre-wrap;margin:0;overflow-wrap:anywhere}
+blockquote{margin:6px 0;padding:4px 0 4px 12px;border-left:3px solid var(--blue);font-style:italic}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;vertical-align:top;padding:8px 6px;border-top:.5px solid var(--sep)}
+th{color:var(--sub);font-weight:500;font-size:12px;text-transform:uppercase}
+@media (max-width:600px){table.stapel thead{display:none}table.stapel tr{display:block;border-top:.5px solid var(--sep);padding:6px 0}
+  table.stapel td{display:block;border:0;padding:3px 0}table.stapel td::before{content:attr(data-l);display:block;font-size:11px;color:var(--sub);text-transform:uppercase}}
+svg{width:100%;height:auto;display:block}
+svg text{font-family:-apple-system,BlinkMacSystemFont,sans-serif;fill:var(--text)}
+svg .k{fill:var(--card);stroke:var(--sep);stroke-width:1}
+svg .kb{fill:var(--blue);fill-opacity:.12;stroke:var(--blue);stroke-width:1.2}
+svg .ko{fill:var(--orange);fill-opacity:.15;stroke:var(--orange);stroke-width:1.2}
+svg .sub{fill:var(--sub);font-size:10px}
+svg .pf{stroke:var(--sub);stroke-width:1.5;fill:none}
+svg .grau{fill:var(--grau)}
+svg .rot{stroke:var(--red);stroke-width:2.2}
+svg .gr{stroke:var(--green);stroke-width:2.2}
+.zeich{background:var(--bg);border-radius:10px;padding:8px}
+.legende{display:flex;flex-wrap:wrap;gap:6px 12px;font-size:13px;color:var(--sub)}
+nav.inhalt a{display:inline-block;margin:3px 6px 3px 0;font-size:14px;text-decoration:none;background:var(--fill);border-radius:14px;padding:4px 10px;color:var(--text)}
+</style>
+
+<body>
+<main>
+<div class="top"><a href="index.html">‹ Videos</a><a href="https://www.youtube.com/watch?v=ymHJ7rUpysE" target="_blank" rel="noopener">Video ansehen ↗</a></div>
+<h1>Meshy AI: vom Bild zum 3D-Druck</h1>
+<p class="small" style="margin:0 4px 10px">Auswertung des Videos „Meshy AI: Vom Bild zum fertigen 3D-Druck – kompletter Workflow mit dem 3D Agent“ von <b>Der Druckt Schon Wieder</b> (YouTube, ca. 19 Min.) · Grundlage: automatische Untertitel, abgerufen 15.11.2026 · Auswertung vom 15.11.2026 · <a href="../index.html">Druckwerk</a></p>
+<div class="card small">Lesehilfe: Normaler Text = was im Video gesagt wird, mit Fundstelle <span class="fs">(mm:ss)</span>. <span class="e" style="display:inline;padding:1px 6px;margin:0">📚 grün = eigene Ergänzung</span> · <span class="q" style="display:inline;padding:1px 6px;margin:0">❓ orange = unklar</span>. Automatische Untertitel – Hörfehler sind markiert.</div>
+<nav class="inhalt" aria-label="Inhalt"><a href="#a">🧭 Steckbrief</a><a href="#b">🌳 Themenbaum</a><a href="#c">🎯 Kernaussagen</a><a href="#d">🔎 Auswertung</a><a href="#e">📅 Ablauf</a><a href="#f">📖 Verzeichnisse</a><a href="#g">⚖️ Abgleich</a><a href="#h">💡 Druckwerk</a><a href="#i">🗂️ Zusammenfassung</a><a href="#q">Quellen</a></nav>
+
+<h2 id="a">A · 🧭 Steckbrief</h2>
+<div class="card">
+<p><b>Thema in einem Satz:</b> Aus einem flachen PNG-Logo entsteht über den Chat-Agenten von Meshy AI ein 3D-Kopf, der mit „Multicolor Print“ auf zwei Farben reduziert, als 3MF in OrcaSlicer geladen, vergrößert und auf einem Snapmaker U1 gedruckt wird.</p>
+<p><b>Sprecher:</b> Betreiber des Kanals „Der Druckt Schon Wieder“ (Name nicht genannt); arbeitet für einen Kunden, der einen Kopf für eine Schaufensterbüste wollte <span class="fs">(00:30)</span>. Nach eigener Aussage kein Bildhauer am Rechner („Skulpt Ding … kann ich definitiv nicht“, 02:04).</p>
+<p><b>Dauer / Umfang:</b> ca. 19:18 Min., ein Sprecher.</p>
+<p><b>Art:</b> Erfahrungsbericht mit Bildschirm-Vorführung und gedrucktem Ergebnis in der Hand; gekennzeichnet als <b>Werbung</b>: Meshy AI hat ihm den Zugang kostenlos zur Verfügung gestellt <span class="fs">(00:00)</span>, laut 15:36 „ein paar Monate“. Am Ende nennt er einen Affiliate-Link mit Rabatt-Code <span class="fs">(17:41–18:11)</span>. Er kündigt dennoch eine „ehrliche Meinung“ an <span class="fs">(00:00)</span>.</p>
+<p><b>Grundton:</b> begeistert („absoluter Gamechanger“ für Leute ohne 3D-Modellierung, 17:08), offen über eigene Druckfehler (Stringing, umgerissene Stützen, 13:29–14:33) und über die Grenze „kein Ersatz für CAD“ <span class="fs">(17:41)</span>.</p>
+<p class="q">❓ Veröffentlichungsdatum des Videos nicht abrufbar. Er nennt „Meshy 6“ <span class="fs">(11:56)</span>; den 3D Agent gibt es laut Meshy seit 04.06.2026, Meshy 7 erschien am 10.08.2026 (siehe Abgleich). Das Video ist also vermutlich zwischen Juni und August 2026 entstanden – das ist nur ein Hinweis, kein Beleg.</p>
+</div>
+
+<h2 id="b">B · 🌳 Themenbaum</h2>
+<div class="card"><pre class="baum">🎬 Meshy AI: Bild → 3D-Druck (00:00–19:18)
+├─ 📢 Werbehinweis, Zugang kostenlos (00:00)
+├─ 📋 Auftrag: Kopf für Schaufensterbüste (00:30)
+│  ├─ 🖼️ nur flaches PNG-Logo (00:30)
+│  └─ 🚫 Blender, ZBrush, Thingiverse: kein Weg (01:01)
+├─ 🌐 Was ist Meshy AI (01:01–02:35)
+├─ 💬 3D Agent im Chat (02:35–05:43)
+│  ├─ ❓ Rückfragen zum Konzept, Farbe (03:36–04:09)
+│  ├─ 🎨 Konzeptbild schwarz-gold (04:09)
+│  └─ 🧊 3D-Modell, drucken/retexturieren (04:40–05:43)
+├─ 🛠️ normale Werkzeuge (05:43–09:52)
+│  ├─ 🌈 Multicolor Print: Original/Processed (06:43)
+│  ├─ 🔢 Color Count 4 → 2 (07:46–08:49)
+│  └─ 💾 3MF, Größe änderbar (08:49–09:21)
+├─ 🖨️ OrcaSlicer, Snapmaker U1 (09:52–11:24)
+│  ├─ 📏 klein vs. Maximalgröße, Prusa XL (09:52–10:23)
+│  └─ 🖌️ Farben eingebettet, nachmalen (10:54)
+├─ 📈 Meshy 6: Netzqualität, ~7 → 22–25 cm (11:56)
+├─ 🔩 „Enhanced Hard Surface“ (12:58)
+├─ ⚠️ Erster Druck: Stringing, Stütze weg (13:29–14:33)
+├─ ✨ Ergebnis, Kunde zufrieden (14:33–16:38)
+├─ ⚖️ Fazit: kreativ stark, kein CAD-Ersatz (17:08–17:41)
+└─ 🔗 Link, Code, Gratis-Version, Abschied (17:41–19:14)</pre></div>
+<div class="card legende"><span>🎬 Video</span><span>📢 Werbung</span><span>📋 Auftrag</span><span>🖼️ Bild</span><span>🚫 Alternative</span><span>🌐 Plattform</span><span>💬 Chat</span><span>❓ Rückfrage</span><span>🎨 Farbe</span><span>🧊 3D-Modell</span><span>🛠️ Werkzeug</span><span>🌈 Mehrfarbig</span><span>🔢 Anzahl</span><span>💾 Export</span><span>🖨️ Slicer/Drucker</span><span>📏 Größe</span><span>🖌️ Malen</span><span>📈 Qualität</span><span>🔩 Technische Teile</span><span>⚠️ Fehler</span><span>✨ Ergebnis</span><span>⚖️ Fazit</span><span>🔗 Link</span></div>
+
+<h2 id="c">C · 🎯 Kernaussagen</h2>
+<div class="card"><h3>1 · Aus einem flachen PNG wird ohne Modellier-Kenntnisse ein druckbares 3D-Modell. ★★★</h3><p class="small">Ausgangslage nur ein Logo <span class="fs">(00:30)</span>; Ergebnis ein gedruckter Kopf <span class="fs">(00:00, 15:36)</span>.</p></div>
+<div class="card"><h3>2 · Der 3D Agent führt im Chat: Rückfragen, Konzeptbild, erst dann 3D. ★★★</h3><p class="small">Fragen zu vollem Kopf und Farben, Render-Konzept, auf Wunsch das 3D-Modell <span class="fs">(03:36–05:12)</span>.</p></div>
+<div class="card"><h3>3 · Für die Druckvorbereitung zurück in die normalen Werkzeuge. ★★★</h3><p class="small">Der Agent generiert gut; Feinarbeit und Export über den Bereich „Print“ <span class="fs">(05:43–06:43, 17:08)</span>.</p></div>
+<div class="card"><h3>4 · „Multicolor Print“ reduziert die Farben (hier 4 → 2) und liefert eine 3MF mit eingebetteten Farben. ★★★</h3><p class="small">Processed-Ansicht, Color Count, Farben von Hand ändern, 3MF-Download <span class="fs">(06:43–08:49, 10:54)</span>.</p></div>
+<div class="card"><h3>5 · Das Netz ist fein genug für starkes Vergrößern. ★★</h3><p class="small">„ich glaube“ ca. 7 cm Ursprung → ca. 22–25 cm Druck, „Faktor 4 oder sowas“ <span class="fs">(11:56–12:26)</span>.</p></div>
+<div class="card"><h3>6 · Fehler im ersten Druck lagen laut ihm an Kalibrierung und Stützen, nicht an Meshy. ★★</h3><p class="small">Starkes Stringing, Baumstützen umgerissen <span class="fs">(13:29–14:33)</span>.</p></div>
+<div class="card"><h3>7 · Stark für organische Modelle und Deko – kein Ersatz für CAD bei präzisen Teilen. ★★★</h3><p class="small">Ehrliches Fazit <span class="fs">(17:08–17:41)</span>; „Hard Surface“ hat er nicht ausprobiert <span class="fs">(13:29, 17:41)</span>.</p></div>
+<div class="card"><h3>8 · Offengelegt: Werbung, kostenloser Zugang, Affiliate-Code. ★</h3><p class="small"><span class="fs">(00:00, 15:36, 17:41–18:11)</span></p></div>
+
+<h2>Zeichnung 1 · Ablauf laut Video</h2>
+<div class="card"><p class="small">Darstellung laut Video (schematisch). Blau = im Agenten-Chat, orange = normale Meshy-Werkzeuge, grau = außerhalb von Meshy.</p>
+<div class="zeich"><svg viewBox="0 0 340 512" role="img" aria-label="Ablauf: PNG-Logo, Chat-Agent mit Rückfragen, Konzeptbild, 3D-Modell, Print und Multicolor mit Farbreduktion, 3MF-Download, OrcaSlicer, Druck">
+<defs><marker id="pf1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--sub)"/></marker></defs>
+<g font-size="13">
+<rect class="k" x="45" y="6" width="250" height="44" rx="10"/><text x="170" y="25" text-anchor="middle" font-weight="600">🖼️ flaches PNG-Logo vom Kunden</text><text class="sub" x="170" y="41" text-anchor="middle">hochladen + ein Satz Wunsch (03:05)</text>
+<rect class="kb" x="45" y="66" width="250" height="52" rx="10"/><text x="170" y="85" text-anchor="middle" font-weight="600">💬 3D Agent: Rückfragen</text><text class="sub" x="170" y="101" text-anchor="middle">voller Kopf? Farben? → schwarz + gold</text><text class="sub" x="170" y="113" text-anchor="middle">(03:36–04:09)</text>
+<rect class="kb" x="45" y="134" width="250" height="44" rx="10"/><text x="170" y="153" text-anchor="middle" font-weight="600">🎨 Konzeptbild (Render, noch 2D)</text><text class="sub" x="170" y="169" text-anchor="middle">frontal, Facetten (04:09–04:40)</text>
+<rect class="kb" x="45" y="194" width="250" height="44" rx="10"/><text x="170" y="213" text-anchor="middle" font-weight="600">🧊 „mach mal das 3D Modell“</text><text class="sub" x="170" y="229" text-anchor="middle">dann Druck vorbereiten, retexturieren (04:40–05:43)</text>
+<rect class="ko" x="45" y="254" width="250" height="52" rx="10"/><text x="170" y="273" text-anchor="middle" font-weight="600">🌈 Print → Multicolor Print</text><text class="sub" x="170" y="289" text-anchor="middle">Original → Processed, Color Count 4 → 2,</text><text class="sub" x="170" y="301" text-anchor="middle">Farben von Hand (06:43–08:49)</text>
+<rect class="ko" x="45" y="322" width="250" height="44" rx="10"/><text x="170" y="341" text-anchor="middle" font-weight="600">💾 Download als 3MF</text><text class="sub" x="170" y="357" text-anchor="middle">Größe optional vorher ändern (08:49–09:21)</text>
+<rect class="k" x="45" y="382" width="250" height="52" rx="10"/><text x="170" y="401" text-anchor="middle" font-weight="600">🖨️ OrcaSlicer</text><text class="sub" x="170" y="417" text-anchor="middle">skalieren, Farben eingebettet, nachmalen,</text><text class="sub" x="170" y="429" text-anchor="middle">Baumstützen (09:52–11:24, 14:01)</text>
+<rect class="k" x="45" y="450" width="250" height="44" rx="10" style="fill:var(--blue);fill-opacity:.25"/><text x="170" y="469" text-anchor="middle" font-weight="600">✨ Druck auf Snapmaker U1</text><text class="sub" x="170" y="485" text-anchor="middle">größer folgt auf Prusa XL (10:23)</text>
+</g>
+<g class="pf" marker-end="url(#pf1)"><path d="M170 50v14"/><path d="M170 118v14"/><path d="M170 178v14"/><path d="M170 238v14"/><path d="M170 306v14"/><path d="M170 366v14"/><path d="M170 434v14"/></g>
+<path d="M300 244 h22 v-200 h-24" fill="none" stroke="var(--sub)" stroke-width="1.2" stroke-dasharray="3 3"/>
+<text class="sub" x="330" y="150" text-anchor="middle" transform="rotate(90 330 150)">Iterationen im Chat (03:05)</text>
+<text class="sub" x="4" y="508">„Back Button“: Agent verlassen, normale Werkzeuge (06:13)</text>
+</svg></div></div>
+
+<h2 id="d">D · 🔎 Detaillierte Auswertung</h2>
+
+<div class="card"><h3>📢 1 · Einstieg und Werbehinweis <span class="fs">(00:00–00:30)</span></h3>
+<p>Er hält einen gedruckten Kopf in der Hand, der vor ein paar Tagen „noch ein flaches PNG“ war – ein simples Logo. Möglich sei das mit KI und einem Chat. Direkt danach der Hinweis: Werbung, Meshy AI habe ihm den Zugang zur Plattform kostenlos zur Verfügung gestellt. Trotzdem gebe es wie immer eine ehrliche Meinung.</p>
+<p>💬 <q>Das hier war vor ein paar Tagen noch ein flaches PNG</q> <span class="fs">(00:00)</span></p>
+<p>📌</p><ul><li><span class="tag t-f">Fakt</span>Werbung: kostenloser Zugang durch Meshy AI <span class="fs">(00:00)</span>.</li><li><span class="tag t-f">Fakt</span>Ausgangspunkt war ein flaches Logo <span class="fs">(00:00)</span>.</li><li><span class="tag t-m">Meinung</span>Er kündigt eine ehrliche Meinung an <span class="fs">(00:00)</span>.</li></ul>
+<p>🔗 Abschnitt 17 („ein paar Monate kostenlos“) und 19 (Affiliate-Code).</p></div>
+
+<div class="card"><h3>📋 2 · Auftrag und Ausgangslage <span class="fs">(00:30–01:01)</span></h3>
+<p>Kundenauftrag: ein Kopf für eine Schaufensterbüste. Vorhanden war nur ein flaches PNG-Logo der Firma. Die Aufgabe: aus 2D wird 3D, und zwar druckfertig.</p>
+<p>💬 <q>mach aus 2D 3D und zwar druckfertig</q> <span class="fs">(00:30)</span></p>
+<p>📌</p><ul><li><span class="tag t-f">Fakt</span>Kundenauftrag, Ziel Schaufensterbüste <span class="fs">(00:30)</span>.</li><li><span class="tag t-f">Fakt</span>Vorlage: PNG-Logo der Firma <span class="fs">(00:30)</span>.</li></ul>
+<p class="q">❓ Hier heißt es „<b>Löwenkopf</b>“ <span class="fs">(00:30)</span>, später sagt der Agent „Tiger-Logo“ <span class="fs">(03:36)</span>, der Sprecher spricht von „Tigerfarben“ und dem „Gesicht des Tigers“ <span class="fs">(04:09, 10:23)</span>. Ob Löwe oder Tiger gemeint ist, bleibt offen – möglicherweise ein Versprecher oder Untertitel-Fehler.</p></div>
+
+<div class="card"><h3>🚫 3 · Die üblichen Wege, die er nicht gehen kann <span class="fs">(01:01)</span></h3>
+<p>Normalerweise würde er Blender probieren – das könne er nicht – oder an ZBrush sitzen – auch das nicht – oder auf Thingiverse oder anderswo suchen und wohl nicht das Gewünschte oder gar nichts finden. Hier kam der 3D Agent von Meshy AI ins Spiel.</p>
+<p>📌</p><ul><li><span class="tag t-f">Fakt</span>Er beherrscht nach eigener Aussage weder Blender noch ZBrush <span class="fs">(01:01)</span>.</li><li><span class="tag t-b">Behauptung</span>In Modell-Datenbanken findet man so etwas kaum <span class="fs">(01:01)</span>.</li></ul>
+<p class="e">📚 <b>Blender</b> = kostenlose 3D-Software (Modellieren, Rendern); <b>ZBrush</b> = Programm zum digitalen Bildhauen („Sculpting“); <b>Thingiverse</b> = Modell-Datenbank für den 3D-Druck.</p></div>
+
+<div class="card"><h3>🌐 4 · Was ist Meshy AI? <span class="fs">(01:01–02:35)</span></h3>
+<p>Meshy AI sei eine Plattform, kein einzelnes Werkzeug: Von einer Idee – auch ohne Vorlage – über einen KI-Agenten zum komplexen 3D-Modell, inklusive Druckvorbereitung mit Farben. Ohne sie hätte er den Kopf „definitiv nicht hingekriegt“.</p>
+<p>💬 <q>Man kann eigentlich gar nicht Tool sagen, sondern es ist eine Plattform</q> <span class="fs">(01:01)</span></p>
+<p>📌</p><ul><li><span class="tag t-b">Behauptung</span>Von der Idee ohne Vorlage zum komplexen Modell <span class="fs">(01:33)</span>.</li><li><span class="tag t-f">Fakt</span>Druckvorbereitung inkl. Farben in Meshy <span class="fs">(01:33)</span>.</li><li><span class="tag t-m">Meinung</span>Allein hätte er es nicht geschafft <span class="fs">(01:33–02:04)</span>.</li></ul>
+<p class="q">❓ „wie ich diesen <b>Onkel</b> hier mit Mesh AI erzeugt habe“ <span class="fs">(01:33)</span> – vermutlich Hörfehler (gemeint wohl der Kopf). Der Name schwankt in den Untertiteln: „Mesh AI“, „Meshie AI“, „Meshi“ – gemeint ist durchgehend Meshy.</p></div>
+
+<div class="card"><h3>💬 5 · Der 3D Agent: Start und Rückfragen <span class="fs">(02:35–04:09)</span></h3>
+<p>Oben beschreibt man eine Idee als Text und wird vom Agenten geleitet; unten legt man ein neues Projekt an. Rechts stehen die Iterationen. Er lud das PNG hoch: Bild in einen 3D-Kopf für eine Schaufensterpuppe umwandeln. Der Agent lobte das „klare Tiger-Logo“ und stellte Fragen zum Konzept (genau weiß er sie nicht mehr); er wählte einen vollen 3D-Kopf. Dann die Farbfrage: Tigerfarben Orange/Schwarz oder schwarz-weiß wie die Vorlage.</p>
+<p>💬 <q>Die AI ist natürlich immer sehr freundlich.</q> <span class="fs">(03:36)</span></p>
+<p>📌</p><ul><li><span class="tag t-f">Fakt</span>Einstieg per Text-Idee oder neues Projekt <span class="fs">(02:35)</span>.</li><li><span class="tag t-f">Fakt</span>Verlauf mit mehreren Iterationen sichtbar <span class="fs">(03:05)</span>.</li><li><span class="tag t-f">Fakt</span>Der Agent stellt Rückfragen (voller Kopf, Farbe) <span class="fs">(03:36–04:09)</span>.</li><li><span class="tag t-bsp">Beispiel</span>Anfrage in einem Satz <span class="fs">(03:05)</span>.</li></ul>
+<p class="e">📚 Laut Meshy-Doku bespricht der Agent Ideen, stellt klärende Fragen, erzeugt Konzeptbilder und wandelt gewählte Konzepte in 3D um; vor dem Verbrauch von Credits fragt er standardmäßig nach.</p></div>
+
+<div class="card"><h3>🎨 6 · Farbwahl und Konzeptbild <span class="fs">(04:09–04:40)</span></h3>
+<p>Er antwortete: schwarz mit goldenen Akzenten. Daraufhin erstellte der Agent ein Konzeptbild als Render-Ansicht, das „verdammt cool“ aussah. Der Agent lobte sein Ergebnis selbst: klare Facettenstruktur, ideal für den 3D-Druck, volles Volumen mit Ohren, Mähne und Schnauze, „sauberes weiß, druckfertig“.</p>
+<p>📌</p><ul><li><span class="tag t-f">Fakt</span>Wunsch: schwarz mit Gold-Akzenten <span class="fs">(04:09)</span>.</li><li><span class="tag t-f">Fakt</span>Erst ein Konzeptbild, noch kein 3D <span class="fs">(04:09)</span>.</li><li><span class="tag t-b">Behauptung</span>(des Agenten) Facetten ideal für den Druck <span class="fs">(04:09–04:40)</span>.</li></ul>
+<p class="q">❓ „sauberes weiß“ <span class="fs">(04:40)</span> – unklar, ob ein weißer Hintergrund des Konzeptbilds gemeint ist. „Mähne“ passt eher zu einem Löwen (siehe Abschnitt 2).</p></div>
+
+<div class="card"><h3>🧊 7 · Vom Konzept zum 3D-Modell <span class="fs">(04:40–05:43)</span></h3>
+<p>Das Konzept war noch eine frontale 2D-Ansicht. Auf „mach mal das 3D Modell“ (klein geschrieben – „Faulheit“ beim Chatten) kam ein 3D-Modell, im Chat anklickbar. Der Agent fragte: drucken oder retexturieren? Er wollte beides. Er überspringt Teile; am Ende stand die schwarze Variante mit Gold-Akzenten, wieder als „Pseudo 3D Modell“, aus dem der finale Kopf entstand.</p>
+<p>📌</p><ul><li><span class="tag t-f">Fakt</span>3D-Modell direkt im Chat ansehbar <span class="fs">(05:12)</span>.</li><li><span class="tag t-f">Fakt</span>Agent bietet „drucken“ oder „retexturieren“ an <span class="fs">(05:12)</span>.</li><li><span class="tag t-f">Fakt</span>Teile des Ablaufs übersprungen <span class="fs">(05:12)</span>.</li></ul>
+<p class="q">❓ „Pseudo 3D Modell“ <span class="fs">(05:43)</span> – vermutlich wieder ein Vorschaubild, aus dem dann das eigentliche Modell entstand; genauer erklärt er es nicht.</p>
+<p class="e">📚 <b>Retexturieren</b> = neue Oberflächenfarben/-bilder auf ein vorhandenes Netz rechnen lassen, ohne die Form zu ändern.</p></div>
+
+<div class="card"><h3>↩️ 8 · Raus aus dem Agenten, rein in die Werkzeuge <span class="fs">(05:43–06:43)</span></h3>
+<p>Der Agent könne „wunderbar Modelle generieren“, aber für die konkrete Druckvorbereitung geht er mit dem Back-Button hinaus und nutzt die normalen Workflow-Werkzeuge von Meshy, die dafür „perfektioniert“ seien. Im Bereich „Modell“ sieht man das 3D-Modell, kann es verfeinern oder schon herunterladen. Er ging in den Bereich „Print“; das Modell bleibt geöffnet.</p>
+<p>📌</p><ul><li><span class="tag t-m">Meinung</span>Agent für Erzeugung, Werkzeuge für Druckvorbereitung <span class="fs">(05:43–06:13)</span>.</li><li><span class="tag t-f">Fakt</span>Bereiche „Modell“ und „Print“ <span class="fs">(06:13–06:43)</span>.</li></ul>
+<p>🔗 Gleiches Urteil im Fazit <span class="fs">(17:08)</span>.</p></div>
+
+<div class="card"><h3>🌈 9 · Multicolor Print: Farben reduzieren <span class="fs">(06:43–08:49)</span></h3>
+<p>„Original“ zeigt sehr feine Schattierungen – gut etwa für Game Design, im Druck aber schwer abzubilden. „Processed“ zeigt rudimentärere Druckfarben. Der Color Count stand auf vier; er wollte zwei: Bronze-Gold und Glitzer-Schwarz. Nach der Neuberechnung kam für die erste Farbe ein Braun – er setzt sie von Hand auf Schwarz; für den Druck sei der Ton ohnehin egal. Kleine raue Akzente oben am Kopf könnte man „wegradieren“, er ließ sie.</p>
+<p>💬 <q>aktuell der Color Count auf vier</q> <span class="fs">(07:46)</span></p>
+<p>📌</p><ul><li><span class="tag t-f">Fakt</span>Ansichten Original und Processed <span class="fs">(06:43–07:15)</span>.</li><li><span class="tag t-f">Fakt</span>Color Count stand auf 4, er wählte 2 <span class="fs">(07:46)</span>.</li><li><span class="tag t-f">Fakt</span>Farben nachträglich von Hand wählbar <span class="fs">(08:18)</span>.</li><li><span class="tag t-f">Fakt</span>Kleine Farbinseln lassen sich wegradieren <span class="fs">(08:49)</span>.</li><li><span class="tag t-m">Meinung</span>Raue Akzente gefallen ihm <span class="fs">(08:49)</span>.</li></ul>
+<p class="q">❓ „Fontanelle“ <span class="fs">(08:49)</span> – gemeint ist wohl die Stirn-/Scheitelpartie des Kopfes.</p>
+<p class="e">📚 Laut Meshy-Hilfe sind 1 bis 16 Farben einstellbar, empfohlen werden 4; die Schnittstelle nennt 4 als Standard.</p></div>
+
+<div class="card"><h3>💾 10 · Download als 3MF, Größe <span class="fs">(08:49–09:52)</span></h3>
+<p>Download „im 3MF-Format“. Die Größe ließe sich vorher ändern; er tat es nicht, weil das Modell sehr fein aufgelöst (wie viele Millionen Dreiecke, weiß er nicht) und die Kanten scharf seien. Wer die Druckgröße kennt, könne sie schon in Meshy setzen.</p>
+<p>📌</p><ul><li><span class="tag t-f">Fakt</span>Export als 3MF <span class="fs">(08:49)</span>.</li><li><span class="tag t-f">Fakt</span>Größe vor dem Download einstellbar <span class="fs">(09:21)</span>.</li><li><span class="tag t-b">Behauptung</span>Sehr hohe Auflösung, Skalieren unproblematisch <span class="fs">(09:21)</span>.</li></ul>
+<p class="e">📚 Laut Meshy-Doku: „Resize“ in den Download-Einstellungen (Höhe, Einheit), braucht einen Bezahl-Plan. 3Dnatives stellte fest, dass 3MF-Exporte ohne Angabe 50 mm hoch sind.</p></div>
+
+<div class="card"><h3>🖨️ 11 · OrcaSlicer, Snapmaker U1, Größe <span class="fs">(09:52–10:54)</span></h3>
+<p>In OrcaSlicer für den Snapmaker U1: der Kopf in Originalgröße (klein) und daneben einer in der U1-Maximalgröße. Auch der sei für die Puppe noch zu klein – Ansatz passt, Gesicht klein. Deshalb ein weiterer Druck auf dem Prusa XL. Der Kunde sei „restlos begeistert“ gewesen.</p>
+<p>💬 <q>immer noch ein bisschen zu klein für die Schaufensterpuppe</q> <span class="fs">(10:23)</span></p>
+<p>📌</p><ul><li><span class="tag t-f">Fakt</span>OrcaSlicer, Snapmaker U1 <span class="fs">(09:52)</span>.</li><li><span class="tag t-f">Fakt</span>Druck in maximaler U1-Größe, noch zu klein <span class="fs">(09:52–10:23)</span>.</li><li><span class="tag t-f">Fakt</span>Größerer Druck auf dem Prusa XL geplant <span class="fs">(10:23, 12:26)</span>.</li></ul>
+<p class="e">📚 Bauraum laut Herstellern: Snapmaker U1 270 × 270 × 270 mm, vier Werkzeugköpfe; Prusa nennt für den XL+ 360 × 360 × 360 mm. Toms Creator 5 Pro: 256 × 256 × 256 mm.</p></div>
+
+<div class="card"><h3>🖌️ 12 · Eingebettete Farben, nachmalen <span class="fs">(10:54–11:24)</span></h3>
+<p>Die zwei Farben sind direkt im Modell eingebettet; ändert man eine Filamentfarbe (Beispiel Grün), ändert sich der ganze Bereich. Als „angemaltes Modell“ lässt es sich mit den Color-Painting-Werkzeugen des Slicers nachmalen – oder zurück in Meshy ändern.</p>
+<p>💬 <q>das ist ein angemaltes Modell</q> <span class="fs">(10:54)</span></p>
+<p>📌</p><ul><li><span class="tag t-f">Fakt</span>Farben in der 3MF eingebettet <span class="fs">(10:54)</span>.</li><li><span class="tag t-f">Fakt</span>Nachmalen im Slicer oder in Meshy <span class="fs">(10:54–11:24)</span>.</li></ul>
+<p class="e">📚 „Angemalt“ heißt: ein einziger Körper, dessen Dreiecke je eine Kopf-/Filamentnummer tragen – kein Satz getrennter Farbteile. Genau diese Form liest Druckwerk mit <code>druck.py --bemalt</code> (siehe H).</p></div>
+
+<div class="card"><h3>📈 13 · Zwischenfazit: Meshy 6 und Vergrößerung <span class="fs">(11:24–12:58)</span></h3>
+<p>Es funktioniere erstaunlich gut; Meshy 6 habe bei der Netzqualität Fortschritte gemacht. Darum exportierte er klein: aus „ich glaube“ ca. 7 cm wurden „ich glaube 25 cm oder sowas oder 22“ – so groß, wie es auf den U1 passte, „Faktor 4 oder sowas“. Eine noch größere Version für den Prusa XL ist vorbereitet; Vergleich folgt als Short.</p>
+<p>💬 <q>dass Meshy 6 echte Fortschritte gemacht hat, was die Mesh-Qualität angeht</q> <span class="fs">(11:56)</span></p>
+<p>📌</p><ul><li><span class="tag t-m">Meinung</span>Meshy 6 deutlich bessere Netzqualität <span class="fs">(11:56)</span>.</li><li><span class="tag t-f">Fakt</span>Werte ausdrücklich unsicher: ca. 7 cm → ca. 22–25 cm <span class="fs">(11:56)</span>.</li><li><span class="tag t-b">Behauptung</span>Faktor „4 oder sowas“ <span class="fs">(12:26)</span>.</li></ul>
+<p class="e">📚 Nachgerechnet: 22 ÷ 7 ≈ 3,1 und 25 ÷ 7 ≈ 3,6 – mit seinen eigenen, geschätzten Zahlen liegt der Faktor eher bei gut 3; er sagt selbst „oder sowas“.</p></div>
+
+<h2>Zeichnung 2 · Größe und Farbanzahl</h2>
+<div class="card"><p class="small">Nur Werte wie im Video genannt, mit seinen Unsicherheiten. Maßstab: 1 cm = 10 px. Bauraum-Linien 📚 aus Herstellerangaben.</p>
+<div class="zeich"><svg viewBox="0 0 340 470" role="img" aria-label="Größenvergleich: Ursprungskopf ungefähr 7 Zentimeter, Druck ungefähr 22 bis 25 Zentimeter; Bauraum Snapmaker U1 27 und Creator 5 Pro 25,6 Zentimeter. Farbanzahl von vier auf zwei reduziert">
+<g font-size="12">
+<text x="10" y="18" font-weight="700">Größe laut Video (11:56)</text>
+<line x1="20" y1="300" x2="330" y2="300" stroke="var(--sub)"/>
+<line x1="150" y1="30" x2="330" y2="30" stroke="var(--orange)" stroke-dasharray="4 3"/>
+<text x="146" y="34" text-anchor="end" class="sub">📚 U1-Bauraum 27 cm</text>
+<line x1="150" y1="44" x2="330" y2="44" stroke="var(--blue)" stroke-dasharray="4 3"/>
+<text x="146" y="48" text-anchor="end" class="sub">📚 Creator 5 Pro 25,6 cm</text>
+<rect x="40" y="230" width="60" height="70" rx="22" fill="#222"/>
+<path d="M52 248 l8 -12 l8 12 M80 248 l8 -12 l8 12" stroke="#c9a227" stroke-width="2" fill="none"/>
+<text x="70" y="318" text-anchor="middle">ca. 7 cm</text>
+<text class="sub" x="70" y="332" text-anchor="middle">„ich glaube“</text>
+<text class="sub" x="70" y="344" text-anchor="middle">Ursprungskopf</text>
+<rect x="170" y="50" width="140" height="250" rx="54" fill="none" stroke="var(--sub)" stroke-width="2" stroke-dasharray="5 4"/>
+<rect x="170" y="80" width="140" height="220" rx="50" fill="#222"/>
+<path d="M190 120 l22 -30 l22 30 M246 120 l22 -30 l22 30" stroke="#c9a227" stroke-width="3" fill="none"/>
+<text x="240" y="318" text-anchor="middle">ca. 22–25 cm</text>
+<text class="sub" x="240" y="332" text-anchor="middle">„25 … oder 22“ – so groß, wie es</text>
+<text class="sub" x="240" y="344" text-anchor="middle">auf den U1 passte</text>
+<path d="M108 262 C 130 240, 145 220, 162 200" class="pf" marker-end="url(#pf4)"/>
+<defs><marker id="pf4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--sub)"/></marker></defs>
+<text x="20" y="196" class="sub">„Faktor 4</text><text x="20" y="208" class="sub">oder sowas“</text>
+<text x="10" y="378" font-weight="700">Farbanzahl in „Multicolor Print“ (07:46)</text>
+<g transform="translate(10 390)">
+<circle cx="14" cy="16" r="11" fill="#1a1a1a"/><circle cx="42" cy="16" r="11" fill="#6b4a2b"/><circle cx="70" cy="16" r="11" fill="#c9a227"/><circle cx="98" cy="16" r="11" fill="#e8e2d0" stroke="var(--sep)"/>
+<text x="56" y="46" text-anchor="middle" class="sub">Standard: 4</text>
+<path d="M124 16 h40" class="pf" marker-end="url(#pf4)"/>
+<circle cx="186" cy="16" r="11" fill="#1a1a1a"/><circle cx="214" cy="16" r="11" fill="#c9a227"/>
+<text x="200" y="46" text-anchor="middle" class="sub">gewählt: 2</text>
+<text x="236" y="12" class="sub">Braun → Schwarz</text><text x="236" y="26" class="sub">von Hand (08:18)</text>
+</g>
+<text class="sub" x="10" y="464">Farbtöne nur schematisch; Kopfformen frei gezeichnet.</text>
+</g></svg></div></div>
+
+<div class="card"><h3>🔩 14 · „Enhanced Hard Surface“ <span class="fs">(12:58–13:29)</span></h3>
+<p>Stichwort „Enhanced Hard Surface“: auch Smartphone-Ständer, Wandhaken und andere nicht-dekorative Teile könne Meshy „inzwischen sehr sehr gut“. Selbst ausprobiert hat er es noch nicht.</p>
+<p>📌</p><ul><li><span class="tag t-b">Behauptung</span>Hard-Surface-Modelle gehen inzwischen sehr gut <span class="fs">(12:58)</span>.</li><li><span class="tag t-f">Fakt</span>Selbst nicht getestet <span class="fs">(13:29)</span>.</li><li><span class="tag t-bsp">Beispiel</span>Handyständer, Wandhaken <span class="fs">(12:58)</span>.</li></ul>
+<p class="q">❓ Eine Option mit genau dem Namen „Enhanced Hard Surface“ war in der aktuellen Meshy-Doku (Bild zu 3D) nicht zu finden – nicht eindeutig zuzuordnen. Belegt ist, dass Meshy zu Meshy 6 schärfere Kanten bei Hard-Surface-Objekten angekündigt hat.</p>
+<p>🔗 Im Fazit grenzt er ein: kein CAD-Ersatz für präzise Teile <span class="fs">(17:41)</span>.</p></div>
+
+<div class="card"><h3>⚠️ 15 · Der erste Druck: Stringing und umgerissene Stützen <span class="fs">(13:29–14:33)</span></h3>
+<p>Er zeigt den ersten Druckversuch (einen weiteren hat der Kunde behalten). Das Material hat stark „gestringt“, unter dem Kinn ist eine Stütze weggebrochen. Ursache laut ihm: fehlende Kalibrierung von Filament und Stützen; die Tree Supports waren zu schwach und rissen um. Stabilere Stützen und weniger Stringing will er in einem eigenen Video zeigen.</p>
+<p>💬 <q>Da kann Meshy AI nun wirklich gar nichts zu.</q> <span class="fs">(14:01)</span></p>
+<p>📌</p><ul><li><span class="tag t-f">Fakt</span>Starkes Stringing im ersten Druck <span class="fs">(14:01)</span>.</li><li><span class="tag t-f">Fakt</span>Baumstützen umgerissen, Stütze unter dem Kinn weg <span class="fs">(14:01)</span>.</li><li><span class="tag t-m">Meinung</span>Ursache: eigene fehlende Kalibrierung <span class="fs">(14:01)</span>.</li><li><span class="tag t-b">Behauptung</span>Hohe, filigrane Stützen sind anfällig <span class="fs">(14:33)</span>.</li></ul>
+<p class="e">📚 <b>Stringing</b> = feine Fäden zwischen Bereichen, entsteht beim Verfahren der Düse ohne Druck, oft durch zu hohe Temperatur, feuchtes Filament oder zu wenig Rückzug (Retraction). <b>Tree Supports</b> = Baumstützen, die von wenigen Punkten verästelt nach oben wachsen.</p></div>
+
+<h2>Zeichnung 3 · Fehlerbilder im ersten Druck</h2>
+<div class="card"><p class="small">Darstellung laut Video (schematisch, 13:29–15:06). Wo das Video keine Ursache nennt, steht keine.</p>
+<div class="zeich"><svg viewBox="0 0 340 272" role="img" aria-label="Schematisch: Kopf auf Druckbett, Fäden durch Stringing, umgerissene Baumstütze unter dem Kinn, leicht runzlige Stirn">
+<g font-size="12">
+<line x1="20" y1="210" x2="320" y2="210" stroke="var(--sub)" stroke-width="3"/>
+<text class="sub" x="22" y="228">Druckbett</text>
+<path d="M120 200 C 100 150, 105 80, 160 50 C 215 80, 220 150, 200 200 Z" fill="#222"/>
+<path d="M135 75 q25 -8 50 0 M138 85 q22 -6 44 0" stroke="#c9a227" stroke-width="2" fill="none"/>
+<path d="M150 150 C 145 175, 142 190, 145 210 M145 186 l-12 -10 M146 196 l12 -8" stroke="var(--red)" stroke-width="2" fill="none" stroke-dasharray="3 2"/>
+<path d="M212 120 C 240 125, 255 135, 270 150 M214 140 C 240 150, 252 160, 268 170 M210 160 C 236 170, 250 178, 266 186" stroke="var(--sub)" stroke-width=".8" fill="none"/>
+<text x="230" y="40" font-weight="600">Runzlige Stirn</text>
+<text class="sub" x="230" y="54">Ursache offen (15:06)</text>
+<path d="M228 44 L188 74" class="pf"/>
+<text x="250" y="110" font-weight="600">Stringing</text>
+<text class="sub" x="250" y="124">Fäden (14:01)</text>
+<text x="10" y="100" font-weight="600">Baumstütze</text>
+<text x="10" y="114" font-weight="600">umgerissen</text>
+<text class="sub" x="10" y="128">unter dem Kinn,</text>
+<text class="sub" x="10" y="140">„ein bisschen</text>
+<text class="sub" x="10" y="152">schwach“ (14:01)</text>
+<path d="M60 160 L138 186" class="pf"/>
+<text class="sub" x="22" y="248">Laut Sprecher: fehlende Kalibrierung von Filament</text><text class="sub" x="22" y="262">und Stützen, kein Meshy-Problem (14:01).</text>
+</g></svg></div></div>
+
+<div class="card"><h3>✨ 16 · Das saubere Ergebnis <span class="fs">(14:33–15:36)</span></h3>
+<p>Den gelungenen Druck findet er „absolut fantastisch“. Ein kleiner „Popel“ müsse noch weg. Die Stirn sei „komischerweise“ leicht runzlig – was im Slicer passiert ist, will er sich genauer ansehen. Auch das sei kein Problem des Netzes, sondern seine „eigene Dummheit“.</p>
+<p>📌</p><ul><li><span class="tag t-m">Meinung</span>Druck „absolut fantastisch“ <span class="fs">(15:06)</span>.</li><li><span class="tag t-f">Fakt</span>Kleiner Rest am Druck, leicht runzlige Stirn <span class="fs">(15:06)</span>.</li><li><span class="tag t-b">Behauptung</span>Ursache im Slicer, nicht im Netz <span class="fs">(15:06)</span>.</li></ul>
+<p class="q">❓ „Das werde ich mir noch mal von Namen anschauen“ <span class="fs">(15:06)</span> – vermutlich „von Nahem“.</p></div>
+
+<div class="card"><h3>💡 17 · Zusammenfassung: vom PNG aufs Druckbett <span class="fs">(15:36–17:08)</span></h3>
+<p>Es war ein flaches PNG – und vom Chat bis aufs Druckbett habe alles sehr gut funktioniert. Das sage er nicht wegen des „ein paar Monate“ kostenlosen Zugangs, sondern aus Überzeugung. Der Kunde war sehr zufrieden, sogar mit dem schlechten, kleineren Druck; einziger Wunsch: größer. Er will weitere Köpfe drucken und das Modell eventuell veröffentlichen. Das Netz lasse sich problemlos skalieren. Ohne KI-Werkzeuge hätte er es wohl nicht in dieser Qualität geschafft.</p>
+<p>💬 <q>vom Chat über den Slicer bis aufs Druckbett, der komplette Workflow</q> <span class="fs">(15:36)</span></p>
+<p>📌</p><ul><li><span class="tag t-f">Fakt</span>Plattform einige Monate kostenlos erhalten <span class="fs">(15:36)</span>.</li><li><span class="tag t-f">Fakt</span>Kunde zufrieden, Wunsch: größer <span class="fs">(16:06)</span>.</li><li><span class="tag t-m">Meinung</span>Netz problemlos skalierbar <span class="fs">(16:38)</span>.</li><li><span class="tag t-bsp">Beispiel</span>Veröffentlichung des Modells möglich <span class="fs">(16:06–16:38)</span>.</li></ul>
+<p class="q">❓ „ich kann nicht <b>scalen</b>“ <span class="fs">(15:36)</span> – im Zusammenhang („Das war ein PNG“) vermutlich „sculpten“ (modellieren/bildhauern), passend zu 02:04. Bei 16:38 („ohne Probleme scalen“) ist dagegen wohl „skalieren“ gemeint.</p>
+<p class="e">📚 Lizenz-Hinweis aus Druckwerks Regeln: Meshy-Modelle aus dem Gratis-Plan sind laut Meshy öffentlich unter CC BY 4.0; mit Bezahl-Plan gilt eine private Lizenz. Für Toms öffentliches Repo heißt das: Herkunft und Lizenz im BERICHT.md nennen.</p></div>
+
+<div class="card"><h3>⚖️ 18 · „Ehrliches Fazit“ <span class="fs">(17:08–17:41)</span></h3>
+<p>Für Menschen ohne 3D-Modellierung „ein absoluter Gamechanger“. Der KI-Chat beeindrucke in der kreativen Phase; Export und Feinarbeit brauchen die normalen Werkzeuge. Netzqualität deutlich besser als bei Vorgängern; für Druckerbesitzer besonders der Mehrfarbdruck interessant. Kein Ersatz für CAD bei präzisen Teilen; perfekt für organische Modelle, Deko-Figuren, Prototypen.</p>
+<p>💬 <q>es ist kein Ersatz für eine professionelle CAD-Software für präzise Teile</q> <span class="fs">(17:41)</span></p>
+<p>📌</p><ul><li><span class="tag t-m">Meinung</span>Chat stark in der kreativen Phase <span class="fs">(17:08)</span>.</li><li><span class="tag t-m">Meinung</span>Export/Feinarbeit mit den normalen Werkzeugen <span class="fs">(17:08)</span>.</li><li><span class="tag t-m">Meinung</span>Kein CAD-Ersatz; gut für Organisches, Deko, Prototypen <span class="fs">(17:41)</span>.</li></ul>
+<p class="q">❓ Die Untertitel schreiben hier „<b>Meshmixer 6</b>“ und „Meshmixer“ <span class="fs">(17:08–17:41)</span>. Gemeint ist im Zusammenhang Meshy (bzw. Meshy 6), vermutlich ein Untertitel-Fehler. 📚 Meshmixer ist ein eigenständiges, älteres Netz-Bearbeitungsprogramm von Autodesk.</p></div>
+
+<div class="card"><h3>🔗 19 · Link, Rabatt, Gratis-Version, Abschied <span class="fs">(17:41–19:14)</span></h3>
+<p>Link und Affiliate-Link (50 % Rabatt, Code „DDSW“) in der Beschreibung; „glaube ich“ auch ein paar Tage eine kostenlose Version. Ein nächstes Video soll Stützen und Filament-Kalibrierung behandeln. Bitte um Abo und Kommentare.</p>
+<p>📌</p><ul><li><span class="tag t-f">Fakt</span>Affiliate-Link, Code DDSW, 50 % Rabatt <span class="fs">(17:41–18:11)</span>.</li><li><span class="tag t-b">Behauptung</span>Kostenlose Version für ein paar Tage – ausdrücklich unsicher <span class="fs">(18:11)</span>.</li><li><span class="tag t-f">Fakt</span>Folgevideo zu Stützen und Kalibrierung angekündigt <span class="fs">(18:43)</span>.</li></ul>
+<p class="e">📚 Laut Meshy gibt es einen dauerhaften Gratis-Plan mit 100 Credits im Monat (Stand der Doku); Details im Abgleich. Ob sich die „paar Tage“ auf eine Probezeit für Bezahlfunktionen beziehen, ist nicht eindeutig zuzuordnen ❓.</p></div>
+
+<h2 id="e">E · 📅 Ablauf und Zeitleiste</h2>
+<div class="card"><p><b>Arbeitsschritte im Video</b></p><ol>
+<li>PNG hochladen, Wunsch in einem Satz an den 3D Agent <span class="fs">(03:05)</span></li>
+<li>Rückfragen beantworten: voller Kopf, schwarz + gold <span class="fs">(03:36–04:09)</span></li>
+<li>Konzeptbild prüfen, dann „3D-Modell machen“ <span class="fs">(04:09–05:12)</span></li>
+<li>Druck vorbereiten / retexturieren lassen <span class="fs">(05:12–05:43)</span></li>
+<li>Agent verlassen → Modell → Print → Multicolor Print <span class="fs">(06:13–06:43)</span></li>
+<li>Processed-Ansicht, Color Count 4 → 2, Farben von Hand <span class="fs">(07:15–08:49)</span></li>
+<li>3MF herunterladen (Größe optional vorher) <span class="fs">(08:49–09:21)</span></li>
+<li>OrcaSlicer: skalieren, ggf. nachmalen, Stützen <span class="fs">(09:52–11:24)</span></li>
+<li>Druck auf dem U1; größere Version für den Prusa XL vorbereitet <span class="fs">(10:23, 12:26)</span></li></ol></div>
+<div class="card"><p><b>📚 Eckdaten (nicht aus dem Video)</b></p><ul>
+<li>16.10.2025 – Meshy 6 Preview angekündigt (Pressemitteilung)</li>
+<li>17.03.2026 – Multi-Color Printing (Meshy 6) auf meshy.ai, MakerLab-Anbindung</li>
+<li>20.05.2026 – Meshy in Flashforges Flash Studio, ausgerichtet auf den Creator 5</li>
+<li>04.06.2026 – 3D Agent (Beta) für alle Nutzer</li>
+<li>10.08.2026 – Meshy 7; heute führt die Doku „Meshy 7.1“ als Spitzenmodell</li>
+<li>23.09.2026 – Test von 3Dnatives mit Druckschwerpunkt</li></ul></div>
+
+<h2 id="f">F · 👤 Personen · 🗺️ Orte · 📖 Begriffe</h2>
+<div class="card"><p><b>👤 Personen</b></p><ul>
+<li><b>Sprecher</b> → Betreiber von „Der Druckt Schon Wieder“ → zeigt seinen Ablauf → durchgehend</li>
+<li><b>Kunde</b> → Firma mit PNG-Logo, will einen Kopf für eine Schaufensterbüste → begeistert, möchte ihn größer → <span class="fs">(00:30, 10:23, 16:06)</span></li>
+<li><b>Meshy AI</b> (Firma) → stellt den Zugang kostenlos → <span class="fs">(00:00, 15:36)</span></li></ul>
+<p><b>🗺️ Orte</b> – Schaufenster/Schaufensterpuppe als Einsatzort <span class="fs">(00:30, 03:05)</span>. Digital: meshy.ai, Thingiverse <span class="fs">(01:01)</span>, OrcaSlicer.</p></div>
+<div class="card"><p><b>📖 Begriffe</b></p><ul>
+<li><b>3D Agent</b> → Chat-Assistent in Meshy, führt von der Idee zum Modell → <span class="fs">(01:01, 02:35)</span></li>
+<li><b>Konzeptbild / Render</b> → 2D-Vorschau vor dem 3D-Modell → <span class="fs">(04:09)</span></li>
+<li><b>Retexturieren</b> → Oberfläche neu einfärben → <span class="fs">(05:12)</span></li>
+<li><b>Multicolor Print</b> → Meshy-Werkzeug, das Texturfarben in wenige Druckfarben umsetzt → <span class="fs">(06:43)</span></li>
+<li><b>Original / Processed</b> → feine Textur vs. reduzierte Druckfarben → <span class="fs">(06:43–07:15)</span></li>
+<li><b>Color Count</b> → Zahl der Druckfarben, hier 4 → 2 → <span class="fs">(07:46)</span></li>
+<li><b>3MF</b> → Projektdatei, hier mit eingebetteten Farben → <span class="fs">(08:49, 10:54)</span></li>
+<li><b>Resize / skalieren</b> → Größe ändern → <span class="fs">(09:21, 16:38)</span></li>
+<li><b>Color Painting</b> → Malwerkzeug im Slicer → <span class="fs">(10:54)</span></li>
+<li><b>Meshy 6</b> → Modellgeneration von Meshy → <span class="fs">(11:56)</span></li>
+<li><b>Enhanced Hard Surface</b> ❓ → für technische, kantige Teile → <span class="fs">(12:58)</span></li>
+<li><b>Stringing</b> → Fadenbildung → <span class="fs">(14:01)</span></li>
+<li><b>Tree Supports</b> → Baumstützen → <span class="fs">(14:01)</span></li>
+<li><b>Snapmaker U1, Prusa XL</b> → Drucker des Sprechers → <span class="fs">(09:52, 10:23)</span></li>
+<li><b>Blender, ZBrush</b> → 3D-Programme, die er nicht beherrscht → <span class="fs">(00:30–01:01)</span></li>
+<li><b>„Meshmixer (6)“</b> ❓ → vermutlich Meshy (Untertitel) → <span class="fs">(17:08–17:41)</span></li>
+<li><b>Affiliate-Link, Code DDSW</b> → Rabatt-Link des Kanals → <span class="fs">(17:41–18:11)</span></li></ul></div>
+
+<h2 id="g">G · ⚖️ Abgleich (neutral)</h2>
+<div class="card"><p class="small">Stand heute = geprüfte Angaben bis 15.11.2026. Herstellerangaben sind Eigenaussagen.</p>
+<table class="stapel"><thead><tr><th>Aussage im Video</th><th>Stand heute / Herstellerangaben 📚</th><th>Quelle</th></tr></thead><tbody>
+<tr><td data-l="Aussage im Video">3D Agent: Idee per Text, führt durch den Prozess <span class="fs">(02:35)</span></td><td data-l="Stand heute">Chat-Agent: Ideen, Rückfragen, Konzeptbilder (auch Varianten), gewählte Konzepte → 3D; fragt standardmäßig vor Credit-Verbrauch. Beta für alle seit 04.06.2026, laut Mitteilung auch für den Weg in den 3D-Druck.</td><td data-l="Quelle"><a href="https://docs.meshy.ai/uk/webapp/3d-agent" target="_blank" rel="noopener">Meshy-Doku: 3D Agent</a> · <a href="https://www.prnewswire.com/de/news-releases/meshy-brings-ai-agents-to-3d-creation-meshy-3d-agent-beta-launches-302791235.html" target="_blank" rel="noopener">PR Newswire (04.06.2026)</a></td></tr>
+<tr><td data-l="Aussage im Video">Meshy 6 hat bei der Netzqualität echte Fortschritte gemacht <span class="fs">(11:56)</span></td><td data-l="Stand heute">Meshy 6 Preview am 16.10.2025, beworben mit Detail „auf Bildhauer-Niveau“ und schärferen Kanten. Seit 10.08.2026 Meshy 7; heute ist „Meshy 7.1“ das Spitzenmodell, Meshy 6 bleibt wählbar.</td><td data-l="Quelle"><a href="https://www.newsfilecorp.com/release/270549/Meshy-Launches-Meshy-6-Preview-A-SculptingLevel-AI-3D-Modeling-Platform" target="_blank" rel="noopener">Newsfile (16.10.2025)</a> · <a href="https://technode.global/prnasia/meshy-releases-meshy-7-a-new-foundation-model-that-sets-a-new-bar-for-image-3d-alignment/" target="_blank" rel="noopener">Meshy 7 (12.08.2026)</a> · <a href="https://docs.meshy.ai/en/webapp/image-to-3d" target="_blank" rel="noopener">Meshy-Doku: Image to 3D</a></td></tr>
+<tr><td data-l="Aussage im Video">Multicolor Print, Color Count stand auf 4, reduziert auf 2 <span class="fs">(06:43–07:46)</span></td><td data-l="Stand heute">1 bis 16 Farben, 4 als Empfehlung bzw. Standard; Meshy erkennt die dominanten Farben selbst. Über die Schnittstelle zusätzlich Stil „realistic“/„cartoon“ und Druckermarke (u. a. flashforge, snapmaker, prusa, bambu).</td><td data-l="Quelle"><a href="https://help.meshy.ai/en/articles/15029992-how-to-get-multi-color-prints-with-meshy" target="_blank" rel="noopener">Meshy-Hilfe: Multi-Color</a> · <a href="https://docs.meshy.ai/en/api/multi-color-print" target="_blank" rel="noopener">Meshy-API: Multi-Color Print</a></td></tr>
+<tr><td data-l="Aussage im Video">Download als 3MF, Farben eingebettet, im Slicer nachmalbar <span class="fs">(08:49, 10:54)</span></td><td data-l="Stand heute">Ergebnis ist eine mehrfarbige 3MF, laut API mit Slicer-Voreinstellung der gewählten Marke (Standarddrucker, 0,4-mm-Düse). Laut 3Dnatives enthält nur dieser Weg Farbdaten – normale 3MF-Exporte nach dem Texturieren nicht. Erschienen am 17.03.2026 (erst für Bambu AMS beschrieben).</td><td data-l="Quelle"><a href="https://docs.meshy.ai/en/api/multi-color-print" target="_blank" rel="noopener">Meshy-API</a> · <a href="https://www.3dnatives.com/en/3dnatives-lab-meshy-ai-3d-model-generator-23092026/" target="_blank" rel="noopener">3Dnatives Lab (23.09.2026)</a> · <a href="https://technode.global/prnasia/how-to-turn-any-image-into-a-full-color-3d-print-in-one-click-meshys-multi-color-printing-powered-by-meshy-6-is-now-live-on-makerworld/" target="_blank" rel="noopener">Mitteilung 17.03.2026</a></td></tr>
+<tr><td data-l="Aussage im Video">Größe vor dem Download einstellbar; Skalieren danach kein Problem <span class="fs">(09:21, 16:38)</span></td><td data-l="Stand heute">„Resize“ in den Download-Einstellungen (Höhe, Einheit), nur mit Bezahl-Plan. Ohne Angabe sind 3MF-Exporte 50 mm hoch; 3Dnatives betont, dass Meshy-Modelle keine Maße kennen: <q>nothing about a Meshy model is a measurement</q>.</td><td data-l="Quelle"><a href="https://docs.meshy.ai/en/webapp/guides/use-cases/3d-printing" target="_blank" rel="noopener">Meshy-Doku: 3D Printing</a> · <a href="https://www.3dnatives.com/en/3dnatives-lab-meshy-ai-3d-model-generator-23092026/" target="_blank" rel="noopener">3Dnatives Lab</a></td></tr>
+<tr><td data-l="Aussage im Video">Ausdruck auf dem Snapmaker U1 in Maximalgröße, größer auf dem Prusa XL <span class="fs">(09:52–10:23)</span></td><td data-l="Stand heute">Snapmaker U1: 270 × 270 × 270 mm, vier Köpfe. Prusa: XL+ 360 × 360 × 360 mm, 1–5 Köpfe (das Maß des älteren XL war auf der abgerufenen Seite nicht separat genannt ❓).</td><td data-l="Quelle"><a href="https://snapmaker.com/snapmaker-u1" target="_blank" rel="noopener">Snapmaker U1</a> · <a href="https://www.prusa3d.com/product/original-prusa-xl-2/" target="_blank" rel="noopener">Prusa XL+</a></td></tr>
+<tr><td data-l="Aussage im Video">„Enhanced Hard Surface“ für Handyständer, Haken <span class="fs">(12:58)</span></td><td data-l="Stand heute">In der aktuellen Doku zu Bild → 3D keine Option dieses Namens gefunden – nicht eindeutig zuzuordnen ❓. Meshy kündigte zu Meshy 6 „schärfere Kanten, sauberere Strukturen“ für technische Objekte an; 3Dnatives hat einen Hard-Surface-Modus nicht getestet.</td><td data-l="Quelle"><a href="https://docs.meshy.ai/en/webapp/image-to-3d" target="_blank" rel="noopener">Meshy-Doku</a> · <a href="https://www.newsfilecorp.com/release/270549/Meshy-Launches-Meshy-6-Preview-A-SculptingLevel-AI-3D-Modeling-Platform" target="_blank" rel="noopener">Newsfile</a></td></tr>
+<tr><td data-l="Aussage im Video">„ein paar Tage … eine kostenlose Version“; Affiliate 50 % mit Code <span class="fs">(18:11)</span></td><td data-l="Stand heute">Gratis-Plan mit 100 Credits pro Monat, Modelle dort öffentlich unter CC BY 4.0. Pro 20 $/Monat (laut 3Dnatives 1.000 Credits, ohne Übertrag). Bild → 3D 20–25 Credits; Multi-Color 10 Credits laut 3Dnatives. Download von Meshy-7-Modellen laut Mitteilung erst ab Pro; Resize und „Make Printable“ für eigene Modelle nur bezahlt. Planbezeichnungen in Hilfe und Doku uneinheitlich ❓; Rabatt-Code nicht geprüft.</td><td data-l="Quelle"><a href="https://docs.meshy.ai/en/webapp/pricing" target="_blank" rel="noopener">Meshy-Doku: Preise</a> · <a href="https://help.meshy.ai/en/articles/12062933-meshy-pricing-plans-free-pro-studio-enterprise" target="_blank" rel="noopener">Meshy-Hilfe: Pläne</a> · <a href="https://www.3dnatives.com/en/3dnatives-lab-meshy-ai-3d-model-generator-23092026/" target="_blank" rel="noopener">3Dnatives Lab</a></td></tr>
+<tr><td data-l="Aussage im Video">Kein Ersatz für CAD bei präzisen Teilen <span class="fs">(17:41)</span></td><td data-l="Stand heute">Meshy rät, vor dem Druck Geometrie, Maßstab und Wandstärke zu prüfen. 3Dnatives: erfundene Rückseiten, kleine Schrift unlesbar, bis ca. 2,97 Mio. Dreiecke, teils viele Einzelkörper.</td><td data-l="Quelle"><a href="https://docs.meshy.ai/uk/webapp/3d-agent" target="_blank" rel="noopener">Meshy-Doku</a> · <a href="https://www.3dnatives.com/en/3dnatives-lab-meshy-ai-3d-model-generator-23092026/" target="_blank" rel="noopener">3Dnatives Lab</a></td></tr>
+<tr><td data-l="Aussage im Video">(Flashforge – nicht im Video)</td><td data-l="Stand heute">Meshy ist seit 20.05.2026 in Flashforges Flash Studio eingebunden, beschrieben für den Creator 5 (vier Köpfe, 256 mm Bauraum). Aus der Meshy-Web-App gibt es „Send to Printer → Flash Studio“ (überträgt eine 3MF, braucht Pro). Flashforge wirbt mit einem 1-$-Mitgliedschaftsangebot für Flash-Studio-Nutzer.</td><td data-l="Quelle"><a href="https://www.voxelmatters.com/flashforge-integrates-meshy-ai-into-flash-studio-enabling-image-to-3d-to-multi-color-print-in-one-click/" target="_blank" rel="noopener">VoxelMatters (20.05.2026)</a> · <a href="https://docs.meshy.ai/th/webapp/3d-printing-platforms/flash-studio" target="_blank" rel="noopener">Meshy-Doku: Flash Studio</a> · <a href="https://www.flashforge.com/blogs/news/flashforge-meshy-ai" target="_blank" rel="noopener">Flashforge-Blog</a></td></tr>
+</tbody></table></div>
+<div class="card"><p><b>🧩 Spannungen innerhalb des Videos</b></p><ul>
+<li>„Löwenkopf“ <span class="fs">(00:30)</span> gegenüber „Tiger-Logo“, „Gesicht des Tigers“ <span class="fs">(03:36, 10:23)</span>; dazu „Mähne“ <span class="fs">(04:40)</span> ❓.</li>
+<li>„Faktor 4 oder sowas“ <span class="fs">(12:26)</span> gegenüber seinen Zahlen ca. 7 → 22–25 cm (rechnerisch gut 3) – beides von ihm als ungefähr markiert.</li>
+<li>„Zugang kostenlos“ <span class="fs">(00:00)</span>, konkretisiert als „ein paar Monate“ <span class="fs">(15:36)</span>; Gratis-Version „ein paar Tage“ <span class="fs">(18:11)</span> – bezieht sich wohl auf das Angebot für Zuschauer.</li>
+<li>Hard Surface „sehr sehr gut“ <span class="fs">(12:58)</span>, zugleich nicht selbst ausprobiert <span class="fs">(13:29, 17:41)</span>.</li>
+<li>Name im Fazit „Meshmixer“ statt Meshy <span class="fs">(17:08–17:41)</span> ❓.</li></ul></div>
+
+<h2 id="h">H · 💡 Erkenntnisse, offene Fragen – und was das für Druckwerk heißt</h2>
+<div class="card"><p><b>Was ich mitnehme</b></p><ul>
+<li>Der Chat-Weg (Rückfragen → Konzeptbild → 3D) macht aus einem Logo ein Modell, ohne dass man selbst modelliert.</li>
+<li>Die Druckfarben entstehen erst in „Multicolor Print“ – dort Anzahl und Töne festlegen, nicht im Chat.</li>
+<li>Größe gleich mitdenken: Der Kunde wollte am Ende größer, als der Drucker zuließ.</li>
+<li>Die sichtbaren Druckfehler (Fäden, umgerissene Stützen) kamen laut Sprecher vom Drucken, nicht vom Modell.</li></ul></div>
+<div class="card"><p><b>Einordnung für Druckwerk</b> (Creator 5 Pro, 4 Köpfe, 256 mm Bauraum)</p>
+<p class="small">Grundlage: CLAUDE.md „Figuren und freie Formen über KI“, <code>werkzeug/KI_MODELLE.md</code>, <code>wissen/workflow.json</code>. Alles hier ist <b>Überlegung</b> – mit einer echten Meshy-Datei ist in Druckwerk noch nichts getestet.</p><ul>
+<li><b>(a) Bemalte 3MF → <code>druck.py --bemalt</code>:</b> Meshy liefert genau die Art Datei, die Druckwerk schon slicen kann (ein Körper, Farbe je Dreieck). Bisher nur mit Druckwerks eigenen Dateien aus <code>textur_farben.py</code> geprüft. <b>Ungetestet:</b> ob Druckwerks Lesefunktion Meshys Farbcodierung erkennt – sie sucht das Attribut <code>paint_color</code> in der ersten Modell-Datei der 3MF. Nutzt Meshy ein anderes Farbformat oder verteilt das Netz auf mehrere Dateien, käme alles als Kopf 1 an. Erste Meshy-3MF daher erst untersuchen (Farbattribute, Zahl der Körper), dann slicen.</li>
+<li><b>(b) Farbanzahl 2–4 = vier Köpfe:</b> In Meshy den Color Count auf höchstens 4 stellen (Standard ist ohnehin 4). Bei Toms Lieblingsfarben schwarz/gold/rot/weiß passt das direkt; Gold dann als <code>PLA-SILK</code> über <code>--materialien</code>. Alternativ wie bisher: GLB laden → <code>textur_farben.py</code> zerlegt selbst in 4 Köpfe.</li>
+<li><b>(c) Zielgröße:</b> Im Video ca. 7 → 22–25 cm. Der Creator-Bauraum (256 mm) ist etwas kleiner als der des U1 (270 mm) – ein Kopf von 25 cm ginge nur knapp und nur, wenn alle drei Maße passen. Meshy exportiert ohne Angabe 50 mm hoch; „Resize“ kostet einen Bezahl-Plan. In Druckwerk lässt sich die Größe auch nach dem Download setzen (bei GLB <code>ki_rohling.py --ziel-mm</code>; bei bemalter 3MF ist Skalieren vor <code>--bemalt</code> <b>noch nicht eingebaut</b>). Passt zur Bastlwastl-Lehre „Zielgröße immer nennen“.</li>
+<li><b>(d) Stützen:</b> Im Video rissen Baumstützen um. Druckwerk nutzt für Figuren schon <code>--stuetzen auto</code> (Baumstützen gaben bei feinen Reliefs Slicer-Fehler). Für hohe Köpfe: Brim an, bei Bedarf dichtere Stützen; das Folgevideo des Kanals zu stabilen Stützen wäre eine Quelle.</li>
+<li><b>(e) Stringing/Kalibrierung:</b> Passt zu Druckwerks Kalibrier-Set (<code>modelle/kalibrier/</code>): erst Werte am Creator bestätigen, dann große Figuren – nicht erprobt.</li>
+<li><b>(f) Chat-Ablauf als Vorbild:</b> Der Agent fragt vor dem Bauen nach Form (voller Kopf?) und Farben, zeigt ein Konzeptbild, baut erst nach „ja“ und fragt vor Kosten. Das entspricht Druckwerks „Erst Bild, dann Druckdatei“ und dem geführten Auftrag/KI-Weg (<code>kiweg.js</code>, Schritte 1–4). Denkbar: im geführten Weg „Aus Foto per KI“ dieselben Rückfragen (voll/halb, Aufstellung, 2–4 Farben, Endgröße) fest einbauen.</li>
+<li><b>(g) Kein CAD-Ersatz:</b> Bestätigt „KI-Modelle sind Deko“; Ständer, Haken usw. weiter per OpenSCAD/build123d.</li>
+<li><b>Neuer Weg (nicht im Video):</b> Flash Studio hat Meshy eingebaut, ausgerichtet auf den Creator 5; aus Meshy geht „Send to Printer → Flash Studio“ (Pro-Plan). Das wäre ein Weg ganz ohne Druckwerk – ob er mit dem Creator <b>5 Pro</b> genauso läuft, ist nicht belegt ❓.</li>
+<li><b>Lizenz:</b> Gratis-Modelle sind öffentlich (CC BY 4.0) → dürften mit Namensnennung ins Repo; mit Bezahl-Plan private Lizenz → nach Druckwerk-Regel lieber nicht einchecken, nur .gcode schicken.</li></ul></div>
+<div class="card"><p><b>Offene Fragen</b></p><ul>
+<li>Welches Farbformat hat Meshys Multi-Color-3MF genau – liest <code>druck.py --bemalt</code> es ohne Änderung?</li>
+<li>Gilt die Flash-Studio-Anbindung auch für den Creator 5 Pro, und braucht sie Pro-Plan oder reicht das 1-$-Angebot?</li>
+<li>Was genau ist „Enhanced Hard Surface“ (Option, Modell, Werbebegriff)?</li>
+<li>Wie verhält sich ein 22–25-cm-Kopf mit Auto-Stützen am Creator (Zeit, Kopfwechsel, Standfestigkeit)?</li>
+<li>Was ist mit „Löwe“ vs. „Tiger“ gemeint – und gibt es das angekündigte Folgevideo zu Stützen und Stringing schon?</li></ul>
+<p class="small">Suchbegriffe: „Meshy multi-color 3MF paint_color“, „Meshy Flash Studio Creator 5 Pro“, „Meshy hard surface mode“, „Der Druckt Schon Wieder Stützen Stringing“.</p></div>
+
+<h2 id="i">I · 🗂️ Ein-Seiten-Zusammenfassung</h2>
+<div class="card">
+<p><b>Worum es geht:</b> Ein Maker ohne Modellier-Kenntnisse macht für einen Kunden aus einem PNG-Logo einen 3D-Kopf für eine Schaufensterbüste – mit dem Chat-Agenten von Meshy AI. Gekennzeichnet als Werbung (Zugang kostenlos, Affiliate-Code).</p>
+<p><b>So geht’s laut Video:</b> PNG + ein Satz → Rückfragen (voller Kopf, schwarz-gold) → Konzeptbild → „mach das 3D-Modell“ → Agent verlassen → Print → <b>Multicolor Print</b>, Color Count 4 → 2, Farbton von Hand → <b>3MF</b> → OrcaSlicer, skalieren, ggf. nachmalen → Druck auf dem Snapmaker U1.</p>
+<p><b>Ergebnis:</b> ca. 7 cm Ursprung → ca. 22–25 cm Druck („ich glaube“); Kunde begeistert, will ihn größer → Prusa XL. Erster Druck mit Stringing und umgerissenen Baumstützen – laut ihm Kalibrierung, nicht Meshy.</p>
+<p><b>Fazit des Sprechers:</b> stark für die kreative Phase, organische Modelle, Deko, Prototypen; für Export/Feinarbeit die normalen Werkzeuge; <b>kein CAD-Ersatz</b> für präzise Teile.</p>
+<p><b>Stand heute:</b> 3D Agent seit 04.06.2026; Multi-Color 1–16 Farben, Standard 4, Ausgabe 3MF; Gratis-Plan 100 Credits/Monat (CC BY 4.0), Pro 20 $/Monat; Resize nur bezahlt; Meshy 7.1 ist inzwischen das Spitzenmodell; Meshy in Flash Studio für den Creator 5.</p>
+<p><b>Für Druckwerk:</b> Meshy-3MF passt grundsätzlich zu <code>--bemalt</code> und vier Köpfen – mit echter Meshy-Datei <b>ungetestet</b>.</p></div>
+
+<h2 id="q">Quellen</h2>
+<div class="card small"><ul>
+<li>Video: <a href="https://www.youtube.com/watch?v=ymHJ7rUpysE" target="_blank" rel="noopener">Der Druckt Schon Wieder – Meshy AI: Vom Bild zum fertigen 3D-Druck – kompletter Workflow mit dem 3D Agent</a> (automatische Untertitel, abgerufen 15.11.2026)</li>
+<li><a href="https://docs.meshy.ai/uk/webapp/3d-agent" target="_blank" rel="noopener">Meshy-Doku: 3D Agent</a> · <a href="https://www.prnewswire.com/de/news-releases/meshy-brings-ai-agents-to-3d-creation-meshy-3d-agent-beta-launches-302791235.html" target="_blank" rel="noopener">PR Newswire: 3D Agent Beta (04.06.2026)</a></li>
+<li><a href="https://help.meshy.ai/en/articles/15029992-how-to-get-multi-color-prints-with-meshy" target="_blank" rel="noopener">Meshy-Hilfe: Multi-Color Prints</a> · <a href="https://docs.meshy.ai/en/api/multi-color-print" target="_blank" rel="noopener">Meshy-API: Multi-Color Print</a></li>
+<li><a href="https://docs.meshy.ai/en/webapp/guides/use-cases/3d-printing" target="_blank" rel="noopener">Meshy-Doku: 3D Printing Workflow</a> · <a href="https://docs.meshy.ai/en/webapp/image-to-3d" target="_blank" rel="noopener">Meshy-Doku: Image to 3D</a></li>
+<li><a href="https://docs.meshy.ai/en/webapp/pricing" target="_blank" rel="noopener">Meshy-Doku: Preise und Credits</a> · <a href="https://help.meshy.ai/en/articles/12062933-meshy-pricing-plans-free-pro-studio-enterprise" target="_blank" rel="noopener">Meshy-Hilfe: Pläne</a></li>
+<li><a href="https://www.newsfilecorp.com/release/270549/Meshy-Launches-Meshy-6-Preview-A-SculptingLevel-AI-3D-Modeling-Platform" target="_blank" rel="noopener">Newsfile: Meshy 6 Preview (16.10.2025)</a> · <a href="https://technode.global/prnasia/meshy-releases-meshy-7-a-new-foundation-model-that-sets-a-new-bar-for-image-3d-alignment/" target="_blank" rel="noopener">Meshy 7 (12.08.2026)</a></li>
+<li><a href="https://technode.global/prnasia/how-to-turn-any-image-into-a-full-color-3d-print-in-one-click-meshys-multi-color-printing-powered-by-meshy-6-is-now-live-on-makerworld/" target="_blank" rel="noopener">Mitteilung: Multi-Color Printing mit Meshy 6 (17.03.2026)</a></li>
+<li><a href="https://www.3dnatives.com/en/3dnatives-lab-meshy-ai-3d-model-generator-23092026/" target="_blank" rel="noopener">3Dnatives Lab: Meshy für den 3D-Druck getestet (23.09.2026)</a></li>
+<li><a href="https://www.voxelmatters.com/flashforge-integrates-meshy-ai-into-flash-studio-enabling-image-to-3d-to-multi-color-print-in-one-click/" target="_blank" rel="noopener">VoxelMatters: Meshy in Flash Studio (20.05.2026)</a> · <a href="https://docs.meshy.ai/th/webapp/3d-printing-platforms/flash-studio" target="_blank" rel="noopener">Meshy-Doku: Flash Studio</a> · <a href="https://www.flashforge.com/blogs/news/flashforge-meshy-ai" target="_blank" rel="noopener">Flashforge-Blog: Flashforge × Meshy</a></li>
+<li><a href="https://snapmaker.com/snapmaker-u1" target="_blank" rel="noopener">Snapmaker U1</a> · <a href="https://www.prusa3d.com/product/original-prusa-xl-2/" target="_blank" rel="noopener">Prusa XL+</a></li></ul>
+<p>Hörfehler-Hinweise (❓) sind Vermutungen aus dem Zusammenhang.</p></div>
+<p class="small" style="text-align:center;margin-top:16px"><a href="index.html">‹ Alle ausgewerteten Videos</a> · <a href="../index.html">Druckwerk</a></p>
+</main>
+</body>
+</html>

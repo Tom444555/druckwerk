@@ -177,6 +177,9 @@ function vier(){
       <li>Drucker mit 0,4-mm-Düse wählen, <b>STL</b> herunterladen (3MF und GLB gehen auch).</li></ol>
     <div style="padding:0 16px 14px"><a class="btn grey" href="${MAKERLAB}" target="_blank" rel="noopener">MakerLab öffnen</a>
       <label class="btn" style="margin-top:10px">Heruntergeladene STL importieren<input type="file" id="kwImp" accept=".stl,.3mf,.obj" multiple hidden></label></div></div>
+  <div class="card" style="margin-top:12px"><div class="row oben"><div class="grow"><b>C · Bei Claude im Chat (kostenlos, grob)</b>
+      <div class="small">Claude rechnet das Bild selbst um – ohne Dienst und ohne Schlüssel, in etwa 2 Minuten. Deutlich gröber als A und B: gut zum Ausprobieren und für einfache, kompakte Figuren; dünne Teile gehen verloren.</div></div></div>
+    <div style="padding:0 16px 14px"><a class="btn grey" target="_blank" rel="noopener" href="https://claude.ai/new?q=${encodeURIComponent(`druckwerk: Bitte das angehängte Bild hier im Chat mit werkzeug/ki_lokal.py in ein 3D-Modell umwandeln (Zielhöhe ${mm} mm). Erst die Vorschau zeigen, noch nicht slicen.`)}">In Claude öffnen und Bild anhängen</a></div></div>
   <p class="hint">KI-Modelle sind nicht maßhaltig – für Deko und Figuren gedacht. Hohle Dinge (Vase, Helm, Maske) gelingen laut Video kaum (02:31).</p>
   ${S.modellId ? `<div class="card" style="margin-top:12px"><div class="row"><span class="haken on" aria-hidden="true">✓</span><div class="grow">Modell ist in „Meine Modelle“</div></div></div>` : ""}`;
 }

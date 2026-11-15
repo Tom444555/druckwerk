@@ -59,7 +59,7 @@ export async function start(app, ctx){
     <li>Im Auftrag „.gcode laden“ → auf den USB-Stick → am Drucker starten.</li>
     <li>Danach „Als gedruckt markieren“ und das <b>Ergebnis eintragen</b>.</li></ol>
     <div class="row chev" data-ziel="workflow" style="cursor:pointer" role="button" tabindex="0"><div class="grow">Von der Idee zum Modell<div class="small">Alle Wege, Werkzeuge und Vorschläge</div></div></div>
-    <a class="row chev" href="videos/index.html" style="color:inherit;text-decoration:none"><div class="grow">Videos ausgewertet<div class="small">STL mit KI · Foto in 3D drucken (Bastlwastl)</div></div></a></div>
+    <a class="row chev" href="videos/index.html" style="color:inherit;text-decoration:none"><div class="grow">Videos ausgewertet<div class="small">STL mit KI · Foto in 3D · Technische Filamente · Meshy</div></div></a></div>
   <h2>Gerät &amp; Daten</h2>
   <div class="card">
     <div class="row chev" id="stSich" style="cursor:pointer" role="button" tabindex="0"><div class="grow">Sicherung erstellen<div class="small">Aufträge, Spulen, Tagebuch mit Fotos, eigene Modelle – als eine Datei${ls("druckwerk_gesichert", "") ? ` · zuletzt am ${C.deDatum(ls("druckwerk_gesichert", ""))}` : ""}</div></div></div>

@@ -302,7 +302,7 @@
     "steif"
    ],
    "wofuer": "Maßhaltige Außenteile, Halterungen am Fahrzeug, Träger.",
-   "achtung": "Flashforge empfiehlt die 0,6-mm-Düse. Faserfilament ist spröde: mit großem Bogen und möglichst von oben zuführen. Klebestift, Kammer zu, lüften."
+   "achtung": "Flashforge empfiehlt die 0,6-mm-Düse. Faserfilament ist spröde: mit großem Bogen und möglichst von oben zuführen. Klebestift, Kammer zu, lüften. Bericht eines Testers (My Engines DE, Leihgerät): ASA-CF lief auf dem Creator 5 Pro problemlos."
   },
   {
    "id": "pa-cf",
@@ -330,7 +330,7 @@
     "hitze"
    ],
    "wofuer": "Tragende Halter, Werkzeug, Zahnräder, Teile mit Schlag- und Dauerbelastung.",
-   "achtung": "Nimmt sehr schnell Wasser auf: frisch trocknen und aus der Trockenbox drucken, sonst Blasen und schwache Schichten. 0,6-mm-Düse empfohlen, Klebestift nötig. Langsam (Durchfluss 6 mm³/s)."
+   "achtung": "Nimmt sehr schnell Wasser auf: frisch trocknen und aus der Trockenbox drucken, sonst Blasen und schwache Schichten. 0,6-mm-Düse empfohlen, Klebestift nötig. Langsam (Durchfluss 6 mm³/s). Bericht eines Testers (My Engines DE, Leihgerät): PA12-CF verzog sich mit beheizter Kammer nur minimal; Stützen aus Faser-Material waren schwer zu lösen – stützfrei konstruieren oder Stützmaterial in einen eigenen Kopf legen."
   },
   {
    "id": "pet-cf",
@@ -378,7 +378,7 @@
     "stabil"
    ],
    "wofuer": "Wenn ein bestimmtes Datenblatt verlangt ist. Für den Alltag reichen ASA und PA-CF fast immer.",
-   "achtung": "Flashforge führt diese Gruppe als „machbar“: Die Kammer schafft 65 °C, manche dieser Kunststoffe wollen mehr. Kein fertiges Profil im Slicer – erst kleine Teile testen."
+   "achtung": "Flashforge führt diese Gruppe als „machbar“: Die Kammer schafft 65 °C, manche dieser Kunststoffe wollen mehr. Kein fertiges Profil im Slicer – erst kleine Teile testen. PC-PBT-CF: laut einem Videotest (My Engines DE, Leihgerät) auf dem Creator 5 Pro gut druckbar und sehr steif. Datenblatt-Beispiel Extrudr DuraPro PC/PBT CF: Düse 260–290 °C, Bett 100–110 °C, hitzefest bis 130 °C (Vicat A). Eigenes Profil fehlt noch."
   },
   {
    "id": "pva",
@@ -441,7 +441,8 @@
   "PLA-Stützen unter ABS gehen nicht – dafür HIPS nehmen.",
   "Weiches TPU: Kammerheizung aus, Bett unter 70 °C, Deckel ab und Tür auf, Klebestift als Trennschicht.",
   "Zwei Materialien sollen fest halten? Im Slicer „Beam Interlocking“ einschalten (Prozess → Multimaterial); die Teile müssen zu einem Modell gehören.",
-  "Flashforge-Filament hat abgestimmte Spülmengen. Bei Fremdmarken die Spülmengen etwa halbieren und testen, Farben von hell nach dunkel ordnen."
+  "Flashforge-Filament hat abgestimmte Spülmengen. Bei Fremdmarken die Spülmengen etwa halbieren und testen, Farben von hell nach dunkel ordnen.",
+  "PETG außen + TPU innen (hart + weich in einem Druck): In einem Videotest auf dem Creator 5 Pro ließen sich die Teile von Hand nicht trennen (My Engines DE, Leihgerät). Andere Quellen berichten, dass beide kaum aneinander haften – deshalb große Kontaktfläche und „Beam Interlocking“ einplanen. An deinem Gerät noch nicht bestätigt."
  ],
  "starter": [
   {
@@ -510,6 +511,18 @@
   {
    "titel": "Filamentor (Shop, Angaben der Startseite vom 14.11.2026)",
    "url": "https://filamentor.io"
+  },
+  {
+   "titel": "Video: Technische Filamente mit dem Creator 5 Pro (My Engines DE) – Auswertung",
+   "url": "videos/technische-filamente-myengines.html"
+  },
+  {
+   "titel": "3DJake: Extrudr DuraPro PC/PBT CF (Datenblatt-Werte)",
+   "url": "https://www.3djake.com/extrudr/durapro-pc-pbt-cf-black"
+  },
+  {
+   "titel": "3DJake-Ratgeber: TPU und PETG verbinden (Beam Interlocking)",
+   "url": "https://www.3djake.com/info/guide/beam-interlocking-in-3d-printing-how-to-combine-tpu-petg-correctly"
   }
  ],
  "stabil": {

@@ -1,6 +1,9 @@
 # Übergabe druckwerk
 
 ## STAND 15.11.2026 – hier einsteigen (neuer Chat: „druckwerk: …“)
+- 15.11. nachmittags (2): **Gratis-KI im Chat** `werkzeug/ki_lokal.py` (TripoSR ohne GPU, ~2 Min. je Bild, grob; getestet mit 2 Beispielbildern, nichts gedruckt) + Karte „C“ in KI-Weg Schritt 4.
+  Zwei weitere Video-Auswertungen (`videos/technische-filamente-myengines.html`, `videos/meshy-3d-agent-ddsw.html`), Lehren in CLAUDE.md, `wissen/filamente.json`, `wissen/c5pro.json`, `wissen/workflow.json`.
+  Offen: bemalte Meshy-3MF durch `--bemalt` testen; Skalieren vor `--bemalt`; Hunyuan3D-2mini lokal ausprobieren; `sw.js` steht auf `druckwerk-v6`.
 - 15.11. Modell-Quellen recherchiert: Liste in der App (Workflow → Werkzeuge → „Modelle finden …“, 4 Gruppen), Abruf-Test und Lizenz-Regel in CLAUDE.md (Abschnitt App). **Offen:** Lizenz des Vox-Plektrumhalters (MakerWorld 1485935) klären – liegt samt STL im öffentlichen Repo; bei „Standard Digital File License“ auf Toms Wunsch aus dem Repo nehmen.
 - 15.11. nachmittags: Reiter **Workflow** („Von der Idee zum Modell“) wieder unten hinter Drucker (7 Reiter, geprüft 320/390/820 px); `sw.js` auf `druckwerk-v4`.
 - **Drucker:** nur Flashforge Creator 5 Pro (`c5pro`). **Am echten Gerät ist weiterhin nichts bestätigt** (Werte aus Profilen, Wiki, Tests; Spiele nur gerechnet).

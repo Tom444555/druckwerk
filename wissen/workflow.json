@@ -605,6 +605,13 @@
    "gruppe": "KI: Bild oder Text zu 3D",
    "liste": [
     {
+     "name": "Bei Claude im Chat (TripoSR)",
+     "wo": "Claude",
+     "preis": "kostenlos, kein Schlüssel",
+     "url": "",
+     "d": "Foto im Chat anhängen, Claude rechnet daraus in etwa 2 Minuten einen druckfertigen Rohling mit Vorschau. Gröber als die Bezahldienste: gut für Entwürfe und einfache, kompakte Figuren – dünne Teile gehen verloren."
+    },
+    {
      "name": "MakerWorld MakerLab – Bild zu 3D",
      "wo": "Browser",
      "preis": "MakerLab-Credits (gegen MakerWorld-Punkte tauschbar); im Video kostet schon die Erzeugung, der Download nochmals – Preise vor dem Bestätigen ansehen",
@@ -614,9 +621,9 @@
     {
      "name": "Meshy",
      "wo": "Browser",
-     "preis": "Gratis-Kontingent, Pro rund 20 $/Monat",
+     "preis": "Gratis-Stufe mit 100 Credits im Monat (Modelle dann öffentlich), Pro rund 20 $/Monat",
      "url": "https://www.meshy.ai",
-     "d": "In Vergleichen meist vorn für den Druck: geschlossene Netze, Druck-Prüfung, STL- und 3MF-Export."
+     "d": "Bild oder Text zu 3D, auch als Chat-Agent mit Rückfragen und Konzeptbild. „Multi-Color Print“ macht daraus eine bemalte 3MF mit eingebetteten Farben – für den Creator höchstens 4 Farben wählen. Ohne Größenangabe kommt das Modell 50 mm hoch: Zielgröße vor dem Export setzen (Bezahl-Plan) oder von Claude skalieren lassen."
     },
     {
      "name": "Tripo",
@@ -1061,6 +1068,18 @@
   {
    "titel": "Bambu-Forum: Standard Digital File License erklärt",
    "url": "https://forum.bambulab.com/t/understanding-makerworlds-standard-digital-file-license/257609"
+  },
+  {
+   "titel": "Video: Meshy AI – vom Bild zum 3D-Druck mit dem 3D Agent (Der Druckt Schon Wieder) – Auswertung",
+   "url": "videos/meshy-3d-agent-ddsw.html"
+  },
+  {
+   "titel": "Meshy-Doku: Preise und Pläne",
+   "url": "https://docs.meshy.ai/en/webapp/pricing"
+  },
+  {
+   "titel": "TripoSR (freies Bild-zu-3D-Modell, MIT-Lizenz)",
+   "url": "https://github.com/VAST-AI-Research/TripoSR"
   }
  ]
 }
