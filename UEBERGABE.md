@@ -35,6 +35,9 @@
 - **Text zu Bild (15.11. 20:45 Uhr):** Vorschlag 1/5/6 als Chat-Werkzeug gebaut: `werkzeug/bild_ki.py` (Entwürfe gratis, freistellen, Ampel, Übersicht; Test „Eule“ gut).
   In der App noch nichts; Schlüssel-Wege (fal, Pollinations-Schlüssel) im Skript vorbereitet, aber ungetestet. Rest der Recherche: `wissen/recherche_text_zu_bild.md` mit acht Vorschlägen; Test: Pollinations liefert von der
   Sitzung aus gratis Entwurfsbilder (768 px, Wasserzeichen). Tom wählt noch aus; empfohlen 1 (Entwurf gratis im Chat), 4 (Bild-Text schärfen), dann 2 + 3 mit `FAL_KEY`.
+- **Gitarre rot-schwarz (15.11. 22:15 Uhr, läuft):** eigener Entwurf in der Optik von Toms Gitarre, `modelle/gitarre_rotschwarz.py` → vier STL (schwarz/rot/gold/weiß), 200 mm,
+  liegt flach, keine Stützen. `pruefen.py`: alle dicht; bleibende Meldungen sind gewollt (Einlagen 0,6–1 mm dick, einzelne rote Stege < 0,45 mm → beim Slicen Arachne-Zusätze nehmen).
+  Vorschau an Tom geschickt, **noch nicht gesliced** – wartet auf sein Ja bzw. Wünsche (`--saat`, `--schwarz`, `--laenge`). Text-zu-Bild taugt für so ein Motiv nicht (getestet).
 - **Bekannte Lücken:** Stützen kommen vom aktiven Kopf;
   WLAN-Senden, Abgleich iPhone↔iPad, Auftrag ohne Chat offen (Vorschläge in `wissen/workflow.json`).
 - **Toms Geschmack:** detailreich, geschwungen, naturnah, breit statt hoch; Farben schwarz/gold/rot/weiß; erst schnelle Vorschau, kurze Antworten. Will Modellqualität „wie Hyper3D“.
