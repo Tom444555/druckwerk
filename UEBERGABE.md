@@ -1,30 +1,35 @@
 # Übergabe druckwerk
 
-## STAND 15.11.2026 – hier einsteigen (neuer Chat: „druckwerk: …“)
-- 15.11. 14:40: Links zu Claude umgestellt auf `claude.ai/code/new?repo=Tom444555%2Fdruckwerk&q=…` (alte `claude.ai/new?q=` taten am iPhone/iPad nichts) + Text wird beim Antippen kopiert; `sw.js` v7. **Am echten Gerät noch nicht bestätigt.**
-- 15.11. nachmittags (2): **Gratis-KI im Chat** `werkzeug/ki_lokal.py` (TripoSR ohne GPU, ~2 Min. je Bild, grob; getestet mit 2 Beispielbildern, nichts gedruckt) + Karte „C“ in KI-Weg Schritt 4.
-  Zwei weitere Video-Auswertungen (`videos/technische-filamente-myengines.html`, `videos/meshy-3d-agent-ddsw.html`), Lehren in CLAUDE.md, `wissen/filamente.json`, `wissen/c5pro.json`, `wissen/workflow.json`.
-  Offen: bemalte Meshy-3MF durch `--bemalt` testen; Skalieren vor `--bemalt`; Hunyuan3D-2mini lokal ausprobieren; `sw.js` steht auf `druckwerk-v6`.
-- 15.11. Modell-Quellen recherchiert: Liste in der App (Workflow → Werkzeuge → „Modelle finden …“, 4 Gruppen), Abruf-Test und Lizenz-Regel in CLAUDE.md (Abschnitt App). **Offen:** Lizenz des Vox-Plektrumhalters (MakerWorld 1485935) klären – liegt samt STL im öffentlichen Repo; bei „Standard Digital File License“ auf Toms Wunsch aus dem Repo nehmen.
-- 15.11. nachmittags: Reiter **Workflow** („Von der Idee zum Modell“) wieder unten hinter Drucker (7 Reiter, geprüft 320/390/820 px); `sw.js` auf `druckwerk-v4`.
-- **Drucker:** nur Flashforge Creator 5 Pro (`c5pro`). **Am echten Gerät ist weiterhin nichts bestätigt** (Werte aus Profilen, Wiki, Tests; Spiele nur gerechnet).
+## STAND 15.11.2026 (15 Uhr) – hier einsteigen (neuer Chat: „druckwerk: …“)
+- **Drucker:** nur Flashforge Creator 5 Pro (`c5pro`). **Am echten Gerät ist weiterhin nichts bestätigt** (Werte aus Profilen, Wiki, Tests, Videos; Spiele nur gerechnet).
 - **Lager:** `2026-11-14_stratocaster_c5pro`, `2026-11-14_loopsmiths_amp_c5pro`, `2026-11-15_vox_plektrumhalter_c5pro` (3 h 38 min, 73 g, schwarz/rot/weiß),
-  Kalibrier-Set `2026-11-14_kalibrier_1…5_c5pro`. Keine `_kobrax`-Aufträge mehr. Tom wollte von den gelöschten Kobra-Modellen nur den Vox-Amp zurück.
-- **App (15.11.):** Tabs Start · Aufträge · Neu · Bibliothek · Material · Drucker. Neu: Startseite mit „Nächster Schritt“ und Suche (`start.js`), gedruckt-Haken/Filter,
-  Sicherung/Wiederherstellung (`sicherung.js`), Offline/PWA (`sw.js`, CACHE `druckwerk-v3` – bei App-Änderungen hochzählen), Zurück-Navigation, KI-Ablauf in 6 Schritten
-  (`kiweg.js`) mit Bild-Idee-Baukasten und Prüflisten, „Aus Foto erzeugen (KI)“ (`ki.js` → Action `generieren.yml` → `werkzeug/generieren.py`, braucht Repo-Secret `FAL_KEY`),
-  „Videos ausgewertet“ (`videos/`). Prüfbefund der App-Durchsicht (37 Punkte) ist eingearbeitet; vier schwere Fehler behoben (u. a. Werkstatt-Slicen ging noch an die Kobra).
-- **Qualität (15.11.):** `werkzeug/QUALITAET.md` (Regeln + Pflicht-Schleife bauen → pruefen.py → ansichten.py ansehen → korrigieren), `profi.py`, `pruefen.py`, `ansichten.py`,
-  Muster `modelle/profi/` (Gitarrenhalter, Zahnradpaar, Dose). KI-Modelle: `ki_rohling.py`, `textur_farben.py` (Weg A bemalte 3MF über `druck.py --bemalt`, Weg B Farbkörper),
-  `foto.py` (Blender-Foto, `pip install bpy` nur bei Bedarf), `werkzeug/KI_MODELLE.md`. Recherche mit Quellen: `wissen/recherche_modellqualitaet.md`.
-- **Getestet:** App mit Playwright (390×844 hell/dunkel, 820×1180), Profi-Teile 0 Fehler in pruefen.py, Farbwege A und B mit Orca-CLI (Testpinguin: 736/757 Kopfwechsel, alle 4 Köpfe > 0 g),
-  altes Slicen läuft weiter. **Nicht getestet:** echter fal-Aufruf (kein Schlüssel), echtes KI-Modell (nur selbst gebautes Testmodell), MakerLab, alles am Drucker, iPhone-Tastatur,
-  Offline-Speicher auf GitHub Pages.
-- **Bekannte Lücken:** App/`eingang.py` können bemalte 3MF (Weg A) nicht aus der Werkstatt slicen → für App-Slicen Weg B nehmen. Stützen kommen vom gerade aktiven Kopf.
-  Gemischte Düsengrößen, WLAN-Senden, Abgleich iPhone↔iPad, Auftrag ohne Chat offen (Vorschläge v8, v10, v12–v18 in `wissen/workflow.json`).
+  Kalibrier-Set `2026-11-14_kalibrier_1…5_c5pro`. Keine `_kobrax`-Aufträge mehr.
+- **App:** sieben Reiter Start · Aufträge · Neu · Bibliothek · Material · Drucker · **Workflow** („Von der Idee zum Modell“; Tom fand die Seite unter „So geht's“ nicht →
+  wieder eigener Reiter). `sw.js` steht auf `druckwerk-v7` (bei jeder App-Änderung hochzählen). Startseite mit „Nächster Schritt“ und Suche, gedruckt-Haken, Sicherung,
+  Offline/PWA, KI-Ablauf in 6 Schritten (`kiweg.js`, Schritt 4 jetzt mit A fal.ai · B MakerLab · C „Bei Claude im Chat“), „Videos ausgewertet“ (`videos/`, vier Auswertungen).
+- **Links zu Claude:** `https://claude.ai/code/new?repo=Tom444555%2Fdruckwerk&q=<Text>` (die alte Form `claude.ai/new?q=` tat am iPhone/iPad nichts; laut Anthropic-Hilfe
+  reagiert die App nur auf `claude.ai/code…`). Beim Antippen wird der Text zusätzlich kopiert (Sammel-Handler in `index.html`). **Tom hat noch nicht bestätigt, ob es jetzt geht** –
+  er soll auch sagen, ob er Druckwerk in Safari, als Home-Symbol oder in der Claude-App öffnet.
+- **Modell-Quellen:** Liste in der App (Workflow → Werkzeuge → vier Gruppen „Modelle finden …“). Von hier NICHT abrufbar: Printables, Thingiverse, MakerWorld, Cults3D,
+  MyMiniFactory, GrabCAD → Tom lädt und hängt die Datei an. Direkt nutzbar: GitHub (BOSL2, NopSCADlib, Gridfinity Rebuilt), Objaverse, Poly Haven; Thangs/Sketchfab nur Suche.
+- **Lizenz-Regel (neu):** Repo ist öffentlich → Modelle mit „Standard Digital File License“, ND-Lizenz oder Kaufmodelle nicht einchecken (nur .gcode per Chat schicken).
+  **Offen, Tom entscheidet:** Lizenz des Vox-Plektrumhalters (MakerWorld 1485935) ansehen; steht dort diese Lizenz, Ordner auf sein Wort aus dem Repo nehmen.
+- **Gratis-KI im Chat (neu):** `python3 werkzeug/ki_lokal.py bild.png --name n --ziel-mm 120 --aus /tmp/n` – TripoSR ohne Grafikkarte, Einrichten ~2 Min., dann ~2 Min. je Bild
+  inkl. `ki_rohling.py`. Grob (Entwurf, kompakte Figuren; dünne Teile fehlen). Getestet mit zwei Beispielbildern des Modells, **nichts gedruckt, noch kein Foto von Tom**.
+  TRELLIS.2/Hunyuan/Rodin/Meshy laufen hier nicht (GPU nötig) → dafür weiter fal.ai (Schlüssel fehlt), MakerLab oder Meshy.
+- **Videos (neu):** My Engines DE „Technische Filamente“ (PA12-CF, PC-PBT-CF, ASA-CF mit wenig Verzug; PETG außen + TPU innen hält; Stützen bei Faser-Material kaum lösbar →
+  stützfrei konstruieren) und Der Druckt Schon Wieder „Meshy 3D Agent“ (bemalte 3MF mit ≤ 4 Farben → `druck.py --bemalt`, ungetestet). Lehren stehen in CLAUDE.md
+  („Lehren aus Videos zum Creator 5 Pro“), `wissen/filamente.json`, `wissen/c5pro.json`, `wissen/workflow.json`, `werkzeug/KI_MODELLE.md`.
+- **Qualität:** `werkzeug/QUALITAET.md` (Pflicht-Schleife bauen → pruefen.py → ansichten.py ansehen → korrigieren), `profi.py`, Muster `modelle/profi/`. KI-Modelle: `ki_rohling.py`,
+  `textur_farben.py` (Weg A bemalte 3MF, Weg B Farbkörper), `foto.py`, `werkzeug/KI_MODELLE.md`. Recherche: `wissen/recherche_modellqualitaet.md`.
+- **Getestet:** App mit Playwright (320/390/820 px), alle neuen Seiten `scrollWidth` = Fensterbreite; Profi-Teile 0 Fehler; Farbwege A und B mit Orca-CLI; `ki_lokal.py` Ende zu Ende.
+  **Nicht getestet:** alles am Drucker, Claude-Links und Offline-Speicher am echten iPhone/iPad, echter fal-Aufruf, bemalte Meshy-3MF, MakerLab.
+- **Bekannte Lücken:** App/`eingang.py` können bemalte 3MF nicht aus der Werkstatt slicen (Weg B nehmen); Skalieren vor `--bemalt` fehlt; Stützen kommen vom aktiven Kopf;
+  gemischte Düsengrößen, WLAN-Senden, Abgleich iPhone↔iPad, Auftrag ohne Chat offen (Vorschläge in `wissen/workflow.json`).
 - **Toms Geschmack:** detailreich, geschwungen, naturnah, breit statt hoch; Farben schwarz/gold/rot/weiß; erst schnelle Vorschau, kurze Antworten. Will Modellqualität „wie Hyper3D“.
-- **Nächste Schritte:** 1) Tom legt fal.ai-Schlüssel als `FAL_KEY` an → ersten echten KI-Lauf begleiten. 2) Kalibrier-Set drucken → Spiele in `profi.py`/`baukasten.scad` einstellen,
-  Herkunft „Gerät“ eintragen. 3) Gitarrenhalter aus `modelle/profi/` slicen, wenn Tom ihn will (PETG + TPU). 4) Kleiner Probedruck Farbmischung (v18), wenn gewünscht.
+- **Nächste Schritte:** 1) Toms Rückmeldung zu den Claude-Links. 2) Vox-Lizenz klären. 3) Erstes eigenes Foto durch `ki_lokal.py`; erste Meshy-3MF durch `--bemalt` (Farben je Kopf
+  im Bericht prüfen). 4) fal.ai-Schlüssel `FAL_KEY` → ersten echten KI-Lauf begleiten. 5) Kalibrier-Set drucken → Spiele in `profi.py`/`baukasten.scad`, Herkunft „Gerät“.
+  6) Gitarrenhalter aus `modelle/profi/` slicen, wenn gewünscht. 7) Idee: Hunyuan3D-2mini lokal probieren (besser als TripoSR, Speicher knapp).
 
 ---
 ## Verlauf (älter)
