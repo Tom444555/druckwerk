@@ -301,9 +301,12 @@ function workflow(app){
     <p class="hint">${C.esc(g.kurz)}</p>
     <h2>${g.schritte.length} Schritte</h2><div class="card">${g.schritte.map((s, i) => `<div class="row oben"><span class="nr">${i + 1}</span>
       <div class="grow"><div><b>${C.esc(s.t)}</b> <span class="pill">${C.esc(s.wer)}</span></div><div class="small">${C.esc(s.d)}</div></div></div>`).join("")}</div>
-    <div style="height:16px"></div><button class="btn" id="wStart">Auftrag so beginnen</button>
+    ${g.video ? `<h2>Mehr dazu</h2><div class="card"><a class="row chev" href="${C.esc(g.video.url)}" style="color:inherit;text-decoration:none"><div class="grow">${C.esc(g.video.t)}<div class="small">${C.esc(g.video.d || "")}</div></div></a></div>` : ""}
+    ${g.lehren ? `<h2>Worauf es ankommt</h2>${liste(g.lehren)}` : ""}
+    <div style="height:16px"></div>${g.id === "foto" ? `<button class="btn" id="wKiWeg">Schritt für Schritt: Bild-Idee → Druck</button><button class="btn grey" id="wKi">Jetzt aus Foto erzeugen (KI)</button>` : ""}<button class="btn${g.id === "foto" ? " grey" : ""}" id="wStart">Auftrag so beginnen</button>
     <p class="hint">Öffnet unter „Neu“ den geführten Auftrag mit genau den Fragen, die Claude für diesen Weg braucht.</p><div style="height:20px"></div>`;
   } else if (U.wf === "werkzeuge") {
+    h += `<div class="card" style="margin-top:14px"><a class="row chev" href="videos/index.html" style="color:inherit;text-decoration:none"><div class="grow"><b>Videos ausgewertet</b><div class="small">STL mit KI · Foto in 3D drucken – mit Zeitstempeln und Abgleich</div></div></a></div>`;
     h += w.werkzeuge.map(g => `<h2>${C.esc(g.gruppe)}</h2><div class="card">${g.liste.map(t => { const innen = `<div class="grow"><div><b>${C.esc(t.name)}</b> <span class="pill">${C.esc(t.wo)}</span></div>
         <div class="small">${C.esc(t.d)}</div>${t.preis && t.preis !== "–" ? `<div class="small" style="color:var(--text);margin-top:3px">${C.esc(t.preis)}</div>` : ""}</div>`;
       return t.url ? `<a class="row chev oben" href="${C.esc(t.url)}" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">${innen}</a>` : `<div class="row oben">${innen}</div>`; }).join("")}</div>`).join("")
@@ -326,6 +329,8 @@ function workflow(app){
   app.innerHTML = h;
   binden(app, neu);
   $("#wfZur").onclick = () => C.go("neu");
+  const kw = $("#wKiWeg"); if (kw) kw.onclick = () => C.go("kiweg:1");
+  const wk = $("#wKi"); if (wk) wk.onclick = async () => { try { (await import("./ki.js")).oeffnen(C); } catch (e) { C.toast("Konnte nicht geladen werden"); } };
   const st = $("#wStart"); if (st) st.onclick = () => { const g = w.wege.find(x => x.id === U.weg) || w.wege[0]; C.neuStart("", g.zweck, "", g.id); };
   $$("[data-v2]", app).forEach(b => b.onclick = () => { let L = ls("druckwerk_wunsch", []); L = L.includes(b.dataset.v2) ? L.filter(x => x !== b.dataset.v2) : [...L, b.dataset.v2];
     lsSet("druckwerk_wunsch", L); const y = scrollY; neu(); scrollTo(0, y); });

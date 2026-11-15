@@ -1,0 +1,44 @@
+name: Generieren
+# KI-Modell aus Foto: startet, wenn die App eingang/<id>/ki.json ablegt (Fotos liegen daneben).
+# Getrennt vom Slicen: slicen.yml hört nur auf eingang/*/auftrag.json, dieser Workflow nur auf eingang/*/ki.json.
+# Commits dieses Workflows (mit GITHUB_TOKEN) lösen keine weiteren Workflows aus.
+on:
+  push:
+    branches: [main]
+    paths: ['eingang/*/ki.json']
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: generieren
+  cancel-in-progress: false
+jobs:
+  generieren:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Pakete
+        run: python -m pip install -q fal-client==1.0.3 gradio_client==2.7.2 trimesh numpy pillow fast_simplification
+      - name: Erzeugen
+        env:
+          FAL_KEY: ${{ secrets.FAL_KEY }}
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: python werkzeug/generieren.py
+      - name: Notfall-Rückmeldung
+        if: failure()
+        run: python werkzeug/generieren.py --notfall
+      - name: Ergebnis speichern
+        if: always()
+        run: |
+          git config user.name "druckwerk"
+          git config user.email "druckwerk@users.noreply.github.com"
+          mkdir -p ki status eingang
+          git add -A -- ki eingang status
+          git diff --cached --quiet && exit 0
+          git commit -q -m "KI-Modell aus der App"
+          for i in 1 2 3 4; do git pull -q --rebase --autostash && git push -q && exit 0; sleep 5; done
+          exit 1

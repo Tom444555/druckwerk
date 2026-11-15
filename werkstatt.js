@@ -133,6 +133,8 @@ async function exportGlb(M){
 /* ---------- Bibliothek ---------- */
 export async function bibliothek(app, ctx){
   C = ctx;
+  let kiLauf = null; try { const o = JSON.parse(localStorage.getItem("druckwerk_ki") || "null"); if (o && Date.now() - o.start < 2 * 3600e3) kiLauf = o; } catch (e) {}
+  let kwOffen = null; try { kwOffen = (await import("./kiweg.js")).offen(); } catch (e) {}
   const eigene = (await eigeneAlle()).sort((a, b) => (b.datum || "").localeCompare(a.datum || ""));
   // Lager: je Modellname nur einmal (Creator 5 Pro bevorzugt)
   const lager = []; for (const a of C.LAGER) { const i = lager.findIndex(x => x.name === a.name);
@@ -149,6 +151,11 @@ export async function bibliothek(app, ctx){
     <label class="btn" style="margin-top:12px">Eigene Datei öffnen (STL · 3MF · OBJ)
       <input type="file" id="imp" accept=".stl,.3mf,.obj" multiple hidden></label>
     <p class="hint">Mehrere Dateien zusammen wählen = ein Modell aus mehreren Teilen (je Teil eine Farbe).</p>
+    <button class="btn grey" id="kiBtn" style="margin-top:12px">Aus Foto erzeugen (KI)</button>
+    ${kwOffen ? `<div class="card" style="margin-top:10px"><div class="row chev" id="kiWeiter" style="cursor:pointer" role="button" tabindex="0">
+      <div class="grow"><b>KI-Ablauf fortsetzen</b><div class="small">Schritt ${kwOffen.schritt} von 6 · ${C.esc(kwOffen.titel)}</div></div></div></div>` : ""}
+    ${kiLauf ? `<div class="card" style="margin-top:10px"><div class="row chev" id="kiLauf" style="cursor:pointer" role="button" tabindex="0">
+      <div class="grow"><b>„${C.esc(kiLauf.name)}“ wird erzeugt …</b><div class="small">seit ${Math.max(1, Math.round((Date.now() - kiLauf.start) / 60000))} Min. · antippen für den Stand</div></div></div></div>` : ""}
     ${eigene.length ? `<h2>Meine Modelle (auf diesem Gerät)</h2><div class="mgrid">${eigene.map(m =>
       karte("e:" + m.id, m.bild, m.name, `${m.teile.length} Teil${m.teile.length > 1 ? "e" : ""} · ${deD(m.datum)}`, [...new Set(m.teile.map(t => m.slots[t.slot-1]))])).join("")}</div>` : ""}
     <h2>Von Claude erstellt (${lager.length})</h2>
@@ -156,6 +163,10 @@ export async function bibliothek(app, ctx){
       `${a.teile.length} Teil${a.teile.length > 1 ? "e" : ""} · ${deD(a.datum)}`, a.slots.map(s => C.farbe(s.farbe)))).join("")}</div>`;
   app.querySelectorAll(".mk").forEach(k => { k.setAttribute("role", "button"); k.tabIndex = 0;
     k.onclick = k.onkeydown = e => { if (e.type === "keydown" && e.key !== "Enter") return; C.go("werkstatt:" + k.dataset.m); }; });
+  const ki = async () => { try { (await import("./ki.js")).oeffnen(C); } catch (e) { C.toast("Konnte nicht geladen werden"); } };
+  $("#kiBtn").onclick = () => C.go("kiweg:1");
+  const kw = $("#kiWeiter"); if (kw) kw.onclick = kw.onkeydown = e => { if (e.type === "keydown" && e.key !== "Enter") return; C.go("kiweg:" + kwOffen.schritt); };
+  const kl = $("#kiLauf"); if (kl) kl.onclick = kl.onkeydown = e => { if (e.type === "keydown" && e.key !== "Enter") return; ki(); };
   $("#suche").oninput = e => { const q = e.target.value.toLowerCase().trim();
     app.querySelectorAll(".mk").forEach(k => k.style.display = k.dataset.n.includes(q) ? "" : "none"); };
   $("#imp").onchange = async e => {
@@ -194,6 +205,18 @@ async function importieren(files){
   });
   return { id: "m" + Date.now().toString(36), name: files[0].name.replace(/\.[^.]+$/, ""), datum: new Date().toISOString().slice(0, 10),
     herkunft: "Datei", slots, bild: "", teile: teile.map(t => ({name: t.name, slot: t.slot, stl: stlBinaer([t.geo])})) };
+}
+
+// Dateien (STL/3MF/OBJ) wie „Eigene Datei öffnen“ ablegen – für den KI-Ablauf (kiweg.js); gibt die Modell-ID zurück
+export async function dateienImportieren(files, ctx){ if (!C) C = ctx; const m = await importieren(files); await eigenesSichern(m); return m.id; }
+
+// KI-Modell (ki.js) als eigenes Modell ablegen – wie ein Import einer STL; gibt die Modell-ID zurück
+export async function kiUebernehmen({name, stl, bild, info}){
+  new STLLoader().parse(stl);                        // wirft, wenn die Datei kaputt ist
+  const m = { id: "m" + Date.now().toString(36), name: String(name || "KI-Modell"), datum: new Date().toISOString().slice(0, 10),
+    herkunft: "KI" + (info && info.dienst_name ? " · " + info.dienst_name : ""), ki: info || {}, slots: [...STD_FARBEN], bild: bild || "",
+    teile: [{name: String(name || "KI-Modell"), slot: 1, stl}] };
+  await eigenesSichern(m); return m.id;
 }
 
 /* ---------- Werkstatt ---------- */
@@ -527,6 +550,8 @@ function zugang(weiter){
     } catch (e) { ls.set(TOK, null); b.textContent = "Speichern"; C.toast("Token passt nicht – Contents: Read and write?"); }
   };
 }
+
+export function zugangEinrichten(ctx, weiter){ C = ctx; zugang(weiter); }   // für ki.js (gleicher Zugang wie beim Slicen)
 
 async function sliceStart(E){
   const teile = M.teile.filter(t => !t.weg), id = "a" + Date.now().toString(36);

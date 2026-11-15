@@ -50,6 +50,7 @@ export async function start(app, ctx){
     <button class="kachel" data-ziel="bibliothek"><span aria-hidden="true">⬆︎</span>Datei öffnen</button>
     <button class="kachel" data-ziel="w:hilfe"><span aria-hidden="true">?</span>Problem lösen</button>
     <button class="kachel" data-ziel="w:lager"><span aria-hidden="true">◎</span>Meine Spulen</button>
+    <button class="kachel" data-ziel="kiweg:1" style="grid-column:1/-1"><span aria-hidden="true">✦</span>Aus Foto erzeugen (KI)<small style="display:block;font-weight:400;font-size:13px;color:var(--sub);margin-top:2px">Schritt für Schritt: Bild-Idee → Bild → 3D → Druck</small></button>
   </div>
   <h2>So geht's</h2>
   <div class="card"><ol class="steps">
@@ -57,14 +58,15 @@ export async function start(app, ctx){
     <li>Claude schickt die <b>.gcode</b> und einen Link – Link antippen speichert den Auftrag hier.</li>
     <li>Im Auftrag „.gcode laden“ → auf den USB-Stick → am Drucker starten.</li>
     <li>Danach „Als gedruckt markieren“ und das <b>Ergebnis eintragen</b>.</li></ol>
-    <div class="row chev" data-ziel="workflow" style="cursor:pointer" role="button" tabindex="0"><div class="grow">Alle Wege, Werkzeuge und Ideen</div></div></div>
+    <div class="row chev" data-ziel="workflow" style="cursor:pointer" role="button" tabindex="0"><div class="grow">Alle Wege, Werkzeuge und Ideen</div></div>
+    <a class="row chev" href="videos/index.html" style="color:inherit;text-decoration:none"><div class="grow">Videos ausgewertet<div class="small">STL mit KI · Foto in 3D drucken (Bastlwastl)</div></div></a></div>
   <h2>Gerät &amp; Daten</h2>
   <div class="card">
     <div class="row chev" id="stSich" style="cursor:pointer" role="button" tabindex="0"><div class="grow">Sicherung erstellen<div class="small">Aufträge, Spulen, Tagebuch mit Fotos, eigene Modelle – als eine Datei${ls("druckwerk_gesichert", "") ? ` · zuletzt am ${C.deDatum(ls("druckwerk_gesichert", ""))}` : ""}</div></div></div>
     <label class="row chev" style="cursor:pointer"><div class="grow">Sicherung wiederherstellen<div class="small">Datei wählen (auch vom anderen Gerät)</div></div>
       <input type="file" id="stWieder" accept=".json,application/json" hidden></label>
     <div class="row chev" id="stHome" style="cursor:pointer" role="button" tabindex="0"><div class="grow">Als App auf den Home-Bildschirm<div class="small">${standalone() ? "läuft bereits als App ✓" : "eigenes Symbol, startet ohne Safari-Leiste, geht auch offline"}</div></div></div>
-    <div class="row"><div class="grow">GitHub-Zugang (Slicen aus der App)</div><span class="val">${tokenDa() ? "eingerichtet" : "nicht eingerichtet"}</span>
+    <div class="row"><div class="grow">GitHub-Zugang (Slicen &amp; KI aus der App)</div><span class="val">${tokenDa() ? "eingerichtet" : "nicht eingerichtet"}</span>
       ${tokenDa() ? `<button class="back" id="stTok" style="color:var(--red)">entfernen</button>` : ""}</div>
   </div>
   <p class="hint">Alle eigenen Daten liegen nur in diesem Gerät. Eine Sicherung ab und zu schützt vor Verlust (z. B. wenn Safari Website-Daten löscht).</p>
@@ -73,6 +75,7 @@ export async function start(app, ctx){
   const geh = ziel => { const [art, x] = ziel.split(":");
     if (art === "w") return x === "hilfe" ? K.oeffnen("problem", C, "") : K.oeffnen(x, C);
     if (art === "liste") { C.liste(x); return; }
+    if (art === "ki") { import("./ki.js").then(Ki => Ki.oeffnen(C)).catch(() => C.toast("Konnte nicht geladen werden")); return; }
     C.go(ziel); };
   app.querySelectorAll("[data-ziel]").forEach(b => b.onclick = b.onkeydown = e => { if (e.type === "keydown" && e.key !== "Enter") return; geh(b.dataset.ziel); });
   $("#stSich").onclick = async () => (await import("./sicherung.js")).sichern(C);

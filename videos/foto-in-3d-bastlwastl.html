@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<title>Auswertung: Jedes Foto in 3D drucken (Bastlwastl) – Druckwerk</title>
+<link rel="icon" href="../symbol-192.png" type="image/png">
+<link rel="apple-touch-icon" href="../symbol-180.png">
+<style>
+:root{--bg:#f2f2f7;--card:#fff;--text:#000;--sub:#6c6c70;--sep:rgba(60,60,67,.18);--blue:#007aff;--green:#34c759;--orange:#ff9500;--red:#ff3b30;--fill:rgba(120,120,128,.12);--grau:#a7a7ad}
+@media (prefers-color-scheme:dark){:root{--bg:#000;--card:#1c1c1e;--text:#fff;--sub:#98989f;--sep:rgba(84,84,88,.6);--blue:#0a84ff;--green:#30d158;--orange:#ff9f0a;--red:#ff453a;--fill:rgba(120,120,128,.24);--grau:#8e8e93}}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--text);font:17px/1.4 -apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",sans-serif}
+main{max-width:720px;margin:0 auto;padding:calc(env(safe-area-inset-top) + 8px) 16px 60px}
+a{color:var(--blue)}
+h1{font-size:30px;font-weight:700;letter-spacing:.2px;margin:6px 4px 6px;line-height:1.15}
+h2{font-size:13px;font-weight:400;text-transform:uppercase;color:var(--sub);margin:28px 16px 8px}
+h3{font-size:18px;margin:0 0 6px}
+.card{background:var(--card);border-radius:12px;overflow:hidden;padding:14px 16px;margin-bottom:10px;overflow-wrap:anywhere}
+.card p{margin:0 0 8px}.card p:last-child{margin-bottom:0}
+.small,.fs{font-size:13px;color:var(--sub)}
+.fs{white-space:nowrap}
+.top{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;padding:8px 0}
+.top a{text-decoration:none;font-size:17px}
+.pill{font-size:12px;background:var(--fill);border-radius:6px;padding:2px 7px;white-space:nowrap;color:var(--text)}
+.e{background:rgba(52,199,89,.13);border-radius:10px;padding:8px 12px;margin-top:8px;font-size:15px}
+.q{background:rgba(255,149,0,.15);border-radius:10px;padding:8px 12px;margin-top:8px;font-size:15px}
+ul,ol{margin:4px 0 8px;padding-left:20px}li{margin:4px 0}
+.tag{font-size:11px;font-weight:600;border-radius:5px;padding:1px 6px;margin-right:4px;color:#fff;white-space:nowrap}
+.t-f{background:var(--blue)}.t-b{background:var(--orange)}.t-m{background:#af52de}.t-bsp{background:var(--green)}
+pre.baum{font:13px/1.5 ui-monospace,Menlo,monospace;white-space:pre-wrap;margin:0;overflow-wrap:anywhere}
+blockquote{margin:6px 0;padding:4px 0 4px 12px;border-left:3px solid var(--blue);font-style:italic}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;vertical-align:top;padding:8px 6px;border-top:.5px solid var(--sep)}
+th{color:var(--sub);font-weight:500;font-size:12px;text-transform:uppercase}
+@media (max-width:600px){table.stapel thead{display:none}table.stapel tr{display:block;border-top:.5px solid var(--sep);padding:6px 0}
+  table.stapel td{display:block;border:0;padding:3px 0}table.stapel td::before{content:attr(data-l);display:block;font-size:11px;color:var(--sub);text-transform:uppercase}}
+svg{width:100%;height:auto;display:block}
+svg text{font-family:-apple-system,BlinkMacSystemFont,sans-serif;fill:var(--text)}
+svg .k{fill:var(--card);stroke:var(--sep);stroke-width:1}
+svg .kb{fill:var(--blue);fill-opacity:.12;stroke:var(--blue);stroke-width:1.2}
+svg .ko{fill:var(--orange);fill-opacity:.15;stroke:var(--orange);stroke-width:1.2}
+svg .sub{fill:var(--sub);font-size:10px}
+svg .pf{stroke:var(--sub);stroke-width:1.5;fill:none}
+svg .grau{fill:var(--grau)}
+svg .rot{stroke:var(--red);stroke-width:2.2}
+svg .gr{stroke:var(--green);stroke-width:2.2}
+.zeich{background:var(--bg);border-radius:10px;padding:8px}
+.legende{display:flex;flex-wrap:wrap;gap:6px 12px;font-size:13px;color:var(--sub)}
+nav.inhalt a{display:inline-block;margin:3px 6px 3px 0;font-size:14px;text-decoration:none;background:var(--fill);border-radius:14px;padding:4px 10px;color:var(--text)}
+</style>
+</head>
+<body>
+<main>
+<div class="top"><a href="index.html">‹ Videos</a><a href="https://www.youtube.com/watch?v=XZR_ALfpAKo" target="_blank" rel="noopener">Video ansehen ↗</a></div>
+<h1>Jedes Foto in 3D drucken?</h1>
+<p class="small" style="margin:0 4px 10px">Auswertung des Videos „NEU Jedes Foto in 3D drucken?! Diese GRATIS Funktion verändert alles!“ von <b>Bastlwastl</b> (YouTube, ca. 10 Min.) · Grundlage: automatische Untertitel, abgerufen 15.11.2026 · Auswertung vom 15.11.2026 · <a href="../index.html">Druckwerk</a></p>
+<div class="card small">Lesehilfe: Normaler Text = was im Video gesagt wird, mit Fundstelle <span class="fs">(mm:ss)</span>. <span class="e" style="display:inline;padding:1px 6px;margin:0">📚 grün = eigene Ergänzung</span> · <span class="q" style="display:inline;padding:1px 6px;margin:0">❓ orange = unklar</span>. Automatische Untertitel – Hörfehler sind markiert.</div>
+<nav class="inhalt" aria-label="Inhalt"><a href="#a">🧭 Steckbrief</a><a href="#b">🌳 Themenbaum</a><a href="#c">🎯 Kernaussagen</a><a href="#d">🔎 Auswertung</a><a href="#e">📅 Ablauf</a><a href="#f">📖 Verzeichnisse</a><a href="#g">⚖️ Abgleich</a><a href="#h">💡 Creator 5 Pro</a><a href="#i">🗂️ Zusammenfassung</a><a href="#q">Quellen</a></nav>
+
+<h2 id="a">A · 🧭 Steckbrief</h2>
+<div class="card">
+<p><b>Thema in einem Satz:</b> Ein kostenloses Web-Werkzeug legt Fotos und Farbverläufe auf 3D-Modelle und erzeugt eine 3MF, die mit fünf Filamenten (Cyan, Magenta, Gelb, Schwarz, Weiß) über eine neue Farbmisch-Funktion in Bambu Studio gedruckt wird – mit sehr langer Druckzeit.</p>
+<p><b>Sprecher:</b> Betreiber des Kanals „Bastlwastl“ (Name nicht genannt); stellt eine Entdeckung vor, die er beim „Durchzappen“ auf YouTube gemacht hat <span class="fs">(00:00)</span>. Druckt auf H2D bzw. X2D, beide mit zwei Düsen <span class="fs">(04:07, 06:40)</span>.</p>
+<p><b>Dauer / Umfang:</b> ca. 10:24 Min., ein Sprecher.</p>
+<p><b>Art:</b> kurze Vorstellung mit Bildschirm-Vorführung, ausdrücklich keine Schritt-für-Schritt-Anleitung und keine fertigen Druckergebnisse <span class="fs">(00:00)</span>; Aufruf zum „Community-Projekt“ <span class="fs">(06:40)</span>.</p>
+<p><b>Grundton:</b> begeistert („hat mir einfach die Sprache verschlagen“, 09:48), offen über eigene Unsicherheit („Keine Ahnung“, 05:09) und einen eigenen Bedienfehler <span class="fs">(08:16)</span>.</p>
+<p class="q">❓ Veröffentlichungsdatum des Videos nicht abrufbar. Die Bambu-Studio-Funktion erschien am 14.04.2026 (siehe Abgleich) – das Video ist also danach entstanden.</p>
+</div>
+
+<h2 id="b">B · 🌳 Themenbaum</h2>
+<div class="card"><pre class="baum">🎬 Jedes Foto in 3D drucken (00:00–10:24)
+├─ 💡 Anlass: Fund auf YouTube, schnell gemacht (00:00)
+├─ 🎨 Bambu-Studio-Update: CMYK + Weiß (00:31)
+│  └─ 🧑‍💻 Software eines „Kollegen“ für Fotos (00:31)
+├─ ⚠️ Fünf-Farben-Druck braucht Düsen (01:33)
+├─ 🌐 Web-Werkzeug (01:33–04:07)
+│  ├─ 📦 Modell laden: Schädel (02:04)
+│  ├─ 🖌️ Verläufe, Pinsel (02:04)
+│  ├─ 📷 Foto auflegen, PNG freistellen (02:35–03:06)
+│  └─ 💾 Process → 3MF, Kaffee spenden (04:07)
+├─ 🖨️ Bambu Studio (04:07–06:10)
+│  ├─ 🧵 H2D, AMS, Farben C/M/Y/K/W (04:07)
+│  ├─ ⚠️ Meldung „generierte Datei“ (04:38)
+│  └─ 🌈 Vorschau, Regler, Tipps (05:40)
+├─ ⚫ Idee: Schwarz-Weiß mit zwei Düsen (06:10)
+├─ 🔬 Schichten: ständiger Farbwechsel (07:11)
+│  └─ 🖼️ wie Rasterpunkte auf Plakaten (07:42)
+├─ ⏱️ Slicen: 0,20 → 0,08 mm, Tage (08:16)
+│  └─ 🔁 3224 Wechsel, Düsenzahl (08:47–09:17)
+└─ 👋 Benchy-Idee, Verabschiedung (09:48)</pre></div>
+<div class="card legende"><span>🎬 Video</span><span>💡 Anlass</span><span>🎨 Farbe</span><span>🧑‍💻 Software</span><span>⚠️ Hinweis/Grenze</span><span>🌐 Webseite</span><span>📦 Modell</span><span>🖌️ Malen</span><span>📷 Foto</span><span>💾 Export</span><span>🖨️ Slicer</span><span>🧵 Filament</span><span>🌈 Vorschau</span><span>⚫ Schwarz-Weiß</span><span>🔬 Detail</span><span>🖼️ Vergleich</span><span>⏱️ Zeit</span><span>🔁 Wechsel</span><span>👋 Abschluss</span></div>
+
+<h2 id="c">C · 🎯 Kernaussagen</h2>
+<div class="card"><h3>1 · Mit fünf Filamenten lassen sich Farbverläufe und Fotos auf 3D-Modelle drucken. ★★★</h3><p class="small">Bambu Studio kann seit dem letzten Update mit C, M, Y, Weiß und Schwarz Verläufe drucken; ein Web-Werkzeug macht das auch mit Fotos <span class="fs">(00:31–01:02)</span>.</p></div>
+<div class="card"><h3>2 · Ohne mehrere Düsen dauert es „unfassbar lange“. ★★★</h3><p class="small">Mindestens zwei, eher fünf Düsen <span class="fs">(01:33)</span>; Beispiel: 4 Tage 15 Std. auf zwei Düsen <span class="fs">(08:47)</span>.</p></div>
+<div class="card"><h3>3 · Freigestellte PNG-Bilder verwenden. ★★</h3><p class="small">Sonst wird der Bildrand mit aufgemalt <span class="fs">(03:06)</span>.</p></div>
+<div class="card"><h3>4 · Für saubere Bilder 0,08 mm Schichthöhe. ★★★</h3><p class="small">Mit 0,20 mm sah es „nicht so toll“ aus; 0,08 mm ergibt ein „viel, viel saubereres“ Bild <span class="fs">(08:16)</span>.</p></div>
+<div class="card"><h3>5 · Farben entstehen wie Rasterpunkte – fast jede Schicht wechselt die Farbe. ★★</h3><p class="small">Vergleich mit Großplakaten; im Beispiel 3224 Filamentwechsel <span class="fs">(07:11–08:47)</span>.</p></div>
+<div class="card"><h3>6 · Aktuelles Bambu Studio nötig; die 3MF erzeugt eine Hinweismeldung. ★★</h3><p class="small">Die Datei ist „generiert“, keine Bambu-Studio-Datei <span class="fs">(03:36–05:09)</span>.</p></div>
+<div class="card"><h3>7 · Das Verfahren steckt in den Kinderschuhen – die Community soll weiterforschen. ★</h3><p class="small">Auflösung „80er Jahre Pixelspiel-mäßig“, viele Regler unerforscht <span class="fs">(03:36, 06:40, 09:17)</span>.</p></div>
+
+<h2>Zeichnung 1 · Prinzip Farbmischung</h2>
+<div class="card"><p class="small">Darstellung laut Video (schematisch): wenige Filamente, viele dünne Schichten und kleine Farbfelder; aus der Entfernung mischt das Auge (07:11–07:42).</p>
+<div class="zeich"><svg viewBox="0 0 340 312" role="img" aria-label="Prinzip: fünf Filamente in dünnen Schichten und Rasterpunkten ergeben aus der Entfernung eine Mischfarbe">
+<g font-size="11">
+<text x="10" y="16" font-weight="700" font-size="12">5 Filamente</text>
+<g>
+<circle cx="22" cy="36" r="10" fill="#00aeef"/><text x="38" y="40">Cyan</text>
+<circle cx="22" cy="62" r="10" fill="#ec008c"/><text x="38" y="66">Magenta</text>
+<circle cx="22" cy="88" r="10" fill="#ffd400"/><text x="38" y="92">Gelb</text>
+<circle cx="22" cy="114" r="10" fill="#111"/><text x="38" y="118">Schwarz</text>
+<circle cx="22" cy="140" r="10" fill="#fff" stroke="var(--sub)"/><text x="38" y="144">Weiß</text>
+</g>
+<text x="112" y="16" font-weight="700" font-size="12">nah: Schichten</text>
+<g transform="translate(112 26)">
+<rect y="0" width="96" height="9" fill="#00aeef"/><rect y="9" width="96" height="9" fill="#ffd400"/><rect y="18" width="96" height="9" fill="#fff"/><rect y="27" width="96" height="9" fill="#00aeef"/>
+<rect y="36" width="96" height="9" fill="#ffd400"/><rect y="45" width="96" height="9" fill="#111"/><rect y="54" width="96" height="9" fill="#00aeef"/><rect y="63" width="96" height="9" fill="#ffd400"/>
+<rect y="72" width="96" height="9" fill="#ffd400"/><rect y="81" width="96" height="9" fill="#00aeef"/><rect y="90" width="96" height="9" fill="#fff"/><rect y="99" width="96" height="9" fill="#ffd400"/>
+<rect width="96" height="108" fill="none" stroke="var(--sep)"/>
+</g>
+<text class="sub" x="112" y="150">je Schicht ein Filament</text>
+<text class="sub" x="112" y="162">(0,08 mm laut Video)</text>
+<path d="M214 80 h22" stroke="var(--sub)" stroke-width="1.5" marker-end="url(#pf2)"/>
+<defs><marker id="pf2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--sub)"/></marker></defs>
+<text x="244" y="16" font-weight="700" font-size="12">fern: Mischung</text>
+<rect x="244" y="26" width="86" height="108" rx="6" fill="#4cb87a"/>
+<text class="sub" x="244" y="150">Auge mischt</text>
+<text class="sub" x="244" y="162">Cyan + Gelb = Grün</text>
+<text x="10" y="196" font-weight="700" font-size="12">Oberfläche: Rasterpunkte wie Plakat (07:42)</text>
+<g transform="translate(10 206)">
+<rect width="150" height="80" rx="6" fill="var(--card)" stroke="var(--sep)"/>
+<g id="raster">
+<circle cx="12" cy="12" r="5" fill="#00aeef"/><circle cx="28" cy="12" r="5" fill="#ffd400"/><circle cx="44" cy="12" r="5" fill="#00aeef"/><circle cx="60" cy="12" r="5" fill="#ffd400"/><circle cx="76" cy="12" r="5" fill="#111"/><circle cx="92" cy="12" r="5" fill="#ffd400"/><circle cx="108" cy="12" r="5" fill="#00aeef"/><circle cx="124" cy="12" r="5" fill="#ffd400"/><circle cx="140" cy="12" r="5" fill="#00aeef"/>
+<circle cx="20" cy="30" r="5" fill="#ffd400"/><circle cx="36" cy="30" r="5" fill="#00aeef"/><circle cx="52" cy="30" r="5" fill="#fff" stroke="var(--sep)"/><circle cx="68" cy="30" r="5" fill="#00aeef"/><circle cx="84" cy="30" r="5" fill="#ffd400"/><circle cx="100" cy="30" r="5" fill="#00aeef"/><circle cx="116" cy="30" r="5" fill="#ec008c"/><circle cx="132" cy="30" r="5" fill="#ffd400"/>
+<circle cx="12" cy="48" r="5" fill="#00aeef"/><circle cx="28" cy="48" r="5" fill="#ffd400"/><circle cx="44" cy="48" r="5" fill="#111"/><circle cx="60" cy="48" r="5" fill="#ffd400"/><circle cx="76" cy="48" r="5" fill="#00aeef"/><circle cx="92" cy="48" r="5" fill="#ffd400"/><circle cx="108" cy="48" r="5" fill="#00aeef"/><circle cx="124" cy="48" r="5" fill="#fff" stroke="var(--sep)"/><circle cx="140" cy="48" r="5" fill="#00aeef"/>
+<circle cx="20" cy="66" r="5" fill="#ffd400"/><circle cx="36" cy="66" r="5" fill="#00aeef"/><circle cx="52" cy="66" r="5" fill="#ffd400"/><circle cx="68" cy="66" r="5" fill="#00aeef"/><circle cx="84" cy="66" r="5" fill="#ffd400"/><circle cx="100" cy="66" r="5" fill="#111"/><circle cx="116" cy="66" r="5" fill="#ffd400"/><circle cx="132" cy="66" r="5" fill="#00aeef"/>
+</g></g>
+<path d="M168 246 h22" stroke="var(--sub)" stroke-width="1.5" marker-end="url(#pf2)"/>
+<rect x="198" y="206" width="132" height="80" rx="6" fill="#4cb87a"/>
+<text x="264" y="302" text-anchor="middle" class="sub">aus Entfernung: eine Fläche</text>
+</g></svg></div>
+<p class="e">📚 Fachlich heißt das Verfahren <b>Dithering</b> bzw. Rasterung: wenige Grundfarben werden in kleinen Mustern verteilt, das Auge mittelt sie. Das Werkzeug Primed3D beschreibt seinen Modus „Full Spectrum“ genau so (Zerlegung in Cyan, Magenta, Gelb, optional Weiß/Schwarz, als Schicht-Dithering).</p></div>
+
+<h2 id="d">D · 🔎 Detaillierte Auswertung</h2>
+
+<div class="card"><h3>💡 1 · Anlass: schnell gemachtes Video <span class="fs">(00:00–00:31)</span></h3>
+<p>Er nennt es eines seiner am schnellsten gemachten Videos. Es gehe weder um tolle Ergebnisse noch um eine Schritt-für-Schritt-Anleitung. Er will „den Ball zuspielen“ und etwas zeigen, das ihn beim „Durchzappen“ auf YouTube fasziniert hat und das in den deutschsprachigen Raum gehöre.</p>
+<p>💬 <q>das muss sofort auch in den deutschsprachigen Raum adaptiert werden</q> <span class="fs">(00:00)</span></p>
+<p>📌</p><ul><li><span class="tag t-f">Fakt</span>Keine Anleitung, keine fertigen Drucke gezeigt <span class="fs">(00:00)</span>.</li><li><span class="tag t-m">Meinung</span>Das Thema hat ihn „unfassbar fasziniert“ <span class="fs">(00:00)</span>.</li></ul></div>
+
+<div class="card"><h3>🎨 2 · Bambu-Studio-Update und die Software des „Kollegen“ <span class="fs">(00:00–01:33)</span></h3>
+<p>Bambu Studio habe im letzten Update eine Funktion eingeführt, mit der man mit CMYK arbeiten kann: mit fünf Farben – Cyan, Magenta, Gelb, Weiß, Schwarz – lassen sich Farbverläufe drucken. Das sei machbar und nicht kompliziert, dazu gebe es schon viele Videos. Er sei auf einen „Kollegen“ gestoßen, der dafür eine Software geschrieben habe, mit der das auch mit Fotos geht. So könne man mit fünf Farben sämtliche 3D-Modelle mit Fototexturen überziehen. Er zeigt grob, was er probiert hat; den Rest sollen die Zuschauer herausfinden.</p>
+<p>💬 <q>ihr könnt im Prinzip mit fünf Farben … Farbverläufe drucken</q> <span class="fs">(00:31)</span></p>
+<p>📌</p><ul><li><span class="tag t-b">Behauptung</span>Bambu Studio kann seit dem letzten Update mit CMYK + Weiß Verläufe drucken <span class="fs">(00:31)</span>.</li><li><span class="tag t-f">Fakt</span>Ein anderer YouTuber hat eine Software für Fotos geschrieben <span class="fs">(00:31)</span>.</li><li><span class="tag t-m">Meinung</span>Verläufe sind „gar nicht so kompliziert“ <span class="fs">(00:31)</span>.</li></ul>
+<p class="q">❓ „wie ihr euch da rein vernatelt“ <span class="fs">(01:02)</span> – unklares Wort, vermutlich umgangssprachlich für „hineinarbeiten“.</p>
+<p class="e">📚 Stand heute: Die Funktion heißt in Bambu Studio „Farbmischung“ (Color Mixing), kam mit Version 2.5.3 am 14.04.2026 und mischt laut Berichten bis zu drei gleichartige Filamente über abwechselnde dünne Schichten. Fünf Farben (W/K/C/M/Y) für Fotos kommen über die gemalte 3MF des Web-Werkzeugs zustande – Details im Abgleich.</p></div>
+
+<div class="card"><h3>⚠️ 3 · Fünf Farben brauchen Düsen <span class="fs">(01:33)</span></h3>
+<p>Es sei unbedingt zu sagen: Es handelt sich um Fünf-Farben-Druck. Ohne mindestens zwei, eher fünf Düsen („Mehrdrucksystem mit mehr Nozzlen“) dauere es unfassbar lange. Er will gleich slicen und zeigen, was er macht.</p>
+<p>💬 <q>wenn ihr nicht mindestens zwei, eher fünf Düsen habt</q> <span class="fs">(01:33)</span></p>
+<p>📌</p><ul><li><span class="tag t-b">Behauptung</span>Mit wenigen Düsen dauert es sehr lange <span class="fs">(01:33)</span>.</li></ul>
+<p>🔗 Zahlen in Abschnitt 11, Düsenzahl in Abschnitt 12.</p></div>
+
+<div class="card"><h3>🌐 4 · Die Webseite <span class="fs">(01:33–02:35)</span></h3>
+<p>Er öffnet eine Seite, die er „Prime 3D 3D Revolution.net“ nennt und unten verlinkt hat. Die Seite sei „nicht wirklich großartig aussagend“, aber man könne eine Druckdatei hineinziehen. Er nimmt „ganz random“ die obere Hälfte eines Schädels – ein rundes Objekt. Es gibt viel Auswahl: beliebige Farbverläufe, mit dem Pinsel eigene Muster oder Verläufe malen; wer sich hineinarbeitet, könne „voll viel machen“.</p>
+<p>💬 <q>Ihr könnt mit dem Pinsel jetzt eigene Muster oder Farbverläufe reinmalen.</q> <span class="fs">(02:04)</span></p>
+<p>📌</p><ul><li><span class="tag t-f">Fakt</span>Modell per Drag and Drop laden <span class="fs">(02:04)</span>.</li><li><span class="tag t-bsp">Beispiel</span>Schädel-Oberteil als rundes Testobjekt <span class="fs">(02:04)</span>.</li><li><span class="tag t-f">Fakt</span>Verläufe und Pinsel <span class="fs">(02:04)</span>.</li></ul>
+<p class="q">❓ Name laut Untertitel „Prime 3D 3D Revolution.net“. 📚 Belegt: Das Werkzeug heißt <b>Primed3D</b> („Full Spectrum STL Painter – A 3D Revolution Tool“) unter <a href="https://primed3d.3drevolution.net/" target="_blank" rel="noopener">primed3d.3drevolution.net</a>, Anbieter ist der YouTube-Kanal <b>3D Revolution</b> (Großbritannien laut alternativeTo). Ob das gezeigte Original-Video das von hackster verlinkte ist, ist nicht eindeutig zuzuordnen.</p></div>
+
+<div class="card"><h3>📷 5 · Foto auflegen <span class="fs">(02:35–03:36)</span></h3>
+<p>Unten gibt es die Möglichkeit, Fotos einzubauen; er nimmt ein Foto vom Desktop. Mit der rechten Maustaste dreht er das Modell, dann „schnappt“ er das Foto, legt es hin und ändert die Größe. Er rät zu PNG mit freigestelltem Objekt, denn der Rand des Bildes wird sonst mit aufgemalt. Mit „Apply Photo“ liegt das Foto auf dem Objekt; bei sauberer Freistellung hätte man den Schädel grau und vorne das Bild. Die Auflösung sei „noch so ein bisschen 80er Jahre Pixelspiel-mäßig“, sehe aber „gar nicht mal so schlecht“ aus; was komme erst in ein paar Monaten?</p>
+<p>💬 <q>es bietet sich natürlich an, eher mit PNGs zu arbeiten</q> <span class="fs">(03:06)</span> · <q>noch so ein bisschen 80er Jahre Pixelspiel-mäßig</q> <span class="fs">(03:36)</span></p>
+<p>📌</p><ul><li><span class="tag t-f">Fakt</span>Foto platzieren, drehen, skalieren, „Apply Photo“ <span class="fs">(02:35–03:06)</span>.</li><li><span class="tag t-m">Meinung</span>Freigestellte PNG verwenden <span class="fs">(03:06)</span>.</li><li><span class="tag t-m">Meinung</span>Auflösung noch grob <span class="fs">(03:36)</span>.</li><li><span class="tag t-b">Behauptung</span>In wenigen Monaten wird mehr gehen <span class="fs">(03:36)</span>.</li></ul>
+<p class="e">📚 <b>Freistellen</b> = Hintergrund entfernen, so dass nur das Motiv mit durchsichtigem Rand bleibt; PNG speichert diese Durchsichtigkeit, JPEG nicht. Am iPhone/iPad: Motiv lange drücken → „Kopieren“ bzw. „Sticker“.</p></div>
+
+<div class="card"><h3>💾 6 · 3MF erzeugen <span class="fs">(03:36–04:07)</span></h3>
+<p>Speichern geht „im neuen Bambu Studio“ – das aktuelle Update sei nötig, damit die Funktion arbeitet. Nach „Process“ lädt man eine 3MF-Datei herunter und kann dem Ersteller „einen Kaffee spendieren“.</p>
+<p>📌</p><ul><li><span class="tag t-f">Fakt</span>Knopf „Process“, Ergebnis 3MF <span class="fs">(04:07)</span>.</li><li><span class="tag t-b">Behauptung</span>Aktuelles Bambu Studio erforderlich <span class="fs">(03:36)</span>.</li><li><span class="tag t-f">Fakt</span>Spendenmöglichkeit <span class="fs">(04:07)</span>.</li></ul>
+<p class="e">📚 Laut Werkzeug-Seite: 3MF mit Malfarben im Bambu-Format; Schichthöhe beim Export 0,08 mm (Standard) oder 0,06 mm (hohe Qualität) – im Slicer muss dieselbe eingestellt werden. Spende über Buy Me a Coffee.</p></div>
+
+<div class="card"><h3>🖨️ 7 · In Bambu Studio laden <span class="fs">(04:07–05:40)</span></h3>
+<p>Er hat seinen H2D gewählt – im Prinzip ein Drucker mit zwei Düsen – mit AMS. Nötig sind Cyan, Magenta, Gelb, Schwarz, Weiß; aktuell sind sechs Farben geladen, das Grün könnte raus. Eine Anleitung bekomme man beim Laden der Datei. Beim Öffnen komme zwar keine Fehlermeldung, aber eine Meldung, dass es keine Bambu-Studio-Datei, sondern eine generierte sei; Geometrie und Farbdaten könnten nicht abgeglichen werden. Er vermutet, man könne in der Software vorher den Ziel-Slicer wählen, „weil das geht für Orca oder noch für andere Slicer ebenso. Keine Ahnung.“ Er klickt die Meldung weg.</p>
+<p>💬 <q>ist mir momentan schnurzpiepegal, ich möchte das einfach nur fürs Video machen</q> <span class="fs">(05:09)</span></p>
+<p>📌</p><ul><li><span class="tag t-f">Fakt</span>H2D mit zwei Düsen, AMS mit sechs Farben <span class="fs">(04:07–04:38)</span>.</li><li><span class="tag t-f">Fakt</span>Meldung „generierte Datei“ beim Laden <span class="fs">(04:38–05:09)</span>.</li><li><span class="tag t-b">Behauptung</span>Geht auch mit Orca oder anderen Slicern – ausdrücklich unsicher <span class="fs">(05:09)</span>.</li></ul>
+<p class="q">❓ „nicht die Fehlermeldung, aber zumindest die Meldung“ <span class="fs">(04:38)</span>, kurz darauf „diese Fehlermeldung“ <span class="fs">(05:09)</span> – gemeint ist vermutlich derselbe Hinweis beim Öffnen fremder 3MF.</p>
+<p class="e">📚 Laut Werkzeug-Seite bestätigt: Bambu Studio, OrcaSlicer „in allen Varianten – Snapmaker, Flashforge, Creality usw.“ und PrusaSlicer. Eine Auswahl des Ziel-Slicers wird dort nicht beschrieben; entscheidend sei nur die passende Schichthöhe.</p></div>
+
+<div class="card"><h3>🌈 8 · Vorschau und Tipps <span class="fs">(05:40–06:40)</span></h3>
+<p>Die mehrfarbige Ansicht zeigt eine kleine Vorschau mit Schwarz, Gelb, Magenta, Cyan und Weiß; er bestätigt mit OK. Es gebe sicher viele weitere Einstellungen. Sein Rat: erst das ganze Objekt mit Farbverläufen einfärben, dann ein PNG darüber setzen, damit es „smoother“ wird. Regler machen Farben stärker oder schwächer; kontrastreiche, sehr farbige oder farbarme Bilder dürften sich unterscheiden.</p>
+<p>💬 <q>Schlagt mich bitte nicht, es gibt bestimmt noch viele andere Einstellungen</q> <span class="fs">(05:40)</span></p>
+<p>📌</p><ul><li><span class="tag t-m">Meinung</span>Verlauf als Grund, PNG darüber <span class="fs">(05:40–06:10)</span>.</li><li><span class="tag t-f">Fakt</span>Regler für Farbintensität <span class="fs">(06:10)</span>.</li><li><span class="tag t-b">Behauptung</span>Bildart (Kontrast, Farbigkeit) macht Unterschiede <span class="fs">(06:10)</span>.</li></ul></div>
+
+<div class="card"><h3>⚫ 9 · Idee: Schwarz-Weiß mit zwei Düsen <span class="fs">(06:10–07:11)</span></h3>
+<p>Ihn interessiert, ob es mit nur zwei Düsen auch in Schwarz-Weiß geht. Mit fünf Farben auf zwei Düsen – ob X2D oder H2D, mehr Düsen hat er nicht – müsse es „ewig lang“ dauern. Vielleicht ergeben nur Schwarz und Weiß Grauverläufe oder schwarze und weiße Schichten, die das Bild bilden. Ergebnisse sollen in die Kommentare – „wie ein Community-Projekt“.</p>
+<p>💬 <q>Vielleicht kann man aber das Ganze auch in Schwarz-Weiß machen</q> <span class="fs">(06:40)</span></p>
+<p>📌</p><ul><li><span class="tag t-m">Meinung</span>Schwarz-Weiß mit zwei Düsen als offene Frage <span class="fs">(06:10–06:40)</span>.</li><li><span class="tag t-f">Fakt</span>Seine Drucker haben höchstens zwei Düsen <span class="fs">(06:40)</span>.</li></ul>
+<p class="e">📚 Die Werkzeug-Seite nennt einen Modus „2 Filaments – dual nozzle“, der zwischen zwei gewählten Farben rastert. Ein Ergebnis dazu liegt hier nicht vor.</p></div>
+
+<div class="card"><h3>🔬 10 · Schichten: ständiger Farbwechsel <span class="fs">(07:11–08:16)</span></h3>
+<p>In der Schichtvorschau „zwirbelt“ sein „Druckerherz“: Es sieht schlimm aus, wirke aber aus der Entfernung toll. Es gebe kaum Schichten ohne Farbwechsel. Für das Grün sehe man Magenta, dann Schwarz, Weiß – wohl für Sättigung oder Dunkelheit. So sei ein Bild aufgebaut, vergleichbar mit „16-Bogen-Plakaten“ an Baustellen, deren Pünktchen man aus der Nähe sieht. Folge: Slicen und Druck brauchen sehr lange; er fordert zum Mitschätzen der Tage auf.</p>
+<p>💬 <q>Wir haben hier überall Farbwechsel.</q> <span class="fs">(07:11)</span></p>
+<p>📌</p><ul><li><span class="tag t-f">Fakt</span>Fast jede Schicht mit Farbwechsel <span class="fs">(07:11)</span>.</li><li><span class="tag t-bsp">Beispiel</span>Plakat-Rasterpunkte als Vergleich <span class="fs">(07:42)</span>.</li></ul>
+<p class="q">❓ Grün aus „Magenta, dann Schwarz, Weiß“ <span class="fs">(07:42)</span> – nach üblicher Farbmischung entsteht Grün aus Cyan und Gelb; vermutlich beschreibt er nur die sichtbaren Schichten an der Stelle. „16-Bogen-Plakate“ – vermutlich Großflächenplakate; die übliche Bezeichnung in Deutschland ist „18/1“ ❓.</p></div>
+
+<div class="card"><h3>⏱️ 11 · Slicen: 0,20 mm gegen 0,08 mm <span class="fs">(08:16–09:17)</span></h3>
+<p>Das erste Ergebnis, 1 Tag 14 Stunden, wundert ihn als „extrem schnell“, und es sieht nicht gut aus. Sein Fehler: Er hatte 0,20 mm Schichthöhe statt 0,08 mm. Neu geslict: „zarte“ 4 Tage, 15 Stunden und 15 Minuten, mit 3224 Filamentwechseln auf zwei Düsen.</p>
+<p>💬 <q>ich muss auf 0,08 mm hier arbeiten</q> <span class="fs">(08:16)</span> · <q>3224 Filamentwechsel auf zwei Nozzeln</q> <span class="fs">(08:47)</span></p>
+<p>📌</p><ul><li><span class="tag t-f">Fakt</span>0,20 mm: 1 Tag 14 Std. (sein Fehler) <span class="fs">(08:16)</span>.</li><li><span class="tag t-f">Fakt</span>0,08 mm: 4 Tage 15 Std. 15 Min. <span class="fs">(08:47)</span>.</li><li><span class="tag t-f">Fakt</span>3224 Filamentwechsel, zwei Düsen <span class="fs">(08:47)</span>.</li></ul>
+<p class="e">📚 Die Größe des Schädels wird nicht genannt – die Zahlen lassen sich deshalb nicht auf andere Modelle umrechnen. Die Werkzeug-Seite schreibt 0,08 mm (oder 0,06 mm) ausdrücklich vor.</p></div>
+
+<h2>Zeichnung 2 · Zeit und Wechsel nach Düsenzahl</h2>
+<div class="card"><p class="small">Nur die im Video genannten Zahlen (Schädel-Oberteil, Größe nicht genannt). Wo das Video keine Zahl nennt, steht keine.</p>
+<div class="zeich"><svg viewBox="0 0 340 300" role="img" aria-label="Druckzeit 1 Tag 14 Stunden bei 0,20 mm und 4 Tage 15 Stunden bei 0,08 mm mit zwei Düsen; für eine und vier bis fünf Düsen nennt das Video keine Zahl">
+<g font-size="12">
+<text x="10" y="18" font-weight="700">2 Düsen (H2D) – Druckzeit</text>
+<text x="10" y="44">0,20 mm</text>
+<rect x="72" y="32" width="76" height="18" rx="4" fill="var(--orange)"/>
+<text x="154" y="46">1 T 14 h <tspan class="sub">(Fehler, 08:16)</tspan></text>
+<text x="10" y="76">0,08 mm</text>
+<rect x="72" y="64" width="222" height="18" rx="4" fill="var(--blue)"/>
+<text x="76" y="78" style="fill:#fff">4 T 15 h 15 min</text>
+<text class="sub" x="72" y="98">3224 Filamentwechsel (08:47)</text>
+<line x1="72" y1="104" x2="294" y2="104" stroke="var(--sep)"/>
+<text class="sub" x="72" y="116">0</text><text class="sub" x="294" y="116" text-anchor="end">≈ 4,6 Tage</text>
+<rect x="10" y="134" width="150" height="74" rx="8" class="k"/>
+<text x="85" y="156" text-anchor="middle" font-weight="700">1 Düse</text>
+<text x="85" y="176" text-anchor="middle">„erheblich länger“</text>
+<text class="sub" x="85" y="194" text-anchor="middle">keine Zahl im Video (09:17)</text>
+<rect x="180" y="134" width="150" height="74" rx="8" class="k"/>
+<text x="255" y="156" text-anchor="middle" font-weight="700">4–5 Düsen</text>
+<text x="255" y="176" text-anchor="middle">„erheblich verkürzen“</text>
+<text class="sub" x="255" y="194" text-anchor="middle">keine Zahl im Video (09:17)</text>
+<text x="10" y="234" font-weight="700">Merksatz laut Video</text>
+<text x="10" y="254">Mehr Düsen mit fertig geladenen Farben</text>
+<text x="10" y="272">= weniger Wartezeit je Wechsel (09:17).</text>
+<text class="sub" x="10" y="292">Balken: Länge proportional zur Zeit (38 h zu 111,25 h).</text>
+</g></svg></div></div>
+
+<div class="card"><h3>🔁 12 · Abhängigkeit von der Düsenzahl <span class="fs">(09:17–09:48)</span></h3>
+<p>Mit einer Düse gehe es auch, dauere aber erheblich länger. Hat der Drucker ein System mit mehreren Düsen, die die Farben schon enthalten, verkürze sich der Vorgang erheblich. Es bleibe ein sehr aufwendiges Verfahren in den Kinderschuhen, „gerade mal mit so einem Free Programm“ möglich.</p>
+<p>💬 <q>Es ist immer noch ein sehr aufwendiges Verfahren</q> <span class="fs">(09:17)</span></p>
+<p>📌</p><ul><li><span class="tag t-b">Behauptung</span>Eine Düse: erheblich länger <span class="fs">(09:17)</span>.</li><li><span class="tag t-b">Behauptung</span>Mehrere Düsen: erheblich kürzer <span class="fs">(09:17)</span>.</li><li><span class="tag t-m">Meinung</span>Verfahren steckt in den Kinderschuhen <span class="fs">(09:17)</span>.</li></ul>
+<p class="e">📚 Grund: Bei einer Düse muss für jeden Wechsel Filament getauscht und gespült werden; bei mehreren Köpfen bzw. Düsen wird nur gewechselt. Laut Tom’s Hardware wird die Bambu-Farbmischung für Ein-Düsen-Drucker wegen des Spülaufwands nicht empfohlen.</p></div>
+
+<div class="card"><h3>👋 13 · Benchy-Idee und Abschied <span class="fs">(09:48–10:24)</span></h3>
+<p>Er habe es zeigen müssen, weil es so „schräg“ sei. Zuschauer sollen schreiben, ob sie sich einen Testdruck trauen – vielleicht wie der Kollege im Video einen kleineren Benchy: drei, vier Tage für ein Boot mit Donald Duck am Bug. Verabschiedung mit „Peace, Love and 3D Druck“.</p>
+<p>💬 <q>ich drucke mal drei, vier Tage so ein Böötchen</q> <span class="fs">(09:48)</span></p>
+<p>📌</p><ul><li><span class="tag t-bsp">Beispiel</span>Benchy mit Donald-Duck-Bild aus dem Original-Video <span class="fs">(09:48)</span>.</li><li><span class="tag t-b">Behauptung</span>Kleiner Benchy: drei, vier Tage <span class="fs">(09:48)</span>.</li></ul>
+<p class="q">❓ „Strike over. End out.“ <span class="fs">(10:18)</span> – unverständliche Verabschiedung in den Untertiteln; „nächsten Short Tipp“ – vermutlich Kurzvideo-Reihe.</p>
+<p class="e">📚 <b>Benchy</b> = das bekannte Test-Boot „3DBenchy“ für 3D-Drucker.</p></div>
+
+<h2>Zeichnung 3 · Ablauf</h2>
+<div class="card"><p class="small">Darstellung laut Video (schematisch).</p>
+<div class="zeich"><svg viewBox="0 0 340 430" role="img" aria-label="Ablauf: Modell, Web-Werkzeug, Foto auflegen, Process, 3MF, Slicer mit 0,08 mm, Druck über Tage">
+<defs><marker id="pf3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--sub)"/></marker></defs>
+<g font-size="13">
+<rect class="k" x="45" y="6" width="250" height="44" rx="10"/><text x="170" y="25" text-anchor="middle" font-weight="600">📦 3D-Modell (z. B. Schädel)</text><text class="sub" x="170" y="41" text-anchor="middle">ins Web-Werkzeug ziehen (02:04)</text>
+<rect class="kb" x="45" y="66" width="250" height="44" rx="10"/><text x="170" y="85" text-anchor="middle" font-weight="600">🖌️ Verlauf als Grundfarbe</text><text class="sub" x="170" y="101" text-anchor="middle">ganzes Objekt einfärben (05:40)</text>
+<rect class="kb" x="45" y="126" width="250" height="44" rx="10"/><text x="170" y="145" text-anchor="middle" font-weight="600">📷 Foto auflegen (PNG freigestellt)</text><text class="sub" x="170" y="161" text-anchor="middle">drehen, Größe, „Apply Photo“ (02:35–03:06)</text>
+<rect class="ko" x="45" y="186" width="250" height="44" rx="10"/><text x="170" y="205" text-anchor="middle" font-weight="600">💾 „Process“ → 3MF</text><text class="sub" x="170" y="221" text-anchor="middle">herunterladen (04:07)</text>
+<rect class="k" x="45" y="246" width="250" height="52" rx="10"/><text x="170" y="265" text-anchor="middle" font-weight="600">🖨️ Slicer (aktuelles Bambu Studio)</text><text class="sub" x="170" y="281" text-anchor="middle">C/M/Y/K/W zuweisen, Meldung wegklicken,</text><text class="sub" x="170" y="293" text-anchor="middle">Schichthöhe 0,08 mm (04:07–08:16)</text>
+<rect class="k" x="45" y="314" width="250" height="44" rx="10"/><text x="170" y="333" text-anchor="middle" font-weight="600">🔬 Schichtvorschau prüfen</text><text class="sub" x="170" y="349" text-anchor="middle">Farbwechsel fast jede Schicht (07:11)</text>
+<rect class="kb" x="45" y="374" width="250" height="44" rx="10" style="fill-opacity:.3"/><text x="170" y="393" text-anchor="middle" font-weight="600">⏱️ Druck</text><text class="sub" x="170" y="409" text-anchor="middle">im Beispiel 4 T 15 h auf 2 Düsen (08:47)</text>
+</g>
+<g class="pf" marker-end="url(#pf3)"><path d="M170 50v14"/><path d="M170 110v14"/><path d="M170 170v14"/><path d="M170 230v14"/><path d="M170 298v14"/><path d="M170 358v14"/></g>
+</svg></div></div>
+
+<h2 id="e">E · 📅 Ablauf (Arbeitsschritte)</h2>
+<div class="card"><ol>
+<li>Web-Werkzeug öffnen, Modell hineinziehen <span class="fs">(01:33–02:04)</span></li>
+<li>Farbverlauf/Pinsel für den Grund <span class="fs">(02:04, 05:40)</span></li>
+<li>Foto wählen (am besten freigestelltes PNG), platzieren, skalieren, „Apply Photo“ <span class="fs">(02:35–03:36)</span></li>
+<li>„Process“, 3MF herunterladen <span class="fs">(04:07)</span></li>
+<li>Aktuelles Bambu Studio: Drucker mit mehreren Düsen, C/M/Y/K/W laden <span class="fs">(04:07–04:38)</span></li>
+<li>3MF öffnen, Hinweis „generierte Datei“ bestätigen <span class="fs">(04:38–05:40)</span></li>
+<li>Schichthöhe 0,08 mm, slicen <span class="fs">(08:16–08:47)</span></li>
+<li>Schichten ansehen, Zeit und Wechsel prüfen <span class="fs">(07:11, 08:47)</span></li></ol>
+<p class="e">📚 Eckdaten (nicht aus dem Video): Hackaday stellt den OrcaSlicer-Fork „FullSpectrum“ (Entwickler ratdoux) am 17.03.2026 vor · Bambu Studio 2.5.3 mit Farbmischung am 14.04.2026 (Bambu nennt FullSpectrum als Grundlage der Farbvorhersage) · OrcaSlicer 2.5.0 Alpha mit „Color mixing with mixed filaments“ am 16.10.2026, RC am 01.11.2026 · Primed3D v0.9.8.84.50 beim Abruf am 15.11.2026.</p></div>
+
+<h2 id="f">F · 👤 Personen · 🗺️ Orte · 📖 Begriffe</h2>
+<div class="card"><p><b>👤 Personen</b></p><ul>
+<li><b>Sprecher</b> → Betreiber von Bastlwastl → stellt das Verfahren vor → durchgehend</li>
+<li><b>„Kollege“</b> → Autor der Foto-Software und eines Videos mit Benchy/Donald Duck → <span class="fs">(00:31, 09:48)</span>; 📚 belegt ist der Anbieter des Werkzeugs: YouTube-Kanal 3D Revolution; ob er der im Video Gezeigte ist ❓</li>
+<li><b>Community</b> → soll Schwarz-Weiß und Einstellungen erforschen → <span class="fs">(06:40, 09:48)</span></li></ul>
+<p><b>🗺️ Orte</b> – „deutschsprachiger Raum“ <span class="fs">(00:00)</span>; Baustellen mit Großplakaten (Vergleich, 07:42). Digital: YouTube, die Webseite, Bambu Studio.</p></div>
+<div class="card"><p><b>📖 Begriffe</b></p><ul>
+<li><b>CMYK / C, M, Y, K + Weiß</b> → Cyan, Magenta, Gelb, Schwarz (Key), dazu Weiß → Grundfarben der Mischung → <span class="fs">(00:31, 04:38)</span></li>
+<li><b>Farbverlauf</b> → fließender Übergang zwischen Farben → <span class="fs">(00:31, 02:04)</span></li>
+<li><b>Bambu Studio</b> → Slicer von Bambu Lab, aktuelles Update nötig → <span class="fs">(00:00, 03:36)</span></li>
+<li><b>„Prime 3D 3D Revolution.net“</b> ❓ → 📚 Primed3D von 3D Revolution → <span class="fs">(01:33)</span></li>
+<li><b>PNG, freigestellt</b> → Bild mit durchsichtigem Hintergrund → <span class="fs">(03:06)</span></li>
+<li><b>Apply Photo / Process</b> → Knöpfe im Werkzeug → <span class="fs">(03:06, 04:07)</span></li>
+<li><b>3MF</b> → Projektdatei mit Farbinformationen → <span class="fs">(04:07)</span></li>
+<li><b>H2D, X2D</b> → Bambu-Lab-Drucker mit zwei Düsen → <span class="fs">(04:07, 06:40)</span></li>
+<li><b>AMS</b> → Filament-Wechselsystem von Bambu Lab → <span class="fs">(04:07)</span></li>
+<li><b>Nozzle / Düse</b> → hier: Zahl der Düsen bestimmt die Wartezeit → <span class="fs">(01:33, 09:17)</span></li>
+<li><b>Filamentwechsel</b> → Umschalten auf anderes Filament; im Beispiel 3224 → <span class="fs">(08:47)</span></li>
+<li><b>Schichthöhe 0,20 / 0,08 mm</b> → <span class="fs">(08:16)</span></li>
+<li><b>Benchy</b> → Test-Boot → <span class="fs">(09:48)</span></li>
+<li><b>Orca</b> → OrcaSlicer, als mögliche Alternative genannt → <span class="fs">(05:09)</span></li>
+<li>📚 <b>Dithering</b> → Rastern mit wenigen Farben, das Auge mischt</li></ul></div>
+
+<h2 id="g">G · ⚖️ Abgleich (neutral)</h2>
+<div class="card"><p class="small">Stand heute = geprüfte Angaben bis 15.11.2026.</p>
+<table class="stapel"><thead><tr><th>Aussage im Video</th><th>Stand heute / Herstellerangaben 📚</th><th>Quelle</th></tr></thead><tbody>
+<tr><td data-l="Aussage im Video">Bambu Studio hat im letzten Update eine CMYK-Funktion; mit fünf Farben lassen sich Verläufe drucken <span class="fs">(00:31)</span></td><td data-l="Stand heute">Funktion „Farbmischung“ (Color Mixing, mit „Gradient“-Modus), experimentell, ab Bambu Studio 2.5.3 vom 14.04.2026, auch in 2.6.0. Mischt bis zu drei gleichartige Filamente über abwechselnde dünne Schichten (bis 0,08 mm). Bambu nennt den OrcaSlicer-Fork FullSpectrum als Grundlage der Farbvorhersage. Fünf Farben (W/K/C/M/Y) werden von der Primed3D-3MF als gemalte Flächen geliefert.</td><td data-l="Quelle"><a href="https://all3dp.com/4/never-mind-the-x2d-new-bambu-studio-update-adds-filament-color-mixing-feature/" target="_blank" rel="noopener">All3DP (21.04.2026)</a> · <a href="https://www.tomshardware.com/3d-printing/bambu-updates-its-3d-printers-to-print-unique-hues-or-gradients-using-two-or-three-filaments-company-acknowledges-orcaslicer-fullspectrum-fork-as-the-basis-for-the-color-prediction-part-of-the-new-feature" target="_blank" rel="noopener">Tom’s Hardware (16.04.2026)</a> · <a href="https://forum.bambulab.com/t/has-anyone-tried-the-new-color-mixing-feature-on-studio-2-5-3-yet/249293" target="_blank" rel="noopener">Bambu-Forum</a></td></tr>
+<tr><td data-l="Aussage im Video">Webseite „Prime 3D 3D Revolution.net“, Software eines „Kollegen“, kostenlos, Kaffee-Spende <span class="fs">(00:31, 01:33, 04:07)</span></td><td data-l="Stand heute">Primed3D – „Full Spectrum STL Painter, A 3D Revolution Tool“, „Free Full Spectrum 3D Printing Tool“; Anbieter 3D Revolution (UK), Spende über Buy Me a Coffee, GitHub-Seite 3DRev/Primed3D. Modi: CMY, WCMY, KCMY (je 4), WKCMY (5), 2 Filamente, Volltonfarben ohne Rastern.</td><td data-l="Quelle"><a href="https://primed3d.3drevolution.net/" target="_blank" rel="noopener">Primed3D (Abruf 15.11.2026)</a> · <a href="https://www.hackster.io/news/3d-print-full-color-photos-on-a-regular-old-filament-printer-e40b1ba784d8" target="_blank" rel="noopener">hackster.io</a> · <a href="https://alternativeto.net/software/primed3d/about/" target="_blank" rel="noopener">alternativeTo</a></td></tr>
+<tr><td data-l="Aussage im Video">Original-Video des „Kollegen“ mit Benchy <span class="fs">(00:31, 09:48)</span></td><td data-l="Stand heute">hackster verlinkt als Vorstellungsvideo youtu.be/hZe5zvMEsp0; die Werkzeug-Seite verweist auf den Kanal 3D Revolution. Ob es das im Video gezeigte ist, nicht eindeutig zuzuordnen ❓.</td><td data-l="Quelle"><a href="https://www.hackster.io/news/3d-print-full-color-photos-on-a-regular-old-filament-printer-e40b1ba784d8" target="_blank" rel="noopener">hackster.io</a></td></tr>
+<tr><td data-l="Aussage im Video">„… das geht für Orca oder noch für andere Slicer ebenso. Keine Ahnung.“ <span class="fs">(05:09)</span></td><td data-l="Stand heute">Laut Werkzeug-Seite „bestätigt“: Bambu Studio, OrcaSlicer „in allen Varianten – Snapmaker, Flashforge, Creality usw.“ und PrusaSlicer; die 3MF trägt Malfarben im Bambu-Format. Wichtig sei nur die gleiche Schichthöhe (0,08 bzw. 0,06 mm).</td><td data-l="Quelle"><a href="https://primed3d.3drevolution.net/" target="_blank" rel="noopener">Primed3D, Abschnitt „Slicer Compatibility“</a></td></tr>
+<tr><td data-l="Aussage im Video">(OrcaSlicer selbst)</td><td data-l="Stand heute">OrcaSlicer 2.5.0 Alpha (16.10.2026) bringt „Color mixing with mixed filaments“: zwei oder drei geladene gleichartige Filamente werden zu einem Zusatz-Slot gemischt und in abwechselnden Schichten gedruckt; „Mixed color sublayer“ für feinere Übergänge; CMYW/RYBW-Automischung für importierte Modelle; experimentell. Im RC vom 01.11.2026 enthalten, Stable noch nicht erschienen. Der Fork FullSpectrum (ratdoux) arbeitet ähnlich, getestet auf dem Snapmaker U1.</td><td data-l="Quelle"><a href="https://www.orcaslicer.com/wiki/releases/release_2_5_0_alpha" target="_blank" rel="noopener">OrcaSlicer 2.5.0 Alpha</a> · <a href="https://makers101.com/orcaslicer-2-5-0-rc/" target="_blank" rel="noopener">makers101 (RC)</a> · <a href="https://github.com/ratdoux/OrcaSlicer-FullSpectrum" target="_blank" rel="noopener">FullSpectrum (GitHub)</a></td></tr>
+<tr><td data-l="Aussage im Video">(Flashforge Flash Studio / Orca-Flashforge)</td><td data-l="Stand heute">Eine eigene Farbmisch-Funktion in Flashforges Slicern wurde nicht gefunden – nicht belegt ❓. Die Primed3D-Seite nennt Flashforge-Varianten von OrcaSlicer als kompatibel für den Import.</td><td data-l="Quelle"><a href="https://primed3d.3drevolution.net/" target="_blank" rel="noopener">Primed3D</a></td></tr>
+<tr><td data-l="Aussage im Video">0,08 mm statt 0,20 mm für ein sauberes Bild <span class="fs">(08:16)</span></td><td data-l="Stand heute">Werkzeug-Seite: Schichthöhe 0,08 mm (Standard) oder 0,06 mm (hohe Qualität), muss zum Export passen. Bambu empfiehlt für die eigene Farbmischung bei 0,4-mm-Düse 0,12 mm Grundschicht und 0,2 mm Mischschicht (laut Tom’s Hardware).</td><td data-l="Quelle"><a href="https://primed3d.3drevolution.net/" target="_blank" rel="noopener">Primed3D</a> · <a href="https://www.tomshardware.com/3d-printing/bambu-updates-its-3d-printers-to-print-unique-hues-or-gradients-using-two-or-three-filaments-company-acknowledges-orcaslicer-fullspectrum-fork-as-the-basis-for-the-color-prediction-part-of-the-new-feature" target="_blank" rel="noopener">Tom’s Hardware</a></td></tr>
+<tr><td data-l="Aussage im Video">Mindestens zwei, eher fünf Düsen; mit einer Düse erheblich länger <span class="fs">(01:33, 09:17)</span></td><td data-l="Stand heute">Für die Bambu-Farbmischung: Ein-Düsen-Drucker möglich, wegen Spülaufwand nicht empfohlen. Ein Nutzer berichtet knapp sechs Stunden für einen Benchy auf dem H2C (Bambu-Farbmischung, nicht Primed3D).</td><td data-l="Quelle"><a href="https://www.tomshardware.com/3d-printing/bambu-updates-its-3d-printers-to-print-unique-hues-or-gradients-using-two-or-three-filaments-company-acknowledges-orcaslicer-fullspectrum-fork-as-the-basis-for-the-color-prediction-part-of-the-new-feature" target="_blank" rel="noopener">Tom’s Hardware</a> · <a href="https://forum.bambulab.com/t/has-anyone-tried-the-new-color-mixing-feature-on-studio-2-5-3-yet/249293" target="_blank" rel="noopener">Bambu-Forum</a></td></tr>
+<tr><td data-l="Aussage im Video">Schwarz-Weiß mit zwei Düsen? <span class="fs">(06:10–06:40)</span></td><td data-l="Stand heute">Primed3D bietet einen Modus „2 Filaments – dual nozzle“, der zwischen zwei gewählten Farben rastert. Druckergebnisse dazu nicht geprüft.</td><td data-l="Quelle"><a href="https://primed3d.3drevolution.net/" target="_blank" rel="noopener">Primed3D</a></td></tr>
+<tr><td data-l="Aussage im Video">Bild wirkt wie Rasterpunkte <span class="fs">(07:42)</span></td><td data-l="Stand heute">Primed3D beschreibt „Full Spectrum“ als Zerlegung in Cyan, Magenta, Gelb (optional Weiß/Schwarz) als Schicht-Dithering; hackster: Mischung kleiner Farbflächen, die das Auge aus der Entfernung verbindet.</td><td data-l="Quelle"><a href="https://primed3d.3drevolution.net/" target="_blank" rel="noopener">Primed3D</a> · <a href="https://www.hackster.io/news/3d-print-full-color-photos-on-a-regular-old-filament-printer-e40b1ba784d8" target="_blank" rel="noopener">hackster.io</a></td></tr>
+</tbody></table></div>
+<div class="card"><p><b>🧩 Spannungen innerhalb des Videos</b></p><ul>
+<li>„nicht mindestens zwei, eher fünf Düsen“ nötig <span class="fs">(01:33)</span> gegenüber „ihr könnt auch mit einer Nozzle das machen“ <span class="fs">(09:17)</span> – gemeint ist wohl: möglich, aber sehr lang.</li>
+<li>„gar nicht so kompliziert“ <span class="fs">(00:31)</span> gegenüber „sehr aufwendiges Verfahren … in den Kinderschuhen“ <span class="fs">(09:17)</span> – bezieht sich einmal auf Verläufe, einmal auf Fotos.</li>
+<li>„nicht die Fehlermeldung, aber zumindest die Meldung“ <span class="fs">(04:38)</span>, danach „diese Fehlermeldung“ <span class="fs">(05:09)</span>.</li>
+<li>Grün aus „Magenta, dann Schwarz, Weiß“ <span class="fs">(07:42)</span> – passt nicht zur üblichen Mischung Cyan + Gelb ❓.</li>
+<li>Erste Zeit „extrem schnell“ (1 T 14 h) – vom Sprecher selbst als Bedienfehler (0,20 mm) erkannt <span class="fs">(08:16)</span>.</li></ul></div>
+
+<h2 id="h">H · 💡 Erkenntnisse, offene Fragen – und was das für den Creator 5 Pro heißt</h2>
+<div class="card"><p><b>Was ich mitnehme</b></p><ul>
+<li>Foto auf Modell geht mit Filamentdruck – aber nur mit sehr dünnen Schichten (0,08 mm) und Tausenden Farbwechseln.</li>
+<li>Die Düsen- bzw. Kopfzahl bestimmt, ob das Stunden oder Tage dauert.</li>
+<li>Bild vorher freistellen (PNG), Grund als Verlauf, Foto darüber.</li></ul></div>
+<div class="card"><p><b>Einordnung für Toms Creator 5 Pro</b> (4 Köpfe mit Werkzeugwechsel, kein Spülabfall, aber höchstens 4 Farben gleichzeitig)</p>
+<p class="small">Alles in diesem Kasten sind <b>Überlegungen</b>, nichts davon ist am Gerät oder in Druckwerk erprobt.</p><ul>
+<li><b>Fünf Farben gleichzeitig gehen nicht.</b> Die beste Primed3D-Stufe WKCMY braucht fünf Filamente.</li>
+<li><b>Mit vier Köpfen denkbar:</b> laut Werkzeug-Seite die Vier-Farben-Modi <b>WCMY</b> (hellere Pastelltöne) oder <b>KCMY</b> (sattere Dunkeltöne) oder <b>CMY</b> mit weißem Grund; für Graustufen der Modus „2 Filaments“ mit Schwarz und Weiß. Ein Vorteil gegenüber den Zwei-Düsen-Druckern im Video: jede Farbe hat ihren eigenen Kopf – Wechsel ohne Filamenttausch und ohne Spülturm-Abfall. Die Zahl der Wechsel bleibt aber hoch; wie lang ein Kopfwechsel tatsächlich dauert und was das bei Tausenden Wechseln bedeutet, ist offen.</li>
+<li><b>Schichthöhe:</b> Gefordert sind 0,08 mm (oder 0,06 mm). Druckwerks Profile für die 0,4-mm-Düse beginnen bei 0,12 mm; 0,08 mm gibt es im Profil der 0,25-mm-Düse (dann auf allen Köpfen). Ob 0,08 mm mit 0,4-mm-Düse sauber läuft, ist offen.</li>
+<li><b>Slicer-Seite:</b> Primed3D nennt Flashforge-Varianten von OrcaSlicer als kompatibel. Druckwerk slict mit OrcaSlicer 2.5.0 – die Orca-eigene Farbmischung („mixed filaments“) ist dort enthalten, aber experimentell. <b>Nicht getestet:</b> ob Druckwerks Slicer-Skript eine gemalte 3MF (Malfarben je Fläche) mit dem Creator-Profil übernimmt – das Skript nimmt heute je Farbe eine eigene Datei. Eine Farbmischung in Flashforges eigenem Slicer wurde nicht gefunden.</li>
+<li><b>Bezug zu Druckwerk heute:</b> <i>Bild-zu-Farbrelief</i> (<code>werkzeug/bild_relief.py</code>) macht aus einem Bild ein flaches Wandbild in bis zu vier <b>Volltonfarben</b> – schnell, ohne Mischen, aber nur flach. Die <i>feste 4-Farben-Zerlegung aus Textur</i> (<code>werkzeug/textur_farben.py</code>, entsteht gerade) färbt ein 3D-Modell in vier Volltonfarben – auch ohne Mischfarben. Das Video-Verfahren wäre ein dritter Weg: echte Mischfarben auf runden Körpern, dafür viel längere Druckzeit. In Druckwerk ist dafür <b>keine Funktion eingebaut</b>.</li>
+<li><b>Sinnvoller erster Versuch</b> (Vorschlag): kleines Testteil (wenige cm), Modus KCMY oder 2 Filamente, 0,08 mm, erst die Slicer-Zeit ansehen.</li></ul></div>
+<div class="card"><p><b>Offene Fragen</b></p><ul>
+<li>Läuft eine Primed3D-3MF in Druckwerks OrcaSlicer 2.5.0 (Kommandozeile) mit dem Creator-5-Pro-Profil – mit 4 Filamenten und 0,08 mm?</li>
+<li>Wie lange dauert ein Kopfwechsel am Creator 5 Pro im Mittel – und wie viele Wechsel ergibt ein kleines Testteil?</li>
+<li>Wie sieht das Ergebnis im Vier-Farben-Modus gegenüber WKCMY aus?</li>
+<li>Bringt Flashforge die Farbmischung in den eigenen Slicer?</li></ul>
+<p class="small">Suchbegriffe: „Primed3D KCMY results“, „OrcaSlicer mixed filament toolchanger“, „Creator 5 Pro tool change time“, „FullSpectrum Flashforge“.</p></div>
+
+<h2 id="i">I · 🗂️ Ein-Seiten-Zusammenfassung</h2>
+<div class="card">
+<p><b>Worum es geht:</b> Bastlwastl zeigt kurz und ohne Anleitung ein kostenloses Web-Werkzeug (belegt: Primed3D von 3D Revolution), das Fotos und Verläufe auf 3D-Modelle malt und eine 3MF erzeugt, die mit Cyan, Magenta, Gelb, Schwarz und Weiß gedruckt wird.</p>
+<p><b>So geht’s laut Video:</b> Modell hineinziehen → Grund als Verlauf → freigestelltes PNG auflegen, „Apply Photo“ → „Process“ → 3MF → aktuelles Bambu Studio, fünf Farben laden, Hinweis wegklicken → <b>0,08 mm</b> Schichthöhe → slicen.</p>
+<p><b>Preis dafür:</b> Schädel-Oberteil: 4 Tage 15 Std. 15 Min., 3224 Filamentwechsel auf zwei Düsen; mit 0,20 mm 1 Tag 14 Std., aber unsauber. Eine Düse: viel länger; mehr Düsen: viel kürzer.</p>
+<p><b>Stand heute:</b> Bambu Studio „Farbmischung“ seit 2.5.3 (14.04.2026), OrcaSlicer „mixed filaments“ seit 2.5.0 Alpha (experimentell); Primed3D nennt Bambu Studio, OrcaSlicer (auch Flashforge-Variante) und PrusaSlicer als kompatibel.</p>
+<p><b>Für den Creator 5 Pro:</b> höchstens Vier-Farben-Modi (KCMY/WCMY) oder Schwarz-Weiß denkbar – nicht erprobt, in Druckwerk nicht eingebaut.</p></div>
+
+<h2 id="q">Quellen</h2>
+<div class="card small"><ul>
+<li>Video: <a href="https://www.youtube.com/watch?v=XZR_ALfpAKo" target="_blank" rel="noopener">Bastlwastl – NEU Jedes Foto in 3D drucken?! Diese GRATIS Funktion verändert alles!</a> (automatische Untertitel, abgerufen 15.11.2026)</li>
+<li><a href="https://primed3d.3drevolution.net/" target="_blank" rel="noopener">Primed3D – Full Spectrum STL Painter (3D Revolution)</a>, Hilfe-Texte abgerufen 15.11.2026</li>
+<li><a href="https://www.hackster.io/news/3d-print-full-color-photos-on-a-regular-old-filament-printer-e40b1ba784d8" target="_blank" rel="noopener">hackster.io: 3D Print Full-Color Photos on a Regular Old Filament Printer</a></li>
+<li><a href="https://alternativeto.net/software/primed3d/about/" target="_blank" rel="noopener">alternativeTo: Primed3D</a></li>
+<li><a href="https://all3dp.com/4/never-mind-the-x2d-new-bambu-studio-update-adds-filament-color-mixing-feature/" target="_blank" rel="noopener">All3DP: Bambu Studio Update Adds Filament Color Mixing</a></li>
+<li><a href="https://www.tomshardware.com/3d-printing/bambu-updates-its-3d-printers-to-print-unique-hues-or-gradients-using-two-or-three-filaments-company-acknowledges-orcaslicer-fullspectrum-fork-as-the-basis-for-the-color-prediction-part-of-the-new-feature" target="_blank" rel="noopener">Tom’s Hardware: Bambu updates its 3D printers to print unique hues or gradients</a></li>
+<li><a href="https://forum.bambulab.com/t/has-anyone-tried-the-new-color-mixing-feature-on-studio-2-5-3-yet/249293" target="_blank" rel="noopener">Bambu-Forum: Color Mixing in Studio 2.5.3</a></li>
+<li><a href="https://www.orcaslicer.com/wiki/releases/release_2_5_0_alpha" target="_blank" rel="noopener">OrcaSlicer: Release 2.5.0 Alpha</a> · <a href="https://makers101.com/orcaslicer-2-5-0-rc/" target="_blank" rel="noopener">makers101: OrcaSlicer 2.5.0 RC</a></li>
+<li><a href="https://github.com/ratdoux/OrcaSlicer-FullSpectrum" target="_blank" rel="noopener">GitHub: ratdoux/OrcaSlicer-FullSpectrum</a> · <a href="https://hackaday.com/2026/03/17/fullspectrum-is-like-hueforge-for-3d-models-but-bring-your-toolchanger" target="_blank" rel="noopener">Hackaday (17.03.2026)</a></li></ul>
+<p>Hörfehler-Hinweise (❓) sind Vermutungen aus dem Zusammenhang.</p></div>
+<p class="small" style="text-align:center;margin-top:16px"><a href="index.html">‹ Alle ausgewerteten Videos</a> · <a href="../index.html">Druckwerk</a></p>
+</main>
+</body>
+</html>

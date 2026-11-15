@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<title>Auswertung: Eigene STL-Dateien mit KI (Bastlwastl) – Druckwerk</title>
+<link rel="icon" href="../symbol-192.png" type="image/png">
+<link rel="apple-touch-icon" href="../symbol-180.png">
+<style>
+:root{--bg:#f2f2f7;--card:#fff;--text:#000;--sub:#6c6c70;--sep:rgba(60,60,67,.18);--blue:#007aff;--green:#34c759;--orange:#ff9500;--red:#ff3b30;--fill:rgba(120,120,128,.12);--grau:#a7a7ad}
+@media (prefers-color-scheme:dark){:root{--bg:#000;--card:#1c1c1e;--text:#fff;--sub:#98989f;--sep:rgba(84,84,88,.6);--blue:#0a84ff;--green:#30d158;--orange:#ff9f0a;--red:#ff453a;--fill:rgba(120,120,128,.24);--grau:#8e8e93}}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--text);font:17px/1.4 -apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",sans-serif}
+main{max-width:720px;margin:0 auto;padding:calc(env(safe-area-inset-top) + 8px) 16px 60px}
+a{color:var(--blue)}
+h1{font-size:30px;font-weight:700;letter-spacing:.2px;margin:6px 4px 6px;line-height:1.15}
+h2{font-size:13px;font-weight:400;text-transform:uppercase;color:var(--sub);margin:28px 16px 8px}
+h3{font-size:18px;margin:0 0 6px}
+.card{background:var(--card);border-radius:12px;overflow:hidden;padding:14px 16px;margin-bottom:10px;overflow-wrap:anywhere}
+.card p{margin:0 0 8px}.card p:last-child{margin-bottom:0}
+.small,.fs{font-size:13px;color:var(--sub)}
+.fs{white-space:nowrap}
+.top{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;padding:8px 0}
+.top a{text-decoration:none;font-size:17px}
+.pill{font-size:12px;background:var(--fill);border-radius:6px;padding:2px 7px;white-space:nowrap;color:var(--text)}
+.e{background:rgba(52,199,89,.13);border-radius:10px;padding:8px 12px;margin-top:8px;font-size:15px}
+.q{background:rgba(255,149,0,.15);border-radius:10px;padding:8px 12px;margin-top:8px;font-size:15px}
+ul,ol{margin:4px 0 8px;padding-left:20px}li{margin:4px 0}
+.tag{font-size:11px;font-weight:600;border-radius:5px;padding:1px 6px;margin-right:4px;color:#fff;white-space:nowrap}
+.t-f{background:var(--blue)}.t-b{background:var(--orange)}.t-m{background:#af52de}.t-bsp{background:var(--green)}
+pre.baum{font:13px/1.5 ui-monospace,Menlo,monospace;white-space:pre-wrap;margin:0;overflow-wrap:anywhere}
+blockquote{margin:6px 0;padding:4px 0 4px 12px;border-left:3px solid var(--blue);font-style:italic}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;vertical-align:top;padding:8px 6px;border-top:.5px solid var(--sep)}
+th{color:var(--sub);font-weight:500;font-size:12px;text-transform:uppercase}
+@media (max-width:600px){table.stapel thead{display:none}table.stapel tr{display:block;border-top:.5px solid var(--sep);padding:6px 0}
+  table.stapel td{display:block;border:0;padding:3px 0}table.stapel td::before{content:attr(data-l);display:block;font-size:11px;color:var(--sub);text-transform:uppercase}}
+svg{width:100%;height:auto;display:block}
+svg text{font-family:-apple-system,BlinkMacSystemFont,sans-serif;fill:var(--text)}
+svg .k{fill:var(--card);stroke:var(--sep);stroke-width:1}
+svg .kb{fill:var(--blue);fill-opacity:.12;stroke:var(--blue);stroke-width:1.2}
+svg .ko{fill:var(--orange);fill-opacity:.15;stroke:var(--orange);stroke-width:1.2}
+svg .sub{fill:var(--sub);font-size:10px}
+svg .pf{stroke:var(--sub);stroke-width:1.5;fill:none}
+svg .grau{fill:var(--grau)}
+svg .rot{stroke:var(--red);stroke-width:2.2}
+svg .gr{stroke:var(--green);stroke-width:2.2}
+.zeich{background:var(--bg);border-radius:10px;padding:8px}
+.legende{display:flex;flex-wrap:wrap;gap:6px 12px;font-size:13px;color:var(--sub)}
+nav.inhalt a{display:inline-block;margin:3px 6px 3px 0;font-size:14px;text-decoration:none;background:var(--fill);border-radius:14px;padding:4px 10px;color:var(--text)}
+</style>
+</head>
+<body>
+<main>
+<div class="top"><a href="../index.html">‹ Druckwerk</a><a href="https://www.youtube.com/watch?v=KbYygB1Xuzs" target="_blank" rel="noopener">Video ansehen ↗</a></div>
+<h1>Eigene STL-Dateien mit KI erstellen</h1>
+<p class="small" style="margin:0 4px 10px">Auswertung des Videos von <b>Bastlwastl</b> (YouTube, ca. 25 Min.) · Grundlage: automatische Untertitel, abgerufen 15.11.2026 · Auswertung vom 15.11.2026</p>
+<div class="card small">Lesehilfe: Normaler Text = was im Video gesagt wird, mit Fundstelle <span class="fs">(mm:ss)</span>. <span class="e" style="display:inline;padding:1px 6px;margin:0">📚 grün = eigene Ergänzung</span> · <span class="q" style="display:inline;padding:1px 6px;margin:0">❓ orange = unklar</span>. Die Untertitel sind automatisch erzeugt – Hörfehler sind möglich und markiert.</div>
+<nav class="inhalt" aria-label="Inhalt"><a href="#a">🧭 Steckbrief</a><a href="#b">🌳 Themenbaum</a><a href="#c">🎯 Kernaussagen</a><a href="#d">🔎 Auswertung</a><a href="#e">📅 Ablauf</a><a href="#f">📖 Verzeichnisse</a><a href="#g">⚖️ Abgleich</a><a href="#h">💡 Erkenntnisse</a><a href="#i">🗂️ Zusammenfassung</a><a href="#q">Quellen</a></nav>
+
+<!-- ================= A ================= -->
+<h2 id="a">A · 🧭 Steckbrief</h2>
+<div class="card">
+<p><b>Thema in einem Satz:</b> Wie man ohne CAD-Kenntnisse aus einer Idee über ein ChatGPT-Bild und den Bild-zu-3D-Dienst MakerLab auf MakerWorld eine druckbare STL-Datei macht – und welche Regeln Fehlversuche und Kosten sparen.</p>
+<p><b>Sprecher:</b> Betreiber des Kanals „Bastlwastl“ (Name im Video nicht genannt), 3D-Druck-YouTuber; zeigt nach eigener Aussage „nicht den besten, sondern meinen persönlichen“ Arbeitsablauf <span class="fs">(02:01)</span>. Druckt selbst auf einem X1C <span class="fs">(19:49)</span>.</p>
+<p><b>Dauer / Umfang:</b> ca. 25:10 Min., ein Sprecher.</p>
+<p><b>Art:</b> Anleitung mit Bildschirm-Vorführung (ChatGPT → MakerLab → Slicer) am Beispiel „Frosch in Ritterrüstung“, mit Kommentaren und Nebenbemerkungen.</p>
+<p><b>Grundton:</b> locker, humorvoll, vorsichtig-selbstkritisch; beginnt mit einer „Triggerwarnung“ und bittet mehrfach um faire Kommentare <span class="fs">(00:00, 24:28)</span>; nennt KI „ein Übel“, das man trotzdem nutzen lernen sollte <span class="fs">(23:58)</span>.</p>
+<p class="q">❓ Veröffentlichungsdatum: nicht abrufbar (YouTube-Seite aus der Arbeitsumgebung gesperrt). Die genannten Modelle (Tripo 3.1, „HI3D … relativ neu“) passen zu Herbst 2026 – das ist eine Schlussfolgerung, kein Beleg.</p>
+</div>
+
+<!-- ================= B ================= -->
+<h2 id="b">B · 🌳 Themenbaum</h2>
+<div class="card"><pre class="baum">🎬 Eigene STL-Dateien mit KI (00:00–25:10)
+├─ ⚠️ Vorrede: Triggerwarnung, faire Kommentare (00:00)
+├─ 💡 Ausgangslage (01:01)
+│  ├─ 📈 KI-Welle im Hobby, gratis und teuer (01:01)
+│  ├─ ⏩ Stand des Tages, rasanter Wandel (01:31)
+│  └─ ⚠️ Grenzen heute (02:31)
+│     ├─ 🏺 hohle Objekte (Vase, Helm, Maske) (02:31)
+│     └─ 🧠 jede KI hat Stärken – selbst testen (03:33)
+├─ 🧰 Werkzeuge: ChatGPT + MakerWorld MakerLab (03:33)
+├─ 🖼️ Regeln fürs Eingabebild (05:07–07:46)
+│  ├─ 🎯 ein Objekt, neutral, einfarbig (05:07)
+│  ├─ 📐 leicht schräg von oben (05:39)
+│  ├─ ✨ matt statt glänzend (06:10)
+│  ├─ 🧱 kompakt, nichts Fliegendes (06:10)
+│  ├─ 🦶 Unterseite und Aufstellung (06:42)
+│  └─ 📏 Dimensionen planen, prüfen (07:15)
+├─ 💬 Bild in ChatGPT (07:46–11:59)
+│  ├─ 📁 Chat oder Projekt, Prompt (07:46)
+│  ├─ 🎙️ Diktat statt Tippen (08:48)
+│  ├─ 🐸 Beispiel Frosch-Ritter (09:21)
+│  └─ 🔧 Nachbessern: Textur, Cape weg (09:52)
+├─ 💰 Punkte und Credits (12:30–13:35)
+├─ 🤖 MakerLab „Bild zu 3D“ (13:35–16:10)
+│  ├─ 🗂️ Verlauf mit ~30 Plätzen (13:35)
+│  ├─ 🧪 Modelle, Zeiten, Preise (14:38)
+│  └─ 💡 ChatGPT nach bester KI fragen (15:40)
+├─ ✂️ Ein Stück oder getrennte Teile (16:41)
+├─ 🔎 Fehlersuche in Grau (17:43)
+├─ 📏 Größe ist elementar (19:17)
+├─ 📤 Export: Drucker, Düse, Format (19:49)
+│  └─ 📣 Kanal-Hinweis (20:52)
+├─ 🖨️ Slicer: auf Fläche legen, Boden schneiden (21:23)
+└─ 🔮 Ausblick: weitere KIs, Teil 2 (22:56)</pre></div>
+<div class="card legende"><span>🎬 Video</span><span>⚠️ Warnung/Grenze</span><span>💡 Idee/Tipp</span><span>📈 Entwicklung</span><span>⏩ Wandel</span><span>🏺 Hohlform</span><span>🧠 Auswahl</span><span>🧰 Werkzeug</span><span>🖼️ Bild</span><span>🎯 Motiv</span><span>📐 Winkel</span><span>✨ Oberfläche</span><span>🧱 Form</span><span>🦶 Standfläche</span><span>📏 Größe</span><span>💬 Chat-KI</span><span>📁 Projekt</span><span>🎙️ Sprache</span><span>🐸 Beispiel</span><span>🔧 Korrektur</span><span>💰 Kosten</span><span>🤖 3D-KI</span><span>🗂️ Verlauf</span><span>🧪 Modelle</span><span>✂️ Teilung</span><span>🔎 Prüfung</span><span>📤 Export</span><span>📣 Kanal</span><span>🖨️ Slicer</span><span>🔮 Ausblick</span></div>
+
+<!-- ================= C ================= -->
+<h2 id="c">C · 🎯 Kernaussagen</h2>
+<div class="card"><h3>1 · KI-Generatoren sind nützlich, aber keine Alleskönner. ★★★</h3>
+<p class="small">Er will zeigen, dass sie „nicht die eierlegenden Wollmilchsäue“ sind; hohle Objekte gehen kaum, Figuren gehen <span class="fs">(01:31, 02:31, 03:02)</span>.</p></div>
+<div class="card"><h3>2 · Über das Ergebnis entscheidet schon das Eingabebild. ★★★</h3>
+<p class="small">Wer Einfluss nehmen will, muss „vorher bei ChatGPT schon ordentlich etwas einstellen“, damit später keine Fehler entstehen <span class="fs">(04:35)</span>.</p></div>
+<div class="card"><h3>3 · Gutes Eingabebild: ein Objekt, neutral, einfarbig-matt, leicht schräg von oben, kompakt. ★★★</h3>
+<p class="small">Ausführliche Regelliste vor der Vorführung <span class="fs">(05:07–07:15)</span>.</p></div>
+<div class="card"><h3>4 · Die Zielgröße gehört in den Bild-Auftrag. ★★★</h3>
+<p class="small">Ohne Größe wird es „meistens relativ klein“; „Die Größe ist elementar wichtig“, 15–20 cm statt 5–6 cm <span class="fs">(07:15, 19:17)</span>.</p></div>
+<div class="card"><h3>5 · Jede Umwandlung kostet – deshalb vorher prüfen. ★★</h3>
+<p class="small">Umrechnen „wird … Geld kosten oder zumindest Punkte“; mehrere Versuche sind üblich <span class="fs">(07:46, 13:02)</span>.</p></div>
+<div class="card"><h3>6 · Abstehende Teile lieber getrennt erzeugen und kleben. ★★</h3>
+<p class="small">Beispiel Schnecke und Schild: weniger Stützen, dafür zweimal Punkte <span class="fs">(16:41–17:43)</span>.</p></div>
+<div class="card"><h3>7 · Das 3D-Ergebnis ohne Farbe auf Fehler prüfen. ★★★</h3>
+<p class="small">Ansicht „keine Farbe“ zeigt es wie in grauem Filament; Finger, krumme Schwerter, erfundene Teile suchen <span class="fs">(17:43–18:46)</span>.</p></div>
+<div class="card"><h3>8 · Im Slicer auf die Fläche legen und den Boden plan schneiden. ★★</h3>
+<p class="small">KI-Böden sind uneben; Schnitt so tief, dass eine solide Schnittfläche entsteht <span class="fs">(21:53–22:25)</span>.</p></div>
+<div class="card"><h3>9 · Das Feld ändert sich schnell – Werkzeugwahl selbst testen. ★</h3>
+<p class="small">Video gilt für den Stand des Aufnahmetags; KI-Auswahl „müsst ihr … selber ausprobieren“ <span class="fs">(01:31, 15:10)</span>.</p></div>
+
+<!-- Zeichnung 1 -->
+<h2>Zeichnung 1 · Ablauf</h2>
+<div class="card"><p class="small">Darstellung laut Video (schematisch). Grau gestrichelt: Rücksprung bei Fehlern.</p>
+<div class="zeich"><svg viewBox="0 0 340 590" role="img" aria-label="Ablauf von der Idee bis zum Druck in acht Schritten">
+<defs><marker id="pf" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--sub)"/></marker></defs>
+<g font-size="13">
+<rect class="k" x="40" y="6" width="230" height="50" rx="10"/><text x="155" y="27" text-anchor="middle" font-weight="600">💡 Idee + Zielgröße</text><text class="sub" x="155" y="44" text-anchor="middle">Motiv, Größe, Aufstellung (07:15)</text>
+<rect class="kb" x="40" y="78" width="230" height="50" rx="10"/><text x="155" y="99" text-anchor="middle" font-weight="600">💬 Bild-KI (ChatGPT)</text><text class="sub" x="155" y="116" text-anchor="middle">Prompt mit Regeln, Düse, Schicht (08:16)</text>
+<rect class="kb" x="40" y="150" width="230" height="50" rx="10"/><text x="155" y="171" text-anchor="middle" font-weight="600">👀 Bild prüfen / nachbessern</text><text class="sub" x="155" y="188" text-anchor="middle">Textur, Cape weg, Teile trennen (10:24)</text>
+<rect class="ko" x="40" y="222" width="230" height="50" rx="10"/><text x="155" y="243" text-anchor="middle" font-weight="600">🤖 Bild zu 3D (MakerLab)</text><text class="sub" x="155" y="260" text-anchor="middle">Modell wählen – kostet Punkte (16:10)</text>
+<rect class="ko" x="40" y="294" width="230" height="50" rx="10"/><text x="155" y="315" text-anchor="middle" font-weight="600">🔎 Fehlersuche in Grau</text><text class="sub" x="155" y="332" text-anchor="middle">Ansicht „keine Farbe“ (18:15)</text>
+<rect class="k" x="40" y="366" width="230" height="50" rx="10"/><text x="155" y="387" text-anchor="middle" font-weight="600">📤 STL herunterladen</text><text class="sub" x="155" y="404" text-anchor="middle">auch 3MF oder GLB (20:52)</text>
+<rect class="k" x="40" y="438" width="230" height="58" rx="10"/><text x="155" y="458" text-anchor="middle" font-weight="600">🖨️ Slicer</text><text class="sub" x="155" y="474" text-anchor="middle">auf Fläche legen (F), Boden schneiden,</text><text class="sub" x="155" y="487" text-anchor="middle">Stützen, Infill, Wände (21:53–22:56)</text>
+<rect class="kb" x="40" y="518" width="230" height="50" rx="10" style="fill-opacity:.3"/><text x="155" y="548" text-anchor="middle" font-weight="600">✅ Druck</text>
+</g>
+<g class="pf" marker-end="url(#pf)"><path d="M155 56v20"/><path d="M155 128v20"/><path d="M155 200v20"/><path d="M155 272v20"/><path d="M155 344v20"/><path d="M155 416v20"/><path d="M155 496v20"/></g>
+<path d="M270 319 H315 V175 H274" class="pf" stroke-dasharray="4 3" marker-end="url(#pf)"/>
+<text class="sub" x="318" y="250" transform="rotate(90 318 250)" text-anchor="middle">Fehler → Bild korrigieren</text>
+<path d="M40 175 H18 V31 H38" class="pf" stroke-dasharray="4 3" marker-end="url(#pf)"/>
+<text class="sub" x="12" y="103" transform="rotate(-90 12 103)" text-anchor="middle">Serie: Größe in Prompt</text>
+</svg></div></div>
+
+<!-- ================= D ================= -->
+<h2 id="d">D · 🔎 Detaillierte Auswertung</h2>
+
+<div class="card"><h3>⚠️ 1 · Vorrede und „Triggerwarnung“ <span class="fs">(00:00–00:30)</span></h3>
+<p>Er rechnet damit, dass das Thema oder seine Herangehensweise manchen „die Nackenhaare“ aufstellt. Zuschauer sollen das Video ansehen und am Ende selbst urteilen. Er bittet darum, in den Kommentaren nicht verbal auszufallen, und weiß, dass das Video nicht jedem gefällt.</p>
+<p>💬 <q>seid so fair und artet unterhalb in den Kommentaren verbal nicht aus</q> <span class="fs">(00:30)</span> · <q>Jetzt haben wir mal alle Disclaimer disclaimed.</q> <span class="fs">(00:30)</span></p>
+<p>📌</p><ul><li><span class="tag t-m">Meinung</span>Viele werden mit dem Thema ein „riesen Problem“ haben <span class="fs">(00:00)</span>.</li><li><span class="tag t-m">Meinung</span>Das Video trifft „nicht jedermanns Geschmack“ <span class="fs">(00:30)</span>.</li></ul>
+<p>🔗 Gleiche Bitte am Ende (Abschnitt 18).</p>
+<p class="e">📚 KI-erzeugte Modelle werden in der 3D-Druck-Gemeinschaft unterschiedlich aufgenommen (Urheberschaft, Qualität, Flut auf Plattformen); das Video selbst nennt keine Gründe. Keine Quelle geprüft – nur Einordnung.</p></div>
+
+<div class="card"><h3>📈 2 · KI-Welle und Ziel des Videos <span class="fs">(00:30–02:31)</span></h3>
+<p>Wer sich in den letzten Monaten mit 3D-Druck befasst hat, sieht die KI-Welle im Hobby. Es gibt kostenlose und teurere Programme, die versprechen, aus einem Wunsch ohne CAD-Wissen druckbare Modelle zu machen. Er will zeigen, dass sie nicht alles können. Das Video gilt für den Aufnahmetag; in zwei, drei Monaten könne ein neues nötig sein. Für Einsteiger sei es schwer, Schritt zu halten; deshalb zeigt er seinen persönlichen Weg von der Idee zum gedruckten Objekt.</p>
+<p>💬 <q>nicht die eierlegenden Wollmilchsäue</q> <span class="fs">(01:31)</span> · <q>nicht der Beste, sondern einfach nur mein persönlicher</q> <span class="fs">(02:01)</span></p>
+<p>📌</p><ul><li><span class="tag t-f">Fakt</span>Es gibt kostenlose und kostenpflichtige KI-Programme für 3D-Modelle <span class="fs">(01:01)</span>.</li><li><span class="tag t-b">Behauptung</span>Die Branche entwickelt sich sehr schnell <span class="fs">(01:31)</span>.</li><li><span class="tag t-m">Meinung</span>Ihn freut der schnelle Wandel, er ist aber für Einsteiger anstrengend <span class="fs">(02:01)</span>.</li><li><span class="tag t-bsp">Beispiel</span>„King of Ringe Ding“ – umgangssprachlich für „man ist der König“ <span class="fs">(01:01)</span>.</li></ul>
+<p>🔗 Wandel → Abschnitt 11 (laufend neue Modelle), 18 (Teil 2).</p>
+<p class="e">📚 Zur Geschwindigkeit: Allein 2026 kamen u. a. Tripo H3.1 (März), Meshy 6 in MakerLab (17.03.), Hyper3D Rodin Gen‑2.5 (26.05.) und Hi3D v1.0 (23.10.) hinzu – siehe Abgleich.</p></div>
+
+<div class="card"><h3>⚠️ 3 · Grenzen der KI heute <span class="fs">(02:31–04:04)</span></h3>
+<p>Beim Ausprobieren stößt man schnell an Grenzen: Vasen und hohle Objekte wie Helm oder Maske seien „sehr schwierig oder fast nicht möglich“; den „letzten Step“ schaffen KIs noch nicht. Klassische Figuren funktionieren. KIs machten Menschen nicht mehr mit 12 oder 17 Fingern. Weiß die KI, dass gedruckt wird, fragt sie sich teils selbst, ob fliegende Haare gehen, und plant kompakter. Keine KI ist perfekt: manche sind bei Gesichtern besser, andere bei Technik – man muss testen; er hat nicht alle getestet.</p>
+<p>💬 <q>sehr schwierig oder fast nicht möglich, Vasen oder hohle Objekte zu machen</q> <span class="fs">(02:31)</span> · <q>keine KI aktuell die perfekte ist, die alles kann</q> <span class="fs">(03:33)</span></p>
+<p>📌</p><ul><li><span class="tag t-b">Behauptung</span>Hohle Objekte gelingen kaum <span class="fs">(02:31)</span>.</li><li><span class="tag t-b">Behauptung</span>Klassische Figuren funktionieren <span class="fs">(03:02)</span>.</li><li><span class="tag t-b">Behauptung</span>Finger-Fehler sind seltener geworden <span class="fs">(03:02)</span>.</li><li><span class="tag t-b">Behauptung</span>Mit Druck-Hinweis plant die KI kompakter <span class="fs">(03:02–03:33)</span>.</li><li><span class="tag t-m">Meinung</span>KIs unterscheiden sich: Gesichter vs. Technik <span class="fs">(03:33)</span>.</li></ul>
+<p class="q">❓ „eine Figur hat vier Finger, außer man sagt es explizit dazu“ <span class="fs">(03:02)</span> – vermutlich gemeint: vier Finger plus Daumen, oder bewusst comichafte Figuren. Steht in Spannung zur Fehlersuche nach „fünftem oder sechstem Finger“ (18:46).</p>
+<p>🔗 Fehlersuche (Abschnitt 14), Prüfliste in Druckwerk.</p>
+<p class="e">📚 Bild-zu-3D-Generatoren liefern ein Oberflächennetz aus einem Bild; die Rückseite wird bei nur einem Bild erraten. Innenräume (Vase, Helm) sind im Bild nicht sichtbar – daher die Grenze. Für Vasen gibt es im Slicer den Vasen-/Spiralmodus, der aus einem vollen Körper eine einwandige Hülle druckt (allgemeine Slicer-Funktion, im Video nicht erwähnt).</p></div>
+
+<div class="card"><h3>🧰 4 · Werkzeuge: ChatGPT und MakerLab <span class="fs">(03:33–05:07)</span></h3>
+<p>Er arbeitet mit ChatGPT für das Bild und mit „MakerLab“ auf der Seite MakerWorld, um das Bild in eine STL umzuwandeln. Einfach ein Bild hineinziehen funktioniere bei manchen Dingen gut; wer aber Einfluss auf das Ergebnis will, muss vorher in ChatGPT viel einstellen und die KI „trainieren“. Der erste Teil des Videos zeigt daher seinen ChatGPT-Ablauf, mit dem er spätere Probleme vorab vermeidet.</p>
+<p>💬 <q>muss man vorher bei ChatGPT schon ordentlich etwas einstellen</q> <span class="fs">(04:35)</span></p>
+<p>📌</p><ul><li><span class="tag t-f">Fakt</span>Werkzeuge im Video: ChatGPT und MakerWorld MakerLab <span class="fs">(03:33–04:04)</span>.</li><li><span class="tag t-m">Meinung</span>Vorarbeit im Bild spart spätere Fehler <span class="fs">(04:35)</span>.</li></ul>
+<p class="e">📚 MakerWorld ist die Modellplattform von Bambu Lab; MakerLab ist dort der Bereich mit Generatoren und KI-Werkzeugen, u. a. „Image to 3D“ unter makerworld.com/makerlab/imageto3d (laut Drittquellen, siehe Abgleich).</p></div>
+
+<div class="card"><h3>🖼️ 5 · Regeln für das Eingabebild <span class="fs">(05:07–07:46)</span></h3>
+<p>Vor der Vorführung gibt er klare Anweisungen: immer nur ein Objekt je Bild, neutraler Hintergrund, keine „kurios bunten“ Bilder, sondern einfarbig in Grau- oder sanften Tontönen – so liest die KI Licht, Schatten, Textur und Struktur besser. Perspektive leicht schräg von oben statt frontal oder seitlich, damit die Tiefe erkennbar wird. Matt statt glänzend, besonders bei Augen. Kompakte, zusammenhängende Formen, nichts Fliegendes; sich in den Slicer versetzen und Unterseite und Aufstellung (Boden, hängend, Wand) planen. Extreme Kamerawinkel vermeiden, Dimensionen vorab festlegen; mit einem mäßigen ersten Ergebnis rechnen und prüfen, denn die Umwandlung kostet.</p>
+<p>💬 <q>Lasst euch auf gar keinen Fall kurios bunte Bilder generieren.</q> <span class="fs">(05:07)</span> · <q>macht das Ganze so leicht schräg oben</q> <span class="fs">(05:39)</span> · <q>Fliegende Objekte sind schlichtweg nicht druckbar</q> <span class="fs">(06:10)</span> · <q>Macht euch auch Gedanken über die Unterseite.</q> <span class="fs">(06:42)</span></p>
+<p>📌</p><ul>
+<li><span class="tag t-m">Meinung</span>Ein Objekt pro Bild <span class="fs">(05:07)</span>.</li>
+<li><span class="tag t-m">Meinung</span>Neutraler Hintergrund ratsam <span class="fs">(05:07)</span>.</li>
+<li><span class="tag t-b">Behauptung</span>Einfarbig (grau/sanfte Töne) → Licht, Schatten, Texturen besser lesbar <span class="fs">(05:07–05:39)</span>.</li>
+<li><span class="tag t-b">Behauptung</span>Schräg von oben zeigt Tiefe und „Plastizität“ <span class="fs">(05:39–06:10)</span>.</li>
+<li><span class="tag t-b">Behauptung</span>Glanz (z. B. Schimmer in Augen) führt zu kuriosen STL-Ergebnissen <span class="fs">(06:10)</span>.</li>
+<li><span class="tag t-f">Fakt</span>Schwebende Teile sind nicht druckbar <span class="fs">(06:10)</span>.</li>
+<li><span class="tag t-b">Behauptung</span>Nicht alle Bilddetails landen in der STL <span class="fs">(06:42)</span>.</li>
+<li><span class="tag t-m">Meinung</span>Unterseite/Aufstellung vorab klären <span class="fs">(06:42–07:15)</span>.</li>
+<li><span class="tag t-b">Behauptung</span>Ohne Größenangabe wird es meist klein, Struktur geht verloren <span class="fs">(07:15)</span>.</li>
+<li><span class="tag t-f">Fakt</span>Umwandeln kostet Geld bzw. Punkte <span class="fs">(07:46)</span>.</li></ul>
+<p class="q">❓ „Sagt eurer KI …, dass es auf jeden Fall ein matter Untergrund sein soll“ <span class="fs">(06:10)</span> – aus dem Zusammenhang ist wohl die matte <i>Oberfläche</i> des Objekts gemeint. · „versucht nicht zu viele gerade Strukturen zu erzeugen“ <span class="fs">(07:15)</span> – Grund wird nicht genannt; nicht eindeutig zuzuordnen.</p>
+<p>🔗 Zeichnung 2; Bild-Idee-Baukasten und Prüfliste „Bild prüfen“ in Druckwerk.</p>
+<p class="e">📚 Fachbegriffe: <b>Hinterschneidung</b> = Stelle, die von oben bzw. aus Bildsicht verdeckt ist und im Druck Stützen braucht; <b>Überhang</b> = Fläche, die ohne Unterbau in der Luft gedruckt würde (Faustregel: bis ca. 45° geht ohne Stützen).</p></div>
+
+<!-- Zeichnung 2 -->
+<h2>Zeichnung 2 · Das gute Eingabebild</h2>
+<div class="card"><p class="small">Darstellung laut Video (schematisch), Fundstellen 05:07–07:15.</p>
+<div class="zeich"><svg viewBox="0 0 340 400" role="img" aria-label="Gutes Eingabebild: ein Objekt, neutraler Hintergrund, matt, leicht schräg von oben, kompakt, Standfläche">
+<rect x="70" y="40" width="200" height="200" rx="8" fill="var(--fill)" stroke="var(--sep)"/>
+<text class="sub" x="170" y="56" text-anchor="middle">neutraler, ruhiger Hintergrund</text>
+<!-- Figur -->
+<ellipse cx="170" cy="210" rx="52" ry="10" class="grau" opacity=".55"/>
+<rect x="130" y="196" width="80" height="16" rx="4" class="grau"/>
+<path d="M145 196 Q140 150 152 128 Q170 112 188 128 Q200 150 195 196 Z" class="grau"/>
+<circle cx="170" cy="112" r="20" class="grau"/>
+<path d="M150 150 Q132 160 136 178" stroke="var(--grau)" stroke-width="9" fill="none" stroke-linecap="round"/>
+<path d="M190 150 Q206 162 202 180" stroke="var(--grau)" stroke-width="9" fill="none" stroke-linecap="round"/>
+<!-- Kamera -->
+<g transform="translate(18 6) rotate(28)"><rect x="0" y="0" width="34" height="22" rx="4" fill="var(--blue)"/><circle cx="17" cy="11" r="6" fill="var(--card)"/></g>
+<path d="M50 40 L128 112" stroke="var(--blue)" stroke-width="1.5" stroke-dasharray="4 3" fill="none"/>
+<text x="56" y="22" font-size="11" fill="var(--blue)">leicht schräg von oben</text>
+<!-- Nummern -->
+<g font-size="11" font-weight="700" fill="#fff">
+<circle cx="236" cy="120" r="9" fill="var(--blue)"/><text x="236" y="124" text-anchor="middle" style="fill:#fff">1</text>
+<circle cx="250" cy="80" r="9" fill="var(--blue)"/><text x="250" y="84" text-anchor="middle" style="fill:#fff">2</text>
+<circle cx="214" cy="160" r="9" fill="var(--blue)"/><text x="214" y="164" text-anchor="middle" style="fill:#fff">3</text>
+<circle cx="34" cy="62" r="9" fill="var(--blue)"/><text x="34" y="66" text-anchor="middle" style="fill:#fff">4</text>
+<circle cx="120" cy="150" r="9" fill="var(--blue)"/><text x="120" y="154" text-anchor="middle" style="fill:#fff">5</text>
+<circle cx="230" cy="204" r="9" fill="var(--blue)"/><text x="230" y="208" text-anchor="middle" style="fill:#fff">6</text>
+</g>
+<g font-size="12">
+<text x="12" y="268">① genau <tspan font-weight="700">ein</tspan> Objekt, ganz im Bild (05:07)</text>
+<text x="12" y="288">② neutraler Hintergrund (05:07)</text>
+<text x="12" y="308">③ einfarbig grau/sanfte Töne, <tspan font-weight="700">matt</tspan> (05:07, 06:10)</text>
+<text x="12" y="328">④ leicht schräg oben, kein Extremwinkel (05:39)</text>
+<text x="12" y="348">⑤ kompakt, nichts Fliegendes (06:10)</text>
+<text x="12" y="368">⑥ ebene Standfläche bzw. passende Rückseite (06:42)</text>
+<text class="sub" x="12" y="392">+ Zielgröße im Text angeben (07:15, 19:17)</text>
+</g>
+</svg></div></div>
+
+<div class="card"><h3>📁 6 · ChatGPT vorbereiten: Chat, Projekt, Prompt <span class="fs">(07:46–09:21)</span></h3>
+<p>Er öffnet einen neuen Chat. Wer mehrere ähnliche Bilder oder eine Serie plant, soll statt eines Chats ein Projekt anlegen. Den Text („Prompt“) stellt er in die Videobeschreibung; darin stehen schon Winkel, Größe usw. – man trägt nur noch das Motiv ein. Er schreibt sogar Düse („Nozzle“) und Schichthöhe hinein, denn je mehr und je klarere Informationen, desto besser. Er diktiert per Mikrofon statt zu tippen; ChatGPT verstehe ihn „erstaunlich gut“.</p>
+<p>💬 <q>je mehr Informationen ich meiner KI gebe und je klarer diese Information ist</q> <span class="fs">(08:48)</span></p>
+<p>📌</p><ul><li><span class="tag t-m">Meinung</span>Für Serien ein ChatGPT-Projekt nutzen <span class="fs">(07:46–08:16)</span>.</li><li><span class="tag t-f">Fakt</span>Der Prompt steht in der Videobeschreibung <span class="fs">(08:16)</span>.</li><li><span class="tag t-b">Behauptung</span>Mehr und klarere Angaben → bessere Ergebnisse <span class="fs">(08:48)</span>.</li><li><span class="tag t-bsp">Beispiel</span>Diktat spart Zeit <span class="fs">(08:48)</span>.</li></ul>
+<p class="q">❓ Der Wortlaut des Prompts aus der Videobeschreibung liegt dieser Auswertung nicht vor. Druckwerk nutzt deshalb einen <b>eigenen</b> Text nach den Grundsätzen aus Abschnitt 5.</p>
+<p class="e">📚 <b>Prompt</b> = Auftragstext an eine KI. <b>Projekt</b> (ChatGPT) = Ordner, in dem mehrere Chats gemeinsame Anweisungen und Dateien teilen.</p></div>
+
+<div class="card"><h3>🐸 7 · Beispiel: Frosch in Ritterrüstung <span class="fs">(09:21–10:24)</span></h3>
+<p>Er ersetzt im Prompt den Platzhalter beim Motiv durch: Frosch in Ritterrüstung, Visier offen, Schwert in der Hand, grimmig. ChatGPT rechnet eine Weile (Prozentanzeige). Er nutzt ChatGPT Plus; der Prompt funktioniere auch mit Claude oder anderen KIs. Das erste Ergebnis sieht „gar nicht so schlecht“ aus.</p>
+<p>💬 <q>Erstelle mir einen Frosch in einer Ritterrüstung.</q> <span class="fs">(09:21)</span></p>
+<p>📌</p><ul><li><span class="tag t-bsp">Beispiel</span>Motiv mit Haltung, Ausrüstung und Gesichtsausdruck <span class="fs">(09:21)</span>.</li><li><span class="tag t-f">Fakt</span>Er arbeitet mit ChatGPT Plus <span class="fs">(09:52)</span>.</li><li><span class="tag t-b">Behauptung</span>Der Prompt geht auch mit Claude u. a. <span class="fs">(09:52)</span>.</li></ul>
+<p class="e">📚 Gängige Darstellung / Stand heute: Claude erstellt selbst keine Bilder, sondern Text (auch Bild-Prompts). Für den Bildschritt braucht es eine Bild-KI. Keine verlinkte Quelle ❓.</p></div>
+
+<div class="card"><h3>🔧 8 · Nachbessern im Chat <span class="fs">(09:52–11:59)</span></h3>
+<p>Hinterschneidungen vermeiden – ein offener Mund mit herausgestreckter Zunge sei schwer zu drucken. Am Ritter fehlt ihm Textur; ein Kettenhemd ist da, aber es soll mehr „Damage“ hinein. Er klickt das Bild an und diktiert: Cape entfernen, Risse und Dellen in alle Metallteile, Schwert bleibt glatt. Nebenbei erwähnt er scherzhaft Leute, die der KI „bitte“ und „danke“ sagen, um später verschont zu werden. Das neue Ergebnis (ohne Umhang, mit Rissen) hält er für brauchbar.</p>
+<p>💬 <q>Ich möchte mehr Textur sehen.</q> <span class="fs">(10:24)</span> · <q>Entferne mir das Cape.</q> <span class="fs">(10:24)</span></p>
+<p>📌</p><ul><li><span class="tag t-m">Meinung</span>Hinterschneidungen vermeiden <span class="fs">(09:52)</span>.</li><li><span class="tag t-bsp">Beispiel</span>Zunge aus offenem Mund ist schwierig <span class="fs">(10:24)</span>.</li><li><span class="tag t-bsp">Beispiel</span>Cape entfernen, Risse/Dellen ergänzen, Schwert glatt <span class="fs">(10:24–10:55)</span>.</li><li><span class="tag t-m">Meinung</span>Nebenbemerkung „bitte und danke“ – humorvoll <span class="fs">(10:55–11:27)</span>.</li></ul>
+<p class="q">❓ „in dem vorderen Cape, das im Schrittbereich hängt“ <span class="fs">(10:55)</span> – vermutlich ein Waffenrock/Tuch vorne, nicht der entfernte Umhang.</p>
+<p>🔗 Vorlage „Bild nachbessern“ in Druckwerk.</p></div>
+
+<div class="card"><h3>💾 9 · Bild speichern, zu MakerWorld <span class="fs">(11:27–12:30)</span></h3>
+<p>Er speichert das Bild über „Speichern“ in Downloads und legt es auf den Desktop – egal ob Mac, Windows oder Linux, Hauptsache wiederauffindbar. Dann wechselt er zu MakerWorld. Andere Programme gingen auch; er hat dort Erfahrung, bietet seine Downloads dort an und bekommt so Punkte, die er in MakerLab-Punkte umtauschen kann.</p>
+<p>📌</p><ul><li><span class="tag t-f">Fakt</span>Downloads auf MakerWorld bringen dem Anbieter Punkte <span class="fs">(12:30)</span>.</li><li><span class="tag t-m">Meinung</span>Andere Programme sind möglich <span class="fs">(11:59)</span>.</li></ul>
+<p class="q">❓ „STL Party“ <span class="fs">(11:59)</span> – vermutlich Hörfehler der Untertitel; welcher Dienst gemeint ist, ist nicht eindeutig zuzuordnen.</p></div>
+
+<div class="card"><h3>💰 10 · Punkte und Credits <span class="fs">(12:30–13:35)</span></h3>
+<p>Er zeigt 2586 MakerWorld-Punkte; in MakerLab erscheinen Credits als kleine blaue Symbole, aktuell 4024. Über das goldene Symbol lassen sich Punkte tauschen: für 80 Punkte gibt es 600 Credits. Die brauche man schnell, denn bis zu einem guten Ergebnis seien zwei, drei Versuche möglich, und mit seiner Version koste „ein Bild zu STL generieren“ 80 Punkte. Früher habe erst der Download gekostet, jetzt schon die Erstellung.</p>
+<p>💬 <q>Jetzt mittlerweile verlangen die Füchse schon für die Erstellung.</q> <span class="fs">(13:35)</span></p>
+<p>📌</p><ul><li><span class="tag t-f">Fakt</span>Kontostand im Video: 2586 Punkte, 4024 Credits <span class="fs">(12:30)</span>.</li><li><span class="tag t-f">Fakt</span>Tausch im Video: 80 Punkte → 600 Credits <span class="fs">(13:02)</span>.</li><li><span class="tag t-b">Behauptung</span>Bild zu STL kostet 80 Punkte <span class="fs">(13:02–13:35)</span>.</li><li><span class="tag t-b">Behauptung</span>Früher zahlte man beim Download, jetzt bei der Erstellung <span class="fs">(13:35)</span>.</li><li><span class="tag t-m">Meinung</span>Servergebühren seien „anscheinend recht teuer“ (ironisch) <span class="fs">(13:35)</span>.</li></ul>
+<p class="q">❓ „blauen Violen“ <span class="fs">(12:30)</span> – vermutlich „Phiolen“ (Fläschchen-Symbol). Punkte und Credits werden im Video teils vermischt – siehe Spannungen.</p></div>
+
+<div class="card"><h3>🤖 11 · MakerLab „Bild zu 3D“: Oberfläche und Modelle <span class="fs">(13:35–16:10)</span></h3>
+<p>Links oben über den Pfeil öffnet er „Bild zu 3D-Modelle“. Unten stehen die zuletzt erzeugten Modelle – nach seiner Erinnerung etwa 30 Plätze; alte löscht man über X und „Confirm“. Vor dem Hochladen zeigt er die KIs, die das Bild verarbeiten könnten: Tripo, Meshy, „HI“, „Ronen“, laufend mehr; Hi3D sei für ihn neu. Angezeigt werden Dauer (teils 20 Min., andere 3 Min.) und Preise. Am liebsten nutzt er Tripo 3.1 Standard; Meshy mache manchmal komische Sachen. Man könne ChatGPT einen Screenshot der Liste geben und fragen, welche KI für das Bild am besten ist.</p>
+<p>💬 <q>ich nutze z.B. am allerliebsten Tripo und zwar das 3.1 Standard</q> <span class="fs">(15:10)</span> · <q>Meshy macht manchmal komische Sachen</q> <span class="fs">(15:10)</span></p>
+<p>📌</p><ul><li><span class="tag t-b">Behauptung</span>Verlauf mit etwa 30 Plätzen („glaube ich“) <span class="fs">(13:35–14:06)</span>.</li><li><span class="tag t-f">Fakt</span>Auswahl mehrerer KIs mit Zeit- und Preisangabe <span class="fs">(14:38)</span>.</li><li><span class="tag t-m">Meinung</span>Tripo 3.1 Standard funktioniert für ihn am besten <span class="fs">(15:10)</span>.</li><li><span class="tag t-bsp">Beispiel</span>Screenshot an ChatGPT zur Modellwahl <span class="fs">(15:40)</span>.</li></ul>
+<p class="q">❓ „Ronen“ <span class="fs">(14:38)</span> – vermutlich „Rodin“ (Hyper3D). „HI“ / „HI3D“ – vermutlich Hi3D (Hitem3D). „Spritze“ <span class="fs">(14:06)</span> – ein älteres Modell im Verlauf, nicht erklärt.</p>
+<p class="e">📚 Tripo, Meshy, Rodin (Hyper3D), Hunyuan3D (Tencent) und Hi3D sind eigenständige Bild-zu-3D-Generatoren, die MakerLab einbindet. Details und Daten im Abgleich.</p></div>
+
+<div class="card"><h3>⬆️ 12 · Umwandlung starten <span class="fs">(15:40–16:41)</span></h3>
+<p>Per Drag and Drop zieht er das Bild hinein und klickt „generieren“. Das koste aktuell 24 Punkte; im „Pott“ seien 1024. Nach „confirm“ rechnet MakerLab einige Minuten. In der Wartezeit zeigt er eigene KI-Modelle, die er auf seiner MakerWorld-Seite als Download anbietet.</p>
+<p>💬 <q>Das kostet aktuell 24 Punkte.</q> <span class="fs">(16:10)</span></p>
+<p>📌</p><ul><li><span class="tag t-f">Fakt</span>Kosten laut Anzeige: 24 Punkte <span class="fs">(16:10)</span>.</li><li><span class="tag t-f">Fakt</span>Umwandlung dauert „seine paar Minuten“ <span class="fs">(16:10)</span>.</li></ul>
+<p class="q">❓ „1024 bei mir im Pott“ vs. zuvor 4024 Credits (12:30) – möglicherweise Hörfehler.</p></div>
+
+<div class="card"><h3>✂️ 13 · Ein Stück oder getrennte Teile <span class="fs">(16:41–17:43)</span></h3>
+<p>Für Serien rät er: nach dem ersten Modell ausmessen, wie groß es ist, und diese Größe in den Prompt eintragen. Dann entscheiden, ob getrennt gebaut wird. Beispiel 1: Flügel gehen in das Schild über – eine Datei, ein Druck. Beispiel 2: Schnecke und Schild getrennt erzeugt, am Schluss geklebt. Ein Stück auf der Druckplatte brauche „extrem viele Stützstrukturen“, die dem Objekt schaden können. Klug sei, ChatGPT vorher zu sagen, Vorder- und Hintergrund zu trennen; das kostet zweimal Punkte, ergibt aber zwei Teile, die man im Slicer wieder zusammenfügt.</p>
+<p>💬 <q>Und somit wird die am Schluss einfach nur zusammengeklebt.</q> <span class="fs">(17:13)</span></p>
+<p>📌</p><ul><li><span class="tag t-m">Meinung</span>Größe des ersten Modells in den Prompt für die Serie <span class="fs">(16:41)</span>.</li><li><span class="tag t-bsp">Beispiel</span>Flügel + Schild in einem Stück <span class="fs">(16:41)</span>.</li><li><span class="tag t-bsp">Beispiel</span>Schnecke und Schild getrennt, geklebt <span class="fs">(17:13)</span>.</li><li><span class="tag t-b">Behauptung</span>Ein Stück → viele Stützen, Schäden möglich <span class="fs">(17:13)</span>.</li><li><span class="tag t-f">Fakt</span>Getrennt = zweimal Punkte <span class="fs">(17:43)</span>.</li></ul>
+<p class="e">📚 Beim Creator 5 Pro mit vier Köpfen kann ein getrenntes Teil auch in anderer Farbe gedruckt werden; Stützen aus einem eigenen Kopf hinterlassen keine Spülreste (Druckwerk-Grundwissen, nicht aus dem Video).</p></div>
+
+<!-- Zeichnung 3 -->
+<h2>Zeichnung 3 · Ein Stück oder getrennte Teile</h2>
+<div class="card"><p class="small">Darstellung laut Video (schematisch), Fundstellen 16:41–17:43.</p>
+<div class="zeich"><svg viewBox="0 0 340 300" role="img" aria-label="Vergleich: ein Stück mit vielen Stützen gegen getrennte Teile mit wenig Stützen, aber doppelten Kosten">
+<text x="85" y="18" text-anchor="middle" font-size="13" font-weight="700">Ein Stück</text>
+<text x="255" y="18" text-anchor="middle" font-size="13" font-weight="700">Getrennte Teile</text>
+<line x1="170" y1="8" x2="170" y2="292" stroke="var(--sep)"/>
+<!-- links: Schild hinter Schnecke, Überhang -->
+<rect x="20" y="160" width="130" height="6" fill="var(--sub)" opacity=".5"/>
+<path d="M40 155 Q40 120 75 118 Q105 116 108 140 L108 155 Z" class="grau"/>
+<rect x="88" y="40" width="58" height="72" rx="6" class="grau" transform="rotate(12 117 76)"/>
+<g class="rot" opacity=".9"><path d="M100 118v37M110 115v40M120 113v42M130 111v44M140 112v43"/></g>
+<text x="85" y="186" text-anchor="middle" font-size="12">1 Umwandlung</text>
+<text x="85" y="203" text-anchor="middle" font-size="12" fill="var(--red)" style="fill:var(--red)">viele Stützen</text>
+<text x="85" y="220" text-anchor="middle" class="sub">Stützen können schaden</text>
+<!-- rechts -->
+<rect x="190" y="160" width="130" height="6" fill="var(--sub)" opacity=".5"/>
+<path d="M196 155 Q196 122 228 120 Q256 118 258 140 L258 155 Z" class="grau"/>
+<rect x="268" y="129" width="46" height="26" rx="4" class="grau"/>
+<text x="291" y="122" text-anchor="middle" class="sub">Schild flach</text>
+<text x="255" y="186" text-anchor="middle" font-size="12">2 Umwandlungen</text>
+<text x="255" y="203" text-anchor="middle" font-size="12" fill="var(--green)" style="fill:var(--green)">kaum Stützen</text>
+<text x="255" y="220" text-anchor="middle" class="sub">danach kleben/fügen</text>
+<!-- Kosten -->
+<g font-size="12">
+<rect x="20" y="236" width="130" height="50" rx="8" class="k"/><text x="85" y="256" text-anchor="middle">Kosten: 1 ×</text><text x="85" y="274" text-anchor="middle" class="sub">Stützen ++</text>
+<rect x="190" y="236" width="130" height="50" rx="8" class="k"/><text x="255" y="256" text-anchor="middle">Kosten: 2 ×</text><text x="255" y="274" text-anchor="middle" class="sub">Stützen −, kleben</text>
+</g>
+</svg></div></div>
+
+<div class="card"><h3>🔎 14 · Fehlersuche in Grau <span class="fs">(17:43–19:17)</span></h3>
+<p>Das Modell ist fertig; mit linker Maustaste dreht, mit dem Mausrad zoomt man. Jetzt sei Fehlersuche wichtig – aber nicht in der Farbansicht. Unten gibt es drei Punkte: rechts volle Farbe (mit Mehrfarb-Drucker theoretisch so herunterladbar), er wählt „keine Farbe“ – dann sieht es aus wie in grauem Filament gedruckt. Zu prüfen: Sieht etwas komisch aus? Ein fünfter oder sechster Finger? Ist das Schwert krumm? Gibt es Elemente, die nicht im Bild waren, etwa ein Schild hinten? Passt das Kettenhemd? Sein Ergebnis sieht „eigentlich ganz gut“ aus.</p>
+<p>💬 <q>jetzt ist es wichtig, dass ihr auf Fehlersuche geht</q> <span class="fs">(17:43)</span> · <q>Gibt's vielleicht einen fünften oder einen sechsten Finger</q> <span class="fs">(18:46)</span></p>
+<p>📌</p><ul><li><span class="tag t-f">Fakt</span>Ansichten: Vollfarbe und „keine Farbe“ <span class="fs">(18:15)</span>.</li><li><span class="tag t-m">Meinung</span>Fehlersuche ohne Farbe <span class="fs">(17:43–18:15)</span>.</li><li><span class="tag t-bsp">Beispiel</span>Finger, krummes Schwert, Schild hinten, Kettenhemd <span class="fs">(18:46)</span>.</li><li><span class="tag t-b">Behauptung</span>Vollfarbe für Mehrfarb-Drucker möglich <span class="fs">(18:15)</span>.</li></ul>
+<p>🔗 Prüfliste „3D-Modell in Grau prüfen“ in Druckwerk.</p>
+<p class="e">📚 Grund für Grau: Farbtexturen täuschen Details vor, die in der Geometrie nicht vorhanden sind; einfarbig gedruckt bleibt nur die Form.</p></div>
+
+<div class="card"><h3>📏 15 · Die Größe ist elementar <span class="fs">(19:17–19:49)</span></h3>
+<p>Viele bekämen zu wenig detaillierte STL, weil sie ChatGPT die Größe nicht sagen. Glaubt die KI, es sei ein 5–6 cm großer „Sprössling“, passen mit 0,4-mm-Düse wenig Details hinein; bei „mindestens 15 bis 20 cm“ werde es scharf. Er vergleicht das mit Pixeln: mehr Pixel, mehr Schärfe. Das Netz („Mesh“) sei größer, enthalte mehr Informationen und werde dadurch schärfer.</p>
+<p>💬 <q>Die Größe ist elementar wichtig</q> <span class="fs">(19:17)</span></p>
+<p>📌</p><ul><li><span class="tag t-b">Behauptung</span>Fehlende Größenangabe ist ein häufiger Fehler <span class="fs">(19:17)</span>.</li><li><span class="tag t-bsp">Beispiel</span>5–6 cm vs. 15–20 cm bei 0,4-mm-Düse <span class="fs">(19:17)</span>.</li><li><span class="tag t-b">Behauptung</span>Größeres Mesh = mehr Information = schärfer <span class="fs">(19:49)</span>.</li></ul>
+<p class="e">📚 Unstrittig ist die Druckseite: Eine 0,4-mm-Düse kann Details unter etwa 0,4 mm Breite kaum wiedergeben; je größer gedruckt wird, desto mehr Details bleiben. Ob die Größenangabe im Bild-Prompt die Netzdichte des 3D-Modells erhöht, ist nicht belegt – siehe Abgleich.</p></div>
+
+<div class="card"><h3>📤 16 · Export: Drucker, Düse, Format <span class="fs">(19:49–21:23)</span></h3>
+<p>Ist man zufrieden, geht es rechts oben weiter zum Export; dort wählt man den Drucker. Sein X1C fehlt in der Liste, also nimmt er den H2S, damit eine 0,4-mm-Düse gesetzt ist. Ob das etwas bringt, sei „reine Spekulation“ – Zuschauer sollen kommentieren, ob 0,2 oder 0,4 mm einen Unterschied macht. Speichern dauert. Beim Erstellen kosten Punkte, beim Download „die komplette Summe der Punkte“. Angeboten werden 3MF, GLB und STL; er nimmt STL, kann die Datei umbenennen und direkt im Slicer öffnen. Dazwischen ein Kanal-Hinweis: über 111.000 Leute, erst 4 % weibliche Zuschauer, er wünscht sich mehr.</p>
+<p>💬 <q>Das ist jetzt reine Spekulation.</q> <span class="fs">(20:21)</span></p>
+<p>📌</p><ul><li><span class="tag t-f">Fakt</span>Formate: 3MF, GLB, STL <span class="fs">(20:52)</span>.</li><li><span class="tag t-f">Fakt</span>Druckerwahl beim Export; X1C nicht vorhanden <span class="fs">(19:49)</span>.</li><li><span class="tag t-m">Meinung</span>Düsenwahl „ratsam“, Wirkung unklar <span class="fs">(20:21)</span>.</li><li><span class="tag t-b">Behauptung</span>Download kostet die volle Punktzahl <span class="fs">(20:21)</span>.</li><li><span class="tag t-f">Fakt</span>Kanal: über 111.000, 4 % weiblich <span class="fs">(20:52–21:23)</span>.</li></ul>
+<p class="q">❓ „auf explodieren gehen“ <span class="fs">(19:49)</span> – vermutlich „exportieren“. „oder auf % kommen“ <span class="fs">(21:23)</span> – Zahl fehlt in den Untertiteln.</p>
+<p class="e">📚 <b>X1C</b> (X1 Carbon) und <b>H2S</b> sind Druckermodelle von Bambu Lab, dem Betreiber von MakerWorld. <b>STL</b> = reines Dreiecksnetz ohne Farbe; <b>3MF</b> = Projektformat mit Farben/Einstellungen; <b>GLB</b> = 3D-Format mit Texturen (für Ansicht und Weiterbearbeitung).</p></div>
+
+<div class="card"><h3>🖨️ 17 · Im Slicer: auf Fläche legen, Boden schneiden <span class="fs">(21:23–22:56)</span></h3>
+<p>Der Ritter steht im Slicer, er färbt ihn hellgrau. Wichtig sei, ob die Füße sauber auf dem Boden stehen: Modell anklicken, „Auf Fläche legen“ (Taste F). Es ist nicht sauber – je mehr Flächen, desto unebener der Boden. Daher „Schneiden“: Schnitt möglichst weit nach unten ziehen, etwas mehr ginge noch, Hauptsache solide Schnittfläche; „Schnitt ausführen“, abgeschnittene Teile löschen. Danach nochmals alles kontrollieren: Muss man schneiden oder Teile wegnehmen? Dann die üblichen Einstellungen wie Stützen, Infill, Wandstärke – es ist eine ganz normale STL.</p>
+<p>💬 <q>Je mehr Flächen ihr habt, umso unebener ist euer Untergrund</q> <span class="fs">(21:53)</span> · <q>Hauptsache, dass ich eine stabile und vor allem solide Schnittfläche habe.</q> <span class="fs">(22:25)</span></p>
+<p>📌</p><ul><li><span class="tag t-f">Fakt</span>Funktion „Auf Fläche legen“, Taste F <span class="fs">(21:53)</span>.</li><li><span class="tag t-b">Behauptung</span>Viele Flächen → unebener Boden <span class="fs">(21:53)</span>.</li><li><span class="tag t-bsp">Beispiel</span>Unten abschneiden bis zur soliden Fläche <span class="fs">(21:53–22:25)</span>.</li><li><span class="tag t-f">Fakt</span>Danach normale Einstellungen <span class="fs">(22:56)</span>.</li></ul>
+<p class="e">📚 Der Slicer im Video ist vermutlich Bambu Studio (nicht genannt ❓). OrcaSlicer (Grundlage von Druckwerk) hat dieselben Funktionen „Auf Fläche legen“ und „Schneiden“. In der Druckwerk-Werkstatt gibt es „auf angetippte Fläche legen“; plan schneiden erledigt derzeit Claude im Auftrag.</p></div>
+
+<div class="card"><h3>🔮 18 · Ausblick und Verabschiedung <span class="fs">(22:56–25:10)</span></h3>
+<p>Es gebe weitere KIs, die er nutzt: eine, die Texturen intensiver aufbringt, und eine, die ein eingefärbtes Modell in Einzelteile trennt (Arme, Knöpfe, Augen separat druckbar). Dafür wünscht er sich ein zweites Video – auch abhängig davon, wie dieses ankommt. KI sei „zwar ein Übel“, bleibe aber; man solle lernen, sie zum eigenen Vorteil zu nutzen. Er bittet um viele Kommentare, welche KIs andere nutzen; vielleicht mache er es kompliziert und es gebe einfachere Lösungen. Erneut bittet er um freundlichen Umgangston und verabschiedet sich.</p>
+<p>💬 <q>Bitte genehmigt mir ein zweites Video zu dieser Serie.</q> <span class="fs">(23:27)</span> · <q>künstliche Intelligenz zwar ein Übel ist</q> <span class="fs">(23:58)</span></p>
+<p>📌</p><ul><li><span class="tag t-f">Fakt</span>Er nutzt weitere KIs für Textur und Teile-Trennung <span class="fs">(22:56–23:27)</span>.</li><li><span class="tag t-m">Meinung</span>KI ist ein Übel, das man nutzen lernen sollte <span class="fs">(23:58)</span>.</li><li><span class="tag t-m">Meinung</span>Er macht es vielleicht kompliziert <span class="fs">(24:28)</span>.</li></ul>
+<p class="q">❓ „Bis laufen 3D-Druck Schwegover“ <span class="fs">(24:59)</span> – Verabschiedungsformel, in den Untertiteln unverständlich. „End out“ – vermutlich „And out“.</p>
+<p class="e">📚 Teile-Trennung per KI bieten z. B. Rodin („Bang“), Tripo (Segmentierung) und Hunyuan3D-Part an (Recherche Druckwerk 15.11.2026); welche er meint, sagt er nicht ❓.</p></div>
+
+<!-- ================= E ================= -->
+<h2 id="e">E · 📅 Ablauf (Arbeitsschritte)</h2>
+<div class="card"><ol>
+<li><b>Idee und Größe festlegen</b>, Aufstellung planen <span class="fs">(06:42–07:15)</span></li>
+<li><b>ChatGPT:</b> neuer Chat oder Projekt, Prompt einfügen, Motiv eintragen <span class="fs">(07:46–09:21)</span></li>
+<li><b>Bild erzeugen</b> (Frosch-Ritter) <span class="fs">(09:21–09:52)</span></li>
+<li><b>Nachbessern</b>: Cape weg, Risse und Dellen <span class="fs">(10:24–11:27)</span></li>
+<li><b>Bild speichern</b> <span class="fs">(11:59)</span></li>
+<li><b>Credits besorgen</b>: Punkte tauschen <span class="fs">(12:30–13:35)</span></li>
+<li><b>MakerLab „Bild zu 3D“</b>: Modell wählen, Bild hineinziehen, generieren (24 Punkte) <span class="fs">(13:35–16:10)</span></li>
+<li><b>Fehlersuche</b> in der Ansicht „keine Farbe“ <span class="fs">(17:43–18:46)</span></li>
+<li><b>Export</b>: Drucker/Düse wählen, STL herunterladen <span class="fs">(19:49–20:52)</span></li>
+<li><b>Slicer</b>: auf Fläche legen, Boden schneiden, Reste löschen <span class="fs">(21:53–22:25)</span></li>
+<li><b>Druckeinstellungen</b> wie bei jeder STL <span class="fs">(22:56)</span></li></ol>
+<p class="e">📚 Eckdaten (nicht aus dem Video): Tripo H3.1 03/2026 · Meshy 6 in MakerLab ab 17.03.2026 · Hyper3D Rodin Gen‑2.5 ab 26.05.2026 · Hi3D v1.0 (offenes Sparc3D) 23.10.2026 · Untertitel abgerufen 15.11.2026. Quellen siehe Abgleich und Quellenliste. Veröffentlichungsdatum des Videos ❓.</p></div>
+
+<!-- ================= F ================= -->
+<h2 id="f">F · 👤 Personen · 🗺️ Orte · 📖 Begriffe</h2>
+<div class="card"><p><b>👤 Personen</b></p><ul>
+<li><b>Sprecher</b> → Betreiber des Kanals Bastlwastl → führt durch den eigenen Ablauf → durchgehend</li>
+<li><b>Zuschauer/Community</b> → über 111.000, ca. 4 % weiblich → sollen kommentieren, welche KIs sie nutzen → <span class="fs">(20:52, 24:28)</span></li></ul>
+<p><b>🗺️ Orte</b> – keine geografischen Orte. Digitale „Orte“: ChatGPT (Chat/Projekt) <span class="fs">(07:46)</span>, Downloads/Desktop <span class="fs">(11:59)</span>, MakerWorld mit Bereich MakerLab <span class="fs">(04:04, 12:30)</span>, Slicer <span class="fs">(21:23)</span>.</p></div>
+<div class="card"><p><b>📖 Begriffe und Werkzeuge</b></p><ul>
+<li><b>ChatGPT (Plus)</b> → Chat-KI von OpenAI, erzeugt hier das Bild → <span class="fs">(03:33, 09:52)</span></li>
+<li><b>Claude</b> → Chat-KI von Anthropic, als Alternative genannt → <span class="fs">(09:52)</span>; 📚 erzeugt selbst keine Bilder</li>
+<li><b>Prompt</b> → Auftragstext an die KI → <span class="fs">(08:16)</span></li>
+<li><b>Projekt (ChatGPT)</b> → Sammlung von Chats für eine Serie → <span class="fs">(08:16)</span></li>
+<li><b>MakerWorld</b> → Modellplattform (📚 von Bambu Lab) → Ort der Umwandlung, Punkte durch Downloads → <span class="fs">(04:04, 12:30)</span></li>
+<li><b>MakerLab</b> → KI- und Generator-Bereich auf MakerWorld, „Bild zu 3D“ → <span class="fs">(04:04, 13:35)</span></li>
+<li><b>Punkte / Credits</b> → MakerWorld-Punkte (durch Downloads), MakerLab-Credits (für Umwandlung); tauschbar → <span class="fs">(12:30–13:02)</span></li>
+<li><b>Tripo (3.1 Standard)</b> → Bild-zu-3D-Modell, sein Favorit → <span class="fs">(15:10)</span></li>
+<li><b>Meshy</b> → Bild-zu-3D-Modell, „manchmal komische Sachen“ → <span class="fs">(15:10)</span></li>
+<li><b>Hi3D („HI“, „HI3D“)</b> → Bild-zu-3D-Modell, für ihn neu → <span class="fs">(14:38)</span></li>
+<li><b>„Ronen“</b> ❓ → vermutlich Rodin (Hyper3D) → <span class="fs">(14:38)</span></li>
+<li><b>„STL Party“</b> ❓ → nicht eindeutig zuzuordnen → <span class="fs">(11:59)</span></li>
+<li><b>STL / 3MF / GLB</b> → Exportformate → <span class="fs">(20:52)</span></li>
+<li><b>Mesh</b> → Dreiecksnetz des Modells → <span class="fs">(19:49)</span></li>
+<li><b>Textur / Struktur</b> → Oberflächendetails (Risse, Dellen, Kettenhemd) → <span class="fs">(05:39, 10:24)</span></li>
+<li><b>Hinterschneidung</b> → verdeckte Stelle, im Druck schwierig → <span class="fs">(09:52)</span></li>
+<li><b>Nozzle (Düse) 0,4 / 0,2 mm</b> → Durchmesser der Druckdüse → <span class="fs">(08:48, 19:17, 20:21)</span></li>
+<li><b>Layerhöhe (Schichthöhe)</b> → Dicke einer Druckschicht → <span class="fs">(08:48)</span></li>
+<li><b>Slicer</b> → Programm, das die STL in Druckbefehle zerlegt → <span class="fs">(06:42, 21:23)</span></li>
+<li><b>Auf Fläche legen (Taste F)</b> → Slicer-Funktion: gewählte Fläche nach unten → <span class="fs">(21:53)</span></li>
+<li><b>Schneiden / Schnitt ausführen</b> → Slicer-Funktion: Modell trennen, Boden plan machen → <span class="fs">(21:53–22:25)</span></li>
+<li><b>Stützstrukturen, Infill, Wandstärke</b> → übliche Druckeinstellungen → <span class="fs">(17:13, 22:56)</span></li>
+<li><b>Multicolour-Drucker</b> → Drucker für mehrere Farben, könnte Vollfarb-Dateien nutzen → <span class="fs">(18:15)</span></li>
+<li><b>X1C, H2S</b> → Druckermodelle (📚 Bambu Lab) → <span class="fs">(19:49)</span></li>
+<li><b>Diktat</b> → Spracheingabe statt Tippen → <span class="fs">(08:48, 10:24)</span></li></ul></div>
+
+<!-- ================= G ================= -->
+<h2 id="g">G · ⚖️ Abgleich (neutral)</h2>
+<div class="card"><p class="small">Gegenüberstellung ohne Wertung. „Stand heute“ = geprüfte Angaben bis 15.11.2026. Die MakerWorld-Hilfeseiten selbst waren aus der Arbeitsumgebung nicht abrufbar (Antwort 403) – dort, wo nur Drittquellen vorliegen, steht das dabei.</p>
+<table class="stapel"><thead><tr><th>Aussage im Video</th><th>Stand heute / Herstellerangaben 📚</th><th>Quelle</th></tr></thead><tbody>
+<tr><td data-l="Aussage im Video">„Bild zu STL generieren“ kostet 80 Punkte <span class="fs">(13:02)</span>; beim Generieren angezeigt: 24 Punkte <span class="fs">(16:10)</span>; Download kostet nochmals <span class="fs">(20:21)</span></td><td data-l="Stand heute">Drittquellen (März/Mai 2026): „2 MakerLab credits per successful export“, misslungene Erzeugungen kosten nichts; Forum Jan. 2025: 2 Credits je Erzeugung. Aktueller Preis je Modell auf der Herstellerseite nicht geprüft ❓ – die Preise werden in MakerLab vor dem Bestätigen angezeigt.</td><td data-l="Quelle"><a href="https://sorceress.games/blog/makerworld-image-to-3d-model-game-ready-glb-path" target="_blank" rel="noopener">sorceress.games (19.05.2026)</a> · <a href="https://cms.abduzeedo.com/node/89211" target="_blank" rel="noopener">abduzeedo (28.03.2026)</a> · <a href="https://forum.bambulab.com/t/image-to-3d-is-now-worse/135333" target="_blank" rel="noopener">Bambu-Forum</a></td></tr>
+<tr><td data-l="Aussage im Video">Früher kostete erst der Download, jetzt schon die Erstellung <span class="fs">(13:35)</span></td><td data-l="Stand heute">Stand Mai 2026 (Drittquelle): Abrechnung je erfolgreichem Export. Eine spätere Umstellung auf Abrechnung bei der Erstellung ist in den gefundenen Quellen nicht dokumentiert ❓.</td><td data-l="Quelle"><a href="https://sorceress.games/blog/makerworld-image-to-3d-model-game-ready-glb-path" target="_blank" rel="noopener">sorceress.games</a></td></tr>
+<tr><td data-l="Aussage im Video">80 Punkte → 600 Credits; Punkte entstehen durch Downloads eigener Modelle <span class="fs">(12:30–13:02)</span></td><td data-l="Stand heute">Hersteller-Leitfaden „MakerLab Credits: Complete Guide“ existiert; Inhalt nicht abrufbar ❓. Laut Drittquelle füllen sich Gratis-Credits täglich auf (ohne genaue Zahl).</td><td data-l="Quelle"><a href="https://makerworld.com/en/makerlab-credit-full-guide" target="_blank" rel="noopener">MakerWorld Credit-Leitfaden</a> · <a href="https://sorceress.games/blog/makerworld-image-to-3d-model-game-ready-glb-path" target="_blank" rel="noopener">sorceress.games</a></td></tr>
+<tr><td data-l="Aussage im Video">Auswahl: Tripo, Meshy, „HI“/Hi3D, „Ronen“, laufend mehr <span class="fs">(14:38)</span></td><td data-l="Stand heute">MakerLab „Image to 3D“ seit 17.03.2026 mit Meshy 6; Mai 2026 laut Drittquelle Meshy 6, Hunyuan 3.1, Tripo 3.0. Hi3D v1.0 erschien am 23.10.2026; Rodin Gen‑2.5 am 26.05.2026. Ob Rodin in MakerLab angeboten wird, ist nicht geprüft ❓.</td><td data-l="Quelle"><a href="https://cms.abduzeedo.com/node/89211" target="_blank" rel="noopener">abduzeedo</a> · <a href="https://sorceress.games/blog/makerworld-image-to-3d-model-game-ready-glb-path" target="_blank" rel="noopener">sorceress.games</a> · <a href="https://www.orcarouter.ai/blog/hi3d-v1-0-3d-printing-reality-check" target="_blank" rel="noopener">orcarouter (Hi3D)</a> · <a href="https://hyper3d.ai/features/api" target="_blank" rel="noopener">Hyper3D</a></td></tr>
+<tr><td data-l="Aussage im Video">Tripo 3.1 Standard funktioniert für ihn am besten <span class="fs">(15:10)</span></td><td data-l="Stand heute">Tripo H3.1 erschien im März 2026. Eine Arena-Rangliste vom 03.08.2026 sah Tripo v3.1 knapp vorn (ELO 1042) vor Rodin 2.5 (1009) und Meshy 6 (1004) – eine Quelle, Anbieter-Blog.</td><td data-l="Quelle"><a href="https://www.sloyd.ai/blog/ai-3d-model-generator-rankings" target="_blank" rel="noopener">Sloyd-Rangliste</a> · <a href="https://app.cinevva.com/guides/ai-3d-model-generation-timeline-2026" target="_blank" rel="noopener">Zeitleiste 2026 (Cinevva)</a></td></tr>
+<tr><td data-l="Aussage im Video">Dauer teils 20 Min., teils 3 Min. <span class="fs">(14:38)</span></td><td data-l="Stand heute">Drittquelle (Mai 2026): etwa 2–4 Min. je Lauf. Längere Zeiten je nach Modell sind damit nicht ausgeschlossen.</td><td data-l="Quelle"><a href="https://sorceress.games/blog/makerworld-image-to-3d-model-game-ready-glb-path" target="_blank" rel="noopener">sorceress.games</a></td></tr>
+<tr><td data-l="Aussage im Video">Export als 3MF, GLB oder STL <span class="fs">(20:52)</span></td><td data-l="Stand heute">Drittquelle nennt zusätzlich OBJ, FBX, USDZ, BLEND; 3MF ordnet Texturfarben bis zu 16 AMS-Farben zu.</td><td data-l="Quelle"><a href="https://sorceress.games/blog/makerworld-image-to-3d-model-game-ready-glb-path" target="_blank" rel="noopener">sorceress.games</a> · <a href="https://cms.abduzeedo.com/node/89211" target="_blank" rel="noopener">abduzeedo</a></td></tr>
+<tr><td data-l="Aussage im Video">Hohle Objekte (Vase, Helm, Maske) kaum möglich <span class="fs">(02:31)</span></td><td data-l="Stand heute">Herstellerseitig nicht als Grenze beschrieben. Bekannt: Ausgabe ist ein Netz ohne Maße; bei einem Bild wird die Rückseite erraten; Netze sind oft nicht wasserdicht oder haben Innenflächen. Ein Druck-Check zu Hi3D: Wasserdichtheit, Wandstärke, Überhänge werden nicht geprüft.</td><td data-l="Quelle"><a href="https://www.orcarouter.ai/blog/hi3d-v1-0-3d-printing-reality-check" target="_blank" rel="noopener">orcarouter</a> · Druckwerk-Recherche 15.11.2026 (wissen/recherche_modellqualitaet.md)</td></tr>
+<tr><td data-l="Aussage im Video">Zielgröße angeben → größeres Mesh, mehr Details <span class="fs">(19:17–19:49)</span></td><td data-l="Stand heute">Die Netzauflösung hängt laut Herstellern an der gewählten Stufe (z. B. TRELLIS.2 512/1024/1536, Rodin bis „Extreme-High“), das Netz kommt in Einheitsgröße. Die Größenangabe wirkt auf das Bild (wie grob Details gezeichnet werden). Dass sie die Netzdichte erhöht, ist nicht belegt ❓; dass größer gedruckte Teile mit 0,4-mm-Düse mehr Details zeigen, ist unstrittig.</td><td data-l="Quelle"><a href="https://fal.ai/models/fal-ai/trellis-2/llms.txt" target="_blank" rel="noopener">fal TRELLIS.2</a> · <a href="https://hyper3d.ai/features/api" target="_blank" rel="noopener">Hyper3D API</a></td></tr>
+<tr><td data-l="Aussage im Video">KIs machen kaum noch 12 oder 17 Finger <span class="fs">(03:02)</span></td><td data-l="Stand heute">Keine belastbare Quelle gefunden – nicht eindeutig zuzuordnen ❓.</td><td data-l="Quelle">–</td></tr>
+<tr><td data-l="Aussage im Video">Glänzende Oberflächen (Augen) führen zu kuriosen Ergebnissen <span class="fs">(06:10)</span></td><td data-l="Stand heute">Deckt sich mit den Foto-Tipps in Druckwerk (gleichmäßiges Licht, kein Glanz); eine Herstellerquelle wurde dafür nicht geprüft ❓.</td><td data-l="Quelle">–</td></tr>
+</tbody></table></div>
+
+<div class="card"><p><b>🧩 Spannungen innerhalb des Videos</b></p><ul>
+<li><b>Kosten:</b> „kostet ein Bild zu STL generieren 80 Punkte“ <span class="fs">(13:02–13:35)</span> gegenüber „Das kostet aktuell 24 Punkte“ <span class="fs">(16:10)</span>. Möglich: unterschiedliche Modelle/Stufen oder Verwechslung von Punkten und Credits ❓.</li>
+<li><b>Kontostand:</b> 4024 Credits <span class="fs">(12:30)</span> gegenüber „1024 … im Pott“ <span class="fs">(16:10)</span> – möglicher Hörfehler ❓.</li>
+<li><b>Punkte/Credits:</b> „Credits für 80 Punkte kaufen. Kriegt ihr 600 Credits“ <span class="fs">(13:02)</span>, danach werden die Kosten wieder in „Punkten“ genannt.</li>
+<li><b>Wann wird bezahlt:</b> „Jetzt … für die Erstellung“ <span class="fs">(13:35)</span> und später „beim Downloaden … die komplette Summe“ <span class="fs">(20:21)</span> – ob beides fällig wird oder die Erzeugung angerechnet wird, bleibt offen.</li>
+<li><b>Finger:</b> KIs wüssten, „eine Figur hat vier Finger“ <span class="fs">(03:02)</span>, später Suche nach „fünftem oder sechstem Finger“ <span class="fs">(18:46)</span>.</li>
+<li><b>Düse:</b> Düsenwahl beim Export „ratsam“, zugleich „reine Spekulation“ <span class="fs">(20:21)</span>.</li>
+<li><b>Haltung:</b> KI „ein Übel“ <span class="fs">(23:58)</span> und zugleich ausdrückliche Empfehlung, sie zu nutzen – vom Sprecher selbst so zusammengeführt.</li></ul></div>
+
+<!-- ================= H ================= -->
+<h2 id="h">H · 💡 Erkenntnisse und offene Fragen</h2>
+<div class="card"><p><b>Was ich mitnehme</b></p><ul>
+<li>Die meisten Fehler lassen sich im Bild verhindern – das ist billiger als jede Umwandlung.</li>
+<li>Zielgröße, Aufstellung und Bauweise (ein Stück / Teile) gehören vor dem ersten Bild festgelegt.</li>
+<li>Prüfen in Grau, nicht in Farbe; Boden im Slicer plan schneiden.</li></ul>
+<p><b>Was Druckwerk übernimmt</b> (seit 15.11.2026)</p><ul>
+<li><b>Bild-Idee-Baukasten</b>: Motiv, Zielgröße, Aufstellung, Stil, Details, ein Stück/getrennt, Farbe → fertiger Text für eine Bild-KI mit allen Regeln aus Abschnitt 5 (eigener Text, nicht der Original-Prompt).</li>
+<li>Vorlage <b>„Bild nachbessern“</b> (mehr Textur, Teil entfernen, Teile trennen).</li>
+<li>Prüflisten <b>„Bild prüfen, bevor es Geld kostet“</b> und <b>„3D-Modell in Grau prüfen“</b>, nur im Gerät gespeichert.</li>
+<li>Ablauf in 6 Schritten: Bild-Idee → Bild (extern) → Bild prüfen → 3D (App über fal.ai oder MakerLab) → Modell prüfen → Werkstatt/Slicen. Erreichbar über Bibliothek → „Aus Foto erzeugen (KI)“.</li></ul>
+<p><b>Offene Fragen</b></p><ul>
+<li>Wortlaut des Prompts aus der Videobeschreibung? (Video-Beschreibung lesen.)</li>
+<li>Aktuelle MakerLab-Preise je Modell und ob Erzeugung und Download beide kosten? (MakerLab-Credit-Leitfaden im Browser lesen.)</li>
+<li>Bringt die Düsenwahl beim MakerLab-Export etwas? (Vergleich 0,2 / 0,4 mm am gleichen Bild.)</li>
+<li>Erhöht eine Größenangabe im Bild-Prompt messbar die Netzdichte? (Gleiches Motiv mit 6 cm und 20 cm umwandeln, Dreieckszahl vergleichen.)</li>
+<li>Wie gut lässt sich eine Vollfarb-Datei auf die vier Köpfe des Creator 5 Pro abbilden?</li>
+<li>Teil 2 des Videos: welche Textur- und Teile-Trennungs-KIs?</li></ul>
+<p class="small">Suchbegriffe: „MakerLab Image to 3D credits“, „Bastlwastl KI STL Teil 2“, „Tripo 3.1 printability“, „Bambu Studio cut tool flat base“.</p></div>
+
+<!-- ================= I ================= -->
+<h2 id="i">I · 🗂️ Ein-Seiten-Zusammenfassung</h2>
+<div class="card">
+<p><b>Worum es geht:</b> Bastlwastl zeigt seinen persönlichen Weg von der Idee zur druckbaren STL ohne CAD: ChatGPT erzeugt ein Bild, MakerWorld MakerLab macht daraus ein 3D-Modell, der Slicer macht es druckfertig. Er betont Grenzen (hohle Objekte) und den schnellen Wandel.</p>
+<p><b>Das Eingabebild entscheidet:</b> ein Objekt · neutraler Hintergrund · einfarbig grau oder sanfter Ton · matt, kein Glanz (Augen!) · leicht schräg von oben, keine Extremwinkel · kompakt, nichts Fliegendes · wenig Hinterschneidungen · Unterseite/Aufstellung geplant · <b>Zielgröße angeben</b> (15–20 cm statt 5–6 cm) · Düse und Schichthöhe nennen.</p>
+<p><b>ChatGPT:</b> Prompt mit allen Regeln, nur das Motiv ändern; Serie → Projekt; per Diktat nachbessern (Cape weg, Risse/Dellen).</p>
+<p><b>MakerLab:</b> Credits gegen Punkte tauschen; Modell wählen (er: Tripo 3.1 Standard); Kosten vor dem Bestätigen ansehen (im Video 24 bzw. 80 Punkte, Download zusätzlich); bei Unsicherheit ChatGPT per Screenshot fragen.</p>
+<p><b>Teilen:</b> Abstehende Teile getrennt erzeugen → weniger Stützen, aber doppelte Kosten; danach kleben oder im Slicer fügen.</p>
+<p><b>Prüfen:</b> Ansicht „keine Farbe“ – Finger, krumme Klingen, erfundene Rückseite, Details.</p>
+<p><b>Export & Slicer:</b> Drucker/Düse wählen, STL laden; „Auf Fläche legen“ (F), Boden plan schneiden, dann normale Einstellungen.</p>
+<p><b>Ausblick:</b> Teil 2 mit Textur- und Teile-Trennungs-KIs geplant.</p>
+<p class="small">Abgleich: Kosten- und Modellangaben ändern sich laufend; laut Drittquellen kostete der Export im Frühjahr 2026 2 Credits. Herstellerseiten waren nicht abrufbar.</p></div>
+
+<!-- ================= Quellen ================= -->
+<h2 id="q">Quellen</h2>
+<div class="card small"><ul>
+<li>Video: <a href="https://www.youtube.com/watch?v=KbYygB1Xuzs" target="_blank" rel="noopener">Bastlwastl – Eigene STL-Dateien mit KI erstellen – ganz ohne 3D-Modellierkenntnisse!</a> (automatische Untertitel, abgerufen 15.11.2026)</li>
+<li><a href="https://sorceress.games/blog/makerworld-image-to-3d-model-game-ready-glb-path" target="_blank" rel="noopener">sorceress.games: Makerworld Image to 3D Model (19.05.2026)</a> – Drittquelle</li>
+<li><a href="https://cms.abduzeedo.com/node/89211" target="_blank" rel="noopener">abduzeedo: Meshy-6 AI Image to 3D Now Live on MakerWorld (28.03.2026)</a> – Drittquelle</li>
+<li><a href="https://forum.bambulab.com/t/image-to-3d-is-now-worse/135333" target="_blank" rel="noopener">Bambu-Lab-Forum: „Image to 3D is now worse?“ (2025)</a> – Nutzerbeiträge</li>
+<li><a href="https://makerworld.com/en/makerlab-credit-full-guide" target="_blank" rel="noopener">MakerWorld: MakerLab Credits – Complete Guide</a> – Herstellerseite, Inhalt nicht abrufbar (403)</li>
+<li><a href="https://hyper3d.ai/features/api" target="_blank" rel="noopener">Hyper3D Rodin API</a> · <a href="https://fal.ai/models/fal-ai/trellis-2/llms.txt" target="_blank" rel="noopener">fal: TRELLIS.2</a></li>
+<li><a href="https://www.orcarouter.ai/blog/hi3d-v1-0-3d-printing-reality-check" target="_blank" rel="noopener">orcarouter: Hi3D v1.0 – 3D-Druck-Check</a></li>
+<li><a href="https://www.sloyd.ai/blog/ai-3d-model-generator-rankings" target="_blank" rel="noopener">Sloyd: KI-3D-Generatoren Rangliste (03.08.2026)</a> · <a href="https://app.cinevva.com/guides/ai-3d-model-generation-timeline-2026" target="_blank" rel="noopener">Cinevva: Zeitleiste 2026</a></li>
+<li>Druckwerk-Recherche „Modellqualität“ vom 15.11.2026 (wissen/recherche_modellqualitaet.md, mit Primärquellen)</li></ul>
+<p>Hörfehler-Hinweise (❓) sind Vermutungen aus dem Zusammenhang, keine Belege.</p></div>
+<p class="small" style="text-align:center;margin-top:16px"><a href="index.html">‹ Alle ausgewerteten Videos</a> · <a href="../index.html">Druckwerk</a> · <a href="../index.html#kiweg:1">KI-Ablauf in der App öffnen</a></p>
+</main>
+</body>
+</html>
