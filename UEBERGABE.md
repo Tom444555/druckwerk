@@ -32,6 +32,8 @@
 - **Raue Oberfläche / Fuzzy Skin (15.11. 18:45 Uhr):** Video von Bastlwastl ausgewertet (`videos/fuzzy-skin-bastlwastl.html`); `druck.py --rau fein|mittel|grob`
   (+ `--rau-wo`), `eingang.py` nimmt `rau`, Werkstatt-Slicen hat die Zeile „Oberfläche“. Gemessen: „mittel“ trägt je Seite 0,30 mm auf. Nichts gedruckt.
   Mögliche nächste Schritte: Testraster als Kalibrier-Teil 6, gezieltes Bemalen, Muster als Relief.
+- **Text zu Bild (15.11. 20:30 Uhr): nur Recherche, nichts eingebaut.** `wissen/recherche_text_zu_bild.md` mit acht Vorschlägen; Test: Pollinations liefert von der
+  Sitzung aus gratis Entwurfsbilder (768 px, Wasserzeichen). Tom wählt noch aus; empfohlen 1 (Entwurf gratis im Chat), 4 (Bild-Text schärfen), dann 2 + 3 mit `FAL_KEY`.
 - **Bekannte Lücken:** Stützen kommen vom aktiven Kopf;
   WLAN-Senden, Abgleich iPhone↔iPad, Auftrag ohne Chat offen (Vorschläge in `wissen/workflow.json`).
 - **Toms Geschmack:** detailreich, geschwungen, naturnah, breit statt hoch; Farben schwarz/gold/rot/weiß; erst schnelle Vorschau, kurze Antworten. Will Modellqualität „wie Hyper3D“.
