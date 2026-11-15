@@ -77,5 +77,6 @@
   }
  ],
  "vorschau": "vorschau.png",
- "projekt": "stratocaster_c5pro.3mf"
+ "projekt": "stratocaster_c5pro.3mf",
+ "bild_im_gcode": true
 }

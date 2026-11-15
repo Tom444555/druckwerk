@@ -177,15 +177,28 @@ export async function bibliothek(app, ctx){
   };
 }
 
+// Bemalte 3MF (Farbe je Dreieck, z. B. Meshy „Multi-Color Print“ oder textur_farben.py): Original aufheben,
+// weil die 3D-Ansicht die Bemalung nicht kennt – beim Slicen geht das Original samt Umbau-Matrix an den Slicer.
+const BEMALT_MAX = 25 * 1024 * 1024;
+async function bemaltPruefen(buf){
+  try {
+    const { unzipSync, strFromU8 } = await import("three/addons/libs/fflate.module.js");
+    const z = unzipSync(new Uint8Array(buf), {filter: f => /\.model$/i.test(f.name)});
+    for (const n in z) if (strFromU8(z[n]).includes('paint_color="')) return true;
+  } catch (e) {}
+  return false;
+}
+
 async function importieren(files){
-  const teile = [];
+  const teile = []; let bemalt = null;
   for (const f of files) {
     const ext = f.name.split(".").pop().toLowerCase(), basis = f.name.replace(/\.[^.]+$/, "");
     const buf = await f.arrayBuffer();
     if (ext === "stl") teile.push({name: basis, geo: sauber(new STLLoader().parse(buf))});
     else {
       let obj;
-      if (ext === "3mf") { const { ThreeMFLoader } = await import("three/addons/loaders/3MFLoader.js"); obj = new ThreeMFLoader().parse(buf); }
+      if (ext === "3mf") { const { ThreeMFLoader } = await import("three/addons/loaders/3MFLoader.js"); obj = new ThreeMFLoader().parse(buf);
+        if (files.length === 1 && buf.byteLength <= BEMALT_MAX && await bemaltPruefen(buf)) bemalt = {daten: buf, matrix: new THREE.Matrix4().toArray()}; }
       else if (ext === "obj") { const { OBJLoader } = await import("three/addons/loaders/OBJLoader.js"); obj = new OBJLoader().parse(new TextDecoder().decode(buf)); }
       else throw new Error("Format " + ext);
       obj.updateMatrixWorld(true); let n = 0;
@@ -204,7 +217,8 @@ async function importieren(files){
     else t.slot = files.length > 1 || teile.length > 1 ? Math.min(i + 1, 4) : 1;
   });
   return { id: "m" + Date.now().toString(36), name: files[0].name.replace(/\.[^.]+$/, ""), datum: new Date().toISOString().slice(0, 10),
-    herkunft: "Datei", slots, bild: "", teile: teile.map(t => ({name: t.name, slot: t.slot, stl: stlBinaer([t.geo])})) };
+    herkunft: bemalt ? "Datei (bemalt)" : "Datei", slots: bemalt ? [...STD_FARBEN] : slots, bild: "", ...(bemalt ? {bemalt} : {}),
+    teile: teile.map(t => ({name: t.name, slot: t.slot, stl: stlBinaer([t.geo])})) };
 }
 
 // Dateien (STL/3MF/OBJ) wie „Eigene Datei öffnen“ ablegen – für den KI-Ablauf (kiweg.js); gibt die Modell-ID zurück
@@ -252,6 +266,7 @@ async function modellLaden(id, fortschritt){
   } else {
     const e = await eigenesHolen(id.slice(2)); if (!e) throw new Error("nicht gefunden");
     m.name = e.name; m.eigen = e; m.slots = [...e.slots]; m.ops = [...(e.ops || [])];
+    if (e.bemalt && e.bemalt.daten) m.bemalt = e.bemalt;
     for (const t of e.teile) m.teile.push({name: t.name, slot: t.slot, geo: sauber(new STLLoader().parse(t.stl))});
   }
   return m;
@@ -439,6 +454,9 @@ function exportWahl(){
   });
 }
 
+// gesamter Umbau seit dem Import: gespeicherte Matrix (bis zum letzten Sichern) und alles seitdem
+function bemaltMatrix(){ return M.kum.clone().multiply(new THREE.Matrix4().fromArray(M.bemalt.matrix)); }
+
 async function merken(){
   R.r.render(R.sc, R.cam);
   let bild = ""; try { const c = document.createElement("canvas"); c.width = 360; c.height = 270;
@@ -447,6 +465,7 @@ async function merken(){
   const e = { id: neuId, name: M.eigen ? M.eigen.name : M.name + " (bearbeitet)", datum: new Date().toISOString().slice(0, 10),
     herkunft: M.lager ? "Lager: " + M.lager.ordner : (M.eigen && M.eigen.herkunft) || "Datei", slots: [...M.slots], bild, ops: [...M.ops],
     teile: M.teile.filter(t => !t.weg).map(t => ({name: t.name, slot: t.slot, stl: stlBinaer([t.geo])})) };
+  if (M.bemalt) { e.bemalt = {daten: M.bemalt.daten, matrix: bemaltMatrix().toArray()}; M.bemalt = e.bemalt; M.kum = new THREE.Matrix4(); }
   await eigenesSichern(e); M.eigen = e; C.toast("In „Meine Modelle“ gesichert"); ui();
 }
 
@@ -489,13 +508,14 @@ function sliceWahl(){
   const schichten = dr.schichten || ["0.12", "0.20", "0.24"];
   if (!schichten.includes(E.schicht)) E.schicht = schichten.reduce((b, v) => Math.abs(v - E.schicht) < Math.abs(b - E.schicht) ? v : b, "0.20");
   E.mat = E.mat.map(m => mats.includes(m) ? m : "PLA");
-  const benutzt = [...new Set(M.teile.filter(t => !t.weg).map(t => t.slot))].sort();
+  const benutzt = M.bemalt ? [1, 2, 3, 4] : [...new Set(M.teile.filter(t => !t.weg).map(t => t.slot))].sort();
   const d = C.sheet(""), box = d.firstElementChild;
   const opt = (liste, akt) => liste.map(([v, l]) => `<option value="${v}" ${String(v) === String(akt) ? "selected" : ""}>${l}</option>`).join("");
   const seg = (k, liste) => `<div class="seg">${liste.map(([v, l]) => `<button data-k="${k}" data-v="${v}" class="${E[k] === v ? "on" : ""}">${l}</button>`).join("")}</div>`;
   const mal = () => {
     const y = box.scrollTop;
     box.innerHTML = `<h3>„${C.esc(M.name)}“ slicen</h3><p>Flashforge Creator 5 Pro · fertige Datei für den USB-Stick</p>
+    ${M.bemalt ? `<p class="hint">Bemaltes Modell: Die Farben aus der Datei bleiben erhalten (in der 3D-Ansicht sind sie nicht zu sehen). Größe und Drehung aus der Werkstatt werden übernommen. Welche Köpfe wirklich drucken, steht danach im Bericht.</p>` : ""}
     <h2>Voreinstellung</h2>${seg("vor", [["deko","Deko"],["fein","Fein"],["funktion","Funktion"],["stabil","Stabil"]])}
     <h2>Qualität &amp; Festigkeit</h2><div class="card">
       <div class="row"><div class="grow">Schichthöhe</div><select data-e="schicht">${opt(schichten.map(v => [v, v.replace(".", ",") + " mm"]), E.schicht)}</select></div>
@@ -565,7 +585,13 @@ async function sliceStart(E){
     const job = { name: M.name.replace(/\s*\(bearbeitet\)$/, ""), drucker: "c5pro", schicht: +E.schicht, infill: E.infill, waende: E.waende, stuetzen: E.stuetzen, brim: E.brim,
       extra: {sparse_infill_pattern: E.muster, top_shell_layers: E.decke, bottom_shell_layers: E.decke, seam_position: E.naht, ironing_type: E.glaetten ? "top" : "no ironing"},
       farben: M.slots.slice(0, max).map(farbName), quelle: (M.lager && M.lager.quelle) || "", teile: [] };
-    if (M.lager && teile.every(t => t.datei)) {            // Dateien liegen schon im Lager -> nur die Änderung schicken
+    if (M.bemalt) {                                        // bemalte 3MF: Original + Umbau-Matrix, Farben bleiben
+      const e = bemaltMatrix().elements; job.matrix = [0,1,2].flatMap(r => [0,1,2,3].map(c => e[c*4+r]));
+      job.farben = M.slots.slice(0, 4).map(farbName); job.materialien = E.mat.slice(0, 4);
+      sag("Bemaltes Modell wird hochgeladen …", 20);
+      await ablegen(`eingang/${id}/bemalt.3mf`, b64(M.bemalt.daten), `App: bemaltes Modell für ${job.name}`);
+      job.bemalt = "bemalt.3mf";
+    } else if (M.lager && teile.every(t => t.datei)) {     // Dateien liegen schon im Lager -> nur die Änderung schicken
       const e = M.kum.elements; job.matrix = [0,1,2].flatMap(r => [0,1,2,3].map(c => e[c*4+r]));
       job.teile = teile.map(t => ({name: t.name, aus: `auftraege/${M.lager.ordner}/${t.datei}`, material: E.mat[t.slot-1], slot: t.slot}));
     } else {

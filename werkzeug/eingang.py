@@ -43,7 +43,17 @@ def einer(ordner: Path):
         m = np.array(j["matrix"], dtype=np.float64).reshape(3, 4); M = (m[:, :3], m[:, 3])
     cmd = [sys.executable, str(W / "werkzeug" / "druck.py"), "--drucker", drucker, "--name", name]
     teile = j.get("teile") or []
-    if not 1 <= len(teile) <= 16: raise ValueError("keine Teile")
+    if j.get("bemalt"):                                          # bemalte 3MF aus der Werkstatt: Original + Matrix, Farben bleiben
+        q = ordner / re.sub(r"[^\w\-.]+", "_", str(j["bemalt"]))
+        if q.suffix.lower() != ".3mf" or not q.exists(): raise ValueError("Bemaltes Modell fehlt")
+        if q.stat().st_size > 40 * 1024 * 1024: raise ValueError("Bemaltes Modell ist zu groß (über 40 MB)")
+        mats = [str(x).upper() for x in (j.get("materialien") or [])][:4]
+        if any(not MAT_OK.match(x) for x in mats): raise ValueError("Material ungültig")
+        cmd += ["--bemalt", str(q)] + (["--materialien", ",".join(mats)] if mats else [])
+        if M is not None and not np.allclose(np.hstack([M[0], M[1][:, None]]), np.eye(3, 4), atol=1e-6):
+            cmd += ["--matrix", " ".join("%.6f" % x for x in np.hstack([M[0], M[1][:, None]]).ravel())]
+        teile = []
+    elif not 1 <= len(teile) <= 16: raise ValueError("keine Teile")
     for i, t in enumerate(teile):
         mat = str(t.get("material", "PLA")).upper(); slot = int(t.get("slot", 1))
         if not MAT_OK.match(mat) or not 1 <= slot <= 4: raise ValueError("Material/Spule ungültig")

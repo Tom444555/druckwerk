@@ -77,5 +77,6 @@
   }
  ],
  "vorschau": "vorschau.png",
- "projekt": "loopsmiths_amp_c5pro.3mf"
+ "projekt": "loopsmiths_amp_c5pro.3mf",
+ "bild_im_gcode": true
 }

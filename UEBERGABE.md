@@ -5,7 +5,7 @@
 - **Lager:** `2026-11-14_stratocaster_c5pro`, `2026-11-14_loopsmiths_amp_c5pro`, `2026-11-15_vox_plektrumhalter_c5pro` (3 h 38 min, 73 g, schwarz/rot/weiß),
   Kalibrier-Set `2026-11-14_kalibrier_1…5_c5pro`. Keine `_kobrax`-Aufträge mehr.
 - **App:** sieben Reiter Start · Aufträge · Neu · Bibliothek · Material · Drucker · **Workflow** („Von der Idee zum Modell“; Tom fand die Seite unter „So geht's“ nicht →
-  wieder eigener Reiter). `sw.js` steht auf `druckwerk-v7` (bei jeder App-Änderung hochzählen). Startseite mit „Nächster Schritt“ und Suche, gedruckt-Haken, Sicherung,
+  wieder eigener Reiter). `sw.js` steht auf `druckwerk-v8` (bei jeder App-Änderung hochzählen). Startseite mit „Nächster Schritt“ und Suche, gedruckt-Haken, Sicherung,
   Offline/PWA, KI-Ablauf in 6 Schritten (`kiweg.js`, Schritt 4 jetzt mit A fal.ai · B MakerLab · C „Bei Claude im Chat“), „Videos ausgewertet“ (`videos/`, vier Auswertungen).
 - **Links zu Claude:** `https://claude.ai/code/new?repo=Tom444555%2Fdruckwerk&q=<Text>` (die alte Form `claude.ai/new?q=` tat am iPhone/iPad nichts; laut Anthropic-Hilfe
   reagiert die App nur auf `claude.ai/code…`). Beim Antippen wird der Text zusätzlich kopiert (Sammel-Handler in `index.html`). **Tom hat noch nicht bestätigt, ob es jetzt geht** –
@@ -26,8 +26,11 @@
   `textur_farben.py` (Weg A bemalte 3MF, Weg B Farbkörper), `foto.py`, `werkzeug/KI_MODELLE.md`. Recherche: `wissen/recherche_modellqualitaet.md`.
 - **Getestet:** App mit Playwright (320/390/820 px), alle neuen Seiten `scrollWidth` = Fensterbreite; Profi-Teile 0 Fehler; Farbwege A und B mit Orca-CLI; `ki_lokal.py` Ende zu Ende.
   **Nicht getestet:** alles am Drucker, Claude-Links und Offline-Speicher am echten iPhone/iPad, echter fal-Aufruf, bemalte Meshy-3MF, MakerLab.
-- **Bekannte Lücken:** App/`eingang.py` können bemalte 3MF nicht aus der Werkstatt slicen (Weg B nehmen); Skalieren vor `--bemalt` fehlt; Stützen kommen vom aktiven Kopf;
-  gemischte Düsengrößen, WLAN-Senden, Abgleich iPhone↔iPad, Auftrag ohne Chat offen (Vorschläge in `wissen/workflow.json`).
+- **Slicer-Lücken geschlossen (15.11. 15:30 Uhr, alles nur mit Orca-CLI/Playwright geprüft, nichts gedruckt):** gemischte Düsen `druck.py --duesen 0.4,0.25`;
+  Vorschaubild 140×110 in der .gcode (Anzeige am Creator 5 Pro unbestätigt; alte Aufträge erst nach neuem Slicen); bemalte 3MF skalieren/drehen
+  (`--groesse`, `--skala`, `--matrix`); bemalte 3MF aus der Werkstatt slicen (App hebt Original auf, `eingang.py` → `--bemalt`). In der App gibt es für gemischte Düsen noch keinen Schalter.
+- **Bekannte Lücken:** Stützen kommen vom aktiven Kopf;
+  WLAN-Senden, Abgleich iPhone↔iPad, Auftrag ohne Chat offen (Vorschläge in `wissen/workflow.json`).
 - **Toms Geschmack:** detailreich, geschwungen, naturnah, breit statt hoch; Farben schwarz/gold/rot/weiß; erst schnelle Vorschau, kurze Antworten. Will Modellqualität „wie Hyper3D“.
 - **Nächste Schritte:** 1) Toms Rückmeldung zu den Claude-Links. 2) Vox-Lizenz klären. 3) Erstes eigenes Foto durch `ki_lokal.py`; erste Meshy-3MF durch `--bemalt` (Farben je Kopf
   im Bericht prüfen). 4) fal.ai-Schlüssel `FAL_KEY` → ersten echten KI-Lauf begleiten. 5) Kalibrier-Set drucken → Spiele in `profi.py`/`baukasten.scad`, Herkunft „Gerät“.

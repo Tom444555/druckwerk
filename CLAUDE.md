@@ -24,13 +24,15 @@ Alte `_kobrax`-Aufträge laufen nicht auf dem Creator 5 Pro – bei Bedarf aus d
    ```
    python3 werkzeug/druck.py --drucker c5pro --name <name> \
      --teil modelle/a.scad:PLA:1 --teil modelle/b.scad:PLA:2 --farben "schwarz,rot" \
-     --zusammen --schicht 0.20 --infill 15 [--waende 3] [--stuetzen auto|baum] [--brim an|aus] [--duese 0.25|0.6|0.8]
+     --zusammen --schicht 0.20 --infill 15 [--waende 3] [--stuetzen auto|baum] [--brim an|aus] [--duese 0.25|0.6|0.8] [--duesen 0.4,0.25,0.4,0.4]
    ```
    - `Datei:Material:Slot` – Slot 1–4 = Spule (Kobra) bzw. Kopf (Creator). Materialien: siehe `drucker/*.json`.
    - `--zusammen` = mehrere Dateien bilden EIN mehrfarbiges Teil. Ohne = getrennte Teile, werden verteilt.
    - Schichten: Creator 0.12/0.20/0.24 (0,4-mm-Düse), Kobra 0.08–0.28.
    - `--duese` (nur c5pro, gilt für ALLE Köpfe): 0.25 → Schicht 0.08/0.10/0.12/0.14 · 0.6 → 0.18/0.30/0.42 · 0.8 → 0.32/0.4/0.48
-     (Profile in `drucker/c5pro.json → duesen`). Gemischte Düsengrößen in einem Druck gehen headless noch nicht.
+     (Profile in `drucker/c5pro.json → duesen`).
+   - `--duesen 0.4,0.25` (seit 15.11.2026) = Düse **je Kopf** gemischt: Schichthöhen und Prozessprofil der kleinsten Düse, Linienbreiten als Prozent der
+     jeweiligen Düse, Brückenlinie = kleinste Düse. Bericht nennt die Düse je Kopf. Nur mit Orca-CLI geprüft (Breiten je Kopf in der .gcode), **nicht gedruckt**.
    - Gold = `PLA-SILK` (230 °C, langsamer); mit normalem PLA zusammen meldet der Bericht „gemischt“ – das ist in Ordnung.
 5. Ergebnis (auch `auftrag.json`; `auftraege/index.json` wird automatisch neu gebaut → erscheint in der App) liegt in `auftraege/<datum>_<name>_<drucker>/`: `.gcode`, `BERICHT.md`, STL, `slicer.log`.
 6. Committen + pushen. An Tom: `.gcode` per SendUserFile + Kurzfassung aus BERICHT.md (Spulen, Zeit, Gramm)
@@ -44,7 +46,7 @@ Alte `_kobrax`-Aufträge laufen nicht auf dem Creator 5 Pro – bei Bedarf aus d
 - Jede Ansicht hat eine Adresse (`#start`, `#auftrag:<ordner>`, `#werkstatt:…`, `#kiweg:<schritt>`); Zurück/Vor funktionieren.
 - **Sicherung** (`sicherung.js`): alle `druckwerk_*`-Schlüssel + IndexedDB (eigene Modelle, Tagebuch-Fotos) als eine Datei; `druckwerk_gesichert` = Datum.
 - **Offline/PWA**: `manifest.webmanifest`, `symbol-*.png`, `sw.js` (immer zuerst Netz, Zwischenspeicher nur ohne Netz; .gcode/STL nie).
-  **Bei jeder Änderung an App-Dateien `CACHE` in `sw.js` hochzählen** (Stand `druckwerk-v7`) und neue Dateien dort eintragen.
+  **Bei jeder Änderung an App-Dateien `CACHE` in `sw.js` hochzählen** (Stand `druckwerk-v8`) und neue Dateien dort eintragen.
 - „Aus dem Lager hinzufügen“ heißt in der App jetzt „Weitere Aufträge von Claude“. Überall „Kopf 1–4“, nie „Spule“; Werkstatt-Slicen sendet `c5pro`.
 - Aufträge sind wie die Ideen im Looper **pro Gerät gespeichert** (localStorage `druckwerk_meine`): neue Besucher
   sehen eine leere Liste. Tom speichert einen Auftrag über den Link `https://tom444555.github.io/druckwerk/#hinzu=<ordner>`
@@ -81,7 +83,10 @@ Alte `_kobrax`-Aufträge laufen nicht auf dem Creator 5 Pro – bei Bedarf aus d
   `status/<id>.json`, App übernimmt den Auftrag automatisch (~1–3 Min.). Token (Fine-grained, Contents RW) liegt nur
   im Gerät (localStorage `druckwerk_token`). Erlaubte Extra-Schlüssel stehen in `EXTRA_OK` (eingang.py) – dort erweitern.
 - Schichtvorschau: `schichten.js` (Knopf „Schichten ansehen“ im Auftrag) liest die .gcode und zeichnet jede Schicht.
-- Noch offen: 1b schneiden/zusammensetzen/Text · gemischte Düsengrößen · Senden per WLAN · Abgleich iPhone↔iPad über das Repo · Auftrag ohne Chat. Erledigt: Filamentlager mit Check und Kosten, Druck-Tagebuch, geführter Auftrag (14.11.), Start/Sicherung/Offline/KI-Weg (15.11.).
+- **Bemalte 3MF in der Werkstatt (seit 15.11.2026):** Beim Import erkennt die App `paint_color` und hebt das Original auf (`bemalt: {daten, matrix}` am eigenen Modell,
+  höchstens 25 MB). Slicen schickt `eingang/<id>/bemalt.3mf` + `bemalt`/`matrix`/`materialien` in `auftrag.json`; `eingang.py` ruft `druck.py --bemalt … --matrix …`.
+  Die 3D-Ansicht zeigt die Bemalung nicht; Teile entfernen wirkt bei bemalten Modellen nicht.
+- Noch offen: 1b schneiden/zusammensetzen/Text · Senden per WLAN · Abgleich iPhone↔iPad über das Repo · Auftrag ohne Chat. Erledigt: Filamentlager mit Check und Kosten, Druck-Tagebuch, geführter Auftrag (14.11.), Start/Sicherung/Offline/KI-Weg (15.11.).
 
 ## Wissen: Material, Drucker, Workflow (wissen.js + wissen/*.json, seit 14.11.2026)
 - **Inhalte stehen in `wissen/*.json`, nicht im Code.** Neue Erkenntnisse (Toms Druckergebnisse, neue Preise, Firmware) dort eintragen und
@@ -140,7 +145,7 @@ Alte `_kobrax`-Aufträge laufen nicht auf dem Creator 5 Pro – bei Bedarf aus d
 
 - **Der Druckt Schon Wieder, „Meshy AI … 3D Agent“** (Werbe-Video, Snapmaker U1): Agent fragt erst nach (Form, Farben), zeigt ein Konzeptbild, baut dann 3D – so auch selbst vorgehen.
   Meshy „Multi-Color Print“ liefert eine **bemalte 3MF** (Farbanzahl dort auf ≤ 4 stellen) → `druck.py --bemalt`; mit echter Meshy-Datei **ungetestet**: beim ersten Mal prüfen, ob
-  `lese_3mf` die Farbcodierung liest (sonst alles auf Kopf 1) und die Größe stimmt (Meshy-Standard 50 mm; Skalieren vor `--bemalt` fehlt noch). Baumstützen sind im Video umgerissen
+  `lese_3mf` die Farbcodierung liest (sonst alles auf Kopf 1) und die Größe stimmt (Meshy-Standard 50 mm → `--groesse <mm>` oder `--skala <Faktor>`; der Bericht nennt die Maße vorher/nachher). Baumstützen sind im Video umgerissen
   → bei `--stuetzen auto` bleiben; Stringing kam von fehlender Kalibrierung → erst Kalibrier-Set. KI bleibt Deko, kein CAD-Ersatz.
 
 ## Weitere Werkzeuge (seit 14.11.2026)
@@ -190,6 +195,10 @@ Alte `_kobrax`-Aufträge laufen nicht auf dem Creator 5 Pro – bei Bedarf aus d
 - Jeder Auftrag bekommt zusätzlich `<name>_<drucker>.3mf` (Projekt mit Einstellungen, Feld `projekt`) – App-Knopf „3MF-Projekt laden“.
 - `druck.py` rendert automatisch `vorschau.png` (OpenSCAD, Farben je Spule) → App zeigt es sofort, 3D lädt dahinter nach.
 - Große Netze bekommen eine leichte Kopie `*.app.stl` (~60.000 Dreiecke, Feld `teile_app`) nur für die 3D-Ansicht am Handy.
-- Drucker-Thumbnail im .gcode wird headless noch nicht erzeugt → Drucker zeigt kein Bild. Offen.
+- Vorschaubild für die Drucker-Anzeige (seit 15.11.2026): `druck.py` schreibt `vorschau.png` als Thumbnail-Block (Größe aus dem Maschinenprofil, 140×110 PNG)
+  hinter den Kopfblock der .gcode (`bild_in_gcode`, Feld `bild_im_gcode`). Format wie OrcaSlicer; **ob der Creator 5 Pro es anzeigt, ist am Gerät noch nicht bestätigt**.
+  Ältere Aufträge haben es erst nach neuem Slicen.
+- `druck.py --bemalt` mit `--groesse`/`--skala`/`--matrix` (`bemalt_umformen`): schreibt nur die Eckpunkte neu, die Bemalung bleibt unverändert; von der Matrix zählt
+  nur der 3×3-Teil (Lage bestimmt der Slicer). Spiegeln geht nur bei einfacher Bemalung (ein Farbcode je Dreieck).
 - Später (Stufe 2): Senden per LAN über Heim-Brücke (Kobra X: MQTT, grunna/ha-anycubic-kobra-x-lan;
   Flashforge: HTTP 8898, Parallel-7/flashforge-api-docs). Erst nach Kauf am echten Gerät testen.

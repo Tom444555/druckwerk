@@ -933,9 +933,9 @@
   {
    "id": "v8",
    "t": "Feine Düse 0,25 mm",
-   "nutzen": "Die Profile für 0,25, 0,6 und 0,8 mm sind eingebunden – bisher nur, wenn alle benutzten Köpfe die gleiche Düse tragen. Ein einzelner feiner Gold-Kopf neben 0,4 mm ist noch offen.",
+   "nutzen": "Die Profile für 0,25, 0,6 und 0,8 mm sind eingebunden. Seit 15.11. geht auch gemischt: ein Kopf mit 0,25 mm für feine Schrift neben 0,4 mm für den Rest (Auftrag an Claude: „Kopf 2 mit 0,25-mm-Düse“). Gerechnet, noch nicht gedruckt.",
    "aufwand": "klein (plus 29,90 € Düse)",
-   "status": "teilweise eingebaut 14.11."
+   "status": "eingebaut 15.11., am Drucker noch nicht erprobt"
   },
   {
    "id": "v9",

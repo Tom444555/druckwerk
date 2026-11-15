@@ -119,4 +119,4 @@ Auswertungen mit Fundstellen: `videos/ki-stl-bastlwastl.html`, `videos/foto-in-3
 ## Meshy „Multi-Color Print“ (aus dem Video von Der Druckt Schon Wieder, 15.11.2026)
 - Meshy liefert direkt eine bemalte 3MF (Weg A ohne `textur_farben.py`); Farbanzahl in Meshy auf höchstens 4 stellen, Farbtöne lassen sich dort und im Slicer ändern.
 - Ungetestet: ob `lese_3mf` in `druck.py` Meshys Farbcodierung liest – beim ersten echten File Werkzeugwechsel und Gramm je Kopf im Bericht prüfen.
-- Größe: Meshy exportiert ohne Angabe 50 mm hoch; im Video wurde im Slicer etwa vierfach vergrößert, ohne dass das Netz grob wirkte. Skalieren vor `--bemalt` ist noch offen.
+- Größe: Meshy exportiert ohne Angabe 50 mm hoch; im Video wurde im Slicer etwa vierfach vergrößert, ohne dass das Netz grob wirkte. Seit 15.11.2026: `druck.py --bemalt datei.3mf --groesse 180` (größtes Maß in mm) oder `--skala 3.6`.

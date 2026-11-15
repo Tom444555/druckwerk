@@ -39,5 +39,6 @@
   }
  ],
  "vorschau": "vorschau.png",
- "projekt": "kalibrier_1_haftung_c5pro.3mf"
+ "projekt": "kalibrier_1_haftung_c5pro.3mf",
+ "bild_im_gcode": true
 }

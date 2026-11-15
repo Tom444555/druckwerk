@@ -78,5 +78,6 @@
   }
  ],
  "vorschau": "vorschau.png",
- "projekt": "kalibrier_3_versatz_c5pro.3mf"
+ "projekt": "kalibrier_3_versatz_c5pro.3mf",
+ "bild_im_gcode": true
 }

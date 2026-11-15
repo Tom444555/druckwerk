@@ -65,5 +65,6 @@
   }
  ],
  "vorschau": "vorschau.png",
- "projekt": "vox_plektrumhalter_c5pro.3mf"
+ "projekt": "vox_plektrumhalter_c5pro.3mf",
+ "bild_im_gcode": true
 }

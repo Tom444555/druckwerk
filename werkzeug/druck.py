@@ -102,6 +102,71 @@ def vorschau_bild(ziel: Path, teile_stl, slots_farben):
         return False
 
 
+def bild_in_gcode(gcode: Path, png: Path, groessen):
+    """Vorschaubild für die Drucker-Anzeige in die .gcode schreiben (Orca erzeugt es ohne Bildschirm nicht).
+    Format wie OrcaSlicer: Block '; thumbnail begin BxH LÄNGE' mit base64-PNG direkt nach dem Kopfblock."""
+    try:
+        import base64, io
+        from PIL import Image
+        txt = gcode.read_text(encoding="utf-8", errors="surrogateescape")
+        marke = "; HEADER_BLOCK_END\n"
+        if "thumbnail begin" in txt or marke not in txt or not png.exists():
+            return False
+        quelle = Image.open(png).convert("RGBA")
+        block = ["; THUMBNAIL_BLOCK_START"]
+        for b, h in groessen:
+            bild = quelle.copy(); bild.thumbnail((b, h), Image.LANCZOS)
+            feld = Image.new("RGBA", (b, h), (0, 0, 0, 0)); feld.paste(bild, ((b - bild.width) // 2, (h - bild.height) // 2))
+            puffer = io.BytesIO(); feld.save(puffer, "PNG", optimize=True)
+            b64 = base64.b64encode(puffer.getvalue()).decode()
+            block += [";", f"; thumbnail begin {b}x{h} {len(b64)}"] + [f"; {b64[i:i + 78]}" for i in range(0, len(b64), 78)] + ["; thumbnail end"]
+        block += ["; THUMBNAIL_BLOCK_END", ""]
+        i = txt.index(marke) + len(marke)
+        gcode.write_text(txt[:i] + "\n" + "\n".join(block) + txt[i:], encoding="utf-8", errors="surrogateescape")
+        return True
+    except Exception:
+        return False
+
+
+def bemalt_umformen(quelle: Path, ziel: Path, groesse=None, skala=None, matrix=None):
+    """Bemalte 3MF skalieren/drehen, ohne die Bemalung anzufassen: nur die Eckpunkte werden neu geschrieben.
+    groesse = größtes Maß in mm, skala = Faktor, matrix = 12 Zahlen (3×4, zeilenweise; nur der 3×3-Teil zählt,
+    die Lage auf der Platte bestimmt der Slicer). Gibt (Maße vorher, Maße nachher) zurück."""
+    import zipfile
+    L = np.eye(3)
+    if matrix is not None:
+        L = np.array(matrix, dtype=float).reshape(3, 4)[:, :3]
+    with zipfile.ZipFile(quelle) as z:
+        dateien = {n: z.read(n) for n in z.namelist()}
+    modelle = [n for n in dateien if n.lower().endswith(".model")]
+    muster = re.compile(r'<vertex x="([^"]+)" y="([^"]+)" z="([^"]+)"')
+    alle = [np.array(muster.findall(dateien[n].decode("utf-8")), float) for n in modelle]
+    V = np.vstack([v for v in alle if len(v)])
+    vorher = np.ptp(V, axis=0)
+    W_ = V @ L.T
+    f = float(skala) if skala else 1.0
+    if groesse:
+        f = float(groesse) / float(np.ptp(W_, axis=0).max())
+    L = L * f
+    spiegel = np.linalg.det(L) < 0
+    W_ = V @ L.T
+    versatz = np.array([-(W_[:, 0].min() + W_[:, 0].max()) / 2, -(W_[:, 1].min() + W_[:, 1].max()) / 2, -W_[:, 2].min()])
+    for n in modelle:
+        x = dateien[n].decode("utf-8")
+        if spiegel:
+            if re.search(r'paint_color="[0-9A-F]{3,}"', x):
+                raise SystemExit("Spiegeln geht bei fein bemalten 3MF nicht (die Bemalung hängt an der Dreiecks-Richtung).")
+            x = re.sub(r'<triangle v1="(\d+)" v2="(\d+)"', r'<triangle v1="\2" v2="\1"', x)
+        def neu(m):
+            q = L @ np.array([float(m.group(1)), float(m.group(2)), float(m.group(3))]) + versatz
+            return f'<vertex x="{q[0]:.4f}" y="{q[1]:.4f}" z="{q[2]:.4f}"'
+        dateien[n] = muster.sub(neu, x).encode("utf-8")
+    with zipfile.ZipFile(ziel, "w", zipfile.ZIP_DEFLATED) as z:
+        for n, d in dateien.items():
+            z.writestr(n, d)
+    return vorher, np.ptp(W_, axis=0)
+
+
 def app_stl(st: Path, ziel_flaechen=60000):
     """Leichte Kopie für die 3D-Vorschau in der App (Handy): große Netze auf ~60.000 Dreiecke reduzieren."""
     try:
@@ -134,6 +199,11 @@ def main():
                     help="Teile als EIN Objekt behandeln (mehrfarbiges Teil aus mehreren Dateien)")
     ap.add_argument("--extra", action="append", default=[], help="Slicer-Einstellung überschreiben: schluessel=wert (mehrfach)")
     ap.add_argument("--duese", default=None, help="Düsengröße in mm für ALLE Köpfe (c5pro: 0.25 | 0.4 | 0.6 | 0.8; Standard 0.4)")
+    ap.add_argument("--duesen", default=None,
+                    help="Düse je Kopf, z. B. '0.4,0.25,0.4,0.4' (gemischt; Schicht richtet sich nach der kleinsten Düse)")
+    ap.add_argument("--groesse", type=float, default=None, help="nur mit --bemalt: größtes Maß in mm (Meshy liefert 50 mm)")
+    ap.add_argument("--skala", type=float, default=None, help="nur mit --bemalt: Faktor, z. B. 2.4")
+    ap.add_argument("--matrix", default=None, help="nur mit --bemalt: 12 Zahlen (3×4, zeilenweise) aus der Werkstatt")
     ap.add_argument("--quelle", default="", help="Link zum Original-Modell (MakerWorld, Printables …)")
     ap.add_argument("--ausgabe", default=None, help="Zielordner (Standard: auftraege/<datum>_<name>)")
     ap.add_argument("--bemalt", default=None,
@@ -142,8 +212,17 @@ def main():
     a = ap.parse_args()
     if bool(a.teil) == bool(a.bemalt):
         raise SystemExit("Entweder --teil … (eine oder mehrere Dateien) oder --bemalt <datei.3mf> angeben.")
-    bemalt = None
+    bemalt = None; bemalt_masse = None
+    if (a.groesse or a.skala or a.matrix) and not a.bemalt:
+        raise SystemExit("--groesse/--skala/--matrix gelten nur zusammen mit --bemalt.")
     if a.bemalt:                          # Köpfe aus der Bemalung lesen (0 = Grundfarbe = Kopf 1)
+        if a.groesse or a.skala or a.matrix:
+            neu_ = Path(tempfile.mkdtemp(prefix="druckwerk_bemalt_")) / Path(a.bemalt).name
+            mx = [float(x) for x in re.split(r"[,\s|]+", a.matrix.strip())] if a.matrix else None
+            if mx is not None and len(mx) != 12:
+                raise SystemExit("--matrix braucht genau 12 Zahlen.")
+            bemalt_masse = bemalt_umformen(Path(a.bemalt), neu_, a.groesse, a.skala, mx)
+            a.bemalt = str(neu_)
         sys.path.insert(0, str(WERKZEUG))
         from textur_farben import lese_3mf
         bV, bF, bS = lese_3mf(a.bemalt)
@@ -155,6 +234,22 @@ def main():
         a.teil = [f"{a.bemalt}:{bemalt['mat'][0]}:1"]
 
     cfg = json.loads((WURZEL / "drucker" / f"{a.drucker}.json").read_text(encoding="utf-8"))
+    duesen_mix = None
+    if a.duesen:
+        dl = [("%g" % float(x)) for x in a.duesen.split(",") if x.strip()]
+        if a.duese:
+            raise SystemExit("Entweder --duese (alle Köpfe gleich) oder --duesen (je Kopf) angeben.")
+        if len(set(dl)) == 1:
+            a.duese = dl[0]
+        else:
+            duesen_mix = (dl + ["0.4"] * 4)[:cfg["farben_max"]]
+            for d_ in duesen_mix:
+                if d_ != "0.4" and d_ not in cfg.get("duesen", {}):
+                    raise SystemExit(f"Düse {d_} mm ist für {cfg['name']} nicht hinterlegt. Möglich: 0.4, {', '.join(cfg.get('duesen', {}))}")
+            kleinste = min(duesen_mix, key=float)
+            maschinen_je_duese = {d_: (cfg["duesen"][d_]["maschine"] if d_ != "0.4" else cfg["maschine"]) for d_ in set(duesen_mix)}
+            if kleinste != "0.4":         # Schichthöhen und Prozessprofil der kleinsten Düse
+                cfg = {**cfg, **{k: v for k, v in cfg["duesen"][kleinste].items() if k != "maschine"}}
     if a.duese and a.duese != "0.4":      # andere Düse = andere Maschinen-/Prozessprofile und Schichthöhen (drucker/*.json → "duesen")
         if a.duese not in cfg.get("duesen", {}):
             raise SystemExit(f"Düse {a.duese} mm ist für {cfg['name']} nicht hinterlegt. Möglich: 0.4, {', '.join(cfg.get('duesen', {}))}")
@@ -213,6 +308,23 @@ def main():
         prozess["support_type"] = "tree(auto)" if a.stuetzen == "baum" else "normal(auto)"
     prozess["brim_type"] = {"aus": "no_brim", "auto": "auto_brim", "an": "outer_only"}[a.brim]
     prozess["compatible_printers"] = []  # Kompatibilitätsprüfung abschalten
+    if duesen_mix:
+        # Maschine: je Kopf die Werte aus dem Profil der jeweiligen Düse (unterscheiden sich nur in Düse und max. Schicht)
+        for i_, d_ in enumerate(duesen_mix):
+            m_ = aufloesen("machine", maschinen_je_duese[d_])
+            for k_ in ("nozzle_diameter", "max_layer_height", "min_layer_height"):
+                if isinstance(maschine.get(k_), list) and isinstance(m_.get(k_), list) and i_ < len(maschine[k_]) and i_ < len(m_[k_]):
+                    maschine[k_][i_] = m_[k_][i_]
+        # Prozess: Linienbreiten als Prozent der Düse, damit jeder Kopf passend breit druckt
+        prozess["bridge_line_width"] = kleinste            # in mm (Prozent nimmt Orca hier nicht): darf keine Düse übersteigen
+        for k_, v_ in list(prozess.items()):
+            if k_.endswith("line_width") and k_ != "bridge_line_width" and isinstance(v_, str) and not v_.endswith("%"):
+                try:
+                    if float(v_) > 0:
+                        pz = round(float(v_) / float(kleinste) * 100)
+                        prozess[k_] = f"{pz}%"
+                except ValueError:
+                    pass
     if bemalt:   # Farbe nur als Schale (1,2 mm) statt keilförmig bis in den Kern – spart Farbfilament, sauberere Kanten
         prozess["mmu_segmented_region_max_width"] = "1.2"
     for ex in a.extra:
@@ -317,7 +429,8 @@ def main():
         fb = farben[s - 1] if s - 1 < len(farben) else "-"
         zeilen.append(f"| {s} | {belegt[s]} | {fb} | {cfg['filamente'][belegt[s]]} |")
     zeilen += ["", "## Einstellungen", "",
-               f"- Düse: {a.duese or '0.4'} mm (alle Köpfe)",
+               ("- Düsen: " + ", ".join(f"Kopf {i_ + 1}: {d_} mm" for i_, d_ in enumerate(duesen_mix[:slots])) + " – am Drucker genau so einbauen!"
+                if duesen_mix else f"- Düse: {a.duese or '0.4'} mm (alle Köpfe)"),
                f"- Schichthöhe: {a.schicht} mm ({a.stufe})",
                f"- Füllung: {a.infill} %",
                f"- Wände: {a.waende or 'Profil-Standard'}",
@@ -327,6 +440,11 @@ def main():
                "## Teile", ""]
     for t in teile:
         zeilen.append(f"- `{t[0].name}` → " + (f"bemalt, Köpfe 1–{slots}" if bemalt else f"Slot {t[2]} ({t[1]})"))
+    if bemalt_masse:
+        zeilen.append("- Größe geändert: " + " × ".join(f"{x:.1f}" for x in bemalt_masse[0]) + " mm → "
+                      + " × ".join(f"{x:.1f}" for x in bemalt_masse[1]) + " mm")
+    elif bemalt:
+        zeilen.append("- Größe: " + " × ".join(f"{x:.1f}" for x in np.ptp(bemalt["V"], axis=0)) + " mm (unverändert; ändern mit --groesse)")
     # Kontrolle: Welche Köpfe benutzt die .gcode wirklich? (Tn = Kopf n+1)
     t_befehle = re.findall(r"^T(\d+)\s*$", txt, re.M)
     benutzt = sorted({int(x) + 1 for x in t_befehle})
@@ -346,7 +464,7 @@ def main():
     info = {**info_koepfe, "name": a.name, "drucker": cfg["kurz"], "drucker_name": cfg["name"], "datum": datum,
             "ordner": ziel.name, "gcode": gname, "zeit": zeit, "gramm": gramm, "meter": meter,
             "duese": duese, "bett": bett, "schicht": a.schicht, "stufe": a.stufe, "infill": a.infill,
-            "duese_mm": a.duese or "0.4", "waende": a.waende, "stuetzen": a.stuetzen, "brim": a.brim, "gemischt": gemischt,
+            "duese_mm": a.duese or "0.4", **({"duesen_mm": duesen_mix[:slots]} if duesen_mix else {}), "waende": a.waende, "stuetzen": a.stuetzen, "brim": a.brim, "gemischt": gemischt,
             "slots": [{"slot": s_, "material": belegt[s_],
                        "farbe": farben[s_ - 1] if s_ - 1 < len(farben) else ""} for s_ in range(1, slots + 1)],
             "teile": [{"datei": Path(st).name, "slot": t[2]} for t, st in zip(teile, stls)],
@@ -369,6 +487,9 @@ def main():
     if vorschau_bild(ziel, [p_ for p_, _ in vorschau_teile],
                      [farben[s_ - 1] if s_ - 1 < len(farben) else "" for _, s_ in vorschau_teile]):
         info["vorschau"] = "vorschau.png"
+        gr = [tuple(int(z_) for z_ in g_.split("/")[0].split("x")) for g_ in re.findall(r"\d+x\d+(?:/\w+)?", str(maschine.get("thumbnails", "") or ""))]
+        if bild_in_gcode(ziel / gname, ziel / "vorschau.png", gr or [(140, 110)]):
+            info["bild_im_gcode"] = True
     pj = ziel / f"{a.name}_{cfg['kurz']}.3mf"
     if pj.exists():
         info["projekt"] = pj.name
