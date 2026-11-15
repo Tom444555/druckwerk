@@ -1,6 +1,7 @@
 # Übergabe druckwerk
 
 ## STAND 15.11.2026 – hier einsteigen (neuer Chat: „druckwerk: …“)
+- 15.11. Modell-Quellen recherchiert: Liste in der App (Workflow → Werkzeuge → „Modelle finden …“, 4 Gruppen), Abruf-Test und Lizenz-Regel in CLAUDE.md (Abschnitt App). **Offen:** Lizenz des Vox-Plektrumhalters (MakerWorld 1485935) klären – liegt samt STL im öffentlichen Repo; bei „Standard Digital File License“ auf Toms Wunsch aus dem Repo nehmen.
 - 15.11. nachmittags: Reiter **Workflow** („Von der Idee zum Modell“) wieder unten hinter Drucker (7 Reiter, geprüft 320/390/820 px); `sw.js` auf `druckwerk-v4`.
 - **Drucker:** nur Flashforge Creator 5 Pro (`c5pro`). **Am echten Gerät ist weiterhin nichts bestätigt** (Werte aus Profilen, Wiki, Tests; Spiele nur gerechnet).
 - **Lager:** `2026-11-14_stratocaster_c5pro`, `2026-11-14_loopsmiths_amp_c5pro`, `2026-11-15_vox_plektrumhalter_c5pro` (3 h 38 min, 73 g, schwarz/rot/weiß),

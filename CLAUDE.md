@@ -44,12 +44,18 @@ Alte `_kobrax`-Aufträge laufen nicht auf dem Creator 5 Pro – bei Bedarf aus d
 - Jede Ansicht hat eine Adresse (`#start`, `#auftrag:<ordner>`, `#werkstatt:…`, `#kiweg:<schritt>`); Zurück/Vor funktionieren.
 - **Sicherung** (`sicherung.js`): alle `druckwerk_*`-Schlüssel + IndexedDB (eigene Modelle, Tagebuch-Fotos) als eine Datei; `druckwerk_gesichert` = Datum.
 - **Offline/PWA**: `manifest.webmanifest`, `symbol-*.png`, `sw.js` (immer zuerst Netz, Zwischenspeicher nur ohne Netz; .gcode/STL nie).
-  **Bei jeder Änderung an App-Dateien `CACHE` in `sw.js` hochzählen** (Stand `druckwerk-v4`) und neue Dateien dort eintragen.
+  **Bei jeder Änderung an App-Dateien `CACHE` in `sw.js` hochzählen** (Stand `druckwerk-v5`) und neue Dateien dort eintragen.
 - „Aus dem Lager hinzufügen“ heißt in der App jetzt „Weitere Aufträge von Claude“. Überall „Kopf 1–4“, nie „Spule“; Werkstatt-Slicen sendet `c5pro`.
 - Aufträge sind wie die Ideen im Looper **pro Gerät gespeichert** (localStorage `druckwerk_meine`): neue Besucher
   sehen eine leere Liste. Tom speichert einen Auftrag über den Link `https://tom444555.github.io/druckwerk/#hinzu=<ordner>`
   (mehrere mit Komma) oder über „Aus dem Lager hinzufügen“. „Auftrag löschen“ entfernt ihn nur aus seiner Liste.
   Dateien endgültig aus dem Repo löschen (nur auf Wunsch): `git rm -r auftraege/<ordner>` + `druck.index_neu(Path('auftraege'))`.
+- **Modell-Quellen (geprüft 15.11.2026, Liste in `wissen/workflow.json` → „Modelle finden …“):** Von der Cloud-Sitzung aus NICHT abrufbar (weder Shell noch WebFetch):
+  Printables, Thingiverse, MakerWorld, Cults3D, MyMiniFactory, GrabCAD, Yeggi, TraceParts → Tom lädt am iPad und hängt STL/3MF/STEP an (Link nur für `--quelle`).
+  Direkt nutzbar: GitHub per `git clone` (BOSL2, NopSCADlib, gridfinity-rebuilt-openscad), Hugging Face (Objaverse), Poly-Haven-API (CC0), Thangs-Suche
+  (`/api/search/v5/search-by-text?searchTerm=…`, nur suchen), Sketchfab-Suche (`api.sketchfab.com/v3/search?downloadable=true`, Download braucht Toms Token), NIH 3D.
+- **Lizenz fremder Modelle:** Das Repo ist öffentlich. Modelle mit „Standard Digital File License“, ND-Lizenz oder Kaufmodelle NICHT einchecken (weder STL noch .gcode/3MF):
+  slicen, .gcode nur per SendUserFile schicken, Auftragsordner nicht committen. CC0/CC-BY/CC-BY-SA dürfen ins Repo, Urheber + Lizenz in BERICHT.md nennen.
 - Original-Modell verlinken: `--quelle <URL>` (MakerWorld, Printables …) → Knopf „Original auf … öffnen“ im Auftrag.
 - Nach Änderung an index.html: lokal mit Playwright (390×844) prüfen, dann pushen.
 

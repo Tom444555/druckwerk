@@ -668,28 +668,42 @@
    ]
   },
   {
-   "gruppe": "Modelle finden",
+   "gruppe": "Modelle finden: fertige Druckmodelle",
    "liste": [
     {
      "name": "MakerWorld",
      "wo": "Browser",
      "preis": "kostenlos",
      "url": "https://makerworld.com/de",
-     "d": "Größte Auswahl, auch Zubehör für den Creator 5 Pro."
+     "d": "Größte Auswahl an mehrfarbigen Modellen (3MF). Achtung Lizenz: oft „Standard Digital File License“ – nur privat drucken, nicht weitergeben oder umbauen."
     },
     {
      "name": "Printables",
      "wo": "Browser",
      "preis": "kostenlos",
      "url": "https://www.printables.com",
-     "d": "Gut gepflegt, klare Lizenzen."
+     "d": "Gut gepflegt, Lizenz steht an jedem Modell; viele Funktionsteile, teils mit STEP-Datei zum Ändern."
     },
     {
-     "name": "Thangs",
+     "name": "Thingiverse",
      "wo": "Browser",
      "preis": "kostenlos",
-     "url": "https://thangs.com",
-     "d": "Suchmaschine über viele Seiten hinweg."
+     "url": "https://www.thingiverse.com",
+     "d": "Größtes altes Archiv; gehört seit Februar 2026 zu MyMiniFactory. Qualität schwankt, Kommentare lesen."
+    },
+    {
+     "name": "Cults3D",
+     "wo": "Browser",
+     "preis": "kostenlos + Kaufmodelle",
+     "url": "https://cults3d.com/de",
+     "d": "Viele Designer-Modelle, auch seltene; gute Stücke kosten oft etwas."
+    },
+    {
+     "name": "MyMiniFactory",
+     "wo": "Browser",
+     "preis": "kostenlos + Kaufmodelle",
+     "url": "https://www.myminifactory.com",
+     "d": "Figuren und Tabletop, geprüfte Modelle."
     },
     {
      "name": "Scan the World",
@@ -697,6 +711,133 @@
      "preis": "kostenlos",
      "url": "https://www.myminifactory.com/scantheworld/",
      "d": "Gescannte Skulpturen aus Museen."
+    },
+    {
+     "name": "Smithsonian 3D",
+     "wo": "Browser",
+     "preis": "kostenlos",
+     "url": "https://3d.si.edu",
+     "d": "Museumsstücke und Fossilien als Scan."
+    },
+    {
+     "name": "NASA 3D Resources",
+     "wo": "Browser",
+     "preis": "kostenlos",
+     "url": "https://science.nasa.gov/3d-resources/",
+     "d": "Raumsonden, Raketen, Gelände von Mond und Mars."
+    },
+    {
+     "name": "NIH 3D",
+     "wo": "Browser",
+     "preis": "kostenlos",
+     "url": "https://3d.nih.gov",
+     "d": "Anatomie, Moleküle, Labor-Teile; Claude kann die Seite direkt lesen."
+    }
+   ]
+  },
+  {
+   "gruppe": "Modelle finden: Suche über alle Seiten",
+   "liste": [
+    {
+     "name": "Thangs",
+     "wo": "Browser",
+     "preis": "kostenlos",
+     "url": "https://thangs.com",
+     "d": "Sucht über viele Seiten und nach Form. Claude kann hier selbst suchen und dir Treffer nennen."
+    },
+    {
+     "name": "Yeggi",
+     "wo": "Browser",
+     "preis": "kostenlos",
+     "url": "https://www.yeggi.com",
+     "d": "Suchmaschine für Druckmodelle, verlinkt auf die Originalseite."
+    },
+    {
+     "name": "STLFinder",
+     "wo": "Browser",
+     "preis": "kostenlos",
+     "url": "https://www.stlfinder.com",
+     "d": "Zweite Suchmaschine, wenn Yeggi nichts findet."
+    }
+   ]
+  },
+  {
+   "gruppe": "Modelle finden: Technik und Normteile (STEP)",
+   "liste": [
+    {
+     "name": "GrabCAD Library",
+     "wo": "Browser",
+     "preis": "kostenlos, Konto",
+     "url": "https://grabcad.com/library",
+     "d": "Millionen CAD-Modelle von Ingenieuren (STEP). Nicht für den Druck gebaut – Maße und Wandstärken prüfen."
+    },
+    {
+     "name": "TraceParts",
+     "wo": "Browser",
+     "preis": "kostenlos, Konto",
+     "url": "https://www.traceparts.com/de",
+     "d": "Normteile und Hersteller-Kataloge als STEP: Lager, Profile, Schrauben, Pneumatik."
+    },
+    {
+     "name": "McMaster-Carr",
+     "wo": "Browser",
+     "preis": "kostenlos",
+     "url": "https://www.mcmaster.com",
+     "d": "Sehr sauber gezeichnete Normteile mit STEP, ohne Anmeldung. Zoll-Maße beachten."
+    },
+    {
+     "name": "Normteile in druckwerk",
+     "wo": "Claude",
+     "preis": "inklusive",
+     "url": "",
+     "d": "Schrauben, Muttern, Lager, Gewinde und Zahnräder erzeugt Claude selbst (profi.py) – meist schneller als Herunterladen."
+    }
+   ]
+  },
+  {
+   "gruppe": "Modelle finden: Bausteine, die Claude direkt nutzt",
+   "liste": [
+    {
+     "name": "BOSL2",
+     "wo": "Claude",
+     "preis": "frei (BSD)",
+     "url": "https://github.com/BelfrySCAD/BOSL2",
+     "d": "Große OpenSCAD-Bibliothek: Gewinde, Zahnräder, Scharniere, Rundungen, Verbinder."
+    },
+    {
+     "name": "NopSCADlib",
+     "wo": "Claude",
+     "preis": "frei (GPL 3)",
+     "url": "https://github.com/nophead/NopSCADlib",
+     "d": "Fertige Technik-Teile zum Einpassen: Motoren, Lüfter, Platinen, Schalter, Schrauben."
+    },
+    {
+     "name": "Gridfinity Rebuilt",
+     "wo": "Claude",
+     "preis": "frei (MIT)",
+     "url": "https://github.com/kennetek/gridfinity-rebuilt-openscad",
+     "d": "Sortierkästen und Grundplatten im Gridfinity-Raster nach Maß."
+    },
+    {
+     "name": "Objaverse",
+     "wo": "Claude",
+     "preis": "frei, Lizenz je Modell",
+     "url": "https://huggingface.co/datasets/allenai/objaverse",
+     "d": "Sehr große Sammlung freier 3D-Objekte (Figuren, Dinge). Nicht druckfertig – läuft durch die KI-Aufbereitung."
+    },
+    {
+     "name": "Sketchfab (CC-Modelle)",
+     "wo": "Browser",
+     "preis": "kostenlos, Konto",
+     "url": "https://sketchfab.com/search?features=downloadable&type=models",
+     "d": "Claude kann suchen und Lizenz nennen; herunterladen musst du. Für Bildschirm gebaut, oft dünn oder offen."
+    },
+    {
+     "name": "Poly Haven",
+     "wo": "Claude",
+     "preis": "frei (CC0)",
+     "url": "https://polyhaven.com/models",
+     "d": "Rund 500 sehr saubere Objekte ohne Auflagen (Möbel, Pflanzen, Deko) als Vorlage für Reliefs und Deko."
     }
    ]
   },
@@ -904,6 +1045,22 @@
   {
    "titel": "OrcaSlicer 2.5.0 Alpha: Farbmischung (mixed filaments)",
    "url": "https://www.orcaslicer.com/wiki/releases/release_2_5_0_alpha"
+  },
+  {
+   "titel": "Fabbaloo: Die große Liste der 3D-Modell-Seiten 2026",
+   "url": "https://www.fabbaloo.com/?p=239519"
+  },
+  {
+   "titel": "3Dnatives: Thingiverse (Übernahme durch MyMiniFactory, Februar 2026)",
+   "url": "https://www.3dnatives.com/en/thingiverse-platform-190220204/"
+  },
+  {
+   "titel": "All3DP: Freie CAD-Modelle und Normteil-Bibliotheken",
+   "url": "https://all3dp.com/2/best-sites-for-free-3d-cad-models-cad-libraries/"
+  },
+  {
+   "titel": "Bambu-Forum: Standard Digital File License erklärt",
+   "url": "https://forum.bambulab.com/t/understanding-makerworlds-standard-digital-file-license/257609"
   }
  ]
 }
