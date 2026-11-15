@@ -58,7 +58,7 @@ export async function start(app, ctx){
     <li>Claude schickt die <b>.gcode</b> und einen Link – Link antippen speichert den Auftrag hier.</li>
     <li>Im Auftrag „.gcode laden“ → auf den USB-Stick → am Drucker starten.</li>
     <li>Danach „Als gedruckt markieren“ und das <b>Ergebnis eintragen</b>.</li></ol>
-    <div class="row chev" data-ziel="workflow" style="cursor:pointer" role="button" tabindex="0"><div class="grow">Alle Wege, Werkzeuge und Ideen</div></div>
+    <div class="row chev" data-ziel="workflow" style="cursor:pointer" role="button" tabindex="0"><div class="grow">Von der Idee zum Modell<div class="small">Alle Wege, Werkzeuge und Vorschläge</div></div></div>
     <a class="row chev" href="videos/index.html" style="color:inherit;text-decoration:none"><div class="grow">Videos ausgewertet<div class="small">STL mit KI · Foto in 3D drucken (Bastlwastl)</div></div></a></div>
   <h2>Gerät &amp; Daten</h2>
   <div class="card">

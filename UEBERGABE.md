@@ -1,6 +1,7 @@
 # Übergabe druckwerk
 
 ## STAND 15.11.2026 – hier einsteigen (neuer Chat: „druckwerk: …“)
+- 15.11. nachmittags: Reiter **Workflow** („Von der Idee zum Modell“) wieder unten hinter Drucker (7 Reiter, geprüft 320/390/820 px); `sw.js` auf `druckwerk-v4`.
 - **Drucker:** nur Flashforge Creator 5 Pro (`c5pro`). **Am echten Gerät ist weiterhin nichts bestätigt** (Werte aus Profilen, Wiki, Tests; Spiele nur gerechnet).
 - **Lager:** `2026-11-14_stratocaster_c5pro`, `2026-11-14_loopsmiths_amp_c5pro`, `2026-11-15_vox_plektrumhalter_c5pro` (3 h 38 min, 73 g, schwarz/rot/weiß),
   Kalibrier-Set `2026-11-14_kalibrier_1…5_c5pro`. Keine `_kobrax`-Aufträge mehr. Tom wollte von den gelöschten Kobra-Modellen nur den Vox-Amp zurück.

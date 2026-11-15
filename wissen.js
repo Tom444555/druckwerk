@@ -28,7 +28,7 @@ function binden(app, neu){
 
 export async function seite(app, ctx, welche){
   C = ctx;
-  if (!D) app.innerHTML = `<h1>${{material: "Material", drucker: "Drucker", workflow: "Workflow"}[welche]}</h1><div class="empty">Wird geladen …</div>`;
+  if (!D) app.innerHTML = `<h1>${{material: "Material", drucker: "Drucker", workflow: "Von der Idee zum Modell"}[welche]}</h1><div class="empty">Wird geladen …</div>`;
   await daten();
   ({material, drucker, workflow})[welche](app);
 }
@@ -294,7 +294,7 @@ function drucker(app){
 /* ================= Workflow ================= */
 function workflow(app){
   const w = D.w, neu = () => workflow(app);
-  let h = `<button class="back" id="wfZur">‹ Neuer Auftrag</button><h1>So geht's</h1>${seg("wf", [["weg", "Weg"], ["werkzeuge", "Werkzeuge"], ["vorschlaege", "Vorschläge"]])}`;
+  let h = `<h1>Von der Idee zum Modell</h1>${seg("wf", [["weg", "Weg"], ["werkzeuge", "Werkzeuge"], ["vorschlaege", "Vorschläge"]])}`;
   if (U.wf === "weg") {
     const g = w.wege.find(x => x.id === U.weg) || w.wege[0];
     h += `<h2>Womit fängst du an?</h2>${chips("weg", w.wege.map(x => [x.id, x.name]))}
@@ -328,7 +328,6 @@ function workflow(app){
   }
   app.innerHTML = h;
   binden(app, neu);
-  $("#wfZur").onclick = () => C.go("neu");
   const kw = $("#wKiWeg"); if (kw) kw.onclick = () => C.go("kiweg:1");
   const wk = $("#wKi"); if (wk) wk.onclick = async () => { try { (await import("./ki.js")).oeffnen(C); } catch (e) { C.toast("Konnte nicht geladen werden"); } };
   const st = $("#wStart"); if (st) st.onclick = () => { const g = w.wege.find(x => x.id === U.weg) || w.wege[0]; C.neuStart("", g.zweck, "", g.id); };

@@ -149,6 +149,7 @@ input.zahl{border:0;outline:none;color:var(--text);font:17px -apple-system,sans-
   <button data-tab="bibliothek"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1.5"/></svg>Bibliothek</button>
   <button data-tab="material"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="8"/><circle cx="11" cy="11" r="2.5"/><path d="M11 19h10"/></svg>Material</button>
   <button data-tab="drucker"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M4 8h16M9 13h6M12 8v5"/></svg>Drucker</button>
+  <button data-tab="workflow" aria-label="Von der Idee zum Modell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="5" cy="6" r="2.2"/><circle cx="19" cy="18" r="2.2"/><path d="M7.2 6H14a3.5 3.5 0 0 1 0 7h-4a3.5 3.5 0 0 0 0 7h6.8"/></svg>Workflow</button>
 </nav>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
@@ -221,7 +222,7 @@ function hinzufuegen(liste){
 // Navigation: jeder Bildschirm hat eine Adresse (#auftraege, #auftrag:<ordner> …) → Zurück-Taste und Links funktionieren
 function zeige(ersetzen){
   if (location.hash.slice(1) !== tab) { try { history[ersetzen === true ? "replaceState" : "pushState"](null, "", "#" + tab); } catch(e) {} }
-  const haupt = {auftrag:"auftraege", werkstatt:"bibliothek", kiweg:"bibliothek", workflow:"neu"}[tab.split(":")[0]] || tab.split(":")[0];
+  const haupt = {auftrag:"auftraege", werkstatt:"bibliothek", kiweg:"bibliothek"}[tab.split(":")[0]] || tab.split(":")[0];
   document.querySelectorAll("nav button").forEach(b => { b.classList.toggle("on", b.dataset.tab === haupt);
     if (b.dataset.tab === haupt) b.setAttribute("aria-current", "page"); else b.removeAttribute("aria-current"); });
   document.querySelectorAll(".sheet").forEach(d => d.remove());
@@ -519,7 +520,7 @@ function neu(){
   app.innerHTML = `
   <h1>Neuer Auftrag</h1>
   ${seg("modus", [["frei","Frei"],["gefuehrt","Geführt"]])}
-  <div class="card" style="margin-top:10px"><div class="row chev" id="zuWf" style="cursor:pointer" role="button" tabindex="0"><div class="grow"><b>So geht's</b>
+  <div class="card" style="margin-top:10px"><div class="row chev" id="zuWf" style="cursor:pointer" role="button" tabindex="0"><div class="grow"><b>Von der Idee zum Modell</b>
     <div class="small">Wege von der Idee zum Modell, Werkzeuge, Ausbau-Ideen</div></div></div></div>
   ${gef ? `
   <h2>Womit fängst du an?</h2><div class="chips">${WF.wege.map(x => `<button class="chip ${x.id === weg.id ? "on" : ""}" data-weg="${x.id}">${esc(x.name)}</button>`).join("")}</div>

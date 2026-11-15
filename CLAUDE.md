@@ -40,11 +40,11 @@ Alte `_kobrax`-Aufträge laufen nicht auf dem Creator 5 Pro – bei Bedarf aus d
 - Live: https://tom444555.github.io/druckwerk/ – liest `drucker/*.json` und `auftraege/index.json`.
 - Tabs (seit 15.11.2026): **Start** (`start.js`: nächster Schritt, offene Drucke, Suche über alles, Schnellknöpfe, Gerät & Daten),
   Aufträge (3D-Vorschau, Köpfe, .gcode-Download, „gedruckt“-Haken `druckwerk_gedruckt`, Filter/Sortierung/Suche), Neu (Frei/Geführt; „So geht's“ = frühere
-  Workflow-Seite), Bibliothek, Material, Drucker. iOS-Stil, hell/dunkel. Prompts aus der App beginnen mit `druckwerk:`.
+  Workflow-Seite), Bibliothek, Material, Drucker, **Workflow** (Seite „Von der Idee zum Modell“, seit 15.11. wieder eigener Reiter hinter Drucker – Tom fand sie unter „So geht's“ nicht). iOS-Stil, hell/dunkel. Prompts aus der App beginnen mit `druckwerk:`.
 - Jede Ansicht hat eine Adresse (`#start`, `#auftrag:<ordner>`, `#werkstatt:…`, `#kiweg:<schritt>`); Zurück/Vor funktionieren.
 - **Sicherung** (`sicherung.js`): alle `druckwerk_*`-Schlüssel + IndexedDB (eigene Modelle, Tagebuch-Fotos) als eine Datei; `druckwerk_gesichert` = Datum.
 - **Offline/PWA**: `manifest.webmanifest`, `symbol-*.png`, `sw.js` (immer zuerst Netz, Zwischenspeicher nur ohne Netz; .gcode/STL nie).
-  **Bei jeder Änderung an App-Dateien `CACHE` in `sw.js` hochzählen** (Stand `druckwerk-v3`) und neue Dateien dort eintragen.
+  **Bei jeder Änderung an App-Dateien `CACHE` in `sw.js` hochzählen** (Stand `druckwerk-v4`) und neue Dateien dort eintragen.
 - „Aus dem Lager hinzufügen“ heißt in der App jetzt „Weitere Aufträge von Claude“. Überall „Kopf 1–4“, nie „Spule“; Werkstatt-Slicen sendet `c5pro`.
 - Aufträge sind wie die Ideen im Looper **pro Gerät gespeichert** (localStorage `druckwerk_meine`): neue Besucher
   sehen eine leere Liste. Tom speichert einen Auftrag über den Link `https://tom444555.github.io/druckwerk/#hinzu=<ordner>`
@@ -90,7 +90,7 @@ Alte `_kobrax`-Aufträge laufen nicht auf dem Creator 5 Pro – bei Bedarf aus d
   Im Auftrag: „Verbrauch vom Filamentlager abbuchen“ (`wissen.abbuchen`, merkt sich `druckwerk_gebucht`).
   Im Filament-Blatt öffnet „Günstigsten Preis suchen“ Claude mit `filament-preise: <Material> …` (Skill `filament-preise`, sucht Preise nur auf Abruf; keine Preise im Lager speichern).
 - Tab **Drucker**: Überblick, Einrichten (`druckwerk_c5_ein`), Wartung (`druckwerk_c5_wartung`), Hilfe, Tagebuch (`druckwerk_tagebuch`, Fotos in IndexedDB `druckwerk_fotos`). Die frühere USB-Seite steht jetzt hier.
-- **„So geht's“** (früher Tab Workflow; erreichbar über Neu und Start): Weg (Knopf „Auftrag so beginnen“ öffnet den geführten Auftrag), Werkzeuge, Vorschläge (Auswahl `druckwerk_wunsch` → Prompt).
+- **„Von der Idee zum Modell“** (Reiter Workflow; auch über Neu und Start erreichbar): Weg (Knopf „Auftrag so beginnen“ öffnet den geführten Auftrag), Werkzeuge, Vorschläge (Auswahl `druckwerk_wunsch` → Prompt).
   Kommt ein Prompt „Bitte diese Vorschläge aus der App umsetzen“, sind die Titel aus `workflow.json → vorschlaege` gemeint.
 - Prüfskript-Muster: Playwright 390×844, alle drei Tabs und Unterseiten durchklicken, `scrollWidth` muss 390 bleiben.
 
