@@ -174,7 +174,7 @@ def main():
             log("  FEHLER:", e); continue
         im = Image.open(io.BytesIO(daten)).convert("RGB"); im.save(aus / f"bild_{nr}.png")
         f, info = pruefen_und_zuschneiden(im); f.save(aus / f"bild_{nr}_fertig.png")
-        kurz = next((v for k, v in ANSICHT_NAME.items() if k in sicht), "")
+        kurz = "eigener Text" if a.roh else next((v for k, v in ANSICHT_NAME.items() if k in sicht), "")
         info.update({"nr": nr, "saat": saat, "ansicht": kurz, "dienst": dienst, "text": text, "groesse_roh": im.size})
         infos.append(info); fertig.append(f); titel.append((f"{nr} · {kurz} · {info['ampel']}" + (" – " + info["hinweise"][0][:26] if info["hinweise"] else ""), info["ampel"]))
         log(f"  {dienst} · {im.size[0]} px · Ampel {info['ampel']}" + (" · " + "; ".join(info["hinweise"]) if info["hinweise"] else ""))

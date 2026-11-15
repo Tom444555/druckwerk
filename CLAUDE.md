@@ -136,7 +136,8 @@ Alte `_kobrax`-Aufträge laufen nicht auf dem Creator 5 Pro – bei Bedarf aus d
   – holt Entwürfe von Pollinations (ohne Schlüssel gratis: 768 px, ein Bild alle 45 s, bei Überlast 503 → wartet selbst), hängt die 3D-Regeln an den Text, stellt jedes Bild frei
   (rembg), setzt es mittig auf Weiß (1024 px) und rechnet eine Ampel (ein Objekt? angeschnitten? klein? sperrig?). `uebersicht.png` SELBST ansehen, Tom zeigen, er wählt die Nummer;
   dann `ki_lokal.py bild_<n>_fertig.png …` (gratis, grob) oder fal.ai/MakerLab. Mit `FAL_KEY` bzw. `POLLINATIONS_KEY` in der Umgebung nimmt das Skript bessere Modelle (ungetestet).
-  Qualität ohne Schlüssel = Entwurf; das Gratis-Modell hält sich nur teilweise an Farbe und Sockel. Tom sagt z. B. „druckwerk: Bild-Idee Eule …“. Hintergrund: `wissen/recherche_text_zu_bild.md`.
+  Qualität ohne Schlüssel = Entwurf; das Gratis-Modell hält sich nur teilweise an Farbe und Sockel. **Nur für freie Figuren:** bei technischen oder realen
+  Gegenständen (Test 15.11.: Pistole, Karabiner) kommt Unbrauchbares heraus, und die Ampel merkt das nicht → Foto als Vorlage, fertiges Modell oder CAD nehmen. Tom sagt z. B. „druckwerk: Bild-Idee Eule …“. Hintergrund: `wissen/recherche_text_zu_bild.md`.
 - Schickt Tom ein KI-Modell (GLB/STL): `werkzeug/ki_rohling.py` (aufrichten, skalieren, schließen, Boden plan, Info) → Bild zeigen → bei Farbe
   `werkzeug/textur_farben.py` (Textur → 4 Köpfe) → slicen. Abschlussbild: `werkzeug/foto.py` (Blender). Details und Grenzen: `werkzeug/KI_MODELLE.md`.
 - **Lehren aus Toms Videos** (Auswertungen unter `videos/`, Bastlwastl): Eingabebild = ein Objekt, neutraler Hintergrund, einfarbig grau und matt, leicht schräg von
