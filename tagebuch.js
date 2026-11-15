@@ -157,7 +157,7 @@ function blatt(t, neu){
     const text = claudeText(t);
     const s = C.sheet(`<h3>An Claude schicken</h3><p>${t.foto ? "Foto bitte im Chat anhängen („Foto sichern“ legt es in deine Fotos/Dateien)." : "Text kopieren oder direkt in Claude öffnen."}</p>
       <div class="card"><pre class="prompt">${C.esc(text)}</pre></div><div style="height:14px"></div>
-      <button class="btn" id="cKop">Kopieren</button><a class="btn grey" target="_blank" rel="noopener" href="https://claude.ai/new?q=${encodeURIComponent(text)}">In Claude öffnen</a>
+      <button class="btn" id="cKop">Kopieren</button><a class="btn grey" target="_blank" rel="noopener" href="https://claude.ai/code/new?repo=Tom444555%2Fdruckwerk&q=${encodeURIComponent(text)}">In Claude öffnen</a>
       <button class="btn grey" id="cZu">Schließen</button>`);
     s.querySelector("#cZu").onclick = () => s.remove();
     s.querySelector("#cKop").onclick = async () => { try { await navigator.clipboard.writeText(text); C.toast("Kopiert"); } catch (e) { C.toast("Bitte markieren und kopieren"); } };

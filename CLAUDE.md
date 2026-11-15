@@ -44,7 +44,7 @@ Alte `_kobrax`-Aufträge laufen nicht auf dem Creator 5 Pro – bei Bedarf aus d
 - Jede Ansicht hat eine Adresse (`#start`, `#auftrag:<ordner>`, `#werkstatt:…`, `#kiweg:<schritt>`); Zurück/Vor funktionieren.
 - **Sicherung** (`sicherung.js`): alle `druckwerk_*`-Schlüssel + IndexedDB (eigene Modelle, Tagebuch-Fotos) als eine Datei; `druckwerk_gesichert` = Datum.
 - **Offline/PWA**: `manifest.webmanifest`, `symbol-*.png`, `sw.js` (immer zuerst Netz, Zwischenspeicher nur ohne Netz; .gcode/STL nie).
-  **Bei jeder Änderung an App-Dateien `CACHE` in `sw.js` hochzählen** (Stand `druckwerk-v6`) und neue Dateien dort eintragen.
+  **Bei jeder Änderung an App-Dateien `CACHE` in `sw.js` hochzählen** (Stand `druckwerk-v7`) und neue Dateien dort eintragen.
 - „Aus dem Lager hinzufügen“ heißt in der App jetzt „Weitere Aufträge von Claude“. Überall „Kopf 1–4“, nie „Spule“; Werkstatt-Slicen sendet `c5pro`.
 - Aufträge sind wie die Ideen im Looper **pro Gerät gespeichert** (localStorage `druckwerk_meine`): neue Besucher
   sehen eine leere Liste. Tom speichert einen Auftrag über den Link `https://tom444555.github.io/druckwerk/#hinzu=<ordner>`
@@ -56,6 +56,9 @@ Alte `_kobrax`-Aufträge laufen nicht auf dem Creator 5 Pro – bei Bedarf aus d
   (`/api/search/v5/search-by-text?searchTerm=…`, nur suchen), Sketchfab-Suche (`api.sketchfab.com/v3/search?downloadable=true`, Download braucht Toms Token), NIH 3D.
 - **Lizenz fremder Modelle:** Das Repo ist öffentlich. Modelle mit „Standard Digital File License“, ND-Lizenz oder Kaufmodelle NICHT einchecken (weder STL noch .gcode/3MF):
   slicen, .gcode nur per SendUserFile schicken, Auftragsordner nicht committen. CC0/CC-BY/CC-BY-SA dürfen ins Repo, Urheber + Lizenz in BERICHT.md nennen.
+- **Links aus der App zu Claude** (seit 15.11.2026): `https://claude.ai/code/new?repo=Tom444555%2Fdruckwerk&q=<Text>` – die Claude-App am iPhone/iPad reagiert laut
+  Hilfeseite nur auf `claude.ai/code…` (neue Sitzung mit Lager, Text vorausgefüllt); `claude.ai/new?q=` tat dort nichts. Beim Antippen wird der Text zusätzlich kopiert
+  (Sammel-Handler in index.html). Neue Claude-Links immer in dieser Form bauen; Preissuche ohne `repo`. Am echten Gerät von Tom noch zu bestätigen.
 - Original-Modell verlinken: `--quelle <URL>` (MakerWorld, Printables …) → Knopf „Original auf … öffnen“ im Auftrag.
 - Nach Änderung an index.html: lokal mit Playwright (390×844) prüfen, dann pushen.
 

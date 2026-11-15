@@ -188,7 +188,12 @@ const zeitKurz = z => { const m = String(z || "").match(/(?:(\d+)d\s*)?(?:(\d+)h
 const zeitStat = z => { const m = minuten(z); return m >= 60 ? `${Math.floor(m / 60)}:${String(m % 60).padStart(2, "0")} h` : m ? `${m} min` : (z || "–"); };
 const minuten = z => { const m = String(z || "").match(/(?:(\d+)d\s*)?(?:(\d+)h\s*)?(?:(\d+)m)?/) || []; return ((+m[1]||0)*24 + (+m[2]||0))*60 + (+m[3]||0); };
 const schoen = n => { const t = String(n || "").replace(/_/g, " ").trim(); return t.charAt(0).toUpperCase() + t.slice(1); };
-const toast = t => { const e = $("#toast"); e.textContent = t; e.classList.add("show"); setTimeout(() => e.classList.remove("show"), 1600); };
+const toast = (t, ms = 1600) => { const e = $("#toast"); e.textContent = t; e.classList.add("show"); clearTimeout(toast.z); toast.z = setTimeout(() => e.classList.remove("show"), ms); };
+/* Links zu Claude: Am iPhone/iPad öffnet die Claude-App nur die Adresse claude.ai/code/new (mit Lager). Zur Sicherheit wird der Text
+   beim Antippen zusätzlich kopiert – geht Claude nicht auf, kann Tom ihn dort einfügen. */
+document.addEventListener("click", e => { const a = e.target.closest && e.target.closest('a[href^="https://claude.ai/"]'); if (!a) return;
+  let q = ""; try { q = new URL(a.href).searchParams.get("q") || ""; } catch (x) {}
+  if (q && navigator.clipboard) navigator.clipboard.writeText(q).then(() => toast("Text kopiert – falls Claude nicht aufgeht: Claude öffnen und einfügen", 5000)).catch(() => {}); }, true);
 
 async function laden(){
   for (const k of ["kobrax","c5pro"]) {
@@ -569,7 +574,7 @@ function neu(){
     return `druckwerk: ${F.text || "…"}\n` + (F.link ? `Modell: ${F.link}\n` : "") +
       `Drucker: ${d.name || F.drucker}\n` + koepfe + `\nZweck: ${z}\nSchicht: ${sch} mm, ${st}`;
   };
-  const aktuell = () => { $("#pr").textContent = prompt(); $("#oeffnen").href = "https://claude.ai/new?q=" + encodeURIComponent(prompt()); };
+  const aktuell = () => { $("#pr").textContent = prompt(); $("#oeffnen").href = "https://claude.ai/code/new?repo=Tom444555%2Fdruckwerk&q=" + encodeURIComponent(prompt()); };
   aktuell();
   const kiW = $("#kiWeg"); if (kiW) kiW.onclick = () => { tab = "kiweg:1"; zeige(); };
   const kiN = $("#kiNeu"); if (kiN) kiN.onclick = async () => { try { (await import("./ki.js")).oeffnen(wctx()); } catch(e) { toast("Konnte nicht geladen werden"); } };

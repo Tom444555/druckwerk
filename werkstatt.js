@@ -461,7 +461,7 @@ function anClaude(){
   p += benutzt.map(n => `Kopf ${n}: ${(M.material && M.material[n-1]) || "PLA"} ${farbName(M.slots[n-1])} – ${teile.filter(t => t.slot === n).map(t => t.name).join(", ")}`).join("\n");
   const d = C.sheet(`<h3>Auftrag für Claude</h3><div class="card" style="margin-bottom:12px"><pre class="prompt">${C.esc(p)}</pre></div>
     ${M.lager ? "" : `<p>Erst als 3MF speichern und im Chat anhängen.</p>`}
-    <button class="btn" id="cKop">Kopieren</button><a class="btn grey" target="_blank" href="https://claude.ai/new?q=${encodeURIComponent(p)}">In Claude öffnen</a>
+    <button class="btn" id="cKop">Kopieren</button><a class="btn grey" target="_blank" href="https://claude.ai/code/new?repo=Tom444555%2Fdruckwerk&q=${encodeURIComponent(p)}">In Claude öffnen</a>
     <button class="btn grey" id="cZu">Schließen</button>`);
   d.querySelector("#cZu").onclick = () => d.remove();
   d.querySelector("#cKop").onclick = async () => { try { await navigator.clipboard.writeText(p); C.toast("Kopiert"); } catch (e) { C.toast("Bitte markieren und kopieren"); } };

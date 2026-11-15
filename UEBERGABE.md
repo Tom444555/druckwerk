@@ -1,6 +1,7 @@
 # Übergabe druckwerk
 
 ## STAND 15.11.2026 – hier einsteigen (neuer Chat: „druckwerk: …“)
+- 15.11. 14:40: Links zu Claude umgestellt auf `claude.ai/code/new?repo=Tom444555%2Fdruckwerk&q=…` (alte `claude.ai/new?q=` taten am iPhone/iPad nichts) + Text wird beim Antippen kopiert; `sw.js` v7. **Am echten Gerät noch nicht bestätigt.**
 - 15.11. nachmittags (2): **Gratis-KI im Chat** `werkzeug/ki_lokal.py` (TripoSR ohne GPU, ~2 Min. je Bild, grob; getestet mit 2 Beispielbildern, nichts gedruckt) + Karte „C“ in KI-Weg Schritt 4.
   Zwei weitere Video-Auswertungen (`videos/technische-filamente-myengines.html`, `videos/meshy-3d-agent-ddsw.html`), Lehren in CLAUDE.md, `wissen/filamente.json`, `wissen/c5pro.json`, `wissen/workflow.json`.
   Offen: bemalte Meshy-3MF durch `--bemalt` testen; Skalieren vor `--bemalt`; Hunyuan3D-2mini lokal ausprobieren; `sw.js` steht auf `druckwerk-v6`.
