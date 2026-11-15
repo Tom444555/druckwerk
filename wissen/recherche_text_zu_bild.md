@@ -2,7 +2,8 @@
 
 Ziel: aus einer Beschreibung ein Bild, das sich gut in ein 3D-Modell wandeln lässt – möglichst ohne Umweg über ChatGPT.
 Heute: `kiweg.js` Schritt 1 baut den Text, Schritt 2 schickt Tom zu einer externen Bild-KI. Claude selbst erzeugt keine Bilder.
-**Alles hier ist Recherche + ein kurzer Test; eingebaut ist noch nichts.** Tom wählt aus den Vorschlägen.
+**Stand 15.11. 20:45 Uhr:** Vorschlag 1 (mit 5 und 6) ist als `werkzeug/bild_ki.py` gebaut und getestet (Eule: drei brauchbare Entwürfe, sauber freigestellt).
+Alles andere ist Recherche; Tom wählt aus den Vorschlägen.
 
 ## Was getestet ist (15.11.2026, Cloud-Sitzung)
 - `image.pollinations.ai/prompt/<Text>` ist von der Sitzung aus erreichbar, ohne Schlüssel: Bild in 1–5 s, 768 × 768, JPEG, Wasserzeichen unten rechts,

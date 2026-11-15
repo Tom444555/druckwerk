@@ -132,6 +132,11 @@ Alte `_kobrax`-Aufträge laufen nicht auf dem Creator 5 Pro – bei Bedarf aus d
 - **Gratis hier im Chat (seit 15.11.2026):** `python3 werkzeug/ki_lokal.py bild.png --name n --ziel-mm 120 --aus /tmp/n` – freies Modell TripoSR ohne Grafikkarte
   (Einrichten ~2 Min., dann ~2 Min. je Bild inkl. `ki_rohling.py`), kein Schlüssel, keine Kosten. Qualität grob (Entwurf, einfache kompakte Figuren; dünne Teile fehlen) –
   Tom vorher sagen, Vorschau zeigen. Schickt Tom ein Foto mit „hier umwandeln“/„ki_lokal“, diesen Weg nehmen. TRELLIS.2/Hunyuan/Rodin gehen hier nicht (brauchen GPU).
+- **Text zu Bild hier im Chat (seit 15.11.2026):** `python3 werkzeug/bild_ki.py "<Motiv auf Englisch>" --name n --aus /tmp/n [--anzahl 4] [--ansicht einzel|vorne|ansichten] [--farbe grau|vier|frei]`
+  – holt Entwürfe von Pollinations (ohne Schlüssel gratis: 768 px, ein Bild alle 45 s, bei Überlast 503 → wartet selbst), hängt die 3D-Regeln an den Text, stellt jedes Bild frei
+  (rembg), setzt es mittig auf Weiß (1024 px) und rechnet eine Ampel (ein Objekt? angeschnitten? klein? sperrig?). `uebersicht.png` SELBST ansehen, Tom zeigen, er wählt die Nummer;
+  dann `ki_lokal.py bild_<n>_fertig.png …` (gratis, grob) oder fal.ai/MakerLab. Mit `FAL_KEY` bzw. `POLLINATIONS_KEY` in der Umgebung nimmt das Skript bessere Modelle (ungetestet).
+  Qualität ohne Schlüssel = Entwurf; das Gratis-Modell hält sich nur teilweise an Farbe und Sockel. Tom sagt z. B. „druckwerk: Bild-Idee Eule …“. Hintergrund: `wissen/recherche_text_zu_bild.md`.
 - Schickt Tom ein KI-Modell (GLB/STL): `werkzeug/ki_rohling.py` (aufrichten, skalieren, schließen, Boden plan, Info) → Bild zeigen → bei Farbe
   `werkzeug/textur_farben.py` (Textur → 4 Köpfe) → slicen. Abschlussbild: `werkzeug/foto.py` (Blender). Details und Grenzen: `werkzeug/KI_MODELLE.md`.
 - **Lehren aus Toms Videos** (Auswertungen unter `videos/`, Bastlwastl): Eingabebild = ein Objekt, neutraler Hintergrund, einfarbig grau und matt, leicht schräg von
