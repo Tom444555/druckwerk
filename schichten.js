@@ -1,8 +1,8 @@
 // druckwerk – Schichtvorschau: liest die .gcode-Datei und zeigt jede Schicht von oben
 export async function zeigen(url, farben, sheet){
   const d = sheet(`<h3>Schichten</h3><p id="sInfo">Druckdatei wird geladen …</p><canvas id="sview"></canvas>
-    <div class="card" style="margin:12px 0"><div class="row"><button class="back" id="sM">−</button><input type="range" id="sReg" min="1" max="1" value="1"><button class="back" id="sP">＋</button></div></div>
-    <p class="small" style="margin:0 0 10px">Farben = Spulen · grau = Schicht darunter · der Block am Rand ist der Spülturm.</p><button class="btn grey" id="sZu">Schließen</button>`);
+    <div class="card" style="margin:12px 0"><div class="row"><button class="back" id="sM" aria-label="Schicht tiefer">−</button><input type="range" id="sReg" min="1" max="1" value="1" aria-label="Schicht"><button class="back" id="sP" aria-label="Schicht höher">＋</button></div></div>
+    <p class="small" style="margin:0 0 10px">Farben = Köpfe · grau = Schicht darunter · der Block am Rand ist der Spülturm.</p><button class="btn grey" id="sZu">Schließen</button>`);
   d.querySelector("#sZu").onclick = () => d.remove();
   const info = d.querySelector("#sInfo");
   let txt;

@@ -3,14 +3,14 @@
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 let D = null, C = null;
-const U = { mat: "filamente", gruppe: "Alle", ziel: "", zub: "alle", vk: "temp", dr: "ueberblick", wf: "weg", weg: "technik" };
+export const U = { mat: "filamente", gruppe: "Alle", ziel: "", zub: "alle", vk: "temp", dr: "ueberblick", wf: "weg", weg: "technik", such: "" };
 const ls = (k, d) => { try { const v = JSON.parse(localStorage.getItem(k)); return v ?? d; } catch (e) { return d; } };
 const lsSet = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} };
 const zahl = v => { const n = parseFloat(String(v ?? "").replace(",", ".")); return isFinite(n) ? n : 0; };
 const heute = () => new Date().toISOString().slice(0, 10);
 const de = iso => iso ? iso.split("-").reverse().join(".") : "";
 
-async function daten(){
+export async function daten(){
   if (D) return D;
   const l = async n => (await fetch(`wissen/${n}.json`, {cache: "no-store"})).json();
   const [f, z, c, w] = await Promise.all([l("filamente"), l("zubehoer"), l("c5pro"), l("workflow")]);
@@ -64,7 +64,7 @@ function material(app){
   $$("[data-m]", app).forEach(r => r.onclick = () => filamentBlatt(f.materialien.find(m => m.id === r.dataset.m)));
 }
 function filamentBlatt(m){
-  const z = (l, k) => m[k] ? `<div class="row"><div class="grow">${l}</div><span class="val">${C.esc(m[k])}${m.herkunft && m.herkunft[k] ? ` <span class="pill">${m.herkunft[k]}</span>` : ""}</span></div>` : "";
+  const z = (l, k) => m[k] ? `<div class="row"><div style="flex:none">${l}</div><span class="val" style="flex:1">${C.esc(m[k])}${m.herkunft && m.herkunft[k] ? ` <span class="pill">${m.herkunft[k]}</span>` : ""}</span></div>` : "";
   const d = C.sheet(`<h3>${C.esc(m.name)}</h3><p>${C.esc(m.kurz)}</p>
     <div class="card">${z("Düse (°C)", "duese")}${z("Bett (°C)", "bett")}${z("Kammer (°C)", "kammer")}${z("Lüfter", "luefter")}${z("Trocknen", "trocknen")}${z("Durchfluss (mm³/s)", "flow")}</div>
     <h2>Wofür</h2><div class="card"><div class="row"><div class="grow" style="font-size:15px">${C.esc(m.wofuer)}</div></div></div>
@@ -269,14 +269,14 @@ function drucker(app){
   } else if (U.dr === "wartung") {
     const W = ls("druckwerk_c5_wartung", {}), jetzt = Date.now();
     h += `<h2>Wartungsplan</h2><div class="card">${c.wartung.map(x => { const l = W[x.id], alt = l ? Math.floor((jetzt - new Date(l)) / 864e5) : null;
-      const faellig = x.tage > 0 && (alt === null || alt >= x.tage);
-      return `<div class="row oben"><div class="grow"><div><b>${C.esc(x.t)}</b>${faellig ? `<span class="pr p2">fällig</span>` : ""}</div>
+      const faellig = x.tage > 0 && alt !== null && alt >= x.tage, nie = x.tage > 0 && alt === null;
+      return `<div class="row oben"><div class="grow"><div><b>${C.esc(x.t)}</b>${faellig ? `<span class="pr p2">fällig</span>` : nie ? `<span class="pr p3">noch nie</span>` : ""}</div>
         <div class="small">${C.esc(x.i)}</div>${x.tage > 0 ? `<div class="small">Zuletzt: ${l ? de(l) + (alt ? ` (vor ${alt} Tagen)` : " (heute)") : "noch nicht eingetragen"}</div>` : ""}</div>
         ${x.tage > 0 ? `<button class="wb klein" data-w="${x.id}">Erledigt</button>` : ""}</div>`; }).join("")}</div>
-    <p class="hint">„Erledigt“ merkt sich das heutige Datum in diesem Gerät. Die Abstände sind Richtwerte; nur die 1500 Druckstunden fürs Fetten stammen aus dem Flashforge-Wiki.</p>
+    <p class="hint">„Erledigt“ merkt sich das heutige Datum in diesem Gerät; danach meldet die App (Start), wenn es wieder fällig ist. Die Abstände sind Richtwerte; nur die 1500 Druckstunden fürs Fetten stammen aus dem Flashforge-Wiki.</p>
     <h2>Firmware-Verlauf</h2><div class="card">${c.firmware.map(([v, d, t]) => `<div class="row oben"><div style="flex:none;width:62px"><b>${v}</b><div class="small">${C.esc(d)}</div></div><div class="grow small" style="color:var(--text)">${C.esc(t)}</div></div>`).join("")}</div><div style="height:20px"></div>`;
   } else {
-    h += `<div style="height:12px"></div><div class="card"><div class="row"><input type="text" id="pSuch" placeholder="Problem oder Fehlercode suchen" style="flex:1"></div></div>
+    h += `<div style="height:12px"></div><div class="card"><div class="row"><input type="text" id="pSuch" placeholder="Problem oder Fehlercode suchen" value="${C.esc(U.such)}" aria-label="Problem suchen" style="flex:1"></div></div>
     <h2>Probleme und Lösungen</h2><div id="pListe">${c.probleme.map(p => `<div class="card pk" style="margin-bottom:10px"><div class="row"><div class="grow"><div><b>${C.esc(p.t)}</b></div>
       <div class="small" style="margin-top:4px"><b>Ursache:</b> ${C.esc(p.u)}</div><div style="font-size:15px;margin-top:4px"><b>Lösung:</b> ${C.esc(p.l)}</div></div></div></div>`).join("")}</div>
     <p class="hint">Kommst du nicht weiter: Foto oder Fehlercode an Claude schicken („druckwerk: Problem …“). Offizielle Hilfe: wiki.flashforge.com.</p><div style="height:20px"></div>`;
@@ -287,14 +287,14 @@ function drucker(app){
     lsSet("druckwerk_c5_ein", E); const y = scrollY; neu(); scrollTo(0, y); });
   $$("[data-w]", app).forEach(b => b.onclick = () => { const W = ls("druckwerk_c5_wartung", {}); W[b.dataset.w] = heute(); lsSet("druckwerk_c5_wartung", W);
     const y = scrollY; neu(); scrollTo(0, y); C.toast("Eingetragen"); });
-  const s = $("#pSuch"); if (s) s.oninput = () => { const q = s.value.toLowerCase().trim();
-    $$(".pk", app).forEach(k => k.style.display = !q || k.textContent.toLowerCase().includes(q) ? "" : "none"); };
+  const s = $("#pSuch"); if (s) { s.oninput = () => { const q = U.such = s.value.toLowerCase().trim();
+    $$(".pk", app).forEach(k => k.style.display = !q || k.textContent.toLowerCase().includes(q) ? "" : "none"); }; if (U.such) s.oninput(); }
 }
 
 /* ================= Workflow ================= */
 function workflow(app){
   const w = D.w, neu = () => workflow(app);
-  let h = `<h1>Von der Idee zum Modell</h1>${seg("wf", [["weg", "Weg"], ["werkzeuge", "Werkzeuge"], ["vorschlaege", "Vorschläge"]])}`;
+  let h = `<button class="back" id="wfZur">‹ Neuer Auftrag</button><h1>So geht's</h1>${seg("wf", [["weg", "Weg"], ["werkzeuge", "Werkzeuge"], ["vorschlaege", "Vorschläge"]])}`;
   if (U.wf === "weg") {
     const g = w.wege.find(x => x.id === U.weg) || w.wege[0];
     h += `<h2>Womit fängst du an?</h2>${chips("weg", w.wege.map(x => [x.id, x.name]))}
@@ -309,21 +309,61 @@ function workflow(app){
       return t.url ? `<a class="row chev oben" href="${C.esc(t.url)}" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">${innen}</a>` : `<div class="row oben">${innen}</div>`; }).join("")}</div>`).join("")
       + `<p class="hint">Preise sind Stand ${C.esc(w.stand)} und ändern sich. „Claude“ = erledige ich im Auftrag, du brauchst dafür nichts zu installieren.</p>` + quellen(w.quellen, w.stand);
   } else {
-    const wahl = ls("druckwerk_wunsch", []);
+    const fertig = v => /^(erledigt|eingebaut)/i.test(v.status || "");
+    const offenV = w.vorschlaege.filter(v => !fertig(v)), fertigV = w.vorschlaege.filter(fertig);
+    const wahl = ls("druckwerk_wunsch", []).filter(id => offenV.some(v => v.id === id));
     h += `<p class="hint" style="margin-top:14px">So würde ich druckwerk zum Komplettprogramm ausbauen. Tipp an, was du willst – unten entsteht daraus ein Auftrag an Claude.</p>
-    <div class="card" style="margin-top:10px">${w.vorschlaege.map(v => `<div class="row oben"><button class="haken ${wahl.includes(v.id) ? "on" : ""}" data-v2="${v.id}" aria-label="auswählen">${wahl.includes(v.id) ? "✓" : ""}</button>
+    <h2>Offen (${offenV.length})</h2>
+    <div class="card">${offenV.map(v => `<div class="row oben"><button class="haken ${wahl.includes(v.id) ? "on" : ""}" data-v2="${v.id}" aria-label="auswählen">${wahl.includes(v.id) ? "✓" : ""}</button>
       <div class="grow"><div><b>${C.esc(v.t)}</b></div><div class="small">${C.esc(v.nutzen)}</div>
-        <div class="werte"><span>Aufwand: ${C.esc(v.aufwand)}</span><span>${C.esc(v.status)}</span></div></div></div>`).join("")}</div>
+        <div class="werte"><span>Aufwand: ${C.esc(v.aufwand)}</span><span>${C.esc(v.status)}</span></div></div></div>`).join("") || `<div class="row"><div class="grow small">Alles umgesetzt.</div></div>`}</div>
     <div style="height:16px"></div>
     <button class="btn" id="vKop" ${wahl.length ? "" : "disabled style='opacity:.4'"}>Auswahl kopieren (${wahl.length})</button>
-    <a class="btn grey" id="vAuf" target="_blank" ${wahl.length ? "" : "style='opacity:.4;pointer-events:none'"}>In Claude öffnen</a><div style="height:20px"></div>`;
+    <a class="btn grey" id="vAuf" target="_blank" ${wahl.length ? "" : "style='opacity:.4;pointer-events:none'"}>In Claude öffnen</a>
+    ${fertigV.length ? `<h2>Schon umgesetzt (${fertigV.length})</h2><div class="card">${fertigV.map(v => `<div class="row oben"><span class="haken on" aria-hidden="true">✓</span>
+      <div class="grow"><div><b>${C.esc(v.t)}</b></div><div class="werte"><span>${C.esc(v.status)}</span></div></div></div>`).join("")}</div>` : ""}<div style="height:20px"></div>`;
   }
   app.innerHTML = h;
   binden(app, neu);
+  $("#wfZur").onclick = () => C.go("neu");
   const st = $("#wStart"); if (st) st.onclick = () => { const g = w.wege.find(x => x.id === U.weg) || w.wege[0]; C.neuStart("", g.zweck, "", g.id); };
   $$("[data-v2]", app).forEach(b => b.onclick = () => { let L = ls("druckwerk_wunsch", []); L = L.includes(b.dataset.v2) ? L.filter(x => x !== b.dataset.v2) : [...L, b.dataset.v2];
     lsSet("druckwerk_wunsch", L); const y = scrollY; neu(); scrollTo(0, y); });
-  const text = () => "druckwerk: Bitte diese Vorschläge aus der App umsetzen:\n" + w.vorschlaege.filter(v => ls("druckwerk_wunsch", []).includes(v.id)).map(v => "- " + v.t).join("\n");
+  const text = () => "druckwerk: Bitte diese Vorschläge aus der App umsetzen:\n" + w.vorschlaege.filter(v => ls("druckwerk_wunsch", []).includes(v.id) && !/^(erledigt|eingebaut)/i.test(v.status || "")).map(v => "- " + v.t).join("\n");
   const k = $("#vKop"); if (k) k.onclick = async () => { try { await navigator.clipboard.writeText(text()); C.toast("Kopiert"); } catch (e) { C.toast("Bitte in Claude öffnen"); } };
   const a = $("#vAuf"); if (a) a.href = "https://claude.ai/new?q=" + encodeURIComponent(text());
+}
+
+/* ================= Für die Startansicht (start.js) ================= */
+// Offener Stand: Einrichtung, fällige Wartung, fast leere Spulen
+export async function offen(){
+  const d = await daten(), E = ls("druckwerk_c5_ein", {}), W = ls("druckwerk_c5_wartung", {}), L = spulen(), jetzt = Date.now();
+  const faellig = d.c.wartung.filter(x => x.tage > 0 && W[x.id] && (jetzt - new Date(W[x.id])) / 864e5 >= x.tage);
+  const leer = L.filter(s => zahl(s.start) && zahl(s.rest) / zahl(s.start) < .15);
+  return { einErledigt: d.c.einrichten.filter(x => E[x.id]).length, einGesamt: d.c.einrichten.length,
+    einNaechster: (d.c.einrichten.find(x => !E[x.id]) || {}).t || "", faellig, leer, spulen: L.length,
+    wartungNie: !Object.keys(W).length };
+}
+// Suche über Wissen: Filamente, Probleme, Wartung, Einrichtung, Zubehör, Wege, Werkzeuge
+export async function suche(q){
+  const d = await daten(), t = String(q || "").toLowerCase().trim(); if (t.length < 2) return [];
+  const hat = (...x) => x.join(" ").toLowerCase().includes(t), r = [];
+  d.f.materialien.forEach(m => { if (hat(m.name, m.kurz, m.wofuer, (m.eignung || []).join(" "))) r.push({art: "Filament", t: m.name, sub: m.kurz, ziel: "filament:" + m.id}); });
+  d.c.probleme.forEach(p => { if (hat(p.t, p.u, p.l)) r.push({art: "Problem", t: p.t, sub: p.l, ziel: "problem"}); });
+  d.c.wartung.forEach(w => { if (hat(w.t, w.i)) r.push({art: "Wartung", t: w.t, sub: w.i, ziel: "wartung"}); });
+  d.c.einrichten.forEach(e => { if (hat(e.t, e.d)) r.push({art: "Einrichten", t: e.t, sub: e.d, ziel: "einrichten"}); });
+  d.z.gruppen.forEach(g => g.teile.forEach(x => { if (hat(x.name, x.wozu)) r.push({art: "Zubehör", t: x.name, sub: x.wozu, ziel: "zubehoer"}); }));
+  d.w.wege.forEach(g => { if (hat(g.name, g.kurz)) r.push({art: "Weg", t: g.name, sub: g.kurz, ziel: "weg:" + g.id}); });
+  d.w.werkzeuge.forEach(g => g.liste.forEach(x => { if (hat(x.name, x.d)) r.push({art: "Werkzeug", t: x.name, sub: x.d, ziel: "werkzeuge"}); }));
+  return r;
+}
+// Treffer öffnen (Tab + Segment setzen)
+export function oeffnen(ziel, ctx, q){
+  C = ctx; const [art, id] = ziel.split(":");
+  if (art === "filament") { U.mat = "filamente"; C.go("material"); daten().then(d => filamentBlatt(d.f.materialien.find(m => m.id === id))); }
+  else if (art === "problem") { U.dr = "hilfe"; U.such = String(q || "").toLowerCase().trim(); C.go("drucker"); }
+  else if (art === "wartung" || art === "einrichten") { U.dr = art; C.go("drucker"); }
+  else if (art === "zubehoer" || art === "lager") { U.mat = art; U.zub = "alle"; C.go("material"); }
+  else if (art === "weg") { U.wf = "weg"; U.weg = id; C.go("workflow"); }
+  else if (art === "werkzeuge" || art === "vorschlaege") { U.wf = art; C.go("workflow"); }
 }

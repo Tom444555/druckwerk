@@ -9,6 +9,9 @@
 <meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
 <title>Druckwerk</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="symbol-192.png" type="image/png">
+<link rel="apple-touch-icon" href="symbol-180.png">
 <style>
 :root{
   --bg:#f2f2f7;--card:#fff;--text:#000;--sub:#6c6c70;--sep:rgba(60,60,67,.18);
@@ -95,7 +98,7 @@ input.zahl{width:84px;text-align:right;background:var(--fill);border-radius:8px;
 .palette{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
 .palette button{border:0;background:none;color:var(--text);font:500 11px -apple-system,sans-serif;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer}
 .palette span{width:38px;height:38px;border-radius:50%;border:.5px solid var(--sep);display:block}
-.sheet>div{max-height:86vh;overflow:auto}
+.sheet>div{max-height:86vh;max-height:86dvh;overflow:auto}
 .balken{height:6px;border-radius:3px;background:var(--fill);overflow:hidden}.balken i{display:block;height:100%;width:0;background:var(--blue);transition:width .6s}
 .sheet h2{margin:16px 4px 7px}.sheet select{font-size:16px}
 #sview{width:100%;aspect-ratio:1;background:#6b6b70;border-radius:12px;display:block}
@@ -117,21 +120,28 @@ ul.liste{margin:0;padding:8px 16px 8px 34px}ul.liste li{padding:5px 0;font-size:
 .seg+h2{margin-top:18px}
 .seg.fuenf button{font-size:13px;padding:7px 1px;letter-spacing:-.2px}
 .row.frage{display:block}
+input.zahl{border:0;outline:none;color:var(--text);font:17px -apple-system,sans-serif}
+@media (prefers-color-scheme:dark){.dot,.spule span,.palette span{border-color:rgba(255,255,255,.35)}}
+.kacheln{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.kachel{border:0;border-radius:12px;background:var(--card);color:var(--text);text-align:left;padding:12px 14px;font:600 15px -apple-system,sans-serif;cursor:pointer;min-height:64px}
+.kachel span{display:block;font-size:24px;margin-bottom:4px;color:var(--blue)}
+.pill.gruen{background:var(--green);color:#fff}
+@media (min-width:700px){.kacheln{grid-template-columns:repeat(4,1fr)}}
 .frage textarea{min-height:64px;padding:6px 0 0}.frage .chips{margin:8px 0 0}.frage .chip{background:var(--fill)}.frage .chip.on{background:var(--blue)}
 </style>
 </head>
 <body>
 <main id="app"></main>
 
-<nav>
-  <button data-tab="bibliothek"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1.5"/></svg>Bibliothek</button>
-  <button data-tab="auftraege" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7l8-4 8 4-8 4-8-4z"/><path d="M4 7v10l8 4 8-4V7"/><path d="M12 11v10"/></svg>Aufträge</button>
-  <button data-tab="neu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>Neu</button>
-  <button data-tab="material"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="8"/><circle cx="11" cy="11" r="2.5"/><path d="M11 19h10"/></svg>Material</button>
-  <button data-tab="drucker"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M4 8h16M9 13h6M12 8v5"/></svg>Drucker</button>
-  <button data-tab="workflow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="5" cy="6" r="2.2"/><circle cx="19" cy="18" r="2.2"/><path d="M7.2 6H14a3.5 3.5 0 0 1 0 7h-4a3.5 3.5 0 0 0 0 7h6.8"/></svg>Workflow</button>
+<nav aria-label="Bereiche">
+  <button data-tab="start" aria-label="Start"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3.5 11 12 4l8.5 7"/><path d="M5.5 9.5V20h13V9.5"/><path d="M10 20v-5.5h4V20"/></svg>Start</button>
+  <button data-tab="auftraege"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 7l8-4 8 4-8 4-8-4z"/><path d="M4 7v10l8 4 8-4V7"/><path d="M12 11v10"/></svg>Aufträge</button>
+  <button data-tab="neu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>Neu</button>
+  <button data-tab="bibliothek"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1.5"/></svg>Bibliothek</button>
+  <button data-tab="material"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="8"/><circle cx="11" cy="11" r="2.5"/><path d="M11 19h10"/></svg>Material</button>
+  <button data-tab="drucker"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M4 8h16M9 13h6M12 8v5"/></svg>Drucker</button>
 </nav>
-<div class="toast" id="toast"></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script type="importmap">
 {"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
@@ -147,7 +157,12 @@ const SPEICHER = "druckwerk_meine";
 let _speicherNotfall = null;   // falls das Gerät keinen Speicher erlaubt
 const meineLaden = () => { try { return JSON.parse(localStorage.getItem(SPEICHER) || "[]"); } catch(e) { return _speicherNotfall || []; } };
 const meineSichern = l => { _speicherNotfall = l; try { localStorage.setItem(SPEICHER, JSON.stringify(l)); } catch(e) {} };
-let tab = "auftraege";
+let tab = "start";
+// gedruckt-Markierung je Auftrag: {ordner: "JJJJ-MM-TT"} – nur auf diesem Gerät
+const GEDRUCKT = "druckwerk_gedruckt";
+const gedrucktListe = () => { try { return JSON.parse(localStorage.getItem(GEDRUCKT) || "{}") || {}; } catch(e) { return {}; } };
+const gedrucktSetzen = (ordner, an) => { const G = gedrucktListe(); if (an) G[ordner] = G[ordner] || new Date().toISOString().slice(0,10); else delete G[ordner];
+  try { localStorage.setItem(GEDRUCKT, JSON.stringify(G)); } catch(e) {} };
 
 // Farbnamen -> Farbe (für Punkte und 3D-Vorschau)
 const FARBEN = {weiss:"#f5f5f5",weiß:"#f5f5f5",schwarz:"#222",rot:"#e0352b",blau:"#2563eb",gruen:"#22a447",grün:"#22a447",
@@ -156,6 +171,13 @@ const FARBEN = {weiss:"#f5f5f5",weiß:"#f5f5f5",schwarz:"#222",rot:"#e0352b",bla
 const farbe = n => FARBEN[(n||"").toLowerCase().trim()] || (/^#/.test(n||"") ? n : "#9a9aa0");
 const uniq = v => [...new Set(String(v ?? "").split(","))].join(" / ");
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const deDatum = iso => iso ? String(iso).slice(0,10).split("-").reverse().join(".") : "";
+const dez = (x, n = 1) => (+x || 0).toFixed(n).replace(".", ",");
+const zeitKurz = z => { const m = String(z || "").match(/(?:(\d+)d\s*)?(?:(\d+)h\s*)?(?:(\d+)m)?/) || [];
+  const h = (+m[1] || 0) * 24 + (+m[2] || 0), mi = +m[3] || 0; return h || mi ? (h ? `${h} h ${mi} min` : `${mi} min`) : (z || "–"); };
+const zeitStat = z => { const m = minuten(z); return m >= 60 ? `${Math.floor(m / 60)}:${String(m % 60).padStart(2, "0")} h` : m ? `${m} min` : (z || "–"); };
+const minuten = z => { const m = String(z || "").match(/(?:(\d+)d\s*)?(?:(\d+)h\s*)?(?:(\d+)m)?/) || []; return ((+m[1]||0)*24 + (+m[2]||0))*60 + (+m[3]||0); };
+const schoen = n => { const t = String(n || "").replace(/_/g, " ").trim(); return t.charAt(0).toUpperCase() + t.slice(1); };
 const toast = t => { const e = $("#toast"); e.textContent = t; e.classList.add("show"); setTimeout(() => e.classList.remove("show"), 1600); };
 
 async function laden(){
@@ -171,12 +193,13 @@ async function laden(){
   if (m) {
     const neu = decodeURIComponent(m[1]).split(",").map(o => LAGER.find(x => x.ordner === o)).filter(Boolean);
     hinzufuegen(neu);
-    history.replaceState(null, "", location.pathname);
-    if (neu.length === 1) tab = "auftrag:" + neu[0].ordner;
+    if (neu.length === 1) tab = "auftrag:" + neu[0].ordner; else if (neu.length) tab = "auftraege";
+    history.replaceState(null, "", location.pathname + "#" + tab);
     toast(neu.length ? (neu.length === 1 ? "Auftrag gespeichert" : neu.length + " Aufträge gespeichert") : "Auftrag nicht gefunden – evtl. 1 Min. warten");
   }
+  else { const h = decodeURIComponent(location.hash.slice(1)); if (h) tab = h; }
   meineSichern(AUFTRAEGE);
-  zeige();
+  zeige(true);
   try { if (localStorage.getItem("druckwerk_laeuft")) (await import("./werkstatt.js")).offenePruefen(wctx()); } catch(e) {}
 }
 function hinzufuegen(liste){
@@ -185,18 +208,34 @@ function hinzufuegen(liste){
   meineSichern(AUFTRAEGE);
 }
 
-function zeige(){
-  const haupt = {auftrag:"auftraege", werkstatt:"bibliothek"}[tab.split(":")[0]] || tab.split(":")[0];
-  document.querySelectorAll("nav button").forEach(b => b.classList.toggle("on", b.dataset.tab === haupt));
+// Navigation: jeder Bildschirm hat eine Adresse (#auftraege, #auftrag:<ordner> …) → Zurück-Taste und Links funktionieren
+function zeige(ersetzen){
+  if (location.hash.slice(1) !== tab) { try { history[ersetzen === true ? "replaceState" : "pushState"](null, "", "#" + tab); } catch(e) {} }
+  const haupt = {auftrag:"auftraege", werkstatt:"bibliothek", workflow:"neu"}[tab.split(":")[0]] || tab.split(":")[0];
+  document.querySelectorAll("nav button").forEach(b => { b.classList.toggle("on", b.dataset.tab === haupt);
+    if (b.dataset.tab === haupt) b.setAttribute("aria-current", "page"); else b.removeAttribute("aria-current"); });
+  document.querySelectorAll(".sheet").forEach(d => d.remove());
   window.scrollTo(0,0);
   if (tab === "bibliothek" || tab.startsWith("werkstatt:")) return werkstattTab();
-  if (tab === "auftraege") listeAuftraege();
+  if (tab === "start") startTab();
+  else if (tab === "auftraege") listeAuftraege();
   else if (tab.startsWith("auftrag:")) detail(tab.slice(8));
   else if (tab === "neu") neu();
   else if (["material","drucker","workflow"].includes(tab)) wissenTab();
-  else { tab = "auftraege"; listeAuftraege(); }
+  else { tab = "start"; startTab(); }
 }
 document.querySelectorAll("nav button").forEach(b => b.onclick = () => { tab = b.dataset.tab; zeige(); });
+
+/* ---------- Start (start.js): nächster Schritt, Suche, Gerät & Daten ---------- */
+const sctx = () => ({...kctx(), AUFTRAEGE, LAGER, gedruckt: gedrucktListe, schoen, deDatum, zeitKurz,
+  hinzufuegen: l => { hinzufuegen(l); }, neuLaden: () => { AUFTRAEGE = meineLaden(); },
+  liste: f => { LA.filter = f === "offen" ? "offen" : "alle"; LA.q = ""; tab = "auftraege"; zeige();
+    if (f === "claude") lagerZeigen(LAGER.filter(x => !AUFTRAEGE.some(a => a.ordner === x.ordner))); }});
+async function startTab(){
+  const meinTab = tab;
+  try { const S = await import("./start.js"); if (tab !== meinTab) return; await S.start(app, sctx()); }
+  catch(e) { console.error(e); app.innerHTML = `<h1>Druckwerk</h1><div class="empty">Konnte nicht geladen werden – Internet prüfen.</div>`; }
+}
 
 /* ---------- Bibliothek & Werkstatt (werkstatt.js) ---------- */
 const wctx = () => ({LAGER, DRUCKER, FARBEN, farbe, esc, toast, sheet, go: t => { tab = t; zeige(); },
@@ -224,30 +263,49 @@ async function wissenTab(){
 
 /* ---------- Aufträge ---------- */
 const summeGramm = a => String(a.gramm).split(",").reduce((s,x) => s + (parseFloat(x)||0), 0);
+const LA = {filter:"alle", sort:"neu", q:""};   // Ansicht der Auftragsliste (nur für diese Sitzung)
+const druckerKurz = a => a.drucker === "kobrax" ? `<span class="badge b-kobrax" title="läuft nicht auf dem Creator 5 Pro">Kobra X</span>` : "";
 function listeAuftraege(){
+  const G = gedrucktListe(), offenN = AUFTRAEGE.filter(a => !G[a.ordner]).length;
   const gesamt = AUFTRAEGE.reduce((s,a) => s + summeGramm(a), 0);
+  let liste = AUFTRAEGE.filter(a => LA.filter === "alle" || (LA.filter === "offen" ? !G[a.ordner] : G[a.ordner]))
+    .filter(a => !LA.q || (a.name + " " + a.ordner).toLowerCase().includes(LA.q));
+  const sorts = {neu: (x,y) => (y.datum + y.ordner).localeCompare(x.datum + x.ordner), name: (x,y) => schoen(x.name).localeCompare(schoen(y.name), "de"),
+    zeit: (x,y) => minuten(x.zeit) - minuten(y.zeit), gramm: (x,y) => summeGramm(x) - summeGramm(y)};
+  liste = [...liste].sort(sorts[LA.sort] || sorts.neu);
+  const segB = (k, opts) => `<div class="seg">${opts.map(([v,l]) => `<button data-la="${k}" data-v="${v}" class="${LA[k]===v?"on":""}">${l}</button>`).join("")}</div>`;
   let h = `<h1>Aufträge</h1>
   <div class="stats">
     <div class="stat"><span class="small">Aufträge</span><b>${AUFTRAEGE.length}</b></div>
+    <div class="stat"><span class="small">Noch drucken</span><b>${offenN}</b></div>
     <div class="stat"><span class="small">Filament</span><b>${gesamt.toFixed(0)} g</b></div>
-    <div class="stat"><span class="small">Drucker</span><b>2</b></div>
   </div>`;
-  if (!AUFTRAEGE.length) h += `<div class="empty">Noch keine Aufträge gespeichert.<br>Unter „Neu“ einen Auftrag zusammenstellen – Claude schickt dir danach einen Link, der ihn hier speichert.</div>`;
+  if (!AUFTRAEGE.length) h += `<div class="empty">Noch keine Aufträge gespeichert.<br>Unter „Neu“ einen Auftrag zusammenstellen – Claude schickt dir danach einen Link, der ihn hier speichert.</div>
+    <button class="btn" id="zuNeu">Neuen Auftrag beginnen</button>`;
   else {
-    h += `<h2>Neueste zuerst</h2><div class="card">`;
-    for (const a of AUFTRAEGE) h += `
-      <div class="row chev" data-o="${esc(a.ordner)}" style="cursor:pointer">
-        <div class="grow"><div><b>${esc(a.name)}</b></div>
-          <div class="small">${esc(a.datum)} · ${esc(a.zeit)} · ${summeGramm(a).toFixed(1)} g</div></div>
+    h += `<div style="height:12px"></div>${segB("filter", [["alle","Alle"],["offen","Noch drucken"],["gedruckt","Gedruckt"]])}
+    <div class="card" style="margin-top:10px"><div class="row"><input type="text" id="laSuch" placeholder="Auftrag suchen" value="${esc(LA.q)}" style="flex:1" aria-label="Auftrag suchen">
+      <select id="laSort" aria-label="Sortieren">${[["neu","Neueste"],["name","Name"],["zeit","Druckzeit"],["gramm","Gewicht"]].map(([v,l]) => `<option value="${v}" ${LA.sort===v?"selected":""}>${l}</option>`).join("")}</select></div></div>
+    <h2>${liste.length} ${liste.length === 1 ? "Auftrag" : "Aufträge"}</h2>`;
+    h += liste.length ? `<div class="card">${liste.map(a => `
+      <div class="row chev" data-o="${esc(a.ordner)}" style="cursor:pointer" role="button" tabindex="0">
+        <div class="grow"><div><b>${esc(schoen(a.name))}</b> ${G[a.ordner] ? `<span class="pill gruen">gedruckt</span>` : ""}</div>
+          <div class="small">${deDatum(a.datum)} · ${zeitKurz(a.zeit)} · ${dez(summeGramm(a))} g</div></div>
         <div class="dots">${a.slots.map(s => `<span class="dot" style="background:${farbe(s.farbe)}"></span>`).join("")}</div>
-        <span class="badge b-${a.drucker}">${a.drucker === "kobrax" ? "Kobra X" : "C5 Pro"}</span>
-      </div>`;
-    h += `</div>`;
+        ${druckerKurz(a)}
+      </div>`).join("")}</div>` : `<div class="empty">Nichts gefunden – Filter oder Suche ändern.</div>`;
   }
   const offen = LAGER.filter(x => !AUFTRAEGE.some(a => a.ordner === x.ordner));
-  if (offen.length) h += `<div style="height:16px"></div><button class="btn grey" id="lager">Aus dem Lager hinzufügen (${offen.length})</button>`;
+  if (offen.length) h += `<div style="height:16px"></div><button class="btn grey" id="lager">Weitere Aufträge von Claude (${offen.length})</button>`;
+  h += `<div style="height:20px"></div>`;
   app.innerHTML = h;
-  app.querySelectorAll("[data-o]").forEach(r => r.onclick = () => { tab = "auftrag:" + r.dataset.o; zeige(); });
+  app.querySelectorAll("[data-o]").forEach(r => r.onclick = r.onkeydown = e => { if (e.type === "keydown" && e.key !== "Enter") return; tab = "auftrag:" + r.dataset.o; zeige(); });
+  app.querySelectorAll("[data-la]").forEach(b => b.onclick = () => { LA[b.dataset.la] = b.dataset.v; listeAuftraege(); });
+  const so = $("#laSort"); if (so) so.onchange = () => { LA.sort = so.value; listeAuftraege(); };
+  const su = $("#laSuch"); if (su) su.oninput = () => { LA.q = su.value.toLowerCase().trim();
+    app.querySelectorAll("[data-o]").forEach(r => { const a = AUFTRAEGE.find(x => x.ordner === r.dataset.o);
+      r.style.display = !LA.q || (a.name + " " + a.ordner).toLowerCase().includes(LA.q) ? "" : "none"; }); };
+  const zn = $("#zuNeu"); if (zn) zn.onclick = () => { tab = "neu"; zeige(); };
   const l = $("#lager"); if (l) l.onclick = () => lagerZeigen(offen);
 }
 
@@ -258,28 +316,29 @@ function detail(ordner){
   const gr = String(a.gramm).split(",");
   app.innerHTML = `
   <button class="back" id="zur">‹ Aufträge</button>
-  <h1>${esc(a.name)}</h1>
+  <h1>${esc(schoen(a.name))}</h1>
   <div id="viewer">${a.vorschau ? `<img id="vbild" src="${pfad}${esc(a.vorschau)}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;border-radius:12px">` : ""}
     <span class="small" id="vtext" style="position:absolute;left:12px;bottom:10px">3D-Modell wird geladen …</span></div>
   <div class="stats">
-    <div class="stat"><span class="small">Druckzeit</span><b>${esc(a.zeit)}</b></div>
-    <div class="stat"><span class="small">Filament</span><b>${summeGramm(a).toFixed(1)} g</b></div>
-    <div class="stat"><span class="small">Schicht</span><b>${esc(a.schicht)}</b></div>
+    <div class="stat"><span class="small">Druckzeit</span><b>${esc(zeitStat(a.zeit))}</b></div>
+    <div class="stat"><span class="small">Filament</span><b>${dez(summeGramm(a))} g</b></div>
+    <div class="stat"><span class="small">Schicht (mm)</span><b>${esc(String(a.schicht).replace(".", ","))}</b></div>
   </div>
   <h2>Drucker</h2>
-  <div class="card"><div class="row"><div class="grow">${esc(a.drucker_name)}</div>
-    <span class="badge b-${a.drucker}">${a.drucker === "kobrax" ? "Kobra X" : "C5 Pro"}</span></div></div>
+  <div class="card"><div class="row"><div class="grow">${esc(a.drucker_name)}<div class="small">erstellt am ${deDatum(a.datum)}</div></div>
+    ${druckerKurz(a)}</div></div>
+  ${a.drucker === "kobrax" ? `<div class="warn">Dieser Auftrag ist für die Kobra X gerechnet und läuft nicht auf dem Creator 5 Pro. „In der Werkstatt umbauen“ → „Slicen“ rechnet ihn neu.</div>` : ""}
   <h2>${a.drucker === "kobrax" ? "Spulen einlegen" : "Köpfe bestücken"}</h2>
   <div class="card">${a.slots.map((s,i) => `
     <div class="row"><span class="dot" style="background:${farbe(s.farbe)};width:22px;height:22px"></span>
       <div class="grow">${a.drucker === "kobrax" ? "Spule" : "Kopf"} ${s.slot}: <b>${esc(s.material)}</b> ${esc(s.farbe)}</div>
-      <span class="val">${(parseFloat(gr[i])||0).toFixed(1)} g</span></div>`).join("")}
+      <span class="val">${dez(gr[i])} g</span></div>`).join("")}
   </div>
   ${a.gemischt ? `<div class="warn">⚠ Unterschiedliche Materialien – Haftung und Temperaturen prüfen.</div>` : ""}
   <div id="fcheck"></div>
   <h2>Einstellungen</h2>
   <div class="card">
-    <div class="row"><div class="grow">Schichthöhe</div><span class="val">${esc(a.schicht)} mm (${esc(a.stufe)})</span></div>
+    <div class="row"><div class="grow">Schichthöhe</div><span class="val">${esc(String(a.schicht).replace(".", ","))} mm (${esc(a.stufe)})</span></div>
     <div class="row"><div class="grow">Füllung</div><span class="val">${esc(a.infill)} %</span></div>
     <div class="row"><div class="grow">Wände</div><span class="val">${esc(a.waende ?? "Standard")}</span></div>
     <div class="row"><div class="grow">Stützen</div><span class="val">${esc(a.stuetzen)}</span></div>
@@ -288,13 +347,17 @@ function detail(ordner){
   </div>
   <h2>Datei für den USB-Stick</h2>
   <a class="btn" href="${pfad}${encodeURIComponent(a.gcode)}" download="${esc(a.gcode)}">${esc(a.gcode)} laden</a>
-  <button class="btn grey" id="schichten">Schichten ansehen</button>
-  <button class="btn grey" id="inWerk">In der Werkstatt umbauen</button>
-  <button class="btn grey" id="buchen">Verbrauch vom Filamentlager abbuchen</button>
-  ${a.projekt ? `<a class="btn grey" href="${pfad}${encodeURIComponent(a.projekt)}" download="${esc(a.projekt)}">3MF-Projekt laden (für ${a.drucker === "kobrax" ? "Anycubic Slicer" : "Flash Studio"} / OrcaSlicer)</a>` : ""}
-  <a class="btn grey" href="${pfad}BERICHT.md" target="_blank">Bericht öffnen</a>
-  ${a.quelle ? `<a class="btn grey" href="${esc(a.quelle)}" target="_blank" rel="noopener">Original auf ${esc(quellName(a.quelle))} öffnen</a>` : ""}
   <p class="hint">Datei auf einen FAT32-USB-Stick kopieren → am Drucker unter USB auswählen → Platte frei? → Start.</p>
+  <div style="height:10px"></div>
+  <div id="gdBox"></div>
+  <button class="btn grey" id="schichten">Schichten ansehen</button>
+  <button class="btn grey" id="buchen">Verbrauch vom Filamentlager abbuchen</button>
+  <h2>Mehr</h2>
+  <button class="btn grey" id="inWerk">In der Werkstatt umbauen</button>
+  <button class="btn grey" id="bericht">Bericht ansehen</button>
+  ${a.projekt ? `<a class="btn grey" href="${pfad}${encodeURIComponent(a.projekt)}" download="${esc(a.projekt)}">3MF-Projekt laden (für ${a.drucker === "kobrax" ? "Anycubic Slicer" : "Flash Studio"} / OrcaSlicer)</a>` : ""}
+  ${a.quelle ? `<a class="btn grey" href="${esc(a.quelle)}" target="_blank" rel="noopener">Original auf ${esc(quellName(a.quelle))} öffnen</a>` : ""}
+  <button class="btn grey" id="teilen">Auf anderes Gerät holen (Link teilen)</button>
   <div id="tbAuf"></div>
   <h2>Verwalten</h2>
   <button class="btn rot" id="loeschen">Auftrag löschen</button>
@@ -305,9 +368,44 @@ function detail(ordner){
   const check = async () => { try { const el = $("#fcheck"); if (el) el.innerHTML = (await import("./wissen.js")).filamentCheck(a, kctx()); } catch(e) {} };
   check();
   $("#buchen").onclick = async () => { try { (await import("./wissen.js")).abbuchen(a, {...kctx(), fertig: check}); } catch(e) { toast("Konnte nicht geladen werden"); } };
-  import("./tagebuch.js").then(T => { const el = $("#tbAuf"); if (el) T.imAuftrag(el, a, kctx()); }).catch(() => {});
+  import("./tagebuch.js").then(T => { const el = $("#tbAuf"); if (el) T.imAuftrag(el, a, {...kctx(), nachEintrag: () => gd()}); }).catch(() => {});
   $("#loeschen").onclick = () => loeschenFragen(a);
+  const gd = () => { const g = gedrucktListe()[a.ordner], el = $("#gdBox"); if (!el) return;
+    el.innerHTML = g ? `<div class="card" style="margin-bottom:10px"><div class="row"><span class="pill gruen">gedruckt</span><div class="grow">am ${deDatum(g)}</div>
+      <button class="back" id="gedruckt">zurücknehmen</button></div></div>` : `<button class="btn grey" id="gedruckt" style="margin-bottom:10px">✓ Als gedruckt markieren</button>`;
+    $("#gedruckt").onclick = () => { gedrucktSetzen(a.ordner, !g); gd(); if (!g) danachFragen(a, check, gd); else toast("Wieder als „noch drucken“ markiert"); }; };
+  gd();
+  $("#bericht").onclick = () => berichtZeigen(pfad, a);
+  $("#teilen").onclick = async () => { const url = location.origin + location.pathname + "#hinzu=" + encodeURIComponent(a.ordner);
+    try { if (navigator.share) { await navigator.share({title: "Druckwerk: " + schoen(a.name), url}); return; } } catch(e) { if (e && e.name === "AbortError") return; }
+    try { await navigator.clipboard.writeText(url); toast("Link kopiert – auf dem anderen Gerät öffnen"); } catch(e) { sheet(`<h3>Link für das andere Gerät</h3><p>Markieren und kopieren:</p><div class="card"><pre class="prompt">${esc(url)}</pre></div>`); } };
   vorschau(pfad, a);
+}
+
+function danachFragen(a, check, gd){
+  const d = sheet(`<h3>Als gedruckt markiert</h3><p>${esc(schoen(a.name))} – was als Nächstes?</p>
+    <button class="btn" id="dE">Ergebnis eintragen (Sterne, Foto)</button>
+    <button class="btn grey" id="dB">Verbrauch vom Filamentlager abbuchen</button>
+    <button class="btn grey" id="dZ">Später</button>`);
+  d.querySelector("#dZ").onclick = () => d.remove();
+  d.querySelector("#dE").onclick = async () => { d.remove(); try { const T = await import("./tagebuch.js");
+    T.eintragen(a, kctx(), () => { const el = $("#tbAuf"); if (el) T.imAuftrag(el, a, kctx()); if (gd) gd(); }); } catch(e) { toast("Konnte nicht geladen werden"); } };
+  d.querySelector("#dB").onclick = async () => { d.remove(); try { (await import("./wissen.js")).abbuchen(a, {...kctx(), fertig: check}); } catch(e) { toast("Konnte nicht geladen werden"); } };
+}
+// BERICHT.md im Blatt zeigen (Safari lädt .md sonst als Datei herunter)
+async function berichtZeigen(pfad, a){
+  const d = sheet(`<h3>Bericht</h3><p>${esc(schoen(a.name))}</p><div class="card"><div id="bText" style="padding:6px 16px 12px;font-size:15px">Wird geladen …</div></div>
+    <div style="height:12px"></div><button class="btn grey" id="bZu">Schließen</button>`);
+  d.querySelector("#bZu").onclick = () => d.remove();
+  try { const r = await fetch(pfad + "BERICHT.md", {cache: "no-store"}); if (!r.ok) throw 0; const t = await r.text();
+    const fett = z => esc(z).replace(/\*\*(.+?)\*\*/g, "<b>$1</b>").replace(/`(.+?)`/g, "$1");
+    d.querySelector("#bText").innerHTML = t.split("\n").map(z => { z = z.trimEnd();
+      if (/^\|?\s*-{3}/.test(z)) return "";
+      if (/^#+ /.test(z)) return `<div style="font-weight:700;margin:12px 0 4px">${fett(z.replace(/^#+ /, ""))}</div>`;
+      if (/^\|/.test(z)) return `<div class="small" style="color:var(--text)">${fett(z.replace(/^\||\|$/g, "").split("|").map(x => x.trim()).join(" · "))}</div>`;
+      if (/^- /.test(z)) return `<div>• ${fett(z.slice(2))}</div>`;
+      return z ? `<div>${fett(z)}</div>` : ""; }).join("");
+  } catch(e) { d.querySelector("#bText").textContent = "Bericht nicht gefunden (ohne Internet nicht verfügbar)."; }
 }
 
 async function vorschau(pfad, a){
@@ -333,7 +431,8 @@ async function vorschau(pfad, a){
         if (vt && ev.total) vt.textContent = `3D-Modell wird geladen … Teil ${i+1}/${teile.length} · ${Math.round(100*ev.loaded/ev.total)} %`; });
       geo.computeVertexNormals();
       const slot = a.slots.find(s => s.slot === t.slot) || {};
-      grp.add(new THREE.Mesh(geo, new THREE.MeshStandardMaterial({color: farbe(slot.farbe), roughness:.6})));
+      grp.add(new THREE.Mesh(geo, new THREE.MeshStandardMaterial({color: farbe(slot.farbe), roughness:.6,
+        emissive: matchMedia("(prefers-color-scheme: dark)").matches ? 0x262628 : 0})));   // schwarz bleibt im Dunkelmodus sichtbar
     }
     grp.rotation.x = -Math.PI/2;           // Z nach oben (Druckkoordinaten)
     const box = new THREE.Box3().setFromObject(grp), c = box.getCenter(new THREE.Vector3());
@@ -366,7 +465,7 @@ function neu(){
     return;
   }
   const gef = F.modus === "gefuehrt";
-  if (gef) F.drucker = "c5pro";
+  F.drucker = "c5pro";   // Tom druckt nur noch auf dem Creator 5 Pro (Kobra X nur, wenn ausdrücklich im Text genannt)
   const weg = gef ? (WF.wege.find(x => x.id === F.weg) || WF.wege[0]) : null;
   const fragen = weg ? (weg.fragen || []) : [];
   if (weg) {
@@ -381,7 +480,6 @@ function neu(){
   const mats = Object.keys(d.filamente);
   F.slots.forEach(s => { if (!mats.includes(s.material)) s.material = "PLA"; });
   const seg = (k, opts) => `<div class="seg">${opts.map(([v,l]) => `<button data-k="${k}" data-v="${v}" class="${F[k]===v?"on":""}">${l}</button>`).join("")}</div>`;
-  const hitze = F.slots.some(s => /ABS|ASA|PA/.test(s.material));
   const frage = q => {
     const ph = esc(q.platzhalter || ""), lab = `<div class="small">${esc(q.label)}</div>`;
     if (q.typ === "farben") return "";   // steht unten unter „Farben & Material“
@@ -403,13 +501,13 @@ function neu(){
   app.innerHTML = `
   <h1>Neuer Auftrag</h1>
   ${seg("modus", [["frei","Frei"],["gefuehrt","Geführt"]])}
+  <div class="card" style="margin-top:10px"><div class="row chev" id="zuWf" style="cursor:pointer" role="button" tabindex="0"><div class="grow"><b>So geht's</b>
+    <div class="small">Wege von der Idee zum Modell, Werkzeuge, Ausbau-Ideen</div></div></div></div>
   ${gef ? `
   <h2>Womit fängst du an?</h2><div class="chips">${WF.wege.map(x => `<button class="chip ${x.id === weg.id ? "on" : ""}" data-weg="${x.id}">${esc(x.name)}</button>`).join("")}</div>
   <p class="hint">${esc(weg.kurz)} Nur ausfüllen, was du weißt – leere Felder fragt Claude nach.</p>
   <h2>${esc(weg.name)}</h2><div class="card">${fragen.map(frage).join("")}</div>
   ${weg.id === "fertig" ? modelleFinden : ""}` : `
-  <h2>Drucker</h2>${seg("drucker", [["c5pro","Creator 5 Pro"],["kobrax","Kobra X (früher)"]])}
-  ${hitze && F.drucker === "kobrax" ? `<div class="warn">ABS/ASA/Nylon besser auf dem geschlossenen Creator 5 Pro drucken.</div>` : ""}
   <h2>Was soll gedruckt werden?</h2>
   <div class="card"><textarea id="txt" placeholder="z. B. Wandhalter für 3 Schraubendreher, 2 Schrauben, Logo vorne">${esc(F.text)}</textarea>
     <div class="row"><input type="text" id="lnk" placeholder="Link zu Modell (optional)" value="${esc(F.link)}"></div></div>
@@ -429,7 +527,7 @@ function neu(){
   <h2>Stützen</h2>${seg("stuetzen", [["aus","Keine"],["auto","Automatisch"],["baum","Baum"]])}
   <h2>Auftrag für Claude</h2>
   <div class="card"><pre class="prompt" id="pr"></pre></div>
-  <p class="hint">Kopieren und an Claude schicken – du bekommst die fertige .gcode-Datei und einen Link zurück, der den Auftrag unter „Aufträge“ speichert.</p>
+  <p class="hint">„In Claude öffnen“ (oder kopieren und einfügen) – du bekommst die fertige .gcode-Datei und einen Link zurück, der den Auftrag unter „Aufträge“ speichert.</p>
   <button class="btn" id="kop" style="margin-top:12px">Auftrag kopieren</button>
   <a class="btn grey" id="oeffnen" target="_blank">In Claude öffnen</a>`;
   const prompt = () => {
@@ -449,6 +547,7 @@ function neu(){
   };
   const aktuell = () => { $("#pr").textContent = prompt(); $("#oeffnen").href = "https://claude.ai/new?q=" + encodeURIComponent(prompt()); };
   aktuell();
+  $("#zuWf").onclick = $("#zuWf").onkeydown = e => { if (e.type === "keydown" && e.key !== "Enter") return; tab = "workflow"; zeige(); };
   app.querySelectorAll(".seg button").forEach(b => b.onclick = () => { F[b.dataset.k] = b.dataset.v; neu(); });
   const txt = $("#txt"); if (txt) txt.oninput = e => { F.text = e.target.value; aktuell(); };
   const lnk = $("#lnk"); if (lnk) lnk.oninput = e => { F.link = e.target.value; aktuell(); };
@@ -475,7 +574,7 @@ function sheet(html){
   document.body.appendChild(d); return d;
 }
 function loeschenFragen(a){
-  const d = sheet(`<h3>„${esc(a.name)}“ löschen?</h3><p>${esc(a.datum)} · ${esc(a.drucker_name)}<br>Der Auftrag wird aus deiner Liste entfernt.</p>
+  const d = sheet(`<h3>„${esc(schoen(a.name))}“ löschen?</h3><p>${deDatum(a.datum)} · ${esc(a.drucker_name)}<br>Der Auftrag wird aus deiner Liste entfernt.</p>
     <button class="btn rotvoll" id="jaL">Löschen</button><button class="btn grey" id="neinL">Abbrechen</button>`);
   d.querySelector("#neinL").onclick = () => d.remove();
   d.querySelector("#jaL").onclick = () => {
@@ -484,12 +583,13 @@ function loeschenFragen(a){
   };
 }
 function lagerZeigen(offen){
-  const d = sheet(`<h3>Aus dem Lager hinzufügen</h3><p>Aufträge, die Claude erstellt hat und die noch nicht in deiner Liste sind.</p>
+  const d = sheet(`<h3>Weitere Aufträge von Claude</h3><p>Aufträge, die Claude erstellt hat und die noch nicht in deiner Liste sind.</p>
     <div class="card" style="max-height:50vh;overflow:auto">${offen.map(a => `
-      <div class="row" data-h="${esc(a.ordner)}" style="cursor:pointer"><div class="grow"><b>${esc(a.name)}</b>
-        <div class="small">${esc(a.datum)} · ${a.drucker === "kobrax" ? "Kobra X" : "C5 Pro"} · ${esc(a.zeit)}</div></div>
+      <div class="row" data-h="${esc(a.ordner)}" style="cursor:pointer" role="button" aria-label="${esc(schoen(a.name))} hinzufügen"><div class="grow"><b>${esc(schoen(a.name))}</b>
+        <div class="small">${deDatum(a.datum)} · ${a.drucker === "kobrax" ? "Kobra X · " : ""}${zeitKurz(a.zeit)}</div></div>
         <span style="color:var(--blue);font-size:24px">＋</span></div>`).join("")}</div>
-    <div style="height:12px"></div><button class="btn grey" id="zuL">Fertig</button>`);
+    <div style="height:12px"></div>${offen.length > 1 ? `<button class="btn" id="alleL">Alle ${offen.length} hinzufügen</button>` : ""}<button class="btn grey" id="zuL">Fertig</button>`);
+  const aL = d.querySelector("#alleL"); if (aL) aL.onclick = () => { hinzufuegen(offen); d.remove(); zeige(); toast(offen.length + " Aufträge hinzugefügt"); };
   d.querySelector("#zuL").onclick = () => { d.remove(); zeige(); };
   d.querySelectorAll("[data-h]").forEach(r => r.onclick = () => {
     hinzufuegen([LAGER.find(x => x.ordner === r.dataset.h)]); r.remove(); toast("Hinzugefügt");
@@ -497,6 +597,13 @@ function lagerZeigen(offen){
 }
 
 window.addEventListener("hashchange", () => { if (/hinzu=/.test(location.hash)) laden(); });
+window.addEventListener("popstate", () => { const h = decodeURIComponent(location.hash.slice(1));
+  if (/hinzu=/.test(h) || h === tab) return; tab = h || "start"; zeige(true); });
+// Tastatur: Eingabefeld in die Mitte holen, damit es nicht verdeckt wird
+document.addEventListener("focusin", e => { if (e.target.matches("input[type=text],input:not([type]),textarea"))
+  setTimeout(() => { try { e.target.scrollIntoView({block: "center", behavior: "smooth"}); } catch(x) {} }, 350); });
+// Offline-Grundlage (sw.js): App-Hülle und Wissen offline, Aufträge immer zuerst aus dem Netz
+if ("serviceWorker" in navigator && location.protocol !== "file:") navigator.serviceWorker.register("sw.js").catch(() => {});
 laden();
 </script>
 </body>

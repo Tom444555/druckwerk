@@ -5,7 +5,7 @@ import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { zipSync, strToU8 } from "three/addons/libs/fflate.module.js";
 
 const $ = s => document.querySelector(s);
-const PLATTE = 260;                                  // Kobra X Bauraum in mm
+let PLATTE = 256;                                    // Creator 5 Pro Bauraum in mm (aus drucker/c5pro.json)
 const STD_FARBEN = ["#222222", "#f5f5f5", "#e0352b", "#d4a017"];
 let C = null;                                        // Kontext aus index.html (LAGER, farbe, FARBEN, esc, toast, sheet, go)
 
@@ -81,7 +81,7 @@ function laden(name, daten, typ){
 }
 function export3mf(M){
   const teile = M.teile.filter(t => !t.weg);
-  const mats = M.slots.map((f, i) => `<base name="Spule ${i+1}" displaycolor="${f.toUpperCase()}FF"/>`).join("");
+  const mats = M.slots.map((f, i) => `<base name="Kopf ${i+1}" displaycolor="${f.toUpperCase()}FF"/>`).join("");
   const st = ['<?xml version="1.0" encoding="UTF-8"?>\n<model unit="millimeter" xml:lang="de" xmlns="http://schemas.microsoft.com/3dmanufacturing/core/2015/02" xmlns:BambuStudio="http://schemas.bambulab.com/package/2021">\n',
     `<metadata name="Application">BambuStudio-01.09.00.00</metadata>\n<metadata name="BambuStudio:3mfVersion">1</metadata>\n<metadata name="Title">${xmlEsc(M.name)}</metadata>\n`,
     `<resources>\n<basematerials id="100">${mats}</basematerials>\n`];
@@ -134,25 +134,28 @@ async function exportGlb(M){
 export async function bibliothek(app, ctx){
   C = ctx;
   const eigene = (await eigeneAlle()).sort((a, b) => (b.datum || "").localeCompare(a.datum || ""));
-  // Lager: je Modellname nur einmal (Kobra bevorzugt)
+  // Lager: je Modellname nur einmal (Creator 5 Pro bevorzugt)
   const lager = []; for (const a of C.LAGER) { const i = lager.findIndex(x => x.name === a.name);
-    if (i < 0) lager.push(a); else if (a.drucker === "kobrax" && lager[i].drucker !== "kobrax") lager[i] = a; }
+    if (i < 0) lager.push(a); else if (a.drucker === "c5pro" && lager[i].drucker !== "c5pro") lager[i] = a; }
+  const schoen = n => { const t = String(n || "").replace(/_/g, " ").trim(); return t.charAt(0).toUpperCase() + t.slice(1); };
+  const deD = iso => iso ? String(iso).slice(0, 10).split("-").reverse().join(".") : "";
   const karte = (id, bild, name, sub, punkte) => `
     <div class="mk" data-m="${C.esc(id)}" data-n="${C.esc(name.toLowerCase())}">
       <div class="mb">${bild ? `<img src="${C.esc(bild)}" alt="" loading="lazy">` : ""}</div>
-      <div class="mt"><b>${C.esc(name)}</b><div class="small">${C.esc(sub)}</div>
+      <div class="mt"><b>${C.esc(schoen(name))}</b><div class="small">${C.esc(sub)}</div>
         <div class="dots">${punkte.map(f => `<span class="dot" style="background:${f}"></span>`).join("")}</div></div></div>`;
   app.innerHTML = `<h1>Bibliothek</h1>
-    <div class="card"><div class="row"><input type="text" id="suche" placeholder="Modell suchen"></div></div>
+    <div class="card"><div class="row"><input type="text" id="suche" placeholder="Modell suchen" aria-label="Modell suchen"></div></div>
     <label class="btn" style="margin-top:12px">Eigene Datei öffnen (STL · 3MF · OBJ)
       <input type="file" id="imp" accept=".stl,.3mf,.obj" multiple hidden></label>
     <p class="hint">Mehrere Dateien zusammen wählen = ein Modell aus mehreren Teilen (je Teil eine Farbe).</p>
     ${eigene.length ? `<h2>Meine Modelle (auf diesem Gerät)</h2><div class="mgrid">${eigene.map(m =>
-      karte("e:" + m.id, m.bild, m.name, `${m.teile.length} Teil${m.teile.length > 1 ? "e" : ""} · ${m.datum || ""}`, [...new Set(m.teile.map(t => m.slots[t.slot-1]))])).join("")}</div>` : ""}
-    <h2>Aus dem Lager (${lager.length})</h2>
+      karte("e:" + m.id, m.bild, m.name, `${m.teile.length} Teil${m.teile.length > 1 ? "e" : ""} · ${deD(m.datum)}`, [...new Set(m.teile.map(t => m.slots[t.slot-1]))])).join("")}</div>` : ""}
+    <h2>Von Claude erstellt (${lager.length})</h2>
     <div class="mgrid">${lager.map(a => karte("l:" + a.ordner, a.vorschau ? `auftraege/${a.ordner}/${a.vorschau}` : "", a.name,
-      `${a.teile.length} Teil${a.teile.length > 1 ? "e" : ""} · ${a.datum}`, a.slots.map(s => C.farbe(s.farbe)))).join("")}</div>`;
-  app.querySelectorAll(".mk").forEach(k => k.onclick = () => C.go("werkstatt:" + k.dataset.m));
+      `${a.teile.length} Teil${a.teile.length > 1 ? "e" : ""} · ${deD(a.datum)}`, a.slots.map(s => C.farbe(s.farbe)))).join("")}</div>`;
+  app.querySelectorAll(".mk").forEach(k => { k.setAttribute("role", "button"); k.tabIndex = 0;
+    k.onclick = k.onkeydown = e => { if (e.type === "keydown" && e.key !== "Enter") return; C.go("werkstatt:" + k.dataset.m); }; });
   $("#suche").oninput = e => { const q = e.target.value.toLowerCase().trim();
     app.querySelectorAll(".mk").forEach(k => k.style.display = k.dataset.n.includes(q) ? "" : "none"); };
   $("#imp").onchange = async e => {
@@ -197,6 +200,7 @@ async function importieren(files){
 let M = null, R = null;                              // Modell, Renderer-Zustand
 export async function werkstatt(app, ctx, id){
   C = ctx;
+  try { const b = C.DRUCKER.c5pro.bauraum_mm; if (b && b[0]) PLATTE = Math.min(b[0], b[1]); } catch (e) {}
   app.innerHTML = `<button class="back" id="zur">‹ Bibliothek</button><h1 id="wname">Werkstatt</h1>
     <div id="wview"><span class="small" id="wtext">Modell wird geladen …</span></div><div id="wui"></div>`;
   $("#zur").onclick = () => C.go("bibliothek");
@@ -205,6 +209,10 @@ export async function werkstatt(app, ctx, id){
   if (!$("#wview")) return;
   $("#wname").textContent = M.name;
   szene(); setzen(new THREE.Matrix4(), null, true); ui();
+  // eigenes Modell ohne Vorschaubild (frisch importiert): Bild für die Bibliothek nachholen
+  if (M.eigen && !M.eigen.bild) setTimeout(async () => { try { if (!R || !document.body.contains(R.r.domElement)) return;
+    R.r.render(R.sc, R.cam); const c = document.createElement("canvas"); c.width = 360; c.height = 270;
+    c.getContext("2d").drawImage(R.r.domElement, 0, 0, 360, 270); M.eigen.bild = c.toDataURL("image/jpeg", .8); await eigenesSichern(M.eigen); } catch (e) {} }, 600);
 }
 
 async function modellLaden(id, fortschritt){
@@ -240,7 +248,7 @@ function szene(){
   const platte = new THREE.Mesh(new THREE.PlaneGeometry(PLATTE, PLATTE), new THREE.MeshBasicMaterial({color: dunkel ? 0x1c1c1e : 0xe9e9ee, transparent: true, opacity: .6, side: THREE.DoubleSide}));
   platte.position.z = -0.05; sc.add(platte);
   const grp = new THREE.Group(); sc.add(grp);
-  for (const t of M.teile) { t.mesh = new THREE.Mesh(t.geo, new THREE.MeshStandardMaterial({color: M.slots[t.slot-1], roughness: .6})); grp.add(t.mesh); }
+  for (const t of M.teile) { t.mesh = new THREE.Mesh(t.geo, new THREE.MeshStandardMaterial({color: M.slots[t.slot-1], roughness: .6, emissive: dunkel ? 0x262628 : 0})); grp.add(t.mesh); }
   const ctl = new OrbitControls(cam, r.domElement); ctl.enableDamping = true;
   R = {r, sc, cam, ctl, grp, waehlen: false};
   new ResizeObserver(() => { const w = el.clientWidth, h = el.clientHeight; if (!w || !h) return; r.setSize(w, h); cam.aspect = w / h; cam.updateProjectionMatrix(); }).observe(el);
@@ -296,12 +304,12 @@ function ui(){
   const zuGross = s.x > PLATTE || s.y > PLATTE || s.z > PLATTE;
   const sichtbar = M.teile.filter(t => !t.weg);
   const dreiecke = sichtbar.reduce((n, t) => n + t.geo.getAttribute("position").count / 3, 0);
-  $("#wtext").textContent = R.waehlen ? "Jetzt die Fläche antippen, die unten liegen soll" : "Drehen mit Finger · Platte 260 × 260 mm";
+  $("#wtext").textContent = R.waehlen ? "Jetzt die Fläche antippen, die unten liegen soll" : `Drehen mit Finger · Platte ${PLATTE} × ${PLATTE} mm`;
   u.innerHTML = `
     <div class="stats"><div class="stat"><span class="small">Breite X</span><b>${fnum(s.x)}</b></div>
       <div class="stat"><span class="small">Tiefe Y</span><b>${fnum(s.y)}</b></div>
       <div class="stat"><span class="small">Höhe Z</span><b>${fnum(s.z)}</b></div></div>
-    ${zuGross ? `<div class="warn">⚠ Größer als der Bauraum (260 mm) – bitte verkleinern.</div>` : ""}
+    ${zuGross ? `<div class="warn">⚠ Größer als der Bauraum (${PLATTE} mm) – bitte verkleinern.</div>` : ""}
     <div class="wrow"><button class="wb" id="uRueck" ${M.undo.length ? "" : "disabled"}>↶ Rückgängig</button>
       <button class="wb" id="uAlles" ${M.undo.length ? "" : "disabled"}>Alles zurück</button></div>
 
@@ -321,18 +329,18 @@ function ui(){
     <h2>Spiegeln</h2>
     <div class="wrow">${["x","y","z"].map(a => `<button class="wb" data-sp="${a}">${a.toUpperCase()}</button>`).join("")}</div>
 
-    <h2>Spulen (Farben)</h2>
+    <h2>Köpfe (Farben)</h2>
     <div class="card"><div class="row" style="justify-content:space-around">${M.slots.map((f, i) => `
-      <button class="spule" data-sl="${i}"><span style="background:${f}"></span>Spule ${i+1}</button>`).join("")}</div></div>
-    <p class="hint">Spule antippen = Farbe ändern. Jedes Teil bekommt unten seine Spule.</p>
+      <button class="spule" data-sl="${i}" aria-label="Farbe für Kopf ${i+1} ändern"><span style="background:${f}"></span>Kopf ${i+1}</button>`).join("")}</div></div>
+    <p class="hint">Kopf antippen = Farbe ändern. Jedes Teil bekommt unten seinen Kopf (1–4).</p>
 
     <h2>Teile (${sichtbar.length}) · ${dreiecke < 1000 ? dreiecke : Math.round(dreiecke / 1000) + " Tsd."} Dreiecke</h2>
     <div class="card">${M.teile.map((t, i) => t.weg ? "" : `
       <div class="row"><span class="dot" style="background:${M.slots[t.slot-1]};width:22px;height:22px"></span>
         <div class="grow tname" style="${t.aus ? "opacity:.4" : ""}">${C.esc(t.name)}</div>
-        <div class="seg mini">${[1,2,3,4].map(n => `<button data-t="${i}" data-n="${n}" class="${t.slot === n ? "on" : ""}">${n}</button>`).join("")}</div>
-        <button class="back" data-auge="${i}" title="ein/aus">${t.aus ? "◌" : "◉"}</button>
-        ${sichtbar.length > 1 ? `<button class="back" data-del="${i}" style="color:var(--red)">✕</button>` : ""}</div>`).join("")}
+        <div class="seg mini" role="group" aria-label="Kopf">${[1,2,3,4].map(n => `<button data-t="${i}" data-n="${n}" class="${t.slot === n ? "on" : ""}" aria-label="Kopf ${n}">${n}</button>`).join("")}</div>
+        <button class="back" data-auge="${i}" title="ein/aus" aria-label="${t.aus ? "einblenden" : "ausblenden"}">${t.aus ? "◌" : "◉"}</button>
+        ${sichtbar.length > 1 ? `<button class="back" data-del="${i}" style="color:var(--red)" aria-label="Teil entfernen">✕</button>` : ""}</div>`).join("")}
     </div>
 
     <h2>Speichern</h2>
@@ -375,7 +383,7 @@ function ui(){
 
 function farbWahl(i){
   const namen = ["schwarz","weiß","grau","silber","rot","orange","gelb","gold","grün","türkis","blau","lila","pink","braun","holz","creme","natur"];
-  const d = C.sheet(`<h3>Farbe für Spule ${i+1}</h3>
+  const d = C.sheet(`<h3>Farbe für Kopf ${i+1}</h3>
     <div class="palette">${namen.map(n => `<button data-f="${C.farbe(n)}"><span style="background:${C.farbe(n)}"></span>${n}</button>`).join("")}</div>
     <div class="card" style="margin:12px 0"><div class="row"><div class="grow">Eigene Farbe</div><input type="color" id="fEigen" value="${M.slots[i]}"></div></div>
     <button class="btn grey" id="fZu">Fertig</button>`);
@@ -388,7 +396,7 @@ function farbWahl(i){
 function exportWahl(){
   const n = datei(M.name), teile = M.teile.filter(t => !t.weg);
   const d = C.sheet(`<h3>„${C.esc(M.name)}“ speichern</h3><p>Mit allen Änderungen, in mm.</p>
-    <button class="btn" data-x="3mf">3MF – Teile, Farben &amp; Spulen (empfohlen)</button>
+    <button class="btn" data-x="3mf">3MF – Teile, Farben &amp; Köpfe (empfohlen)</button>
     <button class="btn grey" data-x="stl">STL – alles in einer Datei</button>
     ${teile.length > 1 ? `<button class="btn grey" data-x="stlzip">STL – jedes Teil einzeln (ZIP)</button>` : ""}
     <button class="btn grey" data-x="obj">OBJ + Farben (ZIP)</button>
@@ -399,7 +407,7 @@ function exportWahl(){
     try {
       if (x === "3mf") laden(n + ".3mf", export3mf(M), "model/3mf");
       if (x === "stl") laden(n + ".stl", stlBinaer(teile.map(t => t.geo)), "model/stl");
-      if (x === "stlzip") { const z = {}; teile.forEach((t, i) => z[`${i+1}_spule${t.slot}_${datei(t.name)}.stl`] = new Uint8Array(stlBinaer([t.geo]))); laden(n + "_teile.zip", zipSync(z), "application/zip"); }
+      if (x === "stlzip") { const z = {}; teile.forEach((t, i) => z[`${i+1}_kopf${t.slot}_${datei(t.name)}.stl`] = new Uint8Array(stlBinaer([t.geo]))); laden(n + "_teile.zip", zipSync(z), "application/zip"); }
       if (x === "obj") laden(n + "_obj.zip", exportObj(M), "application/zip");
       if (x === "glb") laden(n + ".glb", await exportGlb(M), "model/gltf-binary");
       C.toast("Gespeichert");
@@ -423,14 +431,16 @@ function anClaude(){
   const s = kasten().getSize(new THREE.Vector3()), teile = M.teile.filter(t => !t.weg);
   const benutzt = [...new Set(teile.map(t => t.slot))].sort();
   const e = M.kum.elements, mx = [0,1,2].map(r => [0,1,2,3].map(c => +e[c*4+r].toFixed(5)).join(" ")).join(" | ");
-  let p = `druckwerk: „${M.name}“ auf der Kobra X slicen.\n`;
+  let p = `druckwerk: „${M.name}“ auf dem Creator 5 Pro slicen.\n`;
   if (M.lager) p += `Modell aus dem Lager: ${M.lager.ordner}\n` + (M.ops.length ? `Änderungen aus der Werkstatt:\n${M.ops.map(o => "- " + o).join("\n")}\nMatrix (auf die Original-STL anwenden): ${mx}\n` : "Ohne Änderung der Form.\n");
   else p += `Modell: hänge ich als 3MF an (Export aus der Werkstatt).\n`;
   p += `Endmaß: ${fnum(s.x)} × ${fnum(s.y)} × ${fnum(s.z)} mm\n`;
-  p += benutzt.map(n => `Spule ${n}: ${(M.material && M.material[n-1]) || "PLA"} ${farbName(M.slots[n-1])} – ${teile.filter(t => t.slot === n).map(t => t.name).join(", ")}`).join("\n");
+  p += benutzt.map(n => `Kopf ${n}: ${(M.material && M.material[n-1]) || "PLA"} ${farbName(M.slots[n-1])} – ${teile.filter(t => t.slot === n).map(t => t.name).join(", ")}`).join("\n");
   const d = C.sheet(`<h3>Auftrag für Claude</h3><div class="card" style="margin-bottom:12px"><pre class="prompt">${C.esc(p)}</pre></div>
     ${M.lager ? "" : `<p>Erst als 3MF speichern und im Chat anhängen.</p>`}
-    <button class="btn" id="cKop">Kopieren</button><a class="btn grey" target="_blank" href="https://claude.ai/new?q=${encodeURIComponent(p)}">In Claude öffnen</a>`);
+    <button class="btn" id="cKop">Kopieren</button><a class="btn grey" target="_blank" href="https://claude.ai/new?q=${encodeURIComponent(p)}">In Claude öffnen</a>
+    <button class="btn grey" id="cZu">Schließen</button>`);
+  d.querySelector("#cZu").onclick = () => d.remove();
   d.querySelector("#cKop").onclick = async () => { try { await navigator.clipboard.writeText(p); C.toast("Kopiert"); } catch (e) { C.toast("Bitte markieren und kopieren"); } };
 }
 
@@ -452,17 +462,20 @@ function sliceWahl(){
   let E = {vor: "deko", ...VOREIN.deko, stuetzen: "auto", brim: "auto", naht: "aligned", glaetten: false, mat: ["PLA","PLA","PLA","PLA"]};
   try { E = {...E, ...JSON.parse(ls.get(SL) || "{}")}; } catch (e) {}
   if (M.material) M.material.forEach((m, i) => { if (m) E.mat[i] = m; });
-  const mats = Object.keys(((C.DRUCKER || {}).kobrax || {}).filamente || {PLA: 1});
+  const dr = (C.DRUCKER || {}).c5pro || {}, mats = Object.keys(dr.filamente || {PLA: 1});
+  const schichten = dr.schichten || ["0.12", "0.20", "0.24"];
+  if (!schichten.includes(E.schicht)) E.schicht = schichten.reduce((b, v) => Math.abs(v - E.schicht) < Math.abs(b - E.schicht) ? v : b, "0.20");
+  E.mat = E.mat.map(m => mats.includes(m) ? m : "PLA");
   const benutzt = [...new Set(M.teile.filter(t => !t.weg).map(t => t.slot))].sort();
   const d = C.sheet(""), box = d.firstElementChild;
   const opt = (liste, akt) => liste.map(([v, l]) => `<option value="${v}" ${String(v) === String(akt) ? "selected" : ""}>${l}</option>`).join("");
   const seg = (k, liste) => `<div class="seg">${liste.map(([v, l]) => `<button data-k="${k}" data-v="${v}" class="${E[k] === v ? "on" : ""}">${l}</button>`).join("")}</div>`;
   const mal = () => {
     const y = box.scrollTop;
-    box.innerHTML = `<h3>„${C.esc(M.name)}“ slicen</h3><p>Anycubic Kobra X · fertige Datei für den USB-Stick</p>
+    box.innerHTML = `<h3>„${C.esc(M.name)}“ slicen</h3><p>Flashforge Creator 5 Pro · fertige Datei für den USB-Stick</p>
     <h2>Voreinstellung</h2>${seg("vor", [["deko","Deko"],["fein","Fein"],["funktion","Funktion"],["stabil","Stabil"]])}
     <h2>Qualität &amp; Festigkeit</h2><div class="card">
-      <div class="row"><div class="grow">Schichthöhe</div><select data-e="schicht">${opt(["0.08","0.12","0.16","0.20","0.24","0.28"].map(v => [v, v + " mm"]), E.schicht)}</select></div>
+      <div class="row"><div class="grow">Schichthöhe</div><select data-e="schicht">${opt(schichten.map(v => [v, v.replace(".", ",") + " mm"]), E.schicht)}</select></div>
       <div class="row"><div class="grow">Wände</div><select data-e="waende">${opt([2,3,4,5,6,8].map(v => [v, v]), E.waende)}</select></div>
       <div class="row"><div class="grow">Füllung</div><input type="range" min="0" max="100" step="5" value="${E.infill}" data-e="infill"><span class="val" id="sInf">${E.infill} %</span></div>
       <div class="row"><div class="grow">Füllmuster</div><select data-e="muster">${opt([["gyroid","Gyroid"],["grid","Gitter"],["cubic","Würfel"],["honeycomb","Waben"],["triangles","Dreiecke"],["line","Linien"]], E.muster)}</select></div>
@@ -474,14 +487,15 @@ function sliceWahl(){
       <div class="row"><div class="grow">Naht</div><select data-e="naht">${opt([["aligned","Ausgerichtet"],["back","Hinten"],["nearest","Nächste"],["random","Zufällig"]], E.naht)}</select></div>
       <div class="row"><div class="grow">Oberseite glätten (Bügeln)</div><input type="checkbox" data-e="glaetten" ${E.glaetten ? "checked" : ""}></div>
     </div>
-    <h2>Material je Spule</h2><div class="card">${benutzt.map(n => `
-      <div class="row"><span class="dot" style="background:${M.slots[n-1]};width:22px;height:22px"></span><div class="grow">Spule ${n} · ${C.esc(farbName(M.slots[n-1]))}</div>
+    <h2>Material je Kopf</h2><div class="card">${benutzt.map(n => `
+      <div class="row"><span class="dot" style="background:${M.slots[n-1]};width:22px;height:22px"></span><div class="grow">Kopf ${n} · ${C.esc(farbName(M.slots[n-1]))}</div>
         <select data-mat="${n-1}">${opt(mats.map(m => [m, m]), E.mat[n-1])}</select></div>`).join("")}</div>
     <button class="btn" id="sLos" style="margin-top:16px">Jetzt slicen</button>
     <button class="btn grey" id="sZu">Abbrechen</button>
     ${ls.get(TOK) ? `<p class="hint" style="text-align:center"><a href="#" id="sTok" style="color:var(--sub)">GitHub-Zugang auf diesem Gerät entfernen</a></p>` : ""}`;
     box.scrollTop = y;
-    box.querySelectorAll(".seg button").forEach(b => b.onclick = () => { E[b.dataset.k] = b.dataset.v; if (b.dataset.k === "vor") Object.assign(E, VOREIN[E.vor]); mal(); });
+    box.querySelectorAll(".seg button").forEach(b => b.onclick = () => { E[b.dataset.k] = b.dataset.v; if (b.dataset.k === "vor") Object.assign(E, VOREIN[E.vor]);
+      if (!schichten.includes(E.schicht)) E.schicht = "0.20"; mal(); });
     box.querySelectorAll("[data-e]").forEach(e => { const k = e.dataset.e;
       if (e.type === "range") e.oninput = () => { E[k] = +e.value; box.querySelector("#sInf").textContent = e.value + " %"; };
       else e.onchange = () => { E[k] = e.type === "checkbox" ? e.checked : (isNaN(+e.value) || k === "schicht" ? e.value : +e.value); }; });
@@ -523,7 +537,7 @@ async function sliceStart(E){
   const sag = (t, p) => { const e = d.querySelector("#slText"); if (e) { e.textContent = t; d.querySelector("#slBalken").style.width = p + "%"; } };
   try {
     const max = Math.max(...teile.map(t => t.slot));
-    const job = { name: M.name.replace(/\s*\(bearbeitet\)$/, ""), drucker: "kobrax", schicht: +E.schicht, infill: E.infill, waende: E.waende, stuetzen: E.stuetzen, brim: E.brim,
+    const job = { name: M.name.replace(/\s*\(bearbeitet\)$/, ""), drucker: "c5pro", schicht: +E.schicht, infill: E.infill, waende: E.waende, stuetzen: E.stuetzen, brim: E.brim,
       extra: {sparse_infill_pattern: E.muster, top_shell_layers: E.decke, bottom_shell_layers: E.decke, seam_position: E.naht, ironing_type: E.glaetten ? "top" : "no ironing"},
       farben: M.slots.slice(0, max).map(farbName), quelle: (M.lager && M.lager.quelle) || "", teile: [] };
     if (M.lager && teile.every(t => t.datei)) {            // Dateien liegen schon im Lager -> nur die Änderung schicken
@@ -562,7 +576,7 @@ async function warten(id, sag){
       if (l.some(a => a.ordner === st.ordner)) { C.fertig(st.ordner, l); return; } } catch (e) {}
     await pause(6000);
   }
-  throw new Error("Fertig gesliced – erscheint gleich unter „Aus dem Lager hinzufügen“.");
+  throw new Error("Fertig gesliced – erscheint gleich unter Aufträge → „Weitere Aufträge von Claude“.");
 }
 // beim App-Start: läuft noch ein Auftrag von vorhin?
 export async function offenePruefen(ctx){

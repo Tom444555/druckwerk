@@ -51,9 +51,9 @@ async function fotosEinsetzen(root){
 export function eintragen(a, ctx, fertig){
   C = ctx;
   const E = {note: 0, maengel: [], blob: null};
-  const d = C.sheet(`<h3>Ergebnis eintragen</h3><p>${C.esc(a.name)}</p>
+  const d = C.sheet(`<h3>Ergebnis eintragen</h3><p>${C.esc(String(a.name).replace(/_/g, " "))}</p>
     <h2>Wie ist der Druck geworden?</h2>
-    <div class="seg" id="tNote">${[1, 2, 3, 4, 5].map(n => `<button data-n="${n}" style="font-size:20px;color:var(--orange)">☆</button>`).join("")}</div>
+    <div class="seg" id="tNote" role="group" aria-label="Bewertung">${[1, 2, 3, 4, 5].map(n => `<button data-n="${n}" style="font-size:20px;color:var(--orange)" aria-label="${n} von 5 Sternen">☆</button>`).join("")}</div>
     <p class="hint" style="text-align:left;margin:6px 4px 0">1 Stern = misslungen, 5 Sterne = perfekt</p>
     <h2>Mängel</h2><div class="chips">${MAENGEL.map(m => `<button class="chip" data-mg="${C.esc(m)}">${C.esc(m)}</button>`).join("")}</div>
     <h2>Notiz</h2><div class="card"><textarea id="tText" placeholder="z. B. Gold-Adern oben abgerissen, Unterseite sauber"></textarea></div>
@@ -81,7 +81,8 @@ export function eintragen(a, ctx, fertig){
       auftrag: {drucker: a.drucker, drucker_name: a.drucker_name, slots: a.slots, gramm: a.gramm, schicht: a.schicht, stufe: a.stufe,
         infill: a.infill, waende: a.waende, stuetzen: a.stuetzen, duese: a.duese, bett: a.bett}};
     if (!lsSet(TB, [n, ...eintraege()])) return C.toast("Speicher voll – nicht gesichert");
-    d.remove(); C.toast("Eingetragen"); if (fertig) fertig();
+    const G = ls("druckwerk_gedruckt", {}); if (!G[a.ordner]) { G[a.ordner] = n.datum.slice(0, 10); lsSet("druckwerk_gedruckt", G); }   // Ergebnis = gedruckt
+    d.remove(); C.toast("Eingetragen"); if (fertig) fertig(); if (C.nachEintrag) C.nachEintrag();
   };
 }
 
@@ -97,7 +98,7 @@ export function imAuftrag(el, a, ctx){
 }
 const zeile = t => `<div class="row chev" data-t="${t.id}" style="cursor:pointer">
   ${t.foto ? `<img data-foto="${t.id}" alt="" style="width:48px;height:48px;border-radius:8px;object-fit:cover;flex:none;visibility:hidden;background:var(--fill)">` : ""}
-  <div class="grow"><div><b>${C.esc(t.name)}</b></div>
+  <div class="grow"><div><b>${C.esc(String(t.name).replace(/_/g, " "))}</b></div>
     <div class="small"><span style="color:var(--orange)">${sterne(t.note)}</span> · ${de(t.datum)}</div>
     ${t.maengel.length ? `<div class="werte">${t.maengel.map(m => `<span>${C.esc(m)}</span>`).join("")}</div>` : ""}</div></div>`;
 
@@ -111,7 +112,7 @@ export function liste(el, ctx, neu){
     <div class="stat"><span class="small">Schnitt</span><b>${L.length ? schnitt.toFixed(1).replace(".", ",") + " ★" : "–"}</b></div>
     <div class="stat"><span class="small">Mit Mängeln</span><b>${L.filter(x => x.maengel.length).length}</b></div></div>
     ${L.length ? `<h2>Neueste zuerst</h2><div class="card">${L.map(zeile).join("")}</div>`
-      : `<div class="empty">Noch keine Einträge.<br>Nach einem Druck im Auftrag auf „Ergebnis eintragen“ tippen – Sterne, Mängel und Foto helfen Claude, die Einstellungen für deinen Drucker zu verbessern.</div>`}
+      : `<div class="empty">Noch keine Einträge.<br>Nach einem Druck im Auftrag auf „Als gedruckt markieren“ oder „Ergebnis eintragen“ tippen – Sterne, Mängel und Foto helfen Claude, die Einstellungen für deinen Drucker zu verbessern.</div>`}
     <p class="hint">Das Tagebuch liegt nur in diesem Gerät, Fotos inklusive.</p><div style="height:20px"></div>`;
   el.querySelectorAll("[data-t]").forEach(r => r.onclick = () => blatt(eintraege().find(x => x.id === r.dataset.t), neu));
   fotosEinsetzen(el);
