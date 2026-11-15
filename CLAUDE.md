@@ -24,7 +24,7 @@ Alte `_kobrax`-Aufträge laufen nicht auf dem Creator 5 Pro – bei Bedarf aus d
    ```
    python3 werkzeug/druck.py --drucker c5pro --name <name> \
      --teil modelle/a.scad:PLA:1 --teil modelle/b.scad:PLA:2 --farben "schwarz,rot" \
-     --zusammen --schicht 0.20 --infill 15 [--waende 3] [--stuetzen auto|baum] [--brim an|aus] [--duese 0.25|0.6|0.8] [--duesen 0.4,0.25,0.4,0.4]
+     --zusammen --schicht 0.20 --infill 15 [--waende 3] [--stuetzen auto|baum] [--brim an|aus] [--duese 0.25|0.6|0.8] [--duesen 0.4,0.25,0.4,0.4] [--rau fein|mittel|grob]
    ```
    - `Datei:Material:Slot` – Slot 1–4 = Spule (Kobra) bzw. Kopf (Creator). Materialien: siehe `drucker/*.json`.
    - `--zusammen` = mehrere Dateien bilden EIN mehrfarbiges Teil. Ohne = getrennte Teile, werden verteilt.
@@ -33,6 +33,9 @@ Alte `_kobrax`-Aufträge laufen nicht auf dem Creator 5 Pro – bei Bedarf aus d
      (Profile in `drucker/c5pro.json → duesen`).
    - `--duesen 0.4,0.25` (seit 15.11.2026) = Düse **je Kopf** gemischt: Schichthöhen und Prozessprofil der kleinsten Düse, Linienbreiten als Prozent der
      jeweiligen Düse, Brückenlinie = kleinste Düse. Bericht nennt die Düse je Kopf. Nur mit Orca-CLI geprüft (Breiten je Kopf in der .gcode), **nicht gedruckt**.
+   - `--rau fein|mittel|grob` (seit 15.11.2026) = raue Oberfläche (Fuzzy Skin) an den Seitenwänden: fein 0,1/0,4 mm (Schichtlinien kaschieren), mittel 0,3/0,8
+     (Stein, Griff), grob 0,4/1,0 (Stärke/Punktabstand, Tabelle `RAU` in druck.py). Setzt mindestens 3 Wände, Außenwand zuletzt, erste Schicht glatt.
+     `--rau-wo kontur|loecher|alle`. **Trägt je Seite bis zur Stärke auf** (gemessen: 0,30 mm bei „mittel“) → nie bei Passteilen, Bohrungen, Gewinden. Nicht gedruckt.
    - Gold = `PLA-SILK` (230 °C, langsamer); mit normalem PLA zusammen meldet der Bericht „gemischt“ – das ist in Ordnung.
 5. Ergebnis (auch `auftrag.json`; `auftraege/index.json` wird automatisch neu gebaut → erscheint in der App) liegt in `auftraege/<datum>_<name>_<drucker>/`: `.gcode`, `BERICHT.md`, STL, `slicer.log`.
 6. Committen + pushen. An Tom: `.gcode` per SendUserFile + Kurzfassung aus BERICHT.md (Spulen, Zeit, Gramm)
@@ -46,7 +49,7 @@ Alte `_kobrax`-Aufträge laufen nicht auf dem Creator 5 Pro – bei Bedarf aus d
 - Jede Ansicht hat eine Adresse (`#start`, `#auftrag:<ordner>`, `#werkstatt:…`, `#kiweg:<schritt>`); Zurück/Vor funktionieren.
 - **Sicherung** (`sicherung.js`): alle `druckwerk_*`-Schlüssel + IndexedDB (eigene Modelle, Tagebuch-Fotos) als eine Datei; `druckwerk_gesichert` = Datum.
 - **Offline/PWA**: `manifest.webmanifest`, `symbol-*.png`, `sw.js` (immer zuerst Netz, Zwischenspeicher nur ohne Netz; .gcode/STL nie).
-  **Bei jeder Änderung an App-Dateien `CACHE` in `sw.js` hochzählen** (Stand `druckwerk-v8`) und neue Dateien dort eintragen.
+  **Bei jeder Änderung an App-Dateien `CACHE` in `sw.js` hochzählen** (Stand `druckwerk-v9`) und neue Dateien dort eintragen.
 - „Aus dem Lager hinzufügen“ heißt in der App jetzt „Weitere Aufträge von Claude“. Überall „Kopf 1–4“, nie „Spule“; Werkstatt-Slicen sendet `c5pro`.
 - Aufträge sind wie die Ideen im Looper **pro Gerät gespeichert** (localStorage `druckwerk_meine`): neue Besucher
   sehen eine leere Liste. Tom speichert einen Auftrag über den Link `https://tom444555.github.io/druckwerk/#hinzu=<ordner>`
@@ -77,7 +80,7 @@ Alte `_kobrax`-Aufträge laufen nicht auf dem Creator 5 Pro – bei Bedarf aus d
   (`mesh.apply_transform`, 4. Zeile 0 0 0 1; bei negativer Determinante dreht trimesh die Flächen selbst), dann normal slicen.
   Bei eigenen Modellen hängt Tom die exportierte 3MF an.
 - **Slicen aus der App (Stufe 2, seit 11.11.2026):** Werkstatt → „Slicen“ → Einstellungen (Voreinstellung, Schicht, Wände,
-  Füllung/Muster, Deck-/Bodenschichten, Stützen, Brim, Naht, Bügeln, Material je Spule) → App legt per GitHub-API
+  Füllung/Muster, Deck-/Bodenschichten, Stützen, Brim, Oberfläche glatt/rau (`rau`), Naht, Bügeln, Material je Spule) → App legt per GitHub-API
   `eingang/<id>/auftrag.json` ab (Lager-Modelle: nur Pfade + Matrix; eigene: STL-Teile dazu). Workflow
   `.github/workflows/slicen.yml` startet `werkzeug/eingang.py` → `druck.py` → Ergebnis in `auftraege/`, Rückmeldung in
   `status/<id>.json`, App übernimmt den Auftrag automatisch (~1–3 Min.). Token (Fine-grained, Contents RW) liegt nur
@@ -142,6 +145,10 @@ Alte `_kobrax`-Aufträge laufen nicht auf dem Creator 5 Pro – bei Bedarf aus d
 - **My Engines DE, „Technische Filamente“** (ein Tester, Leihgerät, nichts an Toms Gerät bestätigt): PA12-CF, PC-PBT-CF, ASA-CF mit wenig Verzug bei Bett 120 / Kammer 65 / Düse 320 °C;
   PETG außen + TPU innen hielt von Hand untrennbar (andere Quellen: haften kaum → große Kontaktfläche + Beam Interlocking); Stützen bei Faser-Material kaum lösbar →
   **stützfrei konstruieren** oder Stützmaterial in eigenen Kopf; TPU zieht Fäden; druckdicht erst nach Versiegelung. Steht auch in `wissen/filamente.json` und `wissen/c5pro.json`.
+
+- **Bastlwastl, „Fuzzy Skin im Bambu Studio“** (`videos/fuzzy-skin-bastlwastl.html`): raue Außenwand überdeckt Schichtlinien/Streifen, gibt Stein-Optik und Griff; wirkt nur an
+  Seitenwänden (Sichtflächen so legen oder Teil teilen), unten prägt die Plattenstruktur; trägt um die Stärke auf; ≥ 3 Wände, innen vor außen. Eingebaut als `--rau` und
+  in der Werkstatt („Oberfläche“). Nicht eingebaut: Flächen gezielt bemalen (`paint_fuzzy_skin`), neuere Muster (Perlin, Voronoi), Muster/Logo als SVG-Relief, Testraster.
 
 - **Der Druckt Schon Wieder, „Meshy AI … 3D Agent“** (Werbe-Video, Snapmaker U1): Agent fragt erst nach (Form, Farben), zeigt ein Konzeptbild, baut dann 3D – so auch selbst vorgehen.
   Meshy „Multi-Color Print“ liefert eine **bemalte 3MF** (Farbanzahl dort auf ≤ 4 stellen) → `druck.py --bemalt`; mit echter Meshy-Datei **ungetestet**: beim ersten Mal prüfen, ob

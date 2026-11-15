@@ -876,6 +876,12 @@
      "preis": "kostenlos",
      "url": "https://www.meshlab.net",
      "d": "Netze ansehen, messen, reparieren – wenn du selbst nachsehen willst."
+    },
+    {
+     "name": "Raue Oberfläche (Fuzzy Skin)",
+     "wo": "App · Claude",
+     "preis": "–",
+     "d": "Beim Slicen wählbar: Glatt, Fein, Mittel, Grob. Überdeckt Schichtlinien, wirkt wie Stein, gibt Griff. Nur an Seitenwänden; trägt je Seite bis 0,4 mm auf. Noch nicht gedruckt."
     }
    ]
   }

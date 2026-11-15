@@ -78,6 +78,8 @@ def einer(ordner: Path):
     if farben: cmd += ["--farben", ",".join(farben)]
     cmd += ["--schicht", "%.2f" % float(j.get("schicht", 0.2)), "--infill", str(max(0, min(100, int(j.get("infill", 15)))))]
     if j.get("waende"): cmd += ["--waende", str(max(1, min(12, int(j["waende"]))))]
+    if j.get("rau") in ("fein", "mittel", "grob"):
+        cmd += ["--rau", j["rau"]] + (["--rau-wo", j["rau_wo"]] if j.get("rau_wo") in ("kontur", "loecher", "alle") else [])
     if j.get("stuetzen") in ("aus", "auto", "baum"): cmd += ["--stuetzen", j["stuetzen"]]
     if j.get("brim") in ("aus", "auto", "an"): cmd += ["--brim", j["brim"]]
     for kx, wx in (j.get("extra") or {}).items():

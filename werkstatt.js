@@ -501,7 +501,7 @@ const ablegen = async (pfad, inhalt, text) => { const r = await gh("/contents/" 
 const VOREIN = { deko: {schicht: "0.20", infill: 15, waende: 2, decke: 4, muster: "gyroid"}, funktion: {schicht: "0.20", infill: 30, waende: 4, decke: 5, muster: "gyroid"},
   stabil: {schicht: "0.20", infill: 50, waende: 5, decke: 6, muster: "cubic"}, fein: {schicht: "0.12", infill: 15, waende: 3, decke: 6, muster: "gyroid"} };
 function sliceWahl(){
-  let E = {vor: "deko", ...VOREIN.deko, stuetzen: "auto", brim: "auto", naht: "aligned", glaetten: false, mat: ["PLA","PLA","PLA","PLA"]};
+  let E = {vor: "deko", ...VOREIN.deko, stuetzen: "auto", brim: "auto", naht: "aligned", glaetten: false, rau: "aus", mat: ["PLA","PLA","PLA","PLA"]};
   try { E = {...E, ...JSON.parse(ls.get(SL) || "{}")}; } catch (e) {}
   if (M.material) M.material.forEach((m, i) => { if (m) E.mat[i] = m; });
   const dr = (C.DRUCKER || {}).c5pro || {}, mats = Object.keys(dr.filamente || {PLA: 1});
@@ -527,6 +527,7 @@ function sliceWahl(){
     <h2>Stützen</h2>${seg("stuetzen", [["aus","Keine"],["auto","Automatisch"],["baum","Baum"]])}
     <h2>Brim (Haftrand)</h2>${seg("brim", [["aus","Aus"],["auto","Automatisch"],["an","An"]])}
     <h2>Oberfläche</h2><div class="card">
+      <div class="row"><div class="grow">Oberfläche<div class="small">Rau = „Fuzzy Skin“ an den Seitenwänden: kaschiert Schichtlinien, wirkt wie Stein, gibt Griff. Trägt etwas auf – nichts für Passteile.</div></div><select data-e="rau">${opt([["aus","Glatt"],["fein","Fein rau"],["mittel","Mittel rau"],["grob","Grob rau"]], E.rau)}</select></div>
       <div class="row"><div class="grow">Naht</div><select data-e="naht">${opt([["aligned","Ausgerichtet"],["back","Hinten"],["nearest","Nächste"],["random","Zufällig"]], E.naht)}</select></div>
       <div class="row"><div class="grow">Oberseite glätten (Bügeln)</div><input type="checkbox" data-e="glaetten" ${E.glaetten ? "checked" : ""}></div>
     </div>
@@ -582,7 +583,7 @@ async function sliceStart(E){
   const sag = (t, p) => { const e = d.querySelector("#slText"); if (e) { e.textContent = t; d.querySelector("#slBalken").style.width = p + "%"; } };
   try {
     const max = Math.max(...teile.map(t => t.slot));
-    const job = { name: M.name.replace(/\s*\(bearbeitet\)$/, ""), drucker: "c5pro", schicht: +E.schicht, infill: E.infill, waende: E.waende, stuetzen: E.stuetzen, brim: E.brim,
+    const job = { name: M.name.replace(/\s*\(bearbeitet\)$/, ""), drucker: "c5pro", schicht: +E.schicht, infill: E.infill, waende: E.waende, stuetzen: E.stuetzen, brim: E.brim, ...(E.rau !== "aus" ? {rau: E.rau} : {}),
       extra: {sparse_infill_pattern: E.muster, top_shell_layers: E.decke, bottom_shell_layers: E.decke, seam_position: E.naht, ironing_type: E.glaetten ? "top" : "no ironing"},
       farben: M.slots.slice(0, max).map(farbName), quelle: (M.lager && M.lager.quelle) || "", teile: [] };
     if (M.bemalt) {                                        // bemalte 3MF: Original + Umbau-Matrix, Farben bleiben

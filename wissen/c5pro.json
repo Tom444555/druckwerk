@@ -1,5 +1,5 @@
 {
- "stand": "14.11.2026",
+ "stand": "15.11.2026",
  "hinweis": "Zusammengetragen aus Herstellerangaben, Flashforge-Wiki und unabhängigen Tests. Am eigenen Gerät noch nicht nachgemessen – eigene Erfahrungen bitte melden, dann trage ich sie hier ein.",
  "steckbrief": [
   [
@@ -350,6 +350,11 @@
    "t": "TPU zieht Fäden",
    "u": "Bei TPU normal, auch im Videotest auf dem Creator 5 Pro.",
    "l": "TPU trocknen, langsamer drucken, Fahrwege über dem Teil vermeiden; feine Fäden nachher abschneiden."
+  },
+  {
+   "t": "Schichtlinien auf Rundungen oder streifige Wände stören",
+   "u": "Schichten bleiben an flachen Rundungen und Schrägen sichtbar; wechselnde Geschwindigkeit gibt Streifen. Das ist kein Fehler des Druckers.",
+   "l": "Raue Oberfläche (Fuzzy Skin) wählen: Werkstatt → Slicen → Detail-Einstellungen → Oberfläche „Fein rau“. Wirkt nur an Seitenwänden und trägt je Seite bis zur Stärke auf (Fein 0,1 mm, Mittel 0,3 mm) – Passflächen glatt lassen. Sichtflächen als Seitenwände legen. Gerechnet, am Gerät noch nicht gedruckt."
   }
  ],
  "firmware": [
@@ -434,6 +439,10 @@
   {
    "titel": "Video: Technische Filamente mit dem Creator 5 Pro (My Engines DE) – Auswertung",
    "url": "videos/technische-filamente-myengines.html"
+  },
+  {
+   "titel": "Video: Fuzzy Skin im Bambu Studio (Bastlwastl) – Auswertung",
+   "url": "videos/fuzzy-skin-bastlwastl.html"
   }
  ]
 }

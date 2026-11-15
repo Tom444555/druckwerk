@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<title>Auswertung: Fuzzy Skin – raue Oberflächen im Slicer (Bastlwastl) – Druckwerk</title>
+<link rel="icon" href="../symbol-192.png" type="image/png">
+<link rel="apple-touch-icon" href="../symbol-180.png">
+<style>
+:root{--bg:#f2f2f7;--card:#fff;--text:#000;--sub:#6c6c70;--sep:rgba(60,60,67,.18);--blue:#007aff;--green:#34c759;--orange:#ff9500;--red:#ff3b30;--fill:rgba(120,120,128,.12);--grau:#a7a7ad}
+@media (prefers-color-scheme:dark){:root{--bg:#000;--card:#1c1c1e;--text:#fff;--sub:#98989f;--sep:rgba(84,84,88,.6);--blue:#0a84ff;--green:#30d158;--orange:#ff9f0a;--red:#ff453a;--fill:rgba(120,120,128,.24);--grau:#8e8e93}}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--text);font:17px/1.4 -apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",sans-serif}
+main{max-width:720px;margin:0 auto;padding:calc(env(safe-area-inset-top) + 8px) 16px 60px}
+a{color:var(--blue)}
+h1{font-size:30px;font-weight:700;letter-spacing:.2px;margin:6px 4px 6px;line-height:1.15}
+h2{font-size:13px;font-weight:400;text-transform:uppercase;color:var(--sub);margin:28px 16px 8px}
+h3{font-size:18px;margin:0 0 6px}
+.card{background:var(--card);border-radius:12px;overflow:hidden;padding:14px 16px;margin-bottom:10px;overflow-wrap:anywhere}
+.card p{margin:0 0 8px}.card p:last-child{margin-bottom:0}
+.small,.fs{font-size:13px;color:var(--sub)}
+.fs{white-space:nowrap}
+.top{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;padding:8px 0}
+.top a{text-decoration:none;font-size:17px}
+.pill{font-size:12px;background:var(--fill);border-radius:6px;padding:2px 7px;white-space:nowrap;color:var(--text)}
+.e{background:rgba(52,199,89,.13);border-radius:10px;padding:8px 12px;margin-top:8px;font-size:15px}
+.q{background:rgba(255,149,0,.15);border-radius:10px;padding:8px 12px;margin-top:8px;font-size:15px}
+ul,ol{margin:4px 0 8px;padding-left:20px}li{margin:4px 0}
+.tag{font-size:11px;font-weight:600;border-radius:5px;padding:1px 6px;margin-right:4px;color:#fff;white-space:nowrap}
+.t-f{background:var(--blue)}.t-b{background:var(--orange)}.t-m{background:#af52de}.t-bsp{background:var(--green)}
+pre.baum{font:13px/1.5 ui-monospace,Menlo,monospace;white-space:pre-wrap;margin:0;overflow-wrap:anywhere}
+blockquote{margin:6px 0;padding:4px 0 4px 12px;border-left:3px solid var(--blue);font-style:italic}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;vertical-align:top;padding:8px 6px;border-top:.5px solid var(--sep)}
+th{color:var(--sub);font-weight:500;font-size:12px;text-transform:uppercase}
+@media (max-width:600px){table.stapel thead{display:none}table.stapel tr{display:block;border-top:.5px solid var(--sep);padding:6px 0}
+  table.stapel td{display:block;border:0;padding:3px 0}table.stapel td::before{content:attr(data-l);display:block;font-size:11px;color:var(--sub);text-transform:uppercase}}
+svg{width:100%;height:auto;display:block}
+svg text{font-family:-apple-system,BlinkMacSystemFont,sans-serif;fill:var(--text)}
+svg .k{fill:var(--card);stroke:var(--sep);stroke-width:1}
+svg .kb{fill:var(--blue);fill-opacity:.12;stroke:var(--blue);stroke-width:1.2}
+svg .ko{fill:var(--orange);fill-opacity:.15;stroke:var(--orange);stroke-width:1.2}
+svg .sub{fill:var(--sub);font-size:10px}
+svg .pf{stroke:var(--sub);stroke-width:1.5;fill:none}
+svg .grau{fill:var(--grau)}
+svg .rot{stroke:var(--red);stroke-width:2.2}
+svg .gr{stroke:var(--green);stroke-width:2.2}
+.zeich{background:var(--bg);border-radius:10px;padding:8px}
+.legende{display:flex;flex-wrap:wrap;gap:6px 12px;font-size:13px;color:var(--sub)}
+nav.inhalt a{display:inline-block;margin:3px 6px 3px 0;font-size:14px;text-decoration:none;background:var(--fill);border-radius:14px;padding:4px 10px;color:var(--text)}
+</style>
+</head>
+<body>
+<main>
+<div class="top"><a href="index.html">‹ Videos</a><a href="https://www.youtube.com/watch?v=5B1U-6e-hYI" target="_blank" rel="noopener">Video ansehen ↗</a></div>
+<h1>Fuzzy Skin: raue Oberflächen im Slicer</h1>
+<p class="small" style="margin:0 4px 10px">Auswertung des Videos „Fuzzy Skin im Bambu Studio: Die besten Tricks für perfekte 3D-Druck-Oberflächen!“ von <b>Bastlwastl</b> (YouTube, ca. 28:54 Min.) · Grundlage: automatische Untertitel, abgerufen 15.11.2026 · Auswertung vom 15.11.2026 · <a href="../index.html">Druckwerk</a></p>
+<div class="card small">Lesehilfe: Normaler Text = was im Video gesagt wird, mit Fundstelle <span class="fs">(mm:ss)</span>. <span class="e" style="display:inline;padding:1px 6px;margin:0">📚 grün = eigene Ergänzung</span> · <span class="q" style="display:inline;padding:1px 6px;margin:0">❓ orange = unklar</span>. Die Untertitel-Blöcke sind etwa 30 Sekunden lang – die Fundstelle nennt den Blockanfang. Die automatischen Untertitel schreiben das Wort meist „Fassis Skin“; gemeint ist durchgehend Fuzzy Skin.</div>
+<nav class="inhalt" aria-label="Inhalt"><a href="#a">🧭 Steckbrief</a><a href="#b">🌳 Themenbaum</a><a href="#c">🎯 Kernaussagen</a><a href="#d">🔎 Auswertung</a><a href="#e">📅 Zeitleiste</a><a href="#f">📖 Verzeichnisse</a><a href="#g">⚖️ Abgleich</a><a href="#h">💡 Druckwerk</a><a href="#i">🗂️ Zusammenfassung</a><a href="#q">Quellen</a></nav>
+
+<h2 id="a">A · 🧭 Steckbrief</h2>
+<div class="card">
+<p><b>Thema in einem Satz:</b> Wie man mit einer bewusst rauen Außenwand Schichtlinien überdeckt, Stein- und Lebensmittel-Optik erzeugt und Griffflächen baut – und wie man die Struktur im Bambu Studio einstellt, gezielt aufmalt oder als eigenes Muster aufträgt.</p>
+<p><b>Sprecher:</b> Betreiber des Kanals „Bastlwastl“; die Untertitel geben seinen Namen als „Schweighoffer“ wieder <span class="fs">(23:25)</span> ❓.</p>
+<p><b>Dauer / Art:</b> ca. 28:54 Min., ein Sprecher, Anleitung mit Bildschirmaufnahme und Druckbeispielen.</p>
+<p><b>Slicer:</b> Bambu Studio. Tom druckt mit dem Flashforge Creator 5 Pro; Druckwerk slict mit OrcaSlicer 2.5, der dieselben Grundeinstellungen hat.</p>
+<p><b>Grundton:</b> locker und werbend für die Funktion; nennt Grenzen offen (trägt auf, wirkt nicht oben) und gibt zu, ein Werkzeug nicht zu verstehen <span class="fs">(16:03)</span>.</p>
+<p class="q">❓ Veröffentlichungsdatum nicht abrufbar; nach eigener Aussage Jahresende 2025 <span class="fs">(00:30)</span>.</p>
+</div>
+
+<h2 id="b">B · 🌳 Themenbaum</h2>
+<div class="card"><pre class="baum">🎬 Fuzzy Skin im Bambu Studio (00:00–28:54)
+├─ ⚠️ Problem: Schichtlinien, Streifen (00:00)
+├─ 🔬 Prinzip: äußere Bahn zittert (01:32)
+├─ 🛠️ Weg 1: Einstellung fürs ganze Teil (03:04)
+│  ├─ Bereiche: Kontur · Kontur+Bohrung · alle Wände (03:36)
+│  ├─ 📏 Punktabstand und Stärke, z. B. 0,8 / 0,3 (04:08)
+│  └─ 📏 Testraster drucken (05:40)
+├─ 🧵 Regeln (07:15)
+│  ├─ Filament fast egal, TPU anders (07:15)
+│  ├─ ≥ 2, besser 3–4 Wände (07:46)
+│  └─ innen vor außen (08:17)
+├─ 💡 Einsatz
+│  ├─ Schichtlinien überdecken (08:48)
+│  ├─ 🎨 Stein, Lebensmittel (10:21)
+│  └─ ✋ Griff, Haptik (11:56)
+├─ ⚠️ Grenzen
+│  ├─ trägt auf: 0,3 → +0,6 mm (13:59)
+│  └─ 🧱 nur Seiten, nicht oben (18:42)
+├─ 🖌️ Weg 2: aufmalen, Taste H (14:30)
+│  ├─ Pinsel · Kugel · Radierer (15:01)
+│  ├─ ❓ Dreieck-Werkzeug (16:03)
+│  ├─ 🪣 Fülleimer mit Füllwinkel (17:08)
+│  └─ 🔁 Gesamteinstellung aus (20:15)
+├─ 🖼️ Weg 3: eigenes Muster als SVG (21:15)
+│  ├─ Bild → SVG-Konverter (22:20)
+│  └─ Tiefe 0,1 mm · verbinden / schneiden (25:33)
+├─ 🧩 Kombinieren: Muster + Text + rau (26:36)
+└─ 👋 Schluss (27:38)</pre>
+<p class="legende"><span>⚠️ Warnung</span><span>🔬 Technik</span><span>🛠️ Einstellung</span><span>📏 Maß</span><span>🧵 Material</span><span>💡 Idee</span><span>🎨 Optik</span><span>✋ Haptik</span><span>🧱 Grenze</span><span>🖌️ Malen</span><span>🪣 Füllen</span><span>🔁 Ablauf</span><span>🖼️ Muster</span><span>🧩 Kombination</span><span>❓ offen</span></p></div>
+
+<h2 id="c">C · 🎯 Kernaussagen</h2>
+<div class="card"><h3>1 · Eine raue Außenwand überdeckt Schichtlinien und Streifen, die sich sonst nicht vermeiden lassen. ★★★</h3><p class="small">Begründung: Schichten bleiben an Rundungen sichtbar; Vergleich zweier Figuren <span class="fs">(00:00, 08:48–09:51)</span>.</p></div>
+<div class="card"><h3>2 · Zwei Zahlen bestimmen das Bild: Punktabstand und Stärke – am besten am Testraster ablesen. ★★★</h3><p class="small">Gezeigt mit 0,8 / 0,3; Wunschstruktur bei 0,7 / 0,3 <span class="fs">(04:08, 05:40–06:44)</span>.</p></div>
+<div class="card"><h3>3 · Die Struktur trägt auf: Das Teil wächst je Seite um die Stärke. ★★★</h3><p class="small">0,3 mm Stärke → rundes Teil 0,6 mm dicker <span class="fs">(13:59)</span>.</p></div>
+<div class="card"><h3>4 · Sie wirkt nur an Seitenwänden; Oberseiten bleiben schwach, unten hilft die Plattenstruktur. ★★★</h3><p class="small">Beispiel mit kräftiger Seite und schwacher Wölbung; Figur mit getrennt gedrucktem Kopf <span class="fs">(18:42–20:15)</span>.</p></div>
+<div class="card"><h3>5 · Mindestens zwei, besser drei bis vier Wände – und die Außenwand zuletzt. ★★</h3><p class="small">Versetzte Linien haften an weniger Stellen; das Zittern soll nicht nach innen wandern <span class="fs">(07:46–08:17)</span>.</p></div>
+<div class="card"><h3>6 · Drei Einsatzfelder: kaschieren, Dekor (Stein, Lebensmittel), Griff. ★★</h3><p class="small"><span class="fs">(08:48–12:58)</span></p></div>
+<div class="card"><h3>7 · Mit Pinsel, Kugel und Fülleimer lässt sich die Struktur gezielt nur auf Teilflächen legen. ★★</h3><p class="small">Taste H; Gesamteinstellung dafür ausschalten <span class="fs">(14:30–21:15)</span>.</p></div>
+<div class="card"><h3>8 · Eigene Muster kommen als SVG auf eine Fläche, aufgesetzt oder eingeschnitten. ★★</h3><p class="small">Tiefe im Beispiel 0,1 mm; Druckbarkeit selbst testen <span class="fs">(21:15–26:36)</span>.</p></div>
+
+<h2>Zeichnung 1 · Glatte Bahn und zitternde Bahn (Blick von oben)</h2>
+<div class="card"><p class="small">Schematisch, nicht maßstäblich. Darstellung laut Video (02:02, 04:39); Beschriftung mit den Stellwerten der Stufe „mittel“.</p>
+<div class="zeich"><svg viewBox="0 0 340 250" role="img" aria-label="Oben: zwei gerade Wandbahnen. Unten: innere Bahn gerade, äußere Bahn im Zickzack. Der Punktabstand ist der Abstand der Knicke, die Stärke der seitliche Ausschlag.">
+<g font-size="11" fill="currentColor">
+<text x="10" y="16" font-weight="700" font-size="12">Glatt</text>
+<line x1="20" y1="42" x2="320" y2="42" stroke="var(--blue)" stroke-width="7" stroke-linecap="round"/>
+<line x1="20" y1="56" x2="320" y2="56" stroke="var(--sub)" stroke-width="7" stroke-linecap="round" opacity=".6"/>
+<text x="20" y="32" font-size="10">Außenwand</text><text x="20" y="76" font-size="10">Innenwand</text>
+<text x="10" y="112" font-weight="700" font-size="12">Rau (Fuzzy Skin)</text>
+<polyline points="20,150 44,138 68,156 92,141 116,159 140,136 164,152 188,139 212,158 236,142 260,155 284,137 320,150" fill="none" stroke="var(--blue)" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+<line x1="20" y1="176" x2="320" y2="176" stroke="var(--sub)" stroke-width="7" stroke-linecap="round" opacity=".6"/>
+<text x="20" y="196" font-size="10">Innenwand bleibt gerade (zuerst gedruckt)</text>
+<line x1="92" y1="122" x2="116" y2="122" stroke="currentColor" stroke-width="1"/><line x1="92" y1="118" x2="92" y2="126" stroke="currentColor"/><line x1="116" y1="118" x2="116" y2="126" stroke="currentColor"/>
+<text x="122" y="126" font-size="10">Punktabstand 0,8 mm</text>
+<line x1="330" y1="136" x2="330" y2="160" stroke="currentColor" stroke-width="1"/><line x1="326" y1="136" x2="334" y2="136" stroke="currentColor"/><line x1="326" y1="160" x2="334" y2="160" stroke="currentColor"/>
+<text x="250" y="126" font-size="10">Stärke 0,3 mm</text>
+<text x="10" y="226" font-size="10">Außen kommt bis zur Stärke Material dazu → das Teil wird je Seite</text>
+<text x="10" y="240" font-size="10">bis 0,3 mm größer (Druckwerk-Messung an der Druckdatei).</text>
+</g></svg></div></div>
+
+<h2 id="d">D · 🔎 Detaillierte Auswertung</h2>
+<div class="card"><h3>⚠️ 1 · Ausgangsproblem: glatt geht nie ganz <span class="fs">(00:00–01:01)</span></h3>
+<p>Wirklich glatte Drucke hält der Sprecher für unerreichbar, weil in Schichten gedruckt wird: Runde, ovale und schräge Formen zeigen immer Stufen. Dazu kommen Verfärbungen und Streifen auf Wänden, wenn Bereiche mit wechselnder Geschwindigkeit gedruckt werden. Statt dagegen anzukämpfen, überdeckt er solche Stellen gern mit einer Struktur – das Thema des Videos.</p>
+<p>📌</p><ul><li><span class="tag t-m">Meinung</span>Vollkommen glatte Drucke hält er für unmöglich <span class="fs">(00:00)</span>.</li><li><span class="tag t-b">Behauptung</span>Ungleichmäßige Geschwindigkeit führt zu Streifen und Farbunterschieden auf Wänden <span class="fs">(00:00–00:30)</span>.</li><li><span class="tag t-m">Meinung</span>Die Funktion werde seiner Ansicht nach unterschätzt <span class="fs">(00:30)</span>.</li></ul>
+<p class="e">📚 Fuzzy Skin heißt wörtlich „pelzige Haut“. In Druckwerk heißt die Einstellung „Raue Oberfläche“.</p></div>
+<div class="card"><h3>📅 2 · Einordnung: der Slicer ändert sich laufend <span class="fs">(01:01–01:32)</span></h3>
+<p>Er will möglichst alles in ein Video packen, erwartet hier aber eine Fortsetzung: Bambu Studio habe in den Monaten davor immer wieder Neues zu dieser Funktion gebracht.</p>
+<p>📌</p><ul><li><span class="tag t-b">Behauptung</span>Bambu Studio habe immer wieder neue Funktionen zu Fuzzy Skin erhalten <span class="fs">(01:32)</span>.</li><li><span class="tag t-m">Meinung</span>Ein Folgevideo sei wahrscheinlich <span class="fs">(01:32)</span>.</li></ul>
+<p class="small">🔗 Siehe Abgleich: Malwerkzeug seit Version 2.2.0, weitere Muster seit 2.5.3.</p></div>
+<div class="card"><h3>🔬 3 · Was die Funktion tut <span class="fs">(01:32–02:33)</span></h3>
+<p>Die Düse fährt die äußerste Wand nicht als gerade Bahn, sondern zittert und schlägt kleine Haken. Dadurch wird die Außenseite rau. Das lässt sich für das Aussehen nutzen (ein Material wirkt wie zwei) und für schwierige Formen, die mit geraden Bahnen nicht sauber werden.</p>
+<p>📌</p><ul><li><span class="tag t-f">Fakt</span>Betroffen ist die äußerste Wandbahn <span class="fs">(02:02)</span>.</li><li><span class="tag t-bsp">Beispiel</span>Steinstruktur und runde Objekte als typische Fälle <span class="fs">(02:33)</span>.</li></ul></div>
+<div class="card"><h3>🛠️ 4 · Wo man es einstellt und welche Bereiche es gibt <span class="fs">(03:04–04:39)</span></h3>
+<p>Im Bambu Studio unter „Sonstiges“ im Bereich Spezialmodus. Drei Wirkbereiche: nur die Kontur (außen herum, Bohrungen bleiben glatt), Kontur und Bohrung (auch die Innenseiten von Löchern) und alle Wände. Dazu zwei Zahlen: Punktabstand und Stärke; im Beispiel 0,8 und 0,3 mm. Was die Einstellung bewirkt, sieht man erst in der Vorschau nach dem Slicen: Bei zwei Wänden bleibt die innere gerade, nur die äußere läuft im Zickzack.</p>
+<p>📌</p><ul><li><span class="tag t-f">Fakt</span>Drei Bereiche: Kontur, Kontur und Bohrung, alle Wände <span class="fs">(03:36)</span>.</li><li><span class="tag t-f">Fakt</span>Zwei Stellwerte: Punktabstand und Stärke; gezeigt mit 0,8 / 0,3 mm <span class="fs">(04:08)</span>.</li><li><span class="tag t-f">Fakt</span>Innere Wand und Stützen bleiben unberührt <span class="fs">(04:39)</span>.</li><li><span class="tag t-m">Meinung</span>Die Vorschau wirke heftiger als der fertige Druck <span class="fs">(04:08)</span>.</li></ul>
+<p class="e">📚 Druckwerk nutzt OrcaSlicer 2.5 mit denselben Stellwerten (<code>fuzzy_skin</code>, <code>fuzzy_skin_thickness</code>, <code>fuzzy_skin_point_distance</code>). Die drei Bereiche heißen dort <code>external</code>, <code>all</code> und <code>allwalls</code>.</p>
+<p class="q">❓ Zu „alle Wände“ sagt er, damit werde auch oben und unten alles überzogen <span class="fs">(03:36)</span>. Später erklärt er selbst, dass Deckflächen nicht funktionieren (18:42) – siehe Spannungen im Abgleich.</p></div>
+<div class="card"><h3>📏 5 · Stärke und Punktabstand am Testobjekt ablesen <span class="fs">(05:10–07:15)</span></h3>
+<p>Eine Vase zeigt die Idee: oben rau, unten und innen glatt. Was die Millimeterwerte optisch bedeuten, weiß vorab niemand – deshalb empfiehlt er ein Testobjekt mit Raster: eine Achse die Stärke (wie tief die Struktur geht), die andere die Feinheit. Rechts unten die schwächste, zur anderen Ecke die stärkste Wirkung. Als Beispiel für eine gefällige Struktur liest er 0,7 und 0,3 ab. Für ebene Flächen gibt es ein zweites, flaches Muster.</p>
+<p>📌</p><ul><li><span class="tag t-bsp">Beispiel</span>Vase mit rauem oberem Bereich <span class="fs">(05:10)</span>.</li><li><span class="tag t-f">Fakt</span>Testobjekt als Raster aus Stärke und Punktabstand, vom Sprecher verlinkt <span class="fs">(05:40–06:12)</span>.</li><li><span class="tag t-bsp">Beispiel</span>Wunschstruktur bei 0,7 / 0,3 abgelesen <span class="fs">(06:44)</span>.</li><li><span class="tag t-m">Meinung</span>Mit dem Testdruck habe man dauerhaft eine verlässliche Vorlage <span class="fs">(05:40)</span>.</li></ul>
+<p class="e">📚 Ein eigenes Raster für den Creator 5 Pro gibt es in Druckwerk noch nicht – als nächster Schritt vorgeschlagen (Abschnitt H).</p></div>
+<div class="card"><h3>🧵 6 · Material, Wandzahl und Reihenfolge <span class="fs">(07:15–08:48)</span></h3>
+<p>Die Einstellungen hängen nach seiner Aussage nicht vom Filament ab; PETG geht genauso, TPU ist druckbar, sieht aber anders aus als PLA. Wichtig sei die Wandzahl: Bei nur einer Wand besteht das Teil allein aus der rauen Bahn, und weil die Linien versetzt liegen, berühren sich die Schichten an weniger Stellen. Er rät zu mindestens zwei, eher drei oder vier Wänden. Außerdem: innere Wände zuerst, die äußere zuletzt – sonst übertrage sich das Zittern nach innen bis in die Füllung, und die Düse rattere später darüber.</p>
+<p>📌</p><ul><li><span class="tag t-b">Behauptung</span>Stärke und Punktabstand wirken unabhängig vom Filament <span class="fs">(07:15)</span>.</li><li><span class="tag t-b">Behauptung</span>TPU: druckbar, aber anderes Ergebnis <span class="fs">(07:15–07:46)</span>.</li><li><span class="tag t-f">Fakt</span>Mindestens zwei, besser drei bis vier Wände <span class="fs">(07:46)</span>.</li><li><span class="tag t-f">Fakt</span>Reihenfolge innen vor außen <span class="fs">(08:17)</span>.</li><li><span class="tag t-b">Behauptung</span>Sonst könne die Düse über die Füllung rattern und der Druck misslingen <span class="fs">(08:17)</span>.</li></ul>
+<p class="small">🔗 Abschnitt 3 (nur die äußerste Bahn zittert).</p>
+<p class="e">📚 Druckwerk setzt bei rauer Oberfläche deshalb automatisch mindestens drei Wände und druckt die Außenwand zuletzt.</p></div>
+<div class="card"><h3>💡 7 · Einsatz 1: Schichtlinien an Rundungen überdecken <span class="fs">(08:48–10:21)</span></h3>
+<p>Zwei gleiche Figuren im Vergleich: Die mit rauer Oberfläche wirkt deutlich besser, weil man ab einer gewissen Größe eine Struktur sieht statt eines unsauberen Drucks. Am Kopf sind die ringförmigen Linien verschwunden. Ohne die Funktion müsste man schleifen, füllern oder in diesen Zonen sehr dünne Schichten wählen. Das Umlegen des Teils hilft oft nicht, weil dann überall Stützen nötig wären. Er meint ausdrücklich eine feine, keine grobe Einstellung.</p>
+<p>📌</p><ul><li><span class="tag t-bsp">Beispiel</span>Figur mit und ohne raue Oberfläche <span class="fs">(08:48–09:51)</span>.</li><li><span class="tag t-f">Fakt</span>Alternativen: schleifen, füllern, sehr geringe Schichthöhe <span class="fs">(09:51)</span>.</li><li><span class="tag t-m">Meinung</span>Sinnvoll erst ab einer gewissen Größe <span class="fs">(08:48)</span>.</li><li><span class="tag t-m">Meinung</span>Dafür eine feine Einstellung wählen <span class="fs">(10:21)</span>.</li></ul>
+<p class="small">🔗 Abschnitt 15: warum es an der Oberseite trotzdem Grenzen gibt.</p></div>
+<div class="card"><h3>🎨 8 · Einsatz 2: Stein und Lebensmittel <span class="fs">(10:21–11:56)</span></h3>
+<p>Bei großen Schaustücken geht der Betrachter nah heran und erkennt an den Linien sofort den 3D-Druck. Mit der rauen Oberfläche wirkt ein großes Objekt wie Stein, auch unbemalt. Zweites Beispiel: die Creme eines Keks-Modells – alles andere glatt, nur die Creme rau. Viele Ersteller von Druckdateien dächten daran nicht; man könne es selbst ergänzen (Schaumstoff, Creme, Brot, Cupcakes).</p>
+<p>📌</p><ul><li><span class="tag t-bsp">Beispiel</span>Großes Objekt mit Steinwirkung <span class="fs">(10:52–11:23)</span>.</li><li><span class="tag t-bsp">Beispiel</span>Keks mit rauer Creme <span class="fs">(11:23–11:56)</span>.</li><li><span class="tag t-m">Meinung</span>Bei großen Objekten sei der Druck problemlos gewesen <span class="fs">(11:23)</span>.</li></ul></div>
+<div class="card"><h3>✋ 9 · Einsatz 3: Griff und Haptik <span class="fs">(11:56–12:58)</span></h3>
+<p>Die Oberfläche fühlt sich rau an, fast wie Schleifpapier. Das nutzen nach seiner Darstellung auch Hersteller von Spritzgussteilen: Griffflächen bekommen eine rauere Form. Beispiel ist ein Griffstück, das glatt gedruckt schnell aus der Hand rutscht.</p>
+<p>📌</p><ul><li><span class="tag t-b">Behauptung</span>Spritzguss-Hersteller rauen Griffflächen bewusst auf <span class="fs">(12:26)</span>.</li><li><span class="tag t-bsp">Beispiel</span>Griff mit rauer Fläche, einzelne Bereiche ausgespart <span class="fs">(12:26–12:58)</span>.</li></ul>
+<p class="e">📚 Für Druckwerk passt das zu Haltern, Knöpfen und Werkzeuggriffen. Wo etwas passen muss (Bohrung, Steckverbindung), glatt lassen – siehe Abschnitt 11.</p></div>
+<div class="card"><h3>🫙 10 · Beispiel Dose: außen rau, innen glatt <span class="fs">(12:58–13:59)</span></h3>
+<p>Eine runde Dose für Wattepads: Kugelformen und Deckel außen rau, innen alles glatt. Daraus die Frage, wie man die Struktur gezielt nur auf Teile eines Objekts bringt.</p>
+<p>📌</p><ul><li><span class="tag t-bsp">Beispiel</span>Wattepad-Dose mit rauem Deckel <span class="fs">(13:28)</span>.</li><li><span class="tag t-m">Meinung</span>Das Beispiel sei nicht besonders schön, zeige aber den Nutzen bei runden Formen <span class="fs">(12:58)</span>.</li></ul>
+<p class="small">🔗 Leitet zu den Malwerkzeugen über (Abschnitte 12–14).</p></div>
+<div class="card"><h3>⚠️ 11 · Die Struktur trägt auf <span class="fs">(13:59–14:30)</span></h3>
+<p>Das Objekt bleibt nicht gleich groß: Es wächst um die eingestellte Stärke. Bei 0,3 mm ist ein rundes Teil im Durchmesser 0,6 mm dicker. Sein Bild dafür: Marmelade auf dem Butterbrot.</p>
+<p>📌</p><ul><li><span class="tag t-f">Fakt</span>Maßzuwachs in Höhe der Stärke je Seite; 0,3 mm → 0,6 mm im Durchmesser <span class="fs">(13:59)</span>.</li></ul>
+<p class="e">📚 In Druckwerk nachgemessen (Testwürfel 20 mm, Stufe „mittel“): Die äußerste Bahn reicht in der Druckdatei je Seite 0,30 mm weiter nach außen als beim glatten Würfel. Gerechnet, nicht gedruckt. Der Bericht jedes Auftrags nennt den Zuwachs.</p></div>
+<div class="card"><h3>🖌️ 12 · Malwerkzeug: Pinsel und Kugel <span class="fs">(14:30–16:03)</span></h3>
+<p>Relativ neu im Slicer ist ein eigener Knopf (Taste H) zum Bemalen mit Fuzzy Skin, bedient wie das Farbmalen (Taste N). Bemalte Bereiche erscheinen lila und werden nach dem Slicen rau. Der Pinsel malt auf die Fläche; die Kugel erfasst Vorder- und Rückseite gleichzeitig, etwa ein ganzes Ohr. Mit gedrückter Umschalttaste wird radiert.</p>
+<p>📌</p><ul><li><span class="tag t-f">Fakt</span>Malwerkzeug mit Taste H, Pinselgröße einstellbar <span class="fs">(14:30–15:01)</span>.</li><li><span class="tag t-f">Fakt</span>Kugel-Werkzeug malt räumlich durch das Teil <span class="fs">(15:31)</span>.</li><li><span class="tag t-f">Fakt</span>Umschalttaste = Radierer <span class="fs">(16:03)</span>.</li><li><span class="tag t-m">Meinung</span>Die Kugel sei schwer zu führen <span class="fs">(15:31)</span>.</li></ul>
+<p class="e">📚 Diese Werkzeuge gibt es nur im Slicer am Rechner. Druckwerk kann bisher nur das ganze Teil rau stellen; gezieltes Bemalen ist als Ausbau notiert (Abschnitt H).</p></div>
+<div class="card"><h3>❓ 13 · Dreieck-Werkzeug: Zweck unklar <span class="fs">(16:03–17:08)</span></h3>
+<p>Beim Dreieck-Werkzeug sagt er offen, dass er nicht weiß, wofür es da ist: Beim Verstellen der Schnittansicht verschwinden Teile, kontrollieren könne er das nicht. Er bittet um Erklärungen in den Kommentaren und um ein Like oder Abo.</p>
+<p>📌</p><ul><li><span class="tag t-m">Meinung</span>Er wisse nicht, was das Werkzeug macht <span class="fs">(16:36)</span>.</li></ul>
+<p class="e">📚 Wahrscheinlich wählt das Dreieck-Werkzeug einzelne Dreiecke des Netzes aus, wie beim Farb- und Stützenmalen derselben Slicer-Familie; die Schnittansicht ist ein getrennter Regler. Nicht anhand einer Quelle geprüft.</p>
+<p class="q">❓ Ob das im gezeigten Stand so war, lässt sich aus dem Transkript nicht klären.</p></div>
+<div class="card"><h3>🪣 14 · Fülleimer mit Füllwinkel <span class="fs">(17:08–18:42)</span></h3>
+<p>Für die meisten das wichtigste Werkzeug: Bei Modellen mit klaren Kanten klickt man in eine Fläche, und der Eimer füllt sie. Der „intelligente Füllwinkel“ bestimmt, wie weit über Kanten hinweg gefüllt wird: niedrig = einzelne Flächen, höher = ganze zusammenhängende Bereiche wie ein Ring. Schmale ungefüllte Kanten stören nicht, sie fallen erst bei sehr großen Objekten auf. Mit „Richtung“ lässt sich nachhelfen.</p>
+<p>📌</p><ul><li><span class="tag t-f">Fakt</span>Fülleimer erkennt Flächen über einen Winkel-Schwellwert <span class="fs">(17:39)</span>.</li><li><span class="tag t-m">Meinung</span>Kleine Lücken an Kanten sehe man nicht <span class="fs">(18:10)</span>.</li></ul></div>
+<div class="card"><h3>🧱 15 · Grenzen: nur Seitenwände <span class="fs">(18:42–20:15)</span></h3>
+<p>Die Struktur entsteht nur an den Seiten, wo die Düse beim Umfahren zittern kann. Unten hilft stattdessen eine texturierte Druckplatte. Auf Oberseiten müsste die Düse einzelne Punkte setzen; das versucht der Slicer zwar, das Ergebnis ist aber schwach – an einem Beispiel ist die Seite kräftig rau, die leicht gewölbte Oberseite kaum. Dass seine Figur oben trotzdem gut aussieht, liegt am Aufbau: Der Kopf wurde in anderer Lage gedruckt und aufgeklebt. Nur an der Nasenspitze sieht man noch Linien.</p>
+<p>📌</p><ul><li><span class="tag t-f">Fakt</span>Wirkt an Seitenwänden, nicht an Deckflächen <span class="fs">(18:42–19:12)</span>.</li><li><span class="tag t-f">Fakt</span>Unterseite: texturierte PEI-Platte gibt einen ähnlichen Eindruck <span class="fs">(18:42)</span>.</li><li><span class="tag t-bsp">Beispiel</span>Figur: Kopf getrennt gedruckt und aufgeklebt <span class="fs">(19:44–20:15)</span>.</li></ul>
+<p class="small">🔗 Widerspricht der frühen Aussage zu „alle Wände“ (Abschnitt 4).</p>
+<p class="e">📚 Für den Creator 5 Pro heißt das: Teile so legen oder teilen, dass die sichtbaren Flächen Seitenwände sind. Die strukturierte PEI-Platte ist in Druckwerk ohnehin Standard.</p></div>
+<div class="card"><h3>🔁 16 · Bemalung wirkt erst, wenn die Gesamteinstellung aus ist <span class="fs">(20:15–21:15)</span></h3>
+<p>Beim Test mit der Büste kam zunächst nicht das erwartete Bild heraus: Die Gesamteinstellung stand noch auf „Kontur“. Erst nach dem Zurückstellen und neuem Slicen erscheint die Struktur nur dort, wo gemalt wurde. So lassen sich glatte und raue Stellen an einem Objekt mischen – der zweite Weg.</p>
+<p>📌</p><ul><li><span class="tag t-f">Fakt</span>Gesamteinstellung ausschalten, dann gilt nur die Bemalung <span class="fs">(20:15–20:45)</span>.</li></ul>
+<p class="e">📚 Laut den Versionshinweisen zu Bambu Studio 2.3.0 wurde das Verhalten bemalter Flächen später überarbeitet (einstellbare Werte, eigener Zustand „Deaktiviert“). Der gezeigte Ablauf kann in neueren Versionen anders aussehen.</p></div>
+<div class="card"><h3>🖼️ 17 · Dritter Weg: eigenes Muster als SVG auftragen <span class="fs">(21:15–26:36)</span></h3>
+<p>An einem Würfel zeigt er eine Alternative: ein Schwarz-Weiß-Muster aus der Bildersuche, mit einem kostenlosen Konverter in eine SVG-Datei gewandelt, dann per Rechtsklick → „Modifizierer hinzufügen“ → SVG auf eine Fläche gelegt. Das Muster lässt sich drehen und skalieren (Seitenverhältnis halten) und bekommt eine Tiefe, hier 0,1 mm. „Verbinden“ setzt es auf, „Schneiden“ lässt es in die Fläche ein. So wird auch ein eigenes Logo zur Oberflächenstruktur. Ob 0,1 mm mit der eigenen Düse druckbar ist, müsse man ausprobieren.</p>
+<p>📌</p><ul><li><span class="tag t-f">Fakt</span>Ablauf: Bild → SVG-Konverter → Modifizierer hinzufügen → SVG <span class="fs">(22:20–23:25)</span>.</li><li><span class="tag t-f">Fakt</span>Tiefe einstellbar, im Beispiel 0,1 mm; „Verbinden“ oder „Schneiden“ <span class="fs">(25:33–26:06)</span>.</li><li><span class="tag t-m">Meinung</span>Er nenne es hier ebenfalls Fuzzy Skin <span class="fs">(23:25)</span>.</li><li><span class="tag t-m">Meinung</span>Die Vorschau sei noch unsauber und werde wohl besser <span class="fs">(26:36)</span>.</li></ul>
+<p class="e">📚 Technisch ist das keine zitternde Düse, sondern echte Geometrie: ein flaches Relief auf der Fläche. In Druckwerk entspricht dem am ehesten <code>werkzeug/bild_relief.py</code> (Bild → Farbrelief) oder ein Muster im Modell selbst. Als Oberflächenmuster auf beliebigen Flächen ist es nicht eingebaut.</p>
+<p class="q">❓ Den Namen des Konverters nennt das Transkript nicht verständlich <span class="fs">(22:52)</span>.</p></div>
+<div class="card"><h3>🧩 18 · Kombinieren <span class="fs">(26:36–27:38)</span></h3>
+<p>Die Wege lassen sich mischen: eine SVG als Muster auf einer Wand, darauf ein Text, und die Oberseite der Schrift mit dem Fülleimer zusätzlich rau stellen. Ergebnis: Schrift mit Struktur, Wand mit Muster, der Rest glatt.</p>
+<p>📌</p><ul><li><span class="tag t-bsp">Beispiel</span>Würfel mit Muster, Text und rauer Schrift <span class="fs">(27:06–27:38)</span>.</li></ul></div>
+<div class="card"><h3>👋 19 · Schluss <span class="fs">(27:38–28:54)</span></h3>
+<p>Er habe die aus seiner Sicht wichtigsten Einstellungen gezeigt, schlägt als Spiel vor, das Wort im Video mitzuzählen, und verabschiedet sich zum Jahresende 2025.</p>
+<p>📌</p><ul><li><span class="tag t-f">Fakt</span>Das Video entstand zum Jahresende 2025 <span class="fs">(00:30, 28:09)</span>.</li></ul></div>
+
+<h2>Zeichnung 2 · Wo die Struktur entsteht</h2>
+<div class="card"><p class="small">Schematisch, Schnitt durch ein Teil auf der Druckplatte. Darstellung laut Video (18:42–19:44).</p>
+<div class="zeich"><svg viewBox="0 0 340 230" role="img" aria-label="Schnitt durch ein Teil: Seitenwände rau, Deckfläche bleibt glatt oder wird nur schwach rau, Unterseite übernimmt die Struktur der Druckplatte.">
+<g font-size="11" fill="currentColor">
+<rect x="20" y="186" width="300" height="8" fill="var(--sub)" opacity=".5"/><text x="20" y="210" font-size="10">Druckplatte (strukturiertes PEI): Unterseite übernimmt deren Muster</text>
+<path d="M110,186 L110,70 Q110,50 130,50 L210,50 Q230,50 230,70 L230,186 Z" fill="var(--blue)" fill-opacity=".18" stroke="none"/>
+<polyline points="110,186 106,176 113,166 107,156 114,146 106,136 113,126 107,116 114,106 106,96 113,86 108,76 112,66" fill="none" stroke="var(--blue)" stroke-width="3" stroke-linejoin="round"/>
+<polyline points="230,186 234,176 227,166 233,156 226,146 234,136 227,126 233,116 226,106 234,96 227,86 232,76 228,66" fill="none" stroke="var(--blue)" stroke-width="3" stroke-linejoin="round"/>
+<path d="M112,66 Q112,50 130,50 L210,50 Q228,50 228,66" fill="none" stroke="var(--sub)" stroke-width="3"/>
+<text x="118" y="38" font-size="10">Oben: glatt bzw. nur schwach</text>
+<text x="8" y="120" font-size="10">Seite:</text><text x="8" y="133" font-size="10">kräftig rau</text>
+<text x="244" y="120" font-size="10">Seite:</text><text x="244" y="133" font-size="10">kräftig rau</text>
+<text x="128" y="125" font-size="10">Innen und Füllung</text><text x="128" y="138" font-size="10">unverändert</text>
+</g></svg></div></div>
+
+<h2>Zeichnung 3 · Drei Wege zur Struktur</h2>
+<div class="card"><p class="small">Übersicht nach dem Video; rechte Spalte = Stand in Druckwerk am 15.11.2026.</p>
+<table class="stapel"><thead><tr><th>Weg</th><th>So im Video</th><th>In Druckwerk</th></tr></thead><tbody>
+<tr><td data-l="Weg"><b>1 · Ganzes Teil</b></td><td data-l="So im Video">Sonstiges → Spezialmodus: Kontur, Kontur und Bohrung oder alle Wände, dazu Punktabstand und Stärke (03:04).</td><td data-l="In Druckwerk">Eingebaut: Werkstatt → Slicen → „Oberfläche“ (Glatt, Fein, Mittel, Grob) oder im Auftrag an Claude.</td></tr>
+<tr><td data-l="Weg"><b>2 · Bemalte Bereiche</b></td><td data-l="So im Video">Taste H: Pinsel, Kugel, Fülleimer; Gesamteinstellung aus (14:30–21:15).</td><td data-l="In Druckwerk">Nicht eingebaut. Am Mac in Flash Studio oder OrcaSlicer möglich, wenn dort ein Malwerkzeug vorhanden ist – nicht geprüft.</td></tr>
+<tr><td data-l="Weg"><b>3 · Eigenes Muster (SVG)</b></td><td data-l="So im Video">Modifizierer hinzufügen → SVG, Tiefe 0,1 mm, verbinden oder schneiden (21:15–26:36).</td><td data-l="In Druckwerk">Nicht als Oberflächenmuster. Verwandt: Bild-zu-Farbrelief (<code>bild_relief.py</code>).</td></tr>
+</tbody></table></div>
+
+<h2 id="e">E · 📅 Zeitleiste</h2>
+<div class="card"><ul>
+<li>📚 2025 – Bambu Studio 2.2.0 bringt das Malwerkzeug für Fuzzy Skin (Versionshinweise; genaues Datum dort nicht abgelesen ❓).</li>
+<li>Jahresende 2025 – Entstehung des Videos nach eigener Angabe <span class="fs">(00:30, 28:09)</span>.</li>
+<li>📚 Später – Bambu Studio 2.3.0 überarbeitet das Verhalten bemalter Flächen; 2.5.3 ergänzt weitere Muster und Erzeugungsarten (Datum nicht abgelesen ❓).</li>
+<li>📚 15.11.2026 – Transkript abgerufen, ausgewertet und in Druckwerk eingebaut („Oberfläche“ beim Slicen).</li>
+</ul></div>
+
+<h2 id="f">F · 👤 Personen · 🗺️ Orte · 📖 Begriffe</h2>
+<div class="card"><h3>👤 Personen</h3><ul>
+<li><b>Bastlwastl</b> – Kanalbetreiber und Sprecher; in den Untertiteln „Schweighoffer“ ❓ <span class="fs">(23:25, 28:40)</span>.</li>
+</ul><h3>🗺️ Orte</h3><ul><li>Keine. Bangladesch kommt nur in einer scherzhaften Redewendung des Sprechers vor <span class="fs">(20:45)</span>.</li></ul>
+<h3>📖 Begriffe</h3><ul>
+<li><b>Fuzzy Skin</b> – raue Außenhaut: Die äußerste Wandbahn wird mit kleinen seitlichen Ausschlägen gedruckt <span class="fs">(02:02)</span>.</li>
+<li><b>Punktabstand</b> – Abstand der Knickpunkte entlang der Bahn; klein = fein, groß = grob <span class="fs">(05:40)</span>.</li>
+<li><b>Stärke</b> – wie weit die Bahn seitlich ausschlägt; bestimmt auch den Maßzuwachs <span class="fs">(06:12, 13:59)</span>.</li>
+<li><b>Kontur / Bohrung</b> – Außenumriss bzw. Innenseite von Löchern <span class="fs">(03:36)</span>.</li>
+<li><b>Wand (Wandstärke im Video)</b> – Anzahl der Umrissbahnen nebeneinander <span class="fs">(07:46)</span>.</li>
+<li><b>Infill</b> – Füllung im Inneren <span class="fs">(08:17)</span>.</li>
+<li><b>Düse (Nozzle)</b> – im Transkript „Nossel“ <span class="fs">(01:01)</span>.</li>
+<li><b>Fülleimer / Füllwinkel</b> – füllt zusammenhängende Flächen bis zu einem Kantenwinkel <span class="fs">(17:39)</span>.</li>
+<li><b>Modifizierer</b> – Zusatzkörper im Slicer, der einen Bereich verändert; hier Träger für eine SVG <span class="fs">(22:20)</span>.</li>
+<li><b>SVG</b> – Vektorgrafik; Schwarz-Weiß-Muster oder Logo als Vorlage <span class="fs">(22:20)</span>.</li>
+<li><b>Texturierte PEI-Platte</b> – strukturierte Druckplatte, prägt die Unterseite <span class="fs">(18:42)</span>.</li>
+<li><b>Primitiv</b> – einfacher Grundkörper im Slicer, hier ein Würfel <span class="fs">(21:15)</span>.</li>
+</ul></div>
+
+<h2 id="g">G · ⚖️ Abgleich (neutral)</h2>
+<div class="card"><p class="small">Stand heute = geprüfte Angaben bis 15.11.2026. Das Video zeigt Bambu Studio; Tom arbeitet mit dem Creator 5 Pro (Druckwerk: OrcaSlicer 2.5).</p>
+<table class="stapel"><thead><tr><th>Aussage im Video</th><th>Stand heute / Herstellerangaben 📚</th><th>Quelle</th></tr></thead><tbody>
+<tr><td data-l="Aussage im Video">Die Struktur trägt um die eingestellte Stärke auf; 0,3 mm → rundes Teil 0,6 mm dicker <span class="fs">(13:59)</span></td><td data-l="Stand heute">OrcaSlicer-Handbuch: Die Stärke ist die größte seitliche Breite, um die Punkte verschoben werden; die Funktion verändert die Maßhaltigkeit. Druckwerk-Messung an der Druckdatei (20-mm-Würfel, 0,3 mm): äußerste Bahn je Seite 0,30 mm weiter außen.</td><td data-l="Quelle"><a href="https://www.orcaslicer.com/wiki/print_settings/others/others_settings_fuzzy_skin" target="_blank" rel="noopener">OrcaSlicer Wiki: Fuzzy Skin</a> · eigene Messung 15.11.2026</td></tr><tr><td data-l="Aussage im Video">Wirkt nur an den Seiten, nicht auf Deckflächen <span class="fs">(18:42)</span></td><td data-l="Stand heute">Versionshinweise zu Bambu Studio 2.2.0: Mit dem Malwerkzeug lassen sich die Seiten des Modells bemalen, Ober- und Unterseite ausgenommen.</td><td data-l="Quelle"><a href="https://forum.bambulab.com/t/bambu-studio-release-release-note-2-2-0/188864" target="_blank" rel="noopener">Bambu Lab Forum: Release Note 2.2.0</a> · <a href="https://wiki.bambulab.com/en/software/bambu-studio/release/release-note-2-2-0" target="_blank" rel="noopener">Bambu Wiki</a></td></tr><tr><td data-l="Aussage im Video">Das Malwerkzeug sei recht neu <span class="fs">(14:30)</span></td><td data-l="Stand heute">Eingeführt mit Bambu Studio 2.2.0. Laut Fabbaloo stammt die Funktion aus OrcaSlicer; Bambu Lab habe sich dafür ausdrücklich bedankt.</td><td data-l="Quelle"><a href="https://wiki.bambulab.com/en/software/bambu-studio/release/release-note-2-2-0" target="_blank" rel="noopener">Bambu Wiki: Release Note 2.2.0</a> · <a href="https://www.fabbaloo.com/news/bambustudio-2-2-0-beta-brings-accessibility-and-usability-upgrades-for-3d-printing" target="_blank" rel="noopener">Fabbaloo</a></td></tr><tr><td data-l="Aussage im Video">Es kämen laufend neue Funktionen, ein Folgevideo sei wahrscheinlich <span class="fs">(01:32)</span></td><td data-l="Stand heute">Bambu Studio 2.5.3 nennt vier weitere Muster (Perlin, Billow, Ridged Multifractal, Voronoi) und neue Erzeugungsarten; zwei davon wirken nur mit dem Wandgenerator Arachne und wenn die Stärke die Linienbreite nicht übersteigt. OrcaSlicer kennt dieselben Arten und zusätzlich ein Wellenmuster.</td><td data-l="Quelle"><a href="https://newreleases.io/project/github/bambulab/BambuStudio/release/v02.05.03.61" target="_blank" rel="noopener">Bambu Studio 2.5.3, Versionshinweise</a> · <a href="https://www.orcaslicer.com/wiki/print_settings/others/others_settings_fuzzy_skin" target="_blank" rel="noopener">OrcaSlicer Wiki</a></td></tr><tr><td data-l="Aussage im Video">Für die Bemalung muss die Gesamteinstellung aus sein <span class="fs">(20:15)</span></td><td data-l="Stand heute">Bambu Studio 2.3.0: Fehler behoben, durch den sich Punktabstand und Stärke bei bemalten Flächen nicht einstellen ließen; neuer Zustand „Deaktiviert“.</td><td data-l="Quelle"><a href="https://newreleases.io/project/github/bambulab/BambuStudio/release/v02.03.00.70" target="_blank" rel="noopener">Bambu Studio 2.3.0, Versionshinweise</a></td></tr><tr><td data-l="Aussage im Video">Mindestens zwei, besser drei bis vier Wände; Außenwand zuletzt <span class="fs">(07:46–08:17)</span></td><td data-l="Stand heute">OrcaSlicer beschreibt für die neueren Erzeugungsarten, dass die Wände dabei fest und dicht bleiben. Eine Mindest-Wandzahl nennt das Handbuch an der gefundenen Stelle nicht. Druckwerk setzt mindestens drei Wände und innen vor außen.</td><td data-l="Quelle"><a href="https://www.orcaslicer.com/wiki/print_settings/others/others_settings_fuzzy_skin" target="_blank" rel="noopener">OrcaSlicer Wiki</a></td></tr><tr><td data-l="Aussage im Video">Einstellungen wirken unabhängig vom Filament; TPU sieht anders aus <span class="fs">(07:15)</span></td><td data-l="Stand heute">❓ Dazu wurde keine Herstellerangabe gefunden. Am Creator 5 Pro nicht erprobt.</td><td data-l="Quelle">nicht eindeutig zuzuordnen</td></tr><tr><td data-l="Aussage im Video">Dreieck-Werkzeug: Zweck unbekannt <span class="fs">(16:03)</span></td><td data-l="Stand heute">❓ Nicht geprüft. Wahrscheinlich Auswahl einzelner Netz-Dreiecke wie in den anderen Malwerkzeugen.</td><td data-l="Quelle">nicht eindeutig zuzuordnen</td></tr></tbody></table>
+<h3>🧩 Spannungen im Video</h3><ul>
+<li>„Alle Wände“ überziehe auch oben und unten <span class="fs">(03:36)</span> – später: Deckflächen funktionieren nicht richtig <span class="fs">(18:42–19:44)</span>.</li>
+<li>Die Vorschau wirke heftiger als das Ergebnis <span class="fs">(04:08)</span> – zugleich der Rat, die Wirkung nur am gedruckten Testobjekt zu beurteilen <span class="fs">(05:40)</span>.</li>
+<li>Er nennt das SVG-Muster ebenfalls Fuzzy Skin, schränkt das aber selbst ein <span class="fs">(23:25)</span>.</li>
+</ul></div>
+
+<h2 id="h">H · 💡 Erkenntnisse, offene Fragen – und was das für Druckwerk heißt</h2>
+<div class="card"><h3>Eingebaut am 15.11.2026</h3><ul>
+<li><b>App:</b> Werkstatt → Slicen → Detail-Einstellungen → „Oberfläche“: Glatt, Fein rau, Mittel rau, Grob rau.</li>
+<li><b>Auftrag an Claude:</b> „raue Oberfläche fein/mittel/grob“ (<code>druck.py --rau</code>, Bereich mit <code>--rau-wo kontur|loecher|alle</code>).</li>
+<li><b>Stufen (Richtwerte):</b> Fein 0,1 mm Stärke / 0,4 mm Punktabstand (Schichtlinien kaschieren) · Mittel 0,3 / 0,8 (wie im Video, Stein und Griff) · Grob 0,4 / 1,0.</li>
+<li><b>Automatisch dazu:</b> mindestens drei Wände, Außenwand zuletzt, erste Schicht glatt (Haftung). Der Bericht nennt den Maßzuwachs.</li>
+<li><b>Nachgemessen:</b> Stufe „mittel“ vergrößert den Testwürfel in der Druckdatei je Seite um 0,30 mm; Zeit und Gewicht fast gleich (15 min 37 s statt 15 min 24 s, 4,38 g statt 4,35 g).</li>
+</ul><h3>Regeln für Aufträge</h3><ul>
+<li>Passflächen, Bohrungen, Gewinde und Steckverbindungen glatt lassen – oder das Spiel um die Stärke vergrößern.</li>
+<li>Sichtflächen als Seitenwände legen; große Rundungen oben lieber teilen und kleben.</li>
+<li>Für Schichtlinien „Fein“, für Stein oder Griff „Mittel“.</li>
+</ul><h3>Offen</h3><ul>
+<li>Am Creator 5 Pro ist nichts davon gedruckt. Ein Testraster (Stärke × Punktabstand) als Kalibrier-Teil 6 wäre der nächste Schritt.</li>
+<li>Gezieltes Bemalen einzelner Flächen und die neueren Muster (Perlin, Voronoi …) sind nicht eingebaut.</li>
+<li>Eigenes Muster oder Logo als Oberflächenrelief: nicht eingebaut; machbar über ein Relief im Modell.</li>
+<li>Suchbegriffe zum Weiterlesen: „OrcaSlicer fuzzy skin generator mode“, „paint-on fuzzy skin“, „Flash Studio fuzzy skin“.</li>
+</ul></div>
+
+<h2 id="i">I · 🗂️ Ein-Seiten-Zusammenfassung</h2>
+<div class="card"><ul>
+<li><b>Was:</b> Die äußerste Wandbahn zittert seitlich; die Oberfläche wird rau.</li>
+<li><b>Wozu:</b> Schichtlinien und Streifen überdecken · Stein- und Lebensmittel-Optik · rutschfeste Griffe.</li>
+<li><b>Stellwerte:</b> Punktabstand (fein ↔ grob) und Stärke (flach ↔ tief); Beispiel 0,8 / 0,3 mm. Erst am Testdruck beurteilen.</li>
+<li><b>Bereiche:</b> nur Kontur · Kontur und Bohrung · alle Wände.</li>
+<li><b>Regeln:</b> mindestens 2, besser 3–4 Wände; innen vor außen.</li>
+<li><b>Achtung:</b> trägt je Seite um die Stärke auf; wirkt nur an Seitenwänden; unten über die Plattenstruktur.</li>
+<li><b>Gezielt:</b> aufmalen mit Pinsel, Kugel, Fülleimer (Taste H), Gesamteinstellung aus.</li>
+<li><b>Eigenes Muster:</b> Schwarz-Weiß-Bild → SVG → als Modifizierer auf die Fläche, 0,1 mm tief, aufgesetzt oder eingeschnitten.</li>
+<li><b>Druckwerk:</b> „Oberfläche“ beim Slicen in vier Stufen; gerechnet und gemessen, noch nicht gedruckt.</li>
+</ul></div>
+
+<h2 id="q">Quellen</h2>
+<div class="card small"><ul>
+<li>Video: <a href="https://www.youtube.com/watch?v=5B1U-6e-hYI" target="_blank" rel="noopener">Bastlwastl – Fuzzy Skin im Bambu Studio: Die besten Tricks für perfekte 3D-Druck-Oberflächen!</a> (automatische Untertitel, abgerufen 15.11.2026)</li>
+<li><a href="https://www.orcaslicer.com/wiki/print_settings/others/others_settings_fuzzy_skin" target="_blank" rel="noopener">OrcaSlicer Wiki: Fuzzy Skin (Einstellungen, Erzeugungsarten, Muster)</a> (Abruf 15.11.2026)</li>
+<li><a href="https://wiki.bambulab.com/en/software/bambu-studio/release/release-note-2-2-0" target="_blank" rel="noopener">Bambu Lab Wiki: Bambu Studio Release Note 2.2.0</a> und <a href="https://forum.bambulab.com/t/bambu-studio-release-release-note-2-2-0/188864" target="_blank" rel="noopener">Forum-Fassung</a> (Abruf 15.11.2026)</li>
+<li><a href="https://newreleases.io/project/github/bambulab/BambuStudio/release/v02.03.00.70" target="_blank" rel="noopener">Bambu Studio 2.3.0, Versionshinweise</a> (Abruf 15.11.2026)</li>
+<li><a href="https://newreleases.io/project/github/bambulab/BambuStudio/release/v02.05.03.61" target="_blank" rel="noopener">Bambu Studio 2.5.3, Versionshinweise</a> (Abruf 15.11.2026)</li>
+<li><a href="https://www.fabbaloo.com/news/bambustudio-2-2-0-beta-brings-accessibility-and-usability-upgrades-for-3d-printing" target="_blank" rel="noopener">Fabbaloo: BambuStudio 2.2.0 Beta</a> (Abruf 15.11.2026)</li>
+<li>Eigene Messung: <code>druck.py --rau mittel</code> am Testwürfel, Vergleich der Außenwand-Bahnen in der .gcode (15.11.2026).</li>
+</ul></div>
+<p class="small" style="margin:14px 4px">Stand 15.11.2026.</p>
+</main>
+</body>
+</html>

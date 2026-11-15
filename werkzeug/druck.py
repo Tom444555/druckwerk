@@ -102,6 +102,12 @@ def vorschau_bild(ziel: Path, teile_stl, slots_farben):
         return False
 
 
+# Raue Oberfläche (Fuzzy Skin): (Stärke mm, Punktabstand mm). Richtwerte – „mittel“ ist die Slicer-Vorgabe 0,3/0,8;
+# die Stärke bleibt unter der Linienbreite der Außenwand (0,42 mm). Am Creator 5 Pro noch nicht gedruckt.
+RAU = {"fein": (0.1, 0.4), "mittel": (0.3, 0.8), "grob": (0.4, 1.0)}
+RAU_WO = {"kontur": "external", "loecher": "all", "alle": "allwalls"}
+
+
 def bild_in_gcode(gcode: Path, png: Path, groessen):
     """Vorschaubild für die Drucker-Anzeige in die .gcode schreiben (Orca erzeugt es ohne Bildschirm nicht).
     Format wie OrcaSlicer: Block '; thumbnail begin BxH LÄNGE' mit base64-PNG direkt nach dem Kopfblock."""
@@ -197,6 +203,10 @@ def main():
     ap.add_argument("--anordnen", action="store_true", default=True)
     ap.add_argument("--zusammen", action="store_true",
                     help="Teile als EIN Objekt behandeln (mehrfarbiges Teil aus mehreren Dateien)")
+    ap.add_argument("--rau", choices=sorted(RAU), default=None,
+                    help="Raue Oberfläche (Fuzzy Skin) an den Seitenwänden: fein = Schichtlinien kaschieren, mittel = Stein/Griff, grob = starke Struktur")
+    ap.add_argument("--rau-wo", choices=sorted(RAU_WO), default="kontur",
+                    help="kontur = nur außen (Standard), loecher = außen und in Bohrungen, alle = alle Wände")
     ap.add_argument("--extra", action="append", default=[], help="Slicer-Einstellung überschreiben: schluessel=wert (mehrfach)")
     ap.add_argument("--duese", default=None, help="Düsengröße in mm für ALLE Köpfe (c5pro: 0.25 | 0.4 | 0.6 | 0.8; Standard 0.4)")
     ap.add_argument("--duesen", default=None,
@@ -327,6 +337,17 @@ def main():
                     pass
     if bemalt:   # Farbe nur als Schale (1,2 mm) statt keilförmig bis in den Kern – spart Farbfilament, sauberere Kanten
         prozess["mmu_segmented_region_max_width"] = "1.2"
+    rau_text = None
+    if a.rau:                             # raue Oberfläche: äußere Wand „zittert“ (Lehren aus videos/fuzzy-skin-bastlwastl.html)
+        staerke, abstand = RAU[a.rau]
+        prozess.update({"fuzzy_skin": RAU_WO[a.rau_wo], "fuzzy_skin_thickness": str(staerke), "fuzzy_skin_point_distance": str(abstand),
+                        "fuzzy_skin_first_layer": "0",                      # erste Schicht glatt lassen → Haftung
+                        "wall_sequence": "inner wall/outer wall"})         # raue Außenwand zuletzt, sonst drückt sie sich nach innen durch
+        if int(float(prozess.get("wall_loops", 2))) < 3:
+            prozess["wall_loops"] = "3"; a.waende = 3                                  # die raue Bahn liegt schlecht auf → eine Wand mehr für die Festigkeit
+        rau_text = (f"{a.rau} ({ {'kontur': 'nur Außenkontur', 'loecher': 'außen und Bohrungen', 'alle': 'alle Wände'}[a.rau_wo]}) – "
+                    f"Stärke {staerke} mm, Punktabstand {abstand} mm, {prozess['wall_loops']} Wände, Außenwand zuletzt. "
+                    f"Trägt je Seite bis {staerke} mm auf – Passflächen und Bohrungen werden entsprechend enger. Deckflächen bleiben glatt.")
     for ex in a.extra:
         k, v = ex.split("=", 1); prozess[k.strip()] = v.strip()
     # Druckplatte: bestimmt die Betttemperatur (Cool Plate = 35 °C bei PLA!). Kommt aus drucker/*.json.
@@ -434,6 +455,7 @@ def main():
                f"- Schichthöhe: {a.schicht} mm ({a.stufe})",
                f"- Füllung: {a.infill} %",
                f"- Wände: {a.waende or 'Profil-Standard'}",
+               *([f"- Raue Oberfläche (Fuzzy Skin): {rau_text}"] if rau_text else []),
                f"- Stützen: {a.stuetzen}",
                f"- Brim: {a.brim}",
                f"- Düsentemperatur: {duese} °C, Bett: {bett} °C", "",
@@ -464,7 +486,7 @@ def main():
     info = {**info_koepfe, "name": a.name, "drucker": cfg["kurz"], "drucker_name": cfg["name"], "datum": datum,
             "ordner": ziel.name, "gcode": gname, "zeit": zeit, "gramm": gramm, "meter": meter,
             "duese": duese, "bett": bett, "schicht": a.schicht, "stufe": a.stufe, "infill": a.infill,
-            "duese_mm": a.duese or "0.4", **({"duesen_mm": duesen_mix[:slots]} if duesen_mix else {}), "waende": a.waende, "stuetzen": a.stuetzen, "brim": a.brim, "gemischt": gemischt,
+            "duese_mm": a.duese or "0.4", **({"duesen_mm": duesen_mix[:slots]} if duesen_mix else {}), "waende": a.waende, **({"rau": a.rau} if a.rau else {}), "stuetzen": a.stuetzen, "brim": a.brim, "gemischt": gemischt,
             "slots": [{"slot": s_, "material": belegt[s_],
                        "farbe": farben[s_ - 1] if s_ - 1 < len(farben) else ""} for s_ in range(1, slots + 1)],
             "teile": [{"datei": Path(st).name, "slot": t[2]} for t, st in zip(teile, stls)],
