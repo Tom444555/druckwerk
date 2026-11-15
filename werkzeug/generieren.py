@@ -18,7 +18,8 @@ MAX_MB = 95                    # GitHub lehnt Dateien > 100 MB ab
 MAX_DREIECKE = 400_000         # reicht für FDM (0,4-mm-Düse) und bleibt am Handy bedienbar
 BILD_MAX_MB = 8                # Grenze von Hunyuan; Fotos kommen aus der App auf 1536 px verkleinert
 
-# Endpunkte und Felder nach fal-Doku (llms.txt, abgerufen 15.11.2026); Preise in US-Dollar je Lauf
+# Endpunkte und Felder nach fal-Doku (llms.txt, abgerufen 15.11.2026; am 15.11. nachmittags erneut gegen die Doku geprüft:
+# Endpunkte, Feldnamen, Rodin-Stufen, Ausgabefelder stimmen); Preise in US-Dollar je Lauf
 DIENSTE = {
     "trellis2": {"name": "TRELLIS.2", "ep": "fal-ai/trellis-2", "bilder": 1,
                  "preis": {"schnell": 0.25, "standard": 0.30, "hoch": 0.35}},
@@ -143,7 +144,15 @@ def fal_erzeugen(A, aus: Path, log):
             if A["text"]: arg["prompt"] = A["text"]
         else:
             arg = {k: u for k, u in zip(HUNYUAN_ANSICHT, urls)}
-        res = fal_client.subscribe(d["ep"], arguments=arg, with_logs=False, client_timeout=1800)
+        try:
+            res = fal_client.subscribe(d["ep"], arguments=arg, with_logs=False, client_timeout=1800)
+        except Exception as e:
+            # fal-Doku nennt resolution im Schema als Text ("1024"), im Beispiel als Zahl – bei Ablehnung einmal als Text versuchen
+            if A["dienst"] == "trellis2" and getattr(e, "status_code", None) == 422 and isinstance(arg.get("resolution"), int):
+                log("fal.ai lehnt die Eingabe ab – zweiter Versuch mit Auflösung als Text")
+                arg["resolution"] = str(arg["resolution"])
+                res = fal_client.subscribe(d["ep"], arguments=arg, with_logs=False, client_timeout=1800)
+            else: raise
     except Fehler: raise
     except Exception as e:
         if type(e).__name__ == "MissingCredentialsError": raise Fehler("Schlüssel fehlt: Secret FAL_KEY ist leer.")

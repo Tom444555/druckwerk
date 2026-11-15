@@ -17,6 +17,8 @@
 - **Gratis-KI im Chat (neu):** `python3 werkzeug/ki_lokal.py bild.png --name n --ziel-mm 120 --aus /tmp/n` – TripoSR ohne Grafikkarte, Einrichten ~2 Min., dann ~2 Min. je Bild
   inkl. `ki_rohling.py`. Grob (Entwurf, kompakte Figuren; dünne Teile fehlen). Getestet mit zwei Beispielbildern des Modells, **nichts gedruckt, noch kein Foto von Tom**.
   TRELLIS.2/Hunyuan/Rodin/Meshy laufen hier nicht (GPU nötig) → dafür weiter fal.ai (Schlüssel fehlt), MakerLab oder Meshy.
+- **fal.ai-Code gegengeprüft (15.11. nachmittags):** `werkzeug/generieren.py` stimmt mit der aktuellen fal-Doku überein (Endpunkte, Feldnamen, Rodin-Stufen, Ausgabefelder,
+  fal-client 1.0.3 ist aktuell). Einzige Unklarheit: TRELLIS.2 `resolution` als Zahl oder Text → bei 422 jetzt automatisch zweiter Versuch als Text. Echter Lauf weiter ungetestet.
 - **Videos (neu):** My Engines DE „Technische Filamente“ (PA12-CF, PC-PBT-CF, ASA-CF mit wenig Verzug; PETG außen + TPU innen hält; Stützen bei Faser-Material kaum lösbar →
   stützfrei konstruieren) und Der Druckt Schon Wieder „Meshy 3D Agent“ (bemalte 3MF mit ≤ 4 Farben → `druck.py --bemalt`, ungetestet). Lehren stehen in CLAUDE.md
   („Lehren aus Videos zum Creator 5 Pro“), `wissen/filamente.json`, `wissen/c5pro.json`, `wissen/workflow.json`, `werkzeug/KI_MODELLE.md`.
