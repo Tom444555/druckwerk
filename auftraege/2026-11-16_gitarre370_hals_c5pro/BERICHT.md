@@ -15,6 +15,13 @@
 | 3 | PLA | schwarz | Flashforge PLA Basic @FF C5P |
 | 4 | PLA | silber | Flashforge PLA Basic @FF C5P |
 
+## Teil 2 von 2: Hals mit Kopfplatte und Zapfen – Fassung mit Kegellöchern für drehbare Steckwirbel
+
+- Köpfe: 1 Grau, 2 Weinrot, 3 Schwarz, 4 Silber oder Hellgrau (Bünde, Ziffern). Liegt schräg auf dem Bett (251 mm lang).
+- Statt fester Achsen sechs Kegellöcher durch Kopfplatte und Gehäuse; die Wirbel kommen aus dem Auftrag `2026-11-16_gitarre370_wirbel_c5pro`.
+- Decke der Kopfplatte: Weinrot als 0,16 mm dünne Haut über dem schwarzen Muster. Stützen unter Halsrücken und Kopfplatte; der Zapfen steht auf dem Bett.
+- 0,25-mm-Düse, Schicht 0,08 mm, feinste Einstellungen wie beim Korpus. Nur gerechnet.
+
 ## Einstellungen
 
 - Düse: 0.25 mm (alle Köpfe)

@@ -296,7 +296,7 @@ def main():
     if slots > cfg["farben_max"]:
         raise SystemExit(f"{cfg['name']} kann max. {cfg['farben_max']} Farben/Köpfe.")
     for s in range(1, slots + 1):
-        belegt.setdefault(s, belegt[1])
+        belegt.setdefault(s, belegt.get(1) or next(iter(belegt.values())))   # auch wenn Kopf 1 unbenutzt ist
         if belegt[s] not in cfg["filamente"]:
             raise SystemExit(f"Material {belegt[s]} unbekannt für {cfg['name']}. Möglich: {list(cfg['filamente'])}")
 
