@@ -52,7 +52,12 @@
   Gitarren, Lizenz unbekannt → **nicht im Lager**, nur zum Abgleich benutzt). Ergebnis: der aus dem Foto vermessene Umriss deckt sich mit der CAD-T-Form auf wenige mm; echte
   Unterschiede nur am Cutaway/Horn (bei Toms Gitarre tiefer und kürzer). Übernommen: Korpusbreite 320 mm (`--breite`), Umriss stärker geglättet, Foto-Nase am Gurtknopf weg.
   Nachtrag 13:25 Uhr: nach Toms Nahaufnahme der Decke Muster wolkiger und zerklüfteter (`--wolken 1` = 38 % dunkel, wie Nahaufnahme; `2` = ruhiger; `0` = ohne),
-  Klingenschalter mit zwei Schrauben und schrägem Hebel, Regler unten glatt mit vier Rillen oben. Vorschau 3 an Tom, **Ja zum Slicen steht noch aus**.
+  Klingenschalter mit zwei Schrauben und schrägem Hebel, Regler unten glatt mit vier Rillen oben. Vorschau 3 an Tom.
+  **Gesliced 13:30 Uhr auf Toms Ja:** Auftrag `2026-11-16_gitarre_rundum_c5pro` – 2 h 09 min, 31 g (grau 19,3 · rot 4,1 · schwarz 7,6 · weiß 0,2), Schicht 0.12, Füllung 15 %,
+  Stützen auto (nur unter Hals, Kopfplatte, Bauch-Ausfräsung, Gurtknopf; über der Decke keine – Regler-Rillen dafür unten 45° angeschrägt, Hebel steiler), Arachne-Zusätze,
+  143 Kopfwechsel, Köpfe 1 grau · 2 rot · 3 schwarz · 4 weiß. In den Schichten geprüft: Ziffern III–XVII lesbar, XIX/XXI nur als Punkte. **Nicht gedruckt.**
+  Toms Angabe: die drei Vergleichsdateien stammen von GrabCAD und seien frei – sie liegen trotzdem nicht im Lager (nur verglichen). Mögliche nächste Wünsche: größer (bis ~240 mm),
+  Saiten, schwarzer Rand um die Decke, Ständer dazu.
 - **Grenze Text zu Bild (15.11. nachts):** `bild_ki.py` ohne Schlüssel taugt nur für freie Figuren (Eule gut). Technische/reale Gegenstände (Test: Pistole, Karabiner, Toms
   Gitarre) werden unbrauchbar, die Ampel merkt das nicht → Foto, fertiges Modell, Foto-Scan oder eigene Konstruktion.
 - **Foto-Scan (16.11., Plan, noch nichts geliefert):** Tom probiert Photogrammetrie selbst: Canon 5D Mark IV + Softboxen, Windows-Laptop Gigabyte G5 KD (RTX 3060 6 GB, 16 GB RAM)
@@ -62,7 +67,7 @@
 - **Bekannte Lücken:** Stützen kommen vom aktiven Kopf;
   WLAN-Senden, Abgleich iPhone↔iPad, Auftrag ohne Chat offen (Vorschläge in `wissen/workflow.json`).
 - **Toms Geschmack:** detailreich, geschwungen, naturnah, breit statt hoch; Farben schwarz/gold/rot/weiß; erst schnelle Vorschau, kurze Antworten. Will Modellqualität „wie Hyper3D“.
-- **Nächste Schritte:** 1) Toms Ja/Wünsche zur Gitarre rot-schwarz → slicen (Schicht 0.12, Arachne-Zusätze). 2) Erstes Meshroom-ZIP von Tom verarbeiten. 3) Toms Auswahl aus
+- **Nächste Schritte:** 1) Toms Rückmeldung zum Druck der Gitarre rundum (`2026-11-16_gitarre_rundum_c5pro`); die flache `gitarre_rotschwarz.py` ist nicht gesliced und wohl überholt. 2) Erstes Meshroom-ZIP von Tom verarbeiten. 3) Toms Auswahl aus
   den acht Text-zu-Bild-Vorschlägen. 4) Rückmeldung zu den Claude-Links am iPhone/iPad. 5) Vox-Lizenz klären. 6) `FAL_KEY` → erster echter KI-Lauf; erste Meshy-3MF durch `--bemalt`.
   7) Kalibrier-Set drucken → Spiele in `profi.py`/`baukasten.scad`, Herkunft „Gerät“; evtl. Fuzzy-Skin-Testraster als Teil 6. 8) Gitarrenhalter aus `modelle/profi/` slicen, wenn gewünscht.
 

@@ -201,13 +201,13 @@ def main():
         schwarz += [prisma(rt, zs - 0.3, zs + 5), prisma(rt.offset(-0.05) - schlitz, zs + 4.7, zs + 8)]
     for q in regler:                                                                   # Regler: unten glatt, oben vier Rillen, flache Kuppe
         r = 9.5; g = p(0.28)
-        schwarz += [prisma(kreis(r).translate(q), T_B - 0.3, T_B + 9.5), prisma(kreis(r - g).translate(q), T_B + 9.2, T_B + 18.0)]
+        schwarz += [prisma(kreis(r).translate(q), T_B - 0.3, T_B + 9.5), prisma(kreis(r - g).translate(q), T_B + 9.2, T_B + 18.4)]
         for j in range(4):
-            z0 = T_B + 10.4 + j * 2.0
-            schwarz.append(prisma(kreis(r).translate(q), z0, z0 + 1.15))
-        schwarz.append(prisma(kreis(r - g - p(0.3)).translate(q), T_B + 17.7, T_B + 19.2))
+            z0 = T_B + 10.9 + j * 2.0
+            schwarz.append(M.cylinder(g, r - g, r, 40).translate((q[0], q[1], z0 - g)) + prisma(kreis(r).translate(q), z0 - 0.02, z0 + 1.15))   # Rille unten 45° → keine Stützen
+        schwarz.append(prisma(kreis(r - g - p(0.3)).translate(q), T_B + 18.1, T_B + 19.6))
     for q in (sA, sB): schwarz.append(prisma(kreis(p(0.55), 20).translate(tuple(q)), T_B - 0.3, T_B + p(0.24)))
-    fuss_s, kopf_s = sA + 0.72 * (sB - sA), sA + 0.26 * (sB - sA)
+    fuss_s, kopf_s = sA + 0.70 * (sB - sA), sA + 0.42 * (sB - sA)             # Hebel steiler als 45° → keine Stützen
     schwarz.append(prisma(kreis(p(0.27), 16).translate(tuple(fuss_s)), T_B - 0.3, T_B + 3.5))
     schwarz.append(M.batch_hull([M.sphere(p(0.6), 20).translate((fuss_s[0], fuss_s[1], T_B + 0.3 + p(0.6))), M.sphere(p(0.45), 20).translate((kopf_s[0], kopf_s[1], T_B + 12.5))]))
     # ---------------- Gurtknöpfe und Buchse an der Zarge ----------------
@@ -221,7 +221,7 @@ def main():
         k, s_ = gurt(am_rand(ziel), n); schwarz.append(k); schneider.append(s_)
     bp = am_rand((118, 28)); mitte = np.array([0.0, Y(690)]); nb = (bp - mitte); nb /= np.linalg.norm(nb)
     b3, n3 = np.array([bp[0], bp[1], T_B / 2]), np.array([nb[0], nb[1], 0.0])
-    buchse = zylinder(9.5, b3 - 3.0 * n3, b3 + p(0.45) * n3, 40) - zylinder(p(0.8), b3 - 2.4 * n3, b3 + 5 * n3, 24)
+    buchse = zylinder(9.5, b3 - 3.0 * n3, b3 + p(0.2) * n3, 40) - zylinder(p(0.8), b3 - 2.4 * n3, b3 + 5 * n3, 24)
     schwarz.append(buchse); schneider.append(zylinder(9.5, b3 - 3.0 * n3, b3 + 30 * n3, 40))
 
     # ---------------- Griffbrett, Bünde, Ziffern, Sattel ----------------
