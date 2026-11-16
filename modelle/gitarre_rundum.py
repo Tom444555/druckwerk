@@ -125,9 +125,24 @@ def ziffer(text, h, t_min, breite_max):
     return vereint2(teile).translate((-ges / 2, -h / 2))
 
 
+def wolken_rauschen(cs, saat, anteil, korn, res=0.5):
+    """Wolkige Flecken (Rauschen, Korn in echten mm) innerhalb der Fläche cs – für Stellen ohne Foto-Vorlage (Kopfplatte)."""
+    from scipy import ndimage
+    from skimage import measure
+    x0, y0, x1, y1 = cs.bounds(); b, h = int((x1 - x0) / res) + 8, int((y1 - y0) / res) + 8
+    rng = np.random.default_rng(saat)
+    f = sum(w * ndimage.gaussian_filter(rng.standard_normal((h, b)), s / res) / ndimage.gaussian_filter(rng.standard_normal((h, b)), s / res).std() for w, s in ((1.0, korn), (0.7, korn / 2.2), (0.4, korn / 5)))
+    m = np.pad(f > np.quantile(f, 1 - anteil), 1)
+    pl = [np.stack([c[:, 1] * res + x0 - 5 * res, c[:, 0] * res + y0 - 5 * res], 1) for c in measure.find_contours(m.astype(float), 0.5) if len(c) > 8]
+    return CS(pl, m3.FillRule.EvenOdd) ^ cs if pl else CS()
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--laenge", type=float, default=200.0); ap.add_argument("--wolken", type=int, default=3, help="0 keine · 1 grob · 2 ruhig · 3 fein (wie im Bild, für Dunkelrot)")
+    ap.add_argument("--laenge", type=float, default=200.0); ap.add_argument("--wolken", type=int, default=3, help="0 keine · 1 grob · 2 ruhig · 3 fein (wie im Bild, für Dunkelrot) · 4 feinste Auflösung des Fotos (ab ~300 mm)")
+    ap.add_argument("--armschraege", type=float, default=0.33, help="Abflachung der Decke unter dem Unterarm (Bassseite, unterer Bogen): Steigung, 0 = aus")
+    ap.add_argument("--teilen", type=int, default=0, help="1 = zwei Steckteile: Korpus mit Schlitz + Hals mit durchgehendem Zapfen (für Längen über 250 mm)")
+    ap.add_argument("--spiel", type=float, default=0.12, help="Spiel der Steckverbindung je Seite im Druckmaß (mm)")
     ap.add_argument("--duese", type=float, default=0.25, help="Düse, auf die die Feinheiten abgestimmt werden: 0.25 (alle Köpfe, Standard seit 16.11.) oder 0.4")
     ap.add_argument("--breite", type=float, default=320.0, help="größte Korpusbreite in echten mm")
     ap.add_argument("--bauch", type=int, default=1, help="Bauch-Ausfräsung auf der Rückseite (braucht Stützen)")
@@ -137,7 +152,7 @@ def main():
     # Quermaß des Korpus: aus dem Bild 316 mm, Maßblatt 320 mm, Vergleichs-CAD einer T-Form 324 mm → auf 320 mm gestellt (Hals und Mittelteile bleiben)
     QX = a.breite / 316.0
     for kx in ("korpus", "regler", "schalter", "gurt"): D[kx] = [[q[0] * QX, q[1]] for q in D[kx]]
-    for kx in ("wolken", "wolken_viel", "wolken_fein"): D[kx] = [[[q[0] * QX, q[1]] for q in pl] for pl in D[kx]]
+    for kx in ("wolken", "wolken_viel", "wolken_fein", "wolken_max"): D[kx] = [[[q[0] * QX, q[1]] for q in pl] for pl in D[kx]]
     S_END = D["s_ende"]; Y = lambda s: S_END - s
     F0 = a.laenge / 978.0; p = lambda mm: mm / F0                 # Druckmaß → echtes Maß
     D25 = a.duese < 0.3; FEIN = 0.28 if D25 else 0.46                               # dünnster Strich im Druck
@@ -159,15 +174,19 @@ def main():
     PU = [D["tonabnehmer"][0][1], D["tonabnehmer"][1][1]]
     steg_fl = rechteck(84, 43, 3).translate((0, Y(MENSUR + 13.5)))
     regler = [(q[0], Y(q[1])) for q in D["regler"]]
+    RS = max(3.0, p(0.45)); kreuze = []                                                # Schraubenkopf-Radius; Kreuzschlitze werden am Ende ausgeschnitten
+    def kreuz(x, y, z_oben, r):
+        b, t_ = p(0.2), p(0.16)
+        for w in (0, 90): kreuze.append(M.cube((1.3 * r, b, t_ + 5)).translate((-0.65 * r, -b / 2, 0)).rotate((0, 0, w + 20)).translate((x, y, z_oben - t_)))
     sA, sB = (np.array(xy(q)) for q in D["schalter"])                                  # Klingenschalter: zwei Schrauben, dazwischen Schlitz mit Hebel
-    schlitz = vereint2([strich(sA + 0.24 * (sB - sA), sA + 0.76 * (sB - sA), p(0.55))] + [kreis(p(0.55), 20).translate(tuple(q)) for q in (sA, sB)])
+    schlitz = vereint2([strich(sA + 0.24 * (sB - sA), sA + 0.76 * (sB - sA), p(0.55))] + [kreis(RS, 20).translate(tuple(q)) for q in (sA, sB)])
     gb_ende = bund_s(24) + 7.0
     gb = poly([(-21, Y(0)), (21, Y(0)), (halb(gb_ende), Y(gb_ende)), (-halb(gb_ende), Y(gb_ende))])
     hals_fl = poly([(-halb(380) - 0.02, Y(380)), (halb(380) + 0.02, Y(380)), (halb(gb_ende) + 0.02, Y(gb_ende) - 0.02), (-halb(gb_ende) - 0.02, Y(gb_ende) - 0.02)])
     koepfe = vereint2([kreis(2.4, 16).translate(((i - 2.5) * 10.5, Y(MENSUR + 36.0))) for i in range(6)])
     hw = vereint2([pu_fuss(s) for s in PU] + [steg_fl, koepfe] + [kreis(9.5).translate(q) for q in regler] + [schlitz])
     innen = K.offset(-(p(0.38 + 0.45) if a.duese < 0.3 else SLAB + p(0.9)), RUND, 2.0, 24)
-    wl = {2: D["wolken_viel"], 3: D["wolken_fein"]}.get(a.wolken, D["wolken"])
+    wl = {2: D["wolken_viel"], 3: D["wolken_fein"], 4: D["wolken_max"]}.get(a.wolken, D["wolken"])
     W = CS()
     if a.wolken:
         W = CS([np.array([xy(q) for q in pl]) for pl in wl], m3.FillRule.EvenOdd) ^ innen
@@ -194,7 +213,7 @@ def main():
     kern = vereint([prisma(K.offset(-FASE - 0.9, RUND, 2.0, 24), 0, z_slab), band(K, [(FASE, 0.0), (0.0, FASE), (0.0, z_slab)], FASE + 1.5)])
     grau.append(prisma(hals_fl, z_slab - 0.5, ZFB))
     # Rückseite: Deckel und sechs Saitenhülsen (schwarz, bündig)
-    deckel = rechteck(38, 100, 18).translate((92, Y(661)))
+    deckel = rechteck(38, 100, 18).translate((92, Y(661))) - vereint2([kreis(max(2.0, p(0.3)), 14).translate((92 + dx, Y(661) + dy)) for dx in (-11, 11) for dy in (-36, 36)])
     huelsen = vereint2([kreis(p(0.8), 24).translate(((i - 2.5) * 10.5, Y(MENSUR + 11))) for i in range(6)])
     schwarz.append(prisma(deckel + huelsen, 0, E)); schneider.append(prisma(deckel + huelsen, -5, E))
     if a.bauch:                                                                         # Bauch-Ausfräsung: flache Mulde am oberen Bogen der Bassseite
@@ -205,15 +224,17 @@ def main():
     for i, s in enumerate(PU):
         hoch = T_B + (9.0 if i == 0 else 10.5); c = (0, Y(s))
         schwarz.append(prisma(rechteck(70, 38, 3).translate(c), T_B - 0.3, T_B + 3))
+        for sx_ in (-40.5, 40.5):
+            schwarz.append(M.sphere(2.6, 16).scale((1, 1, 0.5)).translate((sx_, Y(s), T_B - 0.02))); kreuz(sx_, Y(s), T_B + 1.28, 2.6)
         for dy in (-9.6, 9.6):
             sp = rechteck(68, 18.2, 9.0).translate((0, Y(s) + dy))
             ring = sp.offset(-p(0.5), RUND, 2.0, 24) - sp.offset(-p(1.0), RUND, 2.0, 24)
             schwarz += [prisma(sp, T_B + 2.7, hoch - E), prisma(sp.offset(-0.05) - ring.offset(FUGE), hoch - E - 0.3, hoch)]
             rot.append(prisma(ring, hoch - E, hoch))
-            pole = vereint2([kreis(p(0.42), 16).translate(((j - 2.5) * 10.2, Y(s) + dy)) for j in range(6)])
+            pole = vereint2([kreis(max(2.3, p(0.38)), 16).translate(((j - 2.5) * 10.2, Y(s) + dy)) for j in range(6)])
             schwarz.append(prisma(pole, hoch - 0.3, hoch + p(0.24)))
     # --- Brücke nach Toms Nahaufnahme: Grundplatte, hochgezogene Rückwand mit runden Ecken, sechs U-förmige Reiter, Federn, Schraubenköpfe hinten ---
-    zs = T_B + 3.2; ys = Y(MENSUR + 13.5); WD = p(1.6 * FEIN)                          # WD = Wandstärke der Rückwand
+    zs = T_B + 3.2; ys = Y(MENSUR + 13.5); WD = max(2.4, p(1.6 * FEIN))                          # WD = Wandstärke der Rückwand
     platte = rechteck(84, 43, 3).translate((0, ys))
     schwarz.append(prisma(platte.offset(-0.05), T_B - 0.3, zs))
     wand = platte - rechteck(84 - 2 * WD, 43, 2).translate((0, ys + WD + 9))           # Rückwand und kurze Seitenwangen
@@ -230,9 +251,11 @@ def main():
         for dx in (-2.6, 2.6): schwarz.append(prisma(kreis(p(0.6 * FEIN), 10).translate((x + dx, Y(MENSUR - 4.2))), zs + 7.1, zs + 7.4 + p(0.16)))   # zwei Madenschrauben
         yf0, yf1 = Y(MENSUR + 29.5), Y(MENSUR + 17.5)                                   # Feder zwischen Reiter und Rückwand
         schwarz.append(prisma(rechteck(3.0, yf1 - yf0 + 1.5).translate((x, (yf0 + yf1) / 2)), zs - 0.3, zs + 3.4))
-        for j in range(5): schwarz.append(prisma(rechteck(4.6, p(0.95 * FEIN)).translate((x, yf0 + 1.6 + j * (yf1 - yf0 - 3.2) / 4)), zs - 0.3, zs + 4.4))
+        nf = max(5, min(9, int((yf1 - yf0 - 2) / (2.1 * p(0.95 * FEIN)))))                                           # so viele Windungen, wie die Düse trennen kann
+        for j in range(nf): schwarz.append(prisma(rechteck(4.6, p(0.95 * FEIN)).translate((x, yf0 + 1.6 + j * (yf1 - yf0 - 3.2) / (nf - 1))), zs - 0.3, zs + 4.4))
         yk = Y(MENSUR + 36.0)                                                           # Schraubenkopf hinter der Rückwand (als Zapfen bis zur Decke, damit nichts frei schwebt)
         schwarz += [prisma(kreis(2.4, 16).translate((x, yk)), T_B - 0.3, zs + 5.2), M.sphere(2.4, 16).scale((1, 1, 0.6)).translate((x, yk, zs + 5.2))]
+        kreuz(x, yk, zs + 5.2 + 0.6 * 2.4, 2.4)
     # --- Regler: unten glatt, drei schmale Ringe, oben Kappe mit Fase, Madenschraube seitlich ---
     for q in regler:
         r = 9.5; g = p(0.8 * FEIN); kz = lambda r0, r1, z0, z1: M.cylinder(z1 - z0, r0, r1, 48).translate((q[0], q[1], z0))
@@ -244,13 +267,15 @@ def main():
         ri = np.array([0.55, -0.83]); m0 = np.array([q[0], q[1], T_B + 4.2]); r3 = np.array([ri[0], ri[1], 0.0])
         schwarz.append(knopf - zylinder(p(0.6 * FEIN), m0 + (r - 2.0) * r3, m0 + (r + 3) * r3, 12))
     # --- Klingenschalter: zwei Schrauben, Schlitz, dünner heller Schaft, schwarze Kegelkappe ---
-    for q in (sA, sB): schwarz += [prisma(kreis(p(0.55), 20).translate(tuple(q)), T_B - 0.3, T_B + p(0.16)), M.sphere(p(0.55), 20).scale((1, 1, 0.45)).translate((q[0], q[1], T_B + p(0.16)))]
+    for q in (sA, sB):
+        schwarz += [prisma(kreis(RS, 20).translate(tuple(q)), T_B - 0.3, T_B + p(0.16)), M.sphere(RS, 20).scale((1, 1, 0.45)).translate((q[0], q[1], T_B + p(0.16)))]
+        kreuz(q[0], q[1], T_B + p(0.16) + 0.45 * RS, RS)
     ach = (sA - sB) / np.linalg.norm(sA - sB); w = math.radians(66)                     # Hebel lehnt zur oberen Schraube, 66° steil (stützfrei)
     ri3 = np.array([ach[0] * math.cos(w), ach[1] * math.cos(w), math.sin(w)])
     f0 = np.array([*(sA + 0.62 * (sB - sA)), T_B - 0.3])
-    schaft = zylinder(p(0.8 * FEIN), f0, f0 + 9.5 * ri3, 14)
-    kappe = M.batch_hull([M.sphere(p(0.8 * FEIN) + 0.05, 16).translate(tuple(f0 + 9.3 * ri3)), M.sphere(p(0.6), 20).translate(tuple(f0 + 16.0 * ri3)),
-                          M.sphere(p(0.34), 16).translate(tuple(f0 + 21.5 * ri3))])                 # Kegel weitet sich flach genug für den Druck ohne Stützen
+    RSCH = max(1.2, p(0.8 * FEIN)); schaft = zylinder(RSCH, f0, f0 + 9.5 * ri3, 14)
+    kappe = M.batch_hull([M.sphere(RSCH + 0.05, 16).translate(tuple(f0 + 9.3 * ri3)), M.sphere(max(3.0, p(0.5)), 20).translate(tuple(f0 + 16.0 * ri3)),
+                          M.sphere(max(1.7, p(0.3)), 16).translate(tuple(f0 + 21.5 * ri3))])                 # Kegel weitet sich flach genug für den Druck ohne Stützen
     schwarz.append(kappe); schaft_k = schaft - kappe
     # ---------------- Gurtknöpfe und Buchse an der Zarge ----------------
     def gurt(pt, n):
@@ -267,7 +292,7 @@ def main():
     schwarz.append(buchse); schneider.append(zylinder(9.5, b3 - 3.0 * n3, b3 + 30 * n3, 40))
 
     # ---------------- Griffbrett, Bünde, Ziffern, Sattel ----------------
-    wb = p(0.55); bund_fl = []
+    wb = max(2.8, p(0.3)); bund_fl = []
     for n in range(1, N_BUND + 1):
         s = bund_s(n); bund_fl.append(rechteck(2 * (halb(s) - 0.02), wb).translate((0, Y(s))))
     buende = vereint2(bund_fl)
@@ -279,8 +304,8 @@ def main():
         zf.append(g.translate((0, Y((s0 + s1) / 2))))
     ziffern = vereint2(zf) ^ gb.offset(-p(0.3))
     schwarz += [prisma(gb, ZFB, ZF - E), prisma(gb.offset(-0.05) - (buende + ziffern).offset(FUGE, RUND), ZF - E - 0.3, ZF)]
-    weiss += [prisma(buende, ZF - E, ZF + p(0.3)), prisma(ziffern, ZF - E, ZF)]
-    schwarz.append(prisma(rechteck(42, 5.2).translate((0, Y(-2.3))), ZFB, ZF + p(0.36)))          # Sattel (schwarz)
+    weiss += [prisma(buende, ZF - E, ZF + max(0.6, p(0.16))), prisma(buende.offset(-0.2 * wb), ZF - 0.1, ZF + max(1.3, p(0.3))), prisma(ziffern, ZF - E, ZF)]
+    schwarz.append(prisma(rechteck(42, 5.2).translate((0, Y(-2.3))), ZFB, ZF + max(2.6, p(0.36))))          # Sattel (schwarz)
 
     # ---------------- Hals (grau): Schnitte, konvex verbunden ----------------
     def schnitt(s, n=30, d=None, e=0.75):
@@ -296,7 +321,7 @@ def main():
     grau.append(vereint([M.hull_points(np.vstack([a_, b_])) for a_, b_ in zip(fs[:-1], fs[1:])] + [M.batch_hull([M.hull_points(fs[-1]), fuss])]) - frei)
     # rote Streifen im Halsrücken (wie verleimte Streifen, von hinten eingelassen)
     zs_top = ZFB - 15.3 + p(0.7)
-    box = vereint([M.cube((p(0.62), 372, 60)).translate((x - p(0.31), Y(382), zs_top - 60)) for x in (-7.5, 7.5)])
+    SW = max(3.0, p(0.62)); box = vereint([M.cube((SW, 372, 60)).translate((x - SW / 2, Y(382), zs_top - 60)) for x in (-7.5, 7.5)])
     hals_roh = vereint(grau[1:]); streifen = hals_roh ^ box
     streifen = streifen - prisma(K.offset(3), -10, 200) ; rot.append(streifen)
     grau = [grau[0], hals_roh - (box ^ prisma(CS.square((100, 500)).translate((-50, Y(382) - 0.01)) - K.offset(3), -100, 200))]
@@ -307,10 +332,16 @@ def main():
     ko = glatt(ko + rechteck(40, 8).translate((0.6, 9.0)), 3.0) ^ CS.square((300, 300)).translate((-150, 6.2))
     mech = [np.array([q[0], -q[1]]) for q in D["mechaniken"]]
     achse = (mech[-1] - mech[0]) / np.linalg.norm(mech[-1] - mech[0]); raus = np.array([-achse[1], achse[0]])      # zeigt nach links außen
-    scheiben = vereint2([kreis(5.4, 24).translate(tuple(m_)) for m_ in mech])
+    scheiben = vereint2([kreis(6.0, 6).rotate(15).translate(tuple(m_)) for m_ in mech])
     deckelchen = poly([(-6.5, 7.2), (6.5, 7.2), (4.2, 32), (0, 37), (-4.2, 32)]).offset(-1.5, RUND).offset(1.5, RUND).translate((0.6, 0))
     k_rot = ko.offset(-p(KR), RUND, 2.0, 24) - CS.square((300, 14.5)).translate((-150, 0)) - scheiben - deckelchen.offset(FUGE, RUND)
     kg = [prisma(ko, -KOPF_DICKE, -HS), prisma(ko - ko.offset(-p(KR), RUND, 2.0, 24) + (ko ^ CS.square((300, 14.5)).translate((-150, 0))) - deckelchen.offset(FUGE, RUND) - scheiben, -HS - 0.4, 0)]
+    kd = []
+    if D25 and a.wolken:
+        Wk = wolken_rauschen(k_rot.offset(-p(0.3), RUND), 7, 0.42, 9.0)
+        Wk = Wk.offset(p(0.13), RUND).offset(-p(0.26), RUND).offset(p(0.13), RUND)
+        Wk = vereint2([c for c in Wk.decompose() if c.area() > p(0.36) ** 2]).offset(0.07, RUND, 2.0, 12).simplify(0.06)
+        k_rot = k_rot - Wk.offset(FUGE, RUND); kd = [prisma(Wk, -HS, 0)]
     kr = [prisma(k_rot, -HS, 0)]
     ks = [prisma(deckelchen, -HS, p(0.3)), prisma(scheiben.offset(-FUGE), -HS, 1.6)]
     for m_ in mech:
@@ -326,6 +357,7 @@ def main():
     ueber = kippen(M.cube((300, 400, 80)).translate((-150, 5.5, -HS - 0.6)))                             # Übergang bleibt unter der Kopf-Deckschicht
     grau += [kippen(vereint(kg)), M.batch_hull([M.hull_points(np.vstack([schnitt(-5.5), schnitt(6)])), kippen(wurzel)]) - ueber]
     rot.append(kippen(vereint(kr))); schwarz.append(kippen(vereint(ks)))
+    if kd: dunkel.append(kippen(vereint(kd)))
 
     # ---------------- zusammensetzen ----------------
     if a.pruef:
@@ -346,11 +378,11 @@ def main():
         xs_, xn = (i - 2.5) * 10.5, (i - 2.5) * 7.0
         bohr.append(M.cylinder(T_B + 30, RL, RL, 14).translate((xs_, Y(MENSUR + 11), -5)))                                  # durch Korpus und Reiter-Langloch
         bohr.append(M.cube((KB, 8, 6)).translate((xs_ - KB / 2, Y(MENSUR + 0.3) - 4, zs + 8.3 - p(0.2))))                   # Kerbe in der Saitenauflage
-        bohr.append(M.cube((KB, 9, 6)).translate((xn - KB / 2, Y(-2.3) - 4.5, ZF + p(0.36) - p(0.22))))                     # Kerbe im Sattel
+        bohr.append(M.cube((KB, 9, 6)).translate((xn - KB / 2, Y(-2.3) - 4.5, ZF + max(2.6, p(0.36)) - p(0.22))))                     # Kerbe im Sattel
         v = mech[i] - np.array([xn, 2.0]); v /= np.linalg.norm(v); hq = mech[i] - 6.2 * v                                   # Loch kurz vor der Mechanik-Achse
         bohr.append(kippen(M.cylinder(KOPF_DICKE + 30, RL, RL, 14).translate((hq[0], hq[1], -KOPF_DICKE - 18))))
-    bohr = vereint(bohr)
-    rot_k, schwarz_k, weiss_k = vereint(rot), vereint(schwarz) - zylinder(p(0.8 * FEIN), f0 - 3 * ri3, f0 + 9.5 * ri3, 14), vereint(weiss)
+    bohr = vereint(bohr + kreuze)
+    rot_k, schwarz_k, weiss_k = vereint(rot), vereint(schwarz) - zylinder(RSCH, f0 - 3 * ri3, f0 + 9.5 * ri3, 14), vereint(weiss)
     grau.append(schaft_k - prisma(CS.square((900, 1200)).translate((-450, -100)), -50, z_slab))
     grau_k = vereint([kern - vereint(schneider)] + grau)
     koerper = {"grau": grau_k, "rot": rot_k, "schwarz": schwarz_k, "weiss": weiss_k}
@@ -366,19 +398,53 @@ def main():
                         vv = (k1 ^ k2).volume()
                         if vv > 0.3: print("     ", namen[i], ii, namen[j], jj, round(vv, 1))
             if v > 0.5: print(f"  Überschneidung {namen[i]}/{namen[j]}: {v:.1f} mm³ (echt)")
+    if a.armschraege > 0:                                                               # Decke fällt zum Rand hin weich ab; alle Farben werden gemeinsam verformt
+        A1, A2 = np.array([-98.0, 6.0]), np.array([-140.0, 200.0]); ri_ = (A2 - A1) / np.linalg.norm(A2 - A1); nrm_ = np.array([ri_[1], -ri_[0]]) * -1
+        if nrm_[0] > 0: nrm_ = -nrm_
+        def senken(v):
+            v = np.array(v, float); u = np.clip((v[:, 0] - A1[0]) * nrm_[0] + (v[:, 1] - A1[1]) * nrm_[1], 0, None)
+            lang = (v[:, 0] - A1[0]) * ri_[0] + (v[:, 1] - A1[1]) * ri_[1]                                  # zum Halsende hin läuft die Schräge aus
+            aus = np.clip((235.0 - lang) / 45.0, 0, 1) * np.clip((lang + 40.0) / 30.0, 0, 1)
+            d = a.armschraege * u * u / (u + 9.0) * aus * aus * (3 - 2 * aus)
+            v[:, 2] -= d * np.clip((v[:, 2] - 6.0) / (T_B - 6.0), 0, 1)
+            return v
+        if not a.teilen: koerper = {n: k.refine_to_length(3.0).warp_batch(senken) for n, k in koerper.items()}
     boden = M.cube((2000, 3000, 200)).translate((-1000, -500, -200))                                   # Mechaniken enden plan auf dem Bett
     koerper = {n: k - boden for n, k in koerper.items()}
     alle = vereint(list(koerper.values())); bb = alle.bounding_box()
     f = a.laenge / (bb[4] - bb[1]); print(f"Gesamtlänge echt {bb[4] - bb[1]:.0f} mm → Faktor {f:.4f} (Maßstab 1:{1 / f:.2f}); Annahme war {F0:.4f}")
     ziel = Path(a.ziel); ziel.mkdir(parents=True, exist_ok=True)
-    for n, k in koerper.items():
-        k = k.translate((-(bb[0] + bb[3]) / 2, -bb[1], -bb[2])).scale((f, f, f))
-        teile = [t_ for t_ in k.decompose() if t_.volume() > 0.004]
-        k = vereint(teile)
-        me = k.to_mesh(); t = trimesh.Trimesh(me.vert_properties[:, :3], me.tri_verts, process=True)
-        t.update_faces(t.nondegenerate_faces()); t.remove_unreferenced_vertices()        # in 32 Bit zusammengefallene Punkte: leere Dreiecke weg
-        pf = ziel / f"{a.name}_{n}.stl"; t.export(pf)
-        print(f"{pf.name}: dicht={t.is_watertight}, {t.volume / 1000:.2f} cm³, {len(t.faces)} Dreiecke, Teile {len(teile)}, Maße {np.round(t.extents, 1).tolist()}")
+    teile_k = {"": koerper}
+    if a.teilen:                                                                        # Hals mit durchgehendem Zapfen (wie ein durchgehender Hals), Korpus mit Schlitz
+        c = a.spiel / f; hoch = lambda cs: prisma(cs, -200, 600)
+        T = poly([(-halb(360), Y(360)), (halb(360), Y(360)), (halb(gb_ende), Y(gb_ende)), (-halb(gb_ende), Y(gb_ende))])
+        aussen = CS.square((120, 900)).translate((-60, 250))
+        T = T.offset(0.06, m3.JoinType.Miter)                                              # knapp breiter als das Griffbrett, sonst liegen Schnitt und Halsflanke deckungsgleich
+        N = hoch(T) + hoch(aussen - K.offset(c, RUND, 2.0, 24)); N_fett = hoch(T.offset(c, m3.JoinType.Miter)) + hoch(aussen - K)
+        hals = {n: k ^ N for n, k in koerper.items()}; korp = {n: k - N_fett for n, k in koerper.items()}
+        sw = SW; dz = p(0.6)                                             # rote Streifen laufen über Halsfuß und Zapfen weiter
+        haut = hals["grau"] - hals["grau"].translate((0.013, 0.017, dz))
+        st = haut ^ vereint([M.cube((sw, Y(382) - Y(gb_ende) - 0.9, 400)).translate((x - sw / 2, Y(gb_ende) + 0.6, -100)) for x in (-7.5, 7.5)])
+        hals["grau"] = hals["grau"] - st; hals["rot"] = hals["rot"] + st
+        v = (vereint(list(hals.values())) ^ vereint(list(korp.values()))).volume(); print(f"  Steckverbindung: Spiel {a.spiel} mm im Druck, Schnittvolumen Hals/Korpus {v:.2f} mm³")
+        if a.armschraege > 0: korp = {n: k.refine_to_length(3.0).warp_batch(senken) for n, k in korp.items()}
+        teile_k = {"korpus_": korp, "hals_": hals}
+    for vor, kk in teile_k.items():
+        ges = vereint(list(kk.values())); b2 = ges.bounding_box(); dreh = 45.0 if vor == "hals_" and (b2[4] - b2[1]) * f > 215 else 0.0
+        for n, k in kk.items():
+            if k.is_empty() or k.volume() < 1: continue
+            k = k.translate((-(b2[0] + b2[3]) / 2, -(b2[1] + b2[4]) / 2 if vor else -b2[1], -b2[2])).scale((f, f, f))
+            if dreh: k = k.rotate((0, 0, dreh))
+            teile = [t_ for t_ in k.decompose() if t_.volume() > 0.004]
+            k = vereint(teile)
+            me = k.to_mesh(); t = trimesh.Trimesh(np.asarray(me.vert_properties[:, :3], np.float64), me.tri_verts, process=False)
+            t.merge_vertices(digits_vertex=6); t.update_faces(t.nondegenerate_faces()); t.remove_unreferenced_vertices()
+            if not t.is_watertight:                                                              # Rückfall: gröber verschmelzen (in 32 Bit zusammengefallene Punkte)
+                t2 = trimesh.Trimesh(me.vert_properties[:, :3], me.tri_verts, process=True); t2.update_faces(t2.nondegenerate_faces()); t2.remove_unreferenced_vertices()
+                if t2.is_watertight: t = t2
+            if not t.is_watertight: trimesh.repair.fill_holes(t)
+            pf = ziel / f"{a.name}_{vor}{n}.stl"; t.export(pf)
+            print(f"{pf.name}: dicht={t.is_watertight}, {t.volume / 1000:.2f} cm³, {len(t.faces)} Dreiecke, Teile {len(teile)}, Maße {np.round(t.extents, 1).tolist()}")
 
 
 if __name__ == "__main__":

@@ -1,0 +1,98 @@
+{
+ "kopfwechsel": 563,
+ "koepfe_benutzt": [
+  1,
+  2,
+  3,
+  4
+ ],
+ "name": "gitarre370_hals",
+ "drucker": "c5pro",
+ "drucker_name": "Flashforge Creator 5 Pro",
+ "datum": "2026-11-16",
+ "ordner": "2026-11-16_gitarre370_hals_c5pro",
+ "gcode": "gitarre370_hals_c5pro.gcode",
+ "zeit": "11h 41m 31s",
+ "gramm": "25.81, 11.83, 17.68, 5.67",
+ "meter": "8.65 m, 3.97 m, 5.93 m, 1.90 m",
+ "duese": "210,210,210,210",
+ "bett": "60,60,60,60",
+ "schicht": "0.08",
+ "stufe": "Standard",
+ "infill": 15,
+ "duese_mm": "0.25",
+ "waende": null,
+ "stuetzen": "auto",
+ "brim": "auto",
+ "gemischt": false,
+ "slots": [
+  {
+   "slot": 1,
+   "material": "PLA",
+   "farbe": "grau"
+  },
+  {
+   "slot": 2,
+   "material": "PLA",
+   "farbe": "rot"
+  },
+  {
+   "slot": 3,
+   "material": "PLA",
+   "farbe": "schwarz"
+  },
+  {
+   "slot": 4,
+   "material": "PLA",
+   "farbe": "dunkelrot"
+  }
+ ],
+ "teile": [
+  {
+   "datei": "gitarre_rundum_hals_grau.stl",
+   "slot": 1
+  },
+  {
+   "datei": "gitarre_rundum_hals_rot.stl",
+   "slot": 2
+  },
+  {
+   "datei": "gitarre_rundum_hals_schwarz.stl",
+   "slot": 3
+  },
+  {
+   "datei": "gitarre_rundum_hals_dunkelrot.stl",
+   "slot": 4
+  },
+  {
+   "datei": "gitarre_rundum_hals_weiss.stl",
+   "slot": 4
+  }
+ ],
+ "quelle": "",
+ "teile_app": [
+  {
+   "datei": "gitarre_rundum_hals_grau.stl",
+   "slot": 1
+  },
+  {
+   "datei": "gitarre_rundum_hals_rot.stl",
+   "slot": 2
+  },
+  {
+   "datei": "gitarre_rundum_hals_schwarz.stl",
+   "slot": 3
+  },
+  {
+   "datei": "gitarre_rundum_hals_dunkelrot.stl",
+   "slot": 4
+  },
+  {
+   "datei": "gitarre_rundum_hals_weiss.stl",
+   "slot": 4
+  }
+ ],
+ "vorschau": "vorschau.png",
+ "bild_im_gcode": true,
+ "projekt": "gitarre370_hals_c5pro.3mf"
+}

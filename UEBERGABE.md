@@ -72,6 +72,16 @@
   Weiß erst ab 10,82) – das Einfügen ist Handarbeit per Python nach `druck.py`, noch kein Schalter. Deckenrand wieder rot. **Saiten zum Einfädeln** (Tom: passt): Löcher Ø 0,72 mm
   durch Korpus und Kopfplatte, Kerben in Reitern und Sattel. Auftrag neu: **6 h 26 min, 35 g**, 231 Kopfwechsel. `dunkelrot` als Farbname in `druck.py` und App (sw.js v10).
   Offen: ob `M25` am Creator 5 Pro den Spulenwechsel erlaubt, ob Tom Dunkelrot hat, Düsen-Frage (alle Köpfe 0,25?). Nicht gedruckt.
+  **Stand 15:30 Uhr – gilt (Toms Ansage: alles 0,25 mm, 370 mm, zweiteilig, „alles Machbare, auch grenzwertig“, Druckzeit egal; später auch kleiner):**
+  `python3 modelle/gitarre_rundum.py --laenge 370 --teilen 1 --wolken 4 --ziel /tmp/g6` → `…_korpus_<farbe>.stl` und `…_hals_<farbe>.stl` (Hals 45° gedreht, 251 mm lang).
+  Teilung: Hals mit **durchgehendem Zapfen** (Griffbrettbreite, bis hinter den 24. Bund, volle Korpusdicke – steht auf dem Bett), Korpus mit Schlitz, `--spiel 0.12` je Seite
+  (ungedruckt). Neu im Modell: Armschräge (`--armschraege 0.33`, weiche Verformung aller Farben per `warp_batch`; Linie A1/A2 geschätzt, nicht aus den Fotos vermessen),
+  Wolken auf der Kopfplatte (Rauschen, keine Foto-Vorlage), feinste Foto-Wolkung `--wolken 4`, Bünde in echter Breite mit Krone, höherer Sattel, Sechskant-Muttern,
+  Tonabnehmer-Schrauben, Kreuzschlitze, mehr Feder-Windungen, vier Deckel-Schrauben, rote Streifen über Halsfuß und Zapfen.
+  Aufträge: `2026-11-16_gitarre370_korpus_c5pro` (14 h 19 min, 83 g, Kopf 4 nur Dunkelrot) und `2026-11-16_gitarre370_hals_c5pro` (11 h 42 min, 61 g, Pause bei 17,62 mm:
+  Kopf 4 Dunkelrot → Weiß). Einstellungen für maximale Details stehen in beiden BERICHT.md. Pause setzt jetzt `werkzeug/spulenwechsel.py <gcode> --kopf 4`.
+  Bekannt: `korpus_rot.stl` hat 12 offene Kanten, `hals_grau.stl` zwei doppelt belegte Kanten (Slicer kam damit klar). Der 200-mm-Auftrag `…_gitarre_rundum_c5pro` bleibt
+  auf dem Stand von 14:45 Uhr (ohne die neuen Details) – für „kleiner“ neu bauen mit `--laenge 200` bzw. `--laenge 250` (einteilig bis ~250 mm). **Nichts gedruckt.**
   Toms Angabe: die drei Vergleichsdateien stammen von GrabCAD und seien frei – sie liegen trotzdem nicht im Lager (nur verglichen). Mögliche nächste Wünsche: größer (bis ~240 mm),
   Saiten, schwarzer Rand um die Decke, Ständer dazu.
 - **Grenze Text zu Bild (15.11. nachts):** `bild_ki.py` ohne Schlüssel taugt nur für freie Figuren (Eule gut). Technische/reale Gegenstände (Test: Pistole, Karabiner, Toms

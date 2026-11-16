@@ -199,6 +199,17 @@ Alte `_kobrax`-Aufträge laufen nicht auf dem Creator 5 Pro – bei Bedarf aus d
 - Gleiche Farbe übereinander: obere Lage 0,012 mm einziehen und 0,03 mm überlappen, sonst deckungsgleiche Wände. Ringe 0,04 mm einziehen.
 - Markennamen/Logos weglassen. Feine Stege < 0,45 mm → Arachne-Zusätze (siehe unten). Nur gerechnet, nicht gedruckt.
 
+## Fünfte Farbe und zweiteilige Modelle (Erfahrung `modelle/gitarre_rundum.py`, 16.11.2026 – nur gerechnet)
+- **Fünfte Farbe:** zwei Farben, die in getrennten Höhen liegen, beim Slicen auf denselben Kopf legen (`--teil a.stl:PLA:4 --teil b.stl:PLA:4`), danach
+  `python3 werkzeug/spulenwechsel.py <gcode> --kopf 4` → setzt `M25` in die Höhen-Lücke; im BERICHT.md Höhe und Farben nennen. Am Gerät unerprobt.
+- **Maximale Details mit 0,25-mm-Düse:** `--duese 0.25 --schicht 0.08` + `--extra` `wall_generator=arachne`, `min_bead_width=70%`, `min_feature_size=20%`,
+  `resolution=0.008`, `only_one_wall_top=1`, `outer_wall_speed=30`, `small_perimeter_speed=20`, `top_surface_speed=40`, `top_shell_layers=8`,
+  `support_on_build_plate_only=1` (sonst Stützen an feinen Teilen auf der Oberseite). Dünnster Strich im Modell 0,28 mm.
+- **Teilen über 250 mm:** nicht quer durchsägen, sondern eine Fuge nehmen, die es am Original gibt (hier Hals mit durchgehendem Zapfen); Zapfen so legen, dass er auf dem Bett steht,
+  Spiel 0,12 mm je Seite, Schnittfläche nie deckungsgleich mit vorhandenen Flächen (0,06 mm versetzen). Mit dem Maßstab wachsen die Details nur, wenn Feinheiten als
+  Druckmaß `p(mm)` und echte Maße als `max(echt, p(...))` angegeben sind.
+- **Gewölbte/abgeschrägte Flächen bei mehrfarbigen Einlagen:** alle Farbkörper gemeinsam verformen (`refine_to_length` + `warp_batch`), nicht einzeln schneiden.
+
 ## Foto-Scans (Photogrammetrie, Plan vom 16.11.2026 – **ungetestet**)
 - Tom fotografiert selbst (Canon 5D Mark IV, Softboxen) und rechnet am Windows-Laptop (RTX 3060 6 GB) mit Meshroom; er schickt OBJ + Textur (+ MTL) als ZIP.
 - Ablauf: ZIP in eigenen leeren Ordner entpacken → `werkzeug/ki_rohling.py` (aufrichten, Maßstab – **Zielgröße erfragen, Scans haben keinen Maßstab** –, schließen, Boden plan)
