@@ -40,6 +40,14 @@
   Vorschau an Tom geschickt, **noch nicht gesliced** – wartet auf sein Ja bzw. Wünsche (`--saat`, `--schwarz`, `--laenge`). Text-zu-Bild taugt für so ein Motiv nicht (getestet).
   Die STL liegen nicht im Lager: neu bauen mit `python3 modelle/gitarre_rotschwarz.py --ziel /tmp/git --bild /tmp/git/v.png` (Sekunden). Bauweise und Netz-Lehren: CLAUDE.md
   → „Mehrfarbige Teile aus 2D-Umrissen“.
+- **Gitarre rundum (16.11. mittags, wartet auf Toms Ja zum Slicen):** Tom schickte 14 Bildschirmfotos eines 3D-Modells seiner Gitarre (T-Form, 24 Bünde, rot gewolkte Decke,
+  graue Zarge) und ein Maßblatt (Mensur 648, Sattel 42, Halsdicke 20/22, Korpus ca. 400 × 320 × 45, Saitenabstand 10,5) mit „so präzise wie möglich“. Neu: `modelle/gitarre_rundum.py`
+  + `modelle/gitarre_rundum_daten.json` (Umriss, Wolkung, Lage der Teile aus der geraden Vorderansicht vermessen; Perspektive über die 24 Bundabstände herausgerechnet, 1 px Restfehler).
+  Rundum-Modell 200 mm: echte Korpusdicke, Halsprofil mit Fuß, um 10° geneigte Kopfplatte, Mechaniken, Brücke, Tonabnehmer mit roten Streifen, Regler, Schalter, Buchse, Gurtknöpfe,
+  Rückseite mit Deckel, Saitenhülsen, Bauch-Ausfräsung, rote Halsstreifen; römische Ziffern bis XXI. Farben grau/rot/schwarz/weiß (Grau statt Gold, wie am Original). Kein Schriftzug, keine Saiten.
+  Bauen: `python3 modelle/gitarre_rundum.py --ziel /tmp/g1 [--wolken 0|1|2] [--bauch 0] [--laenge 200]` (2 s). Vier STL dicht, Schnittvolumen 0. `pruefen.py` meldet gewollte
+  Kleinteile (Einlagen < 1 mm³, Stege um 0,45 mm) → Arachne-Zusätze; Hals und Kopf schweben → Stützen `auto`. **Nur gerechnet, nichts gesliced/gedruckt.** Die flache Fassung
+  (`gitarre_rotschwarz.py`) ist damit vermutlich überholt – Tom fragen.
 - **Grenze Text zu Bild (15.11. nachts):** `bild_ki.py` ohne Schlüssel taugt nur für freie Figuren (Eule gut). Technische/reale Gegenstände (Test: Pistole, Karabiner, Toms
   Gitarre) werden unbrauchbar, die Ampel merkt das nicht → Foto, fertiges Modell, Foto-Scan oder eigene Konstruktion.
 - **Foto-Scan (16.11., Plan, noch nichts geliefert):** Tom probiert Photogrammetrie selbst: Canon 5D Mark IV + Softboxen, Windows-Laptop Gigabyte G5 KD (RTX 3060 6 GB, 16 GB RAM)
