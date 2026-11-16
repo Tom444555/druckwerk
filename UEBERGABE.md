@@ -67,6 +67,11 @@
   **Stand 14:20 Uhr – gilt:** Details nach vier weiteren Nahaufnahmen: Regler (glatter Fuß, drei Ringe, Kappe mit Fase, Madenschraube), Klingenschalter (zwei Schrauben,
   grauer Schaft, schwarze Kegelkappe, 66° geneigt), Brücke (Grundplatte, Rückwand, sechs U-Reiter mit Langloch, Federn, Madenschrauben, sechs Schraubenköpfe hinten).
   Neu gesliced mit `--extra support_on_build_plate_only=1` (sonst setzt der Slicer Stützen an den Schalterhebel): **5 h 56 min, 34 g**, 223 Kopfwechsel. Nicht gedruckt.
+  **Stand 14:45 Uhr – gilt:** Tom fand das schwarze Muster unpassend und will „probieren, was maximal möglich ist“ → **fünf Farben**: Wolken als eigener Körper
+  `…_dunkelrot.stl` (feine Wolkung `--wolken 3`, Standard), beim Slicen zusammen mit Weiß auf Kopf 4; nach dem Slicen `M25` bei Z 9,3 eingefügt (Kopf 4 druckt bis 9,22 Dunkelrot,
+  Weiß erst ab 10,82) – das Einfügen ist Handarbeit per Python nach `druck.py`, noch kein Schalter. Deckenrand wieder rot. **Saiten zum Einfädeln** (Tom: passt): Löcher Ø 0,72 mm
+  durch Korpus und Kopfplatte, Kerben in Reitern und Sattel. Auftrag neu: **6 h 26 min, 35 g**, 231 Kopfwechsel. `dunkelrot` als Farbname in `druck.py` und App (sw.js v10).
+  Offen: ob `M25` am Creator 5 Pro den Spulenwechsel erlaubt, ob Tom Dunkelrot hat, Düsen-Frage (alle Köpfe 0,25?). Nicht gedruckt.
   Toms Angabe: die drei Vergleichsdateien stammen von GrabCAD und seien frei – sie liegen trotzdem nicht im Lager (nur verglichen). Mögliche nächste Wünsche: größer (bis ~240 mm),
   Saiten, schwarzer Rand um die Decke, Ständer dazu.
 - **Grenze Text zu Bild (15.11. nachts):** `bild_ki.py` ohne Schlüssel taugt nur für freie Figuren (Eule gut). Technische/reale Gegenstände (Test: Pistole, Karabiner, Toms

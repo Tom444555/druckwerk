@@ -127,7 +127,7 @@ def ziffer(text, h, t_min, breite_max):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--laenge", type=float, default=200.0); ap.add_argument("--wolken", type=int, default=1, help="0 keine · 1 wie im Bild · 2 kräftiger")
+    ap.add_argument("--laenge", type=float, default=200.0); ap.add_argument("--wolken", type=int, default=3, help="0 keine · 1 grob · 2 ruhig · 3 fein (wie im Bild, für Dunkelrot)")
     ap.add_argument("--duese", type=float, default=0.25, help="Düse, auf die die Feinheiten abgestimmt werden: 0.25 (alle Köpfe, Standard seit 16.11.) oder 0.4")
     ap.add_argument("--breite", type=float, default=320.0, help="größte Korpusbreite in echten mm")
     ap.add_argument("--bauch", type=int, default=1, help="Bauch-Ausfräsung auf der Rückseite (braucht Stützen)")
@@ -137,7 +137,7 @@ def main():
     # Quermaß des Korpus: aus dem Bild 316 mm, Maßblatt 320 mm, Vergleichs-CAD einer T-Form 324 mm → auf 320 mm gestellt (Hals und Mittelteile bleiben)
     QX = a.breite / 316.0
     for kx in ("korpus", "regler", "schalter", "gurt"): D[kx] = [[q[0] * QX, q[1]] for q in D[kx]]
-    for kx in ("wolken", "wolken_viel"): D[kx] = [[[q[0] * QX, q[1]] for q in pl] for pl in D[kx]]
+    for kx in ("wolken", "wolken_viel", "wolken_fein"): D[kx] = [[[q[0] * QX, q[1]] for q in pl] for pl in D[kx]]
     S_END = D["s_ende"]; Y = lambda s: S_END - s
     F0 = a.laenge / 978.0; p = lambda mm: mm / F0                 # Druckmaß → echtes Maß
     D25 = a.duese < 0.3; FEIN = 0.28 if D25 else 0.46                               # dünnster Strich im Druck
@@ -167,26 +167,26 @@ def main():
     koepfe = vereint2([kreis(2.4, 16).translate(((i - 2.5) * 10.5, Y(MENSUR + 36.0))) for i in range(6)])
     hw = vereint2([pu_fuss(s) for s in PU] + [steg_fl, koepfe] + [kreis(9.5).translate(q) for q in regler] + [schlitz])
     innen = K.offset(-(p(0.38 + 0.45) if a.duese < 0.3 else SLAB + p(0.9)), RUND, 2.0, 24)
-    wl = D["wolken_viel"] if a.wolken == 2 else D["wolken"]
+    wl = {2: D["wolken_viel"], 3: D["wolken_fein"]}.get(a.wolken, D["wolken"])
     W = CS()
     if a.wolken:
         W = CS([np.array([xy(q) for q in pl]) for pl in wl], m3.FillRule.EvenOdd) ^ innen
         W = W - hw.offset(p(0.5), RUND) - hals_fl.offset(p(0.5), RUND)
         fw = 0.5 * FEIN - 0.01; W = W.offset(p(fw), RUND).offset(-p(2 * fw), RUND).offset(p(fw), RUND)          # erst schmale rote Stege schließen, dann schmale schwarze Zungen weg
-        W = vereint2([c for c in W.decompose() if c.area() > p(1.6 * FEIN) ** 2])
+        W = vereint2([c for c in W.decompose() if c.area() > p(1.3 * FEIN) ** 2])
         W = W.offset(0.07, RUND, 2.0, 12).simplify(0.06)                                   # Engstellen ohne Breite verschmelzen (sonst Kanten mit vier Flächen)
     z_slab = T_B - SLAB
     if D25:                                                                           # feine Düse: schmale gerundete Kante als schwarzer Rand, Decke bis dorthin rot
         RK, RB = p(0.30), p(0.38)
         decke_in = K.offset(-(RB + FUGE), RUND, 2.0, 24) - hw - hals_fl - W.offset(FUGE, RUND)
         rund = [(0.0, z_slab)] + [(RK * (1 - math.cos(w)), T_B - RK + RK * math.sin(w)) for w in np.linspace(0, math.pi / 2, 6)]
-        rot = [prisma(decke_in, z_slab, T_B)]
-        schwarz = [prisma(W, z_slab, T_B), prisma(hw.offset(-FUGE), z_slab, T_B), band(K, rund, RB) - prisma(hals_fl, z_slab - 1, T_B + 1)]
+        rot = [prisma(decke_in, z_slab, T_B), band(K, rund, RB) - prisma(hals_fl, z_slab - 1, T_B + 1)]
+        schwarz = [prisma(hw.offset(-FUGE), z_slab, T_B)]; dunkel = [prisma(W, z_slab, T_B)]
     else:
         decke_in = K.offset(-(SLAB + 0.35), RUND, 2.0, 24) - hw - hals_fl - W.offset(FUGE, RUND)
         rund = [(SLAB * (1 - math.cos(w)), z_slab + SLAB * math.sin(w)) for w in np.linspace(0, math.pi / 2, 7)]
         rot = [prisma(decke_in, z_slab, T_B), band(K, rund, SLAB + 0.6) - prisma(hals_fl, z_slab - 1, T_B + 1)]
-        schwarz = [prisma(W, z_slab, T_B), prisma(hw.offset(-FUGE), z_slab, T_B)]
+        schwarz = [prisma(W, z_slab, T_B), prisma(hw.offset(-FUGE), z_slab, T_B)]; dunkel = []
     grau, weiss, schneider = [], [], []
 
     # ---------------- Korpus-Kern (grau) mit Fase unten ----------------
@@ -340,17 +340,29 @@ def main():
             if (c != 2).any(): print("      ", np.round(tt.vertices[u[c != 2]][:5].reshape(-1, 6), 2).tolist(), np.unique(c))
             return int((c != 2).sum())
         print("   Kantenfehler rot0", kn(rot[0]), "rot1", kn(rot[1]), "rot0+1", kn(rot[0] + rot[1]), "decke_in Teile", len(decke_in.decompose()), "W", len(W.decompose()))
+    # ---------------- echte Saiten zum Einfädeln (Draht bis 0,3 mm): Löcher durch den Korpus, Kerben in Reitern und Sattel, Löcher in der Kopfplatte ----------------
+    RL = p(0.36); KB = p(0.34); bohr = []                                             # Lochradius und Kerbenbreite im Druckmaß
+    for i in range(6):
+        xs_, xn = (i - 2.5) * 10.5, (i - 2.5) * 7.0
+        bohr.append(M.cylinder(T_B + 30, RL, RL, 14).translate((xs_, Y(MENSUR + 11), -5)))                                  # durch Korpus und Reiter-Langloch
+        bohr.append(M.cube((KB, 8, 6)).translate((xs_ - KB / 2, Y(MENSUR + 0.3) - 4, zs + 8.3 - p(0.2))))                   # Kerbe in der Saitenauflage
+        bohr.append(M.cube((KB, 9, 6)).translate((xn - KB / 2, Y(-2.3) - 4.5, ZF + p(0.36) - p(0.22))))                     # Kerbe im Sattel
+        v = mech[i] - np.array([xn, 2.0]); v /= np.linalg.norm(v); hq = mech[i] - 6.2 * v                                   # Loch kurz vor der Mechanik-Achse
+        bohr.append(kippen(M.cylinder(KOPF_DICKE + 30, RL, RL, 14).translate((hq[0], hq[1], -KOPF_DICKE - 18))))
+    bohr = vereint(bohr)
     rot_k, schwarz_k, weiss_k = vereint(rot), vereint(schwarz) - zylinder(p(0.8 * FEIN), f0 - 3 * ri3, f0 + 9.5 * ri3, 14), vereint(weiss)
     grau.append(schaft_k - prisma(CS.square((900, 1200)).translate((-450, -100)), -50, z_slab))
     grau_k = vereint([kern - vereint(schneider)] + grau)
     koerper = {"grau": grau_k, "rot": rot_k, "schwarz": schwarz_k, "weiss": weiss_k}
+    if dunkel: koerper["dunkelrot"] = vereint(dunkel)
+    koerper = {n: k - bohr for n, k in koerper.items()}
     namen = list(koerper)
-    for i in range(4):
-        for j in range(i + 1, 4):
+    for i in range(len(namen)):
+        for j in range(i + 1, len(namen)):
             v = (koerper[namen[i]] ^ koerper[namen[j]]).volume()
             if v > 0.5 and a.pruef:
-                for ii, k1 in enumerate({"grau": [kern] + grau, "rot": rot, "schwarz": schwarz, "weiss": weiss}[namen[i]]):
-                    for jj, k2 in enumerate({"grau": [kern] + grau, "rot": rot, "schwarz": schwarz, "weiss": weiss}[namen[j]]):
+                for ii, k1 in enumerate({"grau": [kern] + grau, "rot": rot, "schwarz": schwarz, "weiss": weiss, "dunkelrot": dunkel}[namen[i]]):
+                    for jj, k2 in enumerate({"grau": [kern] + grau, "rot": rot, "schwarz": schwarz, "weiss": weiss, "dunkelrot": dunkel}[namen[j]]):
                         vv = (k1 ^ k2).volume()
                         if vv > 0.3: print("     ", namen[i], ii, namen[j], jj, round(vv, 1))
             if v > 0.5: print(f"  Überschneidung {namen[i]}/{namen[j]}: {v:.1f} mm³ (echt)")
