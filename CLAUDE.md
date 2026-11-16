@@ -192,6 +192,19 @@ Alte `_kobrax`-Aufträge laufen nicht auf dem Creator 5 Pro – bei Bedarf aus d
 - **Git:** ein zweiter Chat schreibt ins selbe Repo. Reihenfolge: `git add -A && git commit` → `git fetch` → `git rebase origin/main` → **Status prüfen** (Konfliktmarker in
   UEBERGABE.md entfernen, beide Teile behalten) → `druck.index_neu(Path('auftraege'))` → commit → `git push origin HEAD:main`. Nie mitten im Rebase `git add -A`.
 
+## Mehrfarbige Teile aus 2D-Umrissen (Erfahrung `modelle/gitarre_rotschwarz.py`, 15.11.2026)
+- Eigener Entwurf statt Nachbau: Umrisse als Splines → manifold3d `CrossSection` → Prismen je Farbe; `python3 modelle/gitarre_rotschwarz.py --ziel /tmp/x --bild /tmp/x/v.png`.
+- **Farben in 2D aufteilen, nie 3D-Körper voneinander abziehen** (gab tausende Splitter). Zwischen Farben 0,02 mm Fuge; Polygone mit `FillRule.NonZero`.
+- Vor dem Extrudieren `simplify(0.004)` (fast gerade Spline-Punkte machen das Netz undicht); Inseln entfernen; spitze Keile an Ring-Enden abschneiden.
+- Gleiche Farbe übereinander: obere Lage 0,012 mm einziehen und 0,03 mm überlappen, sonst deckungsgleiche Wände. Ringe 0,04 mm einziehen.
+- Markennamen/Logos weglassen. Feine Stege < 0,45 mm → Arachne-Zusätze (siehe unten). Nur gerechnet, nicht gedruckt.
+
+## Foto-Scans (Photogrammetrie, Plan vom 16.11.2026 – **ungetestet**)
+- Tom fotografiert selbst (Canon 5D Mark IV, Softboxen) und rechnet am Windows-Laptop (RTX 3060 6 GB) mit Meshroom; er schickt OBJ + Textur (+ MTL) als ZIP.
+- Ablauf: ZIP in eigenen leeren Ordner entpacken → `werkzeug/ki_rohling.py` (aufrichten, Maßstab – **Zielgröße erfragen, Scans haben keinen Maßstab** –, schließen, Boden plan)
+  → Bild an Tom → bei Farbe `werkzeug/textur_farben.py` → slicen. Große Netze vorher auf ≤ ~500.000 Dreiecke verkleinern.
+- Scans glänzender/dunkler/dünner Teile (Saiten, Chrom, Lack) haben Löcher und Beulen. Für Maßhaltiges den Scan nur als Vorlage nehmen und das Teil konstruieren.
+
 ## Faustregeln Einstellungen
 - Deko/Figur: 0.16–0.20, Infill 10–15 %, Baumstützen bei Überhängen.
 - Funktionsteil/Halter: 0.20, Infill 25–40 %, `--waende 4`.

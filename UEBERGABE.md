@@ -1,6 +1,6 @@
 # Übergabe druckwerk
 
-## STAND 15.11.2026 (15 Uhr) – hier einsteigen (neuer Chat: „druckwerk: …“)
+## STAND 16.11.2026 – hier einsteigen (neuer Chat: „druckwerk: …“)
 - **Drucker:** nur Flashforge Creator 5 Pro (`c5pro`). **Am echten Gerät ist weiterhin nichts bestätigt** (Werte aus Profilen, Wiki, Tests, Videos; Spiele nur gerechnet).
 - **Lager:** `2026-11-14_stratocaster_c5pro`, `2026-11-14_loopsmiths_amp_c5pro`, `2026-11-15_vox_plektrumhalter_c5pro` (3 h 38 min, 73 g, schwarz/rot/weiß),
   Kalibrier-Set `2026-11-14_kalibrier_1…5_c5pro`. Keine `_kobrax`-Aufträge mehr.
@@ -35,15 +35,23 @@
 - **Text zu Bild (15.11. 20:45 Uhr):** Vorschlag 1/5/6 als Chat-Werkzeug gebaut: `werkzeug/bild_ki.py` (Entwürfe gratis, freistellen, Ampel, Übersicht; Test „Eule“ gut).
   In der App noch nichts; Schlüssel-Wege (fal, Pollinations-Schlüssel) im Skript vorbereitet, aber ungetestet. Rest der Recherche: `wissen/recherche_text_zu_bild.md` mit acht Vorschlägen; Test: Pollinations liefert von der
   Sitzung aus gratis Entwurfsbilder (768 px, Wasserzeichen). Tom wählt noch aus; empfohlen 1 (Entwurf gratis im Chat), 4 (Bild-Text schärfen), dann 2 + 3 mit `FAL_KEY`.
-- **Gitarre rot-schwarz (15.11. 22:15 Uhr, läuft):** eigener Entwurf in der Optik von Toms Gitarre, `modelle/gitarre_rotschwarz.py` → vier STL (schwarz/rot/gold/weiß), 200 mm,
+- **Gitarre rot-schwarz (15.11. 22:15 Uhr, wartet auf Tom):** eigener Entwurf in der Optik von Toms Gitarre, `modelle/gitarre_rotschwarz.py` → vier STL (schwarz/rot/gold/weiß), 200 mm,
   liegt flach, keine Stützen. `pruefen.py`: alle dicht; bleibende Meldungen sind gewollt (Einlagen 0,6–1 mm dick, einzelne rote Stege < 0,45 mm → beim Slicen Arachne-Zusätze nehmen).
   Vorschau an Tom geschickt, **noch nicht gesliced** – wartet auf sein Ja bzw. Wünsche (`--saat`, `--schwarz`, `--laenge`). Text-zu-Bild taugt für so ein Motiv nicht (getestet).
+  Die STL liegen nicht im Lager: neu bauen mit `python3 modelle/gitarre_rotschwarz.py --ziel /tmp/git --bild /tmp/git/v.png` (Sekunden). Bauweise und Netz-Lehren: CLAUDE.md
+  → „Mehrfarbige Teile aus 2D-Umrissen“.
+- **Grenze Text zu Bild (15.11. nachts):** `bild_ki.py` ohne Schlüssel taugt nur für freie Figuren (Eule gut). Technische/reale Gegenstände (Test: Pistole, Karabiner, Toms
+  Gitarre) werden unbrauchbar, die Ampel merkt das nicht → Foto, fertiges Modell, Foto-Scan oder eigene Konstruktion.
+- **Foto-Scan (16.11., Plan, noch nichts geliefert):** Tom probiert Photogrammetrie selbst: Canon 5D Mark IV + Softboxen, Windows-Laptop Gigabyte G5 KD (RTX 3060 6 GB, 16 GB RAM)
+  mit **Meshroom** (gratis). Tipps an ihn: 60–80 Fotos in 2–3 Höhenringen, Blende 8–11, Belichtung/Weißabgleich fest, Objekt unbewegt, Glanz mit Polfilter oder Scan-Spray.
+  Er schickt OBJ + Textur als ZIP → `ki_rohling.py` → Bild zeigen → `textur_farben.py` → slicen. **Mit echtem Foto-Scan ungetestet** (Netze sind groß und löchrig: erst
+  verkleinern/schließen). Empfohlen: Scan als Maß- und Formvorlage, das Druckteil sauber konstruieren. Ablauf: CLAUDE.md → „Foto-Scans“.
 - **Bekannte Lücken:** Stützen kommen vom aktiven Kopf;
   WLAN-Senden, Abgleich iPhone↔iPad, Auftrag ohne Chat offen (Vorschläge in `wissen/workflow.json`).
 - **Toms Geschmack:** detailreich, geschwungen, naturnah, breit statt hoch; Farben schwarz/gold/rot/weiß; erst schnelle Vorschau, kurze Antworten. Will Modellqualität „wie Hyper3D“.
-- **Nächste Schritte:** 1) Toms Rückmeldung zu den Claude-Links. 2) Vox-Lizenz klären. 3) Erstes eigenes Foto durch `ki_lokal.py`; erste Meshy-3MF durch `--bemalt` (Farben je Kopf
-  im Bericht prüfen). 4) fal.ai-Schlüssel `FAL_KEY` → ersten echten KI-Lauf begleiten. 5) Kalibrier-Set drucken → Spiele in `profi.py`/`baukasten.scad`, Herkunft „Gerät“.
-  6) Gitarrenhalter aus `modelle/profi/` slicen, wenn gewünscht. 7) Idee: Hunyuan3D-2mini lokal probieren (besser als TripoSR, Speicher knapp).
+- **Nächste Schritte:** 1) Toms Ja/Wünsche zur Gitarre rot-schwarz → slicen (Schicht 0.12, Arachne-Zusätze). 2) Erstes Meshroom-ZIP von Tom verarbeiten. 3) Toms Auswahl aus
+  den acht Text-zu-Bild-Vorschlägen. 4) Rückmeldung zu den Claude-Links am iPhone/iPad. 5) Vox-Lizenz klären. 6) `FAL_KEY` → erster echter KI-Lauf; erste Meshy-3MF durch `--bemalt`.
+  7) Kalibrier-Set drucken → Spiele in `profi.py`/`baukasten.scad`, Herkunft „Gerät“; evtl. Fuzzy-Skin-Testraster als Teil 6. 8) Gitarrenhalter aus `modelle/profi/` slicen, wenn gewünscht.
 
 ---
 ## Verlauf (älter)
