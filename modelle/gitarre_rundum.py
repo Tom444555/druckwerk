@@ -144,6 +144,7 @@ def main():
     ap.add_argument("--decke", default="unter", help="unter = Decke durchgehend in einer Farbe (Weinrot), schwarzes Muster liegt unter einer dünnen Haut und scheint durch · einlage = Muster als eigene Farbe in der Oberfläche (Dunkelrot, fünfte Farbe)")
     ap.add_argument("--haut", type=float, default=0.16, help="Dicke der Deckhaut über dem Muster im Druckmaß (0,16 = zwei Schichten zu 0,08)")
     ap.add_argument("--wirbel", type=int, default=0, help="1 = drehbare Steckwirbel (ab ~300 mm): Kegellöcher durch die Kopfplatte statt fester Achsen, dazu <name>_wirbel.stl mit acht Wirbeln")
+    ap.add_argument("--klappe", type=int, default=0, help="1 = Saitenfach auf der Rückseite mit steckbarem Deckel und Lochkugeln als Saitenanker (<name>_klappe.stl; ab ~300 mm)")
     ap.add_argument("--teilen", type=int, default=0, help="1 = zwei Steckteile: Korpus mit Schlitz + Hals mit durchgehendem Zapfen (für Längen über 250 mm)")
     ap.add_argument("--spiel", type=float, default=0.12, help="Spiel der Steckverbindung je Seite im Druckmaß (mm)")
     ap.add_argument("--duese", type=float, default=0.25, help="Düse, auf die die Feinheiten abgestimmt werden: 0.25 (alle Köpfe, Standard seit 16.11.) oder 0.4")
@@ -224,6 +225,13 @@ def main():
     # Rückseite: Deckel und sechs Saitenhülsen (schwarz, bündig)
     deckel = rechteck(38, 100, 18).translate((92, Y(661))) - vereint2([kreis(max(2.0, p(0.3)), 14).translate((92 + dx, Y(661) + dy)) for dx in (-11, 11) for dy in (-36, 36)])
     huelsen = vereint2([kreis(p(0.8), 24).translate(((i - 2.5) * 10.5, Y(MENSUR + 11))) for i in range(6)])
+    if a.klappe:                                                                        # Saitenfach statt Hülsen: Mulde über den sechs Löchern, oben eine Stufe für den Deckel
+        KD, KT = 1.0, 3.4                                                               # Deckeldicke und Fachtiefe im Druckmaß
+        fach = rechteck(52.5 + p(4.4), p(3.6), p(1.2)).translate((0, Y(MENSUR + 11)))
+        stufe = fach.offset(p(1.1), RUND, 2.0, 24)
+        kerbe = kreis(p(1.7), 24).translate((26.25 + p(2.2) + p(1.1), Y(MENSUR + 11)))                             # Griffmulde zum Heraushebeln
+        schneider += [prisma(fach, -5, p(KT)), prisma(stufe, -5, p(KD + 0.06)), prisma(kerbe, -5, p(1.8))]
+        huelsen = CS()
     schwarz.append(prisma(deckel + huelsen, 0, E)); schneider.append(prisma(deckel + huelsen, -5, E))
     if a.bauch:                                                                         # Bauch-Ausfräsung: flache Mulde am oberen Bogen der Bassseite
         ex = K.bounds()[0]
@@ -467,6 +475,14 @@ def main():
         alle_w = vereint([w.translate((9.0 * (j % 4), 9.0 * (j // 4), 0)) for j in range(8)])
         me = alle_w.to_mesh(); tw = trimesh.Trimesh(np.asarray(me.vert_properties[:, :3], np.float64), me.tri_verts, process=True)
         tw.export(ziel / f"{a.name}_wirbel.stl"); print(f"{a.name}_wirbel.stl: dicht={tw.is_watertight}, 8 Wirbel, Höhe {tw.extents[2]:.1f} mm, Kegel {r0 * 2:.2f} → {(r0 - steig * (lang + 1.2)) * 2:.2f} mm, Stift {rk * 2:.2f} mm")
+    if a.klappe:                                                                        # Deckel (liegt flach) und zehn Lochkugeln (sechs gebraucht), alles im Druckmaß
+        dk = (stufe.translate((0, -Y(MENSUR + 11))).scale((f, f))).offset(-0.08, RUND, 2.0, 24)
+        teile_d = [dk.extrude(KD)]
+        kug = M.cylinder(0.4, 0.85, 1.2, 32) + M.cylinder(1.2, 1.2, 1.2, 32).translate((0, 0, 0.39)) + M.cylinder(0.4, 1.2, 0.85, 32).translate((0, 0, 1.58)) - M.cylinder(3, 0.45, 0.45, 16).translate((0, 0, -0.5))
+        for j in range(10): teile_d.append(kug.translate((-11.25 + 5.0 * (j % 5), 9.0 + 5.0 * (j // 5), 0)))
+        dm = vereint(teile_d); me = dm.to_mesh(); td = trimesh.Trimesh(np.asarray(me.vert_properties[:, :3], np.float64), me.tri_verts, process=True)
+        td.export(ziel / f"{a.name}_klappe.stl"); b_ = dk.bounds()
+        print(f"{a.name}_klappe.stl: dicht={td.is_watertight}, Deckel {b_[2] - b_[0]:.1f} × {b_[3] - b_[1]:.1f} × {KD} mm, Fach {(52.5 + p(4.4)) * f:.1f} × {p(3.6) * f:.1f} × {KT} mm tief, Kugeln 2,4 × 2,0 mm mit Loch 0,9")
     for vor, kk in teile_k.items():
         ges = vereint(list(kk.values())); b2 = ges.bounding_box(); dreh = 45.0 if vor == "hals_" and (b2[4] - b2[1]) * f > 215 else 0.0
         for n, k in kk.items():

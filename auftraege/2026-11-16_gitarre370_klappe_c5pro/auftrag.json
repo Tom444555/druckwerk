@@ -1,0 +1,58 @@
+{
+ "kopfwechsel": 0,
+ "koepfe_benutzt": [
+  3
+ ],
+ "name": "gitarre370_klappe",
+ "drucker": "c5pro",
+ "drucker_name": "Flashforge Creator 5 Pro",
+ "datum": "2026-11-16",
+ "ordner": "2026-11-16_gitarre370_klappe_c5pro",
+ "gcode": "gitarre370_klappe_c5pro.gcode",
+ "zeit": "5m 30s",
+ "gramm": "0.00, 0.00, 0.29",
+ "meter": "0.00 m, 0.00 m, 0.10 m",
+ "duese": "210,210,210",
+ "bett": "60,60,60",
+ "schicht": "0.08",
+ "stufe": "Standard",
+ "infill": 100,
+ "duese_mm": "0.25",
+ "waende": 4,
+ "stuetzen": "aus",
+ "brim": "auto",
+ "gemischt": false,
+ "slots": [
+  {
+   "slot": 1,
+   "material": "PLA",
+   "farbe": "leer"
+  },
+  {
+   "slot": 2,
+   "material": "PLA",
+   "farbe": "leer"
+  },
+  {
+   "slot": 3,
+   "material": "PLA",
+   "farbe": "schwarz"
+  }
+ ],
+ "teile": [
+  {
+   "datei": "gitarre_rundum_klappe.stl",
+   "slot": 3
+  }
+ ],
+ "quelle": "",
+ "teile_app": [
+  {
+   "datei": "gitarre_rundum_klappe.stl",
+   "slot": 3
+  }
+ ],
+ "vorschau": "vorschau.png",
+ "bild_im_gcode": true,
+ "projekt": "gitarre370_klappe_c5pro.3mf"
+}

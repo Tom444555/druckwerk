@@ -97,6 +97,10 @@
   dazu `…_wirbel.stl` (acht Wirbel: Rändelrad hinten, Kegel 2,84 → 2,16, Stift 1,96 mit Querloch 0,76). Reibschluss wie Geigenwirbel, kein Getriebe; Flügel bleiben Attrappe.
   Aufträge: `…gitarre370_hals` neu (10 h 24 min, mit Kegellöchern) und `…gitarre370_wirbel` (47 min, 1,6 g, nur Kopf 3). Passung ungedruckt – nach dem Druck Sitz erfragen
   (zu tief/zu lose → `WR_H`/`WR_V` bzw. Übermaß 0,05 im Skript). Für 160 mm nicht machbar (Stift unter 1 mm). `druck.py` kann jetzt Aufträge, die Kopf 1 nicht benutzen.
+  **Saitenfach (18:30 Uhr):** Tom will die Saiten im Korpus festmachen → `--klappe 1`: Mulde auf der Rückseite über den sechs Löchern (Druck 24,5 × 3,6 × 3,4 mm) mit Stufe
+  für einen steckbaren Deckel (26,6 × 5,7 × 1,0, Spiel 0,08, Griffmulde) und `…_klappe.stl` (Deckel + zehn Lochkugeln 2,4 × 2,0, Loch 0,9). Ersetzt die schwarzen Hülsen.
+  Aufträge: `…gitarre370_korpus` neu (14 h 04 min) und `…gitarre370_klappe` (6 min, 0,3 g, nur Kopf 3). Vollständiger Satz 370 mm: korpus, hals, wirbel, klappe.
+  Baubefehl: `gitarre_rundum.py --laenge 370 --teilen 1 --wolken 4 --wirbel 1 --klappe 1`. 160 mm hat weder Wirbel noch Fach. Alles ungedruckt.
   Toms Angabe: die drei Vergleichsdateien stammen von GrabCAD und seien frei – sie liegen trotzdem nicht im Lager (nur verglichen). Mögliche nächste Wünsche: größer (bis ~240 mm),
   Saiten, schwarzer Rand um die Decke, Ständer dazu.
 - **Grenze Text zu Bild (15.11. nachts):** `bild_ki.py` ohne Schlüssel taugt nur für freie Figuren (Eule gut). Technische/reale Gegenstände (Test: Pistole, Karabiner, Toms
