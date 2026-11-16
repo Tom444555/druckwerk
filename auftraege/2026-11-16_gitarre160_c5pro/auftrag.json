@@ -1,0 +1,98 @@
+{
+ "kopfwechsel": 237,
+ "koepfe_benutzt": [
+  1,
+  2,
+  3,
+  4
+ ],
+ "name": "gitarre160",
+ "drucker": "c5pro",
+ "drucker_name": "Flashforge Creator 5 Pro",
+ "datum": "2026-11-16",
+ "ordner": "2026-11-16_gitarre160_c5pro",
+ "gcode": "gitarre160_c5pro.gcode",
+ "zeit": "5h 38m 13s",
+ "gramm": "12.87, 4.81, 5.62, 2.87",
+ "meter": "4.31 m, 1.61 m, 1.88 m, 0.96 m",
+ "duese": "210,210,210,210",
+ "bett": "60,60,60,60",
+ "schicht": "0.08",
+ "stufe": "Standard",
+ "infill": 15,
+ "duese_mm": "0.25",
+ "waende": null,
+ "stuetzen": "auto",
+ "brim": "auto",
+ "gemischt": false,
+ "slots": [
+  {
+   "slot": 1,
+   "material": "PLA",
+   "farbe": "grau"
+  },
+  {
+   "slot": 2,
+   "material": "PLA",
+   "farbe": "rot"
+  },
+  {
+   "slot": 3,
+   "material": "PLA",
+   "farbe": "schwarz"
+  },
+  {
+   "slot": 4,
+   "material": "PLA",
+   "farbe": "dunkelrot"
+  }
+ ],
+ "teile": [
+  {
+   "datei": "gitarre_rundum_grau.stl",
+   "slot": 1
+  },
+  {
+   "datei": "gitarre_rundum_rot.stl",
+   "slot": 2
+  },
+  {
+   "datei": "gitarre_rundum_schwarz.stl",
+   "slot": 3
+  },
+  {
+   "datei": "gitarre_rundum_dunkelrot.stl",
+   "slot": 4
+  },
+  {
+   "datei": "gitarre_rundum_weiss.stl",
+   "slot": 4
+  }
+ ],
+ "quelle": "",
+ "teile_app": [
+  {
+   "datei": "gitarre_rundum_grau.app.stl",
+   "slot": 1
+  },
+  {
+   "datei": "gitarre_rundum_rot.app.stl",
+   "slot": 2
+  },
+  {
+   "datei": "gitarre_rundum_schwarz.app.stl",
+   "slot": 3
+  },
+  {
+   "datei": "gitarre_rundum_dunkelrot.app.stl",
+   "slot": 4
+  },
+  {
+   "datei": "gitarre_rundum_weiss.stl",
+   "slot": 4
+  }
+ ],
+ "vorschau": "vorschau.png",
+ "bild_im_gcode": true,
+ "projekt": "gitarre160_c5pro.3mf"
+}

@@ -82,6 +82,8 @@
   Kopf 4 Dunkelrot → Weiß). Einstellungen für maximale Details stehen in beiden BERICHT.md. Pause setzt jetzt `werkzeug/spulenwechsel.py <gcode> --kopf 4`.
   Bekannt: `korpus_rot.stl` hat 12 offene Kanten, `hals_grau.stl` zwei doppelt belegte Kanten (Slicer kam damit klar). Der 200-mm-Auftrag `…_gitarre_rundum_c5pro` bleibt
   auf dem Stand von 14:45 Uhr (ohne die neuen Details) – für „kleiner“ neu bauen mit `--laenge 200` bzw. `--laenge 250` (einteilig bis ~250 mm). **Nichts gedruckt.**
+  Dazu als Vergleichsstück `2026-11-16_gitarre160_c5pro` (einteilig 160 mm, gleiche Details und Einstellungen, 5 h 38 min, 26 g, Pause bei 7,7 mm). Tom will später
+  den Unterschied zwischen 160 und 370 mm sehen → nach den Drucken fragen, welche Details bei 160 mm noch herauskommen.
   Toms Angabe: die drei Vergleichsdateien stammen von GrabCAD und seien frei – sie liegen trotzdem nicht im Lager (nur verglichen). Mögliche nächste Wünsche: größer (bis ~240 mm),
   Saiten, schwarzer Rand um die Decke, Ständer dazu.
 - **Grenze Text zu Bild (15.11. nachts):** `bild_ki.py` ohne Schlüssel taugt nur für freie Figuren (Eule gut). Technische/reale Gegenstände (Test: Pistole, Karabiner, Toms
