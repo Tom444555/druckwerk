@@ -84,6 +84,12 @@
   auf dem Stand von 14:45 Uhr (ohne die neuen Details) – für „kleiner“ neu bauen mit `--laenge 200` bzw. `--laenge 250` (einteilig bis ~250 mm). **Nichts gedruckt.**
   Dazu als Vergleichsstück `2026-11-16_gitarre160_c5pro` (einteilig 160 mm, gleiche Details und Einstellungen, 5 h 38 min, 26 g, Pause bei 7,7 mm). Tom will später
   den Unterschied zwischen 160 und 370 mm sehen → nach den Drucken fragen, welche Details bei 160 mm noch herauskommen.
+  **Stand 16:15 Uhr – gilt und ersetzt die Farbangaben darüber:** Tom will die Decke in **dunklem Weinrot** (besorgt das Filament) mit dem **schwarzen Muster darunter**
+  und Bünde/Ziffern in **Silber/Hellgrau**. `--decke unter` (Standard; `einlage` = alte Fünf-Farben-Fassung mit Dunkelrot), `--haut 0.16` = Dicke der Weinrot-Haut über dem
+  Muster im Druck. Wieder schmaler schwarzer Deckenrand; ovale Buchsenplatte mit zwei Schrauben (nach Toms Fotos). Nur noch vier Köpfe, **kein Spulenwechsel**:
+  1 Grau · 2 Weinrot · 3 Schwarz · 4 Silber. Alle drei Aufträge neu: `…gitarre370_korpus` 14 h 01 min, 83 g (Köpfe 1–3) · `…gitarre370_hals` 10 h 23 min, 54 g ·
+  `…gitarre160` 4 h 57 min, 23 g. Ob das Schwarz durch 0,16 mm Weinrot sichtbar durchscheint, ist ungedruckt – nach dem ersten Druck `--haut` nachstellen.
+  `weinrot` als Farbname in `druck.py` und App (sw.js v11). Der 200-mm-Auftrag `…_gitarre_rundum_c5pro` ist veraltet (Fünf-Farben-Stand 14:45 Uhr).
   Toms Angabe: die drei Vergleichsdateien stammen von GrabCAD und seien frei – sie liegen trotzdem nicht im Lager (nur verglichen). Mögliche nächste Wünsche: größer (bis ~240 mm),
   Saiten, schwarzer Rand um die Decke, Ständer dazu.
 - **Grenze Text zu Bild (15.11. nachts):** `bild_ki.py` ohne Schlüssel taugt nur für freie Figuren (Eule gut). Technische/reale Gegenstände (Test: Pistole, Karabiner, Toms

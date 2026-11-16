@@ -1,5 +1,5 @@
 {
- "kopfwechsel": 563,
+ "kopfwechsel": 446,
  "koepfe_benutzt": [
   1,
   2,
@@ -12,9 +12,9 @@
  "datum": "2026-11-16",
  "ordner": "2026-11-16_gitarre370_hals_c5pro",
  "gcode": "gitarre370_hals_c5pro.gcode",
- "zeit": "11h 41m 31s",
- "gramm": "25.81, 11.83, 17.68, 5.67",
- "meter": "8.65 m, 3.97 m, 5.93 m, 1.90 m",
+ "zeit": "10h 22m 53s",
+ "gramm": "25.77, 10.04, 17.69, 0.73",
+ "meter": "8.64 m, 3.36 m, 5.93 m, 0.25 m",
  "duese": "210,210,210,210",
  "bett": "60,60,60,60",
  "schicht": "0.08",
@@ -34,7 +34,7 @@
   {
    "slot": 2,
    "material": "PLA",
-   "farbe": "rot"
+   "farbe": "weinrot"
   },
   {
    "slot": 3,
@@ -44,7 +44,7 @@
   {
    "slot": 4,
    "material": "PLA",
-   "farbe": "dunkelrot"
+   "farbe": "silber"
   }
  ],
  "teile": [
@@ -59,10 +59,6 @@
   {
    "datei": "gitarre_rundum_hals_schwarz.stl",
    "slot": 3
-  },
-  {
-   "datei": "gitarre_rundum_hals_dunkelrot.stl",
-   "slot": 4
   },
   {
    "datei": "gitarre_rundum_hals_weiss.stl",
@@ -82,10 +78,6 @@
   {
    "datei": "gitarre_rundum_hals_schwarz.stl",
    "slot": 3
-  },
-  {
-   "datei": "gitarre_rundum_hals_dunkelrot.stl",
-   "slot": 4
   },
   {
    "datei": "gitarre_rundum_hals_weiss.stl",

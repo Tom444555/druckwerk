@@ -141,6 +141,8 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--laenge", type=float, default=200.0); ap.add_argument("--wolken", type=int, default=3, help="0 keine · 1 grob · 2 ruhig · 3 fein (wie im Bild, für Dunkelrot) · 4 feinste Auflösung des Fotos (ab ~300 mm)")
     ap.add_argument("--armschraege", type=float, default=0.33, help="Abflachung der Decke unter dem Unterarm (Bassseite, unterer Bogen): Steigung, 0 = aus")
+    ap.add_argument("--decke", default="unter", help="unter = Decke durchgehend in einer Farbe (Weinrot), schwarzes Muster liegt unter einer dünnen Haut und scheint durch · einlage = Muster als eigene Farbe in der Oberfläche (Dunkelrot, fünfte Farbe)")
+    ap.add_argument("--haut", type=float, default=0.16, help="Dicke der Deckhaut über dem Muster im Druckmaß (0,16 = zwei Schichten zu 0,08)")
     ap.add_argument("--teilen", type=int, default=0, help="1 = zwei Steckteile: Korpus mit Schlitz + Hals mit durchgehendem Zapfen (für Längen über 250 mm)")
     ap.add_argument("--spiel", type=float, default=0.12, help="Spiel der Steckverbindung je Seite im Druckmaß (mm)")
     ap.add_argument("--duese", type=float, default=0.25, help="Düse, auf die die Feinheiten abgestimmt werden: 0.25 (alle Köpfe, Standard seit 16.11.) oder 0.4")
@@ -199,8 +201,14 @@ def main():
         RK, RB = p(0.30), p(0.38)
         decke_in = K.offset(-(RB + FUGE), RUND, 2.0, 24) - hw - hals_fl - W.offset(FUGE, RUND)
         rund = [(0.0, z_slab)] + [(RK * (1 - math.cos(w)), T_B - RK + RK * math.sin(w)) for w in np.linspace(0, math.pi / 2, 6)]
-        rot = [prisma(decke_in, z_slab, T_B), band(K, rund, RB) - prisma(hals_fl, z_slab - 1, T_B + 1)]
-        schwarz = [prisma(hw.offset(-FUGE), z_slab, T_B)]; dunkel = [prisma(W, z_slab, T_B)]
+        rand_k = band(K, rund, RB) - prisma(hals_fl, z_slab - 1, T_B + 1)
+        if a.decke == "unter":                                                          # eine Deckfarbe; Muster schwarz darunter, schmaler schwarzer Rand wie am Original
+            HAUT = p(a.haut); voll = K.offset(-(RB + FUGE), RUND, 2.0, 24) - hw - hals_fl
+            rot = [prisma(voll, T_B - HAUT, T_B), prisma(voll.offset(-0.012, m3.JoinType.Miter) - W.offset(FUGE, RUND), z_slab, T_B - HAUT + 0.03)]
+            schwarz = [prisma(hw.offset(-FUGE), z_slab, T_B), prisma(W, z_slab, T_B - HAUT), rand_k]; dunkel = []
+        else:
+            rot = [prisma(decke_in, z_slab, T_B), rand_k]
+            schwarz = [prisma(hw.offset(-FUGE), z_slab, T_B)]; dunkel = [prisma(W, z_slab, T_B)]
     else:
         decke_in = K.offset(-(SLAB + 0.35), RUND, 2.0, 24) - hw - hals_fl - W.offset(FUGE, RUND)
         rund = [(SLAB * (1 - math.cos(w)), z_slab + SLAB * math.sin(w)) for w in np.linspace(0, math.pi / 2, 7)]
@@ -288,8 +296,14 @@ def main():
         k, s_ = gurt(am_rand(ziel), n); schwarz.append(k); schneider.append(s_)
     bp = am_rand((118, 28)); mitte = np.array([0.0, Y(690)]); nb = (bp - mitte); nb /= np.linalg.norm(nb)
     b3, n3 = np.array([bp[0], bp[1], T_B / 2]), np.array([nb[0], nb[1], 0.0])
-    buchse = zylinder(9.5, b3 - 3.0 * n3, b3 + p(0.2) * n3, 40) - zylinder(p(0.8), b3 - 2.4 * n3, b3 + 5 * n3, 24)
-    schwarz.append(buchse); schneider.append(zylinder(9.5, b3 - 3.0 * n3, b3 + 30 * n3, 40))
+    tg3 = np.array([-n3[1], n3[0], 0.0])                                               # ovale Buchsenplatte mit zwei Schrauben, flach an der Zarge
+    def oval(a_, b_, t0, t1):
+        return M.cylinder(t1 - t0, 1, 1, 48).scale((a_, b_, 1)).transform(np.column_stack([tg3, [0, 0, 1], n3, b3 + t0 * n3]))
+    tief = 5.0
+    buchse = oval(21, 11, -tief, p(0.22)) + oval(6.5, 6.5, 0, p(0.22) + max(1.2, p(0.2))) - zylinder(max(3.0, p(0.5)), b3 - 2.4 * n3, b3 + 9 * n3, 24)
+    for sg in (-1, 1):
+        m_ = b3 + sg * 15.5 * tg3; buchse = buchse + M.sphere(max(1.6, p(0.3)), 12).scale((1, 1, 1)).translate(tuple(m_ + p(0.22) * n3))
+    schwarz.append(buchse); schneider.append(oval(21, 11, -tief, 40))
 
     # ---------------- Griffbrett, Bünde, Ziffern, Sattel ----------------
     wb = max(2.8, p(0.3)); bund_fl = []
@@ -341,8 +355,13 @@ def main():
         Wk = wolken_rauschen(k_rot.offset(-p(0.3), RUND), 7, 0.42, 9.0)
         Wk = Wk.offset(p(0.13), RUND).offset(-p(0.26), RUND).offset(p(0.13), RUND)
         Wk = vereint2([c for c in Wk.decompose() if c.area() > p(0.36) ** 2]).offset(0.07, RUND, 2.0, 12).simplify(0.06)
-        k_rot = k_rot - Wk.offset(FUGE, RUND); kd = [prisma(Wk, -HS, 0)]
+        if a.decke == "unter":
+            kr_extra = [prisma(k_rot, -p(a.haut), 0), prisma(k_rot.offset(-0.012, m3.JoinType.Miter) - Wk.offset(FUGE, RUND), -HS, -p(a.haut) + 0.03)]; k_unter = prisma(Wk, -HS, -p(a.haut))
+        else:
+            k_rot = k_rot - Wk.offset(FUGE, RUND); kd = [prisma(Wk, -HS, 0)]
     kr = [prisma(k_rot, -HS, 0)]
+    if D25 and a.wolken and a.decke == "unter": kr = kr_extra; ks_extra = [k_unter]
+    else: ks_extra = []
     ks = [prisma(deckelchen, -HS, p(0.3)), prisma(scheiben.offset(-FUGE), -HS, 1.6)]
     for m_ in mech:
         ks.append(prisma(kreis(3.3, 20).translate(tuple(m_)), 1.3, 8.5))
@@ -356,7 +375,7 @@ def main():
     def kippen(k): return k.translate((0, -5.5, 0)).rotate((-KOPF_WINKEL, 0, 0)).translate((0, Y(0) + 5.5, Z_H))
     ueber = kippen(M.cube((300, 400, 80)).translate((-150, 5.5, -HS - 0.6)))                             # Übergang bleibt unter der Kopf-Deckschicht
     grau += [kippen(vereint(kg)), M.batch_hull([M.hull_points(np.vstack([schnitt(-5.5), schnitt(6)])), kippen(wurzel)]) - ueber]
-    rot.append(kippen(vereint(kr))); schwarz.append(kippen(vereint(ks)))
+    rot.append(kippen(vereint(kr))); schwarz.append(kippen(vereint(ks + ks_extra)))
     if kd: dunkel.append(kippen(vereint(kd)))
 
     # ---------------- zusammensetzen ----------------

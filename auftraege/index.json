@@ -98,12 +98,11 @@
   "projekt": "gitarre_rundum_c5pro.3mf"
  },
  {
-  "kopfwechsel": 258,
+  "kopfwechsel": 266,
   "koepfe_benutzt": [
    1,
    2,
-   3,
-   4
+   3
   ],
   "name": "gitarre370_korpus",
   "drucker": "c5pro",
@@ -111,11 +110,11 @@
   "datum": "2026-11-16",
   "ordner": "2026-11-16_gitarre370_korpus_c5pro",
   "gcode": "gitarre370_korpus_c5pro.gcode",
-  "zeit": "14h 19m 11s",
-  "gramm": "60.87, 7.30, 9.79, 5.14",
-  "meter": "20.41 m, 2.45 m, 3.28 m, 1.72 m",
-  "duese": "210,210,210,210",
-  "bett": "60,60,60,60",
+  "zeit": "14h 0m 31s",
+  "gramm": "60.90, 7.99, 14.44",
+  "meter": "20.42 m, 2.68 m, 4.84 m",
+  "duese": "210,210,210",
+  "bett": "60,60,60",
   "schicht": "0.08",
   "stufe": "Standard",
   "infill": 12,
@@ -133,17 +132,12 @@
    {
     "slot": 2,
     "material": "PLA",
-    "farbe": "rot"
+    "farbe": "weinrot"
    },
    {
     "slot": 3,
     "material": "PLA",
     "farbe": "schwarz"
-   },
-   {
-    "slot": 4,
-    "material": "PLA",
-    "farbe": "dunkelrot"
    }
   ],
   "teile": [
@@ -158,10 +152,6 @@
    {
     "datei": "gitarre_rundum_korpus_schwarz.stl",
     "slot": 3
-   },
-   {
-    "datei": "gitarre_rundum_korpus_dunkelrot.stl",
-    "slot": 4
    }
   ],
   "quelle": "",
@@ -175,12 +165,8 @@
     "slot": 2
    },
    {
-    "datei": "gitarre_rundum_korpus_schwarz.stl",
+    "datei": "gitarre_rundum_korpus_schwarz.app.stl",
     "slot": 3
-   },
-   {
-    "datei": "gitarre_rundum_korpus_dunkelrot.app.stl",
-    "slot": 4
    }
   ],
   "vorschau": "vorschau.png",
@@ -188,7 +174,7 @@
   "projekt": "gitarre370_korpus_c5pro.3mf"
  },
  {
-  "kopfwechsel": 563,
+  "kopfwechsel": 446,
   "koepfe_benutzt": [
    1,
    2,
@@ -201,9 +187,9 @@
   "datum": "2026-11-16",
   "ordner": "2026-11-16_gitarre370_hals_c5pro",
   "gcode": "gitarre370_hals_c5pro.gcode",
-  "zeit": "11h 41m 31s",
-  "gramm": "25.81, 11.83, 17.68, 5.67",
-  "meter": "8.65 m, 3.97 m, 5.93 m, 1.90 m",
+  "zeit": "10h 22m 53s",
+  "gramm": "25.77, 10.04, 17.69, 0.73",
+  "meter": "8.64 m, 3.36 m, 5.93 m, 0.25 m",
   "duese": "210,210,210,210",
   "bett": "60,60,60,60",
   "schicht": "0.08",
@@ -223,7 +209,7 @@
    {
     "slot": 2,
     "material": "PLA",
-    "farbe": "rot"
+    "farbe": "weinrot"
    },
    {
     "slot": 3,
@@ -233,7 +219,7 @@
    {
     "slot": 4,
     "material": "PLA",
-    "farbe": "dunkelrot"
+    "farbe": "silber"
    }
   ],
   "teile": [
@@ -250,10 +236,6 @@
     "slot": 3
    },
    {
-    "datei": "gitarre_rundum_hals_dunkelrot.stl",
-    "slot": 4
-   },
-   {
     "datei": "gitarre_rundum_hals_weiss.stl",
     "slot": 4
    }
@@ -273,10 +255,6 @@
     "slot": 3
    },
    {
-    "datei": "gitarre_rundum_hals_dunkelrot.stl",
-    "slot": 4
-   },
-   {
     "datei": "gitarre_rundum_hals_weiss.stl",
     "slot": 4
    }
@@ -286,7 +264,7 @@
   "projekt": "gitarre370_hals_c5pro.3mf"
  },
  {
-  "kopfwechsel": 237,
+  "kopfwechsel": 181,
   "koepfe_benutzt": [
    1,
    2,
@@ -299,9 +277,9 @@
   "datum": "2026-11-16",
   "ordner": "2026-11-16_gitarre160_c5pro",
   "gcode": "gitarre160_c5pro.gcode",
-  "zeit": "5h 38m 13s",
-  "gramm": "12.87, 4.81, 5.62, 2.87",
-  "meter": "4.31 m, 1.61 m, 1.88 m, 0.96 m",
+  "zeit": "4h 56m 47s",
+  "gramm": "12.87, 3.63, 6.23, 0.30",
+  "meter": "4.32 m, 1.22 m, 2.09 m, 0.10 m",
   "duese": "210,210,210,210",
   "bett": "60,60,60,60",
   "schicht": "0.08",
@@ -321,7 +299,7 @@
    {
     "slot": 2,
     "material": "PLA",
-    "farbe": "rot"
+    "farbe": "weinrot"
    },
    {
     "slot": 3,
@@ -331,7 +309,7 @@
    {
     "slot": 4,
     "material": "PLA",
-    "farbe": "dunkelrot"
+    "farbe": "silber"
    }
   ],
   "teile": [
@@ -346,10 +324,6 @@
    {
     "datei": "gitarre_rundum_schwarz.stl",
     "slot": 3
-   },
-   {
-    "datei": "gitarre_rundum_dunkelrot.stl",
-    "slot": 4
    },
    {
     "datei": "gitarre_rundum_weiss.stl",
@@ -369,10 +343,6 @@
    {
     "datei": "gitarre_rundum_schwarz.app.stl",
     "slot": 3
-   },
-   {
-    "datei": "gitarre_rundum_dunkelrot.app.stl",
-    "slot": 4
    },
    {
     "datei": "gitarre_rundum_weiss.stl",

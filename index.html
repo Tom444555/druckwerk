@@ -175,7 +175,7 @@ const gedrucktSetzen = (ordner, an) => { const G = gedrucktListe(); if (an) G[or
   try { localStorage.setItem(GEDRUCKT, JSON.stringify(G)); } catch(e) {} };
 
 // Farbnamen -> Farbe (für Punkte und 3D-Vorschau)
-const FARBEN = {weiss:"#f5f5f5",weiß:"#f5f5f5",schwarz:"#222",rot:"#e0352b",dunkelrot:"#6a0d16",blau:"#2563eb",gruen:"#22a447",grün:"#22a447",
+const FARBEN = {weiss:"#f5f5f5",weiß:"#f5f5f5",schwarz:"#222",rot:"#e0352b",dunkelrot:"#6a0d16",weinrot:"#73121f",blau:"#2563eb",gruen:"#22a447",grün:"#22a447",
   gelb:"#f5c518",orange:"#f97316",grau:"#8e8e93",silber:"#c0c0c0",gold:"#d4a017",lila:"#8b5cf6",violett:"#8b5cf6",
   pink:"#ec4899",rosa:"#f9a8d4",braun:"#8b5a2b",tuerkis:"#14b8a6",türkis:"#14b8a6",natur:"#efe6d2",creme:"#f3e9c6",holz:"#b98a4e",transparent:"#cfe8ff"};
 const farbe = n => FARBEN[(n||"").toLowerCase().trim()] || (/^#/.test(n||"") ? n : "#9a9aa0");
