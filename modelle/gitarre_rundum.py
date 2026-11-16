@@ -95,38 +95,40 @@ def strich(a, b, w):
     return rechteck(L, w).translate((L / 2, 0)).rotate(math.degrees(math.atan2(v[1], v[0]))).translate(tuple(a)) + kreis(w / 2, 12).translate(tuple(a)) + kreis(w / 2, 12).translate(tuple(b))
 
 
-def raute(c, a, b): return poly([(c[0] - a, c[1]), (c[0], c[1] - b), (c[0] + a, c[1]), (c[0], c[1] + b)])
+# Fette gebrochene Schrift nach Toms Nahaufnahme der „III“: breite, oben und unten schräg geschnittene Balken mit kleinen Zacken.
+# Flächen im Einheitskasten (Höhe 1); Wert = (Breite, [Polygone]).
+GLYPH = {
+    "I": (0.40, [[(0.04, 0.10), (0.38, 0.00), (0.38, 0.30), (0.46, 0.36), (0.38, 0.44), (0.38, 0.90), (0.04, 1.00), (0.04, 0.66), (-0.05, 0.58), (0.04, 0.50)]]),
+    "X": (0.92, [[(0.00, 1.00), (0.34, 0.92), (0.92, 0.08), (0.92, 0.00), (0.58, 0.08), (0.00, 0.92)],                       # fetter Balken links oben → rechts unten
+                 [(0.02, 0.04), (0.20, 0.00), (0.90, 0.92), (0.88, 1.00), (0.72, 0.98), (0.04, 0.10)],                       # dünner Balken links unten → rechts oben
+                 [(0.20, 0.50), (0.46, 0.60), (0.72, 0.50), (0.46, 0.40)]]),                                                 # Raute in der Mitte
+    "V": (0.90, [[(0.00, 1.00), (0.34, 0.92), (0.50, 0.30), (0.66, 0.84), (0.60, 0.98), (0.90, 0.92), (0.62, 0.00), (0.34, 0.00), (0.04, 0.90)]]),
+}
+DUENN = {"I": 0.34, "X": 0.14, "V": 0.16}                                           # dünnste Stelle je Zeichen (Anteil der Zeichenbreite bzw. Höhe)
 
 
-def ziffer(text, h, u, t_min, breite_max):
-    """Römische Ziffer in gebrochener Schrift (wie auf Toms Griffbrett): dicker und dünner Strich, Rauten an den Enden.
-    h = Höhe, u = Breite von X und V, t_min = dünnster druckbarer Strich. Gibt die Fläche mittig um (0, 0) zurück."""
-    dick, duenn = max(t_min, 0.17 * h), max(t_min, 0.085 * h); kontrast = dick > duenn * 1.15
-    luecke = max(0.5 * dick, 0.16 * u)
-    def bw(c): return 2.1 * dick if c == "I" else u
-    ges = sum(bw(c) for c in text) + luecke * (len(text) - 1)
+def ziffer(text, h, t_min, breite_max):
+    """Römische Ziffer, mittig um (0, 0). h = Höhe im echten Maß, t_min = dünnster druckbarer Strich.
+    Kleine Zeichen werden breiter gezogen und so weit aufgedickt, dass der dünnste Strich noch druckbar ist."""
+    sx = max(h, 3.4 * t_min)                                                         # Zeichenbreite je Einheit: nie schmaler, als die Düse auflösen kann
+    d = max(0.0, max((t_min - DUENN[c] * min(sx, h)) / 2 for c in set(text)))        # Aufdickung
+    luecke = max(0.16 * sx, 1.1 * t_min + 2 * d)
+    ges = sum(GLYPH[c][0] * sx for c in text) + luecke * (len(text) - 1)
     if ges > breite_max:
-        u *= (breite_max - sum(2.1 * dick for c in text if c == "I") - luecke * (len(text) - 1)) / max(1e-9, sum(u for c in text if c != "I")); ges = breite_max
-    teile, x = [], 0.0; e = 0.5 * dick                                                 # e = Einzug der Strichenden vom Rand
+        f = (breite_max - luecke * (len(text) - 1)) / (ges - luecke * (len(text) - 1)); sx *= f; ges = breite_max
+    teile, x = [], 0.0
     for c in text:
-        b = bw(c)
-        if c == "I":
-            teile.append(strich((x + b / 2, e), (x + b / 2, h - e), dick))
-            if kontrast: teile += [raute((x + b / 2, e), b / 2, 0.6 * dick), raute((x + b / 2, h - e), b / 2, 0.6 * dick)]
-        elif c == "X":
-            teile += [strich((x + e, h - e), (x + b - e, e), dick), strich((x + e, e), (x + b - e, h - e), duenn)]
-            if kontrast: teile += [raute(q, 0.75 * dick, 0.5 * dick) for q in ((x + e, h - e), (x + b - e, e), (x + e, e), (x + b - e, h - e))]
-        else:                                                                           # V
-            teile += [strich((x + e, h - e), (x + b / 2, e), dick), strich((x + b / 2, e), (x + b - e, h - e), duenn)]
-            if kontrast: teile += [raute((x + e, h - e), 0.75 * dick, 0.5 * dick), raute((x + b - e, h - e), 0.75 * dick, 0.5 * dick)]
-        x += b + luecke
+        b, polys = GLYPH[c]
+        g = vereint2([CS([np.array(pl, float) * (sx, h)], m3.FillRule.NonZero) + CS([np.array(pl, float) * (sx, h)], m3.FillRule.Negative) for pl in polys])
+        if d > 0: g = g.offset(d, RUND, 2.0, 8) ^ CS.square((b * sx + 2 * d, h)).translate((-d, 0))     # oben/unten nicht höher werden
+        teile.append(g.translate((x, 0))); x += b * sx + luecke
     return vereint2(teile).translate((-ges / 2, -h / 2))
 
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--laenge", type=float, default=200.0); ap.add_argument("--wolken", type=int, default=1, help="0 keine · 1 wie im Bild · 2 kräftiger")
-    ap.add_argument("--strich", type=float, default=0.46, help="dünnster Strich der Ziffern im Druck (0.46 für 0,4-mm-Düse, 0.28 für 0,25-mm-Düse am weißen Kopf)")
+    ap.add_argument("--duese", type=float, default=0.25, help="Düse, auf die die Feinheiten abgestimmt werden: 0.25 (alle Köpfe, Standard seit 16.11.) oder 0.4")
     ap.add_argument("--breite", type=float, default=320.0, help="größte Korpusbreite in echten mm")
     ap.add_argument("--bauch", type=int, default=1, help="Bauch-Ausfräsung auf der Rückseite (braucht Stützen)")
     ap.add_argument("--pruef", action="store_true"); ap.add_argument("--ziel", default=str(HIER)); ap.add_argument("--name", default="gitarre_rundum")
@@ -138,7 +140,8 @@ def main():
     for kx in ("wolken", "wolken_viel"): D[kx] = [[[q[0] * QX, q[1]] for q in pl] for pl in D[kx]]
     S_END = D["s_ende"]; Y = lambda s: S_END - s
     F0 = a.laenge / 978.0; p = lambda mm: mm / F0                 # Druckmaß → echtes Maß
-    FUGE = p(0.03); E = p(0.36); SLAB = p(0.60)
+    D25 = a.duese < 0.3; FEIN = 0.28 if D25 else 0.46                               # dünnster Strich im Druck
+    FUGE = p(0.03); E = p(0.32 if D25 else 0.36); SLAB = p(0.60)                     # E = Tiefe der Einlagen (4 Schichten 0,08 bzw. 3 × 0,12)
     xy = lambda q: (q[0], Y(q[1]))
 
     # ---------------- Korpus-Umriss: unterer Bogen rechts = Spiegel von links (rechts war das Foto gestört) ----------------
@@ -162,20 +165,27 @@ def main():
     gb = poly([(-21, Y(0)), (21, Y(0)), (halb(gb_ende), Y(gb_ende)), (-halb(gb_ende), Y(gb_ende))])
     hals_fl = poly([(-halb(380) - 0.02, Y(380)), (halb(380) + 0.02, Y(380)), (halb(gb_ende) + 0.02, Y(gb_ende) - 0.02), (-halb(gb_ende) - 0.02, Y(gb_ende) - 0.02)])
     hw = vereint2([pu_fuss(s) for s in PU] + [steg_fl] + [kreis(9.5).translate(q) for q in regler] + [schlitz])
-    innen = K.offset(-(SLAB + p(0.9)), RUND, 2.0, 24)
+    innen = K.offset(-(p(0.38 + 0.45) if a.duese < 0.3 else SLAB + p(0.9)), RUND, 2.0, 24)
     wl = D["wolken_viel"] if a.wolken == 2 else D["wolken"]
     W = CS()
     if a.wolken:
         W = CS([np.array([xy(q) for q in pl]) for pl in wl], m3.FillRule.EvenOdd) ^ innen
         W = W - hw.offset(p(0.5), RUND) - hals_fl.offset(p(0.5), RUND)
-        W = W.offset(p(0.2), RUND).offset(-p(0.4), RUND).offset(p(0.2), RUND)          # erst schmale rote Stege schließen, dann schmale schwarze Zungen weg
-        W = vereint2([c for c in W.decompose() if c.area() > p(0.75) ** 2])
+        fw = 0.5 * FEIN - 0.01; W = W.offset(p(fw), RUND).offset(-p(2 * fw), RUND).offset(p(fw), RUND)          # erst schmale rote Stege schließen, dann schmale schwarze Zungen weg
+        W = vereint2([c for c in W.decompose() if c.area() > p(1.6 * FEIN) ** 2])
         W = W.offset(0.07, RUND, 2.0, 12).simplify(0.06)                                   # Engstellen ohne Breite verschmelzen (sonst Kanten mit vier Flächen)
-    decke_in = K.offset(-(SLAB + 0.35), RUND, 2.0, 24) - hw - hals_fl - W.offset(FUGE, RUND)
     z_slab = T_B - SLAB
-    rund = [(SLAB * (1 - math.cos(w)), z_slab + SLAB * math.sin(w)) for w in np.linspace(0, math.pi / 2, 7)]
-    rot = [prisma(decke_in, z_slab, T_B), band(K, rund, SLAB + 0.6) - prisma(hals_fl, z_slab - 1, T_B + 1)]
-    schwarz = [prisma(W, z_slab, T_B), prisma(hw.offset(-FUGE), z_slab, T_B)]
+    if D25:                                                                           # feine Düse: schmale gerundete Kante als schwarzer Rand, Decke bis dorthin rot
+        RK, RB = p(0.30), p(0.38)
+        decke_in = K.offset(-(RB + FUGE), RUND, 2.0, 24) - hw - hals_fl - W.offset(FUGE, RUND)
+        rund = [(0.0, z_slab)] + [(RK * (1 - math.cos(w)), T_B - RK + RK * math.sin(w)) for w in np.linspace(0, math.pi / 2, 6)]
+        rot = [prisma(decke_in, z_slab, T_B)]
+        schwarz = [prisma(W, z_slab, T_B), prisma(hw.offset(-FUGE), z_slab, T_B), band(K, rund, RB) - prisma(hals_fl, z_slab - 1, T_B + 1)]
+    else:
+        decke_in = K.offset(-(SLAB + 0.35), RUND, 2.0, 24) - hw - hals_fl - W.offset(FUGE, RUND)
+        rund = [(SLAB * (1 - math.cos(w)), z_slab + SLAB * math.sin(w)) for w in np.linspace(0, math.pi / 2, 7)]
+        rot = [prisma(decke_in, z_slab, T_B), band(K, rund, SLAB + 0.6) - prisma(hals_fl, z_slab - 1, T_B + 1)]
+        schwarz = [prisma(W, z_slab, T_B), prisma(hw.offset(-FUGE), z_slab, T_B)]
     grau, weiss, schneider = [], [], []
 
     # ---------------- Korpus-Kern (grau) mit Fase unten ----------------
@@ -208,7 +218,7 @@ def main():
     for i in range(6):
         x = (i - 2.5) * 10.5
         rt = rechteck(9.3, 27, 4.4).translate((x, Y(MENSUR + 8.5)))
-        schlitz = rechteck(p(0.55), 13).translate((x, Y(MENSUR + 9)))
+        schlitz = rechteck(p(1.2 * FEIN), 13).translate((x, Y(MENSUR + 9)))
         schwarz += [prisma(rt, zs - 0.3, zs + 5), prisma(rt.offset(-0.05) - schlitz, zs + 4.7, zs + 8)]
     for q in regler:                                                                   # Regler: unten glatt, oben vier Rillen, flache Kuppe
         r = 9.5; g = p(0.28)
@@ -243,8 +253,8 @@ def main():
     zf = []                                                                             # Ziffern wie am Original, auch XIX, XXI, XXIV (dort nur so fein, wie die Düse es kann)
     for n, text in ZIFFERN.items():
         s0, s1 = bund_s(n - 1), bund_s(n); zelle = s1 - s0 - wb - p(0.4)
-        h = min(max(0.66 * zelle, min(0.94 * zelle, p(1.0))), p(3.4))
-        g = ziffer(text, h, max(0.78 * h, p(a.strich * 3.0)), p(a.strich), 2 * halb(s0) - p(1.3))
+        h = min(max(0.62 * zelle, min(0.94 * zelle, p(1.0))), p(3.6))
+        g = ziffer(text, h, p(FEIN), 2 * halb(s0) - p(1.3))
         zf.append(g.translate((0, Y((s0 + s1) / 2))))
     ziffern = vereint2(zf) ^ gb.offset(-p(0.3))
     schwarz += [prisma(gb, ZFB, ZF - E), prisma(gb.offset(-0.05) - (buende + ziffern).offset(FUGE, RUND), ZF - E - 0.3, ZF)]
@@ -271,15 +281,15 @@ def main():
     grau = [grau[0], hals_roh - (box ^ prisma(CS.square((100, 500)).translate((-50, Y(382) - 0.01)) - K.offset(3), -100, 200))]
 
     # ---------------- Kopfplatte (im eigenen Rahmen: x quer, y = Abstand vom Sattel, Fläche bei z = 0), dann kippen ----------------
-    HS = p(0.5)
+    HS = p(0.5); KR = 0.34 if D25 else 0.5                                             # KR = Breite des hellen Kopfplatten-Rands
     ko = poly([(q[0], -q[1]) for q in D["kopf"]])
     ko = glatt(ko + rechteck(40, 8).translate((0.6, 9.0)), 3.0) ^ CS.square((300, 300)).translate((-150, 6.2))
     mech = [np.array([q[0], -q[1]]) for q in D["mechaniken"]]
     achse = (mech[-1] - mech[0]) / np.linalg.norm(mech[-1] - mech[0]); raus = np.array([-achse[1], achse[0]])      # zeigt nach links außen
     scheiben = vereint2([kreis(5.4, 24).translate(tuple(m_)) for m_ in mech])
     deckelchen = poly([(-6.5, 7.2), (6.5, 7.2), (4.2, 32), (0, 37), (-4.2, 32)]).offset(-1.5, RUND).offset(1.5, RUND).translate((0.6, 0))
-    k_rot = ko.offset(-p(0.5), RUND, 2.0, 24) - CS.square((300, 14.5)).translate((-150, 0)) - scheiben - deckelchen.offset(FUGE, RUND)
-    kg = [prisma(ko, -KOPF_DICKE, -HS), prisma(ko - ko.offset(-p(0.5), RUND, 2.0, 24) + (ko ^ CS.square((300, 14.5)).translate((-150, 0))) - deckelchen.offset(FUGE, RUND) - scheiben, -HS - 0.4, 0)]
+    k_rot = ko.offset(-p(KR), RUND, 2.0, 24) - CS.square((300, 14.5)).translate((-150, 0)) - scheiben - deckelchen.offset(FUGE, RUND)
+    kg = [prisma(ko, -KOPF_DICKE, -HS), prisma(ko - ko.offset(-p(KR), RUND, 2.0, 24) + (ko ^ CS.square((300, 14.5)).translate((-150, 0))) - deckelchen.offset(FUGE, RUND) - scheiben, -HS - 0.4, 0)]
     kr = [prisma(k_rot, -HS, 0)]
     ks = [prisma(deckelchen, -HS, p(0.3)), prisma(scheiben.offset(-FUGE), -HS, 1.6)]
     for m_ in mech:

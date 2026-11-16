@@ -59,6 +59,11 @@
   Nachtrag 13:40 Uhr: Ziffern auf Toms Wunsch „genauso“ wie am Griffbrett – gebrochene Schrift (dicker/dünner Strich, Rauten an den Enden), jetzt alle zehn inkl. XIX, XXI, XXIV;
   neu gesliced (gleicher Ordner, 2 h 09 min). Mit 0,4-mm-Düse zeigt die Schrift ihren Charakter nur bis etwa XII, XIX–XXIV werden kleine Kleckse (Feld nur 2 mm hoch).
   Feiner geht es mit `--strich 0.28` + `druck.py --duesen 0.4,0.4,0.4,0.25` (0,25-mm-Düse am weißen Kopf) oder größer (`--laenge 240`) – Tom angeboten, Antwort offen.
+  **Stand 14:00 Uhr – gilt:** Tom druckt mit **0,25-mm-Düse** („stimm alles darauf ab, so detailreich wie möglich“; angenommen: alle vier Köpfe – er sprach von „einer“ Düse,
+  Rückfrage gestellt). `gitarre_rundum.py --duese 0.25` ist jetzt Standard (`--duese 0.4` = alte Fassung): Ziffern als fette gebrochene Schrift nach Toms Nahaufnahme der „III“
+  (schräg geschnittene Balken mit Zacken, Tabelle `GLYPH`), dünnster Strich 0,28 mm, feinere Wolkung, schmaler schwarzer Rand um die Decke, schmalerer Kopfplatten-Rand.
+  Auftrag `2026-11-16_gitarre_rundum_c5pro` neu: `druck.py --duese 0.25 --schicht 0.08` + Arachne-Zusätze → **5 h 49 min, 34 g** (grau 19,7 · rot 5,0 · schwarz 8,7 · weiß 0,35),
+  165 Schichten, 213 Kopfwechsel, keine Stützen über der Decke; in den Bahnen sind alle zehn Ziffern einzeln angelegt (XIX–XXIV nur etwa 1 mm hoch). **Nicht gedruckt.**
   Toms Angabe: die drei Vergleichsdateien stammen von GrabCAD und seien frei – sie liegen trotzdem nicht im Lager (nur verglichen). Mögliche nächste Wünsche: größer (bis ~240 mm),
   Saiten, schwarzer Rand um die Decke, Ständer dazu.
 - **Grenze Text zu Bild (15.11. nachts):** `bild_ki.py` ohne Schlüssel taugt nur für freie Figuren (Eule gut). Technische/reale Gegenstände (Test: Pistole, Karabiner, Toms

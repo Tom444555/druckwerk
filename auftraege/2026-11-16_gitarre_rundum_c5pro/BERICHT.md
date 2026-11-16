@@ -2,8 +2,8 @@
 
 **Drucker:** Flashforge Creator 5 Pro  
 **Datei für USB:** `gitarre_rundum_c5pro.gcode`  
-**Druckzeit (geschätzt):** 2h 8m 44s  
-**Filament:** 19.31, 4.08, 7.65, 0.24 g (6.48 m, 1.37 m, 2.56 m, 0.08 m)  
+**Druckzeit (geschätzt):** 5h 49m 7s  
+**Filament:** 19.67, 4.96, 8.72, 0.35 g (6.59 m, 1.66 m, 2.92 m, 0.12 m)  
 
 
 ## Spulen / Köpfe einlegen
@@ -17,8 +17,8 @@
 
 ## Einstellungen
 
-- Düse: 0.4 mm (alle Köpfe)
-- Schichthöhe: 0.12 mm (Standard)
+- Düse: 0.25 mm (alle Köpfe)
+- Schichthöhe: 0.08 mm (Standard)
 - Füllung: 15 %
 - Wände: Profil-Standard
 - Stützen: auto
@@ -32,7 +32,7 @@
 - `gitarre_rundum_schwarz.stl` → Slot 3 (PLA)
 - `gitarre_rundum_weiss.stl` → Slot 4 (PLA)
 
-Kopfwechsel in der .gcode: 143, benutzte Köpfe: 1, 2, 3, 4
+Kopfwechsel in der .gcode: 213, benutzte Köpfe: 1, 2, 3, 4
 
 ## Am Drucker
 

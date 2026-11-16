@@ -1,6 +1,6 @@
 [
  {
-  "kopfwechsel": 143,
+  "kopfwechsel": 213,
   "koepfe_benutzt": [
    1,
    2,
@@ -13,15 +13,15 @@
   "datum": "2026-11-16",
   "ordner": "2026-11-16_gitarre_rundum_c5pro",
   "gcode": "gitarre_rundum_c5pro.gcode",
-  "zeit": "2h 8m 44s",
-  "gramm": "19.31, 4.08, 7.65, 0.24",
-  "meter": "6.48 m, 1.37 m, 2.56 m, 0.08 m",
+  "zeit": "5h 49m 7s",
+  "gramm": "19.67, 4.96, 8.72, 0.35",
+  "meter": "6.59 m, 1.66 m, 2.92 m, 0.12 m",
   "duese": "210,210,210,210",
   "bett": "60,60,60,60",
-  "schicht": "0.12",
+  "schicht": "0.08",
   "stufe": "Standard",
   "infill": 15,
-  "duese_mm": "0.4",
+  "duese_mm": "0.25",
   "waende": null,
   "stuetzen": "auto",
   "brim": "auto",
