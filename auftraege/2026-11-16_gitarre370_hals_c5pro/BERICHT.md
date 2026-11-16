@@ -2,8 +2,8 @@
 
 **Drucker:** Flashforge Creator 5 Pro  
 **Datei für USB:** `gitarre370_hals_c5pro.gcode`  
-**Druckzeit (geschätzt):** 10h 22m 53s  
-**Filament:** 25.77, 10.04, 17.69, 0.73 g (8.64 m, 3.36 m, 5.93 m, 0.25 m)  
+**Druckzeit (geschätzt):** 10h 24m 14s  
+**Filament:** 25.87, 10.04, 17.73, 0.73 g (8.67 m, 3.37 m, 5.95 m, 0.25 m)  
 
 
 ## Spulen / Köpfe einlegen
@@ -14,16 +14,6 @@
 | 2 | PLA | weinrot | Flashforge PLA Basic @FF C5P |
 | 3 | PLA | schwarz | Flashforge PLA Basic @FF C5P |
 | 4 | PLA | silber | Flashforge PLA Basic @FF C5P |
-
-## Teil 2 von 2: Hals mit Kopfplatte und Zapfen (liegt schräg auf dem Bett, 251 mm lang)
-
-- Köpfe: 1 Grau, 2 Weinrot, 3 Schwarz, 4 Silber oder Hellgrau (Bünde, Ziffern).
-- Stützen unter Halsrücken und Kopfplatte; der Zapfen steht auf dem Bett. Saiten: Kerben im Sattel, sechs Löcher in der Kopfplatte.
-- **Decke:** durchgehend Weinrot; das schwarze Muster liegt unter einer 0,16 mm dicken Haut (zwei Schichten) und soll durchscheinen. Wie stark, hängt vom Filament ab –
-  ungedruckt. Zu schwach: `--haut 0.08` (eine Schicht); zu hart: `--haut 0.24`.
-- **Maximale Details:** 0,25-mm-Düse auf allen Köpfen, Schicht 0,08 mm, Arachne (`min_bead_width=70%`, `min_feature_size=20%`), Auflösung 0,008 mm, nur eine Wand an Deckflächen,
-  Außenwand 30 mm/s, kleine Umrisse 20 mm/s, Deckfläche 40 mm/s, 8 Deckschichten, Stützen nur vom Druckbett. Kein Spulenwechsel mehr nötig.
-- Alles nur gerechnet, am Gerät nicht erprobt.
 
 ## Einstellungen
 

@@ -143,6 +143,7 @@ def main():
     ap.add_argument("--armschraege", type=float, default=0.33, help="Abflachung der Decke unter dem Unterarm (Bassseite, unterer Bogen): Steigung, 0 = aus")
     ap.add_argument("--decke", default="unter", help="unter = Decke durchgehend in einer Farbe (Weinrot), schwarzes Muster liegt unter einer dünnen Haut und scheint durch · einlage = Muster als eigene Farbe in der Oberfläche (Dunkelrot, fünfte Farbe)")
     ap.add_argument("--haut", type=float, default=0.16, help="Dicke der Deckhaut über dem Muster im Druckmaß (0,16 = zwei Schichten zu 0,08)")
+    ap.add_argument("--wirbel", type=int, default=0, help="1 = drehbare Steckwirbel (ab ~300 mm): Kegellöcher durch die Kopfplatte statt fester Achsen, dazu <name>_wirbel.stl mit acht Wirbeln")
     ap.add_argument("--teilen", type=int, default=0, help="1 = zwei Steckteile: Korpus mit Schlitz + Hals mit durchgehendem Zapfen (für Längen über 250 mm)")
     ap.add_argument("--spiel", type=float, default=0.12, help="Spiel der Steckverbindung je Seite im Druckmaß (mm)")
     ap.add_argument("--duese", type=float, default=0.25, help="Düse, auf die die Feinheiten abgestimmt werden: 0.25 (alle Köpfe, Standard seit 16.11.) oder 0.4")
@@ -364,7 +365,7 @@ def main():
     else: ks_extra = []
     ks = [prisma(deckelchen, -HS, p(0.3)), prisma(scheiben.offset(-FUGE), -HS, 1.6)]
     for m_ in mech:
-        ks.append(prisma(kreis(3.3, 20).translate(tuple(m_)), 1.3, 8.5))
+        if not a.wirbel: ks.append(prisma(kreis(3.3, 20).translate(tuple(m_)), 1.3, 8.5))
         ks.append(prisma(kreis(8.6, 28).translate(tuple(m_)), -KOPF_DICKE - 11, -KOPF_DICKE))                    # Gehäuse hinten
         c = m_ + 24.5 * raus; zc = -KOPF_DICKE - 5.6
         ks.append(zylinder(2.7, (m_[0], m_[1], zc), (c[0], c[1], zc), 20))
@@ -392,6 +393,7 @@ def main():
             return int((c != 2).sum())
         print("   Kantenfehler rot0", kn(rot[0]), "rot1", kn(rot[1]), "rot0+1", kn(rot[0] + rot[1]), "decke_in Teile", len(decke_in.decompose()), "W", len(W.decompose()))
     # ---------------- echte Saiten zum Einfädeln (Draht bis 0,3 mm): Löcher durch den Korpus, Kerben in Reitern und Sattel, Löcher in der Kopfplatte ----------------
+    WR_H, WR_V = 1.35, 1.05                                                             # Radius des Kegellochs hinten (Gehäuse-Unterseite) und vorn (Mutter), Druckmaß
     RL = p(0.36); KB = p(0.34); bohr = []                                             # Lochradius und Kerbenbreite im Druckmaß
     for i in range(6):
         xs_, xn = (i - 2.5) * 10.5, (i - 2.5) * 7.0
@@ -399,7 +401,10 @@ def main():
         bohr.append(M.cube((KB, 8, 6)).translate((xs_ - KB / 2, Y(MENSUR + 0.3) - 4, zs + 8.3 - p(0.2))))                   # Kerbe in der Saitenauflage
         bohr.append(M.cube((KB, 9, 6)).translate((xn - KB / 2, Y(-2.3) - 4.5, ZF + max(2.6, p(0.36)) - p(0.22))))                     # Kerbe im Sattel
         v = mech[i] - np.array([xn, 2.0]); v /= np.linalg.norm(v); hq = mech[i] - 6.2 * v                                   # Loch kurz vor der Mechanik-Achse
-        bohr.append(kippen(M.cylinder(KOPF_DICKE + 30, RL, RL, 14).translate((hq[0], hq[1], -KOPF_DICKE - 18))))
+        if a.wirbel:                                                                       # Kegelloch für den Steckwirbel: hinten weiter, vorn enger (Druckmaß WR_H / WR_V)
+            bohr.append(kippen(M.cylinder(KOPF_DICKE + 11 + 1.6 + 2, p(WR_H) + 1 * (p(WR_H) - p(WR_V)) / (KOPF_DICKE + 12.6), p(WR_V), 32).translate((mech[i][0], mech[i][1], -KOPF_DICKE - 12))))
+        else:
+            bohr.append(kippen(M.cylinder(KOPF_DICKE + 30, RL, RL, 14).translate((hq[0], hq[1], -KOPF_DICKE - 18))))
     bohr = vereint(bohr + kreuze)
     rot_k, schwarz_k, weiss_k = vereint(rot), vereint(schwarz) - zylinder(RSCH, f0 - 3 * ri3, f0 + 9.5 * ri3, 14), vereint(weiss)
     grau.append(schaft_k - prisma(CS.square((900, 1200)).translate((-450, -100)), -50, z_slab))
@@ -450,6 +455,18 @@ def main():
         v = (vereint(list(hals.values())) ^ vereint(list(korp.values()))).volume(); print(f"  Steckverbindung: Spiel {a.spiel} mm im Druck, Schnittvolumen Hals/Korpus {v:.2f} mm³")
         if a.armschraege > 0: korp = {n: k.refine_to_length(3.0).warp_batch(senken) for n, k in korp.items()}
         teile_k = {"korpus_": korp, "hals_": hals}
+    if a.wirbel:                                                                        # Steckwirbel als eigenes Druckteil (Druckmaß, stehend: Rändelrad unten, Stift oben)
+        lang = (KOPF_DICKE + 12.6) * f; steig = (WR_H - WR_V) / lang                   # Lochlänge im Druck und Kegelsteigung
+        zahn = np.array([[(3.2 - (0.28 if j % 2 else 0)) * math.cos(j * math.pi / 30), (3.2 - (0.28 if j % 2 else 0)) * math.sin(j * math.pi / 30)] for j in range(60)])
+        rad = CS([zahn], NZ).extrude(2.6) + M.cylinder(0.5, 2.6, 1.9, 40).translate((0, 0, 2.59))
+        r0 = WR_H + 0.05 + steig * 0.6                                                  # 0,05 Übermaß: der Wirbel sitzt fest, bevor das Rad am Gehäuse anliegt
+        stift = M.cylinder(lang + 1.2, r0, r0 - steig * (lang + 1.2), 40).translate((0, 0, 3.08))
+        zs0 = 3.08 + lang + 1.2; rk = WR_V - 0.07
+        kopf_w = M.cylinder(5.0, rk, rk, 40).translate((0, 0, zs0 - 0.02)) + M.cylinder(0.3, rk, rk - 0.25, 40).translate((0, 0, zs0 + 4.97))
+        w = rad + stift + kopf_w - M.cylinder(6, 0.38, 0.38, 16).rotate((90, 0, 0)).translate((0, 3, zs0 + 3.0))      # Querloch 0,76 mm für die Saite
+        alle_w = vereint([w.translate((9.0 * (j % 4), 9.0 * (j // 4), 0)) for j in range(8)])
+        me = alle_w.to_mesh(); tw = trimesh.Trimesh(np.asarray(me.vert_properties[:, :3], np.float64), me.tri_verts, process=True)
+        tw.export(ziel / f"{a.name}_wirbel.stl"); print(f"{a.name}_wirbel.stl: dicht={tw.is_watertight}, 8 Wirbel, Höhe {tw.extents[2]:.1f} mm, Kegel {r0 * 2:.2f} → {(r0 - steig * (lang + 1.2)) * 2:.2f} mm, Stift {rk * 2:.2f} mm")
     for vor, kk in teile_k.items():
         ges = vereint(list(kk.values())); b2 = ges.bounding_box(); dreh = 45.0 if vor == "hals_" and (b2[4] - b2[1]) * f > 215 else 0.0
         for n, k in kk.items():
