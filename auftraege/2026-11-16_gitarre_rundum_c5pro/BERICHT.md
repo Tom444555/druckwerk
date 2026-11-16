@@ -2,8 +2,8 @@
 
 **Drucker:** Flashforge Creator 5 Pro  
 **Datei für USB:** `gitarre_rundum_c5pro.gcode`  
-**Druckzeit (geschätzt):** 2h 8m 58s  
-**Filament:** 19.31, 4.08, 7.64, 0.24 g (6.48 m, 1.37 m, 2.56 m, 0.08 m)  
+**Druckzeit (geschätzt):** 2h 8m 44s  
+**Filament:** 19.31, 4.08, 7.65, 0.24 g (6.48 m, 1.37 m, 2.56 m, 0.08 m)  
 
 
 ## Spulen / Köpfe einlegen

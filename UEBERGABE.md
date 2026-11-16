@@ -56,6 +56,9 @@
   **Gesliced 13:30 Uhr auf Toms Ja:** Auftrag `2026-11-16_gitarre_rundum_c5pro` – 2 h 09 min, 31 g (grau 19,3 · rot 4,1 · schwarz 7,6 · weiß 0,2), Schicht 0.12, Füllung 15 %,
   Stützen auto (nur unter Hals, Kopfplatte, Bauch-Ausfräsung, Gurtknopf; über der Decke keine – Regler-Rillen dafür unten 45° angeschrägt, Hebel steiler), Arachne-Zusätze,
   143 Kopfwechsel, Köpfe 1 grau · 2 rot · 3 schwarz · 4 weiß. In den Schichten geprüft: Ziffern III–XVII lesbar, XIX/XXI nur als Punkte. **Nicht gedruckt.**
+  Nachtrag 13:40 Uhr: Ziffern auf Toms Wunsch „genauso“ wie am Griffbrett – gebrochene Schrift (dicker/dünner Strich, Rauten an den Enden), jetzt alle zehn inkl. XIX, XXI, XXIV;
+  neu gesliced (gleicher Ordner, 2 h 09 min). Mit 0,4-mm-Düse zeigt die Schrift ihren Charakter nur bis etwa XII, XIX–XXIV werden kleine Kleckse (Feld nur 2 mm hoch).
+  Feiner geht es mit `--strich 0.28` + `druck.py --duesen 0.4,0.4,0.4,0.25` (0,25-mm-Düse am weißen Kopf) oder größer (`--laenge 240`) – Tom angeboten, Antwort offen.
   Toms Angabe: die drei Vergleichsdateien stammen von GrabCAD und seien frei – sie liegen trotzdem nicht im Lager (nur verglichen). Mögliche nächste Wünsche: größer (bis ~240 mm),
   Saiten, schwarzer Rand um die Decke, Ständer dazu.
 - **Grenze Text zu Bild (15.11. nachts):** `bild_ki.py` ohne Schlüssel taugt nur für freie Figuren (Eule gut). Technische/reale Gegenstände (Test: Pistole, Karabiner, Toms

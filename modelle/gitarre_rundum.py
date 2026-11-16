@@ -90,32 +90,43 @@ def zylinder(r, p0, p1, n=32):
 
 
 ZIFFERN = {3: "III", 5: "V", 7: "VII", 9: "IX", 12: "XII", 15: "XV", 17: "XVII", 19: "XIX", 21: "XXI", 24: "XXIV"}
-GLYPH = {"I": (0.34, [[(0.17, 0), (0.17, 1)]]), "V": (0.80, [[(0.0, 1), (0.40, 0), (0.80, 1)]]),
-         "X": (0.80, [[(0.0, 0), (0.80, 1)], [(0.0, 1), (0.80, 0)]])}
-
-
 def strich(a, b, w):
     a, b = np.asarray(a, float), np.asarray(b, float); v = b - a; L = np.linalg.norm(v)
     return rechteck(L, w).translate((L / 2, 0)).rotate(math.degrees(math.atan2(v[1], v[0]))).translate(tuple(a)) + kreis(w / 2, 12).translate(tuple(a)) + kreis(w / 2, 12).translate(tuple(b))
 
 
-def ziffer(text, hoehe, w_strich, breite_max):
-    luecke = 0.22
-    ges = sum(GLYPH[c][0] for c in text) + luecke * (len(text) - 1)
-    h = min(hoehe, breite_max / ges)
-    teile, x = [], 0.0
+def raute(c, a, b): return poly([(c[0] - a, c[1]), (c[0], c[1] - b), (c[0] + a, c[1]), (c[0], c[1] + b)])
+
+
+def ziffer(text, h, u, t_min, breite_max):
+    """Römische Ziffer in gebrochener Schrift (wie auf Toms Griffbrett): dicker und dünner Strich, Rauten an den Enden.
+    h = Höhe, u = Breite von X und V, t_min = dünnster druckbarer Strich. Gibt die Fläche mittig um (0, 0) zurück."""
+    dick, duenn = max(t_min, 0.17 * h), max(t_min, 0.085 * h); kontrast = dick > duenn * 1.15
+    luecke = max(0.5 * dick, 0.16 * u)
+    def bw(c): return 2.1 * dick if c == "I" else u
+    ges = sum(bw(c) for c in text) + luecke * (len(text) - 1)
+    if ges > breite_max:
+        u *= (breite_max - sum(2.1 * dick for c in text if c == "I") - luecke * (len(text) - 1)) / max(1e-9, sum(u for c in text if c != "I")); ges = breite_max
+    teile, x = [], 0.0; e = 0.5 * dick                                                 # e = Einzug der Strichenden vom Rand
     for c in text:
-        b, linien = GLYPH[c]
-        for l in linien:
-            for p0, p1 in zip(l[:-1], l[1:]):
-                teile.append(strich(((x + p0[0]) * h, p0[1] * h), ((x + p1[0]) * h, p1[1] * h), w_strich))
+        b = bw(c)
+        if c == "I":
+            teile.append(strich((x + b / 2, e), (x + b / 2, h - e), dick))
+            if kontrast: teile += [raute((x + b / 2, e), b / 2, 0.6 * dick), raute((x + b / 2, h - e), b / 2, 0.6 * dick)]
+        elif c == "X":
+            teile += [strich((x + e, h - e), (x + b - e, e), dick), strich((x + e, e), (x + b - e, h - e), duenn)]
+            if kontrast: teile += [raute(q, 0.75 * dick, 0.5 * dick) for q in ((x + e, h - e), (x + b - e, e), (x + e, e), (x + b - e, h - e))]
+        else:                                                                           # V
+            teile += [strich((x + e, h - e), (x + b / 2, e), dick), strich((x + b / 2, e), (x + b - e, h - e), duenn)]
+            if kontrast: teile += [raute((x + e, h - e), 0.75 * dick, 0.5 * dick), raute((x + b - e, h - e), 0.75 * dick, 0.5 * dick)]
         x += b + luecke
-    return vereint2(teile).translate((-ges * h / 2, -h / 2)), h
+    return vereint2(teile).translate((-ges / 2, -h / 2))
 
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--laenge", type=float, default=200.0); ap.add_argument("--wolken", type=int, default=1, help="0 keine · 1 wie im Bild · 2 kräftiger")
+    ap.add_argument("--strich", type=float, default=0.46, help="dünnster Strich der Ziffern im Druck (0.46 für 0,4-mm-Düse, 0.28 für 0,25-mm-Düse am weißen Kopf)")
     ap.add_argument("--breite", type=float, default=320.0, help="größte Korpusbreite in echten mm")
     ap.add_argument("--bauch", type=int, default=1, help="Bauch-Ausfräsung auf der Rückseite (braucht Stützen)")
     ap.add_argument("--pruef", action="store_true"); ap.add_argument("--ziel", default=str(HIER)); ap.add_argument("--name", default="gitarre_rundum")
@@ -229,12 +240,12 @@ def main():
     for n in range(1, N_BUND + 1):
         s = bund_s(n); bund_fl.append(rechteck(2 * (halb(s) - 0.02), wb).translate((0, Y(s))))
     buende = vereint2(bund_fl)
-    zf = []
+    zf = []                                                                             # Ziffern wie am Original, auch XIX, XXI, XXIV (dort nur so fein, wie die Düse es kann)
     for n, text in ZIFFERN.items():
-        s0, s1 = bund_s(n - 1), bund_s(n); zelle = s1 - s0 - wb - p(0.5)
-        if zelle < p(1.25): continue
-        g, h = ziffer(text, min(zelle, p(3.0)), p(0.46), 2 * halb(s0) - p(1.6))
-        if h >= p(1.15): zf.append(g.translate((0, Y((s0 + s1) / 2))))
+        s0, s1 = bund_s(n - 1), bund_s(n); zelle = s1 - s0 - wb - p(0.4)
+        h = min(max(0.66 * zelle, min(0.94 * zelle, p(1.0))), p(3.4))
+        g = ziffer(text, h, max(0.78 * h, p(a.strich * 3.0)), p(a.strich), 2 * halb(s0) - p(1.3))
+        zf.append(g.translate((0, Y((s0 + s1) / 2))))
     ziffern = vereint2(zf) ^ gb.offset(-p(0.3))
     schwarz += [prisma(gb, ZFB, ZF - E), prisma(gb.offset(-0.05) - (buende + ziffern).offset(FUGE, RUND), ZF - E - 0.3, ZF)]
     weiss += [prisma(buende, ZF - E, ZF + p(0.3)), prisma(ziffern, ZF - E, ZF)]
