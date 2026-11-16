@@ -145,19 +145,21 @@ def main():
     PU = [D["tonabnehmer"][0][1], D["tonabnehmer"][1][1]]
     steg_fl = rechteck(84, 43, 3).translate((0, Y(MENSUR + 13.5)))
     regler = [(q[0], Y(q[1])) for q in D["regler"]]
-    sch = np.mean(np.array([xy(q) for q in D["schalter"]]), 0)
+    sA, sB = (np.array(xy(q)) for q in D["schalter"])                                  # Klingenschalter: zwei Schrauben, dazwischen Schlitz mit Hebel
+    schlitz = vereint2([strich(sA + 0.24 * (sB - sA), sA + 0.76 * (sB - sA), p(0.55))] + [kreis(p(0.55), 20).translate(tuple(q)) for q in (sA, sB)])
     gb_ende = bund_s(24) + 7.0
     gb = poly([(-21, Y(0)), (21, Y(0)), (halb(gb_ende), Y(gb_ende)), (-halb(gb_ende), Y(gb_ende))])
     hals_fl = poly([(-halb(380) - 0.02, Y(380)), (halb(380) + 0.02, Y(380)), (halb(gb_ende) + 0.02, Y(gb_ende) - 0.02), (-halb(gb_ende) - 0.02, Y(gb_ende) - 0.02)])
-    hw = vereint2([pu_fuss(s) for s in PU] + [steg_fl] + [kreis(9.5).translate(q) for q in regler] + [kreis(6.5).translate(tuple(sch))])
+    hw = vereint2([pu_fuss(s) for s in PU] + [steg_fl] + [kreis(9.5).translate(q) for q in regler] + [schlitz])
     innen = K.offset(-(SLAB + p(0.9)), RUND, 2.0, 24)
     wl = D["wolken_viel"] if a.wolken == 2 else D["wolken"]
     W = CS()
     if a.wolken:
         W = CS([np.array([xy(q) for q in pl]) for pl in wl], m3.FillRule.EvenOdd) ^ innen
         W = W - hw.offset(p(0.5), RUND) - hals_fl.offset(p(0.5), RUND)
-        W = W.offset(-p(0.2), RUND).offset(p(0.2), RUND)
+        W = W.offset(p(0.2), RUND).offset(-p(0.4), RUND).offset(p(0.2), RUND)          # erst schmale rote Stege schließen, dann schmale schwarze Zungen weg
         W = vereint2([c for c in W.decompose() if c.area() > p(0.75) ** 2])
+        W = W.offset(0.07, RUND, 2.0, 12).simplify(0.06)                                   # Engstellen ohne Breite verschmelzen (sonst Kanten mit vier Flächen)
     decke_in = K.offset(-(SLAB + 0.35), RUND, 2.0, 24) - hw - hals_fl - W.offset(FUGE, RUND)
     z_slab = T_B - SLAB
     rund = [(SLAB * (1 - math.cos(w)), z_slab + SLAB * math.sin(w)) for w in np.linspace(0, math.pi / 2, 7)]
@@ -197,16 +199,17 @@ def main():
         rt = rechteck(9.3, 27, 4.4).translate((x, Y(MENSUR + 8.5)))
         schlitz = rechteck(p(0.55), 13).translate((x, Y(MENSUR + 9)))
         schwarz += [prisma(rt, zs - 0.3, zs + 5), prisma(rt.offset(-0.05) - schlitz, zs + 4.7, zs + 8)]
-    for q in regler:
+    for q in regler:                                                                   # Regler: unten glatt, oben vier Rillen, flache Kuppe
         r = 9.5; g = p(0.28)
-        schwarz.append(prisma(kreis(r - g).translate(q), T_B - 0.3, T_B + 18.5))
+        schwarz += [prisma(kreis(r).translate(q), T_B - 0.3, T_B + 9.5), prisma(kreis(r - g).translate(q), T_B + 9.2, T_B + 18.0)]
         for j in range(4):
-            z0 = T_B + 1.0 + j * 4.6
-            schwarz.append(prisma(kreis(r).translate(q), z0, z0 + 2.9))
-        schwarz.append(prisma(kreis(r - g - p(0.25)).translate(q), T_B + 18.2, T_B + 19.6))
-    schwarz.append(prisma(kreis(6.5).translate(tuple(sch)), T_B - 0.3, T_B + 2.2))
-    schwarz.append(M.batch_hull([M.sphere(p(0.62), 20).translate((sch[0], sch[1], T_B + 1.5)), M.sphere(p(0.5), 20).translate((sch[0] + 4.5, sch[1] - 6.5, T_B + 15))]))
-
+            z0 = T_B + 10.4 + j * 2.0
+            schwarz.append(prisma(kreis(r).translate(q), z0, z0 + 1.15))
+        schwarz.append(prisma(kreis(r - g - p(0.3)).translate(q), T_B + 17.7, T_B + 19.2))
+    for q in (sA, sB): schwarz.append(prisma(kreis(p(0.55), 20).translate(tuple(q)), T_B - 0.3, T_B + p(0.24)))
+    fuss_s, kopf_s = sA + 0.72 * (sB - sA), sA + 0.26 * (sB - sA)
+    schwarz.append(prisma(kreis(p(0.27), 16).translate(tuple(fuss_s)), T_B - 0.3, T_B + 3.5))
+    schwarz.append(M.batch_hull([M.sphere(p(0.6), 20).translate((fuss_s[0], fuss_s[1], T_B + 0.3 + p(0.6))), M.sphere(p(0.45), 20).translate((kopf_s[0], kopf_s[1], T_B + 12.5))]))
     # ---------------- Gurtknöpfe und Buchse an der Zarge ----------------
     def gurt(pt, n):
         pt, n = np.array([pt[0], pt[1], T_B / 2]), np.array([n[0], n[1], 0.0]) / np.hypot(*n)
