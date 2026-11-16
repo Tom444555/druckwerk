@@ -90,6 +90,9 @@
   1 Grau · 2 Weinrot · 3 Schwarz · 4 Silber. Alle drei Aufträge neu: `…gitarre370_korpus` 14 h 01 min, 83 g (Köpfe 1–3) · `…gitarre370_hals` 10 h 23 min, 54 g ·
   `…gitarre160` 4 h 57 min, 23 g. Ob das Schwarz durch 0,16 mm Weinrot sichtbar durchscheint, ist ungedruckt – nach dem ersten Druck `--haut` nachstellen.
   `weinrot` als Farbname in `druck.py` und App (sw.js v11). Der 200-mm-Auftrag `…_gitarre_rundum_c5pro` ist veraltet (Fünf-Farben-Stand 14:45 Uhr).
+  **Offen (16:40 Uhr):** Abflachung nach Toms Foto neu gelegt (Knick von der Schulter am Halsansatz schräg zum Rand auf Brückenhöhe, breit am oberen Bogen der Bassseite,
+  Korpusende eben; `--armschraege 0.28`, Linie A1/A2 im Skript) – nur als Vorschau an Tom, **die drei Aufträge im Lager haben noch die alte Lage** (unterer Bogen).
+  Nach Toms Ja: Korpus 370 und 160 mm neu slicen (Hals bleibt). Kopfplatte ist 10° geneigt (geschätzt); Tom fragte danach, evtl. flacher (6°) gewünscht.
   Toms Angabe: die drei Vergleichsdateien stammen von GrabCAD und seien frei – sie liegen trotzdem nicht im Lager (nur verglichen). Mögliche nächste Wünsche: größer (bis ~240 mm),
   Saiten, schwarzer Rand um die Decke, Ständer dazu.
 - **Grenze Text zu Bild (15.11. nachts):** `bild_ki.py` ohne Schlüssel taugt nur für freie Figuren (Eule gut). Technische/reale Gegenstände (Test: Pistole, Karabiner, Toms
