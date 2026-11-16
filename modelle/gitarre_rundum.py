@@ -140,7 +140,7 @@ def wolken_rauschen(cs, saat, anteil, korn, res=0.5):
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--laenge", type=float, default=200.0); ap.add_argument("--wolken", type=int, default=3, help="0 keine · 1 grob · 2 ruhig · 3 fein (wie im Bild, für Dunkelrot) · 4 feinste Auflösung des Fotos (ab ~300 mm)")
-    ap.add_argument("--armschraege", type=float, default=0.28, help="Abflachung der Decke unter dem Unterarm (Bassseite, unterer Bogen): Steigung, 0 = aus")
+    ap.add_argument("--armschraege", type=float, default=0.33, help="Abflachung der Decke unter dem Unterarm (Bassseite, unterer Bogen): Steigung, 0 = aus")
     ap.add_argument("--decke", default="unter", help="unter = Decke durchgehend in einer Farbe (Weinrot), schwarzes Muster liegt unter einer dünnen Haut und scheint durch · einlage = Muster als eigene Farbe in der Oberfläche (Dunkelrot, fünfte Farbe)")
     ap.add_argument("--haut", type=float, default=0.16, help="Dicke der Deckhaut über dem Muster im Druckmaß (0,16 = zwei Schichten zu 0,08)")
     ap.add_argument("--teilen", type=int, default=0, help="1 = zwei Steckteile: Korpus mit Schlitz + Hals mit durchgehendem Zapfen (für Längen über 250 mm)")
@@ -418,14 +418,14 @@ def main():
                         if vv > 0.3: print("     ", namen[i], ii, namen[j], jj, round(vv, 1))
             if v > 0.5: print(f"  Überschneidung {namen[i]}/{namen[j]}: {v:.1f} mm³ (echt)")
     if a.armschraege > 0:                                                               # Decke fällt zum Rand hin weich ab; alle Farben werden gemeinsam verformt
-        # Lage nach Toms Foto (16.11.): Knick läuft von der Schulter am Halsansatz schräg zum Rand auf Höhe der Brücke; breit am oberen Bogen,
-        # schmal an der Taille, läuft auf Brückenhöhe aus. Das Drittel am Korpusende bleibt eben.
-        A1, A2 = np.array([-150.0, 125.0]), np.array([-60.0, 400.0]); ri_ = (A2 - A1) / np.linalg.norm(A2 - A1); nrm_ = np.array([-ri_[1], ri_[0]])
+        # Lage laut Tom (16.11.): Bassseite, unterer Bogen, hinten – in Spielhaltung „oben hinten, über den Knöpfen“ (dort liegt der Unterarm auf).
+        # Ein Versuch am oberen Bogen (nach einem Foto gedeutet) war falsch.
+        A1, A2 = np.array([-98.0, 6.0]), np.array([-140.0, 200.0]); ri_ = (A2 - A1) / np.linalg.norm(A2 - A1); nrm_ = np.array([-ri_[1], ri_[0]])
         if nrm_[0] > 0: nrm_ = -nrm_
         def senken(v):
             v = np.array(v, float); u = np.clip((v[:, 0] - A1[0]) * nrm_[0] + (v[:, 1] - A1[1]) * nrm_[1], 0, None)
-            lang = (v[:, 0] - A1[0]) * ri_[0] + (v[:, 1] - A1[1]) * ri_[1]
-            aus = np.clip((lang + 15.0) / 60.0, 0, 1)
+            lang = (v[:, 0] - A1[0]) * ri_[0] + (v[:, 1] - A1[1]) * ri_[1]                                  # zur Taille hin läuft die Schräge aus
+            aus = np.clip((235.0 - lang) / 45.0, 0, 1) * np.clip((lang + 40.0) / 30.0, 0, 1)
             d = a.armschraege * u * u / (u + 9.0) * aus * aus * (3 - 2 * aus)
             v[:, 2] -= d * np.clip((v[:, 2] - 6.0) / (T_B - 6.0), 0, 1)
             return v
