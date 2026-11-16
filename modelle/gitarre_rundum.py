@@ -164,7 +164,8 @@ def main():
     gb_ende = bund_s(24) + 7.0
     gb = poly([(-21, Y(0)), (21, Y(0)), (halb(gb_ende), Y(gb_ende)), (-halb(gb_ende), Y(gb_ende))])
     hals_fl = poly([(-halb(380) - 0.02, Y(380)), (halb(380) + 0.02, Y(380)), (halb(gb_ende) + 0.02, Y(gb_ende) - 0.02), (-halb(gb_ende) - 0.02, Y(gb_ende) - 0.02)])
-    hw = vereint2([pu_fuss(s) for s in PU] + [steg_fl] + [kreis(9.5).translate(q) for q in regler] + [schlitz])
+    koepfe = vereint2([kreis(2.4, 16).translate(((i - 2.5) * 10.5, Y(MENSUR + 36.0))) for i in range(6)])
+    hw = vereint2([pu_fuss(s) for s in PU] + [steg_fl, koepfe] + [kreis(9.5).translate(q) for q in regler] + [schlitz])
     innen = K.offset(-(p(0.38 + 0.45) if a.duese < 0.3 else SLAB + p(0.9)), RUND, 2.0, 24)
     wl = D["wolken_viel"] if a.wolken == 2 else D["wolken"]
     W = CS()
@@ -211,26 +212,46 @@ def main():
             rot.append(prisma(ring, hoch - E, hoch))
             pole = vereint2([kreis(p(0.42), 16).translate(((j - 2.5) * 10.2, Y(s) + dy)) for j in range(6)])
             schwarz.append(prisma(pole, hoch - 0.3, hoch + p(0.24)))
-    zs = T_B + 3.2
-    schwarz.append(prisma(rechteck(84, 43, 3).translate((0, Y(MENSUR + 13.5))).offset(-0.05), T_B - 0.3, zs))
-    wand = rechteck(84, 43, 3).translate((0, Y(MENSUR + 13.5))) - rechteck(84 - 2 * p(0.6), 43, 1).translate((0, Y(MENSUR + 13.5) + p(0.6) + 12))
-    schwarz.append(prisma(wand, zs - 0.3, zs + 9))
+    # --- Brücke nach Toms Nahaufnahme: Grundplatte, hochgezogene Rückwand mit runden Ecken, sechs U-förmige Reiter, Federn, Schraubenköpfe hinten ---
+    zs = T_B + 3.2; ys = Y(MENSUR + 13.5); WD = p(1.6 * FEIN)                          # WD = Wandstärke der Rückwand
+    platte = rechteck(84, 43, 3).translate((0, ys))
+    schwarz.append(prisma(platte.offset(-0.05), T_B - 0.3, zs))
+    wand = platte - rechteck(84 - 2 * WD, 43, 2).translate((0, ys + WD + 9))           # Rückwand und kurze Seitenwangen
+    schwarz.append(prisma(wand, zs - 0.3, zs + 9.5))
+    wange = platte - rechteck(84 - 2 * WD, 43, 2).translate((0, ys + WD - 6))          # Wangen laufen nach vorn niedriger aus
+    schwarz.append(prisma(wange, zs - 0.3, zs + 4.5))
     for i in range(6):
-        x = (i - 2.5) * 10.5
-        rt = rechteck(9.3, 27, 4.4).translate((x, Y(MENSUR + 8.5)))
-        schlitz = rechteck(p(1.2 * FEIN), 13).translate((x, Y(MENSUR + 9)))
-        schwarz += [prisma(rt, zs - 0.3, zs + 5), prisma(rt.offset(-0.05) - schlitz, zs + 4.7, zs + 8)]
-    for q in regler:                                                                   # Regler: unten glatt, oben vier Rillen, flache Kuppe
-        r = 9.5; g = p(0.28)
-        schwarz += [prisma(kreis(r).translate(q), T_B - 0.3, T_B + 9.5), prisma(kreis(r - g).translate(q), T_B + 9.2, T_B + 18.4)]
-        for j in range(4):
-            z0 = T_B + 10.9 + j * 2.0
-            schwarz.append(M.cylinder(g, r - g, r, 40).translate((q[0], q[1], z0 - g)) + prisma(kreis(r).translate(q), z0 - 0.02, z0 + 1.15))   # Rille unten 45° → keine Stützen
-        schwarz.append(prisma(kreis(r - g - p(0.3)).translate(q), T_B + 18.1, T_B + 19.6))
-    for q in (sA, sB): schwarz.append(prisma(kreis(p(0.55), 20).translate(tuple(q)), T_B - 0.3, T_B + p(0.24)))
-    fuss_s, kopf_s = sA + 0.70 * (sB - sA), sA + 0.42 * (sB - sA)             # Hebel steiler als 45° → keine Stützen
-    schwarz.append(prisma(kreis(p(0.27), 16).translate(tuple(fuss_s)), T_B - 0.3, T_B + 3.5))
-    schwarz.append(M.batch_hull([M.sphere(p(0.6), 20).translate((fuss_s[0], fuss_s[1], T_B + 0.3 + p(0.6))), M.sphere(p(0.45), 20).translate((kopf_s[0], kopf_s[1], T_B + 12.5))]))
+        x = (i - 2.5) * 10.5; y_v, y_h = Y(MENSUR - 7), Y(MENSUR + 17)                  # Reiter von vorn (Saitenauflage) bis hinten (rundes Ende)
+        rt = (rechteck(9.3, 24, 0.6).translate((x, (y_v + y_h) / 2)) - rechteck(9.3, 6).translate((x, y_h + 3))) + kreis(4.65, 28).translate((x, y_h + 4.65))
+        rt = rt ^ rechteck(9.3, 40).translate((x, (y_v + y_h) / 2))
+        lang = (rechteck(3.2, 10.5).translate((x, Y(MENSUR + 8.2))) + kreis(1.6, 16).translate((x, Y(MENSUR + 13.4))) + kreis(1.6, 16).translate((x, Y(MENSUR + 3.0))))   # Langloch im U
+        schwarz += [prisma(rt, zs - 0.3, zs + 4.6), prisma(rt.offset(-0.05) - lang, zs + 4.3, zs + 7.4)]
+        schwarz.append(prisma(rechteck(9.3, p(1.3 * FEIN)).translate((x, Y(MENSUR + 0.3))), zs + 7.1, zs + 8.3))                # Auflagekante der Saite
+        for dx in (-2.6, 2.6): schwarz.append(prisma(kreis(p(0.6 * FEIN), 10).translate((x + dx, Y(MENSUR - 4.2))), zs + 7.1, zs + 7.4 + p(0.16)))   # zwei Madenschrauben
+        yf0, yf1 = Y(MENSUR + 29.5), Y(MENSUR + 17.5)                                   # Feder zwischen Reiter und Rückwand
+        schwarz.append(prisma(rechteck(3.0, yf1 - yf0 + 1.5).translate((x, (yf0 + yf1) / 2)), zs - 0.3, zs + 3.4))
+        for j in range(5): schwarz.append(prisma(rechteck(4.6, p(0.95 * FEIN)).translate((x, yf0 + 1.6 + j * (yf1 - yf0 - 3.2) / 4)), zs - 0.3, zs + 4.4))
+        yk = Y(MENSUR + 36.0)                                                           # Schraubenkopf hinter der Rückwand (als Zapfen bis zur Decke, damit nichts frei schwebt)
+        schwarz += [prisma(kreis(2.4, 16).translate((x, yk)), T_B - 0.3, zs + 5.2), M.sphere(2.4, 16).scale((1, 1, 0.6)).translate((x, yk, zs + 5.2))]
+    # --- Regler: unten glatt, drei schmale Ringe, oben Kappe mit Fase, Madenschraube seitlich ---
+    for q in regler:
+        r = 9.5; g = p(0.8 * FEIN); kz = lambda r0, r1, z0, z1: M.cylinder(z1 - z0, r0, r1, 48).translate((q[0], q[1], z0))
+        teile_r = [kz(r, r, T_B - 0.3, T_B + 6.8), kz(r - g, r - g, T_B + 6.5, T_B + 18.0)]
+        for z0 in (8.6, 11.3, 14.0):                                                    # Ringe: unten 45° angeschrägt (stützfrei), oben flach
+            teile_r += [kz(r - g, r, T_B + z0 - g, T_B + z0), kz(r, r, T_B + z0 - 0.02, T_B + z0 + 1.0)]
+        teile_r += [kz(r - g, r, T_B + 16.2 - g, T_B + 16.2), kz(r, r, T_B + 16.18, T_B + 18.3), kz(r, r - 1.1, T_B + 18.28, T_B + 19.4)]   # Kappe mit Fase
+        knopf = vereint(teile_r)
+        ri = np.array([0.55, -0.83]); m0 = np.array([q[0], q[1], T_B + 4.2]); r3 = np.array([ri[0], ri[1], 0.0])
+        schwarz.append(knopf - zylinder(p(0.6 * FEIN), m0 + (r - 2.0) * r3, m0 + (r + 3) * r3, 12))
+    # --- Klingenschalter: zwei Schrauben, Schlitz, dünner heller Schaft, schwarze Kegelkappe ---
+    for q in (sA, sB): schwarz += [prisma(kreis(p(0.55), 20).translate(tuple(q)), T_B - 0.3, T_B + p(0.16)), M.sphere(p(0.55), 20).scale((1, 1, 0.45)).translate((q[0], q[1], T_B + p(0.16)))]
+    ach = (sA - sB) / np.linalg.norm(sA - sB); w = math.radians(66)                     # Hebel lehnt zur oberen Schraube, 66° steil (stützfrei)
+    ri3 = np.array([ach[0] * math.cos(w), ach[1] * math.cos(w), math.sin(w)])
+    f0 = np.array([*(sA + 0.62 * (sB - sA)), T_B - 0.3])
+    schaft = zylinder(p(0.8 * FEIN), f0, f0 + 9.5 * ri3, 14)
+    kappe = M.batch_hull([M.sphere(p(0.8 * FEIN) + 0.05, 16).translate(tuple(f0 + 9.3 * ri3)), M.sphere(p(0.6), 20).translate(tuple(f0 + 16.0 * ri3)),
+                          M.sphere(p(0.34), 16).translate(tuple(f0 + 21.5 * ri3))])                 # Kegel weitet sich flach genug für den Druck ohne Stützen
+    schwarz.append(kappe); schaft_k = schaft - kappe
     # ---------------- Gurtknöpfe und Buchse an der Zarge ----------------
     def gurt(pt, n):
         pt, n = np.array([pt[0], pt[1], T_B / 2]), np.array([n[0], n[1], 0.0]) / np.hypot(*n)
@@ -319,7 +340,8 @@ def main():
             if (c != 2).any(): print("      ", np.round(tt.vertices[u[c != 2]][:5].reshape(-1, 6), 2).tolist(), np.unique(c))
             return int((c != 2).sum())
         print("   Kantenfehler rot0", kn(rot[0]), "rot1", kn(rot[1]), "rot0+1", kn(rot[0] + rot[1]), "decke_in Teile", len(decke_in.decompose()), "W", len(W.decompose()))
-    rot_k, schwarz_k, weiss_k = vereint(rot), vereint(schwarz), vereint(weiss)
+    rot_k, schwarz_k, weiss_k = vereint(rot), vereint(schwarz) - zylinder(p(0.8 * FEIN), f0 - 3 * ri3, f0 + 9.5 * ri3, 14), vereint(weiss)
+    grau.append(schaft_k - prisma(CS.square((900, 1200)).translate((-450, -100)), -50, z_slab))
     grau_k = vereint([kern - vereint(schneider)] + grau)
     koerper = {"grau": grau_k, "rot": rot_k, "schwarz": schwarz_k, "weiss": weiss_k}
     namen = list(koerper)

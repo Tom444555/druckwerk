@@ -64,6 +64,9 @@
   (schräg geschnittene Balken mit Zacken, Tabelle `GLYPH`), dünnster Strich 0,28 mm, feinere Wolkung, schmaler schwarzer Rand um die Decke, schmalerer Kopfplatten-Rand.
   Auftrag `2026-11-16_gitarre_rundum_c5pro` neu: `druck.py --duese 0.25 --schicht 0.08` + Arachne-Zusätze → **5 h 49 min, 34 g** (grau 19,7 · rot 5,0 · schwarz 8,7 · weiß 0,35),
   165 Schichten, 213 Kopfwechsel, keine Stützen über der Decke; in den Bahnen sind alle zehn Ziffern einzeln angelegt (XIX–XXIV nur etwa 1 mm hoch). **Nicht gedruckt.**
+  **Stand 14:20 Uhr – gilt:** Details nach vier weiteren Nahaufnahmen: Regler (glatter Fuß, drei Ringe, Kappe mit Fase, Madenschraube), Klingenschalter (zwei Schrauben,
+  grauer Schaft, schwarze Kegelkappe, 66° geneigt), Brücke (Grundplatte, Rückwand, sechs U-Reiter mit Langloch, Federn, Madenschrauben, sechs Schraubenköpfe hinten).
+  Neu gesliced mit `--extra support_on_build_plate_only=1` (sonst setzt der Slicer Stützen an den Schalterhebel): **5 h 56 min, 34 g**, 223 Kopfwechsel. Nicht gedruckt.
   Toms Angabe: die drei Vergleichsdateien stammen von GrabCAD und seien frei – sie liegen trotzdem nicht im Lager (nur verglichen). Mögliche nächste Wünsche: größer (bis ~240 mm),
   Saiten, schwarzer Rand um die Decke, Ständer dazu.
 - **Grenze Text zu Bild (15.11. nachts):** `bild_ki.py` ohne Schlüssel taugt nur für freie Figuren (Eule gut). Technische/reale Gegenstände (Test: Pistole, Karabiner, Toms
