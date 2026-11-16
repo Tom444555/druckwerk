@@ -39,7 +39,7 @@ def rechteck(b, h, r=0.0, n=0):
 def kreis(r, n=40): return CS.circle(r, n)
 def poly(p): return CS([np.asarray(p, float)], NZ)
 def prisma(cs, z0, z1):
-    cs = cs.simplify(0.02)
+    cs = cs.simplify(0.05)
     return cs.extrude(z1 - z0).translate((0, 0, z0)) if not cs.is_empty() and z1 > z0 else M()
 def vereint(l):
     l = [k for k in l if not k.is_empty()]
@@ -116,13 +116,18 @@ def ziffer(text, hoehe, w_strich, breite_max):
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--laenge", type=float, default=200.0); ap.add_argument("--wolken", type=int, default=1, help="0 keine · 1 wie im Bild · 2 kräftiger")
+    ap.add_argument("--breite", type=float, default=320.0, help="größte Korpusbreite in echten mm")
     ap.add_argument("--bauch", type=int, default=1, help="Bauch-Ausfräsung auf der Rückseite (braucht Stützen)")
     ap.add_argument("--pruef", action="store_true"); ap.add_argument("--ziel", default=str(HIER)); ap.add_argument("--name", default="gitarre_rundum")
     a = ap.parse_args()
     D = json.load(open(HIER / "gitarre_rundum_daten.json"))
+    # Quermaß des Korpus: aus dem Bild 316 mm, Maßblatt 320 mm, Vergleichs-CAD einer T-Form 324 mm → auf 320 mm gestellt (Hals und Mittelteile bleiben)
+    QX = a.breite / 316.0
+    for kx in ("korpus", "regler", "schalter", "gurt"): D[kx] = [[q[0] * QX, q[1]] for q in D[kx]]
+    for kx in ("wolken", "wolken_viel"): D[kx] = [[[q[0] * QX, q[1]] for q in pl] for pl in D[kx]]
     S_END = D["s_ende"]; Y = lambda s: S_END - s
     F0 = a.laenge / 978.0; p = lambda mm: mm / F0                 # Druckmaß → echtes Maß
-    FUGE = p(0.02); E = p(0.36); SLAB = p(0.60)
+    FUGE = p(0.03); E = p(0.36); SLAB = p(0.60)
     xy = lambda q: (q[0], Y(q[1]))
 
     # ---------------- Korpus-Umriss: unterer Bogen rechts = Spiegel von links (rechts war das Foto gestört) ----------------
@@ -131,6 +136,7 @@ def main():
     unten_l = (K ^ CS.square((400, Y(690) + 50)).translate((-400, -50)))
     K = (K - unten_r) + unten_l.mirror((1, 0))
     K = glatt(K, 5.0) + rechteck(2 * halb(440), 70).translate((0, Y(440)))            # Halsbereich sicher geschlossen
+    K = K.offset(-14, RUND, 2.0, 48).offset(14, RUND, 2.0, 48)                         # Nase vom Gurtknopf im Foto und kleine Wellen weg
     K = glatt(K, 6.0).simplify(0.05)
     kb = K.bounds(); print(f"Korpus {kb[2] - kb[0]:.0f} × {kb[3] - kb[1]:.0f} mm")
 

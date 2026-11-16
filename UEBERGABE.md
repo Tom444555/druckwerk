@@ -48,6 +48,9 @@
   Bauen: `python3 modelle/gitarre_rundum.py --ziel /tmp/g1 [--wolken 0|1|2] [--bauch 0] [--laenge 200]` (2 s). Vier STL dicht, Schnittvolumen 0. `pruefen.py` meldet gewollte
   Kleinteile (Einlagen < 1 mm³, Stege um 0,45 mm) → Arachne-Zusätze; Hals und Kopf schweben → Stützen `auto`. **Nur gerechnet, nichts gesliced/gedruckt.** Die flache Fassung
   (`gitarre_rotschwarz.py`) ist damit vermutlich überholt – Tom fragen.
+  Nachtrag 13:15 Uhr: Tom schickte drei Vergleichsdateien (CAD einer T-Form mit Fender-Hals als STEP, eine S-Form als STL, ein Fender-Griffbrett als STL – alles andere
+  Gitarren, Lizenz unbekannt → **nicht im Lager**, nur zum Abgleich benutzt). Ergebnis: der aus dem Foto vermessene Umriss deckt sich mit der CAD-T-Form auf wenige mm; echte
+  Unterschiede nur am Cutaway/Horn (bei Toms Gitarre tiefer und kürzer). Übernommen: Korpusbreite 320 mm (`--breite`), Umriss stärker geglättet, Foto-Nase am Gurtknopf weg.
 - **Grenze Text zu Bild (15.11. nachts):** `bild_ki.py` ohne Schlüssel taugt nur für freie Figuren (Eule gut). Technische/reale Gegenstände (Test: Pistole, Karabiner, Toms
   Gitarre) werden unbrauchbar, die Ampel merkt das nicht → Foto, fertiges Modell, Foto-Scan oder eigene Konstruktion.
 - **Foto-Scan (16.11., Plan, noch nichts geliefert):** Tom probiert Photogrammetrie selbst: Canon 5D Mark IV + Softboxen, Windows-Laptop Gigabyte G5 KD (RTX 3060 6 GB, 16 GB RAM)
