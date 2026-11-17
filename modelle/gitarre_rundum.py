@@ -226,7 +226,7 @@ def main():
     kern = vereint([prisma(K.offset(-FASE - 0.9, RUND, 2.0, 24), 0, z_slab), band(K, [(FASE, 0.0), (0.0, FASE), (0.0, z_slab)], FASE + 1.5)])
     grau.append(prisma(hals_fl, z_slab - 0.5, ZFB))
     # Rückseite: Deckel und sechs Saitenhülsen (schwarz, bündig)
-    deckel = rechteck(38, 100, 18).translate((92, Y(661))) - vereint2([kreis(max(2.0, p(0.3)), 14).translate((92 + dx, Y(661) + dy)) for dx in (-11, 11) for dy in (-36, 36)])
+    deckel = rechteck(38, 100, 18).translate((92, Y(661))) - vereint2([kreis(max(2.0, p(0.3)), 14).translate((92 + dx, Y(661) + dy)) for dx in (0,) for dy in (-41, 41)])
     huelsen = vereint2([kreis(p(0.8), 24).translate(((i - 2.5) * 10.5, Y(MENSUR + 11))) for i in range(6)])
     if a.klappe:                                                                        # Saitenfach statt Hülsen: Mulde über den sechs Löchern, oben eine Stufe für den Deckel
         KD, KT = 1.0, 3.4                                                               # Deckeldicke und Fachtiefe im Druckmaß
@@ -309,8 +309,9 @@ def main():
         return k, zylinder(4.5, pt - 4 * n, pt + 30 * n)
     rand = np.vstack([np.asarray(c) for c in K.to_polygons()])
     def am_rand(ziel): return rand[np.argmin(np.linalg.norm(rand - np.asarray(ziel), axis=1))]
-    for ziel, n in ((xy(D["gurt"][0]), (-0.35, 1.0)), ((0.0, 0.0), (0.0, -1.0))):
-        k, s_ = gurt(am_rand(ziel), n); schwarz.append(k); schneider.append(s_)
+    unten = np.array([0.0, (K ^ rechteck(2.0, 4000)).bounds()[1]])                 # Gurtknopf am Korpusende genau auf der Mittellinie (laut Tom und Foto)
+    for pkt, n in ((am_rand(xy(D["gurt"][0])), (-0.35, 1.0)), (unten, (0.0, -1.0))):
+        k, s_ = gurt(pkt, n); schwarz.append(k); schneider.append(s_)
     bp = am_rand((118, 28)); mitte = np.array([0.0, Y(690)]); nb = (bp - mitte); nb /= np.linalg.norm(nb)
     b3, n3 = np.array([bp[0], bp[1], T_B / 2]), np.array([nb[0], nb[1], 0.0])
     tg3 = np.array([-n3[1], n3[0], 0.0])                                               # ovale Buchsenplatte mit zwei Schrauben, flach an der Zarge
