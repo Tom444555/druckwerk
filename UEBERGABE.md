@@ -4,7 +4,7 @@
 - **Drucker:** nur Flashforge Creator 5 Pro (`c5pro`). Am echten Gerät ist weiterhin **nichts bestätigt**, auch von der Gitarre ist nichts gedruckt.
 - **Laufendes Hauptvorhaben: Miniatur von Toms E-Gitarre** (T-Form, 24 Bünde, weinrot gewolkte Decke, graue Zarge). Tom: „Details sind absolute Priorität“, Druckzeit egal,
   alles mit 0,25-mm-Düse, alles Machbare auch grenzwertig. Modell: `modelle/gitarre_rundum.py` + `modelle/gitarre_rundum_daten.json` (Arbeitsweise: CLAUDE.md → „Detailgetreue Miniatur …“).
-- **Gültige Aufträge** (Köpfe 1 grau · 2 weinrot · 3 schwarz · 4 silber; Weinrot besorgt Tom noch):
+- **Gültige Aufträge** (Köpfe 1 grau · 2 weinrot · 3 schwarz · 4 silber; für Kopf 2 bestellt Tom „Bordeaux“ bei Filamentor, 17.11.; dazu PLA matt grau/schwarz, PLA Silber (kein Silk), PETG als Stütze für PLA):
   - `2026-11-17_gitarre370_korpus_c5pro` – 15 h 19 min; grau 62,9 / weinrot 8,0 / schwarz 16,0 / silber 1,3 g (braucht seit 17.11. auch Kopf 4 für die Buchsenhülse)
   - `2026-11-16_gitarre370_hals_c5pro` – 10 h 24 min, mit Kegellöchern für die Wirbel
   - `2026-11-16_gitarre370_wirbel_c5pro` (47 min, nur Kopf 3) · `2026-11-16_gitarre370_klappe_c5pro` (6 min, nur Kopf 3: Deckel + Lochkugeln)
