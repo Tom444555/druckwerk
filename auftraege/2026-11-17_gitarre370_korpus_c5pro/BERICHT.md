@@ -2,8 +2,8 @@
 
 **Drucker:** Flashforge Creator 5 Pro  
 **Datei für USB:** `gitarre370_korpus_c5pro.gcode`  
-**Druckzeit (geschätzt):** 15h 19m 9s  
-**Filament:** 62.88, 7.99, 16.13, 1.27 g (21.08 m, 2.68 m, 5.41 m, 0.43 m)  
+**Druckzeit (geschätzt):** 15h 19m 29s  
+**Filament:** 62.89, 7.99, 16.02, 1.27 g (21.09 m, 2.68 m, 5.37 m, 0.43 m)  
 
 
 ## Spulen / Köpfe einlegen

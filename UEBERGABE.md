@@ -1,6 +1,30 @@
 # Übergabe druckwerk
 
-## STAND 16.11.2026 – hier einsteigen (neuer Chat: „druckwerk: …“)
+## STAND 17.11.2026, 06:45 Uhr – hier einsteigen (neuer Chat: „druckwerk: Weiterarbeiten“)
+- **Drucker:** nur Flashforge Creator 5 Pro (`c5pro`). Am echten Gerät ist weiterhin **nichts bestätigt**, auch von der Gitarre ist nichts gedruckt.
+- **Laufendes Hauptvorhaben: Miniatur von Toms E-Gitarre** (T-Form, 24 Bünde, weinrot gewolkte Decke, graue Zarge). Tom: „Details sind absolute Priorität“, Druckzeit egal,
+  alles mit 0,25-mm-Düse, alles Machbare auch grenzwertig. Modell: `modelle/gitarre_rundum.py` + `modelle/gitarre_rundum_daten.json` (Arbeitsweise: CLAUDE.md → „Detailgetreue Miniatur …“).
+- **Gültige Aufträge** (Köpfe 1 grau · 2 weinrot · 3 schwarz · 4 silber; Weinrot besorgt Tom noch):
+  - `2026-11-17_gitarre370_korpus_c5pro` – 15 h 19 min; grau 62,9 / weinrot 8,0 / schwarz 16,0 / silber 1,3 g (braucht seit 17.11. auch Kopf 4 für die Buchsenhülse)
+  - `2026-11-16_gitarre370_hals_c5pro` – 10 h 24 min, mit Kegellöchern für die Wirbel
+  - `2026-11-16_gitarre370_wirbel_c5pro` (47 min, nur Kopf 3) · `2026-11-16_gitarre370_klappe_c5pro` (6 min, nur Kopf 3: Deckel + Lochkugeln)
+  - `2026-11-17_gitarre160_c5pro` – Vergleichsstück 160 mm einteilig, 5 h 18 min
+  - App-Link: `https://tom444555.github.io/druckwerk/#hinzu=2026-11-17_gitarre370_korpus_c5pro,2026-11-16_gitarre370_hals_c5pro,2026-11-16_gitarre370_wirbel_c5pro,2026-11-16_gitarre370_klappe_c5pro,2026-11-17_gitarre160_c5pro`
+  - Veraltet (auf Toms Wort löschen): `2026-11-16_gitarre_rundum_c5pro` (200 mm, alter Fünf-Farben-Stand).
+- **Neu bauen** (je ~20 s, STL liegen nicht im Lager):
+  370: `python3 modelle/gitarre_rundum.py --laenge 370 --teilen 1 --wolken 4 --wirbel 1 --klappe 1 --ziel /tmp/gp` · 160: `… --laenge 160 --wolken 4 --ziel /tmp/gq`
+  Slicen: `druck.py --drucker c5pro --duese 0.25 --schicht 0.08 --infill 12 (160: 15) --stuetzen auto --zusammen --farben "grau,weinrot,schwarz,silber"` + Extras aus CLAUDE.md
+  („Maximale Details mit 0,25-mm-Düse“, dazu `inner_wall_speed=60`). Prüfung: `M140 S55` (erste Schicht) und `S60`.
+- **Stand der Details (alles nach Toms Fotos von schecter-guitars.de):** Decke = 0,16 mm Weinrot-Haut über schwarzem Muster (`--haut`), schwarzer Deckenrand; Armschräge Bassseite
+  unterer Bogen (`--armschraege`; Toms Ansage, nicht anders deuten); Kopfplatte 10° geneigt (geschätzt); Ziffern in gebrochener Schrift, Bünde silber; Tonabnehmer versenkt in schwarz
+  ausgekleideter Fräsung; Schalterhebel mittig; Brücke, Regler; Gurtknopf am Korpusende mittig; Deckel hinten mit zwei Schrauben; **Rippen-Ausfräsung kantig aus vier Ebenen**
+  (Bassseite, Raute an der Taille, Tiefe `dR` = 0,5 × Korpusdicke – geschätzt); **Klinkenbuchse**: Linsenplatte, folgt der Zargenrundung und liegt rundum auf (Toms Korrektur 17.11.),
+  Schale, Sechskantmutter, silberne Hülse. 370 mm: Hals steckbar (Zapfen, Spiel 0,12), drehbare Steckwirbel, Saitenfach hinten mit Klappe für echte Saiten. Kein Schriftzug/Markenname.
+- **Offen bei Tom:** Druckergebnisse (Passung Zapfen/Wirbel/Klappe, scheint Schwarz durch die Weinrot-Haut?, Stützfläche der Ausfräsung); Ausfräsung tiefer/flacher?; Kopfplatte flacher (6°)?;
+  Polschrauben als Innensechskant bei 370 mm (angeboten); später kleinere Maßstäbe. Außerdem weiter offen: Foto-Scan-ZIP aus Meshroom (Zielgröße erfragen), Auswahl Text-zu-Bild-Vorschläge.
+- App: `sw.js` steht auf `druckwerk-v11`. Alles Übrige (App, Werkzeuge, Regeln) unverändert wie im Block darunter.
+
+## Stand 16.11.2026 (Verlauf, nur bei Bedarf lesen)
 - **Drucker:** nur Flashforge Creator 5 Pro (`c5pro`). **Am echten Gerät ist weiterhin nichts bestätigt** (Werte aus Profilen, Wiki, Tests, Videos; Spiele nur gerechnet).
 - **Lager:** `2026-11-14_stratocaster_c5pro`, `2026-11-14_loopsmiths_amp_c5pro`, `2026-11-15_vox_plektrumhalter_c5pro` (3 h 38 min, 73 g, schwarz/rot/weiß),
   Kalibrier-Set `2026-11-14_kalibrier_1…5_c5pro`. Keine `_kobrax`-Aufträge mehr.
@@ -122,6 +146,7 @@
   den acht Text-zu-Bild-Vorschlägen. 4) Rückmeldung zu den Claude-Links am iPhone/iPad. 5) Vox-Lizenz klären. 6) `FAL_KEY` → erster echter KI-Lauf; erste Meshy-3MF durch `--bemalt`.
   7) Kalibrier-Set drucken → Spiele in `profi.py`/`baukasten.scad`, Herkunft „Gerät“; evtl. Fuzzy-Skin-Testraster als Teil 6. 8) Gitarrenhalter aus `modelle/profi/` slicen, wenn gewünscht.
 - **Nachtrag 17.11., 05:40 Uhr:** Nach Toms Fotos (Rückseite, Buchse): Rippen-Ausfräsung jetzt kantig aus vier Ebenen (Bassseite, Schulter bis unterer Bogen, Raute an der Taille; Tiefe an der Taille 0,5 × Korpusdicke, `dR` in `gitarre_rundum.py`), statt der runden Mulde. Klinkenbuchse: Linsenplatte mit spitzen Enden, Schale, Sechskantmutter, **silberne Hülse → Korpus braucht jetzt auch Kopf 4 (silber)**. Korpus 370 neu: 15 h 19 min (grau 62,9 / weinrot 8,0 / schwarz 16,1 / silber 1,3 g); 160 mm neu: 5 h 18 min. Ordnernamen unverändert. Ausfräsung liegt auf Stützen (Unterseite) – Oberfläche dort am Gerät prüfen. Nichts gedruckt.
+- **Nachtrag 17.11., 06:40 Uhr:** Buchsenplatte folgt jetzt der Rundung der Zarge und liegt rundum auf (Tom: die Kante im Foto war nur Schatten, Platte minimal erhöht); Korpus 370 und 160 mm neu gesliced (Zeiten praktisch gleich).
 
 ---
 ## Verlauf (älter)

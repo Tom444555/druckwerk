@@ -210,6 +210,22 @@ Alte `_kobrax`-Aufträge laufen nicht auf dem Creator 5 Pro – bei Bedarf aus d
   Druckmaß `p(mm)` und echte Maße als `max(echt, p(...))` angegeben sind.
 - **Gewölbte/abgeschrägte Flächen bei mehrfarbigen Einlagen:** alle Farbkörper gemeinsam verformen (`refine_to_length` + `warp_batch`), nicht einzeln schneiden.
 
+## Detailgetreue Miniatur eines realen Gegenstands (Erfahrung Gitarren-Miniatur 16.–17.11.2026 – nur gerechnet)
+So kam `modelle/gitarre_rundum.py` zustande; für ähnliche Vorhaben (Instrument, Gerät, Fahrzeug als Modell) genauso vorgehen:
+1. **Vorlagen sammeln:** gerade Vorderansicht, Rückseite, Seite, Nahaufnahmen aller Anbauteile, dazu ein Maßblatt. Fremde CAD-Dateien nur zum Abgleich, nicht ins Lager.
+2. **Aus dem Foto vermessen:** Maßstab und Perspektive über bekannte Abstände herausrechnen (hier 24 Bundabstände, Mensur 648), Umriss und Lage aller Teile als Daten in eine
+   JSON neben dem Skript. Muster (Wolkung) per Bandpass + Schwelle aus der Nahaufnahme.
+3. **Ein parametrisches Skript in echten mm**, am Ende auf `--laenge` skaliert. Feinheiten als Druckmaß `p(mm)`, echte Maße als `max(echt, p(...))` → dasselbe Modell geht in 160 und 370 mm.
+   Je Farbe eine Liste von Körpern; Farben nur an Flächen berühren lassen (2D aufteilen, Fuge 0,03), Schnittvolumen aller Farbpaare ausgeben (soll 0 sein).
+4. **Runde um Runde mit Tom:** nach jeder Änderung ein gerendertes Bild der betroffenen Stelle selbst ansehen und schicken (pyvista unter `xvfb-run -a`), Toms Foto daneben denken.
+   Toms Aussage zur Lage/Form geht vor der eigenen Foto-Deutung (Armschräge: eigene Deutung war falsch; Buchsenplatte: „Kante“ war nur Schatten). Geschätzte Werte (Tiefen, Winkel)
+   als ein Parameter anlegen und Tom nennen.
+5. **Anbauteile an gekrümmten Flächen** (Buchsenplatte an der Zarge): Platte aus dem versetzten Umriss schneiden (`K.offset(+t) − K.offset(−e)` ∩ Form entlang der Normalen),
+   nicht als ebene Scheibe aufsetzen. **Kantige Ausfräsungen:** Quader mit `trim_by_plane` je Fläche beschneiden (Ebene durch Kante am Rücken und Tiefpunkt).
+6. **Funktion nur, wo der Maßstab es trägt:** Steckzapfen, Steckwirbel mit Kegel, Saitenfach erst ab 370 mm; im kleinen Stück dieselben Stellen als Farbdetail.
+7. **Farbe über Schichtung:** dünne Haut (0,16 mm) der hellen Farbe über dunklem Muster wirkt echter als zwei Farben nebeneinander – Durchscheinen am Gerät unbestätigt.
+8. **Slicen** mit den Werten aus „Maximale Details mit 0,25-mm-Düse“; nur das betroffene Teil neu slicen, Ordnernamen behalten, Zeiten/Gramm melden. Markennamen und Schriftzüge weglassen.
+
 ## Foto-Scans (Photogrammetrie, Plan vom 16.11.2026 – **ungetestet**)
 - Tom fotografiert selbst (Canon 5D Mark IV, Softboxen) und rechnet am Windows-Laptop (RTX 3060 6 GB) mit Meshroom; er schickt OBJ + Textur (+ MTL) als ZIP.
 - Ablauf: ZIP in eigenen leeren Ordner entpacken → `werkzeug/ki_rohling.py` (aufrichten, Maßstab – **Zielgröße erfragen, Scans haben keinen Maßstab** –, schließen, Boden plan)

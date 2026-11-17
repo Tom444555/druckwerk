@@ -335,13 +335,16 @@ def main():
     r_s, r_h, r_l = max(9.0, p(1.5)), max(4.6, p(0.75)), max(3.0, p(0.45))              # Schale, Hülse außen, Loch
     sechs = CS([np.array([[(r_s - p(0.35)) * math.cos(j * math.pi / 3 + 0.3), (r_s - p(0.35)) * math.sin(j * math.pi / 3 + 0.3)] for j in range(6)])], NZ)
     ring_h = kreis(r_h, 40) - kreis(r_l, 32)
-    buchse = ab(linse - kreis(r_s, 48), -tief, tp) + ab(kreis(r_s, 48) - kreis(r_h + FUGE, 40), -tief, tp - ts)
+    # Platte folgt der Rundung der Zarge und liegt rundum auf (laut Tom 17.11.: steht nirgends ab, nur minimal erhöht); eben ist nur die Schale in der Mitte
+    schale = prisma(K.offset(tp, RUND, 2.0, 48) - K.offset(-max(2.4, p(0.3)), RUND, 2.0, 48), 0, T_B) ^ ab(linse, -40, 40)
+    buchse = (schale - ab(kreis(r_s, 48), tp - ts, 40) - ab(kreis(r_h + FUGE, 40), -40, 40)) + ab(kreis(r_s, 48) - kreis(r_h + FUGE, 40), -tief, tp - ts)
     buchse = buchse + ab(sechs - kreis(r_h + FUGE, 40), tp - ts - 0.05, tp - ts + max(1.0, p(0.25)))               # Mutter sitzt in der Schale
     weiss.append(ab(ring_h, -tief, tp - ts + max(1.6, p(0.4))))                                                     # Hülse (silber), ragt aus der Mutter
     schwarz.append(ab(kreis(r_l, 32), -tief, tp - ts - max(3.0, p(0.6))))                                           # dunkler Grund im Loch
     for sg in (-1, 1):
-        rk_ = max(2.0, p(0.35)); buchse = buchse + M.sphere(rk_, 16).scale((1, 1, 0.5)).translate((sg * 21.5, 0, tp)).transform(mat)
-    schwarz.append(buchse); schneider.append(ab(linse, -tief, 40))
+        rk_ = max(2.0, p(0.35)); q_ = am_rand((b3 + sg * 21.5 * tg3)[:2])                                           # Schraube sitzt auf der gewölbten Platte
+        buchse = buchse + M.sphere(rk_, 16).scale((1, 1, 0.5)).transform(np.column_stack([tg3, [0, 0, 1], n3, [q_[0], q_[1], T_B / 2]])).translate(tuple(tp * n3))
+    schwarz.append(buchse); schneider += [schale, ab(kreis(r_s, 48), -tief, 40)]
 
     # ---------------- Griffbrett, Bünde, Ziffern, Sattel ----------------
     wb = max(2.8, p(0.3)); bund_fl = []
