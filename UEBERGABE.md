@@ -1,6 +1,6 @@
 # Übergabe druckwerk
 
-## STAND 17.11.2026, 07:00 Uhr – hier einsteigen (neuer Chat: „druckwerk: Weiterarbeiten“)
+## STAND 17.11.2026, 12:45 Uhr – hier einsteigen (neuer Chat: „druckwerk: Weiterarbeiten“)
 - **Drucker:** nur Flashforge Creator 5 Pro (`c5pro`). Am echten Gerät ist weiterhin **nichts bestätigt**, auch von der Gitarre ist nichts gedruckt.
 - **Laufendes Hauptvorhaben: Miniatur von Toms E-Gitarre** (T-Form, 24 Bünde, weinrot gewolkte Decke, graue Zarge). Tom: „Details sind absolute Priorität“, Druckzeit egal,
   alles mit 0,25-mm-Düse, alles Machbare auch grenzwertig. Modell: `modelle/gitarre_rundum.py` + `modelle/gitarre_rundum_daten.json` (Arbeitsweise: CLAUDE.md → „Detailgetreue Miniatur …“).
@@ -9,6 +9,7 @@
   - `2026-11-16_gitarre370_hals_c5pro` – 10 h 24 min, mit Kegellöchern für die Wirbel
   - `2026-11-16_gitarre370_wirbel_c5pro` (47 min, nur Kopf 3) · `2026-11-16_gitarre370_klappe_c5pro` (6 min, nur Kopf 3: Deckel + Lochkugeln)
   - `2026-11-17_gitarre160_c5pro` – Vergleichsstück 160 mm einteilig, 5 h 17 min, **seit 17.11. 07 Uhr mit Steckwirbeln** (Tom will Schnur als Saite spannen)
+  - `2026-11-17_gitarre160_einfarbig_c5pro` – Probedruck für den ersten Tag: alle Farben vereint, Kopf 1 PLA grau, **0,4-mm-Serien-Düse**, 0.12, 51 min, 15 g (Drucker kommt 17.11.)
   - `2026-11-17_gitarre160_wirbel_c5pro` – acht kleine Steckwirbel, 25 min, 0,6 g, nur Kopf 3. Klein-Modus im Skript (`KLEIN`, greift, wenn das Gehäuse zu dünn ist):
     Kegelloch 2,08 → 1,45 mm (Wand im Gehäuse 0,45), Rändelrad Ø 4,1, Wirbel 2/4/6 mit 2,8 mm längerem Schaft (Räder auf zwei Ebenen, Mechaniken nur 3,3 mm auseinander),
     Saitenstift Ø 1,27 / 2,6 mm hoch, Querloch 0,5. Gedacht für Schnur bis ~0,3 mm (z. B. Angelschnur), Knoten hinten am Korpusloch Ø 0,72. Passung und Festigkeit ungedruckt.
