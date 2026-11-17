@@ -241,7 +241,9 @@ def main():
         schneider.append(M.sphere(1.0, 64).scale((62, 115, 15)).translate((ex - 4, Y(520), -1.0)))
 
     # ---------------- Tonabnehmer, Steg, Regler, Schalter ----------------
-    schneider.append(prisma(pus, T_B - PU_T - 1.5, 300))                               # Fräsungen: die Tonabnehmer sitzen versenkt, mit Luft zu den Saiten
+    PU_W = p(0.5); futter = pus.offset(PU_W, RUND, 2.0, 24) - hals_fl.offset(0.05, RUND)       # schwarze Auskleidung der Fräsung (zwei Bahnen stark), damit kein Grau zu sehen ist
+    schneider.append(prisma(pus + futter, T_B - PU_T - 1.5, 300))                      # Fräsungen: die Tonabnehmer sitzen versenkt, mit Luft zu den Saiten
+    schwarz.append(prisma(futter - pus, T_B - PU_T - 1.5, z_slab))
     for i, s in enumerate(PU):
         hoch = T_B + (5.5 if i == 0 else 6.5); c = (0, Y(s))                           # Oberkante: Saiten laufen bei etwa T_B + 11
         schwarz.append(prisma(pu_fuss(s).offset(-0.03), T_B - PU_T - 1.5, T_B - PU_T))  # schwarzer Boden der Fräsung

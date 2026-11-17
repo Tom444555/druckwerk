@@ -2,8 +2,8 @@
 
 **Drucker:** Flashforge Creator 5 Pro  
 **Datei für USB:** `gitarre160_c5pro.gcode`  
-**Druckzeit (geschätzt):** 4h 57m 56s  
-**Filament:** 13.12, 3.45, 6.30, 0.30 g (4.40 m, 1.16 m, 2.11 m, 0.10 m)  
+**Druckzeit (geschätzt):** 5h 0m 20s  
+**Filament:** 13.12, 3.45, 6.38, 0.30 g (4.40 m, 1.16 m, 2.14 m, 0.10 m)  
 
 
 ## Spulen / Köpfe einlegen
@@ -15,12 +15,11 @@
 | 3 | PLA | schwarz | Flashforge PLA Basic @FF C5P |
 | 4 | PLA | silber | Flashforge PLA Basic @FF C5P |
 
-## Vergleichsstück 160 mm (einteilig, Maßstab 1:6,05)
+## Vergleichsstück 160 mm (einteilig) – versenkte Tonabnehmer, Fräsungen schwarz ausgekleidet
 
-- Köpfe: 1 Grau, 2 Weinrot, 3 Schwarz, 4 Silber oder Hellgrau (Bünde, Ziffern). Ohne Wirbel und Saitenfach.
-- **Tonabnehmer:** sitzen versenkt in Fräsungen (Spalt rundum, schwarzer Boden) und sind niedriger; zwischen Saite und Tonabnehmer bleiben etwa 1,6 mm (370 mm) bzw. 0,7 mm (160 mm) Luft.
-- **Schalter:** Hebel steht senkrecht in der Mitte des Schlitzes.
-- **Decke:** Weinrot als 0,16 mm dünne Haut über dem schwarzen Muster. 0,25-mm-Düse, Schicht 0,08 mm, feinste Einstellungen, Stützen nur vom Bett. Nur gerechnet.
+- Köpfe: 1 Grau, 2 Weinrot, 3 Schwarz, 4 Silber oder Hellgrau. Ohne Wirbel und Saitenfach.
+- Decke: Weinrot als 0,16 mm dünne Haut über dem schwarzen Muster. Schalterhebel senkrecht in der Schlitzmitte.
+- 0,25-mm-Düse, Schicht 0,08 mm, feinste Einstellungen, Stützen nur vom Bett. Nur gerechnet, am Gerät nicht erprobt.
 
 ## Einstellungen
 

@@ -105,6 +105,7 @@
   Saiten bei etwa T_B + 11), Schalterhebel senkrecht in der Schlitzmitte. Neu gesliced, **neue Ordnernamen wegen Datum**: `2026-11-17_gitarre370_korpus_c5pro` (14 h 24 min)
   und `2026-11-17_gitarre160_c5pro` (4 h 58 min); Hals, Wirbel, Klappe bleiben `2026-11-16_…`. Offen/nicht umgesetzt aus den Fotos: Polschrauben als Innensechskant,
   Stoffband am Tonabnehmer. Alles ungedruckt.
+  Nachtrag 17.11., 03:10 Uhr: Fräsungen der Tonabnehmer schwarz ausgekleidet (`futter`, Stärke `PU_W` = 0,5 mm im Druck), weil Tom das Grau der Wände störte; Korpus 370 (14 h 36 min) und 160 mm (5 h 00 min) neu, gleiche Ordner.
   Toms Angabe: die drei Vergleichsdateien stammen von GrabCAD und seien frei – sie liegen trotzdem nicht im Lager (nur verglichen). Mögliche nächste Wünsche: größer (bis ~240 mm),
   Saiten, schwarzer Rand um die Decke, Ständer dazu.
 - **Grenze Text zu Bild (15.11. nachts):** `bild_ki.py` ohne Schlüssel taugt nur für freie Figuren (Eule gut). Technische/reale Gegenstände (Test: Pistole, Karabiner, Toms
