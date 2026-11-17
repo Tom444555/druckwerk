@@ -143,7 +143,7 @@ def main():
     ap.add_argument("--armschraege", type=float, default=0.33, help="Abflachung der Decke unter dem Unterarm (Bassseite, unterer Bogen): Steigung, 0 = aus")
     ap.add_argument("--decke", default="unter", help="unter = Decke durchgehend in einer Farbe (Weinrot), schwarzes Muster liegt unter einer dünnen Haut und scheint durch · einlage = Muster als eigene Farbe in der Oberfläche (Dunkelrot, fünfte Farbe)")
     ap.add_argument("--haut", type=float, default=0.16, help="Dicke der Deckhaut über dem Muster im Druckmaß (0,16 = zwei Schichten zu 0,08)")
-    ap.add_argument("--wirbel", type=int, default=0, help="1 = drehbare Steckwirbel (ab ~300 mm): Kegellöcher durch die Kopfplatte statt fester Achsen, dazu <name>_wirbel.stl mit acht Wirbeln")
+    ap.add_argument("--wirbel", type=int, default=0, help="1 = drehbare Steckwirbel (unter ~300 mm automatisch Klein-Modus mit schmalen Kegeln und Rädern auf zwei Ebenen): Kegellöcher durch die Kopfplatte statt fester Achsen, dazu <name>_wirbel.stl mit acht Wirbeln")
     ap.add_argument("--klappe", type=int, default=0, help="1 = Saitenfach auf der Rückseite mit steckbarem Deckel und Lochkugeln als Saitenanker (<name>_klappe.stl; ab ~300 mm)")
     ap.add_argument("--teilen", type=int, default=0, help="1 = zwei Steckteile: Korpus mit Schlitz + Hals mit durchgehendem Zapfen (für Längen über 250 mm)")
     ap.add_argument("--spiel", type=float, default=0.12, help="Spiel der Steckverbindung je Seite im Druckmaß (mm)")
@@ -434,6 +434,10 @@ def main():
         print("   Kantenfehler rot0", kn(rot[0]), "rot1", kn(rot[1]), "rot0+1", kn(rot[0] + rot[1]), "decke_in Teile", len(decke_in.decompose()), "W", len(W.decompose()))
     # ---------------- echte Saiten zum Einfädeln (Draht bis 0,3 mm): Löcher durch den Korpus, Kerben in Reitern und Sattel, Löcher in der Kopfplatte ----------------
     WR_H, WR_V = 1.35, 1.05                                                             # Radius des Kegellochs hinten (Gehäuse-Unterseite) und vorn (Mutter), Druckmaß
+    # Kleiner Maßstab (z. B. 160 mm): Gehäuse nur ~2,8 mm dick, Mechaniken 3,3 mm auseinander → Kegel enger, Rändelräder kleiner und abwechselnd hoch/tief (17.11.2026)
+    GH = 8.6 * F0; ABST = min(np.linalg.norm(mech[i + 1] - mech[i]) for i in range(5)) * F0      # Gehäuse-Radius und kleinster Mechanik-Abstand im Druckmaß
+    KLEIN = GH - 0.45 < WR_H
+    if KLEIN: WR_H = GH - 0.45; WR_V = WR_H - 0.25
     RL = p(0.36); KB = p(0.34); bohr = []                                             # Lochradius und Kerbenbreite im Druckmaß
     for i in range(6):
         xs_, xn = (i - 2.5) * 10.5, (i - 2.5) * 7.0
@@ -497,16 +501,23 @@ def main():
         teile_k = {"korpus_": korp, "hals_": hals}
     if a.wirbel:                                                                        # Steckwirbel als eigenes Druckteil (Druckmaß, stehend: Rändelrad unten, Stift oben)
         lang = (KOPF_DICKE + 12.6) * f; steig = (WR_H - WR_V) / lang                   # Lochlänge im Druck und Kegelsteigung
-        zahn = np.array([[(3.2 - (0.28 if j % 2 else 0)) * math.cos(j * math.pi / 30), (3.2 - (0.28 if j % 2 else 0)) * math.sin(j * math.pi / 30)] for j in range(60)])
-        rad = CS([zahn], NZ).extrude(2.6) + M.cylinder(0.5, 2.6, 1.9, 40).translate((0, 0, 2.59))
         r0 = WR_H + 0.05 + steig * 0.6                                                  # 0,05 Übermaß: der Wirbel sitzt fest, bevor das Rad am Gehäuse anliegt
-        stift = M.cylinder(lang + 1.2, r0, r0 - steig * (lang + 1.2), 40).translate((0, 0, 3.08))
-        zs0 = 3.08 + lang + 1.2; rk = WR_V - 0.07
-        kopf_w = M.cylinder(5.0, rk, rk, 40).translate((0, 0, zs0 - 0.02)) + M.cylinder(0.3, rk, rk - 0.25, 40).translate((0, 0, zs0 + 4.97))
-        w = rad + stift + kopf_w - M.cylinder(6, 0.38, 0.38, 16).rotate((90, 0, 0)).translate((0, 3, zs0 + 3.0))      # Querloch 0,76 mm für die Saite
-        alle_w = vereint([w.translate((9.0 * (j % 4), 9.0 * (j // 4), 0)) for j in range(8)])
+        RR = min(3.2, ABST - r0 - 0.2) if KLEIN else 3.2                                # Rändelrad: klein so groß, dass es am Stift des Nachbarn vorbeigeht
+        KH = max(2.6, 13.0 * F0) if KLEIN else 5.0; QL = 0.25 if KLEIN else 0.38        # Höhe des Saitenstifts über der Kopfplatte, Radius Querloch
+        def wirbel_bau(tief):
+            zahn = np.array([[(RR - (0.28 if j % 2 else 0)) * math.cos(j * math.pi / 30), (RR - (0.28 if j % 2 else 0)) * math.sin(j * math.pi / 30)] for j in range(60)])
+            rad = CS([zahn], NZ).extrude(2.6) + M.cylinder(0.5, min(2.6, RR - 0.3), r0 + 0.25, 40).translate((0, 0, 2.59))
+            zv = 3.08 + tief; stift = M.cylinder(lang + 1.2 + tief, r0, r0 - steig * (lang + 1.2), 40).translate((0, 0, 3.08)) if not tief else \
+                M.cylinder(tief + 0.02, r0, r0, 40).translate((0, 0, 3.08)) + M.cylinder(lang + 1.2, r0, r0 - steig * (lang + 1.2), 40).translate((0, 0, zv))
+            zs0 = zv + lang + 1.2; rk = WR_V - 0.07
+            kopf_w = M.cylinder(KH, rk, rk, 40).translate((0, 0, zs0 - 0.02)) + M.cylinder(0.3, rk, rk - 0.25, 40).translate((0, 0, zs0 + KH - 0.03))
+            return rad + stift + kopf_w - M.cylinder(6, QL, QL, 16).rotate((90, 0, 0)).translate((0, 3, zs0 + KH * 0.6))
+        TIEF = 2.8 if KLEIN else 0.0                                                    # klein: jeder zweite Wirbel (Mechanik 2, 4, 6) mit 2,8 mm längerem Schaft → Räder auf zwei Ebenen
+        wa, wb = wirbel_bau(0.0), wirbel_bau(TIEF); sp = max(9.0, 2 * RR + 2.0)
+        alle_w = vereint([(wa if j % 2 == 0 else wb).translate((sp * (j % 4), sp * (j // 4), 0)) for j in range(8)])
+        rk = WR_V - 0.07
         me = alle_w.to_mesh(); tw = trimesh.Trimesh(np.asarray(me.vert_properties[:, :3], np.float64), me.tri_verts, process=True)
-        tw.export(ziel / f"{a.name}_wirbel.stl"); print(f"{a.name}_wirbel.stl: dicht={tw.is_watertight}, 8 Wirbel, Höhe {tw.extents[2]:.1f} mm, Kegel {r0 * 2:.2f} → {(r0 - steig * (lang + 1.2)) * 2:.2f} mm, Stift {rk * 2:.2f} mm")
+        tw.export(ziel / f"{a.name}_wirbel.stl"); print(f"{a.name}_wirbel.stl: dicht={tw.is_watertight}, 8 Wirbel ({'klein, Rad Ø %.1f, je 4 kurz/lang' % (2 * RR) if KLEIN else 'Rad Ø 6,4'}), Höhe {tw.extents[2]:.1f} mm, Kegel {r0 * 2:.2f} → {(r0 - steig * (lang + 1.2)) * 2:.2f} mm, Stift {rk * 2:.2f} mm")
     if a.klappe:                                                                        # Deckel (liegt flach) und zehn Lochkugeln (sechs gebraucht), alles im Druckmaß
         dk = (stufe.translate((0, -Y(MENSUR + 11))).scale((f, f))).offset(-0.08, RUND, 2.0, 24)
         teile_d = [dk.extrude(KD)]

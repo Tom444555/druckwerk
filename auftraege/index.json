@@ -90,6 +90,64 @@
   "projekt": "gitarre370_korpus_c5pro.3mf"
  },
  {
+  "kopfwechsel": 0,
+  "koepfe_benutzt": [
+   3
+  ],
+  "name": "gitarre160_wirbel",
+  "drucker": "c5pro",
+  "drucker_name": "Flashforge Creator 5 Pro",
+  "datum": "2026-11-17",
+  "ordner": "2026-11-17_gitarre160_wirbel_c5pro",
+  "gcode": "gitarre160_wirbel_c5pro.gcode",
+  "zeit": "24m 43s",
+  "gramm": "0.00, 0.00, 0.59",
+  "meter": "0.00 m, 0.00 m, 0.20 m",
+  "duese": "210,210,210",
+  "bett": "60,60,60",
+  "schicht": "0.08",
+  "stufe": "Standard",
+  "infill": 100,
+  "duese_mm": "0.25",
+  "waende": 4,
+  "stuetzen": "aus",
+  "brim": "an",
+  "gemischt": false,
+  "slots": [
+   {
+    "slot": 1,
+    "material": "PLA",
+    "farbe": "leer"
+   },
+   {
+    "slot": 2,
+    "material": "PLA",
+    "farbe": "leer"
+   },
+   {
+    "slot": 3,
+    "material": "PLA",
+    "farbe": "schwarz"
+   }
+  ],
+  "teile": [
+   {
+    "datei": "gitarre_rundum_wirbel.stl",
+    "slot": 3
+   }
+  ],
+  "quelle": "",
+  "teile_app": [
+   {
+    "datei": "gitarre_rundum_wirbel.stl",
+    "slot": 3
+   }
+  ],
+  "vorschau": "vorschau.png",
+  "bild_im_gcode": true,
+  "projekt": "gitarre160_wirbel_c5pro.3mf"
+ },
+ {
   "kopfwechsel": 200,
   "koepfe_benutzt": [
    1,
@@ -103,9 +161,9 @@
   "datum": "2026-11-17",
   "ordner": "2026-11-17_gitarre160_c5pro",
   "gcode": "gitarre160_c5pro.gcode",
-  "zeit": "5h 18m 24s",
-  "gramm": "13.22, 3.82, 6.48, 0.97",
-  "meter": "4.43 m, 1.28 m, 2.17 m, 0.32 m",
+  "zeit": "5h 17m 4s",
+  "gramm": "13.21, 3.82, 6.44, 0.97",
+  "meter": "4.43 m, 1.28 m, 2.16 m, 0.32 m",
   "duese": "210,210,210,210",
   "bett": "60,60,60,60",
   "schicht": "0.08",

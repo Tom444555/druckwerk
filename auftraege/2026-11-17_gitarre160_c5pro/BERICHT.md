@@ -2,8 +2,8 @@
 
 **Drucker:** Flashforge Creator 5 Pro  
 **Datei für USB:** `gitarre160_c5pro.gcode`  
-**Druckzeit (geschätzt):** 5h 18m 24s  
-**Filament:** 13.22, 3.82, 6.48, 0.97 g (4.43 m, 1.28 m, 2.17 m, 0.32 m)  
+**Druckzeit (geschätzt):** 5h 17m 4s  
+**Filament:** 13.21, 3.82, 6.44, 0.97 g (4.43 m, 1.28 m, 2.16 m, 0.32 m)  
 
 
 ## Spulen / Köpfe einlegen

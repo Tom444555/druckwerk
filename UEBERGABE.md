@@ -1,6 +1,6 @@
 # Übergabe druckwerk
 
-## STAND 17.11.2026, 06:45 Uhr – hier einsteigen (neuer Chat: „druckwerk: Weiterarbeiten“)
+## STAND 17.11.2026, 07:00 Uhr – hier einsteigen (neuer Chat: „druckwerk: Weiterarbeiten“)
 - **Drucker:** nur Flashforge Creator 5 Pro (`c5pro`). Am echten Gerät ist weiterhin **nichts bestätigt**, auch von der Gitarre ist nichts gedruckt.
 - **Laufendes Hauptvorhaben: Miniatur von Toms E-Gitarre** (T-Form, 24 Bünde, weinrot gewolkte Decke, graue Zarge). Tom: „Details sind absolute Priorität“, Druckzeit egal,
   alles mit 0,25-mm-Düse, alles Machbare auch grenzwertig. Modell: `modelle/gitarre_rundum.py` + `modelle/gitarre_rundum_daten.json` (Arbeitsweise: CLAUDE.md → „Detailgetreue Miniatur …“).
@@ -8,11 +8,14 @@
   - `2026-11-17_gitarre370_korpus_c5pro` – 15 h 19 min; grau 62,9 / weinrot 8,0 / schwarz 16,0 / silber 1,3 g (braucht seit 17.11. auch Kopf 4 für die Buchsenhülse)
   - `2026-11-16_gitarre370_hals_c5pro` – 10 h 24 min, mit Kegellöchern für die Wirbel
   - `2026-11-16_gitarre370_wirbel_c5pro` (47 min, nur Kopf 3) · `2026-11-16_gitarre370_klappe_c5pro` (6 min, nur Kopf 3: Deckel + Lochkugeln)
-  - `2026-11-17_gitarre160_c5pro` – Vergleichsstück 160 mm einteilig, 5 h 18 min
-  - App-Link: `https://tom444555.github.io/druckwerk/#hinzu=2026-11-17_gitarre370_korpus_c5pro,2026-11-16_gitarre370_hals_c5pro,2026-11-16_gitarre370_wirbel_c5pro,2026-11-16_gitarre370_klappe_c5pro,2026-11-17_gitarre160_c5pro`
+  - `2026-11-17_gitarre160_c5pro` – Vergleichsstück 160 mm einteilig, 5 h 17 min, **seit 17.11. 07 Uhr mit Steckwirbeln** (Tom will Schnur als Saite spannen)
+  - `2026-11-17_gitarre160_wirbel_c5pro` – acht kleine Steckwirbel, 25 min, 0,6 g, nur Kopf 3. Klein-Modus im Skript (`KLEIN`, greift, wenn das Gehäuse zu dünn ist):
+    Kegelloch 2,08 → 1,45 mm (Wand im Gehäuse 0,45), Rändelrad Ø 4,1, Wirbel 2/4/6 mit 2,8 mm längerem Schaft (Räder auf zwei Ebenen, Mechaniken nur 3,3 mm auseinander),
+    Saitenstift Ø 1,27 / 2,6 mm hoch, Querloch 0,5. Gedacht für Schnur bis ~0,3 mm (z. B. Angelschnur), Knoten hinten am Korpusloch Ø 0,72. Passung und Festigkeit ungedruckt.
+  - App-Link: `https://tom444555.github.io/druckwerk/#hinzu=2026-11-17_gitarre370_korpus_c5pro,2026-11-16_gitarre370_hals_c5pro,2026-11-16_gitarre370_wirbel_c5pro,2026-11-16_gitarre370_klappe_c5pro,2026-11-17_gitarre160_c5pro,2026-11-17_gitarre160_wirbel_c5pro`
   - Veraltet (auf Toms Wort löschen): `2026-11-16_gitarre_rundum_c5pro` (200 mm, alter Fünf-Farben-Stand).
 - **Neu bauen** (je ~20 s, STL liegen nicht im Lager):
-  370: `python3 modelle/gitarre_rundum.py --laenge 370 --teilen 1 --wolken 4 --wirbel 1 --klappe 1 --ziel /tmp/gp` · 160: `… --laenge 160 --wolken 4 --ziel /tmp/gq`
+  370: `python3 modelle/gitarre_rundum.py --laenge 370 --teilen 1 --wolken 4 --wirbel 1 --klappe 1 --ziel /tmp/gp` · 160: `… --laenge 160 --wolken 4 --wirbel 1 --ziel /tmp/gq` (Wirbel slicen: Kopf 3, infill 100, `--waende 4 --stuetzen aus --brim an`)
   Slicen: `druck.py --drucker c5pro --duese 0.25 --schicht 0.08 --infill 12 (160: 15) --stuetzen auto --zusammen --farben "grau,weinrot,schwarz,silber"` + Extras aus CLAUDE.md
   („Maximale Details mit 0,25-mm-Düse“, dazu `inner_wall_speed=60`). Prüfung: `M140 S55` (erste Schicht) und `S60`.
 - **Stand der Details (alles nach Toms Fotos von schecter-guitars.de):** Decke = 0,16 mm Weinrot-Haut über schwarzem Muster (`--haut`), schwarzer Deckenrand; Armschräge Bassseite
