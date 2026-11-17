@@ -1,9 +1,10 @@
 {
- "kopfwechsel": 266,
+ "kopfwechsel": 312,
  "koepfe_benutzt": [
   1,
   2,
-  3
+  3,
+  4
  ],
  "name": "gitarre370_korpus",
  "drucker": "c5pro",
@@ -11,11 +12,11 @@
  "datum": "2026-11-17",
  "ordner": "2026-11-17_gitarre370_korpus_c5pro",
  "gcode": "gitarre370_korpus_c5pro.gcode",
- "zeit": "14h 34m 57s",
- "gramm": "61.29, 7.99, 15.73",
- "meter": "20.55 m, 2.68 m, 5.28 m",
- "duese": "210,210,210",
- "bett": "60,60,60",
+ "zeit": "15h 19m 9s",
+ "gramm": "62.88, 7.99, 16.13, 1.27",
+ "meter": "21.08 m, 2.68 m, 5.41 m, 0.43 m",
+ "duese": "210,210,210,210",
+ "bett": "60,60,60,60",
  "schicht": "0.08",
  "stufe": "Standard",
  "infill": 12,
@@ -39,6 +40,11 @@
    "slot": 3,
    "material": "PLA",
    "farbe": "schwarz"
+  },
+  {
+   "slot": 4,
+   "material": "PLA",
+   "farbe": "silber"
   }
  ],
  "teile": [
@@ -53,6 +59,10 @@
   {
    "datei": "gitarre_rundum_korpus_schwarz.stl",
    "slot": 3
+  },
+  {
+   "datei": "gitarre_rundum_korpus_weiss.stl",
+   "slot": 4
   }
  ],
  "quelle": "",
@@ -68,6 +78,10 @@
   {
    "datei": "gitarre_rundum_korpus_schwarz.app.stl",
    "slot": 3
+  },
+  {
+   "datei": "gitarre_rundum_korpus_weiss.stl",
+   "slot": 4
   }
  ],
  "vorschau": "vorschau.png",

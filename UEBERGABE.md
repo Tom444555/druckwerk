@@ -121,6 +121,7 @@
 - **Nächste Schritte:** 1) Toms Rückmeldung zum Druck der Gitarre rundum (`2026-11-16_gitarre_rundum_c5pro`); die flache `gitarre_rotschwarz.py` ist nicht gesliced und wohl überholt. 2) Erstes Meshroom-ZIP von Tom verarbeiten. 3) Toms Auswahl aus
   den acht Text-zu-Bild-Vorschlägen. 4) Rückmeldung zu den Claude-Links am iPhone/iPad. 5) Vox-Lizenz klären. 6) `FAL_KEY` → erster echter KI-Lauf; erste Meshy-3MF durch `--bemalt`.
   7) Kalibrier-Set drucken → Spiele in `profi.py`/`baukasten.scad`, Herkunft „Gerät“; evtl. Fuzzy-Skin-Testraster als Teil 6. 8) Gitarrenhalter aus `modelle/profi/` slicen, wenn gewünscht.
+- **Nachtrag 17.11., 05:40 Uhr:** Nach Toms Fotos (Rückseite, Buchse): Rippen-Ausfräsung jetzt kantig aus vier Ebenen (Bassseite, Schulter bis unterer Bogen, Raute an der Taille; Tiefe an der Taille 0,5 × Korpusdicke, `dR` in `gitarre_rundum.py`), statt der runden Mulde. Klinkenbuchse: Linsenplatte mit spitzen Enden, Schale, Sechskantmutter, **silberne Hülse → Korpus braucht jetzt auch Kopf 4 (silber)**. Korpus 370 neu: 15 h 19 min (grau 62,9 / weinrot 8,0 / schwarz 16,1 / silber 1,3 g); 160 mm neu: 5 h 18 min. Ordnernamen unverändert. Ausfräsung liegt auf Stützen (Unterseite) – Oberfläche dort am Gerät prüfen. Nichts gedruckt.
 
 ---
 ## Verlauf (älter)

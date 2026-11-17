@@ -2,8 +2,8 @@
 
 **Drucker:** Flashforge Creator 5 Pro  
 **Datei für USB:** `gitarre160_c5pro.gcode`  
-**Druckzeit (geschätzt):** 5h 0m 43s  
-**Filament:** 13.12, 3.45, 6.39, 0.30 g (4.40 m, 1.16 m, 2.14 m, 0.10 m)  
+**Druckzeit (geschätzt):** 5h 17m 57s  
+**Filament:** 13.22, 3.82, 6.49, 0.97 g (4.43 m, 1.28 m, 2.17 m, 0.32 m)  
 
 
 ## Spulen / Köpfe einlegen
@@ -14,12 +14,6 @@
 | 2 | PLA | weinrot | Flashforge PLA Basic @FF C5P |
 | 3 | PLA | schwarz | Flashforge PLA Basic @FF C5P |
 | 4 | PLA | silber | Flashforge PLA Basic @FF C5P |
-
-## Vergleichsstück 160 mm (einteilig) – versenkte Tonabnehmer in schwarzen Fräsungen, Gurtknopf mittig
-
-- Köpfe: 1 Grau, 2 Weinrot, 3 Schwarz, 4 Silber oder Hellgrau. Ohne Wirbel und Saitenfach.
-- Decke: Weinrot als 0,16 mm dünne Haut über dem schwarzen Muster. Schalterhebel senkrecht in der Schlitzmitte. Deckel hinten mit zwei Schrauben.
-- 0,25-mm-Düse, Schicht 0,08 mm, feinste Einstellungen, Stützen nur vom Bett. Nur gerechnet, am Gerät nicht erprobt.
 
 ## Einstellungen
 
@@ -38,7 +32,7 @@
 - `gitarre_rundum_schwarz.stl` → Slot 3 (PLA)
 - `gitarre_rundum_weiss.stl` → Slot 4 (PLA)
 
-Kopfwechsel in der .gcode: 181, benutzte Köpfe: 1, 2, 3, 4
+Kopfwechsel in der .gcode: 200, benutzte Köpfe: 1, 2, 3, 4
 
 ## Am Drucker
 

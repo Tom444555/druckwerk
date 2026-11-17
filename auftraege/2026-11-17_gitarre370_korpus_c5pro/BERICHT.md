@@ -2,8 +2,8 @@
 
 **Drucker:** Flashforge Creator 5 Pro  
 **Datei für USB:** `gitarre370_korpus_c5pro.gcode`  
-**Druckzeit (geschätzt):** 14h 34m 57s  
-**Filament:** 61.29, 7.99, 15.73 g (20.55 m, 2.68 m, 5.28 m)  
+**Druckzeit (geschätzt):** 15h 19m 9s  
+**Filament:** 62.88, 7.99, 16.13, 1.27 g (21.08 m, 2.68 m, 5.41 m, 0.43 m)  
 
 
 ## Spulen / Köpfe einlegen
@@ -13,12 +13,7 @@
 | 1 | PLA | grau | Flashforge PLA Basic @FF C5P |
 | 2 | PLA | weinrot | Flashforge PLA Basic @FF C5P |
 | 3 | PLA | schwarz | Flashforge PLA Basic @FF C5P |
-
-## Teil 1 von 2: Korpus (Gitarre 370 mm) – Saitenfach, versenkte Tonabnehmer in schwarzen Fräsungen, Gurtknopf mittig
-
-- Köpfe: 1 Grau, 2 Weinrot, 3 Schwarz. Kopf 4 bleibt leer. Stützen im Saitenfach nach dem Druck herausnehmen.
-- Decke: Weinrot als 0,16 mm dünne Haut über dem schwarzen Muster. Schalterhebel senkrecht in der Schlitzmitte. Deckel hinten mit zwei Schrauben.
-- 0,25-mm-Düse, Schicht 0,08 mm, feinste Einstellungen, Stützen nur vom Bett. Nur gerechnet, am Gerät nicht erprobt.
+| 4 | PLA | silber | Flashforge PLA Basic @FF C5P |
 
 ## Einstellungen
 
@@ -28,15 +23,16 @@
 - Wände: Profil-Standard
 - Stützen: auto
 - Brim: auto
-- Düsentemperatur: 210,210,210 °C, Bett: 60,60,60 °C
+- Düsentemperatur: 210,210,210,210 °C, Bett: 60,60,60,60 °C
 
 ## Teile
 
 - `gitarre_rundum_korpus_grau.stl` → Slot 1 (PLA)
 - `gitarre_rundum_korpus_rot.stl` → Slot 2 (PLA)
 - `gitarre_rundum_korpus_schwarz.stl` → Slot 3 (PLA)
+- `gitarre_rundum_korpus_weiss.stl` → Slot 4 (PLA)
 
-Kopfwechsel in der .gcode: 266, benutzte Köpfe: 1, 2, 3
+Kopfwechsel in der .gcode: 312, benutzte Köpfe: 1, 2, 3, 4
 
 ## Am Drucker
 

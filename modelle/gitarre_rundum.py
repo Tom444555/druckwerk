@@ -236,9 +236,20 @@ def main():
         schneider += [prisma(fach, -5, p(KT)), prisma(stufe, -5, p(KD + 0.06)), prisma(kerbe, -5, p(1.8))]
         huelsen = CS()
     schwarz.append(prisma(deckel + huelsen, 0, E)); schneider.append(prisma(deckel + huelsen, -5, E))
-    if a.bauch:                                                                         # Bauch-Ausfräsung: flache Mulde am oberen Bogen der Bassseite
-        ex = K.bounds()[0]
-        schneider.append(M.sphere(1.0, 64).scale((62, 115, 15)).translate((ex - 4, Y(520), -1.0)))
+    if a.bauch:                                                                         # Rippen-Ausfräsung nach Toms Foto der Rückseite (17.11.): kantig, drei ebene Flächen
+        # Bassseite, vom oberen Bogen über die Taille bis in den unteren Bogen. Punkte aus dem Foto (mm ab Saitenhülsen-Mitte), Rand-Punkte auf den Umriss gezogen.
+        yf = Y(MENSUR + 11); kr = np.vstack([np.asarray(c) for c in K.to_polygons()])
+        nah = lambda q: kr[np.argmin(np.linalg.norm(kr - np.asarray(q), axis=1))]
+        P0, P4, R_ = nah((-120.0, yf + 221.0)), nah((-146.0, yf - 25.0)), nah((-110.0, yf + 128.0))
+        P1, P2, P3 = np.array([-69.6, yf + 163.0]), np.array([-50.7, yf + 90.0]), np.array([-62.3, yf + 44.0])
+        dR = 0.50 * T_B                                                                 # Tiefe an der Taille (Rand bleibt knapp halb so dick)
+        mulde = M.cube((230, 420, dR * 1.12 + 5)).translate((-215, yf - 110, -5))
+        for A_, B_ in ((P0, P1), (P1, P2), (P2, P3), (P3, P4)):                         # je Fläche eine Ebene: Tiefe 0 an der Kante A–B, dR am Taillenpunkt
+            t_ = (B_ - A_) / np.linalg.norm(B_ - A_); n_ = np.array([-t_[1], t_[0]])
+            if np.dot(R_ - A_, n_) < 0: n_ = -n_
+            g_ = dR / np.dot(R_ - A_, n_) * n_                                          # Gefälle der Ebene
+            mulde = mulde.trim_by_plane((g_[0], g_[1], -1.0), float(np.dot(g_, A_)) / float(np.linalg.norm([g_[0], g_[1], 1.0])))
+        schneider.append(mulde)
 
     # ---------------- Tonabnehmer, Steg, Regler, Schalter ----------------
     PU_W = p(0.5); futter = pus.offset(PU_W, RUND, 2.0, 24) - hals_fl.offset(0.05, RUND)       # schwarze Auskleidung der Fräsung (zwei Bahnen stark), damit kein Grau zu sehen ist
@@ -315,13 +326,22 @@ def main():
     bp = am_rand((118, 28)); mitte = np.array([0.0, Y(690)]); nb = (bp - mitte); nb /= np.linalg.norm(nb)
     b3, n3 = np.array([bp[0], bp[1], T_B / 2]), np.array([nb[0], nb[1], 0.0])
     tg3 = np.array([-n3[1], n3[0], 0.0])                                               # ovale Buchsenplatte mit zwei Schrauben, flach an der Zarge
-    def oval(a_, b_, t0, t1):
-        return M.cylinder(t1 - t0, 1, 1, 48).scale((a_, b_, 1)).transform(np.column_stack([tg3, [0, 0, 1], n3, b3 + t0 * n3]))
-    tief = 5.0
-    buchse = oval(21, 11, -tief, p(0.22)) + oval(6.5, 6.5, 0, p(0.22) + max(1.2, p(0.2))) - zylinder(max(3.0, p(0.5)), b3 - 2.4 * n3, b3 + 9 * n3, 24)
+    # Buchsenplatte nach Toms Nahaufnahme (17.11.): Linsenform mit spitzen Enden, zwei Schrauben, in der Mitte eine Schale mit Sechskantmutter und heller Hülse
+    mat = np.column_stack([tg3, [0, 0, 1], n3, b3])
+    def ab(cs, t0, t1): return prisma(cs, t0, t1).transform(mat)                        # Fläche liegt an der Zarge, t = nach außen
+    LB, LH = 29.0, 11.5; rl = (LB * LB + LH * LH) / (2 * LH)                            # Linse = Schnitt zweier Kreise
+    linse = (kreis(rl, 160).translate((0, rl - LH)) ^ kreis(rl, 160).translate((0, LH - rl))).offset(-1.2, RUND, 2.0, 24).offset(1.2, RUND, 2.0, 24)
+    tief = 5.0; tp = max(1.0, p(0.25)); ts = max(2.0, p(0.5))                           # Platte steht tp vor; Schale ts tief
+    r_s, r_h, r_l = max(9.0, p(1.5)), max(4.6, p(0.75)), max(3.0, p(0.45))              # Schale, Hülse außen, Loch
+    sechs = CS([np.array([[(r_s - p(0.35)) * math.cos(j * math.pi / 3 + 0.3), (r_s - p(0.35)) * math.sin(j * math.pi / 3 + 0.3)] for j in range(6)])], NZ)
+    ring_h = kreis(r_h, 40) - kreis(r_l, 32)
+    buchse = ab(linse - kreis(r_s, 48), -tief, tp) + ab(kreis(r_s, 48) - kreis(r_h + FUGE, 40), -tief, tp - ts)
+    buchse = buchse + ab(sechs - kreis(r_h + FUGE, 40), tp - ts - 0.05, tp - ts + max(1.0, p(0.25)))               # Mutter sitzt in der Schale
+    weiss.append(ab(ring_h, -tief, tp - ts + max(1.6, p(0.4))))                                                     # Hülse (silber), ragt aus der Mutter
+    schwarz.append(ab(kreis(r_l, 32), -tief, tp - ts - max(3.0, p(0.6))))                                           # dunkler Grund im Loch
     for sg in (-1, 1):
-        m_ = b3 + sg * 15.5 * tg3; buchse = buchse + M.sphere(max(1.6, p(0.3)), 12).scale((1, 1, 1)).translate(tuple(m_ + p(0.22) * n3))
-    schwarz.append(buchse); schneider.append(oval(21, 11, -tief, 40))
+        rk_ = max(2.0, p(0.35)); buchse = buchse + M.sphere(rk_, 16).scale((1, 1, 0.5)).translate((sg * 21.5, 0, tp)).transform(mat)
+    schwarz.append(buchse); schneider.append(ab(linse, -tief, 40))
 
     # ---------------- Griffbrett, Bünde, Ziffern, Sattel ----------------
     wb = max(2.8, p(0.3)); bund_fl = []
