@@ -174,7 +174,9 @@ def main():
     kb = K.bounds(); print(f"Korpus {kb[2] - kb[0]:.0f} × {kb[3] - kb[1]:.0f} mm")
 
     # ---------------- 2D-Flächen auf der Decke ----------------
-    def pu_fuss(s): return (rechteck(73, 41, 4) + rechteck(90, 13, 5)).translate((0, Y(s)))
+    PU_G = min(2.5, max(1.6, p(0.5))); PU_T = 12.0                                    # Luftspalt rund um den Tonabnehmer und Tiefe der Fräsung (echte mm)
+    def pu_koerper(s): return (rechteck(70, 38, 3) + rechteck(88, 11, 4)).translate((0, Y(s)))
+    def pu_fuss(s): return pu_koerper(s).offset(PU_G, RUND, 2.0, 24)                     # Fräsung in der Decke
     PU = [D["tonabnehmer"][0][1], D["tonabnehmer"][1][1]]
     steg_fl = rechteck(84, 43, 3).translate((0, Y(MENSUR + 13.5)))
     regler = [(q[0], Y(q[1])) for q in D["regler"]]
@@ -188,6 +190,7 @@ def main():
     gb = poly([(-21, Y(0)), (21, Y(0)), (halb(gb_ende), Y(gb_ende)), (-halb(gb_ende), Y(gb_ende))])
     hals_fl = poly([(-halb(380) - 0.02, Y(380)), (halb(380) + 0.02, Y(380)), (halb(gb_ende) + 0.02, Y(gb_ende) - 0.02), (-halb(gb_ende) - 0.02, Y(gb_ende) - 0.02)])
     koepfe = vereint2([kreis(2.4, 16).translate(((i - 2.5) * 10.5, Y(MENSUR + 36.0))) for i in range(6)])
+    pus = vereint2([pu_fuss(s) for s in PU])
     hw = vereint2([pu_fuss(s) for s in PU] + [steg_fl, koepfe] + [kreis(9.5).translate(q) for q in regler] + [schlitz])
     innen = K.offset(-(p(0.38 + 0.45) if a.duese < 0.3 else SLAB + p(0.9)), RUND, 2.0, 24)
     wl = {2: D["wolken_viel"], 3: D["wolken_fein"], 4: D["wolken_max"]}.get(a.wolken, D["wolken"])
@@ -207,15 +210,15 @@ def main():
         if a.decke == "unter":                                                          # eine Deckfarbe; Muster schwarz darunter, schmaler schwarzer Rand wie am Original
             HAUT = p(a.haut); voll = K.offset(-(RB + FUGE), RUND, 2.0, 24) - hw - hals_fl
             rot = [prisma(voll, T_B - HAUT, T_B), prisma(voll.offset(-0.012, m3.JoinType.Miter) - W.offset(FUGE, RUND), z_slab, T_B - HAUT + 0.03)]
-            schwarz = [prisma(hw.offset(-FUGE), z_slab, T_B), prisma(W, z_slab, T_B - HAUT), rand_k]; dunkel = []
+            schwarz = [prisma((hw - pus).offset(-FUGE), z_slab, T_B), prisma(W, z_slab, T_B - HAUT), rand_k]; dunkel = []
         else:
             rot = [prisma(decke_in, z_slab, T_B), rand_k]
-            schwarz = [prisma(hw.offset(-FUGE), z_slab, T_B)]; dunkel = [prisma(W, z_slab, T_B)]
+            schwarz = [prisma((hw - pus).offset(-FUGE), z_slab, T_B)]; dunkel = [prisma(W, z_slab, T_B)]
     else:
         decke_in = K.offset(-(SLAB + 0.35), RUND, 2.0, 24) - hw - hals_fl - W.offset(FUGE, RUND)
         rund = [(SLAB * (1 - math.cos(w)), z_slab + SLAB * math.sin(w)) for w in np.linspace(0, math.pi / 2, 7)]
         rot = [prisma(decke_in, z_slab, T_B), band(K, rund, SLAB + 0.6) - prisma(hals_fl, z_slab - 1, T_B + 1)]
-        schwarz = [prisma(W, z_slab, T_B), prisma(hw.offset(-FUGE), z_slab, T_B)]; dunkel = []
+        schwarz = [prisma(W, z_slab, T_B), prisma((hw - pus).offset(-FUGE), z_slab, T_B)]; dunkel = []
     grau, weiss, schneider = [], [], []
 
     # ---------------- Korpus-Kern (grau) mit Fase unten ----------------
@@ -238,15 +241,18 @@ def main():
         schneider.append(M.sphere(1.0, 64).scale((62, 115, 15)).translate((ex - 4, Y(520), -1.0)))
 
     # ---------------- Tonabnehmer, Steg, Regler, Schalter ----------------
+    schneider.append(prisma(pus, T_B - PU_T - 1.5, 300))                               # Fräsungen: die Tonabnehmer sitzen versenkt, mit Luft zu den Saiten
     for i, s in enumerate(PU):
-        hoch = T_B + (9.0 if i == 0 else 10.5); c = (0, Y(s))
-        schwarz.append(prisma(rechteck(70, 38, 3).translate(c), T_B - 0.3, T_B + 3))
-        for sx_ in (-40.5, 40.5):
-            schwarz.append(M.sphere(2.6, 16).scale((1, 1, 0.5)).translate((sx_, Y(s), T_B - 0.02))); kreuz(sx_, Y(s), T_B + 1.28, 2.6)
+        hoch = T_B + (5.5 if i == 0 else 6.5); c = (0, Y(s))                           # Oberkante: Saiten laufen bei etwa T_B + 11
+        schwarz.append(prisma(pu_fuss(s).offset(-0.03), T_B - PU_T - 1.5, T_B - PU_T))  # schwarzer Boden der Fräsung
+        schwarz.append(prisma(rechteck(70, 38, 3).translate(c), T_B - PU_T - 0.3, T_B + 1.5))
+        schwarz.append(prisma(rechteck(88, 11, 4).translate(c), T_B - PU_T - 0.3, T_B - 2.0))                      # Befestigungsohren liegen tiefer als die Decke
+        for sx_ in (-40.0, 40.0):
+            schwarz.append(M.sphere(2.4, 16).scale((1, 1, 0.5)).translate((sx_, Y(s), T_B - 2.02))); kreuz(sx_, Y(s), T_B - 2.0 + 1.2, 2.4)
         for dy in (-9.6, 9.6):
             sp = rechteck(68, 18.2, 9.0).translate((0, Y(s) + dy))
             ring = sp.offset(-p(0.5), RUND, 2.0, 24) - sp.offset(-p(1.0), RUND, 2.0, 24)
-            schwarz += [prisma(sp, T_B + 2.7, hoch - E), prisma(sp.offset(-0.05) - ring.offset(FUGE), hoch - E - 0.3, hoch)]
+            schwarz += [prisma(sp, T_B + 1.2, hoch - E), prisma(sp.offset(-0.05) - ring.offset(FUGE), hoch - E - 0.3, hoch)]
             rot.append(prisma(ring, hoch - E, hoch))
             pole = vereint2([kreis(max(2.3, p(0.38)), 16).translate(((j - 2.5) * 10.2, Y(s) + dy)) for j in range(6)])
             schwarz.append(prisma(pole, hoch - 0.3, hoch + p(0.24)))
@@ -287,9 +293,9 @@ def main():
     for q in (sA, sB):
         schwarz += [prisma(kreis(RS, 20).translate(tuple(q)), T_B - 0.3, T_B + p(0.16)), M.sphere(RS, 20).scale((1, 1, 0.45)).translate((q[0], q[1], T_B + p(0.16)))]
         kreuz(q[0], q[1], T_B + p(0.16) + 0.45 * RS, RS)
-    ach = (sA - sB) / np.linalg.norm(sA - sB); w = math.radians(66)                     # Hebel lehnt zur oberen Schraube, 66° steil (stützfrei)
+    ach = (sA - sB) / np.linalg.norm(sA - sB); w = math.radians(90)                     # Hebel steht in Mittelstellung senkrecht (laut Tom mittig)
     ri3 = np.array([ach[0] * math.cos(w), ach[1] * math.cos(w), math.sin(w)])
-    f0 = np.array([*(sA + 0.62 * (sB - sA)), T_B - 0.3])
+    f0 = np.array([*(sA + 0.50 * (sB - sA)), T_B - 0.3])
     RSCH = max(1.2, p(0.8 * FEIN)); schaft = zylinder(RSCH, f0, f0 + 9.5 * ri3, 14)
     kappe = M.batch_hull([M.sphere(RSCH + 0.05, 16).translate(tuple(f0 + 9.3 * ri3)), M.sphere(max(3.0, p(0.5)), 20).translate(tuple(f0 + 16.0 * ri3)),
                           M.sphere(max(1.7, p(0.3)), 16).translate(tuple(f0 + 21.5 * ri3))])                 # Kegel weitet sich flach genug für den Druck ohne Stützen

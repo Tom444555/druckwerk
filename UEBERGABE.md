@@ -101,6 +101,10 @@
   für einen steckbaren Deckel (26,6 × 5,7 × 1,0, Spiel 0,08, Griffmulde) und `…_klappe.stl` (Deckel + zehn Lochkugeln 2,4 × 2,0, Loch 0,9). Ersetzt die schwarzen Hülsen.
   Aufträge: `…gitarre370_korpus` neu (14 h 04 min) und `…gitarre370_klappe` (6 min, 0,3 g, nur Kopf 3). Vollständiger Satz 370 mm: korpus, hals, wirbel, klappe.
   Baubefehl: `gitarre_rundum.py --laenge 370 --teilen 1 --wolken 4 --wirbel 1 --klappe 1`. 160 mm hat weder Wirbel noch Fach. Alles ungedruckt.
+  **Stand 17.11. nachts:** nach Toms Fotos Tonabnehmer in Fräsungen versenkt (`PU_G` Spalt, `PU_T` Tiefe 12 mm echt) und niedriger (Oberkante T_B + 5,5 / 6,5 statt 9 / 10,5,
+  Saiten bei etwa T_B + 11), Schalterhebel senkrecht in der Schlitzmitte. Neu gesliced, **neue Ordnernamen wegen Datum**: `2026-11-17_gitarre370_korpus_c5pro` (14 h 24 min)
+  und `2026-11-17_gitarre160_c5pro` (4 h 58 min); Hals, Wirbel, Klappe bleiben `2026-11-16_…`. Offen/nicht umgesetzt aus den Fotos: Polschrauben als Innensechskant,
+  Stoffband am Tonabnehmer. Alles ungedruckt.
   Toms Angabe: die drei Vergleichsdateien stammen von GrabCAD und seien frei – sie liegen trotzdem nicht im Lager (nur verglichen). Mögliche nächste Wünsche: größer (bis ~240 mm),
   Saiten, schwarzer Rand um die Decke, Ständer dazu.
 - **Grenze Text zu Bild (15.11. nachts):** `bild_ki.py` ohne Schlüssel taugt nur für freie Figuren (Eule gut). Technische/reale Gegenstände (Test: Pistole, Karabiner, Toms

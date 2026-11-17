@@ -2,8 +2,8 @@
 
 **Drucker:** Flashforge Creator 5 Pro  
 **Datei für USB:** `gitarre370_korpus_c5pro.gcode`  
-**Druckzeit (geschätzt):** 14h 3m 33s  
-**Filament:** 61.04, 7.99, 14.45 g (20.47 m, 2.68 m, 4.85 m)  
+**Druckzeit (geschätzt):** 14h 23m 38s  
+**Filament:** 61.42, 7.99, 15.21 g (20.59 m, 2.68 m, 5.10 m)  
 
 
 ## Spulen / Köpfe einlegen
@@ -14,13 +14,13 @@
 | 2 | PLA | weinrot | Flashforge PLA Basic @FF C5P |
 | 3 | PLA | schwarz | Flashforge PLA Basic @FF C5P |
 
-## Teil 1 von 2: Korpus (Gitarre 370 mm, Maßstab 1:2,62) – Fassung mit Saitenfach auf der Rückseite
+## Teil 1 von 2: Korpus (Gitarre 370 mm, Maßstab 1:2,62) – mit Saitenfach und versenkten Tonabnehmern
 
 - Köpfe: 1 Grau, 2 Weinrot, 3 Schwarz. Kopf 4 bleibt leer.
-- Rückseite: Fach 24,5 × 3,6 mm, 3,4 mm tief, über den sechs Saitenlöchern; oben eine Stufe für den Deckel (Auftrag `2026-11-16_gitarre370_klappe_c5pro`).
-  Das Fach liegt beim Druck auf dem Bett: Stützen darin nach dem Druck herausnehmen.
-- Decke: Weinrot als 0,16 mm dünne Haut über dem schwarzen Muster. Schlitz oben für den Zapfen des Halses (Spiel 0,12 mm je Seite).
-- 0,25-mm-Düse, Schicht 0,08 mm, feinste Einstellungen. Nur gerechnet.
+- Rückseite: Saitenfach mit Stufe für den Deckel (Auftrag `2026-11-16_gitarre370_klappe_c5pro`); Stützen im Fach nach dem Druck herausnehmen.
+- **Tonabnehmer:** sitzen versenkt in Fräsungen (Spalt rundum, schwarzer Boden) und sind niedriger; zwischen Saite und Tonabnehmer bleiben etwa 1,6 mm (370 mm) bzw. 0,7 mm (160 mm) Luft.
+- **Schalter:** Hebel steht senkrecht in der Mitte des Schlitzes.
+- **Decke:** Weinrot als 0,16 mm dünne Haut über dem schwarzen Muster. 0,25-mm-Düse, Schicht 0,08 mm, feinste Einstellungen, Stützen nur vom Bett. Nur gerechnet.
 
 ## Einstellungen
 

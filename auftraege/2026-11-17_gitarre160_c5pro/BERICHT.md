@@ -2,8 +2,8 @@
 
 **Drucker:** Flashforge Creator 5 Pro  
 **Datei für USB:** `gitarre160_c5pro.gcode`  
-**Druckzeit (geschätzt):** 4h 56m 47s  
-**Filament:** 12.87, 3.63, 6.23, 0.30 g (4.32 m, 1.22 m, 2.09 m, 0.10 m)  
+**Druckzeit (geschätzt):** 4h 57m 56s  
+**Filament:** 13.12, 3.45, 6.30, 0.30 g (4.40 m, 1.16 m, 2.11 m, 0.10 m)  
 
 
 ## Spulen / Köpfe einlegen
@@ -15,14 +15,12 @@
 | 3 | PLA | schwarz | Flashforge PLA Basic @FF C5P |
 | 4 | PLA | silber | Flashforge PLA Basic @FF C5P |
 
-## Vergleichsstück 160 mm (einteilig, Maßstab 1:6,05) – gleiche Details wie die 370-mm-Fassung
+## Vergleichsstück 160 mm (einteilig, Maßstab 1:6,05)
 
-- Köpfe: 1 Grau, 2 Weinrot, 3 Schwarz, 4 Silber oder Hellgrau (Bünde, Ziffern).
-- **Decke:** durchgehend Weinrot; das schwarze Muster liegt unter einer 0,16 mm dicken Haut (zwei Schichten) und soll durchscheinen. Wie stark, hängt vom Filament ab –
-  ungedruckt. Zu schwach: `--haut 0.08` (eine Schicht); zu hart: `--haut 0.24`.
-- **Maximale Details:** 0,25-mm-Düse auf allen Köpfen, Schicht 0,08 mm, Arachne (`min_bead_width=70%`, `min_feature_size=20%`), Auflösung 0,008 mm, nur eine Wand an Deckflächen,
-  Außenwand 30 mm/s, kleine Umrisse 20 mm/s, Deckfläche 40 mm/s, 8 Deckschichten, Stützen nur vom Druckbett. Kein Spulenwechsel mehr nötig.
-- Alles nur gerechnet, am Gerät nicht erprobt.
+- Köpfe: 1 Grau, 2 Weinrot, 3 Schwarz, 4 Silber oder Hellgrau (Bünde, Ziffern). Ohne Wirbel und Saitenfach.
+- **Tonabnehmer:** sitzen versenkt in Fräsungen (Spalt rundum, schwarzer Boden) und sind niedriger; zwischen Saite und Tonabnehmer bleiben etwa 1,6 mm (370 mm) bzw. 0,7 mm (160 mm) Luft.
+- **Schalter:** Hebel steht senkrecht in der Mitte des Schlitzes.
+- **Decke:** Weinrot als 0,16 mm dünne Haut über dem schwarzen Muster. 0,25-mm-Düse, Schicht 0,08 mm, feinste Einstellungen, Stützen nur vom Bett. Nur gerechnet.
 
 ## Einstellungen
 
