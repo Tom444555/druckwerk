@@ -23,7 +23,7 @@ export async function seite(app, C){
   <h2>Hilfe</h2><div class="card">
     ${zeile("anleitung", "Anleitung: Mac und Flash Studio", "Teile in Flash Studio öffnen, per WLAN drucken, eigene Änderungen zurückholen")}
     ${zeile("w:problem", "Problem lösen", "Fehlerbilder und was dagegen hilft")}
-    <a class="row chev" href="videos/index.html" style="color:inherit;text-decoration:none"><div class="grow">Videos ausgewertet<div class="small">Z-Naht · PLA-Einstellungen · STL mit KI · Foto in 3D · Technische Filamente · Meshy · Fuzzy Skin</div></div></a></div>
+    <a class="row chev" href="videos/index.html" style="color:inherit;text-decoration:none"><div class="grow">Videos ausgewertet<div class="small">Aimia · Z-Naht · PLA-Einstellungen · STL mit KI · Foto in 3D · Technische Filamente · Meshy · Fuzzy Skin</div></div></a></div>
   <h2>Gerät &amp; Daten</h2>
   <div class="card">
     <div class="row chev" id="stSich" style="cursor:pointer" role="button" tabindex="0"><div class="grow">Sicherung erstellen<div class="small">Haken, Spulen, Tagebuch mit Fotos, eigene Modelle – als eine Datei${ls("druckwerk_gesichert", "") ? " · zuletzt " + C.deDatum(ls("druckwerk_gesichert", "")) : ""}</div></div></div>

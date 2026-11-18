@@ -16,7 +16,14 @@
 - `druck.py --schoen` = Sichtteil-Paket für PLA mit 0,4-mm-Düse (3 Wände innen-außen-innen, Arachne, ≥ 5 Deck-/Bodenschichten, Außenwand ≤ 45, Innenwand ≤ 100, erste Schicht ≤ 30,
   Überhänge/Brücken ≤ 30 mm/s, Fahrwege meiden Wände, Naht hinten, Schrägnaht). Bei Deko/Sichtteilen aus PLA von selbst nehmen. `--schraegnaht` einzeln. In der Werkstatt: Haken
   „Schön (langsam)“, Füllmuster „Blitz“. Messwerte: Winkel-Teil 16:28 statt 12:27 min; Zylinder mit Schrägnaht +11 s.
-- Videos ausgewertet am 18.11.: `videos/pla-einstellungen-bastlwastl.html`, `videos/z-naht-bastlwastl.html`. Ablauf für weitere Videos: CLAUDE.md → „Video auswerten und aneignen“.
+- Videos ausgewertet am 18.11.: `videos/pla-einstellungen-bastlwastl.html`, `videos/z-naht-bastlwastl.html`, `videos/aimia-makerlab-bastlwastl.html` (Aimia → neues Werkzeug
+  `werkzeug/teilen.py`: zu große/fremde STL gerade teilen mit Passstift-Löchern, siehe CLAUDE.md). sw.js jetzt `druckwerk-v18`. Ablauf für weitere Videos: CLAUDE.md → „Video auswerten und aneignen“.
+
+**Neu am 18.11. abends**
+- Vogel-Ring-Schlüsselanhänger, eigener Entwurf nach Toms Stilbild (das Albatros-Shopmodell wird nicht nachgebaut): `modelle/vogelring.py` (Höhenfeld → marching cubes, 45 mm, 8 mm,
+  beidseitig gleich, halbrund, Öse). Vorschau an Tom geschickt, Rückmeldung offen; Plan: zwei Hälften mit flacher Rückseite + Filament-Passstiften, Hälften-Teil im Skript noch nicht fertig.
+- Tom hat fremde Gitarren-Modelle geschickt (Strat-Bausatz 1:1, Les-Paul-Bausatz 1:1, Les Paul komplett, Telecaster-STEP von GrabCAD, Plektrumhalter, Kork-Diorama, Albatros-Hueforge).
+  Herkunft/Lizenz offen → **nicht eingecheckt**. Tom will das Lager auf privat stellen; Folgen (Pages, Actions-Minuten) mit ihm klären.
 
 **Offen / wartet auf Tom**
 - Erste Drucke: Kalibrier-Teil 1 (Haftung) und 2, dann `Schecter_160_Probe_einfarbig`; Rückmeldung per Tagebuch. Zeigt der Drucker Unterordner auf dem Stick?

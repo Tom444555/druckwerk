@@ -1,5 +1,5 @@
 {
- "stand": "15.11.2026",
+ "stand": "18.11.2026",
  "wege": [
   {
    "id": "technik",
@@ -645,6 +645,13 @@
      "preis": "Bezahlmodell",
      "url": "https://hyper3d.ai",
      "d": "Gilt als das detailreichste – wenn ein Rohling besonders fein sein soll."
+    },
+    {
+     "name": "Aimia (MakerWorld MakerLab)",
+     "wo": "Browser",
+     "preis": "wenige Versuche gratis, dann Credits/Punkte",
+     "url": "https://makerworld.com/makerlab",
+     "d": "KI-Arbeitsplatz von Bambu Lab mit mehreren Generatoren (u. a. Tripo, Meshy), Farbanzahl wählbar, Teilen an Formgrenzen mit Steckverbindern, Export STL/3MF. Stand Nov. 2026 Beta mit Warteliste. Ergebnis als STL oder 3MF an Claude schicken. Video-Auswertung unter Wissen → Videos."
     }
    ]
   },
@@ -882,6 +889,12 @@
      "wo": "App · Claude",
      "preis": "–",
      "d": "Beim Slicen wählbar: Glatt, Fein, Mittel, Grob. Überdeckt Schichtlinien, wirkt wie Stein, gibt Griff. Nur an Seitenwänden; trägt je Seite bis 0,4 mm auf. Noch nicht gedruckt."
+    },
+    {
+     "name": "Teilen mit Passstiften (druckwerk)",
+     "wo": "Claude",
+     "preis": "–",
+     "d": "Zu große oder fremde STL gerade schneiden, bis jedes Stück in den Bauraum passt; Löcher für gedruckte Stifte (Ø 4, Spiel 0,2) oder 1,75-mm-Filament. Seit 18.11. (werkzeug/teilen.py), am Drucker noch nicht erprobt."
     }
    ]
   }
@@ -1004,7 +1017,7 @@
    "t": "Werkstatt: schneiden, Text, zusammensetzen",
    "nutzen": "Boden plan schneiden und Schrift aufsetzen direkt am Handy, ohne Auftrag an Claude.",
    "aufwand": "groß",
-   "status": "Idee"
+   "status": "Schneiden mit Passstiften im Chat eingebaut 18.11. (teilen.py) – in der App noch offen"
   },
   {
    "id": "v18",

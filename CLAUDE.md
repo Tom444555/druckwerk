@@ -205,6 +205,14 @@ Alte `_kobrax`-Aufträge laufen nicht auf dem Creator 5 Pro – bei Bedarf aus d
   Seitenwänden (Sichtflächen so legen oder Teil teilen), unten prägt die Plattenstruktur; trägt um die Stärke auf; ≥ 3 Wände, innen vor außen. Eingebaut als `--rau` und
   in der Werkstatt („Oberfläche“). Nicht eingebaut: Flächen gezielt bemalen (`paint_fuzzy_skin`), neuere Muster (Perlin, Voronoi), Muster/Logo als SVG-Relief, Testraster.
 
+- **Bastlwastl, „Diese neue 3D-KI ist unglaublich! AIMIA von MakerWorld im Test“** (`videos/aimia-makerlab-bastlwastl.html`, 18.11.2026): Aimia = KI-Arbeitsplatz im MakerLab
+  (Beta mit Warteliste, 2 Versuche gratis, dann Credits; Generatoren laut Berichten Tripo, Meshy, Hi3D, Rodin, Hunyuan). Text → 4–5 Bilder → 3D (~4 Min.) mit 4–18 Farben → Browser-Slicer
+  (Boden plan, „Geometric Split“ = Teile entlang der Form trennen mit Steckverbindern, Spiel 0,20) → STL/3MF. Für Tom: Farbanzahl 4, als 3MF schicken (Farbzuordnung in Druckwerk **ungetestet**).
+  **Angeeignet als `werkzeug/teilen.py`** (gerade Schnitte, keine KI-Erkennung): `python3 werkzeug/teilen.py modell.stl --aus /tmp/t` teilt, bis jedes Stück ≤ `--bett 250` mm ist;
+  oder `--achse x|y|z --bei <mm>|mitte`. Passstifte `--stift druck` (Ø `--stift-d 4`, Spiel `--spiel 0.2` je Seite, Stift-STL dazu) | `filament` (Loch Ø 1,95 für 1,75-mm-Stückchen) | `keine`;
+  Tiefe ≤ `--tiefe 6`, höchstens 40 % der dünneren Hälfte; Stiftorte automatisch im eingezogenen Schnitt (Wand `--wand 1.6`), längliche Inseln zwei Stifte. `--lage auto`: Z-Schnitt → Schnittfläche
+  nach unten. Test: Les-Paul-Korpus 437 × 331 mm → 4 Stücke, 6 Stifte, alle dicht, Lochvolumen nachgerechnet. Nicht übernommen: organisches Teilen (bräuchte KI-Segmentierung), Scharniere. Nichts gedruckt.
+
 - **Der Druckt Schon Wieder, „Meshy AI … 3D Agent“** (Werbe-Video, Snapmaker U1): Agent fragt erst nach (Form, Farben), zeigt ein Konzeptbild, baut dann 3D – so auch selbst vorgehen.
   Meshy „Multi-Color Print“ liefert eine **bemalte 3MF** (Farbanzahl dort auf ≤ 4 stellen) → `druck.py --bemalt`; mit echter Meshy-Datei **ungetestet**: beim ersten Mal prüfen, ob
   `lese_3mf` die Farbcodierung liest (sonst alles auf Kopf 1) und die Größe stimmt (Meshy-Standard 50 mm → `--groesse <mm>` oder `--skala <Faktor>`; der Bericht nennt die Maße vorher/nachher). Baumstützen sind im Video umgerissen
