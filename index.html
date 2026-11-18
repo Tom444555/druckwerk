@@ -365,6 +365,7 @@ function detail(ordner){
   <h2>Mehr</h2>
   <button class="btn grey" id="inWerk">In der Werkstatt umbauen</button>
   <button class="btn grey" id="bericht">Bericht ansehen</button>
+  ${a.projekt && !/iPhone|iPad|iPod|Android/i.test(navigator.userAgent) && !(navigator.maxTouchPoints > 1) ? `<a class="btn grey" href="orcaslicer://open?file=${encodeURIComponent(new URL(pfad + encodeURIComponent(a.projekt), location.href.split("#")[0]).href)}">In Flash Studio öffnen (Mac)</a>` : ""}
   ${a.projekt ? `<a class="btn grey" href="${pfad}${encodeURIComponent(a.projekt)}" download="${esc(a.projekt)}">3MF-Projekt laden (für ${a.drucker === "kobrax" ? "Anycubic Slicer" : "Flash Studio"} / OrcaSlicer)</a>` : ""}
   ${a.quelle ? `<a class="btn grey" href="${esc(a.quelle)}" target="_blank" rel="noopener">Original auf ${esc(quellName(a.quelle))} öffnen</a>` : ""}
   <button class="btn grey" id="teilen">Auf anderes Gerät holen (Link teilen)</button>

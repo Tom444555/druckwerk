@@ -115,6 +115,10 @@ export function projekt(app, ctx, id){
   <button class="btn" id="usb">Alles für den USB-Stick laden</button>
   <div class="balken" id="usbB" style="display:none;margin:8px 2px"><i></i></div>
   <p class="hint">Lädt <b>${C.esc(ordnerName(p))}.zip</b>. In „Dateien“ antippen → es entsteht der Ordner <b>${C.esc(ordnerName(p))}</b> mit ${mehr ? "allen Druckdateien in Reihenfolge (1_, 2_ …)" : "der Druckdatei"} und LIESMICH.txt. Den Ordner auf den USB-Stick bewegen.</p>
+  ${amRechner() && p.teile.some(t => t.projekt) ? `<h2>Direkt in Flash Studio öffnen</h2>
+  <div class="card">${p.teile.filter(t => t.projekt).map(t => `<a class="row chev" href="${C.esc(studioLink(t))}" style="color:inherit;text-decoration:none"><div class="grow"><b>${mehr ? (p.teile.indexOf(t) + 1) + ". " : ""}${C.esc(teilTitel(t))}</b>
+      <div class="small">öffnet das Projekt mit allen Einstellungen in Flash Studio Desktop</div></div></a>`).join("")}</div>
+  <p class="hint">Von Flash Studio geht es per WLAN an den Drucker. <a href="#" id="fsHilfe" style="color:var(--blue)">Einmal einrichten</a></p>` : ""}
   <h2>Mehr</h2>
   ${p.teile.some(t => t.projekt) ? `<button class="btn grey" id="fs">Für Flash Studio am Mac laden (3MF)</button>
   <p class="hint">Dieselben Teile als Projekt-Dateien: in Flash Studio Desktop öffnen, ansehen oder ändern und von dort per WLAN an den Drucker senden.</p>` : ""}
@@ -132,6 +136,7 @@ export function projekt(app, ctx, id){
     catch (e) { console.error(e); C.toast("Konnte nicht geladen werden – Internet prüfen", 4000); }
     knopf.disabled = false; knopf.textContent = text; setTimeout(() => { balken.style.display = "none"; }, 1500); };
   $("#usb").onclick = e => laden(e.currentTarget, "gcode");
+  const fh = $("#fsHilfe"); if (fh) fh.onclick = e => { e.preventDefault(); studioHilfe(C); };
   const fs = $("#fs"); if (fs) fs.onclick = e => laden(e.currentTarget, "projekt");
   $("#teilen").onclick = async () => { const url = location.origin + location.pathname + "#projekt:" + encodeURIComponent(p.id);
     try { if (navigator.share) { await navigator.share({title: "Druckwerk: " + p.titel, url}); return; } } catch (e) { if (e && e.name === "AbortError") return; }
@@ -161,6 +166,17 @@ export function liesmich(p, c = C){
     "  3. Am Bildschirm unter USB die Datei waehlen, erste Schicht beobachten.", "  4. In Druckwerk den Haken beim Teil setzen und das Ergebnis eintragen.", "");
   return Z.join("\r\n");
 }
+// Am Mac/PC: 3MF-Projekt direkt in Flash Studio Desktop öffnen (Adresse orcaslicer://open?file=…, wie „In Slicer öffnen“ bei Printables).
+// Flash Studio lädt die Datei selbst aus dem Lager; von dort geht sie per WLAN an den Drucker. Auf iPhone/iPad gibt es kein Flash Studio Desktop.
+export const amRechner = () => { try { return !/iPhone|iPad|iPod|Android/i.test(navigator.userAgent) && !(navigator.maxTouchPoints > 1); } catch (e) { return false; } };
+export const studioLink = t => t.projekt ? "orcaslicer://open?file=" + encodeURIComponent(new URL(`auftraege/${t.ordner}/${encodeURIComponent(t.projekt)}`, location.href.split("#")[0]).href) : "";
+export const studioHilfe = c => { const d = c.sheet(`<h3>Flash Studio am Mac</h3><p>So öffnet ein Klick das Teil direkt in Flash Studio Desktop:</p>
+  <div class="card"><ol class="steps"><li>Flash Studio Desktop installieren und einmal starten (Drucker dort verbinden).</li>
+    <li>In Flash Studio unter Einstellungen einen <b>Download-Ordner</b> festlegen – ohne ihn nimmt es keine Links an.</li>
+    <li>Hier auf ein Teil klicken → der Browser fragt „Flash Studio öffnen?“ → erlauben (Haken „immer“).</li>
+    <li>Flash Studio lädt das Projekt mit allen Einstellungen und Farben. Dort „Slicen“ und „Drucken“ – es geht per WLAN an den Drucker.</li></ol></div>
+  <p class="hint">Passiert beim Klick nichts, kennt der Mac die Adresse noch nicht: Flash Studio einmal starten, sonst „Für Flash Studio am Mac laden (3MF)“ nehmen und die Datei per Doppelklick öffnen. Ist zusätzlich OrcaSlicer installiert, kann sich stattdessen OrcaSlicer öffnen.</p>
+  <div style="height:12px"></div><button class="btn grey" id="shZu">Fertig</button>`); d.querySelector("#shZu").onclick = () => d.remove(); };
 let _crcT = null;
 function crc32(u8){ if (!_crcT) { _crcT = new Uint32Array(256); for (let n = 0; n < 256; n++) { let c = n; for (let k = 0; k < 8; k++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1; _crcT[n] = c >>> 0; } }
   let c = 0xFFFFFFFF; for (let i = 0; i < u8.length; i++) c = _crcT[(c ^ u8[i]) & 255] ^ (c >>> 8); return (c ^ 0xFFFFFFFF) >>> 0; }
