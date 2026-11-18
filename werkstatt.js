@@ -158,6 +158,7 @@ export async function bibliothek(app, ctx){
       <div class="grow"><b>„${C.esc(kiLauf.name)}“ wird erzeugt …</b><div class="small">seit ${Math.max(1, Math.round((Date.now() - kiLauf.start) / 60000))} Min. · antippen für den Stand</div></div></div></div>` : ""}
     ${eigene.length ? `<h2>Meine Modelle (auf diesem Gerät)</h2><div class="mgrid">${eigene.map(m =>
       karte("e:" + m.id, m.bild, m.name, `${m.teile.length} Teil${m.teile.length > 1 ? "e" : ""} · ${deD(m.datum)}`, [...new Set(m.teile.map(t => m.slots[t.slot-1]))])).join("")}</div>` : ""}
+    <div id="privat"></div>
     <h2>Von Claude erstellt (${lager.length})</h2>
     <div class="mgrid">${lager.map(a => karte("l:" + a.ordner, a.vorschau ? `auftraege/${a.ordner}/${a.vorschau}` : "", a.name,
       `${a.teile.length} Teil${a.teile.length > 1 ? "e" : ""} · ${deD(a.datum)}`, a.slots.map(s => C.farbe(s.farbe)))).join("")}</div>`;
@@ -165,6 +166,7 @@ export async function bibliothek(app, ctx){
     k.onclick = k.onkeydown = e => { if (e.type === "keydown" && e.key !== "Enter") return; C.go("werkstatt:" + k.dataset.m); }; });
   const ki = async () => { try { (await import("./ki.js")).oeffnen(C); } catch (e) { C.toast("Konnte nicht geladen werden"); } };
   $("#kiBtn").onclick = () => C.go("kiweg:1");
+  import("./privat.js").then(m => m.zeigen($("#privat"), C)).catch(() => {});
   const kw = $("#kiWeiter"); if (kw) kw.onclick = kw.onkeydown = e => { if (e.type === "keydown" && e.key !== "Enter") return; C.go("kiweg:" + kwOffen.schritt); };
   const kl = $("#kiLauf"); if (kl) kl.onclick = kl.onkeydown = e => { if (e.type === "keydown" && e.key !== "Enter") return; ki(); };
   $("#suche").oninput = e => { const q = e.target.value.toLowerCase().trim();

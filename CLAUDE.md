@@ -73,7 +73,7 @@ Alte `_kobrax`-Aufträge laufen nicht auf dem Creator 5 Pro – bei Bedarf aus d
 - Jede Ansicht hat eine Adresse (`#projekte`, `#projekt:<gruppe>`, `#auftrag:<ordner>`, `#werkstatt:…`, `#kiweg:<schritt>`); Zurück/Vor funktionieren.
 - **Sicherung** (`sicherung.js`): alle `druckwerk_*`-Schlüssel + IndexedDB (eigene Modelle, Tagebuch-Fotos) als eine Datei; `druckwerk_gesichert` = Datum.
 - **Offline/PWA**: `manifest.webmanifest`, `symbol-*.png`, `sw.js` (immer zuerst Netz, Zwischenspeicher nur ohne Netz; .gcode/STL nie).
-  **Bei jeder Änderung an App-Dateien `CACHE` in `sw.js` hochzählen** (Stand `druckwerk-v17`) und neue Dateien dort eintragen.
+  **Bei jeder Änderung an App-Dateien `CACHE` in `sw.js` hochzählen** (Stand `druckwerk-v19`) und neue Dateien dort eintragen.
 - „Aus dem Lager hinzufügen“ heißt in der App jetzt „Weitere Aufträge von Claude“. Überall „Kopf 1–4“, nie „Spule“; Werkstatt-Slicen sendet `c5pro`.
 - Aufträge sind wie die Ideen im Looper **pro Gerät gespeichert** (localStorage `druckwerk_meine`): neue Besucher
   sehen eine leere Liste. Tom speichert einen Auftrag über den Link `https://tom444555.github.io/druckwerk/#hinzu=<ordner>`
@@ -83,6 +83,10 @@ Alte `_kobrax`-Aufträge laufen nicht auf dem Creator 5 Pro – bei Bedarf aus d
   Printables, Thingiverse, MakerWorld, Cults3D, MyMiniFactory, GrabCAD, Yeggi, TraceParts → Tom lädt am iPad und hängt STL/3MF/STEP an (Link nur für `--quelle`).
   Direkt nutzbar: GitHub per `git clone` (BOSL2, NopSCADlib, gridfinity-rebuilt-openscad), Hugging Face (Objaverse), Poly-Haven-API (CC0), Thangs-Suche
   (`/api/search/v5/search-by-text?searchTerm=…`, nur suchen), Sketchfab-Suche (`api.sketchfab.com/v3/search?downloadable=true`, Download braucht Toms Token), NIH 3D.
+- **Privates Modell-Lager `Tom444555/druckwerk-modelle` (seit 18.11.2026):** fremde Modelle mit unbekannter/unfreier Lizenz (gekauft, GrabCAD, Shops) kommen dorthin
+  (Ordner je Projekt, `projekt.json`, `katalog.py` → `index.json` + Vorschau; Regeln in dessen CLAUDE.md). Slicen mit den Werkzeugen hier, Auftragsordner aber **dort**
+  unter `<projekt>/auftraege/` ablegen, nie hier. Die App zeigt es in der Bibliothek unter „Private Modelle“ (`privat.js`: GitHub-API mit Toms Schlüssel `druckwerk_token`,
+  der Zugriff auf beide Lager braucht; Knopf „Werkstatt“ lädt ein Teil bis 30 MB in „Meine Modelle“, „Mit Claude drucken“ öffnet Claude). Mit nachgestellter API geprüft, am iPad offen.
 - **Lizenz fremder Modelle:** Das Repo ist öffentlich. Modelle mit „Standard Digital File License“, ND-Lizenz oder Kaufmodelle NICHT einchecken (weder STL noch .gcode/3MF):
   slicen, .gcode nur per SendUserFile schicken, Auftragsordner nicht committen. CC0/CC-BY/CC-BY-SA dürfen ins Repo, Urheber + Lizenz in BERICHT.md nennen.
 - **Links aus der App zu Claude** (seit 15.11.2026): `https://claude.ai/code/new?repo=Tom444555%2Fdruckwerk&q=<Text>` – die Claude-App am iPhone/iPad reagiert laut

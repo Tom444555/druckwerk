@@ -23,7 +23,9 @@
 - Vogel-Ring-Schlüsselanhänger, eigener Entwurf nach Toms Stilbild (das Albatros-Shopmodell wird nicht nachgebaut): `modelle/vogelring.py` (Höhenfeld → marching cubes, 45 mm, 8 mm,
   beidseitig gleich, halbrund, Öse). Vorschau an Tom geschickt, Rückmeldung offen; Plan: zwei Hälften mit flacher Rückseite + Filament-Passstiften, Hälften-Teil im Skript noch nicht fertig.
 - Tom hat fremde Gitarren-Modelle geschickt (Strat-Bausatz 1:1, Les-Paul-Bausatz 1:1, Les Paul komplett, Telecaster-STEP von GrabCAD, Plektrumhalter, Kork-Diorama, Albatros-Hueforge).
-  Herkunft/Lizenz offen → **nicht eingecheckt**. Tom will das Lager auf privat stellen; Folgen (Pages, Actions-Minuten) mit ihm klären.
+  Statt druckwerk privat zu machen: **neues privates Lager `Tom444555/druckwerk-modelle`** (Tom hat es angelegt und für Claude freigegeben). Alle Dateien dort einsortiert
+  (7 Projekte, `index.json`, Vorschaubilder). App: Bibliothek → „Private Modelle“ (`privat.js`, sw.js `druckwerk-v19`) – braucht Toms Schlüssel mit Zugriff auf druckwerk-modelle;
+  am iPad ungetestet. Nichts davon geslict; Bausätze 1:1 bei Bedarf mit `teilen.py` teilen.
 
 **Offen / wartet auf Tom**
 - Erste Drucke: Kalibrier-Teil 1 (Haftung) und 2, dann `Schecter_160_Probe_einfarbig`; Rückmeldung per Tagebuch. Zeigt der Drucker Unterordner auf dem Stick?
