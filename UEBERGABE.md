@@ -27,6 +27,10 @@
   (7 Projekte, `index.json`, Vorschaubilder). App: Bibliothek → „Private Modelle“ (`privat.js`, sw.js `druckwerk-v19`) – braucht Toms Schlüssel mit Zugriff auf druckwerk-modelle;
   am iPad ungetestet. Nichts davon geslict; Bausätze 1:1 bei Bedarf mit `teilen.py` teilen.
 
+**Albatros Hueforge (18.11. abends, privates Lager)**
+- `druckwerk-modelle/albatros-hueforge/auftraege/2026-11-18_albatros_hueforge_c5pro`: dicke Fassung in 4 Höhen-Lagen geteilt (schwarz ≤ 0,88 / grau ≤ 1,04 / silber ≤ 1,36 / weiß), Köpfe 3/1/4/2,
+  0,08 mm (erste 0,16), Füllung 100 %, Reinigungsturm aus, 3 h 58 min, 45 g. Wechselhöhen selbst gewählt und nur simuliert. Skript `albatros_schichten.py` dort.
+
 **Offen / wartet auf Tom**
 - Erste Drucke: Kalibrier-Teil 1 (Haftung) und 2, dann `Schecter_160_Probe_einfarbig`; Rückmeldung per Tagebuch. Zeigt der Drucker Unterordner auf dem Stick?
 - Vergleichsdrucke: kleines Teil normal/„schön“, Zylinder ohne/mit Schrägnaht (Testdateien noch nicht als Auftrag angelegt – auf Wunsch rechnen).

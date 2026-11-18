@@ -293,6 +293,12 @@ So kam `modelle/gitarre_rundum.py` zustande; für ähnliche Vorhaben (Instrument
   → Bild an Tom → bei Farbe `werkzeug/textur_farben.py` → slicen. Große Netze vorher auf ≤ ~500.000 Dreiecke verkleinern.
 - Scans glänzender/dunkler/dünner Teile (Saiten, Chrom, Lack) haben Löcher und Beulen. Für Maßhaltiges den Scan nur als Vorlage nehmen und das Teil konstruieren.
 
+## Hueforge-Bilder (Erfahrung Albatros, 18.11.2026 – nur gerechnet)
+- Hueforge-STL = einfarbiges Höhenrelief (Grundplatte + Relief, für 0,08-mm-Schichten mit 0,16 erster Schicht angelegt). Für den Creator: Netz mit manifold3d `trim_by_plane` an
+  Schichtgrenzen in ≤ 4 Lagen teilen, je Lage ein Kopf, `--zusammen --infill 100 --extra layer_height=0.08 --extra initial_layer_print_height=0.16 --extra enable_prime_tower=0`
+  (+ Arachne-Zusätze). Netz vorher auf Plattenmitte schieben (bei Ursprung in der Mitte: „No object is fully inside“). Mit Reinigungsturm passt 200 × 200 nicht (Orca-Code -101).
+  Wechselhöhen ohne Original-Farbliste aus dem Höhen-Histogramm wählen und simulieren (Skript im privaten Lager `albatros-hueforge/albatros_schichten.py`).
+
 ## Faustregeln Einstellungen
 - Deko/Figur: 0.16–0.20, Infill 10–15 %, Baumstützen bei Überhängen.
 - Funktionsteil/Halter: 0.20, Infill 25–40 %, `--waende 4`.
