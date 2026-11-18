@@ -1,5 +1,14 @@
 # Übergabe druckwerk
 
+## STAND 18.11.2026, 10:00 Uhr – App-Umbau auf Projekte (hier einsteigen)
+- **App neu geordnet** (Toms Wunsch: intuitiver): vier Reiter Projekte · Neu · Drucker · Wissen; Projekte fassen Teile zusammen; „Alles für den USB-Stick laden“ (ZIP mit Ordner,
+  nummerierten Dateien, LIESMICH.txt). Details in CLAUDE.md → „App“. Geprüft mit Playwright 390×844 (25 Ansichten, ZIP entpackt und getestet), **nicht auf echtem iPad/iPhone**.
+- **Dateien umbenannt** (Ordner unverändert): Projekt `schecter370` „Schecter 370 mm“ = 1 Wirbel, 2 Saitenfach-Deckel, 3 Hals, 4 Korpus (`Schecter_370_Korpus.gcode` usw.);
+  `schecter160` = Probedruck einfarbig, Wirbel, Gitarre, Wirbel aus der App; `schecter200` (erster Stand); `kalibrier` = Kalibrier-Set 1–5. Neue Teile immer mit `--gruppe … --datei …` slicen.
+- Offen: Tom probiert am Gerät, ob der Drucker Unterordner auf dem Stick zeigt; Rückmeldung zur neuen App; alles Weitere wie im Block darunter (nichts gedruckt).
+- Tom: Drucker kam 17.11.; Filament bei filamentor.io bestellt (Kopf 2 „Bordeaux“); GitHub-Token am iPad eingerichtet (ein Slice aus der App lief: `gitarre160_wirbel_2`).
+- Zahnrad-Vorhaben: ca. Ø 10 mm, 20 Zähne, Dauereinsatz in einer Maschine – Tom misst noch (Außen-Ø, Bohrung, Breite, Gegenrad, Achsabstand); Empfehlung PA12 mit 0,25-mm-Düse oder Kaufteil.
+
 ## STAND 17.11.2026, 12:45 Uhr – hier einsteigen (neuer Chat: „druckwerk: Weiterarbeiten“)
 - **Drucker:** nur Flashforge Creator 5 Pro (`c5pro`). Am echten Gerät ist weiterhin **nichts bestätigt**, auch von der Gitarre ist nichts gedruckt.
 - **Laufendes Hauptvorhaben: Miniatur von Toms E-Gitarre** (T-Form, 24 Bünde, weinrot gewolkte Decke, graue Zarge). Tom: „Details sind absolute Priorität“, Druckzeit egal,

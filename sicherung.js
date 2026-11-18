@@ -113,7 +113,7 @@ export async function wiederherstellen(datei, ctx){
         } else localStorage.setItem(k, v);
       }
       for (const x of DBS) if (Array.isArray(idb[x.name]) && idb[x.name].length) await schreiben(x, auspacken(idb[x.name]));
-      d.remove(); if (C.neuLaden) C.neuLaden(); C.toast("Wiederhergestellt"); C.go("start");
+      d.remove(); if (C.neuLaden) C.neuLaden(); C.toast("Wiederhergestellt"); C.go("projekte");
     } catch (e) { console.error(e); C.toast(/Quota/i.test(String(e && e.name)) ? "Speicher voll – nicht alles wiederhergestellt" : "Wiederherstellen fehlgeschlagen"); }
   };
 }

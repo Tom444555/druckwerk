@@ -11,7 +11,7 @@
  "drucker_name": "Flashforge Creator 5 Pro",
  "datum": "2026-11-17",
  "ordner": "2026-11-17_gitarre370_korpus_c5pro",
- "gcode": "gitarre370_korpus_c5pro.gcode",
+ "gcode": "Schecter_370_Korpus.gcode",
  "zeit": "15h 19m 29s",
  "gramm": "62.89, 7.99, 16.02, 1.27",
  "meter": "21.09 m, 2.68 m, 5.37 m, 0.43 m",
@@ -86,5 +86,10 @@
  ],
  "vorschau": "vorschau.png",
  "bild_im_gcode": true,
- "projekt": "gitarre370_korpus_c5pro.3mf"
+ "projekt": "Schecter_370_Korpus.3mf",
+ "gruppe": "schecter370",
+ "gruppe_titel": "Schecter 370 mm",
+ "nr": 4,
+ "titel": "Korpus",
+ "datei": "Schecter_370_Korpus"
 }

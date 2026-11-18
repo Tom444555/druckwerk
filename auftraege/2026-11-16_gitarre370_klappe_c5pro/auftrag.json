@@ -8,7 +8,7 @@
  "drucker_name": "Flashforge Creator 5 Pro",
  "datum": "2026-11-16",
  "ordner": "2026-11-16_gitarre370_klappe_c5pro",
- "gcode": "gitarre370_klappe_c5pro.gcode",
+ "gcode": "Schecter_370_Deckel.gcode",
  "zeit": "5m 30s",
  "gramm": "0.00, 0.00, 0.29",
  "meter": "0.00 m, 0.00 m, 0.10 m",
@@ -54,5 +54,10 @@
  ],
  "vorschau": "vorschau.png",
  "bild_im_gcode": true,
- "projekt": "gitarre370_klappe_c5pro.3mf"
+ "projekt": "Schecter_370_Deckel.3mf",
+ "gruppe": "schecter370",
+ "gruppe_titel": "Schecter 370 mm",
+ "nr": 2,
+ "titel": "Saitenfach-Deckel",
+ "datei": "Schecter_370_Deckel"
 }

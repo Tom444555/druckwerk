@@ -619,7 +619,7 @@ async function warten(id, sag){
     await pause(8000);
     try { const r = await gh(`/contents/status/${id}.json`, {roh: true}); if (r.ok) st = await r.json(); } catch (e) {}
   }
-  if (!st) throw new Error("Keine Antwort vom Slicer – später unter Aufträge nachsehen.");
+  if (!st) throw new Error("Keine Antwort vom Slicer – später unter „Projekte“ nachsehen.");
   ls.set(OFFEN, null);
   if (!st.ok) throw new Error("Slicen fehlgeschlagen: " + String(st.fehler || "").split("\n").filter(Boolean).pop());
   for (let i = 0; i < 40; i++) {
@@ -628,7 +628,7 @@ async function warten(id, sag){
       if (l.some(a => a.ordner === st.ordner)) { C.fertig(st.ordner, l); return; } } catch (e) {}
     await pause(6000);
   }
-  throw new Error("Fertig gesliced – erscheint gleich unter Aufträge → „Weitere Aufträge von Claude“.");
+  throw new Error("Fertig gesliced – erscheint gleich unter „Projekte“.");
 }
 // beim App-Start: läuft noch ein Auftrag von vorhin?
 export async function offenePruefen(ctx){

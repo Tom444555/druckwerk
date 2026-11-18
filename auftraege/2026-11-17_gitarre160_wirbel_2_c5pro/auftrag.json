@@ -8,7 +8,7 @@
  "drucker_name": "Flashforge Creator 5 Pro",
  "datum": "2026-11-17",
  "ordner": "2026-11-17_gitarre160_wirbel_2_c5pro",
- "gcode": "gitarre160_wirbel_2_c5pro.gcode",
+ "gcode": "Schecter_160_Wirbel_App.gcode",
  "zeit": "7m 54s",
  "gramm": "0.00, 0.00, 0.68",
  "meter": "0.00 m, 0.00 m, 0.23 m",
@@ -54,5 +54,10 @@
  ],
  "vorschau": "vorschau.png",
  "bild_im_gcode": true,
- "projekt": "gitarre160_wirbel_2_c5pro.3mf"
+ "projekt": "Schecter_160_Wirbel_App.3mf",
+ "gruppe": "schecter160",
+ "gruppe_titel": "Schecter 160 mm",
+ "nr": 4,
+ "titel": "Wirbel (in der App neu gerechnet)",
+ "datei": "Schecter_160_Wirbel_App"
 }

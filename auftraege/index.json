@@ -12,7 +12,7 @@
   "drucker_name": "Flashforge Creator 5 Pro",
   "datum": "2026-11-17",
   "ordner": "2026-11-17_gitarre370_korpus_c5pro",
-  "gcode": "gitarre370_korpus_c5pro.gcode",
+  "gcode": "Schecter_370_Korpus.gcode",
   "zeit": "15h 19m 29s",
   "gramm": "62.89, 7.99, 16.02, 1.27",
   "meter": "21.09 m, 2.68 m, 5.37 m, 0.43 m",
@@ -87,7 +87,12 @@
   ],
   "vorschau": "vorschau.png",
   "bild_im_gcode": true,
-  "projekt": "gitarre370_korpus_c5pro.3mf"
+  "projekt": "Schecter_370_Korpus.3mf",
+  "gruppe": "schecter370",
+  "gruppe_titel": "Schecter 370 mm",
+  "nr": 4,
+  "titel": "Korpus",
+  "datei": "Schecter_370_Korpus"
  },
  {
   "kopfwechsel": 0,
@@ -99,7 +104,7 @@
   "drucker_name": "Flashforge Creator 5 Pro",
   "datum": "2026-11-17",
   "ordner": "2026-11-17_gitarre160_wirbel_c5pro",
-  "gcode": "gitarre160_wirbel_c5pro.gcode",
+  "gcode": "Schecter_160_Wirbel.gcode",
   "zeit": "24m 43s",
   "gramm": "0.00, 0.00, 0.59",
   "meter": "0.00 m, 0.00 m, 0.20 m",
@@ -145,7 +150,12 @@
   ],
   "vorschau": "vorschau.png",
   "bild_im_gcode": true,
-  "projekt": "gitarre160_wirbel_c5pro.3mf"
+  "projekt": "Schecter_160_Wirbel.3mf",
+  "gruppe": "schecter160",
+  "gruppe_titel": "Schecter 160 mm",
+  "nr": 2,
+  "titel": "Wirbel",
+  "datei": "Schecter_160_Wirbel"
  },
  {
   "kopfwechsel": 0,
@@ -157,7 +167,7 @@
   "drucker_name": "Flashforge Creator 5 Pro",
   "datum": "2026-11-17",
   "ordner": "2026-11-17_gitarre160_wirbel_2_c5pro",
-  "gcode": "gitarre160_wirbel_2_c5pro.gcode",
+  "gcode": "Schecter_160_Wirbel_App.gcode",
   "zeit": "7m 54s",
   "gramm": "0.00, 0.00, 0.68",
   "meter": "0.00 m, 0.00 m, 0.23 m",
@@ -203,7 +213,12 @@
   ],
   "vorschau": "vorschau.png",
   "bild_im_gcode": true,
-  "projekt": "gitarre160_wirbel_2_c5pro.3mf"
+  "projekt": "Schecter_160_Wirbel_App.3mf",
+  "gruppe": "schecter160",
+  "gruppe_titel": "Schecter 160 mm",
+  "nr": 4,
+  "titel": "Wirbel (in der App neu gerechnet)",
+  "datei": "Schecter_160_Wirbel_App"
  },
  {
   "kopfwechsel": 0,
@@ -215,7 +230,7 @@
   "drucker_name": "Flashforge Creator 5 Pro",
   "datum": "2026-11-17",
   "ordner": "2026-11-17_gitarre160_einfarbig_c5pro",
-  "gcode": "gitarre160_einfarbig_c5pro.gcode",
+  "gcode": "Schecter_160_Probe_einfarbig.gcode",
   "zeit": "51m 2s",
   "gramm": "15.35",
   "meter": "5.15 m",
@@ -251,7 +266,12 @@
   ],
   "vorschau": "vorschau.png",
   "bild_im_gcode": true,
-  "projekt": "gitarre160_einfarbig_c5pro.3mf"
+  "projekt": "Schecter_160_Probe_einfarbig.3mf",
+  "gruppe": "schecter160",
+  "gruppe_titel": "Schecter 160 mm",
+  "nr": 1,
+  "titel": "Probedruck einfarbig (0,4-mm-Düse)",
+  "datei": "Schecter_160_Probe_einfarbig"
  },
  {
   "kopfwechsel": 200,
@@ -266,7 +286,7 @@
   "drucker_name": "Flashforge Creator 5 Pro",
   "datum": "2026-11-17",
   "ordner": "2026-11-17_gitarre160_c5pro",
-  "gcode": "gitarre160_c5pro.gcode",
+  "gcode": "Schecter_160_Gitarre.gcode",
   "zeit": "5h 17m 4s",
   "gramm": "13.21, 3.82, 6.44, 0.97",
   "meter": "4.43 m, 1.28 m, 2.16 m, 0.32 m",
@@ -341,7 +361,12 @@
   ],
   "vorschau": "vorschau.png",
   "bild_im_gcode": true,
-  "projekt": "gitarre160_c5pro.3mf"
+  "projekt": "Schecter_160_Gitarre.3mf",
+  "gruppe": "schecter160",
+  "gruppe_titel": "Schecter 160 mm",
+  "nr": 3,
+  "titel": "Gitarre",
+  "datei": "Schecter_160_Gitarre"
  },
  {
   "kopfwechsel": 231,
@@ -356,7 +381,7 @@
   "drucker_name": "Flashforge Creator 5 Pro",
   "datum": "2026-11-16",
   "ordner": "2026-11-16_gitarre_rundum_c5pro",
-  "gcode": "gitarre_rundum_c5pro.gcode",
+  "gcode": "Schecter_200_Gitarre.gcode",
   "zeit": "6h 25m 44s",
   "gramm": "20.24, 5.06, 7.88, 1.73",
   "meter": "6.78 m, 1.70 m, 2.64 m, 0.58 m",
@@ -439,7 +464,12 @@
   ],
   "vorschau": "vorschau.png",
   "bild_im_gcode": true,
-  "projekt": "gitarre_rundum_c5pro.3mf"
+  "projekt": "Schecter_200_Gitarre.3mf",
+  "gruppe": "schecter200",
+  "gruppe_titel": "Schecter 200 mm (erster Stand)",
+  "nr": 1,
+  "titel": "Gitarre",
+  "datei": "Schecter_200_Gitarre"
  },
  {
   "kopfwechsel": 0,
@@ -451,7 +481,7 @@
   "drucker_name": "Flashforge Creator 5 Pro",
   "datum": "2026-11-16",
   "ordner": "2026-11-16_gitarre370_wirbel_c5pro",
-  "gcode": "gitarre370_wirbel_c5pro.gcode",
+  "gcode": "Schecter_370_Wirbel.gcode",
   "zeit": "47m 4s",
   "gramm": "0.00, 0.00, 1.56",
   "meter": "0.00 m, 0.00 m, 0.52 m",
@@ -497,7 +527,12 @@
   ],
   "vorschau": "vorschau.png",
   "bild_im_gcode": true,
-  "projekt": "gitarre370_wirbel_c5pro.3mf"
+  "projekt": "Schecter_370_Wirbel.3mf",
+  "gruppe": "schecter370",
+  "gruppe_titel": "Schecter 370 mm",
+  "nr": 1,
+  "titel": "Wirbel",
+  "datei": "Schecter_370_Wirbel"
  },
  {
   "kopfwechsel": 0,
@@ -509,7 +544,7 @@
   "drucker_name": "Flashforge Creator 5 Pro",
   "datum": "2026-11-16",
   "ordner": "2026-11-16_gitarre370_klappe_c5pro",
-  "gcode": "gitarre370_klappe_c5pro.gcode",
+  "gcode": "Schecter_370_Deckel.gcode",
   "zeit": "5m 30s",
   "gramm": "0.00, 0.00, 0.29",
   "meter": "0.00 m, 0.00 m, 0.10 m",
@@ -555,7 +590,12 @@
   ],
   "vorschau": "vorschau.png",
   "bild_im_gcode": true,
-  "projekt": "gitarre370_klappe_c5pro.3mf"
+  "projekt": "Schecter_370_Deckel.3mf",
+  "gruppe": "schecter370",
+  "gruppe_titel": "Schecter 370 mm",
+  "nr": 2,
+  "titel": "Saitenfach-Deckel",
+  "datei": "Schecter_370_Deckel"
  },
  {
   "kopfwechsel": 446,
@@ -570,7 +610,7 @@
   "drucker_name": "Flashforge Creator 5 Pro",
   "datum": "2026-11-16",
   "ordner": "2026-11-16_gitarre370_hals_c5pro",
-  "gcode": "gitarre370_hals_c5pro.gcode",
+  "gcode": "Schecter_370_Hals.gcode",
   "zeit": "10h 24m 14s",
   "gramm": "25.87, 10.04, 17.73, 0.73",
   "meter": "8.67 m, 3.37 m, 5.95 m, 0.25 m",
@@ -645,7 +685,12 @@
   ],
   "vorschau": "vorschau.png",
   "bild_im_gcode": true,
-  "projekt": "gitarre370_hals_c5pro.3mf"
+  "projekt": "Schecter_370_Hals.3mf",
+  "gruppe": "schecter370",
+  "gruppe_titel": "Schecter 370 mm",
+  "nr": 3,
+  "titel": "Hals",
+  "datei": "Schecter_370_Hals"
  },
  {
   "name": "vox_plektrumhalter",
@@ -887,7 +932,7 @@
   "drucker_name": "Flashforge Creator 5 Pro",
   "datum": "2026-11-14",
   "ordner": "2026-11-14_kalibrier_5_bruecke_c5pro",
-  "gcode": "kalibrier_5_bruecke_c5pro.gcode",
+  "gcode": "Kalibrier_5_Bruecke.gcode",
   "zeit": "49m 58s",
   "gramm": "29.75",
   "meter": "9.98 m",
@@ -922,8 +967,13 @@
    }
   ],
   "vorschau": "vorschau.png",
-  "projekt": "kalibrier_5_bruecke_c5pro.3mf",
-  "bild_im_gcode": true
+  "projekt": "Kalibrier_5_Bruecke.3mf",
+  "bild_im_gcode": true,
+  "gruppe": "kalibrier",
+  "gruppe_titel": "Kalibrier-Set",
+  "nr": 5,
+  "titel": "Brücken und Überhänge",
+  "datei": "Kalibrier_5_Bruecke"
  },
  {
   "name": "kalibrier_4_passung",
@@ -931,7 +981,7 @@
   "drucker_name": "Flashforge Creator 5 Pro",
   "datum": "2026-11-14",
   "ordner": "2026-11-14_kalibrier_4_passung_c5pro",
-  "gcode": "kalibrier_4_passung_c5pro.gcode",
+  "gcode": "Kalibrier_4_Passung.gcode",
   "zeit": "18m 13s",
   "gramm": "7.26",
   "meter": "2.43 m",
@@ -966,8 +1016,13 @@
    }
   ],
   "vorschau": "vorschau.png",
-  "projekt": "kalibrier_4_passung_c5pro.3mf",
-  "bild_im_gcode": true
+  "projekt": "Kalibrier_4_Passung.3mf",
+  "bild_im_gcode": true,
+  "gruppe": "kalibrier",
+  "gruppe_titel": "Kalibrier-Set",
+  "nr": 4,
+  "titel": "Passung",
+  "datei": "Kalibrier_4_Passung"
  },
  {
   "name": "kalibrier_3_versatz",
@@ -975,7 +1030,7 @@
   "drucker_name": "Flashforge Creator 5 Pro",
   "datum": "2026-11-14",
   "ordner": "2026-11-14_kalibrier_3_versatz_c5pro",
-  "gcode": "kalibrier_3_versatz_c5pro.gcode",
+  "gcode": "Kalibrier_3_Versatz.gcode",
   "zeit": "23m 34s",
   "gramm": "14.95, 0.24, 0.19, 0.19",
   "meter": "5.01 m, 0.08 m, 0.06 m, 0.06 m",
@@ -1049,8 +1104,13 @@
    }
   ],
   "vorschau": "vorschau.png",
-  "projekt": "kalibrier_3_versatz_c5pro.3mf",
-  "bild_im_gcode": true
+  "projekt": "Kalibrier_3_Versatz.3mf",
+  "bild_im_gcode": true,
+  "gruppe": "kalibrier",
+  "gruppe_titel": "Kalibrier-Set",
+  "nr": 3,
+  "titel": "Versatz der Köpfe",
+  "datei": "Kalibrier_3_Versatz"
  },
  {
   "name": "kalibrier_2_winkel",
@@ -1058,7 +1118,7 @@
   "drucker_name": "Flashforge Creator 5 Pro",
   "datum": "2026-11-14",
   "ordner": "2026-11-14_kalibrier_2_winkel_c5pro",
-  "gcode": "kalibrier_2_winkel_c5pro.gcode",
+  "gcode": "Kalibrier_2_Winkel.gcode",
   "zeit": "12m 27s",
   "gramm": "5.43",
   "meter": "1.82 m",
@@ -1093,8 +1153,13 @@
    }
   ],
   "vorschau": "vorschau.png",
-  "projekt": "kalibrier_2_winkel_c5pro.3mf",
-  "bild_im_gcode": true
+  "projekt": "Kalibrier_2_Winkel.3mf",
+  "bild_im_gcode": true,
+  "gruppe": "kalibrier",
+  "gruppe_titel": "Kalibrier-Set",
+  "nr": 2,
+  "titel": "Winkel",
+  "datei": "Kalibrier_2_Winkel"
  },
  {
   "name": "kalibrier_1_haftung",
@@ -1102,7 +1167,7 @@
   "drucker_name": "Flashforge Creator 5 Pro",
   "datum": "2026-11-14",
   "ordner": "2026-11-14_kalibrier_1_haftung_c5pro",
-  "gcode": "kalibrier_1_haftung_c5pro.gcode",
+  "gcode": "Kalibrier_1_Haftung.gcode",
   "zeit": "3m 34s",
   "gramm": "1.42",
   "meter": "0.48 m",
@@ -1137,7 +1202,12 @@
    }
   ],
   "vorschau": "vorschau.png",
-  "projekt": "kalibrier_1_haftung_c5pro.3mf",
-  "bild_im_gcode": true
+  "projekt": "Kalibrier_1_Haftung.3mf",
+  "bild_im_gcode": true,
+  "gruppe": "kalibrier",
+  "gruppe_titel": "Kalibrier-Set",
+  "nr": 1,
+  "titel": "Haftung",
+  "datei": "Kalibrier_1_Haftung"
  }
 ]

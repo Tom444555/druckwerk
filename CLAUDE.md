@@ -43,13 +43,25 @@ Alte `_kobrax`-Aufträge laufen nicht auf dem Creator 5 Pro – bei Bedarf aus d
 
 ## App (index.html, GitHub Pages)
 - Live: https://tom444555.github.io/druckwerk/ – liest `drucker/*.json` und `auftraege/index.json`.
-- Tabs (seit 15.11.2026): **Start** (`start.js`: nächster Schritt, offene Drucke, Suche über alles, Schnellknöpfe, Gerät & Daten),
-  Aufträge (3D-Vorschau, Köpfe, .gcode-Download, „gedruckt“-Haken `druckwerk_gedruckt`, Filter/Sortierung/Suche), Neu (Frei/Geführt; „So geht's“ = frühere
-  Workflow-Seite), Bibliothek, Material, Drucker, **Workflow** (Seite „Von der Idee zum Modell“, seit 15.11. wieder eigener Reiter hinter Drucker – Tom fand sie unter „So geht's“ nicht). iOS-Stil, hell/dunkel. Prompts aus der App beginnen mit `druckwerk:`.
-- Jede Ansicht hat eine Adresse (`#start`, `#auftrag:<ordner>`, `#werkstatt:…`, `#kiweg:<schritt>`); Zurück/Vor funktionieren.
+- **Seit 18.11.2026 vier Reiter** (Tom fand sieben nicht intuitiv): **Projekte** (`projekte.js`: Startseite, eine Karte je Projekt, „Als Nächstes drucken“, Suche über alles) ·
+  **Neu** (eine Frage „Was willst du drucken?“, Wege als Auswahl, Feinheiten eingeklappt) · **Drucker** (Überblick mit „Meine Spulen“, Einrichten, Wartung, Hilfe, Tagebuch) ·
+  **Wissen** (`mehr.js`: Material, Von der Idee zum Modell, Bibliothek & Werkstatt, KI-Weg, Videos, Gerät & Daten). Interne Seiten-Kennungen (`material`, `workflow`, `bibliothek`,
+  `kiweg`) gibt es weiter; sie gehören zum Reiter Wissen und bekommen den Knopf „‹ Wissen“. `start.js` gibt es nicht mehr. Prompts aus der App beginnen mit `druckwerk:`.
+- **Projekt = mehrere Aufträge mit gleicher `gruppe`** in `auftrag.json` (Felder `gruppe`, `gruppe_titel`, `nr` = Druck-Reihenfolge, `titel` = Name des Teils, `datei` = Dateiname
+  ohne Endung). Beim Slicen angeben: `--gruppe schecter370 --gruppe-titel "Schecter 370 mm" --nr 4 --titel Korpus --datei Schecter_370_Korpus`. Fehlen die Angaben, übernimmt
+  `druck.py` sie vom Vorgänger (gleicher Ordner oder gleicher `--name` im Lager) – beim Neu-Slicen eines Teils bleiben Projekt und Dateiname also erhalten. Aufträge ohne Gruppe
+  sind ein Projekt für sich. **Jedes neue mehrteilige Vorhaben bekommt eine Gruppe und sprechende Dateinamen** (Tom will „Schecter Korpus“ statt „gitarre370_korpus_c5pro“).
+- Projektseite: Köpfe und Düse einmal oben, Teile in Reihenfolge mit Haken, **„Alles für den USB-Stick laden“** = ZIP ohne Kompression, im Browser gebaut (`projekte.js → zip`):
+  Ordner `<Projekt>/` mit `1_<datei>.gcode`, `2_…` und `LIESMICH.txt` (Köpfe, Reihenfolge, Zeiten). Zweiter Knopf: dieselben Teile als 3MF für Flash Studio am Mac.
+  Ob der Creator 5 Pro am Bildschirm Unterordner des Sticks anzeigt, ist **am Gerät unbestätigt** – die Nummern vorn sortieren auch ohne Ordner.
+- Alles aus dem Lager erscheint von selbst (kein „Speichern“ per Link mehr nötig); „ausblenden“ merkt sich das Gerät in `druckwerk_weg`, zurückholen unter Projekte ganz unten.
+  Der Link `#hinzu=<ordner>[,…]` geht weiter und öffnet das Projekt; neu: `#projekt:<gruppe>`. Alte Adressen `#start`/`#auftraege` führen zu `#projekte`.
+- Direkte Verbindung App ↔ Drucker: geprüft 18.11.2026, **nicht zuverlässig möglich** (Webseite darf nicht ins Heimnetz, keine offizielle Schnittstelle; Tom will nichts Wackeliges).
+  Kabellos nur über Flash Studio Desktop am Mac (3MF), sonst USB.
+- Jede Ansicht hat eine Adresse (`#projekte`, `#projekt:<gruppe>`, `#auftrag:<ordner>`, `#werkstatt:…`, `#kiweg:<schritt>`); Zurück/Vor funktionieren.
 - **Sicherung** (`sicherung.js`): alle `druckwerk_*`-Schlüssel + IndexedDB (eigene Modelle, Tagebuch-Fotos) als eine Datei; `druckwerk_gesichert` = Datum.
 - **Offline/PWA**: `manifest.webmanifest`, `symbol-*.png`, `sw.js` (immer zuerst Netz, Zwischenspeicher nur ohne Netz; .gcode/STL nie).
-  **Bei jeder Änderung an App-Dateien `CACHE` in `sw.js` hochzählen** (Stand `druckwerk-v11`) und neue Dateien dort eintragen.
+  **Bei jeder Änderung an App-Dateien `CACHE` in `sw.js` hochzählen** (Stand `druckwerk-v12`) und neue Dateien dort eintragen.
 - „Aus dem Lager hinzufügen“ heißt in der App jetzt „Weitere Aufträge von Claude“. Überall „Kopf 1–4“, nie „Spule“; Werkstatt-Slicen sendet `c5pro`.
 - Aufträge sind wie die Ideen im Looper **pro Gerät gespeichert** (localStorage `druckwerk_meine`): neue Besucher
   sehen eine leere Liste. Tom speichert einen Auftrag über den Link `https://tom444555.github.io/druckwerk/#hinzu=<ordner>`
@@ -109,7 +121,7 @@ Alte `_kobrax`-Aufträge laufen nicht auf dem Creator 5 Pro – bei Bedarf aus d
 - Tab **Drucker**: Überblick, Einrichten (`druckwerk_c5_ein`), Wartung (`druckwerk_c5_wartung`), Hilfe, Tagebuch (`druckwerk_tagebuch`, Fotos in IndexedDB `druckwerk_fotos`). Die frühere USB-Seite steht jetzt hier.
 - **„Von der Idee zum Modell“** (Reiter Workflow; auch über Neu und Start erreichbar): Weg (Knopf „Auftrag so beginnen“ öffnet den geführten Auftrag), Werkzeuge, Vorschläge (Auswahl `druckwerk_wunsch` → Prompt).
   Kommt ein Prompt „Bitte diese Vorschläge aus der App umsetzen“, sind die Titel aus `workflow.json → vorschlaege` gemeint.
-- Prüfskript-Muster: Playwright 390×844, alle drei Tabs und Unterseiten durchklicken, `scrollWidth` muss 390 bleiben.
+- Prüfskript-Muster: Playwright 390×844, alle vier Reiter und Unterseiten durchklicken, ZIP eines Projekts laden und prüfen, `scrollWidth` muss 390 bleiben.
 
 ## Qualität: technische Teile wie konstruiert (seit 15.11.2026) – Regeln in `werkzeug/QUALITAET.md`
 - **Pflicht-Schleife vor jedem Slicen eines neuen Teils:** bauen → `python3 werkzeug/pruefen.py <stl…>` (0 Fehler) → `python3 werkzeug/ansichten.py <stl…> --aus bild.png`

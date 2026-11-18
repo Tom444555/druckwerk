@@ -8,7 +8,7 @@
  "drucker_name": "Flashforge Creator 5 Pro",
  "datum": "2026-11-17",
  "ordner": "2026-11-17_gitarre160_einfarbig_c5pro",
- "gcode": "gitarre160_einfarbig_c5pro.gcode",
+ "gcode": "Schecter_160_Probe_einfarbig.gcode",
  "zeit": "51m 2s",
  "gramm": "15.35",
  "meter": "5.15 m",
@@ -44,5 +44,10 @@
  ],
  "vorschau": "vorschau.png",
  "bild_im_gcode": true,
- "projekt": "gitarre160_einfarbig_c5pro.3mf"
+ "projekt": "Schecter_160_Probe_einfarbig.3mf",
+ "gruppe": "schecter160",
+ "gruppe_titel": "Schecter 160 mm",
+ "nr": 1,
+ "titel": "Probedruck einfarbig (0,4-mm-Düse)",
+ "datei": "Schecter_160_Probe_einfarbig"
 }

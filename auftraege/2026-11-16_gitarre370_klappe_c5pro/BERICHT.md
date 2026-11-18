@@ -1,7 +1,7 @@
 # Druckauftrag: gitarre370_klappe
 
 **Drucker:** Flashforge Creator 5 Pro  
-**Datei für USB:** `gitarre370_klappe_c5pro.gcode`  
+**Datei für USB:** `Schecter_370_Deckel.gcode`  
 **Druckzeit (geschätzt):** 5m 30s  
 **Filament:** 0.00, 0.00, 0.29 g (0.00 m, 0.00 m, 0.10 m)  
 

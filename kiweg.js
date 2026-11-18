@@ -85,7 +85,7 @@ export async function ansicht(app, ctx, n){
   S.idee = {...STD, ...(S.idee || {})}; S.nach = S.nach || {}; S.bild = S.bild || {}; S.modell = S.modell || {}; S.fertig = S.fertig || {};
   n = Math.min(6, Math.max(1, parseInt(n, 10) || S.schritt || 1));
   S.schritt = n; S.aktiv = true; schreib();
-  const kopf = `<button class="back" id="kwZur">‹ Bibliothek</button><h1>Modell per KI</h1>
+  const kopf = `<button class="back" id="kwZur">‹ Wissen</button><h1>Modell per KI</h1>
     <div class="kwfort" role="list">${SCHRITTE.map(([t, k], i) => `<button role="listitem" data-kw="${i + 1}" class="${i + 1 === n ? "on" : S.fertig[i + 1] ? "ok" : ""}" aria-label="Schritt ${i + 1}: ${t}"${i + 1 === n ? ' aria-current="step"' : ""}>
       <span>${S.fertig[i + 1] && i + 1 !== n ? "✓" : i + 1}</span>${k}</button>`).join("")}</div>
     <h2>Schritt ${n} von 6 · ${SCHRITTE[n - 1][0]}</h2>`;
@@ -93,7 +93,7 @@ export async function ansicht(app, ctx, n){
     ${n < 6 ? `<button class="wb an" id="kwWeiter">Weiter: ${SCHRITTE[n][0]} ›</button>` : `<button class="wb an" id="kwFertig">Ablauf abschließen</button>`}</div>
     <p class="hint">Grundsätze aus dem Video „Eigene STL-Dateien mit KI erstellen“ (Bastlwastl) – <a href="${AUSWERTUNG}" style="color:var(--blue)">Auswertung lesen</a>.</p><div style="height:20px"></div>`;
   app.innerHTML = kopf + [, eins, zwei, drei, vier, fuenf, sechs][n]() + fuss;
-  app.querySelector("#kwZur").onclick = () => C.go("bibliothek");
+  app.querySelector("#kwZur").onclick = () => C.go("wissen");
   app.querySelectorAll("[data-kw]").forEach(b => b.onclick = () => C.go("kiweg:" + b.dataset.kw));
   const zb = app.querySelector("#kwZurueck"); if (zb) zb.onclick = () => C.go("kiweg:" + (n - 1));
   const wb = app.querySelector("#kwWeiter"); if (wb) wb.onclick = () => { S.fertig[n] = true; schreib(); C.go("kiweg:" + (n + 1)); };

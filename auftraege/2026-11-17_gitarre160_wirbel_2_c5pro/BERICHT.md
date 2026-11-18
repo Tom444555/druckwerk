@@ -1,7 +1,7 @@
 # Druckauftrag: gitarre160_wirbel_2
 
 **Drucker:** Flashforge Creator 5 Pro  
-**Datei für USB:** `gitarre160_wirbel_2_c5pro.gcode`  
+**Datei für USB:** `Schecter_160_Wirbel_App.gcode`  
 **Druckzeit (geschätzt):** 7m 54s  
 **Filament:** 0.00, 0.00, 0.68 g (0.00 m, 0.00 m, 0.23 m)  
 

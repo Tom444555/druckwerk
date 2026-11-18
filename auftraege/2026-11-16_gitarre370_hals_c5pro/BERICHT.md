@@ -1,7 +1,7 @@
 # Druckauftrag: gitarre370_hals
 
 **Drucker:** Flashforge Creator 5 Pro  
-**Datei für USB:** `gitarre370_hals_c5pro.gcode`  
+**Datei für USB:** `Schecter_370_Hals.gcode`  
 **Druckzeit (geschätzt):** 10h 24m 14s  
 **Filament:** 25.87, 10.04, 17.73, 0.73 g (8.67 m, 3.37 m, 5.95 m, 0.25 m)  
 

@@ -4,7 +4,7 @@
  "drucker_name": "Flashforge Creator 5 Pro",
  "datum": "2026-11-14",
  "ordner": "2026-11-14_kalibrier_3_versatz_c5pro",
- "gcode": "kalibrier_3_versatz_c5pro.gcode",
+ "gcode": "Kalibrier_3_Versatz.gcode",
  "zeit": "23m 34s",
  "gramm": "14.95, 0.24, 0.19, 0.19",
  "meter": "5.01 m, 0.08 m, 0.06 m, 0.06 m",
@@ -78,6 +78,11 @@
   }
  ],
  "vorschau": "vorschau.png",
- "projekt": "kalibrier_3_versatz_c5pro.3mf",
- "bild_im_gcode": true
+ "projekt": "Kalibrier_3_Versatz.3mf",
+ "bild_im_gcode": true,
+ "gruppe": "kalibrier",
+ "gruppe_titel": "Kalibrier-Set",
+ "nr": 3,
+ "titel": "Versatz der Köpfe",
+ "datei": "Kalibrier_3_Versatz"
 }

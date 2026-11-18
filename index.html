@@ -71,7 +71,7 @@ pre.prompt{white-space:pre-wrap;font:15px/1.4 ui-monospace,Menlo,monospace;margi
 nav{position:fixed;bottom:0;left:0;right:0;display:flex;justify-content:center;
   background:color-mix(in srgb,var(--card) 82%,transparent);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
   border-top:.5px solid var(--sep);padding:6px 0 calc(env(safe-area-inset-bottom) + 4px)}
-nav button{flex:1;max-width:120px;min-width:0;padding:0;border:0;background:none;color:var(--sub);font:500 10px -apple-system,sans-serif;
+nav button{flex:1;max-width:150px;min-width:0;padding:0;border:0;background:none;color:var(--sub);font:500 10px -apple-system,sans-serif;
   display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer}
 nav button svg{width:26px;height:26px}
 nav button.on{color:var(--blue)}
@@ -137,19 +137,25 @@ input.zahl{border:0;outline:none;color:var(--text);font:17px -apple-system,sans-
 .kwfort span{width:30px;height:30px;border-radius:50%;background:var(--fill);color:var(--text);font:600 14px/30px -apple-system,sans-serif;text-align:center}
 .kwfort .on{color:var(--blue)}.kwfort .on span{background:var(--blue);color:#fff}.kwfort .ok span{background:var(--green);color:#fff}
 .frage textarea{min-height:64px;padding:6px 0 0}.frage .chips{margin:8px 0 0}.frage .chip{background:var(--fill)}.frage .chip.on{background:var(--blue)}
+.pgitter{display:grid;grid-template-columns:1fr;gap:10px}
+@media (min-width:700px){.pgitter{grid-template-columns:1fr 1fr}}
+.pkarte{display:flex;gap:12px;align-items:stretch;padding:10px;cursor:pointer;margin:0}
+.pkarte img,.pleer{flex:none;width:96px;height:76px;object-fit:contain;border-radius:9px;background:var(--fill)}
+.ptext{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:space-between;gap:3px}
+.pfuss{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.pbild{display:block;width:100%;max-height:230px;object-fit:contain;border-radius:12px;background:var(--card);margin-bottom:12px}
+details.fein{margin-top:14px}details.fein>summary{cursor:pointer;color:var(--blue);font:500 16px -apple-system,sans-serif;padding:6px 2px;list-style:none}
+details.fein>summary::-webkit-details-marker{display:none}details.fein>summary::before{content:"›";display:inline-block;margin-right:8px;transition:transform .2s}details.fein[open]>summary::before{transform:rotate(90deg)}
 </style>
 </head>
 <body>
 <main id="app"></main>
 
 <nav aria-label="Bereiche">
-  <button data-tab="start" aria-label="Start"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3.5 11 12 4l8.5 7"/><path d="M5.5 9.5V20h13V9.5"/><path d="M10 20v-5.5h4V20"/></svg>Start</button>
-  <button data-tab="auftraege"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 7l8-4 8 4-8 4-8-4z"/><path d="M4 7v10l8 4 8-4V7"/><path d="M12 11v10"/></svg>Aufträge</button>
+  <button data-tab="projekte"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 7l8-4 8 4-8 4-8-4z"/><path d="M4 7v10l8 4 8-4V7"/><path d="M12 11v10"/></svg>Projekte</button>
   <button data-tab="neu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>Neu</button>
-  <button data-tab="bibliothek"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1.5"/></svg>Bibliothek</button>
-  <button data-tab="material"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="8"/><circle cx="11" cy="11" r="2.5"/><path d="M11 19h10"/></svg>Material</button>
   <button data-tab="drucker"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M4 8h16M9 13h6M12 8v5"/></svg>Drucker</button>
-  <button data-tab="workflow" aria-label="Von der Idee zum Modell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="5" cy="6" r="2.2"/><circle cx="19" cy="18" r="2.2"/><path d="M7.2 6H14a3.5 3.5 0 0 1 0 7h-4a3.5 3.5 0 0 0 0 7h6.8"/></svg>Workflow</button>
+  <button data-tab="wissen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 5.5C6.5 4 9.5 4 12 5.5c2.5-1.5 5.5-1.5 8 0V19c-2.5-1.5-5.5-1.5-8 0-2.500-1.5-5.5-1.5-8 0z"/><path d="M12 5.500V19"/></svg>Wissen</button>
 </nav>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
@@ -167,7 +173,13 @@ const SPEICHER = "druckwerk_meine";
 let _speicherNotfall = null;   // falls das Gerät keinen Speicher erlaubt
 const meineLaden = () => { try { return JSON.parse(localStorage.getItem(SPEICHER) || "[]"); } catch(e) { return _speicherNotfall || []; } };
 const meineSichern = l => { _speicherNotfall = l; try { localStorage.setItem(SPEICHER, JSON.stringify(l)); } catch(e) {} };
-let tab = "start";
+let tab = "projekte";
+// Ausgeblendete Aufträge (nur auf diesem Gerät). Alles andere aus dem Lager erscheint von selbst.
+const WEG = "druckwerk_weg";
+const verborgen = () => { try { return JSON.parse(localStorage.getItem(WEG) || "[]") || []; } catch(e) { return []; } };
+const verborgenSetzen = l => { try { localStorage.setItem(WEG, JSON.stringify([...new Set(l)])); } catch(e) {} };
+const gid = a => a.gruppe || a.ordner;
+const teilTitel = a => a.titel || schoen(a.name);
 // gedruckt-Markierung je Auftrag: {ordner: "JJJJ-MM-TT"} – nur auf diesem Gerät
 const GEDRUCKT = "druckwerk_gedruckt";
 const gedrucktListe = () => { try { return JSON.parse(localStorage.getItem(GEDRUCKT) || "{}") || {}; } catch(e) { return {}; } };
@@ -200,17 +212,18 @@ async function laden(){
     try { DRUCKER[k] = await (await fetch(`drucker/${k}.json`, {cache:"no-store"})).json(); } catch(e) {}
   }
   try { LAGER = await (await fetch("auftraege/index.json", {cache:"no-store"})).json(); } catch(e) { LAGER = []; }
-  AUFTRAEGE = meineLaden();
-  // aktuelle Daten aus dem Lager übernehmen (falls neu gesliced)
-  AUFTRAEGE = AUFTRAEGE.map(a => LAGER.find(x => x.ordner === a.ordner) || a);
-  // Link von Claude: …/#hinzu=<ordner>[,<ordner>]
+  // Alles aus dem Lager erscheint von selbst (kein „Speichern“ mehr nötig); dazu eigene Einträge, die es im Lager nicht mehr gibt.
+  const alt = meineLaden(), weg = verborgen();
+  AUFTRAEGE = [...LAGER.filter(a => !weg.includes(a.ordner)), ...alt.filter(a => !LAGER.some(x => x.ordner === a.ordner) && !weg.includes(a.ordner))];
+  AUFTRAEGE.sort((x,y) => (y.datum + y.ordner).localeCompare(x.datum + x.ordner));
+  // Link von Claude: …/#hinzu=<ordner>[,<ordner>] → öffnet das Projekt (und holt Ausgeblendetes zurück)
   const m = location.hash.match(/hinzu=([^&]+)/);
   if (m) {
     const neu = decodeURIComponent(m[1]).split(",").map(o => LAGER.find(x => x.ordner === o)).filter(Boolean);
     hinzufuegen(neu);
-    if (neu.length === 1) tab = "auftrag:" + neu[0].ordner; else if (neu.length) tab = "auftraege";
+    if (neu.length) tab = new Set(neu.map(gid)).size === 1 && (neu.length > 1 || neu[0].gruppe) ? "projekt:" + gid(neu[0]) : neu.length === 1 ? "auftrag:" + neu[0].ordner : "projekte";
     history.replaceState(null, "", location.pathname + "#" + tab);
-    toast(neu.length ? (neu.length === 1 ? "Auftrag gespeichert" : neu.length + " Aufträge gespeichert") : "Auftrag nicht gefunden – evtl. 1 Min. warten");
+    if (!neu.length) toast("Noch nicht gefunden – evtl. 1 Min. warten und neu laden", 4000);
   }
   else { const h = decodeURIComponent(location.hash.slice(1)); if (h) tab = h; }
   meineSichern(AUFTRAEGE);
@@ -219,6 +232,7 @@ async function laden(){
   try { if (localStorage.getItem("druckwerk_ki")) (await import("./ki.js")).offenePruefen(wctx()); } catch(e) {}
 }
 function hinzufuegen(liste){
+  verborgenSetzen(verborgen().filter(o => !liste.some(a => a.ordner === o)));
   for (const a of liste) if (!AUFTRAEGE.some(x => x.ordner === a.ordner)) AUFTRAEGE.unshift(a);
   AUFTRAEGE.sort((x,y) => (y.datum + y.ordner).localeCompare(x.datum + x.ordner));
   meineSichern(AUFTRAEGE);
@@ -226,32 +240,46 @@ function hinzufuegen(liste){
 
 // Navigation: jeder Bildschirm hat eine Adresse (#auftraege, #auftrag:<ordner> …) → Zurück-Taste und Links funktionieren
 function zeige(ersetzen){
+  if (["start","auftraege",""].includes(tab)) tab = "projekte";   // alte Adressen
   if (location.hash.slice(1) !== tab) { try { history[ersetzen === true ? "replaceState" : "pushState"](null, "", "#" + tab); } catch(e) {} }
-  const haupt = {auftrag:"auftraege", werkstatt:"bibliothek", kiweg:"bibliothek"}[tab.split(":")[0]] || tab.split(":")[0];
+  const art = tab.split(":")[0];
+  const haupt = {projekt:"projekte", auftrag:"projekte", werkstatt:"wissen", bibliothek:"wissen", kiweg:"wissen", material:"wissen", workflow:"wissen"}[art] || art;
   document.querySelectorAll("nav button").forEach(b => { b.classList.toggle("on", b.dataset.tab === haupt);
     if (b.dataset.tab === haupt) b.setAttribute("aria-current", "page"); else b.removeAttribute("aria-current"); });
   document.querySelectorAll(".sheet").forEach(d => d.remove());
   window.scrollTo(0,0);
   if (tab === "bibliothek" || tab.startsWith("werkstatt:")) return werkstattTab();
-  if (tab === "start") startTab();
-  else if (tab === "auftraege") listeAuftraege();
-  else if (tab.startsWith("auftrag:")) detail(tab.slice(8));
+  if (tab === "projekte" || art === "projekt") projekteTab();
+  else if (art === "auftrag") detail(tab.slice(8));
   else if (tab === "neu") neu();
+  else if (tab === "wissen") mehrTab();
   else if (["material","drucker","workflow"].includes(tab)) wissenTab();
-  else if (tab === "kiweg" || tab.startsWith("kiweg:")) kiwegTab();
-  else { tab = "start"; startTab(); }
+  else if (art === "kiweg") kiwegTab();
+  else { tab = "projekte"; projekteTab(); }
 }
+// Unterseiten von „Wissen“ bekommen einen Zurück-Knopf (die Seiten zeichnen sich selbst neu, deshalb per Beobachter)
+new MutationObserver(() => { if (!["material","workflow","bibliothek"].includes(tab) || app.querySelector("#zurW")) return;
+  const h = app.querySelector("h1"); if (!h) return;
+  const b = document.createElement("button"); b.className = "back"; b.id = "zurW"; b.textContent = "‹ Wissen"; b.onclick = () => { tab = "wissen"; zeige(); };
+  h.before(b); }).observe(app, {childList: true});
 document.querySelectorAll("nav button").forEach(b => b.onclick = () => { tab = b.dataset.tab; zeige(); });
 
-/* ---------- Start (start.js): nächster Schritt, Suche, Gerät & Daten ---------- */
-const sctx = () => ({...kctx(), AUFTRAEGE, LAGER, gedruckt: gedrucktListe, schoen, deDatum, zeitKurz,
-  hinzufuegen: l => { hinzufuegen(l); }, neuLaden: () => { AUFTRAEGE = meineLaden(); },
-  liste: f => { LA.filter = f === "offen" ? "offen" : "alle"; LA.q = ""; tab = "auftraege"; zeige();
-    if (f === "claude") lagerZeigen(LAGER.filter(x => !AUFTRAEGE.some(a => a.ordner === x.ordner))); }});
-async function startTab(){
+/* ---------- Projekte (projekte.js) und Wissen (mehr.js) ---------- */
+const sctx = () => ({...kctx(), AUFTRAEGE, LAGER, gedruckt: gedrucktListe, gedrucktSetzen, schoen, deDatum, zeitKurz, minuten, summeGramm,
+  hinzufuegen: l => { hinzufuegen(l); }, neuLaden: () => { laden(); },
+  verborgen: () => verborgen().filter(o => LAGER.some(a => a.ordner === o)),
+  verbergen: l => { verborgenSetzen([...verborgen(), ...l]); AUFTRAEGE = AUFTRAEGE.filter(a => !l.includes(a.ordner)); meineSichern(AUFTRAEGE); },
+  verborgenZeigen: () => lagerZeigen(LAGER.filter(a => verborgen().includes(a.ordner)))});
+async function projekteTab(){
   const meinTab = tab;
-  try { const S = await import("./start.js"); if (tab !== meinTab) return; await S.start(app, sctx()); }
-  catch(e) { console.error(e); app.innerHTML = `<h1>Druckwerk</h1><div class="empty">Konnte nicht geladen werden – Internet prüfen.</div>`; }
+  try { const P = await import("./projekte.js"); if (tab !== meinTab) return;
+    if (tab === "projekte") await P.liste(app, sctx()); else P.projekt(app, sctx(), decodeURIComponent(tab.slice(8))); }
+  catch(e) { console.error(e); app.innerHTML = `<h1>Projekte</h1><div class="empty">Konnte nicht geladen werden – Internet prüfen.</div>`; }
+}
+async function mehrTab(){
+  const meinTab = tab;
+  try { const M = await import("./mehr.js"); if (tab !== meinTab) return; await M.seite(app, sctx()); }
+  catch(e) { console.error(e); app.innerHTML = `<h1>Wissen</h1><div class="empty">Konnte nicht geladen werden – Internet prüfen.</div>`; }
 }
 
 /* ---------- Bibliothek & Werkstatt (werkstatt.js) ---------- */
@@ -287,60 +315,17 @@ async function wissenTab(){
 
 /* ---------- Aufträge ---------- */
 const summeGramm = a => String(a.gramm).split(",").reduce((s,x) => s + (parseFloat(x)||0), 0);
-const LA = {filter:"alle", sort:"neu", q:""};   // Ansicht der Auftragsliste (nur für diese Sitzung)
 const druckerKurz = a => a.drucker === "kobrax" ? `<span class="badge b-kobrax" title="läuft nicht auf dem Creator 5 Pro">Kobra X</span>` : "";
-function listeAuftraege(){
-  const G = gedrucktListe(), offenN = AUFTRAEGE.filter(a => !G[a.ordner]).length;
-  const gesamt = AUFTRAEGE.reduce((s,a) => s + summeGramm(a), 0);
-  let liste = AUFTRAEGE.filter(a => LA.filter === "alle" || (LA.filter === "offen" ? !G[a.ordner] : G[a.ordner]))
-    .filter(a => !LA.q || (a.name + " " + a.ordner).toLowerCase().includes(LA.q));
-  const sorts = {neu: (x,y) => (y.datum + y.ordner).localeCompare(x.datum + x.ordner), name: (x,y) => schoen(x.name).localeCompare(schoen(y.name), "de"),
-    zeit: (x,y) => minuten(x.zeit) - minuten(y.zeit), gramm: (x,y) => summeGramm(x) - summeGramm(y)};
-  liste = [...liste].sort(sorts[LA.sort] || sorts.neu);
-  const segB = (k, opts) => `<div class="seg">${opts.map(([v,l]) => `<button data-la="${k}" data-v="${v}" class="${LA[k]===v?"on":""}">${l}</button>`).join("")}</div>`;
-  let h = `<h1>Aufträge</h1>
-  <div class="stats">
-    <div class="stat"><span class="small">Aufträge</span><b>${AUFTRAEGE.length}</b></div>
-    <div class="stat"><span class="small">Noch drucken</span><b>${offenN}</b></div>
-    <div class="stat"><span class="small">Filament</span><b>${gesamt.toFixed(0)} g</b></div>
-  </div>`;
-  if (!AUFTRAEGE.length) h += `<div class="empty">Noch keine Aufträge gespeichert.<br>Unter „Neu“ einen Auftrag zusammenstellen – Claude schickt dir danach einen Link, der ihn hier speichert.</div>
-    <button class="btn" id="zuNeu">Neuen Auftrag beginnen</button>`;
-  else {
-    h += `<div style="height:12px"></div>${segB("filter", [["alle","Alle"],["offen","Noch drucken"],["gedruckt","Gedruckt"]])}
-    <div class="card" style="margin-top:10px"><div class="row"><input type="text" id="laSuch" placeholder="Auftrag suchen" value="${esc(LA.q)}" style="flex:1" aria-label="Auftrag suchen">
-      <select id="laSort" aria-label="Sortieren">${[["neu","Neueste"],["name","Name"],["zeit","Druckzeit"],["gramm","Gewicht"]].map(([v,l]) => `<option value="${v}" ${LA.sort===v?"selected":""}>${l}</option>`).join("")}</select></div></div>
-    <h2>${liste.length} ${liste.length === 1 ? "Auftrag" : "Aufträge"}</h2>`;
-    h += liste.length ? `<div class="card">${liste.map(a => `
-      <div class="row chev" data-o="${esc(a.ordner)}" style="cursor:pointer" role="button" tabindex="0">
-        <div class="grow"><div><b>${esc(schoen(a.name))}</b> ${G[a.ordner] ? `<span class="pill gruen">gedruckt</span>` : ""}</div>
-          <div class="small">${deDatum(a.datum)} · ${zeitKurz(a.zeit)} · ${dez(summeGramm(a))} g</div></div>
-        <div class="dots">${a.slots.map(s => `<span class="dot" style="background:${farbe(s.farbe)}"></span>`).join("")}</div>
-        ${druckerKurz(a)}
-      </div>`).join("")}</div>` : `<div class="empty">Nichts gefunden – Filter oder Suche ändern.</div>`;
-  }
-  const offen = LAGER.filter(x => !AUFTRAEGE.some(a => a.ordner === x.ordner));
-  if (offen.length) h += `<div style="height:16px"></div><button class="btn grey" id="lager">Weitere Aufträge von Claude (${offen.length})</button>`;
-  h += `<div style="height:20px"></div>`;
-  app.innerHTML = h;
-  app.querySelectorAll("[data-o]").forEach(r => r.onclick = r.onkeydown = e => { if (e.type === "keydown" && e.key !== "Enter") return; tab = "auftrag:" + r.dataset.o; zeige(); });
-  app.querySelectorAll("[data-la]").forEach(b => b.onclick = () => { LA[b.dataset.la] = b.dataset.v; listeAuftraege(); });
-  const so = $("#laSort"); if (so) so.onchange = () => { LA.sort = so.value; listeAuftraege(); };
-  const su = $("#laSuch"); if (su) su.oninput = () => { LA.q = su.value.toLowerCase().trim();
-    app.querySelectorAll("[data-o]").forEach(r => { const a = AUFTRAEGE.find(x => x.ordner === r.dataset.o);
-      r.style.display = !LA.q || (a.name + " " + a.ordner).toLowerCase().includes(LA.q) ? "" : "none"; }); };
-  const zn = $("#zuNeu"); if (zn) zn.onclick = () => { tab = "neu"; zeige(); };
-  const l = $("#lager"); if (l) l.onclick = () => lagerZeigen(offen);
-}
-
 function detail(ordner){
   const a = AUFTRAEGE.find(x => x.ordner === ordner);
-  if (!a) { tab = "auftraege"; return zeige(); }
+  if (!a) { tab = "projekte"; return zeige(); }
+  const geschw = AUFTRAEGE.filter(x => gid(x) === gid(a)), imProjekt = geschw.length > 1 || !!a.gruppe;
+  const zurueck = imProjekt ? "projekt:" + gid(a) : "projekte";
   const pfad = `auftraege/${a.ordner}/`;
   const gr = String(a.gramm).split(",");
   app.innerHTML = `
-  <button class="back" id="zur">‹ Aufträge</button>
-  <h1>${esc(schoen(a.name))}</h1>
+  <button class="back" id="zur">‹ ${imProjekt ? esc(a.gruppe_titel || "Projekt") : "Projekte"}</button>
+  <h1>${esc(teilTitel(a))}</h1>
   <div id="viewer">${a.vorschau ? `<img id="vbild" src="${pfad}${esc(a.vorschau)}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;border-radius:12px">` : ""}
     <span class="small" id="vtext" style="position:absolute;left:12px;bottom:10px">3D-Modell wird geladen …</span></div>
   <div class="stats">
@@ -368,10 +353,11 @@ function detail(ordner){
     <div class="row"><div class="grow">Stützen</div><span class="val">${esc(a.stuetzen)}</span></div>
     <div class="row"><div class="grow">Brim</div><span class="val">${esc(a.brim)}</span></div>
     <div class="row"><div class="grow">Düse / Bett</div><span class="val">${esc(uniq(a.duese))} °C · ${esc(uniq(a.bett))} °C</span></div>
+    <div class="row"><div class="grow">Düsen-Größe</div><span class="val">${esc(String(a.duesen_mm ? a.duesen_mm.join(" / ") : a.duese_mm || "0.4").replace(/\./g, ","))} mm</span></div>
   </div>
   <h2>Datei für den USB-Stick</h2>
-  <a class="btn" href="${pfad}${encodeURIComponent(a.gcode)}" download="${esc(a.gcode)}">${esc(a.gcode)} laden</a>
-  <p class="hint">Datei auf einen FAT32-USB-Stick kopieren → am Drucker unter USB auswählen → Platte frei? → Start.</p>
+  <a class="btn" href="${pfad}${encodeURIComponent(a.gcode)}" download="${esc(a.gcode)}">Druckdatei laden</a>
+  <p class="hint"><b>${esc(a.gcode)}</b> – auf einen FAT32-USB-Stick kopieren → am Drucker unter USB auswählen → Platte frei? → Start.${geschw.length > 1 ? " Alle Teile auf einmal: im Projekt „Alles für den USB-Stick laden“." : ""}</p>
   <div style="height:10px"></div>
   <div id="gdBox"></div>
   <button class="btn grey" id="schichten">Schichten ansehen</button>
@@ -384,9 +370,9 @@ function detail(ordner){
   <button class="btn grey" id="teilen">Auf anderes Gerät holen (Link teilen)</button>
   <div id="tbAuf"></div>
   <h2>Verwalten</h2>
-  <button class="btn rot" id="loeschen">Auftrag löschen</button>
+  <button class="btn rot" id="loeschen">Teil ausblenden</button>
   <div style="height:20px"></div>`;
-  $("#zur").onclick = () => { tab = "auftraege"; zeige(); };
+  $("#zur").onclick = () => { tab = zurueck; zeige(); };
   $("#inWerk").onclick = () => { tab = "werkstatt:l:" + a.ordner; zeige(); };
   $("#schichten").onclick = async () => { try { (await import("./schichten.js")).zeigen(pfad + encodeURIComponent(a.gcode), a.slots.map(s => farbe(s.farbe)), sheet); } catch(e) { toast("Konnte nicht geladen werden"); } };
   const check = async () => { try { const el = $("#fcheck"); if (el) el.innerHTML = (await import("./wissen.js")).filamentCheck(a, kctx()); } catch(e) {} };
@@ -401,13 +387,13 @@ function detail(ordner){
   gd();
   $("#bericht").onclick = () => berichtZeigen(pfad, a);
   $("#teilen").onclick = async () => { const url = location.origin + location.pathname + "#hinzu=" + encodeURIComponent(a.ordner);
-    try { if (navigator.share) { await navigator.share({title: "Druckwerk: " + schoen(a.name), url}); return; } } catch(e) { if (e && e.name === "AbortError") return; }
+    try { if (navigator.share) { await navigator.share({title: "Druckwerk: " + teilTitel(a), url}); return; } } catch(e) { if (e && e.name === "AbortError") return; }
     try { await navigator.clipboard.writeText(url); toast("Link kopiert – auf dem anderen Gerät öffnen"); } catch(e) { sheet(`<h3>Link für das andere Gerät</h3><p>Markieren und kopieren:</p><div class="card"><pre class="prompt">${esc(url)}</pre></div>`); } };
   vorschau(pfad, a);
 }
 
 function danachFragen(a, check, gd){
-  const d = sheet(`<h3>Als gedruckt markiert</h3><p>${esc(schoen(a.name))} – was als Nächstes?</p>
+  const d = sheet(`<h3>Als gedruckt markiert</h3><p>${esc(teilTitel(a))} – was als Nächstes?</p>
     <button class="btn" id="dE">Ergebnis eintragen (Sterne, Foto)</button>
     <button class="btn grey" id="dB">Verbrauch vom Filamentlager abbuchen</button>
     <button class="btn grey" id="dZ">Später</button>`);
@@ -482,12 +468,13 @@ let WF = null;   // wissen/workflow.json – Wege und Fragen für den geführten
 const ANHANG = {technik:"Fotos mit Maßband hänge ich an.", kunst:"Fotos als Stilvorlage hänge ich an.",
   fertig:"STL/3MF hänge ich an, falls der Link nicht reicht.", foto:"Bild und KI-Datei (STL/GLB/3MF) hänge ich an.", scan:"Scan-Datei (OBJ/STL) und Fotos hänge ich an."};
 function neu(){
-  if (F.modus === "gefuehrt" && !WF) {
-    app.innerHTML = `<h1>Neuer Auftrag</h1><div class="empty">Wird geladen …</div>`;
+  if (!WF) {
+    app.innerHTML = `<h1>Neu</h1><div class="empty">Wird geladen …</div>`;
     fetch("wissen/workflow.json", {cache:"no-store"}).then(r => r.json()).then(w => { WF = w; if (tab === "neu") neu(); })
-      .catch(() => { F.modus = "frei"; toast("Fragen konnten nicht geladen werden"); if (tab === "neu") neu(); });
+      .catch(() => { WF = {wege: []}; F.modus = "frei"; if (tab === "neu") neu(); });
     return;
   }
+  if (F.modus === "gefuehrt" && !WF.wege.length) F.modus = "frei";
   const gef = F.modus === "gefuehrt";
   F.drucker = "c5pro";   // Tom druckt nur noch auf dem Creator 5 Pro (Kobra X nur, wenn ausdrücklich im Text genannt)
   const weg = gef ? (WF.wege.find(x => x.id === F.weg) || WF.wege[0]) : null;
@@ -523,12 +510,9 @@ function neu(){
     ["MyMiniFactory – Scan the World","https://www.myminifactory.com/scantheworld/"],["Thingiverse","https://www.thingiverse.com"]].map(([n,u]) =>
     `<a class="row chev" href="${u}" target="_blank" rel="noopener" style="color:inherit;text-decoration:none"><div class="grow">${n}</div></a>`).join("")}</div>`;
   app.innerHTML = `
-  <h1>Neuer Auftrag</h1>
-  ${seg("modus", [["frei","Frei"],["gefuehrt","Geführt"]])}
-  <div class="card" style="margin-top:10px"><div class="row chev" id="zuWf" style="cursor:pointer" role="button" tabindex="0"><div class="grow"><b>Von der Idee zum Modell</b>
-    <div class="small">Wege von der Idee zum Modell, Werkzeuge, Ausbau-Ideen</div></div></div></div>
+  <h1>Was willst du drucken?</h1>
+  <h2>Womit fängst du an?</h2><div class="chips"><button class="chip ${gef ? "" : "on"}" data-weg="">Einfach beschreiben</button>${WF.wege.map(x => `<button class="chip ${gef && x.id === weg.id ? "on" : ""}" data-weg="${x.id}">${esc(x.name)}</button>`).join("")}</div>
   ${gef ? `
-  <h2>Womit fängst du an?</h2><div class="chips">${WF.wege.map(x => `<button class="chip ${x.id === weg.id ? "on" : ""}" data-weg="${x.id}">${esc(x.name)}</button>`).join("")}</div>
   <p class="hint">${esc(weg.kurz)} Nur ausfüllen, was du weißt – leere Felder fragt Claude nach.</p>
   ${weg.id === "foto" ? `<div class="card"><div class="row oben"><div class="grow"><b>Direkt in der App erzeugen</b>
     <div class="small">Foto wählen, Dienst aussuchen (ca. 0,25–0,53 $ je Modell bei fal.ai) – das fertige Modell landet in „Meine Modelle“ und öffnet sich in der Werkstatt.</div></div></div>
@@ -537,11 +521,9 @@ function neu(){
   <p class="hint">Oder unten ausfüllen und Claude die fertige KI-Datei aufbereiten lassen (reparieren, Standfläche, Farben).</p>` : ""}
   <h2>${esc(weg.name)}</h2><div class="card">${fragen.map(frage).join("")}</div>
   ${weg.id === "fertig" ? modelleFinden : ""}` : `
-  <h2>Was soll gedruckt werden?</h2>
-  <div class="card"><textarea id="txt" placeholder="z. B. Wandhalter für 3 Schraubendreher, 2 Schrauben, Logo vorne">${esc(F.text)}</textarea>
+  <div class="card" style="margin-top:12px"><textarea id="txt" placeholder="z. B. Wandhalter für 3 Schraubendreher, 2 Schrauben, Logo vorne">${esc(F.text)}</textarea>
     <div class="row"><input type="text" id="lnk" placeholder="Link zu Modell (optional)" value="${esc(F.link)}"></div></div>
-  <p class="hint">Fertiges Modell gefunden? Link oben einfügen – Claude lädt nichts selbst herunter, schick die STL-Datei bei Bedarf mit.</p>
-  ${modelleFinden}`}
+  <p class="hint">Fertiges Modell gefunden? Link oben einfügen – Claude lädt nichts selbst herunter, schick die STL-Datei bei Bedarf mit.</p>`}
   <h2>${gef && farbFrage ? esc(farbFrage.label.replace(/\s*\(.*\)/, "")) + " &amp; Material" : "Farben &amp; Material"} (${F.slots.length}/4)</h2>
   <div class="card">${F.slots.map((s,i) => `
     <div class="row"><span class="dot" style="background:${farbe(s.farbe)};width:22px;height:22px"></span>
@@ -551,14 +533,17 @@ function neu(){
     ${F.slots.length < 4 ? `<div class="row"><button class="back" id="plus">＋ Farbe hinzufügen</button></div>` : ""}
   </div>
   ${draussen ? `<div class="warn">Für ${esc(A.ort)} besser ASA statt PLA wählen – PLA wird ab etwa 55 °C weich.</div>` : ""}
+  <a class="btn" id="oeffnen" target="_blank" style="margin-top:16px">An Claude schicken</a>
+  <p class="hint">Öffnet Claude mit deinem Auftrag. Du bekommst die fertigen Druckdateien – sie erscheinen danach von selbst unter „Projekte“.</p>
+  <details class="fein" id="fein" ${F._fein ? "open" : ""}><summary>Feinheiten: Zweck, Qualität, Stützen</summary>
   <h2>Zweck</h2>${seg("zweck", [["deko","Deko/Figur"],["funktion","Funktionsteil"],["stabil","Sehr stabil"]])}
   <h2>Qualität</h2>${seg("qualitaet", [["fein","Fein"],["standard","Standard"],["schnell","Schnell"]])}
   <h2>Stützen</h2>${seg("stuetzen", [["aus","Keine"],["auto","Automatisch"],["baum","Baum"]])}
   <h2>Auftrag für Claude</h2>
   <div class="card"><pre class="prompt" id="pr"></pre></div>
-  <p class="hint">„In Claude öffnen“ (oder kopieren und einfügen) – du bekommst die fertige .gcode-Datei und einen Link zurück, der den Auftrag unter „Aufträge“ speichert.</p>
-  <button class="btn" id="kop" style="margin-top:12px">Auftrag kopieren</button>
-  <a class="btn grey" id="oeffnen" target="_blank">In Claude öffnen</a>`;
+  <button class="btn grey" id="kop" style="margin-top:12px">Auftrag kopieren</button></details>
+  <div style="height:20px"></div>`;
+  $("#fein").ontoggle = e => { F._fein = e.target.open; };
   const prompt = () => {
     const sch = {kobrax:{fein:"0.12",standard:"0.20",schnell:"0.28"}, c5pro:{fein:"0.12",standard:"0.20",schnell:"0.24"}}[F.drucker][F.qualitaet];
     const z = {deko:"Deko – 15 % Füllung", funktion:"Funktionsteil – 30 % Füllung, 4 Wände", stabil:"sehr stabil – 50 % Füllung, 5 Wände"}[F.zweck];
@@ -578,11 +563,11 @@ function neu(){
   aktuell();
   const kiW = $("#kiWeg"); if (kiW) kiW.onclick = () => { tab = "kiweg:1"; zeige(); };
   const kiN = $("#kiNeu"); if (kiN) kiN.onclick = async () => { try { (await import("./ki.js")).oeffnen(wctx()); } catch(e) { toast("Konnte nicht geladen werden"); } };
-  $("#zuWf").onclick = $("#zuWf").onkeydown = e => { if (e.type === "keydown" && e.key !== "Enter") return; tab = "workflow"; zeige(); };
   app.querySelectorAll(".seg button").forEach(b => b.onclick = () => { F[b.dataset.k] = b.dataset.v; neu(); });
   const txt = $("#txt"); if (txt) txt.oninput = e => { F.text = e.target.value; aktuell(); };
   const lnk = $("#lnk"); if (lnk) lnk.oninput = e => { F.link = e.target.value; aktuell(); };
-  app.querySelectorAll("[data-weg]").forEach(b => b.onclick = () => { const w = WF.wege.find(x => x.id === b.dataset.weg);
+  app.querySelectorAll("[data-weg]").forEach(b => b.onclick = () => { if (!b.dataset.weg) { F.modus = "frei"; return neu(); }
+    const w = WF.wege.find(x => x.id === b.dataset.weg); F.modus = "gefuehrt";
     F.weg = w.id; if (w.zweck) F.zweck = w.zweck; neu(); });
   app.querySelectorAll("[data-q]").forEach(e => e.oninput = () => { A[e.dataset.q] = e.value; aktuell(); });
   app.querySelectorAll("[data-qw]").forEach(b => b.onclick = () => { A[b.dataset.qw] = A[b.dataset.qw] === b.dataset.v ? "" : b.dataset.v; neu(); });
@@ -605,31 +590,31 @@ function sheet(html){
   document.body.appendChild(d); return d;
 }
 function loeschenFragen(a){
-  const d = sheet(`<h3>„${esc(schoen(a.name))}“ löschen?</h3><p>${deDatum(a.datum)} · ${esc(a.drucker_name)}<br>Der Auftrag wird aus deiner Liste entfernt.</p>
-    <button class="btn rotvoll" id="jaL">Löschen</button><button class="btn grey" id="neinL">Abbrechen</button>`);
+  const d = sheet(`<h3>„${esc(teilTitel(a))}“ ausblenden?</h3><p>${deDatum(a.datum)} · ${esc(a.drucker_name)}<br>Das Teil verschwindet aus deiner Liste. Unter „Projekte“ ganz unten holst du es zurück.</p>
+    <button class="btn rotvoll" id="jaL">Ausblenden</button><button class="btn grey" id="neinL">Abbrechen</button>`);
   d.querySelector("#neinL").onclick = () => d.remove();
-  d.querySelector("#jaL").onclick = () => {
-    AUFTRAEGE = AUFTRAEGE.filter(x => x.ordner !== a.ordner); meineSichern(AUFTRAEGE);
-    d.remove(); tab = "auftraege"; zeige(); toast("Gelöscht");
+  d.querySelector("#jaL").onclick = () => { const z = AUFTRAEGE.some(x => x !== a && gid(x) === gid(a)) ? "projekt:" + gid(a) : "projekte";
+    sctx().verbergen([a.ordner]); AUFTRAEGE = AUFTRAEGE.filter(x => x.ordner !== a.ordner); meineSichern(AUFTRAEGE);
+    d.remove(); tab = z; zeige(); toast("Ausgeblendet");
   };
 }
 function lagerZeigen(offen){
-  const d = sheet(`<h3>Weitere Aufträge von Claude</h3><p>Aufträge, die Claude erstellt hat und die noch nicht in deiner Liste sind.</p>
+  const d = sheet(`<h3>Ausgeblendete Teile</h3><p>Antippen holt ein Teil zurück in deine Projekte.</p>
     <div class="card" style="max-height:50vh;overflow:auto">${offen.map(a => `
-      <div class="row" data-h="${esc(a.ordner)}" style="cursor:pointer" role="button" aria-label="${esc(schoen(a.name))} hinzufügen"><div class="grow"><b>${esc(schoen(a.name))}</b>
-        <div class="small">${deDatum(a.datum)} · ${a.drucker === "kobrax" ? "Kobra X · " : ""}${zeitKurz(a.zeit)}</div></div>
+      <div class="row" data-h="${esc(a.ordner)}" style="cursor:pointer" role="button" aria-label="${esc(teilTitel(a))} wieder zeigen"><div class="grow"><b>${esc(teilTitel(a))}</b>
+        <div class="small">${a.gruppe_titel ? esc(a.gruppe_titel) + " · " : ""}${deDatum(a.datum)} · ${zeitKurz(a.zeit)}</div></div>
         <span style="color:var(--blue);font-size:24px">＋</span></div>`).join("")}</div>
-    <div style="height:12px"></div>${offen.length > 1 ? `<button class="btn" id="alleL">Alle ${offen.length} hinzufügen</button>` : ""}<button class="btn grey" id="zuL">Fertig</button>`);
-  const aL = d.querySelector("#alleL"); if (aL) aL.onclick = () => { hinzufuegen(offen); d.remove(); zeige(); toast(offen.length + " Aufträge hinzugefügt"); };
+    <div style="height:12px"></div>${offen.length > 1 ? `<button class="btn" id="alleL">Alle ${offen.length} wieder zeigen</button>` : ""}<button class="btn grey" id="zuL">Fertig</button>`);
+  const aL = d.querySelector("#alleL"); if (aL) aL.onclick = () => { hinzufuegen(offen); d.remove(); zeige(); };
   d.querySelector("#zuL").onclick = () => { d.remove(); zeige(); };
   d.querySelectorAll("[data-h]").forEach(r => r.onclick = () => {
-    hinzufuegen([LAGER.find(x => x.ordner === r.dataset.h)]); r.remove(); toast("Hinzugefügt");
+    hinzufuegen([LAGER.find(x => x.ordner === r.dataset.h)]); r.remove(); toast("Wieder da");
     if (!d.querySelector("[data-h]")) { d.remove(); zeige(); } });
 }
 
 window.addEventListener("hashchange", () => { if (/hinzu=/.test(location.hash)) laden(); });
 window.addEventListener("popstate", () => { const h = decodeURIComponent(location.hash.slice(1));
-  if (/hinzu=/.test(h) || h === tab) return; tab = h || "start"; zeige(true); });
+  if (/hinzu=/.test(h) || h === tab) return; tab = h || "projekte"; zeige(true); });
 // Tastatur: Eingabefeld in die Mitte holen, damit es nicht verdeckt wird
 document.addEventListener("focusin", e => { if (e.target.matches("input[type=text],input:not([type]),textarea"))
   setTimeout(() => { try { e.target.scrollIntoView({block: "center", behavior: "smooth"}); } catch(x) {} }, 350); });

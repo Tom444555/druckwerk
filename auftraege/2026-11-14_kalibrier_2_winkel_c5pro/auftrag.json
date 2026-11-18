@@ -4,7 +4,7 @@
  "drucker_name": "Flashforge Creator 5 Pro",
  "datum": "2026-11-14",
  "ordner": "2026-11-14_kalibrier_2_winkel_c5pro",
- "gcode": "kalibrier_2_winkel_c5pro.gcode",
+ "gcode": "Kalibrier_2_Winkel.gcode",
  "zeit": "12m 27s",
  "gramm": "5.43",
  "meter": "1.82 m",
@@ -39,6 +39,11 @@
   }
  ],
  "vorschau": "vorschau.png",
- "projekt": "kalibrier_2_winkel_c5pro.3mf",
- "bild_im_gcode": true
+ "projekt": "Kalibrier_2_Winkel.3mf",
+ "bild_im_gcode": true,
+ "gruppe": "kalibrier",
+ "gruppe_titel": "Kalibrier-Set",
+ "nr": 2,
+ "titel": "Winkel",
+ "datei": "Kalibrier_2_Winkel"
 }

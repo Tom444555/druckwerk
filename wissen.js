@@ -24,6 +24,7 @@ const quellen = (q, stand) => `<h2>Quellen · Stand ${C.esc(stand)}</h2><div cla
 function binden(app, neu){
   $$("[data-u]", app).forEach(b => b.onclick = () => { const k = b.dataset.u, v = b.dataset.v;
     U[k] = (b.classList.contains("chip") && k === "ziel" && U[k] === v) ? "" : v; neu(); });
+  const sp = $("#drSpulen", app); if (sp) sp.onclick = () => { U.mat = "lager"; C.go("material"); };
 }
 
 export async function seite(app, ctx, welche){
@@ -253,7 +254,8 @@ function drucker(app){
   }
   if (U.dr === "ueberblick") {
     const k = C.DRUCKER.kobrax;
-    h += `<h2>Steckbrief</h2><div class="card">${c.steckbrief.map(([a, b]) => `<div class="row"><div class="grow">${C.esc(a)}</div><span class="val" style="max-width:62%">${C.esc(b)}</span></div>`).join("")}</div>
+    h += `<div class="card" style="margin-top:12px"><div class="row chev" id="drSpulen" style="cursor:pointer" role="button" tabindex="0"><div class="grow"><b>Meine Spulen</b><div class="small">Was du da hast und was in welchem Kopf sitzt</div></div></div></div>
+    <h2>Steckbrief</h2><div class="card">${c.steckbrief.map(([a, b]) => `<div class="row"><div class="grow">${C.esc(a)}</div><span class="val" style="max-width:62%">${C.esc(b)}</span></div>`).join("")}</div>
     <h2>Stärken</h2>${liste(c.staerken)}<h2>Grenzen</h2>${liste(c.grenzen)}
     <h2>Programme</h2>${liste(c.software)}<h2>Stand in druckwerk</h2>${liste(c.druckwerk)}
     <h2>Per USB drucken (iPhone / iPad)</h2><div class="card"><ol class="steps">${c.usb.map(x => `<li>${C.esc(x)}</li>`).join("")}</ol></div>
@@ -338,7 +340,7 @@ function workflow(app){
   const a = $("#vAuf"); if (a) a.href = "https://claude.ai/code/new?repo=Tom444555%2Fdruckwerk&q=" + encodeURIComponent(text());
 }
 
-/* ================= Für die Startansicht (start.js) ================= */
+/* ================= Für die Projekte-Seite (projekte.js) ================= */
 // Offener Stand: Einrichtung, fällige Wartung, fast leere Spulen
 export async function offen(){
   const d = await daten(), E = ls("druckwerk_c5_ein", {}), W = ls("druckwerk_c5_wartung", {}), L = spulen(), jetzt = Date.now();

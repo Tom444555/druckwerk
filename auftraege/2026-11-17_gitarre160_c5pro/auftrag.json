@@ -11,7 +11,7 @@
  "drucker_name": "Flashforge Creator 5 Pro",
  "datum": "2026-11-17",
  "ordner": "2026-11-17_gitarre160_c5pro",
- "gcode": "gitarre160_c5pro.gcode",
+ "gcode": "Schecter_160_Gitarre.gcode",
  "zeit": "5h 17m 4s",
  "gramm": "13.21, 3.82, 6.44, 0.97",
  "meter": "4.43 m, 1.28 m, 2.16 m, 0.32 m",
@@ -86,5 +86,10 @@
  ],
  "vorschau": "vorschau.png",
  "bild_im_gcode": true,
- "projekt": "gitarre160_c5pro.3mf"
+ "projekt": "Schecter_160_Gitarre.3mf",
+ "gruppe": "schecter160",
+ "gruppe_titel": "Schecter 160 mm",
+ "nr": 3,
+ "titel": "Gitarre",
+ "datei": "Schecter_160_Gitarre"
 }

@@ -395,7 +395,7 @@
   ]
  ],
  "usb": [
-  "Auftrag öffnen → „.gcode laden“ → in „Dateien“ sichern.",
+  "Projekt öffnen → „Alles für den USB-Stick laden“ → die ZIP in „Dateien“ antippen (es entsteht ein Ordner).",
   "USB-C-Stick (FAT32) anstecken, Datei in „Dateien“ auf den Stick bewegen.",
   "Stick in den Drucker → Dateien/USB → Datei wählen → Start."
  ],

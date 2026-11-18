@@ -1,7 +1,7 @@
 # Druckauftrag: kalibrier_2_winkel
 
 **Drucker:** Flashforge Creator 5 Pro  
-**Datei für USB:** `kalibrier_2_winkel_c5pro.gcode`  
+**Datei für USB:** `Kalibrier_2_Winkel.gcode`  
 **Druckzeit (geschätzt):** 12m 27s  
 **Filament:** 5.43 g (1.82 m)  
 

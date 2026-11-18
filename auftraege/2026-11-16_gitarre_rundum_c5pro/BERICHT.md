@@ -1,7 +1,7 @@
 # Druckauftrag: gitarre_rundum
 
 **Drucker:** Flashforge Creator 5 Pro  
-**Datei für USB:** `gitarre_rundum_c5pro.gcode`  
+**Datei für USB:** `Schecter_200_Gitarre.gcode`  
 **Druckzeit (geschätzt):** 6h 25m 44s  
 **Filament:** 20.24, 5.06, 7.88, 1.73 g (6.78 m, 1.70 m, 2.64 m, 0.58 m)  
 

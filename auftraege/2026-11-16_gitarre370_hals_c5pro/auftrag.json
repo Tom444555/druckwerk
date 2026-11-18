@@ -11,7 +11,7 @@
  "drucker_name": "Flashforge Creator 5 Pro",
  "datum": "2026-11-16",
  "ordner": "2026-11-16_gitarre370_hals_c5pro",
- "gcode": "gitarre370_hals_c5pro.gcode",
+ "gcode": "Schecter_370_Hals.gcode",
  "zeit": "10h 24m 14s",
  "gramm": "25.87, 10.04, 17.73, 0.73",
  "meter": "8.67 m, 3.37 m, 5.95 m, 0.25 m",
@@ -86,5 +86,10 @@
  ],
  "vorschau": "vorschau.png",
  "bild_im_gcode": true,
- "projekt": "gitarre370_hals_c5pro.3mf"
+ "projekt": "Schecter_370_Hals.3mf",
+ "gruppe": "schecter370",
+ "gruppe_titel": "Schecter 370 mm",
+ "nr": 3,
+ "titel": "Hals",
+ "datei": "Schecter_370_Hals"
 }

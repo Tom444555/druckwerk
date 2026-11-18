@@ -11,7 +11,7 @@
  "drucker_name": "Flashforge Creator 5 Pro",
  "datum": "2026-11-16",
  "ordner": "2026-11-16_gitarre_rundum_c5pro",
- "gcode": "gitarre_rundum_c5pro.gcode",
+ "gcode": "Schecter_200_Gitarre.gcode",
  "zeit": "6h 25m 44s",
  "gramm": "20.24, 5.06, 7.88, 1.73",
  "meter": "6.78 m, 1.70 m, 2.64 m, 0.58 m",
@@ -94,5 +94,10 @@
  ],
  "vorschau": "vorschau.png",
  "bild_im_gcode": true,
- "projekt": "gitarre_rundum_c5pro.3mf"
+ "projekt": "Schecter_200_Gitarre.3mf",
+ "gruppe": "schecter200",
+ "gruppe_titel": "Schecter 200 mm (erster Stand)",
+ "nr": 1,
+ "titel": "Gitarre",
+ "datei": "Schecter_200_Gitarre"
 }

@@ -4,7 +4,7 @@
  "drucker_name": "Flashforge Creator 5 Pro",
  "datum": "2026-11-14",
  "ordner": "2026-11-14_kalibrier_5_bruecke_c5pro",
- "gcode": "kalibrier_5_bruecke_c5pro.gcode",
+ "gcode": "Kalibrier_5_Bruecke.gcode",
  "zeit": "49m 58s",
  "gramm": "29.75",
  "meter": "9.98 m",
@@ -39,6 +39,11 @@
   }
  ],
  "vorschau": "vorschau.png",
- "projekt": "kalibrier_5_bruecke_c5pro.3mf",
- "bild_im_gcode": true
+ "projekt": "Kalibrier_5_Bruecke.3mf",
+ "bild_im_gcode": true,
+ "gruppe": "kalibrier",
+ "gruppe_titel": "Kalibrier-Set",
+ "nr": 5,
+ "titel": "Brücken und Überhänge",
+ "datei": "Kalibrier_5_Bruecke"
 }

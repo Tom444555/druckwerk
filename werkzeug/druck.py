@@ -214,6 +214,11 @@ def main():
     ap.add_argument("--groesse", type=float, default=None, help="nur mit --bemalt: größtes Maß in mm (Meshy liefert 50 mm)")
     ap.add_argument("--skala", type=float, default=None, help="nur mit --bemalt: Faktor, z. B. 2.4")
     ap.add_argument("--matrix", default=None, help="nur mit --bemalt: 12 Zahlen (3×4, zeilenweise) aus der Werkstatt")
+    ap.add_argument("--gruppe", default="", help="Projekt-Kennung (z. B. schecter370): Aufträge mit gleicher Gruppe bilden in der App EIN Projekt")
+    ap.add_argument("--gruppe-titel", default="", help="Anzeigename des Projekts (z. B. 'Schecter 370 mm')")
+    ap.add_argument("--nr", type=int, default=0, help="Druck-Reihenfolge des Teils im Projekt (1, 2, 3 …)")
+    ap.add_argument("--titel", default="", help="Anzeigename des Teils (z. B. 'Korpus')")
+    ap.add_argument("--datei", default="", help="Dateiname für .gcode/.3mf ohne Endung (z. B. Schecter_370_Korpus); nur Buchstaben, Ziffern, _ und -")
     ap.add_argument("--quelle", default="", help="Link zum Original-Modell (MakerWorld, Printables …)")
     ap.add_argument("--ausgabe", default=None, help="Zielordner (Standard: auftraege/<datum>_<name>)")
     ap.add_argument("--bemalt", default=None,
@@ -515,6 +520,27 @@ def main():
     pj = ziel / f"{a.name}_{cfg['kurz']}.3mf"
     if pj.exists():
         info["projekt"] = pj.name
+    # Projekt-Angaben (Gruppe, Titel, Reihenfolge, Dateiname): aus den Argumenten, sonst vom Vorgänger (gleicher Ordner oder gleicher Name im Lager)
+    alt = {}
+    try:
+        alt = json.loads((ziel / "auftrag.json").read_text(encoding="utf-8"))
+    except Exception:
+        try:
+            alt = next((x for x in json.loads((ziel.parent / "index.json").read_text(encoding="utf-8")) if x.get("name") == a.name and x.get("gruppe")), {})
+        except Exception:
+            alt = {}
+    for k_, v_ in (("gruppe", a.gruppe), ("gruppe_titel", a.gruppe_titel), ("nr", a.nr), ("titel", a.titel), ("datei", a.datei)):
+        v_ = v_ or alt.get(k_)
+        if v_:
+            info[k_] = v_
+    if info.get("datei"):
+        basis = re.sub(r"[^A-Za-z0-9_-]", "_", info["datei"]); info["datei"] = basis
+        for feld, endung in (("gcode", ".gcode"), ("projekt", ".3mf")):
+            if info.get(feld) and info[feld] != basis + endung and (ziel / info[feld]).exists():
+                (ziel / info[feld]).replace(ziel / (basis + endung))
+                zeilen = [z_.replace(info[feld], basis + endung) for z_ in zeilen]
+                info[feld] = basis + endung
+        gname = info["gcode"]
     (ziel / "auftrag.json").write_text(json.dumps(info, ensure_ascii=False, indent=1), encoding="utf-8")
     index_neu(ziel.parent)
     (ziel / "BERICHT.md").write_text("\n".join(zeilen) + "\n", encoding="utf-8")

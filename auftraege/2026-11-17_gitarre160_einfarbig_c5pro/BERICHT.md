@@ -1,7 +1,7 @@
 # Druckauftrag: gitarre160_einfarbig
 
 **Drucker:** Flashforge Creator 5 Pro  
-**Datei für USB:** `gitarre160_einfarbig_c5pro.gcode`  
+**Datei für USB:** `Schecter_160_Probe_einfarbig.gcode`  
 **Druckzeit (geschätzt):** 51m 2s  
 **Filament:** 15.35 g (5.15 m)  
 

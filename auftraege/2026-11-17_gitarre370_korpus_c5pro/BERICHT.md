@@ -1,7 +1,7 @@
 # Druckauftrag: gitarre370_korpus
 
 **Drucker:** Flashforge Creator 5 Pro  
-**Datei für USB:** `gitarre370_korpus_c5pro.gcode`  
+**Datei für USB:** `Schecter_370_Korpus.gcode`  
 **Druckzeit (geschätzt):** 15h 19m 29s  
 **Filament:** 62.89, 7.99, 16.02, 1.27 g (21.09 m, 2.68 m, 5.37 m, 0.43 m)  
 

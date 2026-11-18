@@ -1,7 +1,7 @@
 # Druckauftrag: gitarre370_wirbel
 
 **Drucker:** Flashforge Creator 5 Pro  
-**Datei für USB:** `gitarre370_wirbel_c5pro.gcode`  
+**Datei für USB:** `Schecter_370_Wirbel.gcode`  
 **Druckzeit (geschätzt):** 47m 4s  
 **Filament:** 0.00, 0.00, 1.56 g (0.00 m, 0.00 m, 0.52 m)  
 
