@@ -6,7 +6,7 @@ import numpy as np
 
 W = Path(__file__).resolve().parent.parent
 MAT_OK = re.compile(r"^[A-Z0-9+\-]{2,10}$")
-EXTRA_OK = {"sparse_infill_pattern": {"grid", "gyroid", "honeycomb", "cubic", "triangles", "line", "adaptivecubic", "rectilinear"},
+EXTRA_OK = {"sparse_infill_pattern": {"grid", "gyroid", "honeycomb", "cubic", "triangles", "line", "adaptivecubic", "rectilinear", "lightning"},
             "top_shell_layers": range(1, 13), "bottom_shell_layers": range(1, 13),
             "seam_position": {"aligned", "nearest", "back", "random"},
             "ironing_type": {"no ironing", "top", "topmost"}}
@@ -126,6 +126,7 @@ def einer(ordner: Path):
     if j.get("waende"): cmd += ["--waende", str(max(1, min(12, int(j["waende"]))))]
     if j.get("rau") in ("fein", "mittel", "grob"):
         cmd += ["--rau", j["rau"]] + (["--rau-wo", j["rau_wo"]] if j.get("rau_wo") in ("kontur", "loecher", "alle") else [])
+    if j.get("schoen") is True: cmd.append("--schoen")
     if j.get("stuetzen") in ("aus", "auto", "baum"): cmd += ["--stuetzen", j["stuetzen"]]
     if j.get("brim") in ("aus", "auto", "an"): cmd += ["--brim", j["brim"]]
     for kx, wx in (j.get("extra") or {}).items():

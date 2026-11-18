@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<title>Auswertung: PLA perfekt drucken – Slicer-Einstellungen (Bastlwastl) – Druckwerk</title>
+<link rel="icon" href="../symbol-192.png" type="image/png">
+<link rel="apple-touch-icon" href="../symbol-180.png">
+<style>
+:root{--bg:#f2f2f7;--card:#fff;--text:#000;--sub:#6c6c70;--sep:rgba(60,60,67,.18);--blue:#007aff;--green:#34c759;--orange:#ff9500;--red:#ff3b30;--fill:rgba(120,120,128,.12);--grau:#a7a7ad}
+@media (prefers-color-scheme:dark){:root{--bg:#000;--card:#1c1c1e;--text:#fff;--sub:#98989f;--sep:rgba(84,84,88,.6);--blue:#0a84ff;--green:#30d158;--orange:#ff9f0a;--red:#ff453a;--fill:rgba(120,120,128,.24);--grau:#8e8e93}}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--text);font:17px/1.4 -apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",sans-serif}
+main{max-width:720px;margin:0 auto;padding:calc(env(safe-area-inset-top) + 8px) 16px 60px}
+a{color:var(--blue)}
+h1{font-size:30px;font-weight:700;letter-spacing:.2px;margin:6px 4px 6px;line-height:1.15}
+h2{font-size:13px;font-weight:400;text-transform:uppercase;color:var(--sub);margin:28px 16px 8px}
+h3{font-size:18px;margin:0 0 6px}
+.card{background:var(--card);border-radius:12px;overflow:hidden;padding:14px 16px;margin-bottom:10px;overflow-wrap:anywhere}
+.card p{margin:0 0 8px}.card p:last-child{margin-bottom:0}
+.small,.fs{font-size:13px;color:var(--sub)}
+.fs{white-space:nowrap}
+.top{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;padding:8px 0}
+.top a{text-decoration:none;font-size:17px}
+.pill{font-size:12px;background:var(--fill);border-radius:6px;padding:2px 7px;white-space:nowrap;color:var(--text)}
+.e{background:rgba(52,199,89,.13);border-radius:10px;padding:8px 12px;margin-top:8px;font-size:15px}
+.q{background:rgba(255,149,0,.15);border-radius:10px;padding:8px 12px;margin-top:8px;font-size:15px}
+ul,ol{margin:4px 0 8px;padding-left:20px}li{margin:4px 0}
+.tag{font-size:11px;font-weight:600;border-radius:5px;padding:1px 6px;margin-right:4px;color:#fff;white-space:nowrap}
+.t-f{background:var(--blue)}.t-b{background:var(--orange)}.t-m{background:#af52de}.t-bsp{background:var(--green)}
+pre.baum{font:13px/1.5 ui-monospace,Menlo,monospace;white-space:pre-wrap;margin:0;overflow-wrap:anywhere}
+blockquote{margin:6px 0;padding:4px 0 4px 12px;border-left:3px solid var(--blue);font-style:italic}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;vertical-align:top;padding:8px 6px;border-top:.5px solid var(--sep)}
+th{color:var(--sub);font-weight:500;font-size:12px;text-transform:uppercase}
+@media (max-width:600px){table.stapel thead{display:none}table.stapel tr{display:block;border-top:.5px solid var(--sep);padding:6px 0}
+  table.stapel td{display:block;border:0;padding:3px 0}table.stapel td::before{content:attr(data-l);display:block;font-size:11px;color:var(--sub);text-transform:uppercase}}
+svg{width:100%;height:auto;display:block}
+svg text{font-family:-apple-system,BlinkMacSystemFont,sans-serif;fill:var(--text)}
+svg .k{fill:var(--card);stroke:var(--sep);stroke-width:1}
+svg .kb{fill:var(--blue);fill-opacity:.12;stroke:var(--blue);stroke-width:1.2}
+svg .ko{fill:var(--orange);fill-opacity:.15;stroke:var(--orange);stroke-width:1.2}
+svg .sub{fill:var(--sub);font-size:10px}
+svg .pf{stroke:var(--sub);stroke-width:1.5;fill:none}
+svg .grau{fill:var(--grau)}
+svg .rot{stroke:var(--red);stroke-width:2.2}
+svg .gr{stroke:var(--green);stroke-width:2.2}
+.zeich{background:var(--bg);border-radius:10px;padding:8px}
+.legende{display:flex;flex-wrap:wrap;gap:6px 12px;font-size:13px;color:var(--sub)}
+nav.inhalt a{display:inline-block;margin:3px 6px 3px 0;font-size:14px;text-decoration:none;background:var(--fill);border-radius:14px;padding:4px 10px;color:var(--text)}
+</style>
+</head>
+<body>
+<main>
+<div class="top"><a href="index.html">‹ Videos</a><a href="https://www.youtube.com/watch?v=4aDAwZ4s54k" target="_blank" rel="noopener">Video ansehen ↗</a></div>
+<h1>PLA sauber drucken: Slicer-Einstellungen</h1>
+<p class="small" style="margin:0 4px 10px">Auswertung des Videos „PLA PERFEKT drucken! Die besten Bambu Studio Einstellungen einfach erklärt“ von <b>Bastlwastl</b> (YouTube, ca. 27:47 Min.) · Grundlage: automatische Untertitel, abgerufen 18.11.2026 · Auswertung vom 18.11.2026 · Veröffentlichungsdatum nicht bekannt · <a href="../index.html">Druckwerk</a></p>
+<div class="card small">Lesehilfe: Normaler Text = was im Video gesagt wird, mit Fundstelle <span class="fs">(mm:ss)</span>. <span class="e" style="display:inline;padding:1px 6px;margin:0">📚 grün = eigene Ergänzung</span> · <span class="q" style="display:inline;padding:1px 6px;margin:0">❓ orange = unklar</span>. Die Untertitel-Blöcke sind etwa 30 Sekunden lang – die Fundstelle nennt den Blockanfang. Automatische Untertitel verhören sich bei Zahlen und Fachwörtern; solche Stellen sind markiert.</div>
+<nav class="inhalt" aria-label="Inhalt"><a href="#a">🧭 Steckbrief</a><a href="#b">🌳 Themenbaum</a><a href="#c">🎯 Kernaussagen</a><a href="#d">🔎 Auswertung</a><a href="#e">📅 Zeitleiste</a><a href="#f">📖 Verzeichnisse</a><a href="#g">⚖️ Abgleich</a><a href="#h">💡 Druckwerk</a><a href="#i">🗂️ Zusammenfassung</a><a href="#q">Quellen</a></nav>
+
+<h2 id="a">A · 🧭 Steckbrief</h2>
+<div class="card"><p><b>Thema:</b> Welche Filament- und Slicer-Einstellungen der Sprecher für klassisches PLA nutzt, um sauberere Oberflächen zu bekommen – und warum.</p>
+<p><b>Sprecher:</b> Schweighofer („Bastlwastl“), allein vor der Kamera und am Bildschirm.</p>
+<p><b>Umfang und Art:</b> knapp 28 Minuten, Erklärvideo am Slicer (Bambu Studio, Drucker Bambu Lab X1 Carbon), am Ende ein Vorher-Nachher-Beispiel.</p>
+<p><b>Grundton:</b> locker, erfahrungsbasiert, ausdrücklich „ausprobieren statt glauben“. Das verwendete Filament hat er nach eigener Aussage mitentwickelt; am Ende nennt er einen Gutscheincode dafür.</p></div>
+
+<h2 id="b">B · 🌳 Themenbaum</h2>
+<div class="card"><pre class="baum">PLA sauber drucken
+├─ 🧵 Filament-Profil (02:02)
+│  ├─ 🌡️ Düse 210 statt 220 °C (03:05)
+│  ├─ 💨 Lüfter: erste Schicht aus, danach ~100 % (04:08, 05:12)
+│  └─ 🚪 Tür einen Spalt offen (04:41)
+├─ ⚙️ Qualität (06:14)
+│  ├─ 📏 Schicht 0,2 / 0,16 mm (07:17)
+│  ├─ 🧷 Naht hinten oder an der Kante (08:19)
+│  ├─ 🕸️ Wandgenerator Arachne (09:22)
+│  └─ 🛣️ Fahrwege meiden Gedrucktes (09:54)
+├─ 🧱 Stärke (11:27)
+│  ├─ 3 Wände (11:27)
+│  ├─ 🔁 innen – außen – innen (11:58)
+│  ├─ 5 Deck- und 5 Bodenschichten (14:02)
+│  └─ 🫙 ohne Füllung / Blitz-Füllung (14:02, 15:38)
+├─ 🐢 Geschwindigkeit (17:11)
+│  ├─ erste Schicht 30 (17:42)
+│  ├─ Außenwand 45, Innenwand 100 (18:14)
+│  └─ Überhänge und Brücken 30 (18:14, 18:44)
+├─ 🌳 Stützen: Baum, automatisch (19:47)
+├─ 🧩 Sonstiges (22:24)
+│  ├─ Rand außen und innen 5 mm (22:24)
+│  └─ nach Objekt drucken (22:56)
+├─ 🔬 Beispiel Rad vorher/nachher (24:59)
+└─ 💰 Gutscheincode fürs Filament (27:03)</pre>
+<div class="legende" style="margin-top:8px"><span>🧵 Material</span><span>🌡️ Temperatur</span><span>💨 Kühlung</span><span>⚙️ Einstellung</span><span>🧱 Wände</span><span>🐢 Tempo</span><span>🌳 Stützen</span><span>🔬 Beispiel</span><span>💰 Geld</span></div></div>
+
+<h2 id="c">C · 🎯 Kernaussagen</h2>
+<div class="card"><ol>
+<li><b>Langsamer ist schöner.</b> Außenwand 45 mm/s, erste Schicht 30, Überhänge und Brücken 30 <span class="fs">(17:11–18:44)</span> ★★★</li>
+<li><b>Drei Wände in der Reihenfolge innen-außen-innen</b> geben die sauberste Außenseite, weil die Bahnen auskühlen <span class="fs">(11:58–13:30)</span> ★★★</li>
+<li><b>Düse 10 °C kühler</b> (210 statt 220 °C) gegen Fäden <span class="fs">(03:05)</span> ★★</li>
+<li><b>Erste Schicht ohne Lüfter</b>, danach volle Kühlung; Tür einen Spalt offen <span class="fs">(04:08–05:12)</span> ★★</li>
+<li><b>Figuren hohl drucken</b> spart Zeit und Material – wenn das Filament gut haftet; sonst wenig Füllung <span class="fs">(14:02–15:38)</span> ★★</li>
+<li><b>Je fünf Deck- und Bodenschichten</b> für stabile Flächen ohne Füllung <span class="fs">(14:02)</span> ★★</li>
+<li><b>Fahrwege sollen Gedrucktes meiden</b>, damit die Düse nichts umreißt <span class="fs">(09:54)</span> ★</li>
+<li><b>Mehrere Teile nacheinander drucken</b> statt Schicht für Schicht: weniger Fäden <span class="fs">(22:56–24:28)</span> ★</li>
+<li><b>Selbst testen</b> mit kleinem Teil, bevor man es übernimmt <span class="fs">(15:07, 21:53)</span> ★★</li></ol></div>
+
+<h2>Zeichnung 1 · Reihenfolge der drei Wandbahnen</h2>
+<div class="card"><p class="small">Schematisch, nicht maßstäblich. Darstellung laut Video (11:58–12:28).</p><div class="zeich"><svg viewBox="0 0 340 230" role="img" aria-label="Schnitt durch eine Wand mit drei Bahnen. Gedruckt wird erst die innerste Bahn, dann die äußere, zuletzt die mittlere.">
+<g font-size="11"><text x="10" y="16" font-weight="700" font-size="12">Blick von oben auf eine Wand</text>
+<text x="10" y="40" class="sub">außen (Sichtseite)</text>
+<line x1="20" y1="58" x2="320" y2="58" stroke="var(--blue)" stroke-width="12" stroke-linecap="round"/>
+<line x1="20" y1="78" x2="320" y2="78" stroke="var(--green)" stroke-width="12" stroke-linecap="round"/>
+<line x1="20" y1="98" x2="320" y2="98" stroke="var(--sub)" stroke-width="12" stroke-linecap="round" opacity=".7"/>
+<text x="10" y="122" class="sub">innen (Füllung / hohl)</text>
+<circle cx="170" cy="58" r="9" class="k"/><text x="170" y="62" text-anchor="middle" font-weight="700">2</text>
+<circle cx="170" cy="78" r="9" class="k"/><text x="170" y="82" text-anchor="middle" font-weight="700">3</text>
+<circle cx="170" cy="98" r="9" class="k"/><text x="170" y="102" text-anchor="middle" font-weight="700">1</text>
+<text x="10" y="150" font-size="11">1 · innerste Bahn zuerst – sie gibt die Form vor</text>
+<text x="10" y="168" font-size="11">2 · Außenwand – liegt frei, nichts drückt dagegen</text>
+<text x="10" y="186" font-size="11">3 · mittlere Bahn füllt die Lücke</text>
+<text x="10" y="212" class="sub">Dazwischen kühlt die Wand aus (laut Video 12:28).</text></g></svg></div></div>
+
+<h2 id="d">D · 🔎 Detaillierte Auswertung</h2>
+<div class="card"><h3>🎬 Einstieg und Rahmen <span class="fs">(00:00–02:02)</span></h3><p>Der Sprecher kündigt PLA-Einstellungen an, die er aus sieben Jahren 3D-Druck mitbringt. Er nennt sie ausdrücklich nicht „perfekt“, verspricht aber weniger Kosten, Zeit und Material und schönere Drucke. Fast alle gezeigten Teile sind aus einem bestimmten grauen PLA gedruckt, das er nach eigener Aussage mit dem Hersteller entwickelt hat.</p><ul><li><span class="tag t-f">Fakt</span>Druckt seit sieben Jahren <span class="fs">(00:00)</span></li><li><span class="tag t-b">Behauptung</span>Wer die Einstellungen übernimmt, bekommt bessere Ergebnisse <span class="fs">(00:30)</span></li><li><span class="tag t-f">Fakt</span>Etwa 90 % der gezeigten Teile: „PLA X Artist Grey“ von Novofil, gemeinsam mit Novofil entwickelt <span class="fs">(01:00–01:31)</span></li><li><span class="tag t-b">Behauptung</span>Die Werte sollen für so gut wie alle klassischen PLA gelten (matt, glänzend) – nicht für Silk-PLA und nicht für faserverstärktes PLA <span class="fs">(01:31)</span></li></ul><div class="e">📚 Das Video zeigt Bambu Studio auf einem Bambu Lab X1 Carbon. Tom druckt auf dem Flashforge Creator 5 Pro; Druckwerk rechnet mit OrcaSlicer 2.5. Die Einstellungen heißen dort gleich oder sehr ähnlich, die Ausgangswerte der Profile sind aber andere (siehe Abgleich).</div></div><div class="card"><h3>🌡️ Filament-Profil: Temperatur <span class="fs">(02:02–03:37)</span></h3><p>Im Slicer wird das eingelegte Filament über die drei Punkte bearbeitet. Die Düsentemperatur setzt er für die erste und alle weiteren Schichten von 220 auf 210 °C. Wer schneller drucken will, soll in 5-Grad-Schritten wieder hochgehen.</p><ul><li><span class="tag t-f">Fakt</span>Voreinstellung im gezeigten Profil: 220 °C <span class="fs">(03:05)</span></li><li><span class="tag t-m">Meinung</span>Empfehlung: 210 °C für erste und weitere Schichten – weniger Fäden bei guter Haftung <span class="fs">(03:05)</span></li><li><span class="tag t-m">Meinung</span>Für schnelles Drucken in 5-Grad-Schritten erhöhen <span class="fs">(03:37)</span></li></ul><div class="e">📚 Das Creator-5-Pro-Profil für Flashforge-PLA in Druckwerk steht bereits auf 210 °C (erste Schicht 205 °C). Hier ist also nichts zu senken.</div><div class="q">❓ Die Untertitel nennen als höheren Wert „125°“ – gemeint ist wahrscheinlich 215 oder 225 °C.</div></div><div class="card"><h3>💨 Filament-Profil: Kühlung <span class="fs">(03:37–05:42)</span></h3><p>Der Lüfter soll in der ersten Schicht aus sein, damit sie sich gut mit der Platte verbindet. Bei geschlossenem Bauraum lassen viele die Tür einen Spalt offen oder heben den Deckel an; er selbst hat damit bessere Luftbewegung. Die Mindest-Lüfterdrehzahl stellt er auf etwa 100 %. Danach wird das Filament-Profil unter eigenem Namen gespeichert.</p><ul><li><span class="tag t-m">Meinung</span>Lüfter erste Schicht: 0 <span class="fs">(04:08)</span></li><li><span class="tag t-b">Behauptung</span>PLA braucht im Gegensatz zu PETG keine besonders starke Lüftung, kühlt schnell ab <span class="fs">(04:08–04:41)</span></li><li><span class="tag t-bsp">Beispiel</span>Tür einen Spalt offen → bessere Zirkulation <span class="fs">(04:41)</span></li><li><span class="tag t-m">Meinung</span>Mindest-Lüfterdrehzahl auf etwa 100 % <span class="fs">(05:12)</span></li><li><span class="tag t-f">Fakt</span>Das Filament-Profil speichert nur Filament-Werte, nicht Stützen oder Wände <span class="fs">(05:42)</span></li></ul><p class="small">🔗 Kühlung taucht bei Wandreihenfolge (11:58) und Brücken (18:44) wieder auf.</p><div class="e">📚 Druckwerk-Profil: Lüfter in der ersten Schicht aus, danach 70 %. Bambu Lab begründet die offene Tür bei PLA mit zu warmer Kammer und Verstopfungen (siehe Abgleich).</div></div><div class="card"><h3>📏 Schichthöhe und Naht <span class="fs">(06:14–09:22)</span></h3><p>Welche Einstellung passt, hängt vom Teil ab: ein filigraner Kopf braucht anderes als eine kompakte Box. Für Großes nimmt er 0,2 mm, für Feines und für Rundungen, die oben liegen, 0,16 mm. Für sehr kleine Figuren rät er zur 0,2-mm-Düse mit noch dünneren Schichten. Die Naht legt er nach hinten oder an eine Kante.</p><ul><li><span class="tag t-m">Meinung</span>0,2 mm für große Teile, 0,16 mm („High Quality“) für feine <span class="fs">(07:17–08:19)</span></li><li><span class="tag t-m">Meinung</span>Sehr kleine Figuren: 0,2-mm-Düse und dünnere Schichten, dafür sehr lange Druckzeit <span class="fs">(07:47)</span></li><li><span class="tag t-f">Fakt</span>Höhe der ersten Schicht und Linienbreite lässt er unverändert <span class="fs">(08:19)</span></li><li><span class="tag t-m">Meinung</span>Naht: Rückseite; bei Teilen mit Kante „nächste“ oder „ausgerichtet“ <span class="fs">(08:19–08:51)</span></li></ul><div class="e">📚 Am Creator 5 Pro gibt es statt 0,2 mm die 0,25-mm-Düse. Druckwerk nutzt sie mit 0,08 mm Schicht für Toms Gitarren-Miniatur.</div><div class="q">❓ Bei der 0,2-mm-Düse nennen die Untertitel „0,2 Layerhöhe oder sogar 0,1“ – 0,2 mm Schicht mit 0,2-mm-Düse ist unüblich, gemeint ist vermutlich ein kleinerer Wert.</div></div><div class="card"><h3>🧱 Arachne, Fahrwege, drei Wände <span class="fs">(09:22–11:58)</span></h3><p>Als Wandgenerator stellt er Arachne ein. „Vermeidung von Überquerungen“ wird eingeschaltet: Die Düse soll möglichst nicht über schon Gedrucktes fahren, weil sie früher bei ihm Stützen und Füllung umgerissen hat. Das kostet Fahrzeit, nicht Druckzeit. Unter „Stärke“ stellt er drei Wandlinien ein.</p><ul><li><span class="tag t-m">Meinung</span>Wandgenerator: Arachne <span class="fs">(09:22)</span></li><li><span class="tag t-f">Fakt</span>Einstellungen lassen sich über die Lupe suchen <span class="fs">(09:22)</span></li><li><span class="tag t-m">Meinung</span>Vermeidung von Überquerungen: an <span class="fs">(09:54)</span></li><li><span class="tag t-bsp">Beispiel</span>Frühere Erfahrung mit Druckern, bei denen sich das Bett bewegt: Düse reißt Stützen um <span class="fs">(09:54–10:26)</span></li><li><span class="tag t-b">Behauptung</span>Die Einstellung verhindert das nicht ganz, macht es aber seltener; mehr Bewegungszeit <span class="fs">(10:26–10:57)</span></li><li><span class="tag t-m">Meinung</span>Drei Wandlinien: stabile Hülle, nicht übertrieben <span class="fs">(11:27)</span></li></ul></div><div class="card"><h3>🔁 Wandreihenfolge innen – außen – innen <span class="fs">(11:58–13:30)</span></h3><p>Der Kern des Videos: Mit drei Wänden wählt er die Reihenfolge innen-außen-innen. Erst die innerste Bahn, dann die äußere, dann die mittlere. So kühlen die Bahnen zwischendurch aus, und die Außenwand wird nicht von zu heißen Innenwänden verformt. Das soll vor allem bei kleinen Teilen und langen dünnen Stangen helfen.</p><ul><li><span class="tag t-f">Fakt</span>Die Option braucht drei Wände <span class="fs">(11:58)</span></li><li><span class="tag t-b">Behauptung</span>Bahnen kühlen zwischen den Durchgängen aus – wichtig bei kleinen Teilen <span class="fs">(12:28)</span></li><li><span class="tag t-b">Behauptung</span>Außenseite wird schöner, weil heiße Innenwände sie nicht verbiegen; sonst Wellen und sichtbare Schichten <span class="fs">(13:00)</span></li><li><span class="tag t-m">Meinung</span>Drei Wände plus diese Reihenfolge verbessern das Druckbild „erheblich“ <span class="fs">(13:30)</span></li></ul><p class="small">🔗 Voraussetzung sind die drei Wände aus dem Abschnitt davor.</p><div class="e">📚 Das OrcaSlicer-Handbuch empfiehlt diese Reihenfolge für die beste Außenfläche und Maßhaltigkeit, weil die Außenwand ungestört gedruckt wird. Für Überhänge nennt es innen-außen als beste Wahl. Die erste Schicht wird immer innen-außen gedruckt.</div></div>
+<div class="card"><p>💬 Ein kurzes Zitat zum Leitgedanken: <blockquote>„Langsamer heißt immer besser.“ <span class="fs">(17:11)</span></blockquote></p></div>
+<div class="card"><h3>🫙 Deck- und Bodenschichten, Drucken ohne Füllung <span class="fs">(14:02–17:11)</span></h3><p>Oben und unten stellt er je fünf Schichten ein. Seine Figuren druckt er hohl: Stabil würden sie durch drei Wände und durch die gute Schichthaftung seines Filaments. Wer anderes Filament nutzt, soll es ausprobieren und sonst mit wenig Füllung drucken. Als Füllmuster wählt er „Blitz“ (Lightning); die 15 % lässt er stehen. Die Box braucht so 45 Minuten bei 0,16 mm.</p><ul><li><span class="tag t-m">Meinung</span>Obere und untere Schalenschichten: je 5 <span class="fs">(14:02)</span></li><li><span class="tag t-f">Fakt</span>Er druckt seine Figuren ohne Füllung, sie sind hohl <span class="fs">(14:02)</span></li><li><span class="tag t-b">Behauptung</span>Stabil durch drei Wände und die Schichthaftung des verwendeten PLA <span class="fs">(14:02–14:35)</span></li><li><span class="tag t-m">Meinung</span>Ohne verstärktes Filament: etwa 10 % Gyroid <span class="fs">(14:35)</span></li><li><span class="tag t-b">Behauptung</span>Teureres Filament spare am Ende Geld, weil ohne Füllung gedruckt werden kann <span class="fs">(15:07)</span></li><li><span class="tag t-m">Meinung</span>Aufforderung: mit dem eigenen Filament testen, ob die Teile halten <span class="fs">(15:07–15:38)</span></li><li><span class="tag t-f">Fakt</span>Blitz-Füllung: innen nur Verästelungen, die das Dach tragen <span class="fs">(16:09–16:41)</span></li><li><span class="tag t-bsp">Beispiel</span>Box: 45 Minuten bei 0,16 mm <span class="fs">(16:09)</span></li></ul><div class="e">📚 „Blitz“ heißt in OrcaSlicer „Lightning“: Die Füllung wächst nur dort, wo sie eine Deckfläche tragen muss. Sie trägt kaum zur Festigkeit bei. Ob ein hohles Teil hält, hängt von Form, Wandzahl und Material ab – das Video belegt es an eigenen Figuren, nicht mit Messwerten.</div><div class="q">❓ Die Untertitel schreiben „10 % geruit“ – gemeint ist sehr wahrscheinlich Gyroid.</div></div><div class="card"><h3>🐢 Geschwindigkeit <span class="fs">(17:11–19:47)</span></h3><p>Er rät ausdrücklich zu langsamem Druck: Eine Stunde mehr sei es wert, wenn danach nichts geschliffen oder gespachtelt werden muss. Er nennt feste Werte für erste Schicht, Wände, Überhänge und Brücken. Langsame Brücken geben dem Lüfter Zeit, sonst hängt der Faden durch.</p><ul><li><span class="tag t-m">Meinung</span>Erste Schicht: 30 statt 50 mm/s <span class="fs">(17:42)</span></li><li><span class="tag t-m">Meinung</span>Füllung der ersten Schicht: 100 mm/s <span class="fs">(17:42)</span></li><li><span class="tag t-m">Meinung</span>Außenwände: 40–50, er nimmt 45 mm/s <span class="fs">(18:14)</span></li><li><span class="tag t-m">Meinung</span>Innenwände: 100 mm/s <span class="fs">(18:14)</span></li><li><span class="tag t-m">Meinung</span>Überhänge: alle Werte über 30 auf 30 mm/s, mindestens die ersten beiden <span class="fs">(18:14–18:44)</span></li><li><span class="tag t-m">Meinung</span>Brücken: 30 mm/s <span class="fs">(18:44)</span></li><li><span class="tag t-b">Behauptung</span>Schnelle Brücken hängen durch, weil das Material noch heiß ist <span class="fs">(18:44–19:15)</span></li></ul><div class="e">📚 Zum Vergleich das Creator-5-Pro-Profil in Druckwerk: Außenwand 200, Innenwand 300, erste Schicht 50, Brücken 25 mm/s. Die Werte aus dem Video sind also für Toms Drucker eine sehr deutliche Bremse (Zeichnung 2).</div></div>
+<h2>Zeichnung 2 · Geschwindigkeiten: Toms Drucker-Profil und die Werte aus dem Video</h2>
+<div class="card"><p class="small">Echte Zahlen: grau aus dem Flashforge-Profil, das Druckwerk benutzt (ausgelesen 18.11.2026), blau die im Video genannten Werte (17:42–18:44). Brücken sind im Profil schon langsamer als im Video und bleiben bei 25.</p><div class="zeich"><svg viewBox="0 0 340 215" role="img" aria-label="Balkenvergleich der Geschwindigkeiten: Profil des Creator 5 Pro gegen die Werte aus dem Video."><g><text x="10" y="34" font-size="11">Außenwand</text>
+<rect x="118" y="21" width="133" height="8" rx="3" fill="var(--grau)"/><text x="255" y="28" class="sub">200</text>
+<rect x="118" y="31" width="30" height="8" rx="3" fill="var(--blue)"/><text x="152" y="39" class="sub">45</text><text x="10" y="68" font-size="11">Innenwand</text>
+<rect x="118" y="55" width="200" height="8" rx="3" fill="var(--grau)"/><text x="322" y="62" class="sub">300</text>
+<rect x="118" y="65" width="67" height="8" rx="3" fill="var(--blue)"/><text x="189" y="73" class="sub">100</text><text x="10" y="102" font-size="11">Erste Schicht</text>
+<rect x="118" y="89" width="33" height="8" rx="3" fill="var(--grau)"/><text x="155" y="96" class="sub">50</text>
+<rect x="118" y="99" width="20" height="8" rx="3" fill="var(--blue)"/><text x="142" y="107" class="sub">30</text><text x="10" y="136" font-size="11">Überhang (flach)</text>
+<rect x="118" y="123" width="33" height="8" rx="3" fill="var(--grau)"/><text x="155" y="130" class="sub">50</text>
+<rect x="118" y="133" width="20" height="8" rx="3" fill="var(--blue)"/><text x="142" y="141" class="sub">30</text><text x="10" y="170" font-size="11">Brücken</text>
+<rect x="118" y="157" width="17" height="8" rx="3" fill="var(--grau)"/><text x="139" y="164" class="sub">25</text>
+<rect x="118" y="167" width="17" height="8" rx="3" fill="var(--blue)"/><text x="139" y="175" class="sub">25</text>
+<rect x="10" y="190" width="10" height="8" rx="3" fill="var(--grau)"/><text x="24" y="198" class="sub">Creator-5-Pro-Profil (Druckwerk, 0,4-mm-Düse, 0,20 mm)</text>
+<rect x="10" y="203" width="10" height="8" rx="3" fill="var(--blue)"/><text x="24" y="211" class="sub">Werte aus dem Video als Obergrenze (mm/s)</text></g></svg></div></div>
+<div class="card"><h3>🌳 Stützen <span class="fs">(19:47–22:24)</span></h3><p>Er schaltet Baumstützen auf Automatik ein. Für runde, organische Teile die Art „organisch“, für eckige die normale. Der Schwellwinkel bleibt bei 25°. Für kleine Teile schlanke Bäume, für sehr hohe Teile dicke. Stützen können einen eigenen Rand und zwei bis drei Wände bekommen. Lösen sich Stützen schlecht, soll der Abstand zum Teil etwas vergrößert werden.</p><ul><li><span class="tag t-m">Meinung</span>Baumstützen, automatisch <span class="fs">(19:47)</span></li><li><span class="tag t-m">Meinung</span>Organisch für Rundes, normal für Eckiges <span class="fs">(19:47)</span></li><li><span class="tag t-f">Fakt</span>Schwellwinkel 25° lässt er stehen <span class="fs">(19:47)</span></li><li><span class="tag t-m">Meinung</span>Schlanke Bäume für kleine Teile; dicke ab etwa 30–40 cm Höhe <span class="fs">(20:19)</span></li><li><span class="tag t-m">Meinung</span>Rand an den Stützen und 2–3 Wände für hohe Stützen <span class="fs">(20:19–20:50)</span></li><li><span class="tag t-f">Fakt</span>Am Abstand ändert er bei seinem Filament nichts <span class="fs">(21:21)</span></li><li><span class="tag t-m">Meinung</span>Erst mit kleinem Testobjekt prüfen <span class="fs">(21:53)</span></li></ul><div class="e">📚 In Druckwerk gilt bisher: Baumstützen gaben bei feinen Modellen Slicer-Fehler und sind in einem anderen Video umgerissen worden – deshalb dort „auto“. Das bleibt so, bis Tom am Gerät etwas anderes zeigt.</div><div class="q">❓ Für den größeren Abstand nennen die Untertitel „um 0,5 mm“. Das wäre sehr viel; üblich sind Hundertstel. Der genaue Wert ist aus dem Transkript nicht sicher zu entnehmen.</div></div><div class="card"><h3>🧩 Rand und Drucken nach Objekt <span class="fs">(22:24–24:59)</span></h3><p>Unter „Sonstiges“ setzt er einen Rand außen und innen mit 5 mm, damit sich das Teil nicht von der Platte hebt. Liegen mehrere Teile auf der Platte, lässt er sie nacheinander statt Schicht für Schicht drucken. Das spart Fahrwege zwischen den Teilen und damit Fäden. Der Slicer zeigt den nötigen Abstand; die Reihenfolge lässt sich ändern.</p><ul><li><span class="tag t-m">Meinung</span>Rand außen und innen, 5 mm <span class="fs">(22:24)</span></li><li><span class="tag t-f">Fakt</span>Der Reinigungsturm spielt für ihn hier keine Rolle <span class="fs">(22:24)</span></li><li><span class="tag t-m">Meinung</span>Druckreihenfolge „nach Objekt“ statt „nach Ebene“ <span class="fs">(22:56–23:26)</span></li><li><span class="tag t-f">Fakt</span>Geht nur bis zu einer gewissen Höhe und mit Abstand, sonst stößt die Düse an fertige Teile <span class="fs">(23:26)</span></li><li><span class="tag t-b">Behauptung</span>Bis zu vier Teile auf einer Platte; schöneres Druckbild, weniger Fäden <span class="fs">(24:28)</span></li></ul><div class="e">📚 Der Creator 5 Pro hat vier Köpfe nebeneinander. Wie viel Abstand „nach Objekt“ dort braucht, ist in Druckwerk nicht geprüft – deshalb nicht eingebaut.</div></div><div class="card"><h3>⚙️ Beispiel und Schluss <span class="fs">(24:59–27:47)</span></h3><p>Er zeigt ein Rad, einmal mit dem allgemeinen PLA-Profil und einmal mit seinen Einstellungen. Das erste hat offene Speichen und durchhängende Stellen, das zweite ist sauber, brauchte aber eine halbe Stunde länger und wurde mit Füllung gedruckt, weil es tragen soll. Am Ende nennt er einen Gutscheincode für das verwendete Filament.</p><ul><li><span class="tag t-bsp">Beispiel</span>Rad mit Standardprofil: offene Speichen, Durchhänger <span class="fs">(24:59–25:31)</span></li><li><span class="tag t-bsp">Beispiel</span>Rad mit seinen Einstellungen: sauber, eine halbe Stunde länger, mit Füllung <span class="fs">(26:01)</span></li><li><span class="tag t-f">Fakt</span>Gutscheincode: 15 % auf das Filament, ab drei Rollen weitere 5 %, ab etwa 70–75 € versandfrei <span class="fs">(27:03)</span></li><li><span class="tag t-f">Fakt</span>Bittet um Kommentare mit besseren Einstellungen <span class="fs">(26:31)</span></li></ul><p class="small">🔗 Das Beispiel-Rad wurde mit Füllung gedruckt – anders als die hohlen Figuren aus 14:02.</p></div>
+
+<h2 id="e">E · 📅 Zeitleiste</h2>
+<div class="card"><ul>
+<li><b>seit etwa sieben Jahren</b> druckt der Sprecher 3D <span class="fs">(00:00)</span></li>
+<li><b>„seit Monaten“</b> Wunsch der Zuschauer nach einem PLA-Video, nach seinem PETG-Video <span class="fs">(00:00, 17:11)</span></li>
+<li><b>2026</b> – er nennt sein gespeichertes Profil „… 2026“ <span class="fs">(05:12)</span></li>
+<li>📚 <b>18.11.2026</b> – Untertitel abgerufen und ausgewertet; Veröffentlichungsdatum des Videos nicht ermittelt.</li>
+<li><b>„Sonntag“</b> – angekündigt: ein neues KI-Video <span class="fs">(27:33)</span></li></ul></div>
+
+<h2 id="f">F · 👤 Personen · 🗺️ Orte · 📖 Begriffe</h2>
+<div class="card"><h3>👤 Personen und Firmen</h3><ul>
+<li><b>Schweighofer / Bastlwastl</b> – Sprecher <span class="fs">(durchgehend)</span></li>
+<li><b>Novofil</b> – Hersteller des verwendeten Filaments <span class="fs">(01:00, 27:03)</span></li>
+<li><b>Bambu Lab</b> – Hersteller von Drucker und Slicer im Video <span class="fs">(02:02)</span></li>
+<li><b>Sunlu, Bambu Lab</b> und ein dritter Name (Untertitel: „Bavaria“ ❓) – als Beispiele für andere Filamente <span class="fs">(15:07)</span></li></ul>
+<h3>🗺️ Orte</h3><p>Keine genannt.</p>
+<h3>📖 Begriffe</h3><ul>
+<li><b>Stringing</b> – feine Fäden zwischen Teilen <span class="fs">(03:05)</span></li>
+<li><b>Arachne</b> – Wandgenerator, der die Bahnbreite an schmale Stellen anpasst <span class="fs">(09:22)</span></li>
+<li><b>Reihenfolge der Wände</b> – in welcher Folge die Bahnen einer Wand gedruckt werden <span class="fs">(11:58)</span></li>
+<li><b>Schalenschichten</b> – volle Deck- und Bodenschichten <span class="fs">(14:02)</span></li>
+<li><b>Blitz-Füllung (Lightning)</b> – Füllung nur als Stütze unter Deckflächen <span class="fs">(15:38)</span></li>
+<li><b>Überhang / Brücke</b> – Bahn, die teilweise oder ganz frei in der Luft liegt <span class="fs">(18:14–18:44)</span></li>
+<li><b>Baumstützen</b> – verzweigte Stützen <span class="fs">(19:47)</span></li>
+<li><b>Brim (Rand)</b> – flacher Kranz um das Teil gegen Ablösen <span class="fs">(22:24)</span></li>
+<li><b>Nach Objekt drucken</b> – ein Teil fertig, dann das nächste <span class="fs">(22:56)</span></li></ul></div>
+
+<h2 id="g">G · ⚖️ Abgleich (neutral)</h2>
+<div class="card"><p class="small">Das Video zeigt Bambu Studio auf einem X1 Carbon. Rechts stehen Herstellerangaben und die Werte, mit denen Druckwerk für den Creator 5 Pro rechnet. Am echten Gerät von Tom ist davon noch nichts bestätigt.</p>
+<table class="stapel"><thead><tr><th>Aussage im Video</th><th>Stand / Herstellerangaben 📚</th><th>Quelle</th></tr></thead><tbody>
+<tr><td data-l="Aussage im Video">Innen-außen-innen macht die Außenseite deutlich schöner <span class="fs">(11:58–13:30)</span></td><td data-l="Stand / Herstellerangaben">OrcaSlicer-Handbuch: Diese Reihenfolge wird für die beste Außenfläche und Maßhaltigkeit genannt, weil die Außenwand ungestört von einer Innenbahn gedruckt wird. Für Überhänge empfiehlt es innen-außen. Die erste Schicht wird immer innen-außen gedruckt; mit weniger als drei Wänden greift die Option nicht.</td><td data-l="Quelle"><a href="https://www.orcaslicer.com/wiki/print_settings/quality/quality_settings_wall_and_surfaces" target="_blank" rel="noopener">OrcaSlicer Wiki: Wall and surfaces</a></td></tr>
+<tr><td data-l="Aussage im Video">Tür einen Spalt offen hilft bei PLA <span class="fs">(04:08–04:41)</span></td><td data-l="Stand / Herstellerangaben">Bambu Lab rät bei PLA ebenfalls zu offener Tür oder abgenommenem Deckel, sobald das Bett wärmer ist als die Erweichungstemperatur (bei PLA etwa 45 °C). Als Grund nennt der Hersteller Wärmestau und Verstopfungen im Druckkopf, nicht die Kühlung des Teils. Für den Creator 5 Pro liegt in Druckwerk keine geprüfte Herstellerangabe dazu vor ❓.</td><td data-l="Quelle"><a href="https://wiki.bambulab.com/en/software/bambu-studio/chamber-temperature" target="_blank" rel="noopener">Bambu Lab Wiki: Chamber temperature</a> · <a href="https://wiki.bambulab.com/en/filament-acc/filament/heat-creep" target="_blank" rel="noopener">Heat creep</a></td></tr>
+<tr><td data-l="Aussage im Video">Düse von 220 auf 210 °C senken <span class="fs">(03:05)</span></td><td data-l="Stand / Herstellerangaben">Das Flashforge-PLA-Profil für den Creator 5 Pro steht bereits auf 210 °C (erste Schicht 205 °C).</td><td data-l="Quelle">Druckwerk: Profil aus OrcaSlicer 2.5, ausgelesen 18.11.2026</td></tr>
+<tr><td data-l="Aussage im Video">Lüfter in der ersten Schicht aus <span class="fs">(04:08)</span></td><td data-l="Stand / Herstellerangaben">Im Creator-Profil ebenfalls so eingestellt (Lüfter in der ersten Schicht aus), danach 70 %.</td><td data-l="Quelle">Druckwerk: Profil, ausgelesen 18.11.2026</td></tr>
+<tr><td data-l="Aussage im Video">Außenwand 45, Innenwand 100, erste Schicht 30 mm/s <span class="fs">(17:42–18:14)</span></td><td data-l="Stand / Herstellerangaben">Creator-Profil: Außenwand 200, Innenwand 300, erste Schicht 50 mm/s. Mit den Video-Werten rechnet Druckwerk am Winkel-Testteil 16 min 28 s statt 12 min 27 s und 5,9 g statt 5,4 g.</td><td data-l="Quelle">Druckwerk: Vergleichsrechnung vom 18.11.2026 (nicht gedruckt)</td></tr>
+<tr><td data-l="Aussage im Video">Hohle Figuren sind mit drei Wänden stabil <span class="fs">(14:02–14:35)</span></td><td data-l="Stand / Herstellerangaben">Dazu liegen im Video keine Messwerte vor; er verweist auf die eigenen Figuren und das verwendete Filament. Eine unabhängige Prüfung habe ich nicht gefunden – nicht eindeutig zuzuordnen ❓.</td><td data-l="Quelle">–</td></tr>
+</tbody></table>
+<h3 style="margin-top:12px">🧩 Spannungen im Video</h3><ul>
+<li>PLA brauche „keine großartig starke Lüftung“ <span class="fs">(04:08)</span> – kurz darauf die Mindest-Lüfterdrehzahl auf etwa 100 % <span class="fs">(05:12)</span> und volle Kühlung auf Brücken <span class="fs">(19:15)</span>.</li>
+<li>Angekündigt sind „10, 15 Minuten“ <span class="fs">(01:00)</span>; das Video dauert knapp 28.</li>
+<li>Geworben wird für das Drucken ohne Füllung <span class="fs">(14:02)</span>; das Vorher-Nachher-Rad ist mit Füllung gedruckt <span class="fs">(26:01)</span>.</li>
+<li>Beim Rad ändern sich viele Einstellungen zugleich; welcher Schritt wie viel bringt, zeigt das Beispiel nicht <span class="fs">(24:59–26:01)</span>.</li></ul></div>
+
+<h2 id="h">H · 💡 Erkenntnisse, offene Fragen – und was das für Druckwerk heißt</h2>
+<div class="card"><h3>Mitnehmen</h3><ul>
+<li>Die Außenfläche gewinnt vor allem durch drei Dinge: langsame Außenwand, die Reihenfolge innen-außen-innen und langsame Überhänge.</li>
+<li>Temperatur und Lüfter der ersten Schicht stimmen im Creator-Profil schon.</li>
+<li>Hohl drucken ist ein Sparversuch für Deko, kein Rezept für tragende Teile.</li></ul>
+<h3>In Druckwerk eingebaut (18.11.2026)</h3><ul>
+<li><b>Schalter „schön“</b> beim Slicen (<code>druck.py --schoen</code>): 3 Wände innen-außen-innen, Arachne, je 5 Deck- und Bodenschichten, Außenwand höchstens 45, Innenwand 100, erste Schicht 30, Überhänge und Brücken 30 mm/s, Fahrwege meiden Wände, Naht hinten.</li>
+<li>Gedacht für <b>Sichtteile und Deko aus PLA</b> mit der 0,4-mm-Düse. Kostet am Testteil etwa ein Drittel mehr Zeit.</li>
+<li><b>Blitz-Füllung</b> ist für das Slicen aus der App freigegeben (für hohle Deko-Teile).</li></ul>
+<h3>Bewusst nicht übernommen</h3><ul>
+<li><b>Ganz ohne Füllung</b> als Standard – erst, wenn ein Probeteil aus Toms Filament hält.</li>
+<li><b>Baumstützen</b> als Standard – bei Druckwerk bleibt „auto“ (frühere Slicer-Fehler).</li>
+<li><b>Nach Objekt drucken</b> – Abstand der vier Köpfe am Creator 5 Pro ungeprüft.</li>
+<li><b>Lüfter auf 100 %</b> – Profilwert 70 % bleibt, bis ein Druck zeigt, dass mehr nötig ist.</li></ul>
+<h3>Offen</h3><ul>
+<li>Bringt „schön“ am Creator 5 Pro sichtbar etwas? → dasselbe kleine Teil einmal normal, einmal „schön“ drucken und vergleichen.</li>
+<li>Tür offen bei PLA am Creator 5 Pro: Herstellerangabe nachsehen (Suchbegriffe: „Creator 5 Pro PLA door open chamber temperature“).</li>
+<li>Welcher Abstand der Stützen ist gemeint <span class="fs">(21:53)</span>?</li></ul></div>
+
+<h2 id="i">I · 🗂️ Ein-Seiten-Zusammenfassung</h2>
+<div class="card"><p><b>Wer:</b> Bastlwastl, Bambu Studio, X1 Carbon, eigenes Lieblings-PLA.</p>
+<p><b>Filament:</b> Düse 210 °C · Lüfter erste Schicht aus, danach hoch · Tür einen Spalt offen.</p>
+<p><b>Qualität:</b> 0,2 mm groß / 0,16 mm fein · Naht hinten · Arachne · Fahrwege meiden Gedrucktes.</p>
+<p><b>Stärke:</b> 3 Wände, innen-außen-innen · 5 Deck- und 5 Bodenschichten · hohl oder Blitz-Füllung, sonst 10 % Gyroid.</p>
+<p><b>Tempo (mm/s):</b> erste Schicht 30 · Außenwand 45 · Innenwand 100 · Überhänge 30 · Brücken 30.</p>
+<p><b>Stützen:</b> Baum automatisch, schlank für Kleines, dick und mit Rand für Hohes.</p>
+<p><b>Sonstiges:</b> Rand 5 mm außen und innen · mehrere Teile nacheinander drucken.</p>
+<p><b>Für Tom:</b> Temperatur und erste Schicht passen schon. Neu ist der Schalter „schön“ für Sichtteile. Alles nur gerechnet, nichts gedruckt.</p></div>
+
+<h2 id="q">Quellen</h2>
+<div class="card"><ul>
+<li><a href="https://www.youtube.com/watch?v=4aDAwZ4s54k" target="_blank" rel="noopener">Video: „PLA PERFEKT drucken! Die besten Bambu Studio Einstellungen einfach erklärt“ – Bastlwastl (YouTube)</a></li>
+<li><a href="https://www.orcaslicer.com/wiki/print_settings/quality/quality_settings_wall_and_surfaces" target="_blank" rel="noopener">OrcaSlicer Wiki – Wall and surfaces (Walls printing order)</a>, abgerufen 18.11.2026</li>
+<li><a href="https://wiki.bambulab.com/en/software/bambu-studio/chamber-temperature" target="_blank" rel="noopener">Bambu Lab Wiki – Chamber temperature</a> und <a href="https://wiki.bambulab.com/en/filament-acc/filament/heat-creep" target="_blank" rel="noopener">Heat creep</a>, abgerufen 18.11.2026</li>
+<li>Druckwerk: Flashforge-Profil für den Creator 5 Pro (OrcaSlicer 2.5) und eigene Vergleichsrechnung am Winkel-Testteil, 18.11.2026</li></ul></div>
+</main>
+</body>
+</html>

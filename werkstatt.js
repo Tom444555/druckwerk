@@ -521,7 +521,8 @@ function sliceWahl(){
       <div class="row"><div class="grow">Schichthöhe</div><select data-e="schicht">${opt(schichten.map(v => [v, v.replace(".", ",") + " mm"]), E.schicht)}</select></div>
       <div class="row"><div class="grow">Wände</div><select data-e="waende">${opt([2,3,4,5,6,8].map(v => [v, v]), E.waende)}</select></div>
       <div class="row"><div class="grow">Füllung</div><input type="range" min="0" max="100" step="5" value="${E.infill}" data-e="infill"><span class="val" id="sInf">${E.infill} %</span></div>
-      <div class="row"><div class="grow">Füllmuster</div><select data-e="muster">${opt([["gyroid","Gyroid"],["grid","Gitter"],["cubic","Würfel"],["honeycomb","Waben"],["triangles","Dreiecke"],["line","Linien"]], E.muster)}</select></div>
+      <div class="row"><div class="grow">Füllmuster</div><select data-e="muster">${opt([["gyroid","Gyroid"],["grid","Gitter"],["cubic","Würfel"],["honeycomb","Waben"],["triangles","Dreiecke"],["line","Linien"],["lightning","Blitz (nur für hohle Deko)"]], E.muster)}</select></div>
+      <label class="row" style="cursor:pointer"><div class="grow">Schön (langsam)<div class="small">Für Sichtteile aus PLA: 3 Wände innen-außen-innen, langsame Außenwand, Überhänge und Brücken. Dauert etwa ein Drittel länger.</div></div><input type="checkbox" data-e="schoen" ${E.schoen ? "checked" : ""}></label>
       <div class="row"><div class="grow">Deck- / Bodenschichten</div><select data-e="decke">${opt([3,4,5,6,8].map(v => [v, v]), E.decke)}</select></div>
     </div>
     <h2>Stützen</h2>${seg("stuetzen", [["aus","Keine"],["auto","Automatisch"],["baum","Baum"]])}
@@ -583,8 +584,8 @@ async function sliceStart(E){
   const sag = (t, p) => { const e = d.querySelector("#slText"); if (e) { e.textContent = t; d.querySelector("#slBalken").style.width = p + "%"; } };
   try {
     const max = Math.max(...teile.map(t => t.slot));
-    const job = { name: M.name.replace(/\s*\(bearbeitet\)$/, ""), drucker: "c5pro", schicht: +E.schicht, infill: E.infill, waende: E.waende, stuetzen: E.stuetzen, brim: E.brim, ...(E.rau !== "aus" ? {rau: E.rau} : {}),
-      extra: {sparse_infill_pattern: E.muster, top_shell_layers: E.decke, bottom_shell_layers: E.decke, seam_position: E.naht, ironing_type: E.glaetten ? "top" : "no ironing"},
+    const job = { name: M.name.replace(/\s*\(bearbeitet\)$/, ""), drucker: "c5pro", schicht: +E.schicht, infill: E.infill, waende: E.schoen ? Math.max(3, E.waende) : E.waende, ...(E.schoen ? {schoen: true} : {}), stuetzen: E.stuetzen, brim: E.brim, ...(E.rau !== "aus" ? {rau: E.rau} : {}),
+      extra: {sparse_infill_pattern: E.muster, top_shell_layers: E.schoen ? Math.max(5, E.decke) : E.decke, bottom_shell_layers: E.schoen ? Math.max(5, E.decke) : E.decke, seam_position: E.naht, ironing_type: E.glaetten ? "top" : "no ironing"},
       farben: M.slots.slice(0, max).map(farbName), quelle: (M.lager && M.lager.quelle) || "", teile: [] };
     if (M.bemalt) {                                        // bemalte 3MF: Original + Umbau-Matrix, Farben bleiben
       const e = bemaltMatrix().elements; job.matrix = [0,1,2].flatMap(r => [0,1,2,3].map(c => e[c*4+r]));

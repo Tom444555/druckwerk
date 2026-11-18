@@ -207,6 +207,9 @@ def main():
                     help="Raue Oberfläche (Fuzzy Skin) an den Seitenwänden: fein = Schichtlinien kaschieren, mittel = Stein/Griff, grob = starke Struktur")
     ap.add_argument("--rau-wo", choices=sorted(RAU_WO), default="kontur",
                     help="kontur = nur außen (Standard), loecher = außen und in Bohrungen, alle = alle Wände")
+    ap.add_argument("--schoen", action="store_true",
+                    help="Sichtteil-Paket für PLA (Lehren aus videos/pla-einstellungen-bastlwastl.html): 3 Wände innen-außen-innen, Arachne, je 5 Deck-/Bodenschichten, "
+                         "Außenwand 45 / Innenwand 100 / erste Schicht 30 mm/s, Überhänge und Brücken höchstens 30 mm/s, Fahrwege meiden Wände, Naht hinten. Druckt deutlich länger.")
     ap.add_argument("--extra", action="append", default=[], help="Slicer-Einstellung überschreiben: schluessel=wert (mehrfach)")
     ap.add_argument("--duese", default=None, help="Düsengröße in mm für ALLE Köpfe (c5pro: 0.25 | 0.4 | 0.6 | 0.8; Standard 0.4)")
     ap.add_argument("--duesen", default=None,
@@ -342,6 +345,26 @@ def main():
                     pass
     if bemalt:   # Farbe nur als Schale (1,2 mm) statt keilförmig bis in den Kern – spart Farbfilament, sauberere Kanten
         prozess["mmu_segmented_region_max_width"] = "1.2"
+    schoen_text = None
+    if a.schoen:                          # langsam und sauber: Außenwand ungestört, Wände kühlen zwischen den Bahnen aus (videos/pla-einstellungen-bastlwastl.html)
+        def hoechstens(k_, grenze):
+            v_ = prozess.get(k_); w_ = v_[0] if isinstance(v_, list) and v_ else v_
+            try:
+                if float(w_) > grenze: prozess[k_] = str(grenze)
+            except (TypeError, ValueError):
+                prozess[k_] = str(grenze)
+        if a.waende is None and int(float(prozess.get("wall_loops", 2))) < 3:
+            prozess["wall_loops"] = "3"; a.waende = 3
+        if int(float(prozess.get("wall_loops", 2))) >= 3: prozess["wall_sequence"] = "inner-outer-inner wall"
+        prozess.update({"wall_generator": "arachne", "reduce_crossing_wall": "1", "seam_position": "back"})
+        for k_ in ("top_shell_layers", "bottom_shell_layers"):
+            if int(float(prozess.get(k_, 3))) < 5: prozess[k_] = "5"
+        for k_, g_ in (("outer_wall_speed", 45), ("inner_wall_speed", 100), ("initial_layer_speed", 30), ("initial_layer_infill_speed", 100),
+                       ("overhang_1_4_speed", 30), ("overhang_2_4_speed", 30), ("overhang_3_4_speed", 30), ("overhang_4_4_speed", 30), ("bridge_speed", 30)):
+            hoechstens(k_, g_)
+        schoen_text = (f"Sichtteil-Paket: {prozess['wall_loops']} Wände ({'innen-außen-innen' if prozess.get('wall_sequence') == 'inner-outer-inner wall' else 'Reihenfolge wie Profil'}), Arachne, "
+                       f"{prozess['top_shell_layers']} Deck- und {prozess['bottom_shell_layers']} Bodenschichten, Außenwand ≤ 45, Innenwand ≤ 100, erste Schicht ≤ 30, Überhänge/Brücken ≤ 30 mm/s, "
+                       "Fahrwege meiden Wände, Naht hinten. Gerechnet, am Gerät noch nicht bestätigt.")
     rau_text = None
     if a.rau:                             # raue Oberfläche: äußere Wand „zittert“ (Lehren aus videos/fuzzy-skin-bastlwastl.html)
         staerke, abstand = RAU[a.rau]
@@ -460,6 +483,7 @@ def main():
                f"- Schichthöhe: {a.schicht} mm ({a.stufe})",
                f"- Füllung: {a.infill} %",
                f"- Wände: {a.waende or 'Profil-Standard'}",
+               *([f"- {schoen_text}"] if schoen_text else []),
                *([f"- Raue Oberfläche (Fuzzy Skin): {rau_text}"] if rau_text else []),
                f"- Stützen: {a.stuetzen}",
                f"- Brim: {a.brim}",
