@@ -73,7 +73,7 @@ Alte `_kobrax`-Aufträge laufen nicht auf dem Creator 5 Pro – bei Bedarf aus d
 - Jede Ansicht hat eine Adresse (`#projekte`, `#projekt:<gruppe>`, `#auftrag:<ordner>`, `#werkstatt:…`, `#kiweg:<schritt>`); Zurück/Vor funktionieren.
 - **Sicherung** (`sicherung.js`): alle `druckwerk_*`-Schlüssel + IndexedDB (eigene Modelle, Tagebuch-Fotos) als eine Datei; `druckwerk_gesichert` = Datum.
 - **Offline/PWA**: `manifest.webmanifest`, `symbol-*.png`, `sw.js` (immer zuerst Netz, Zwischenspeicher nur ohne Netz; .gcode/STL nie).
-  **Bei jeder Änderung an App-Dateien `CACHE` in `sw.js` hochzählen** (Stand `druckwerk-v16`) und neue Dateien dort eintragen.
+  **Bei jeder Änderung an App-Dateien `CACHE` in `sw.js` hochzählen** (Stand `druckwerk-v17`) und neue Dateien dort eintragen.
 - „Aus dem Lager hinzufügen“ heißt in der App jetzt „Weitere Aufträge von Claude“. Überall „Kopf 1–4“, nie „Spule“; Werkstatt-Slicen sendet `c5pro`.
 - Aufträge sind wie die Ideen im Looper **pro Gerät gespeichert** (localStorage `druckwerk_meine`): neue Besucher
   sehen eine leere Liste. Tom speichert einen Auftrag über den Link `https://tom444555.github.io/druckwerk/#hinzu=<ordner>`
@@ -179,10 +179,16 @@ Alte `_kobrax`-Aufträge laufen nicht auf dem Creator 5 Pro – bei Bedarf aus d
 - **Bastlwastl, „PLA PERFEKT drucken … Bambu Studio Einstellungen“** (`videos/pla-einstellungen-bastlwastl.html`, 18.11.2026; X1 Carbon, eigenes Filament des Sprechers): langsame
   Außenwand, drei Wände in Reihenfolge innen-außen-innen (laut OrcaSlicer-Handbuch beste Außenfläche/Maßhaltigkeit; für Überhänge ist innen-außen besser), langsame Überhänge/Brücken.
   Eingebaut als **`druck.py --schoen`** (und Haken „Schön (langsam)“ beim Slicen in der Werkstatt, `schoen` in `eingang.py`): 3 Wände innen-außen-innen, Arachne, ≥ 5 Deck-/Bodenschichten,
-  Außenwand ≤ 45, Innenwand ≤ 100, erste Schicht ≤ 30, Überhänge/Brücken ≤ 30 mm/s, `reduce_crossing_wall`, Naht hinten. **Für Sichtteile und Deko aus PLA mit 0,4-mm-Düse von selbst
+  Außenwand ≤ 45, Innenwand ≤ 100, erste Schicht ≤ 30, Überhänge/Brücken ≤ 30 mm/s, `reduce_crossing_wall`, Naht hinten, Schrägnaht. **Für Sichtteile und Deko aus PLA mit 0,4-mm-Düse von selbst
   nehmen** (im Bericht steht es); nicht für Funktionsteile mit Eile, nicht zusammen mit den 0,25-mm-Detailwerten (die sind schon langsamer). Winkel-Testteil: 16:28 statt 12:27 min,
   5,9 statt 5,4 g. Creator-Profil hat schon 210/205 °C und Lüfter aus in Schicht 1 (Außen 200 / Innen 300 / erste Schicht 50 mm/s). **Nicht übernommen:** ohne Füllung als Standard
   (Blitz-Füllung `sparse_infill_pattern=lightning` nur auf Wunsch für hohle Deko), Baumstützen, „nach Objekt“ (Kopfabstand ungeprüft), Lüfter 100 %. Nichts davon gedruckt.
+
+- **Bastlwastl, „Z-Naht komplett unsichtbar … Quick-Tip #27“** (`videos/z-naht-bastlwastl.html`, 18.11.2026): Schrägnaht (Scarf Joint) – Anfang und Ende jeder Runde laufen als Rampe
+  ineinander. In Bambu Studio beim Filament, in OrcaSlicer unter Qualität → Naht. Eingebaut als **`druck.py --schraegnaht`** und **Teil von `--schoen`**: `seam_slope_type=external`,
+  `seam_slope_start_height=10%`, `seam_slope_min_length=8` (Werte aus dem Video; Orca-Standard 0 / 20 mm), `seam_slope_conditional=1` (nur runde Konturen, Ecken behalten die normale Naht).
+  In der .gcode geprüft (`has_scarf_joint_seam = 1`, Z steigt am Nahtanfang); Zylinder Ø 30: +11 s. Nicht übernommen: „Lücke 2“ (in Orca 2.5 kein eigener Wert), Schrägnaht an Löchern
+  (Maßhaltigkeit). Bleibt eine Wulst: Rampe Richtung 20 mm verlängern oder `scarf_joint_speed` senken. Nicht gedruckt.
 
 - **Bastlwastl, „Fuzzy Skin im Bambu Studio“** (`videos/fuzzy-skin-bastlwastl.html`): raue Außenwand überdeckt Schichtlinien/Streifen, gibt Stein-Optik und Griff; wirkt nur an
   Seitenwänden (Sichtflächen so legen oder Teil teilen), unten prägt die Plattenstruktur; trägt um die Stärke auf; ≥ 3 Wände, innen vor außen. Eingebaut als `--rau` und

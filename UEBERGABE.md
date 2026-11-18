@@ -8,6 +8,7 @@
 - 18.11. 09:45: Am Mac öffnet ein Klick das 3MF-Projekt in Flash Studio Desktop (`orcaslicer://open?file=…`, sw.js v13) – **am Mac ungetestet**, Tom meldet, ob es aufgeht.
 - 18.11. 11:15: Rückweg Mac → Druckwerk eingebaut (`zurueck.js`, `eingang.py → zurueck`, sw.js v14): Hochladen von Hand und Ordner-Beobachtung in Chrome. **Echter Lauf offen** – beim ersten Mal von Tom Action-Log und `status/<id>.json` ansehen; unklar, wie Flash Studio exportierte .gcode benennt und ob Zeit/Gramm im gleichen Kommentarformat stehen.
 - 18.11. 18:30: Video „PLA perfekt drucken“ (Bastlwastl) ausgewertet → `videos/pla-einstellungen-bastlwastl.html`; daraus `druck.py --schoen` und Haken „Schön (langsam)“ in der Werkstatt (sw.js v16). Offen: Vergleichsdruck normal/schön am Gerät. Albatros-Entwurf auf Toms Wunsch verworfen.
+- 18.11. 19:00: Video „Z-Naht unsichtbar“ (Bastlwastl) ausgewertet → `videos/z-naht-bastlwastl.html`; Schrägnaht als `--schraegnaht` und Teil von `--schoen` (sw.js v17). Offen: Zylinder ohne/mit am Gerät vergleichen.
 - Offen: Tom probiert am Gerät, ob der Drucker Unterordner auf dem Stick zeigt; Rückmeldung zur neuen App; alles Weitere wie im Block darunter (nichts gedruckt).
 - Tom: Drucker kam 17.11.; Filament bei filamentor.io bestellt (Kopf 2 „Bordeaux“); GitHub-Token am iPad eingerichtet (ein Slice aus der App lief: `gitarre160_wirbel_2`).
 - Zahnrad-Vorhaben: ca. Ø 10 mm, 20 Zähne, Dauereinsatz in einer Maschine – Tom misst noch (Außen-Ø, Bohrung, Breite, Gegenrad, Achsabstand); Empfehlung PA12 mit 0,25-mm-Düse oder Kaufteil.

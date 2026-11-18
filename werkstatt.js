@@ -522,7 +522,7 @@ function sliceWahl(){
       <div class="row"><div class="grow">Wände</div><select data-e="waende">${opt([2,3,4,5,6,8].map(v => [v, v]), E.waende)}</select></div>
       <div class="row"><div class="grow">Füllung</div><input type="range" min="0" max="100" step="5" value="${E.infill}" data-e="infill"><span class="val" id="sInf">${E.infill} %</span></div>
       <div class="row"><div class="grow">Füllmuster</div><select data-e="muster">${opt([["gyroid","Gyroid"],["grid","Gitter"],["cubic","Würfel"],["honeycomb","Waben"],["triangles","Dreiecke"],["line","Linien"],["lightning","Blitz (nur für hohle Deko)"]], E.muster)}</select></div>
-      <label class="row" style="cursor:pointer"><div class="grow">Schön (langsam)<div class="small">Für Sichtteile aus PLA: 3 Wände innen-außen-innen, langsame Außenwand, Überhänge und Brücken. Dauert etwa ein Drittel länger.</div></div><input type="checkbox" data-e="schoen" ${E.schoen ? "checked" : ""}></label>
+      <label class="row" style="cursor:pointer"><div class="grow">Schön (langsam)<div class="small">Für Sichtteile aus PLA: 3 Wände innen-außen-innen, langsame Außenwand, Überhänge und Brücken, Naht läuft schräg aus. Dauert etwa ein Drittel länger.</div></div><input type="checkbox" data-e="schoen" ${E.schoen ? "checked" : ""}></label>
       <div class="row"><div class="grow">Deck- / Bodenschichten</div><select data-e="decke">${opt([3,4,5,6,8].map(v => [v, v]), E.decke)}</select></div>
     </div>
     <h2>Stützen</h2>${seg("stuetzen", [["aus","Keine"],["auto","Automatisch"],["baum","Baum"]])}

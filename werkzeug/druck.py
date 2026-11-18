@@ -209,7 +209,10 @@ def main():
                     help="kontur = nur außen (Standard), loecher = außen und in Bohrungen, alle = alle Wände")
     ap.add_argument("--schoen", action="store_true",
                     help="Sichtteil-Paket für PLA (Lehren aus videos/pla-einstellungen-bastlwastl.html): 3 Wände innen-außen-innen, Arachne, je 5 Deck-/Bodenschichten, "
-                         "Außenwand 45 / Innenwand 100 / erste Schicht 30 mm/s, Überhänge und Brücken höchstens 30 mm/s, Fahrwege meiden Wände, Naht hinten. Druckt deutlich länger.")
+                         "Außenwand 45 / Innenwand 100 / erste Schicht 30 mm/s, Überhänge und Brücken höchstens 30 mm/s, Fahrwege meiden Wände, Naht hinten, Schrägnaht. Druckt deutlich länger.")
+    ap.add_argument("--schraegnaht", action="store_true",
+                    help="Schrägnaht (Scarf Joint) an der Außenwand: Anfang und Ende jeder Runde laufen schräg ineinander statt stumpf aneinander "
+                         "(videos/z-naht-bastlwastl.html). Ist in --schoen enthalten. Nur an runden Konturen; Ecken behalten die normale Naht.")
     ap.add_argument("--extra", action="append", default=[], help="Slicer-Einstellung überschreiben: schluessel=wert (mehrfach)")
     ap.add_argument("--duese", default=None, help="Düsengröße in mm für ALLE Köpfe (c5pro: 0.25 | 0.4 | 0.6 | 0.8; Standard 0.4)")
     ap.add_argument("--duesen", default=None,
@@ -365,6 +368,10 @@ def main():
         schoen_text = (f"Sichtteil-Paket: {prozess['wall_loops']} Wände ({'innen-außen-innen' if prozess.get('wall_sequence') == 'inner-outer-inner wall' else 'Reihenfolge wie Profil'}), Arachne, "
                        f"{prozess['top_shell_layers']} Deck- und {prozess['bottom_shell_layers']} Bodenschichten, Außenwand ≤ 45, Innenwand ≤ 100, erste Schicht ≤ 30, Überhänge/Brücken ≤ 30 mm/s, "
                        "Fahrwege meiden Wände, Naht hinten. Gerechnet, am Gerät noch nicht bestätigt.")
+    naht_text = None
+    if a.schraegnaht or a.schoen:         # Werte aus dem Video: Start bei 10 % der Schichthöhe, Rampe 8 mm; „nur glatte Konturen“ ist Orca-Standard und bleibt an
+        prozess.update({"seam_slope_type": "external", "seam_slope_start_height": "10%", "seam_slope_min_length": "8", "seam_slope_conditional": "1"})
+        naht_text = "Schrägnaht an der Außenkontur (Start 10 % der Schichthöhe, Rampe 8 mm, nur an runden Konturen, nicht in der ersten Schicht). Gerechnet, am Gerät nicht bestätigt."
     rau_text = None
     if a.rau:                             # raue Oberfläche: äußere Wand „zittert“ (Lehren aus videos/fuzzy-skin-bastlwastl.html)
         staerke, abstand = RAU[a.rau]
@@ -484,6 +491,7 @@ def main():
                f"- Füllung: {a.infill} %",
                f"- Wände: {a.waende or 'Profil-Standard'}",
                *([f"- {schoen_text}"] if schoen_text else []),
+               *([f"- {naht_text}"] if naht_text else []),
                *([f"- Raue Oberfläche (Fuzzy Skin): {rau_text}"] if rau_text else []),
                f"- Stützen: {a.stuetzen}",
                f"- Brim: {a.brim}",
