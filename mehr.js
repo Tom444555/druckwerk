@@ -18,8 +18,10 @@ export async function seite(app, C){
   <h2>Modelle</h2><div class="card">
     ${zeile("workflow", "Von der Idee zum Modell", "Alle Wege, Werkzeuge und Ausbau-Vorschläge")}
     ${zeile("bibliothek", "Bibliothek &amp; Werkstatt", "Modelle ansehen, drehen, skalieren, selbst slicen")}
-    ${zeile("kiweg:1", "Modell per KI", "Bild-Idee → Bild → 3D-Modell → Druck")}</div>
+    ${zeile("kiweg:1", "Modell per KI", "Bild-Idee → Bild → 3D-Modell → Druck")}
+    <a class="row chev" href="https://www.printables.com/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none"><div class="grow">Printables.com<div class="small">STL-Modelle – fertige Vorlagen zum Laden; Datei oder Link dann unter „Neu“ an Claude geben</div></div></a></div>
   <h2>Hilfe</h2><div class="card">
+    ${zeile("anleitung", "Anleitung: Mac und Flash Studio", "Teile in Flash Studio öffnen, per WLAN drucken, eigene Änderungen zurückholen")}
     ${zeile("w:problem", "Problem lösen", "Fehlerbilder und was dagegen hilft")}
     <a class="row chev" href="videos/index.html" style="color:inherit;text-decoration:none"><div class="grow">Videos ausgewertet<div class="small">STL mit KI · Foto in 3D · Technische Filamente · Meshy · Fuzzy Skin</div></div></a></div>
   <h2>Gerät &amp; Daten</h2>
@@ -35,6 +37,7 @@ export async function seite(app, C){
   <div style="height:20px"></div></div>`;
   const geh = ziel => { const [art, x] = ziel.split(":");
     if (art === "m") { K.U.mat = x; K.U.zub = "alle"; return C.go("material"); }
+    if (art === "anleitung") return import("./zurueck.js").then(Z => Z.anleitung(C));
     if (art === "w") return K.oeffnen(x, C, "");
     C.go(ziel); };
   app.querySelectorAll("[data-ziel]").forEach(b => b.onclick = b.onkeydown = e => { if (e.type === "keydown" && e.key !== "Enter") return; geh(b.dataset.ziel); });

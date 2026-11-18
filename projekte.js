@@ -122,7 +122,7 @@ export function projekt(app, ctx, id){
   ${amRechner() && p.teile.some(t => t.projekt) ? `<h2>Direkt in Flash Studio öffnen</h2>
   <div class="card">${p.teile.filter(t => t.projekt).map(t => `<a class="row chev" href="${C.esc(studioLink(t))}" style="color:inherit;text-decoration:none"><div class="grow"><b>${mehr ? (p.teile.indexOf(t) + 1) + ". " : ""}${C.esc(teilTitel(t))}</b>
       <div class="small">öffnet das Projekt mit allen Einstellungen in Flash Studio Desktop</div></div></a>`).join("")}</div>
-  <p class="hint">Von Flash Studio geht es per WLAN an den Drucker. <a href="#" id="fsHilfe" style="color:var(--blue)">Einmal einrichten</a></p><div id="ordZ"></div>` : ""}
+  <p class="hint">Von Flash Studio geht es per WLAN an den Drucker. <a href="#" id="fsHilfe" style="color:var(--blue)">Anleitung</a></p><div id="ordZ"></div>` : ""}
   <h2>Mehr</h2>
   ${p.teile.some(t => t.projekt) ? `<button class="btn grey" id="fs">Für Flash Studio am Mac laden (3MF)</button>
   <p class="hint">Dieselben Teile als Projekt-Dateien: in Flash Studio Desktop öffnen, ansehen oder ändern und von dort per WLAN an den Drucker senden.</p>` : ""}
@@ -141,7 +141,7 @@ export function projekt(app, ctx, id){
     knopf.disabled = false; knopf.textContent = text; setTimeout(() => { balken.style.display = "none"; }, 1500); };
   $("#usb").onclick = e => laden(e.currentTarget, "gcode");
   const oz = $("#ordZ"); if (oz) import("./zurueck.js").then(async Z => { if (!oz.isConnected) return; oz.innerHTML = await Z.ordnerZeile(C); Z.ordnerBinden(oz, C, () => { if (oz.isConnected) projekt(app, C, id); }); });
-  const fh = $("#fsHilfe"); if (fh) fh.onclick = e => { e.preventDefault(); studioHilfe(C); };
+  const fh = $("#fsHilfe"); if (fh) fh.onclick = e => { e.preventDefault(); import("./zurueck.js").then(Z => Z.anleitung(C)); };
   const fs = $("#fs"); if (fs) fs.onclick = e => laden(e.currentTarget, "projekt");
   $("#teilen").onclick = async () => { const url = location.origin + location.pathname + "#projekt:" + encodeURIComponent(p.id);
     try { if (navigator.share) { await navigator.share({title: "Druckwerk: " + p.titel, url}); return; } } catch (e) { if (e && e.name === "AbortError") return; }

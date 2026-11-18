@@ -130,3 +130,28 @@ export function ordnerBinden(wurzel, C, neu){
     else if (w === "trennen") { await ordnerTrennen(C); return neu(); }
     const f = await ordnerPruefen(C); if (f.length) fundeZeigen(C, f, neu); else if (w !== "erlauben") C.toast("Keine geänderten Dateien im Ordner"); neu(); });
 }
+
+/* ---------- Anleitung: Mac ↔ Flash Studio ↔ Druckwerk (Wissen → Hilfe, Projektseite) ---------- */
+export function anleitung(C){
+  const d = C.sheet(`<h3>Mac, Flash Studio und Druckwerk</h3>
+    <p>So arbeiten die drei zusammen. Auf iPhone und iPad gibt es Flash Studio Desktop nicht – dort bleibt der USB-Stick.</p>
+    <h2>Einmal einrichten (Mac)</h2>
+    <div class="card"><ol class="steps"><li><b>Flash Studio Desktop</b> installieren, starten, Drucker verbinden.</li>
+      <li>In Flash Studio unter Einstellungen einen <b>Download-Ordner</b> festlegen – ohne ihn nimmt es keine Links an.</li>
+      <li>Druckwerk in <b>Chrome</b> öffnen (Safari geht auch, aber ohne Ordner-Überwachung).</li>
+      <li>Im Projekt <b>„Flash-Studio-Ordner verbinden“</b> und den Ordner wählen, in den du in Flash Studio speicherst.</li>
+      <li>Beim ersten Hochladen fragt Druckwerk nach dem <b>GitHub-Zugang</b> (Token, wie am iPad).</li></ol></div>
+    <h2>Hin: Druckwerk → Flash Studio → Drucker</h2>
+    <div class="card"><ol class="steps"><li>Projekt öffnen → unter <b>„Direkt in Flash Studio öffnen“</b> das Teil anklicken.</li>
+      <li>Der Browser fragt „Flash Studio öffnen?“ → erlauben. Das Projekt lädt mit allen Einstellungen, Farben und Köpfen.</li>
+      <li>In Flash Studio <b>Slicen</b> → <b>Drucken</b>: es geht per WLAN an den Drucker.</li></ol></div>
+    <p class="hint">Passiert beim Klick nichts: „Für Flash Studio am Mac laden (3MF)“ nehmen und die Datei per Doppelklick öffnen.</p>
+    <h2>Zurück: eigene Änderung ins Lager</h2>
+    <div class="card"><ol class="steps"><li>In Flash Studio ändern und slicen.</li>
+      <li><b>„G-Code exportieren“</b> und <b>„Projekt speichern“</b> – in den verbundenen Ordner, <b>Dateinamen beibehalten</b> (z. B. Schecter_370_Korpus…).</li>
+      <li>Zurück zu Druckwerk wechseln: oben erscheint <b>„In Flash Studio geändert“</b> → anklicken.</li>
+      <li>Kurz notieren, <b>was</b> du geändert hast → <b>Hochladen</b>. Nach ein paar Minuten ist die neue Fassung auf allen Geräten und im USB-Paket.</li></ol></div>
+    <p class="hint">Ohne verbundenen Ordner (Safari, iPad): im Teil ganz unten „Geänderte Fassung hochladen“ und die Dateien selbst wählen. Die Notiz liest Claude, bevor er das Teil neu rechnet – sonst ginge deine Änderung verloren. Lädst du nur die .3mf hoch, bleibt die Druckdatei die alte.</p>
+    <div style="height:12px"></div><button class="btn grey" id="anZu">Fertig</button>`);
+  d.querySelector("#anZu").onclick = () => d.remove();
+}
