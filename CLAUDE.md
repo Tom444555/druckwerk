@@ -62,10 +62,17 @@ Alte `_kobrax`-Aufträge laufen nicht auf dem Creator 5 Pro – bei Bedarf aus d
   Link `orcaslicer://open?file=<Adresse der .3mf auf Pages, URL-kodiert>` (`projekte.js → studioLink`). Das Schema steht in der Info.plist des öffentlichen Flash-Studio-Quelltexts
   (FlashForge/Orca-Flashforge: `orcaslicer`, `orcasliceropen`, `bambustudioopen`); Flash Studio braucht einen Download-Ordner in den Einstellungen. **Auf Toms Mac ungetestet**
   (auch ob die aktuelle Fassung das Schema noch so registriert); Rückweg ZIP/3MF bleibt. Nur Richtung druckwerk → Flash Studio, kein Status zurück.
+- **Rückweg Mac → Druckwerk (seit 18.11.2026, `zurueck.js`):** Tom ändert ein Teil selbst in Flash Studio und legt es zurück. (1) Im Teil „Geänderte Fassung hochladen“
+  (.gcode und/oder .3mf + Notiz, jeder Browser). (2) In Chrome/Edge am Rechner „Flash-Studio-Ordner verbinden“ (Projektseite): beim Zurückkommen in die App sucht Druckwerk dort
+  nach .gcode/.3mf, deren Name mit dem `datei`-Namen eines Teils beginnt, und fragt, ob es sie hochladen soll (Safari kann das nicht). Ablage wie beim Slicen:
+  `eingang/<id>/neu.gcode|neu.3mf` + `auftrag.json {art:"zurueck", ordner, notiz}` → Action → `eingang.py → zurueck()` ersetzt die Dateien im Auftrag (Namen bleiben), liest Zeit/Gramm
+  aus der .gcode, schreibt `geaendert {datum, notiz, von, gcode, projekt, id, hinweis}` in `auftrag.json` und einen Abschnitt in BERICHT.md. STL/Vorschau bleiben der alte Stand.
+  **Vor jedem Neu-Slicen eines Teils `geaendert` in `auftrag.json` ansehen** – `druck.py` warnt dann laut; Toms Änderung (Notiz) in die neuen Einstellungen übernehmen und ihm
+  sagen, dass seine Fassung ersetzt wird. Mit echtem Flash Studio, echtem GitHub und am Mac **ungetestet** (nur mit nachgestellter Schnittstelle geprüft).
 - Jede Ansicht hat eine Adresse (`#projekte`, `#projekt:<gruppe>`, `#auftrag:<ordner>`, `#werkstatt:…`, `#kiweg:<schritt>`); Zurück/Vor funktionieren.
 - **Sicherung** (`sicherung.js`): alle `druckwerk_*`-Schlüssel + IndexedDB (eigene Modelle, Tagebuch-Fotos) als eine Datei; `druckwerk_gesichert` = Datum.
 - **Offline/PWA**: `manifest.webmanifest`, `symbol-*.png`, `sw.js` (immer zuerst Netz, Zwischenspeicher nur ohne Netz; .gcode/STL nie).
-  **Bei jeder Änderung an App-Dateien `CACHE` in `sw.js` hochzählen** (Stand `druckwerk-v13`) und neue Dateien dort eintragen.
+  **Bei jeder Änderung an App-Dateien `CACHE` in `sw.js` hochzählen** (Stand `druckwerk-v14`) und neue Dateien dort eintragen.
 - „Aus dem Lager hinzufügen“ heißt in der App jetzt „Weitere Aufträge von Claude“. Überall „Kopf 1–4“, nie „Spule“; Werkstatt-Slicen sendet `c5pro`.
 - Aufträge sind wie die Ideen im Looper **pro Gerät gespeichert** (localStorage `druckwerk_meine`): neue Besucher
   sehen eine leere Liste. Tom speichert einen Auftrag über den Link `https://tom444555.github.io/druckwerk/#hinzu=<ordner>`

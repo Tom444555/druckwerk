@@ -29,8 +29,54 @@ def stl_schreiben(p: Path, v):
     p.write_bytes(b"druckwerk".ljust(80, b" ") + struct.pack("<I", len(v)) + a.tobytes())
 
 
+def zurueck(ordner: Path, j, sid=""):
+    """Tom hat ein Teil selbst geändert (Flash Studio) und lädt .gcode und/oder .3mf zurück: ersetzt die Dateien im Auftrag, liest Zeit/Gramm neu, merkt die Notiz."""
+    o = str(j.get("ordner", ""))
+    if not re.match(r"^[\w\-]+$", o) or not (W / "auftraege" / o / "auftrag.json").exists(): raise ValueError("Auftrag unbekannt")
+    ziel = W / "auftraege" / o
+    info = json.loads((ziel / "auftrag.json").read_text(encoding="utf-8"))
+    basis = info.get("datei") or f"{info['name']}_{info['drucker']}"
+    neu = {}
+    for feld, endung in (("gcode", ".gcode"), ("projekt", ".3mf")):
+        if not j.get(feld): continue
+        q = ordner / re.sub(r"[^\w\-.]+", "_", str(j[feld]))
+        if q.suffix.lower() != endung or not q.exists(): raise ValueError(f"Datei fehlt: {j[feld]}")
+        kopf = q.read_bytes()[:4096]
+        if endung == ".3mf" and kopf[:2] != b"PK": raise ValueError("Das ist keine gültige 3MF-Datei")
+        if endung == ".gcode" and (b"\x00" in kopf or not re.search(rb"(?m)^(;|G\d|M\d)", kopf)): raise ValueError("Das ist keine Druckdatei (.gcode als Text) – in Flash Studio „G-Code exportieren“ wählen")
+        zname = info.get(feld) or basis + endung
+        shutil.copy(q, ziel / zname); info[feld] = zname; neu[feld] = True
+    if not neu: raise ValueError("keine Datei dabei")
+    hinweis = ""
+    if neu.get("gcode"):
+        txt = (ziel / info["gcode"]).read_text(encoding="utf-8", errors="ignore")
+        def wert(muster):
+            m = re.search(muster, txt); return m.group(1).strip() if m else ""
+        zeit = wert(r";\s*(?:estimated printing time \(normal mode\)|model printing time)\s*=\s*([^\n;]+)")
+        gramm = wert(r";\s*filament used \[g\]\s*=\s*([^\n]+)")
+        meter = wert(r";\s*filament used \[mm\]\s*=\s*([^\n]+)")
+        if zeit: info["zeit"] = zeit
+        g = [x.strip() for x in gramm.split(",")] if gramm else []
+        if g and len(g) >= len(info.get("slots", [])):            # Flash Studio nennt alle Köpfe; druckwerk führt nur die belegten Slots
+            g = [g[int(sl["slot"]) - 1] if int(sl["slot"]) <= len(g) else "0" for sl in info.get("slots", [])] if len(g) > len(info.get("slots", [])) else g
+            info["gramm"] = ", ".join(g)
+        elif g: hinweis = "Köpfe der neuen Datei passen nicht zur bisherigen Belegung – Gramm je Kopf nicht übernommen."
+        if meter:
+            try: info["meter"] = ", ".join(f"{float(x)/1000:.2f} m" for x in meter.split(","))
+            except Exception: pass
+        if not zeit: hinweis = (hinweis + " Druckzeit stand nicht in der Datei.").strip()
+    datum = datetime.date.today().isoformat()
+    info["geaendert"] = {"datum": datum, "notiz": str(j.get("notiz", "")).strip()[:500], "von": "Flash Studio", "gcode": bool(neu.get("gcode")), "projekt": bool(neu.get("projekt")), "id": sid, "hinweis": hinweis}
+    (ziel / "auftrag.json").write_text(json.dumps(info, ensure_ascii=False, indent=1), encoding="utf-8")
+    with open(ziel / "BERICHT.md", "a", encoding="utf-8") as f:
+        f.write(f"\n## Von Tom geändert am {datum} (Flash Studio)\n- Ersetzt: {', '.join(k for k in ('gcode', 'projekt') if neu.get(k))}\n- Notiz: {info['geaendert']['notiz'] or '–'}\n"
+                + ("- Achtung: nur das Projekt (.3mf) wurde ersetzt, die Druckdatei (.gcode) ist noch die alte.\n" if not neu.get("gcode") else "") + (f"- {hinweis}\n" if hinweis else ""))
+    return o
+
+
 def einer(ordner: Path):
     j = json.loads((ordner / "auftrag.json").read_text(encoding="utf-8"))
+    if j.get("art") == "zurueck": return zurueck(ordner, j, re.sub(r"[^\w\-]+", "", ordner.name))
     name = re.sub(r"[^a-z0-9_]+", "_", str(j.get("name", "modell")).lower().replace("ä", "ae").replace("ö", "oe").replace("ü", "ue").replace("ß", "ss")).strip("_")[:40] or "modell"
     drucker = j.get("drucker", "kobrax")
     if drucker not in ("kobrax", "c5pro"): raise ValueError("Drucker unbekannt")

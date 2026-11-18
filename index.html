@@ -326,6 +326,8 @@ function detail(ordner){
   app.innerHTML = `
   <button class="back" id="zur">‹ ${imProjekt ? esc(a.gruppe_titel || "Projekt") : "Projekte"}</button>
   <h1>${esc(teilTitel(a))}</h1>
+  ${a.geaendert ? `<div class="warn" style="margin-bottom:12px"><b>Von dir geändert am ${deDatum(a.geaendert.datum)}</b> (${esc(a.geaendert.von || "Flash Studio")})${a.geaendert.notiz ? ": " + esc(a.geaendert.notiz) : ""}.
+    ${a.geaendert.gcode ? "Die 3D-Ansicht und die Einstellungen unten zeigen noch den Stand davor." : "Nur das Projekt ist neu – die Druckdatei ist noch die alte."}${a.geaendert.hinweis ? " " + esc(a.geaendert.hinweis) : ""}</div>` : ""}
   <div id="viewer">${a.vorschau ? `<img id="vbild" src="${pfad}${esc(a.vorschau)}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;border-radius:12px">` : ""}
     <span class="small" id="vtext" style="position:absolute;left:12px;bottom:10px">3D-Modell wird geladen …</span></div>
   <div class="stats">
@@ -371,6 +373,8 @@ function detail(ordner){
   <button class="btn grey" id="teilen">Auf anderes Gerät holen (Link teilen)</button>
   <div id="tbAuf"></div>
   <h2>Verwalten</h2>
+  <button class="btn grey" id="zurueckB">Geänderte Fassung hochladen</button>
+  <p class="hint">Hast du das Teil selbst in Flash Studio geändert? Hier .gcode und Projekt zurück ins Lager legen.</p>
   <button class="btn rot" id="loeschen">Teil ausblenden</button>
   <div style="height:20px"></div>`;
   $("#zur").onclick = () => { tab = zurueck; zeige(); };
@@ -380,6 +384,7 @@ function detail(ordner){
   check();
   $("#buchen").onclick = async () => { try { (await import("./wissen.js")).abbuchen(a, {...kctx(), fertig: check}); } catch(e) { toast("Konnte nicht geladen werden"); } };
   import("./tagebuch.js").then(T => { const el = $("#tbAuf"); if (el) T.imAuftrag(el, a, {...kctx(), nachEintrag: () => gd()}); }).catch(() => {});
+  $("#zurueckB").onclick = async () => (await import("./zurueck.js")).hochladen(sctx(), a);
   $("#loeschen").onclick = () => loeschenFragen(a);
   const gd = () => { const g = gedrucktListe()[a.ordner], el = $("#gdBox"); if (!el) return;
     el.innerHTML = g ? `<div class="card" style="margin-bottom:10px"><div class="row"><span class="pill gruen">gedruckt</span><div class="grow">am ${deDatum(g)}</div>
@@ -613,6 +618,7 @@ function lagerZeigen(offen){
     if (!d.querySelector("[data-h]")) { d.remove(); zeige(); } });
 }
 
+document.addEventListener("visibilitychange", () => { if (!document.hidden && tab === "projekte" && !document.querySelector(".sheet")) zeige(true); });
 window.addEventListener("hashchange", () => { if (/hinzu=/.test(location.hash)) laden(); });
 window.addEventListener("popstate", () => { const h = decodeURIComponent(location.hash.slice(1));
   if (/hinzu=/.test(h) || h === tab) return; tab = h || "projekte"; zeige(true); });

@@ -529,6 +529,11 @@ def main():
             alt = next((x for x in json.loads((ziel.parent / "index.json").read_text(encoding="utf-8")) if x.get("name") == a.name and x.get("gruppe")), {})
         except Exception:
             alt = {}
+    if alt.get("geaendert"):
+        g_ = alt["geaendert"]
+        print(f"\n!!! ACHTUNG: Tom hat dieses Teil am {g_.get('datum')} selbst in Flash Studio geändert: „{g_.get('notiz') or 'ohne Notiz'}“.\n"
+              f"!!! Diese neue Fassung ersetzt seine Datei – seine Änderung in den Einstellungen nachziehen und ihm das sagen.\n")
+        zeilen += ["", f"Hinweis: ersetzt die von Tom am {g_.get('datum')} geänderte Fassung (seine Notiz: {g_.get('notiz') or '–'})."]
     for k_, v_ in (("gruppe", a.gruppe), ("gruppe_titel", a.gruppe_titel), ("nr", a.nr), ("titel", a.titel), ("datei", a.datei)):
         v_ = v_ or alt.get(k_)
         if v_:

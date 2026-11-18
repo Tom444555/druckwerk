@@ -50,7 +50,7 @@ export async function liste(app, ctx){
           <div class="dots">${k.liste.map(x => `<span class="dot" style="background:${C.farbe(x.farbe)}"></span>`).join("")}</div></div></div></div>`; };
   app.innerHTML = `<h1>Projekte</h1>
   <div class="card"><div class="row"><input type="text" id="pSuch" placeholder="Suchen: Projekt, Material, Fehler …" aria-label="Alles durchsuchen" style="flex:1"></div></div>
-  <div id="pTreffer"></div><div id="pHaupt">
+  <div id="pFund"></div><div id="pTreffer"></div><div id="pHaupt">
   ${naechst ? `<h2>Als Nächstes drucken</h2><div class="card"><div class="row oben"><div class="grow"><div><b>${C.esc(teilTitel(naechst))}</b>${offenP.teile.length > 1 ? ` <span class="small">· ${C.esc(offenP.titel)}</span>` : ""}</div>
       <div class="small" style="margin-top:3px">${C.zeitKurz(naechst.zeit)} · ${dez(C.summeGramm(naechst))} g · Düse ${String(naechst.duese_mm || "0.4").replace(".", ",")} mm</div></div>${punkte(naechst)}</div>
     <div style="padding:0 16px 14px"><button class="btn" data-p="${C.esc(offenP.id)}">Zum Projekt</button></div></div>` : ""}
@@ -62,6 +62,10 @@ export async function liste(app, ctx){
   <div style="height:20px"></div></div>`;
   const auf = el => el.onclick = el.onkeydown = e => { if (e.type === "keydown" && e.key !== "Enter") return; e.stopPropagation(); C.go("projekt:" + el.dataset.p); };
   app.querySelectorAll("[data-p]").forEach(auf);
+  if (amRechner()) import("./zurueck.js").then(async Z => { const f = await Z.ordnerPruefen(C), box = $("#pFund"); if (!box || !f.length) return;
+    box.innerHTML = `<div class="card"><div class="row chev" id="pFundR" style="cursor:pointer" role="button" tabindex="0"><div class="grow"><b>In Flash Studio geändert: ${f.length} ${f.length === 1 ? "Teil" : "Teile"}</b>
+      <div class="small">${f.map(x => C.esc(teilTitel(x.a))).join(", ")} – antippen zum Hochladen</div></div></div></div>`;
+    $("#pFundR").onclick = () => Z.fundeZeigen(C, f, () => C.neuLaden()); }).catch(() => {});
   const pe = $("#pEin"); if (pe) pe.onclick = async () => (await import("./wissen.js")).oeffnen("einrichten", C);
   const pw = $("#pWeg"); if (pw) pw.onclick = () => C.verborgenZeigen();
   // Suche über Projekte, Teile und Wissen
@@ -108,7 +112,7 @@ export function projekt(app, ctx, id){
   <div class="card">${p.teile.map((t, i) => `<div class="row" data-o="${C.esc(t.ordner)}">
       <button class="haken ${G[t.ordner] ? "on" : ""}" data-hk="${C.esc(t.ordner)}" aria-label="${C.esc(teilTitel(t))} als gedruckt markieren">${G[t.ordner] ? "✓" : ""}</button>
       <div class="grow chevteil" data-auf="${C.esc(t.ordner)}" role="button" tabindex="0" style="cursor:pointer"><div><b>${mehr ? (i + 1) + ". " : ""}${C.esc(teilTitel(t))}</b></div>
-        <div class="small">${C.zeitKurz(t.zeit)} · ${dez(C.summeGramm(t))} g${k.duesen.length > 1 ? ` · Düse ${dz(t.duese_mm || "0.4")} mm` : ""}</div></div>
+        <div class="small">${t.geaendert ? `<span class="pill">von dir geändert</span> ` : ""}${C.zeitKurz(t.zeit)} · ${dez(C.summeGramm(t))} g${k.duesen.length > 1 ? ` · Düse ${dz(t.duese_mm || "0.4")} mm` : ""}</div></div>
       ${punkte(t)}<span class="small" data-auf="${C.esc(t.ordner)}" style="cursor:pointer;font-size:20px;padding-left:4px" aria-hidden="true">›</span></div>`).join("")}</div>
   <p class="hint">Haken = gedruckt. Teil antippen: 3D-Ansicht, Einstellungen, einzelne Datei, Ergebnis eintragen.</p>
   <h2>Auf den USB-Stick</h2>
@@ -118,7 +122,7 @@ export function projekt(app, ctx, id){
   ${amRechner() && p.teile.some(t => t.projekt) ? `<h2>Direkt in Flash Studio öffnen</h2>
   <div class="card">${p.teile.filter(t => t.projekt).map(t => `<a class="row chev" href="${C.esc(studioLink(t))}" style="color:inherit;text-decoration:none"><div class="grow"><b>${mehr ? (p.teile.indexOf(t) + 1) + ". " : ""}${C.esc(teilTitel(t))}</b>
       <div class="small">öffnet das Projekt mit allen Einstellungen in Flash Studio Desktop</div></div></a>`).join("")}</div>
-  <p class="hint">Von Flash Studio geht es per WLAN an den Drucker. <a href="#" id="fsHilfe" style="color:var(--blue)">Einmal einrichten</a></p>` : ""}
+  <p class="hint">Von Flash Studio geht es per WLAN an den Drucker. <a href="#" id="fsHilfe" style="color:var(--blue)">Einmal einrichten</a></p><div id="ordZ"></div>` : ""}
   <h2>Mehr</h2>
   ${p.teile.some(t => t.projekt) ? `<button class="btn grey" id="fs">Für Flash Studio am Mac laden (3MF)</button>
   <p class="hint">Dieselben Teile als Projekt-Dateien: in Flash Studio Desktop öffnen, ansehen oder ändern und von dort per WLAN an den Drucker senden.</p>` : ""}
@@ -136,6 +140,7 @@ export function projekt(app, ctx, id){
     catch (e) { console.error(e); C.toast("Konnte nicht geladen werden – Internet prüfen", 4000); }
     knopf.disabled = false; knopf.textContent = text; setTimeout(() => { balken.style.display = "none"; }, 1500); };
   $("#usb").onclick = e => laden(e.currentTarget, "gcode");
+  const oz = $("#ordZ"); if (oz) import("./zurueck.js").then(async Z => { if (!oz.isConnected) return; oz.innerHTML = await Z.ordnerZeile(C); Z.ordnerBinden(oz, C, () => { if (oz.isConnected) projekt(app, C, id); }); });
   const fh = $("#fsHilfe"); if (fh) fh.onclick = e => { e.preventDefault(); studioHilfe(C); };
   const fs = $("#fs"); if (fs) fs.onclick = e => laden(e.currentTarget, "projekt");
   $("#teilen").onclick = async () => { const url = location.origin + location.pathname + "#projekt:" + encodeURIComponent(p.id);
