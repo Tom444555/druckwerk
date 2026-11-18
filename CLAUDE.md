@@ -172,6 +172,17 @@ Alte `_kobrax`-Aufträge laufen nicht auf dem Creator 5 Pro – bei Bedarf aus d
   **nicht erprobt und nicht eingebaut**; druckwerk nutzt feste 4-Farben-Zerlegung (`textur_farben.py`, `bild_relief.py`).
 
 ## Lehren aus Videos zum Creator 5 Pro (Auswertungen unter `videos/`)
+**Ablauf „Video auswerten und aneignen“** (Tom schickt eine Transkript-.txt aus a-Shell, oft nur mit „genau wie beim letzten“; bei einem bloßen Link zuerst den a-Shell-Befehl nennen):
+1. Transkript ganz lesen, dann nach Skill `transkript-auswertung` auswerten (A–I, Fundstellen, 📚/❓, neutral, höchstens ein kurzes Zitat, zwei Zeichnungen).
+2. Als Seite `videos/<thema>-<kanal>.html` bauen: Kopf/CSS aus einer vorhandenen Seite übernehmen (z. B. `videos/z-naht-bastlwastl.html`), Karte oben in `videos/index.html`,
+   Stichwort in `mehr.js` (Zeile „Videos ausgewertet“), `CACHE` in `sw.js` hochzählen, mit Playwright 390×844 prüfen (`scrollWidth` 390, Zeichnungen ansehen).
+3. Abgleich: jede prüfbare Aussage gegen Handbuch/Hersteller (OrcaSlicer-Wiki, Bambu-/Flashforge-Wiki) **mit geprüftem Link** und gegen Toms Creator-Profil
+   (Werte aus `project_settings` einer vorhandenen .3mf oder dem Kopf einer .gcode lesen). Das Video zeigt meist Bambu Studio auf einem anderen Drucker – Unterschiede nennen.
+4. Aneignen, wenn es Sinn hat: als Schalter in `werkzeug/druck.py` (und `eingang.py`/Werkstatt, wenn Tom es selbst wählen soll), an einem kleinen Testteil ohne/mit rechnen,
+   in der .gcode nachweisen, Zeit und Gramm vergleichen. Was schon im Profil steckt, nicht doppelt bauen. Unklare Werte (Hörfehler) und Ungeprüftes nicht übernehmen.
+5. Festhalten: Abschnitt hier darunter (was eingebaut, was bewusst nicht, Messwerte), Zeile in `UEBERGABE.md`, Abschnitt H der Seite („was das für Druckwerk heißt“).
+6. An Tom: Link zur Seite, was das Video sagt, was übernommen, was nicht und warum, und dass nichts gedruckt ist; Vergleichsdruck anbieten.
+
 - **My Engines DE, „Technische Filamente“** (ein Tester, Leihgerät, nichts an Toms Gerät bestätigt): PA12-CF, PC-PBT-CF, ASA-CF mit wenig Verzug bei Bett 120 / Kammer 65 / Düse 320 °C;
   PETG außen + TPU innen hielt von Hand untrennbar (andere Quellen: haften kaum → große Kontaktfläche + Beam Interlocking); Stützen bei Faser-Material kaum lösbar →
   **stützfrei konstruieren** oder Stützmaterial in eigenen Kopf; TPU zieht Fäden; druckdicht erst nach Versiegelung. Steht auch in `wissen/filamente.json` und `wissen/c5pro.json`.

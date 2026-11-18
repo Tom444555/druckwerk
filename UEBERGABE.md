@@ -1,19 +1,34 @@
 # Übergabe druckwerk
 
-## STAND 18.11.2026, 10:00 Uhr – App-Umbau auf Projekte (hier einsteigen)
-- **App neu geordnet** (Toms Wunsch: intuitiver): vier Reiter Projekte · Neu · Drucker · Wissen; Projekte fassen Teile zusammen; „Alles für den USB-Stick laden“ (ZIP mit Ordner,
-  nummerierten Dateien, LIESMICH.txt). Details in CLAUDE.md → „App“. Geprüft mit Playwright 390×844 (25 Ansichten, ZIP entpackt und getestet), **nicht auf echtem iPad/iPhone**.
-- **Dateien umbenannt** (Ordner unverändert): Projekt `schecter370` „Schecter 370 mm“ = 1 Wirbel, 2 Saitenfach-Deckel, 3 Hals, 4 Korpus (`Schecter_370_Korpus.gcode` usw.);
-  `schecter160` = Probedruck einfarbig, Wirbel, Gitarre, Wirbel aus der App; `schecter200` (erster Stand); `kalibrier` = Kalibrier-Set 1–5. Neue Teile immer mit `--gruppe … --datei …` slicen.
-- 18.11. 09:45: Am Mac öffnet ein Klick das 3MF-Projekt in Flash Studio Desktop (`orcaslicer://open?file=…`, sw.js v13) – **am Mac ungetestet**, Tom meldet, ob es aufgeht.
-- 18.11. 11:15: Rückweg Mac → Druckwerk eingebaut (`zurueck.js`, `eingang.py → zurueck`, sw.js v14): Hochladen von Hand und Ordner-Beobachtung in Chrome. **Echter Lauf offen** – beim ersten Mal von Tom Action-Log und `status/<id>.json` ansehen; unklar, wie Flash Studio exportierte .gcode benennt und ob Zeit/Gramm im gleichen Kommentarformat stehen.
-- 18.11. 18:30: Video „PLA perfekt drucken“ (Bastlwastl) ausgewertet → `videos/pla-einstellungen-bastlwastl.html`; daraus `druck.py --schoen` und Haken „Schön (langsam)“ in der Werkstatt (sw.js v16). Offen: Vergleichsdruck normal/schön am Gerät. Albatros-Entwurf auf Toms Wunsch verworfen.
-- 18.11. 19:00: Video „Z-Naht unsichtbar“ (Bastlwastl) ausgewertet → `videos/z-naht-bastlwastl.html`; Schrägnaht als `--schraegnaht` und Teil von `--schoen` (sw.js v17). Offen: Zylinder ohne/mit am Gerät vergleichen.
-- Offen: Tom probiert am Gerät, ob der Drucker Unterordner auf dem Stick zeigt; Rückmeldung zur neuen App; alles Weitere wie im Block darunter (nichts gedruckt).
-- Tom: Drucker kam 17.11.; Filament bei filamentor.io bestellt (Kopf 2 „Bordeaux“); GitHub-Token am iPad eingerichtet (ein Slice aus der App lief: `gitarre160_wirbel_2`).
-- Zahnrad-Vorhaben: ca. Ø 10 mm, 20 Zähne, Dauereinsatz in einer Maschine – Tom misst noch (Außen-Ø, Bohrung, Breite, Gegenrad, Achsabstand); Empfehlung PA12 mit 0,25-mm-Düse oder Kaufteil.
+## STAND 18.11.2026, 19:15 Uhr – hier einsteigen (neuer Chat: „druckwerk: Weiterarbeiten“)
+**Am echten Gerät ist weiterhin nichts bestätigt** – Drucker kam am 17.11., bisher keine Rückmeldung zu einem Druck. Alles unten ist gerechnet oder im Browser nachgestellt.
 
-## STAND 17.11.2026, 12:45 Uhr – hier einsteigen (neuer Chat: „druckwerk: Weiterarbeiten“)
+**App (seit 18.11., sw.js `druckwerk-v17`; Details CLAUDE.md → „App“)**
+- Vier Reiter: Projekte · Neu · Drucker · Wissen. Projekt = Aufträge mit gleicher `gruppe`; Teile in Druck-Reihenfolge mit Haken; „Alles für den USB-Stick laden“ (ZIP mit
+  Ordner, `1_…gcode`, LIESMICH.txt). Alles aus dem Lager erscheint von selbst; ausblenden statt löschen.
+- Projekte im Lager: `schecter370` (1 Wirbel, 2 Saitenfach-Deckel, 3 Hals, 4 Korpus), `schecter160` (Probedruck einfarbig mit 0,4-mm-Düse, Wirbel, Gitarre, Wirbel aus der App),
+  `schecter200` (erster Stand), `kalibrier` (1–5). Dateien heißen `Schecter_370_Korpus.gcode` usw. Neue Teile immer mit `--gruppe … --gruppe-titel … --nr … --titel … --datei …`.
+- Mac: „Direkt in Flash Studio öffnen“ (`orcaslicer://open?file=…`) und Rückweg „Geänderte Fassung hochladen“ / „Flash-Studio-Ordner verbinden“ (Chrome), Anleitung unter
+  Wissen → Hilfe. **Beides am Mac ungetestet** – beim ersten echten Lauf Action-Log und `status/<id>.json` ansehen. Vor dem Neu-Slicen `geaendert` in `auftrag.json` beachten.
+- Wissen → Modelle verlinkt Printables.com („STL-Modelle“).
+
+**Slicen (neu am 18.11.)**
+- `druck.py --schoen` = Sichtteil-Paket für PLA mit 0,4-mm-Düse (3 Wände innen-außen-innen, Arachne, ≥ 5 Deck-/Bodenschichten, Außenwand ≤ 45, Innenwand ≤ 100, erste Schicht ≤ 30,
+  Überhänge/Brücken ≤ 30 mm/s, Fahrwege meiden Wände, Naht hinten, Schrägnaht). Bei Deko/Sichtteilen aus PLA von selbst nehmen. `--schraegnaht` einzeln. In der Werkstatt: Haken
+  „Schön (langsam)“, Füllmuster „Blitz“. Messwerte: Winkel-Teil 16:28 statt 12:27 min; Zylinder mit Schrägnaht +11 s.
+- Videos ausgewertet am 18.11.: `videos/pla-einstellungen-bastlwastl.html`, `videos/z-naht-bastlwastl.html`. Ablauf für weitere Videos: CLAUDE.md → „Video auswerten und aneignen“.
+
+**Offen / wartet auf Tom**
+- Erste Drucke: Kalibrier-Teil 1 (Haftung) und 2, dann `Schecter_160_Probe_einfarbig`; Rückmeldung per Tagebuch. Zeigt der Drucker Unterordner auf dem Stick?
+- Vergleichsdrucke: kleines Teil normal/„schön“, Zylinder ohne/mit Schrägnaht (Testdateien noch nicht als Auftrag angelegt – auf Wunsch rechnen).
+- Gitarre: alle Detail-Aufträge brauchen die **0,25-mm-Düse auf allen vier Köpfen** (Tom hat sie evtl. noch nicht). Filament bestellt bei filamentor.io: PLA matt grau/schwarz,
+  PLA Silber (kein Silk), für Kopf 2 „Bordeaux“, PETG als Stütz-Material unter PLA (Stütz-Kopf in druck.py noch nicht eingebaut).
+- Zahnrad: ca. Ø 10 mm, 20 Zähne, Dauereinsatz in einer Maschine – Tom misst noch (Außen-Ø, Bohrung, Breite, Gegenrad, Achsabstand, Wärme); Empfehlung PA12 mit 0,25-mm-Düse oder Kaufteil.
+- Mac-Wege testen (Flash Studio öffnen, Zurücklegen). GitHub-Token am iPad ist eingerichtet (ein Slice aus der App lief: `gitarre160_wirbel_2`), am Mac noch nicht.
+- Verworfen: Albatros-Anhänger (Tom wollte ihn nicht; ein Kaufmodell aus einem Shop wird nicht nachgebaut – eigener Entwurf oder gekaufte Datei von Tom).
+- Nicht gebaut, weil unzuverlässig: direkte Verbindung App ↔ Drucker im WLAN (Tom: „zu wackelig“).
+
+## STAND 17.11.2026, 12:45 Uhr – Gitarren-Miniatur (Einzelheiten zu Modell, Baubefehlen, Aufträgen)
 - **Drucker:** nur Flashforge Creator 5 Pro (`c5pro`). Am echten Gerät ist weiterhin **nichts bestätigt**, auch von der Gitarre ist nichts gedruckt.
 - **Laufendes Hauptvorhaben: Miniatur von Toms E-Gitarre** (T-Form, 24 Bünde, weinrot gewolkte Decke, graue Zarge). Tom: „Details sind absolute Priorität“, Druckzeit egal,
   alles mit 0,25-mm-Düse, alles Machbare auch grenzwertig. Modell: `modelle/gitarre_rundum.py` + `modelle/gitarre_rundum_daten.json` (Arbeitsweise: CLAUDE.md → „Detailgetreue Miniatur …“).
