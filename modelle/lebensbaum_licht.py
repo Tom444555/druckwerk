@@ -172,10 +172,18 @@ def baum(saat):
     for i, (zz, rr) in enumerate([(78, 2.2), (93, 2.1), (107, 2.0), (120, 1.85), (132, 1.7), (142, 1.55), (149, 1.4)]):
         sd = s0 * (1 if i % 2 == 0 else -1); wachse(sd * 2.5, zz + rng.uniform(-2, 2), sd * math.radians(72 - 6 * i + rng.uniform(-8, 8)), rr, lang=1.3)
     # ---- Wurzeln: zwei Stränge legen sich zur Endlos-Schleife (über/unter gekreuzt), außen laufen sie zum Rand aus ----
-    n_ = 2400; s_ = rng.uniform(0, 300)
-    for k in range(n_ + 1):
-        tt = 2 * math.pi * k / n_; x, z = schleife(tt); x2, z2 = schleife(tt + 1e-3); th = math.atan2(x2 - x, z2 - z)
-        stempel(x, z, th, 1.75 * (1 + 0.07 * math.sin(s_ * 0.8)), s_, hmax=2.7 + 1.0 * math.sin(tt)); s_ += 0.19
+    # Die Schleife ist kein glatter Ring: zwei Stränge sind wie ein Tau umeinander gedreht (wie der Stamm – zwei Leben, ein Seil),
+    # liegen abwechselnd vorn und hinten, werden mal dicker, mal dünner, und an der Kreuzung läuft ein Paar über das andere.
+    n_ = 5000; tt_ = 2 * math.pi * np.arange(n_ + 1) / n_; pk = np.array([schleife(v) for v in tt_])
+    pk[:, 1] += 0.5 * np.sin(3 * tt_ + 0.7) * np.abs(np.cos(tt_))                # leicht unregelmäßig, nicht wie mit dem Zirkel
+    bog = np.concatenate([[0], np.cumsum(np.hypot(*np.diff(pk, axis=0).T))]); om = 2 * math.pi * round(bog[-1] / 11.5) / bog[-1]
+    for k in (0, 1):
+        s_ = rng.uniform(0, 300)
+        for q in range(n_):
+            x, z = pk[q]; dx, dz = pk[q + 1] - pk[q]; l_ = math.hypot(dx, dz) or 1e-9; ph = om * bog[q] + k * math.pi
+            ab = 1.3 * math.sin(ph); th = math.atan2(dx, dz) + 0.35 * math.cos(ph)
+            stempel(x + ab * dz / l_, z - ab * dx / l_, th, 1.3 * (1 + 0.12 * math.sin(s_ * 0.5) + 0.06 * math.sin(s_ * 1.7)), s_,
+                    hmax=2.5 + 0.95 * math.cos(ph) + 0.75 * math.sin(tt_[q])); s_ += l_
     for sd in (-1, 1):
         for t0, r0 in [(0.0, 2.3), (0.2, 2.0), (-0.2, 2.0), (0.4, 1.7), (-0.4, 1.7), (0.6, 1.4), (-0.62, 1.5), (0.85, 1.2), (-0.9, 1.3)]:
             x, z = schleife(t0); dx = x - 0.62 * LA; dz = (z - LZ) / LK; n0 = math.hypot(dx, dz) or 1.0
