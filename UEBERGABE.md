@@ -14,6 +14,9 @@
 - `modelle/lebensbaum_licht.py` (Saat 4): stehendes, gebogenes Relief 181 × 41 × 182 mm, Wand 0,85–6,9 mm, stützfrei (Überhänge rechnerisch ≤ 55°), Baum aus `baum_relief.py`,
   Mond/Sterne als dünne Stellen (leuchten mit LED-Teelicht dahinter). STL wird nicht eingecheckt (`python3 modelle/lebensbaum_licht.py --ziel modelle`, 15 s).
 - Auftrag `2026-11-19_lebensbaum_licht_c5pro`: Kopf 1 PLA weiß, 0,12 mm, `--schoen`, Füllung 100 %, Stützen aus, Brim an, `resolution=0.05` → 11 h 25 min, 111 g, .gcode 87 MB.
+- Stand 20:40 Uhr nach Toms Wünschen: Wurzeln laufen spitz bis zum Rahmen aus; zwei Wurzelstränge bilden unter dem Stamm eine **Endlos-Schleife (liegende Acht)**, in den Schlaufen
+  die Namen **Thomas** und **Sandra** als ultrafeine Ein-Strich-Kursive (TeX Gyre Chorus → Mittellinie, Strich 0,6 mm, dünn = leuchtet), Haarstriche verbinden Namen und Strang;
+  Mond als Scheibe mit Kratern, Meeren und Erdschein. Tom wollte „endlose Liebe, kreativ, nicht kitschig“. Namen ändern: `NAMEN` im Skript.
   `pruefen.py` meldet bei Reliefs „Details < 0,45 mm“ und „Wand < 0,8 mm“ (Riefen der Oberfläche, kein Bruchrisiko) – so gelassen. **Nicht gedruckt.**
 
 ## STAND 18.11.2026, 19:15 Uhr

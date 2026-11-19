@@ -2,8 +2,8 @@
 
 **Drucker:** Flashforge Creator 5 Pro  
 **Datei für USB:** `Lebensbaum_Lichtbild.gcode`  
-**Druckzeit (geschätzt):** 11h 25m 13s  
-**Filament:** 111.03 g (37.23 m)  
+**Druckzeit (geschätzt):** 12h 2m 17s  
+**Filament:** 111.37 g (37.34 m)  
 
 
 ## Spulen / Köpfe einlegen

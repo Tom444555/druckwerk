@@ -9,9 +9,9 @@
  "datum": "2026-11-19",
  "ordner": "2026-11-19_lebensbaum_licht_c5pro",
  "gcode": "Lebensbaum_Lichtbild.gcode",
- "zeit": "11h 25m 13s",
- "gramm": "111.03",
- "meter": "37.23 m",
+ "zeit": "12h 2m 17s",
+ "gramm": "111.37",
+ "meter": "37.34 m",
  "duese": "210",
  "bett": "60",
  "schicht": "0.12",
@@ -48,6 +48,6 @@
  "gruppe": "lebensbaum",
  "gruppe_titel": "Lebensbaum Lichtbild",
  "nr": 1,
- "titel": "Lichtbild",
+ "titel": "Lichtbild Thomas & Sandra",
  "datei": "Lebensbaum_Lichtbild"
 }
