@@ -1,6 +1,22 @@
 # Übergabe druckwerk
 
-## STAND 18.11.2026, 19:15 Uhr – hier einsteigen (neuer Chat: „druckwerk: Weiterarbeiten“)
+## STAND 19.11.2026, 20:20 Uhr – hier einsteigen (neuer Chat: „druckwerk: Weiterarbeiten“)
+**Erste Befunde am echten Gerät (Tom, 19.11.):**
+- Mac: Slicer heißt **Flash Studio Desktop** (1.7.22, .pkg von flashforge.com/pages/flash-studio-desktop). Im Mac App Store gibt es nur die iPad-App „Flash Studio“ (= Mobile, kein Slicer);
+  beide heißen im Ordner Programme „Flash Studio“ → Mobile-App erst löschen, dann .pkg installieren.
+- Drucker ist im WLAN und in Flash Studio unter „Device“ verbunden (Firmware 2.0.0-1.3.1, vier 0,4-mm-Düsen, Kopf 1 PLA). Senden: Pfeil neben „Print plate“ → Print plate / Send / Export G-code.
+- **Unsere .3mf öffnet sich in Flash Studio, aber die Prozess-Einstellungen kommen NICHT mit** (Probedruck: Stützen aus, 42 min / 13,1 g statt 51 min / 15,4 g, Warnung „floating regions“).
+  Ursache offen (Vermutung: Projekt aus OrcaSlicer 2.5 ist „neuer“ als Flash Studio → nur Geometrie). **Bis das gelöst ist: Tom die fertige .gcode geben** (USB oder in Flash Studio ziehen
+  und senden), nicht die 3MF neu slicen lassen. Offen: prüfen und beheben; ob der Knopf „In Flash Studio öffnen“ (orcaslicer://) ging oder Tom die 3MF von Hand lud, hat er nicht gesagt.
+- Ob der Probedruck `Schecter_160_Probe_einfarbig` gedruckt wurde: keine Rückmeldung.
+
+**Neu am 19.11.: Projekt `lebensbaum` – „Lebensbaum Lichtbild“** (Toms Auftrag: extrem detailliert, 0,4-mm-Düse, weiß, druckfertig)
+- `modelle/lebensbaum_licht.py` (Saat 4): stehendes, gebogenes Relief 181 × 41 × 182 mm, Wand 0,85–6,9 mm, stützfrei (Überhänge rechnerisch ≤ 55°), Baum aus `baum_relief.py`,
+  Mond/Sterne als dünne Stellen (leuchten mit LED-Teelicht dahinter). STL wird nicht eingecheckt (`python3 modelle/lebensbaum_licht.py --ziel modelle`, 15 s).
+- Auftrag `2026-11-19_lebensbaum_licht_c5pro`: Kopf 1 PLA weiß, 0,12 mm, `--schoen`, Füllung 100 %, Stützen aus, Brim an, `resolution=0.05` → 11 h 25 min, 111 g, .gcode 87 MB.
+  `pruefen.py` meldet bei Reliefs „Details < 0,45 mm“ und „Wand < 0,8 mm“ (Riefen der Oberfläche, kein Bruchrisiko) – so gelassen. **Nicht gedruckt.**
+
+## STAND 18.11.2026, 19:15 Uhr
 **Am echten Gerät ist weiterhin nichts bestätigt** – Drucker kam am 17.11., bisher keine Rückmeldung zu einem Druck. Alles unten ist gerechnet oder im Browser nachgestellt.
 
 **App (seit 18.11., sw.js `druckwerk-v17`; Details CLAUDE.md → „App“)**

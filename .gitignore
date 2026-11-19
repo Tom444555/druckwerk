@@ -3,3 +3,4 @@ __pycache__/
 *.AppImage
 modelle/staender_baum_*.stl
 00000.log
+modelle/lebensbaum_licht.stl

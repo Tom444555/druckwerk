@@ -253,6 +253,15 @@ Alte `_kobrax`-Aufträge laufen nicht auf dem Creator 5 Pro – bei Bedarf aus d
 - **Git:** ein zweiter Chat schreibt ins selbe Repo. Reihenfolge: `git add -A && git commit` → `git fetch` → `git rebase origin/main` → **Status prüfen** (Konfliktmarker in
   UEBERGABE.md entfernen, beide Teile behalten) → `druck.index_neu(Path('auftraege'))` → commit → `git push origin HEAD:main`. Nie mitten im Rebase `git add -A`.
 
+## Stehendes Relief / Lichtbild für die 0,4-mm-Düse (Erfahrung `modelle/lebensbaum_licht.py`, 19.11.2026 – nur gerechnet)
+- **Feinste Details mit der Serien-Düse: Relief STEHEND drucken** (Prinzip Lithophanie): jede 0,12-mm-Schicht zeichnet die Tiefe als Kontur, statt Stufen auf der Deckfläche.
+  Platte im Grundriss biegen (Radius 130 mm) → dünne Wand wird steif und steht von selbst; Bild beim Bauen spiegeln und 180° drehen, damit es seitenrichtig nach vorn (−Y) zeigt.
+- **Stützfrei rechnen:** Dickenfeld von oben nach unten durchgehen, `t[j] = max(t[j], t[j+1] − tan(55°)·RES)` → unter jedem Vorsprung entsteht eine Fase.
+- Weiß: Himmel 1,5 mm, dünnste Stellen (Mond, Sterne) 0,85 mm = zwei Bahnen → leuchten mit Licht dahinter; Füllung 100 %, damit dicke Stellen gleichmäßig dunkel bleiben.
+- Slicen: `--schicht 0.12 --schoen --infill 100 --stuetzen aus --brim an --extra resolution=0.05` (hält die .gcode unter 100 MB; Netz ~800.000 Dreiecke, STL nicht ins Lager).
+- `pruefen.py` meldet bei Reliefs „Details < 0,45“ / „Wand < 0,8“ wegen der Oberflächen-Riefen – bei Reliefs kein Fehler.
+- **Flash Studio am Mac (Befund 19.11.):** unsere .3mf bringt die Prozess-Einstellungen dort nicht mit (Stützen waren aus) → Tom die **.gcode** geben, bis das behoben ist.
+
 ## Mehrfarbige Teile aus 2D-Umrissen (Erfahrung `modelle/gitarre_rotschwarz.py`, 15.11.2026)
 - Eigener Entwurf statt Nachbau: Umrisse als Splines → manifold3d `CrossSection` → Prismen je Farbe; `python3 modelle/gitarre_rotschwarz.py --ziel /tmp/x --bild /tmp/x/v.png`.
 - **Farben in 2D aufteilen, nie 3D-Körper voneinander abziehen** (gab tausende Splitter). Zwischen Farben 0,02 mm Fuge; Polygone mit `FillRule.NonZero`.

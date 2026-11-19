@@ -1,5 +1,58 @@
 [
  {
+  "kopfwechsel": 0,
+  "koepfe_benutzt": [
+   1
+  ],
+  "name": "lebensbaum_licht",
+  "drucker": "c5pro",
+  "drucker_name": "Flashforge Creator 5 Pro",
+  "datum": "2026-11-19",
+  "ordner": "2026-11-19_lebensbaum_licht_c5pro",
+  "gcode": "Lebensbaum_Lichtbild.gcode",
+  "zeit": "11h 25m 13s",
+  "gramm": "111.03",
+  "meter": "37.23 m",
+  "duese": "210",
+  "bett": "60",
+  "schicht": "0.12",
+  "stufe": "Standard",
+  "infill": 100,
+  "duese_mm": "0.4",
+  "waende": 3,
+  "stuetzen": "aus",
+  "brim": "an",
+  "gemischt": false,
+  "slots": [
+   {
+    "slot": 1,
+    "material": "PLA",
+    "farbe": "weiß"
+   }
+  ],
+  "teile": [
+   {
+    "datei": "lebensbaum_licht.stl",
+    "slot": 1
+   }
+  ],
+  "quelle": "",
+  "teile_app": [
+   {
+    "datei": "lebensbaum_licht.app.stl",
+    "slot": 1
+   }
+  ],
+  "vorschau": "vorschau.png",
+  "bild_im_gcode": true,
+  "projekt": "Lebensbaum_Lichtbild.3mf",
+  "gruppe": "lebensbaum",
+  "gruppe_titel": "Lebensbaum Lichtbild",
+  "nr": 1,
+  "titel": "Lichtbild",
+  "datei": "Lebensbaum_Lichtbild"
+ },
+ {
   "kopfwechsel": 312,
   "koepfe_benutzt": [
    1,
