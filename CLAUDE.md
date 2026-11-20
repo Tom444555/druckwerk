@@ -268,6 +268,7 @@ Sagt Tom „mach dir Gedanken“, „hau was raus“ oder nennt nur Rahmen (Düs
 - Slicen: `--schicht 0.12 --schoen --infill 100 --stuetzen aus --brim an --extra resolution=0.05` (hält die .gcode unter 100 MB; Netz ~800.000 Dreiecke, STL nicht ins Lager).
 - `pruefen.py` meldet bei Reliefs „Details < 0,45“ / „Wand < 0,8“ wegen der Oberflächen-Riefen – bei Reliefs kein Fehler.
 - **Flash Studio am Mac (Befund 19.11.):** unsere .3mf bringt die Prozess-Einstellungen dort nicht mit (Stützen waren aus) → Tom die **.gcode** geben, bis das behoben ist.
+  **Ursache (20.11., Quelltext FlashForge/Orca-Flashforge `Plater.cpp`):** Liegt schon etwas auf der Platte, fragt Flash Studio „Als Projekt öffnen / Nur Geometrie importieren“ und hat **Geometrie vorausgewählt**; „Importieren“ (⌘I) und jede weitere 3MF beim Öffnen mehrerer Dateien laden ebenfalls nur die Form. Unsere 3MF selbst wird als Bambu/Orca-Projekt erkannt (Application `BambuStudio-…`), Version 02.08 > 01.10 gibt höchstens einen Hinweis, Einstellungen werden trotzdem geladen. Lösung: „Als Projekt öffnen“ bzw. ⌘O auf leerer Platte, einmalig Einstellungen → Ladeverhalten → „Alles laden“. Hinweis steht in der App (Projektseite, Anleitungen). Am Gerät noch zu bestätigen.
 
 ## Mehrfarbige Teile aus 2D-Umrissen (Erfahrung `modelle/gitarre_rotschwarz.py`, 15.11.2026)
 - Eigener Entwurf statt Nachbau: Umrisse als Splines → manifold3d `CrossSection` → Prismen je Farbe; `python3 modelle/gitarre_rotschwarz.py --ziel /tmp/x --bild /tmp/x/v.png`.

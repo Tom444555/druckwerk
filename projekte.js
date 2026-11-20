@@ -125,7 +125,7 @@ export function projekt(app, ctx, id){
   <p class="hint">Von Flash Studio geht es per WLAN an den Drucker. <a href="#" id="fsHilfe" style="color:var(--blue)">Anleitung</a></p><div id="ordZ"></div>` : ""}
   <h2>Mehr</h2>
   ${p.teile.some(t => t.projekt) ? `<button class="btn grey" id="fs">Für Flash Studio am Mac laden (3MF)</button>
-  <p class="hint">Dieselben Teile als Projekt-Dateien: in Flash Studio Desktop öffnen, ansehen oder ändern und von dort per WLAN an den Drucker senden.</p>` : ""}
+  <p class="hint">Dieselben Teile als Projekt-Dateien: in Flash Studio Desktop öffnen, ansehen oder ändern und von dort per WLAN an den Drucker senden. Beim Öffnen „Als Projekt öffnen“ wählen, nicht „Nur Geometrie“ – sonst fehlen die Einstellungen. Zum Drucken ohne Änderung ist die fertige .gcode sicherer.</p>` : ""}
   <button class="btn grey" id="teilen">Auf anderes Gerät holen (Link teilen)</button>
   <h2>Verwalten</h2>
   <button class="btn rot" id="weg">Projekt ausblenden</button>
@@ -180,6 +180,7 @@ export const studioHilfe = c => { const d = c.sheet(`<h3>Flash Studio am Mac</h3
     <li>In Flash Studio unter Einstellungen einen <b>Download-Ordner</b> festlegen – ohne ihn nimmt es keine Links an.</li>
     <li>Hier auf ein Teil klicken → der Browser fragt „Flash Studio öffnen?“ → erlauben (Haken „immer“).</li>
     <li>Flash Studio lädt das Projekt mit allen Einstellungen und Farben. Dort „Slicen“ und „Drucken“ – es geht per WLAN an den Drucker.</li></ol></div>
+  <p class="warn">Wichtig: Fragt Flash Studio „Als Projekt öffnen“ oder „Nur Geometrie importieren“, immer <b>„Als Projekt öffnen“</b> wählen – vorausgewählt ist Geometrie, dann fehlen alle Einstellungen (z. B. Stützen). Am sichersten: vorher leere Platte (Datei → Neues Projekt) oder Datei → Projekt öffnen (⌘O), nicht „Importieren“ (⌘I). Einmalig in den Einstellungen unter „Ladeverhalten“ (Load Behaviour) „Alles laden“ wählen, dann fragt es nicht mehr. Mehrere 3MF auf einmal: nur die erste kommt mit Einstellungen.</p>
   <p class="hint">Passiert beim Klick nichts, kennt der Mac die Adresse noch nicht: Flash Studio einmal starten, sonst „Für Flash Studio am Mac laden (3MF)“ nehmen und die Datei per Doppelklick öffnen. Ist zusätzlich OrcaSlicer installiert, kann sich stattdessen OrcaSlicer öffnen.</p>
   <div style="height:12px"></div><button class="btn grey" id="shZu">Fertig</button>`); d.querySelector("#shZu").onclick = () => d.remove(); };
 let _crcT = null;

@@ -16,7 +16,7 @@ Bei jedem freien Entwurf zuerst lesen, am Ende ergänzen. Kurzfassung in CLAUDE.
 **Als Nächstes**
 1. Toms Fotos vom Lebensbaum (Tageslicht + Licht dahinter) auswerten: kommen Schrift (Strich 0,6 mm), Mond und Tau sauber? Stärken (Himmel 1,5 / dünn 0,85 mm) nachstellen, Ergebnis in
    `wissen/ideengebung.md` und `wissen/c5pro.json` (Herkunft „Gerät“) eintragen.
-2. 3MF → Flash Studio: herausfinden, warum die Einstellungen fehlen (Vermutung: Projekt aus OrcaSlicer 2.5 gilt dort als „neuer“ → nur Geometrie), beheben oder den Knopf in der App ehrlich beschriften.
+2. ~~3MF → Flash Studio~~ **Ursache gefunden (20.11. früh):** nicht die Version, sondern der Lade-Dialog – bei nicht leerer Platte ist „Nur Geometrie importieren“ vorausgewählt (auch ⌘I und Mehrfach-Öffnen laden nur Form). Hinweis in der App (sw.js v20), CLAUDE.md, `wissen/c5pro.json`. **Tom bestätigen lassen:** 3MF mit „Als Projekt öffnen“ laden → sind Stützen an? Dann Ladeverhalten auf „Alles laden“.
 3. Offen von vorher: Probedruck `Schecter_160_Probe_einfarbig` und Kalibrier-Teile (keine Rückmeldung), ob der Drucker Unterordner auf dem Stick zeigt, 0,25-mm-Düsen für die Gitarre, Zahnrad-Maße.
 4. Einen Einfall aus dem Ideen-Speicher vorschlagen, wenn Tom wieder „hau was raus“ sagt (z. B. Sternenhimmel eines Datums, Sockel mit LED-Teelicht).
 

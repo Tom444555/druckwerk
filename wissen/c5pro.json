@@ -1,5 +1,5 @@
 {
- "stand": "15.11.2026",
+ "stand": "20.11.2026",
  "hinweis": "Zusammengetragen aus Herstellerangaben, Flashforge-Wiki und unabhängigen Tests. Am eigenen Gerät noch nicht nachgemessen – eigene Erfahrungen bitte melden, dann trage ich sie hier ein.",
  "steckbrief": [
   [
@@ -241,6 +241,11 @@
   }
  ],
  "probleme": [
+  {
+   "t": "3MF aus Druckwerk in Flash Studio: Stützen/Einstellungen fehlen",
+   "u": "Beim Öffnen auf eine nicht leere Platte fragt Flash Studio „Als Projekt öffnen“ oder „Nur Geometrie importieren“ – vorausgewählt ist Geometrie. Auch „Importieren“ (⌘I) und jede weitere 3MF beim Öffnen mehrerer Dateien laden nur die Form (Quelltext Orca-Flashforge, Plater.cpp, geprüft 20.11.2026).",
+   "l": "„Als Projekt öffnen“ wählen bzw. Datei → Projekt öffnen (⌘O) auf leerer Platte; einmalig Einstellungen → Ladeverhalten → „Alles laden“. Zum reinen Drucken die fertige .gcode nehmen."
+  },
   {
    "t": "Ein Kopf druckt versetzt zu den anderen",
    "u": "Kalibrierung fehlgeschlagen, nach Umbau nicht wiederholt oder schmutzige Düse.",

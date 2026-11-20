@@ -146,6 +146,7 @@ export function anleitung(C){
       <li>Der Browser fragt „Flash Studio öffnen?“ → erlauben. Das Projekt lädt mit allen Einstellungen, Farben und Köpfen.</li>
       <li>In Flash Studio <b>Slicen</b> → <b>Drucken</b>: es geht per WLAN an den Drucker.</li></ol></div>
     <p class="hint">Passiert beim Klick nichts: „Für Flash Studio am Mac laden (3MF)“ nehmen und die Datei per Doppelklick öffnen.</p>
+    <p class="warn">Wichtig: Fragt Flash Studio „Als Projekt öffnen“ oder „Nur Geometrie importieren“, immer <b>„Als Projekt öffnen“</b> wählen – vorausgewählt ist Geometrie, dann fehlen alle Einstellungen (z. B. Stützen). Am sichersten: vorher leere Platte (Datei → Neues Projekt) oder Datei → Projekt öffnen (⌘O), nicht „Importieren“ (⌘I). Einmalig in den Einstellungen unter „Ladeverhalten“ (Load Behaviour) „Alles laden“ wählen, dann fragt es nicht mehr. Mehrere 3MF auf einmal: nur die erste kommt mit Einstellungen.</p>
     <h2>Zurück: eigene Änderung ins Lager</h2>
     <div class="card"><ol class="steps"><li>In Flash Studio ändern und slicen.</li>
       <li><b>„G-Code exportieren“</b> und <b>„Projekt speichern“</b> – in den verbundenen Ordner, <b>Dateinamen beibehalten</b> (z. B. Schecter_370_Korpus…).</li>
