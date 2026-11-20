@@ -15,7 +15,9 @@ Bei jedem freien Entwurf zuerst lesen, am Ende ergänzen. Kurzfassung in CLAUDE.
 
 **Neu 20.11. vormittags: Drehteller für Foto-Scans, komplett gedruckt** (Projekt `drehteller`, `modelle/drehteller.py`): 1 Sockel Ø212 mit Steckblock (3 h 23 min, 171 g),
 2 Käfig + 48 Walzen (2 h 43 min, 53 g, 0,12 mm, 100 %), 3 Teller Ø226 mit Spülturm, 25 Felder oben und am Rand (4 h 44 min, 170 g weiß + 5 g schwarz),
-4 Kimme und Korn steckbar (15 min, 4 g, Kopf 2 schwarz). Gesamthöhe 28 mm. Nicht gedruckt – Rückmeldung zu Leichtgängigkeit, Steckpassung (Spiel 0,2) und Visier abwarten.
+4 Kimme und Korn steckbar (15 min, 4 g, Kopf 2 schwarz). Gesamthöhe 28 mm.
+Danach (Toms „Mach alles fertig“): Teller mit Zufallsmuster + 4 CCTag3-Markern + 3 Podest-Löchern (6 h 2 min, 168 g + 7 g), 5 Podest + 8 Stifte (1 h 16 min, 53 g),
+6 Maßwürfel 20 mm mit Ziffern (58 min, 13 g + 2 g). Spickzettel `modelle/drehteller_daten/MESHROOM.md`. Offen: erster echter Scan. Nicht gedruckt – Rückmeldung zu Leichtgängigkeit, Steckpassung (Spiel 0,2) und Visier abwarten.
 
 **Als Nächstes**
 1. Toms Fotos vom Lebensbaum (Tageslicht + Licht dahinter) auswerten: kommen Schrift (Strich 0,6 mm), Mond und Tau sauber? Stärken (Himmel 1,5 / dünn 0,85 mm) nachstellen, Ergebnis in

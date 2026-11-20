@@ -1,0 +1,67 @@
+{
+ "kopfwechsel": 84,
+ "koepfe_benutzt": [
+  1,
+  2
+ ],
+ "name": "drehteller_wuerfel",
+ "drucker": "c5pro",
+ "drucker_name": "Flashforge Creator 5 Pro",
+ "datum": "2026-11-20",
+ "ordner": "2026-11-20_drehteller_wuerfel_c5pro",
+ "gcode": "Drehteller_Masswuerfel.gcode",
+ "zeit": "58m 19s",
+ "gramm": "12.70, 1.83",
+ "meter": "4.26 m, 0.61 m",
+ "duese": "210,210",
+ "bett": "60,60",
+ "schicht": "0.12",
+ "stufe": "Standard",
+ "infill": 100,
+ "duese_mm": "0.4",
+ "waende": 3,
+ "stuetzen": "aus",
+ "brim": "aus",
+ "gemischt": false,
+ "slots": [
+  {
+   "slot": 1,
+   "material": "PLA",
+   "farbe": "weiss"
+  },
+  {
+   "slot": 2,
+   "material": "PLA",
+   "farbe": "schwarz"
+  }
+ ],
+ "teile": [
+  {
+   "datei": "drehteller_wuerfel_weiss.stl",
+   "slot": 1
+  },
+  {
+   "datei": "drehteller_wuerfel_schwarz.stl",
+   "slot": 2
+  }
+ ],
+ "quelle": "",
+ "teile_app": [
+  {
+   "datei": "drehteller_wuerfel_weiss.stl",
+   "slot": 1
+  },
+  {
+   "datei": "drehteller_wuerfel_schwarz.stl",
+   "slot": 2
+  }
+ ],
+ "vorschau": "vorschau.png",
+ "bild_im_gcode": true,
+ "projekt": "Drehteller_Masswuerfel.3mf",
+ "gruppe": "drehteller",
+ "gruppe_titel": "Drehteller Foto-Scan",
+ "nr": 6,
+ "titel": "Maßwürfel 20 mm",
+ "datei": "Drehteller_Masswuerfel"
+}

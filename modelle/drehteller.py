@@ -46,6 +46,17 @@ B_KREIS = 0.8
 H_ZAHL = 9.0
 H_ZAHL_RAND = 6.5    # Zahlen auf der Seitenfläche (Rand 10 mm hoch)
 SEG = 360
+# Meshroom-Hilfen
+MARKER_IDS = (0, 1, 2, 3)   # CCTag3 (AliceVision), Ringe aus modelle/drehteller_daten/cctag3.txt
+MARKER_R = 12.0             # Marker-Radius (feinster Ring = 10 % = 1,2 mm)
+MARKER_BAHN = 75.0          # Abstand der Marker-Mitten von der Tellermitte
+MARKER_FELDER = (0, 6, 13, 19)  # Felder (0 = Feld 1), unregelmäßig -> Lage eindeutig
+PUNKTE_ABSTAND = 4.2        # Zufallsmuster: Mindestabstand der Punkte
+PUNKT_R = (0.6, 1.1)        # Punktradius min/max
+PODEST_D, PODEST_H = 70.0, 40.0
+PODEST_STIFT_R = 30.0       # Steckstifte Podest -> Teller auf diesem Radius
+PODEST_FELDER = (0, 8, 16)
+STIFT_D = 4.0
 # Visier (Kimme und Korn, steckbar am Sockel, zeigt auf die Zahl am Tellerrand)
 VIS_WINKEL = -90.0    # Lage am Sockel (vorn)
 ZAPFEN_Q = 8.0        # Steckzapfen 8 × 8 mm, Loch +0,4
@@ -159,7 +170,8 @@ def teller_koerper():
     t = platte + rand + lauf + nabe + m3.Manifold.batch_boolean(rippen, m3.OpType.Add)
     loch = revolve([(0, Z_TELLER_U - 1), (R_ZAPFEN + SPIEL_ZAPFEN + 0.6, Z_TELLER_U - 1),
                     (R_ZAPFEN + SPIEL_ZAPFEN, Z_TELLER_U + 0.5), (R_ZAPFEN + SPIEL_ZAPFEN, Z_LOCH), (0, Z_LOCH)])
-    return t - loch
+    stifte = m3.Manifold.batch_boolean([m3.Manifold.extrude(c, 3.2).translate([0, 0, Z_OBEN - 3.0]) for c in podest_loecher_2d()], m3.OpType.Add)
+    return t - loch - stifte
 
 
 # ---------- Markierungen (2D) ----------
@@ -180,12 +192,36 @@ def zahl(text, h):
     return cs.translate([-(x0 + x1) / 2, -(y0 + y1) / 2])
 
 
+def feld_mitte(i):
+    return math.radians(90 - i * 360 / N_FELDER - 180 / N_FELDER)
+
+
+def marker_orte():
+    return [(MARKER_BAHN * math.cos(feld_mitte(f)), MARKER_BAHN * math.sin(feld_mitte(f))) for f in MARKER_FELDER]
+
+
+def cctag(idx, r):
+    """CCTag3 als schwarze Fläche: Scheibe 100 minus weiß 90, schwarz 80 … (Einheiten % von r)."""
+    radien = [int(x) for x in open(os.path.join(os.path.dirname(__file__), "drehteller_daten", "cctag3.txt")).read().splitlines()[idx].split()]
+    cs = m3.CrossSection.circle(r, 128)
+    weiss = True
+    for q in radien:
+        k = m3.CrossSection.circle(r * q / 100, 128)
+        cs = cs - k if weiss else cs + k
+        weiss = not weiss
+    return cs
+
+
+def podest_loecher_2d(spiel=0.2):
+    return [m3.CrossSection.circle(STIFT_D / 2 + spiel, 32).translate(
+        [PODEST_STIFT_R * math.cos(feld_mitte(f)), PODEST_STIFT_R * math.sin(feld_mitte(f))]) for f in PODEST_FELDER]
+
+
 def markierung_2d():
     teile = []
     for i in range(N_FELDER):
         a = 90 - i * 360 / N_FELDER                       # Linie i = Anfang von Feld i+1, im Uhrzeigersinn
         teile.append(rechteck(20, R_TELLER - 17, B_LINIE).rotate(a))
-        # Zahl mittig im Feld, Kopf nach außen
         am = a - 180 / N_FELDER
         t = str(i + 1) + ("." if i + 1 in (6, 9) else "")  # 6./9. unterscheidbar
         z = zahl(t, H_ZAHL).rotate(am - 90)
@@ -196,7 +232,29 @@ def markierung_2d():
     teile.append(rechteck(-8, 8, 1.0))
     teile.append(rechteck(-8, 8, 1.0).rotate(90))
     teile.append(kreisring(14, B_KREIS))
-    return m3.CrossSection.batch_boolean(teile, m3.OpType.Add)
+    linien = m3.CrossSection.batch_boolean(teile, m3.OpType.Add)
+    # Freiflächen um die Marker (weißer Rand) und um die Podest-Löcher
+    frei = [m3.CrossSection.circle(MARKER_R + 3.5, 96).translate([x, y]) for x, y in marker_orte()]
+    frei += [m3.CrossSection.circle(STIFT_D / 2 + 1.5, 32).translate([PODEST_STIFT_R * math.cos(feld_mitte(f)), PODEST_STIFT_R * math.sin(feld_mitte(f))])
+             for f in PODEST_FELDER]
+    frei = m3.CrossSection.batch_boolean(frei, m3.OpType.Add)
+    linien = linien - frei
+    # Zufallsmuster (feste Saat, damit jeder Neubau gleich aussieht)
+    rng = np.random.default_rng(25)
+    pkt, gitter, g = [], {}, PUNKTE_ABSTAND
+    for _ in range(60000):
+        r = math.sqrt(rng.uniform(18 ** 2, (R_TELLER - 3) ** 2)); w = rng.uniform(0, 2 * math.pi)
+        x, y = r * math.cos(w), r * math.sin(w)
+        gx, gy = int(x // g), int(y // g)
+        if all((x - a) ** 2 + (y - b) ** 2 > g * g for i in (-1, 0, 1) for j in (-1, 0, 1) for a, b in gitter.get((gx + i, gy + j), [])):
+            pkt.append((x, y)); gitter.setdefault((gx, gy), []).append((x, y))
+    punkte = m3.CrossSection.batch_boolean(
+        [m3.CrossSection.circle(rng.uniform(*PUNKT_R), 12).translate([x, y]) for x, y in pkt], m3.OpType.Add)
+    punkte = punkte - linien.offset(1.0, m3.JoinType.Round) - frei.offset(0.5, m3.JoinType.Round) \
+        - (m3.CrossSection.circle(R_TELLER, SEG) - m3.CrossSection.circle(R_TELLER - 2.5, SEG))
+    punkte = m3.CrossSection([p for p in punkte.to_polygons() if abs(m3.CrossSection([p]).area()) > 0.8])  # Splitter weg
+    marker = m3.CrossSection.batch_boolean([cctag(i, MARKER_R).translate([x, y]) for i, (x, y) in zip(MARKER_IDS, marker_orte())], m3.OpType.Add)
+    return linien + punkte + marker
 
 
 def rand_markierung(k):
@@ -221,6 +279,38 @@ def teller():
     ein = m3.Manifold.extrude(markierung_2d(), EINLAGE + 0.05).translate([0, 0, Z_OBEN - EINLAGE])
     roh = ein + rand_markierung(k)
     return k - roh, roh ^ k
+
+
+def podest_druck():
+    """Podest (Ø70 × 40) kopfüber + 8 Steckstifte Ø3 × 18 – ein Druck, Bett-Koordinaten."""
+    r = PODEST_D / 2
+    p = revolve([(0, 0), (r - 0.6, 0), (r, 0.6), (r, PODEST_H - 0.6), (r - 0.6, PODEST_H), (0, PODEST_H)])
+    loecher = [(0, 0)] + [(12 * math.cos(math.radians(a)), 12 * math.sin(math.radians(a))) for a in range(0, 360, 60)] \
+        + [(24 * math.cos(math.radians(a + 15)), 24 * math.sin(math.radians(a + 15))) for a in range(0, 360, 30)]
+    for x, y in loecher:  # Oberseite liegt unten (z0): Löcher Ø3,3 × 10 für die Stifte
+        p = p - m3.Manifold.cylinder(10.0, 1.65, 1.65, 24).translate([x, y, -0.01])
+    for f in PODEST_FELDER:  # Steckzapfen nach oben (= später unten zum Teller)
+        w = -feld_mitte(f)   # gespiegelt, weil kopfüber
+        p = p + m3.Manifold.cylinder(2.8 + 0.01, STIFT_D / 2, STIFT_D / 2 - 0.3, 32).translate(
+            [PODEST_STIFT_R * math.cos(w), PODEST_STIFT_R * math.sin(w), PODEST_H - 0.01])
+    stift = revolve([(0, 0), (1.1, 0), (1.5, 0.4), (1.5, 17.6), (1.1, 18), (0, 18)])
+    stifte = [stift.translate([r + 8 + (i % 4) * 7, -10.5 + (i // 4) * 7, 0]) for i in range(8)]
+    return (p + m3.Manifold.batch_boolean(stifte, m3.OpType.Add)).translate([110, 128, 0])
+
+
+def wuerfel():
+    """Maßwürfel 20 mm, Ziffern 1–6 als schwarze Einlage – (weiß, schwarz) in Bett-Koordinaten."""
+    a, t = 20.0, EINLAGE
+    k = m3.Manifold.cube([a, a, a], True)
+    seiten = [((0, 0, 0), 1), ((180, 0, 0), 6), ((90, 0, 0), 2), ((-90, 0, 0), 5), ((0, 90, 0), 3), ((0, -90, 0), 4)]
+    roh = []
+    for rot, n in seiten:
+        e = m3.Manifold.extrude(zahl(str(n), 12.0), t + 0.2).translate([0, 0, a / 2 - t])
+        roh.append(e.rotate(list(rot)))
+    roh = m3.Manifold.batch_boolean(roh, m3.OpType.Add)
+    w, s = k - roh, roh ^ k
+    v = [128, 128, a / 2]
+    return w.translate(v), s.translate(v)
 
 
 def nach_trimesh(m):
@@ -263,6 +353,9 @@ def main():
         "drehteller_teller_weiss": kopf(weiss),
         "drehteller_teller_schwarz": kopf(schwarz),
         "drehteller_visier": vis.rotate([0, 0, -VIS_WINKEL]).translate([0, 0, 0]),
+        "drehteller_podest_stifte": podest_druck(),
+        "drehteller_wuerfel_weiss": wuerfel()[0],
+        "drehteller_wuerfel_schwarz": wuerfel()[1],
     }
     for n, m in out.items():
         t = nach_trimesh(m)

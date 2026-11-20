@@ -1,5 +1,5 @@
 {
- "kopfwechsel": 47,
+ "kopfwechsel": 48,
  "koepfe_benutzt": [
   1,
   2
@@ -10,9 +10,9 @@
  "datum": "2026-11-20",
  "ordner": "2026-11-20_drehteller_teller_c5pro",
  "gcode": "Drehteller_Teller.gcode",
- "zeit": "4h 44m 25s",
- "gramm": "170.35, 4.97",
- "meter": "57.12 m, 1.67 m",
+ "zeit": "6h 2m 27s",
+ "gramm": "168.34, 6.89",
+ "meter": "56.44 m, 2.31 m",
  "duese": "210,210",
  "bett": "60,60",
  "schicht": "0.20",
@@ -48,7 +48,7 @@
  "quelle": "",
  "teile_app": [
   {
-   "datei": "drehteller_teller_weiss.stl",
+   "datei": "drehteller_teller_weiss.app.stl",
    "slot": 1
   },
   {
