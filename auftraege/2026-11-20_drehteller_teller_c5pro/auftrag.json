@@ -1,0 +1,67 @@
+{
+ "kopfwechsel": 3,
+ "koepfe_benutzt": [
+  1,
+  2
+ ],
+ "name": "drehteller_teller",
+ "drucker": "c5pro",
+ "drucker_name": "Flashforge Creator 5 Pro",
+ "datum": "2026-11-20",
+ "ordner": "2026-11-20_drehteller_teller_c5pro",
+ "gcode": "Drehteller_Teller.gcode",
+ "zeit": "4h 44m 18s",
+ "gramm": "192.24, 3.52",
+ "meter": "64.46 m, 1.18 m",
+ "duese": "210,210",
+ "bett": "60,60",
+ "schicht": "0.20",
+ "stufe": "Standard",
+ "infill": 15,
+ "duese_mm": "0.4",
+ "waende": 3,
+ "stuetzen": "aus",
+ "brim": "aus",
+ "gemischt": false,
+ "slots": [
+  {
+   "slot": 1,
+   "material": "PLA",
+   "farbe": "weiss"
+  },
+  {
+   "slot": 2,
+   "material": "PLA",
+   "farbe": "schwarz"
+  }
+ ],
+ "teile": [
+  {
+   "datei": "drehteller_teller_weiss.stl",
+   "slot": 1
+  },
+  {
+   "datei": "drehteller_teller_schwarz.stl",
+   "slot": 2
+  }
+ ],
+ "quelle": "",
+ "teile_app": [
+  {
+   "datei": "drehteller_teller_weiss.stl",
+   "slot": 1
+  },
+  {
+   "datei": "drehteller_teller_schwarz.stl",
+   "slot": 2
+  }
+ ],
+ "vorschau": "vorschau.png",
+ "bild_im_gcode": true,
+ "projekt": "Drehteller_Teller.3mf",
+ "gruppe": "drehteller",
+ "gruppe_titel": "Drehteller Foto-Scan",
+ "nr": 2,
+ "titel": "Teller",
+ "datei": "Drehteller_Teller"
+}

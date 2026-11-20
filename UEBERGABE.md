@@ -13,6 +13,9 @@
 ein Gedanke zieht sich durch, Technik erzählt mit, Runden mit je einem Satz), Fragen zur Ideenfindung, **Ideen-Speicher** und was nach jedem Druck nachzutragen ist.
 Bei jedem freien Entwurf zuerst lesen, am Ende ergänzen. Kurzfassung in CLAUDE.md („Ideengebung bei freien Entwürfen“).
 
+**Neu 20.11. früh: Drehteller für Foto-Scans** (Projekt `drehteller`, `modelle/drehteller.py`): Sockel Ø200 (2 h 29 min, 119 g, Kopf 1 weiß) und Teller Ø244 mit 25 Feldern,
+Zahlen und Maßstabskreisen (4 h 44 min, 192 g weiß + 4 g schwarz, Köpfe 1/2, ohne Spülturm). Kugellauf Ø180 mit ~88 Kugeln Ø6 mm – Tom muss Kugeln besorgen. Nicht gedruckt.
+
 **Als Nächstes**
 1. Toms Fotos vom Lebensbaum (Tageslicht + Licht dahinter) auswerten: kommen Schrift (Strich 0,6 mm), Mond und Tau sauber? Stärken (Himmel 1,5 / dünn 0,85 mm) nachstellen, Ergebnis in
    `wissen/ideengebung.md` und `wissen/c5pro.json` (Herkunft „Gerät“) eintragen.
