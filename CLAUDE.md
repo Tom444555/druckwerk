@@ -320,6 +320,15 @@ So kam `modelle/gitarre_rundum.py` zustande; für ähnliche Vorhaben (Instrument
 - Meshroom-Hilfen: Zufallsmuster (Punkte Ø1,2–2,2, Abstand ≥ 4,2, feste Saat 25) zwischen den Linien, vier **CCTag3-Marker** (IDs 0–3, Ø24, Ringe aus `modelle/drehteller_daten/cctag3.txt`
   = AliceVision/CCTag) auf R75 in Feld 1/7/14/20 mit weißem Rand; drei Löcher Ø4,4 × 3 auf R30 für das Podest (Ø70 × 40, oben 19 Löcher Ø3,3 für Stifte Ø3 × 18).
   Spickzettel für Tom mit Marker-Koordinaten für SfMTransform `from_markers`: `modelle/drehteller_daten/MESHROOM.md`. Mit echten Fotos ungetestet.
+- **Rastung (20.11.):** 25 V-Kerben (2,4 × 1,0) unter dem Tellerrand in den Feldmitten, am Sockel eine beidseitig eingespannte Brücke (46 × 4 × 1,2 mm, gerechnet ~2 N) mit Nocken r 1
+  (0,6 mm Eingriff) bei `RAST_WINKEL` = −90 + 5·14,4° → rastet genau, wenn das Visier auf eine Zahlenmitte zeigt. Geprüft: Schnitt 0 in Rast, 2,4 mm³ bei halbem Feld (= Federweg).
+- **Zubehör** `modelle/scan_zubehoer.py`: Halter-Baukasten (3 Spitzen, 2 Säulen stapelbar, 2 Klemmen, V-Auflage; Zapfen Ø3,1 in Podest-Löcher Ø3,3) und **Prüfkörper**
+  (Stufenklotz 60 × 52, Stufen 2–10, Löcher Ø2–6, Stifte Ø1,5–4, Pyramide, Halbkugel, Eck-Loch für die Lage); Bezugsmodell `modelle/drehteller_daten/pruefkoerper_bezug.stl`.
+  Projekt-Nr. 7 Halter, 8 Prüfkörper.
+- **`werkzeug/scan_aufbereiten.py <zip|obj> --aus d [--podest] [--vergleich bezug.stl] [--ziel-mm n]`:** Meshroom (Y oben, Einheit 100 mm aus den Markern) → Z oben, mm →
+  Schnitt über Teller (+0,3) bzw. Podest (40,3) → größte Teile → Löcher schließen, sonst Poisson (Tiefe 10, Normalen aus dem Netz, nicht aus der Punktwolke – sonst Blasen)
+  → Boden plan (unterste 0,5 mm fehlen) → STL + `_bericht.json`; `--vergleich` legt per ICP (vier Startlagen) auf das Bezugsmodell und misst mittel/95 %/max.
+  Mit nachgestelltem Scan geprüft (Rauschen 0,08 mm): mittel 0,20, 95 % 0,30, max 0,47 mm. Braucht `shapely` (steht jetzt in setup.sh).
 - **Lehren:** Mit `--zusammen` (Orca `--assemble`) werden die Teile nicht verschoben → STL in Bett-Koordinaten legen (Mitte 128/128), sonst „No object is fully inside“.
   Spülturm (Standardlage x165/y250) passt bis Teller Ø226; Ø230 und größer nur ohne Turm (`enable_prime_tower=0`, Verschieben in die Ecke gab Code -101). Rand-Zahlen = ~49 Kopfwechsel.
   `ironing_type=top` bügelt auch die ganze Sockelplatte (3 h 20 → 9 h 40) – weggelassen. Einlage-Körper „roh“ abziehen, nicht den mit dem Körper geschnittenen (sonst undichte Netze).

@@ -2,8 +2,8 @@
 
 **Drucker:** Flashforge Creator 5 Pro  
 **Datei für USB:** `Drehteller_Teller.gcode`  
-**Druckzeit (geschätzt):** 6h 2m 27s  
-**Filament:** 168.34, 6.89 g (56.44 m, 2.31 m)  
+**Druckzeit (geschätzt):** 6h 3m 4s  
+**Filament:** 168.21, 6.89 g (56.40 m, 2.31 m)  
 
 
 ## Spulen / Köpfe einlegen

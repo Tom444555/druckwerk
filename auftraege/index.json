@@ -136,9 +136,9 @@
   "datum": "2026-11-20",
   "ordner": "2026-11-20_drehteller_teller_c5pro",
   "gcode": "Drehteller_Teller.gcode",
-  "zeit": "6h 2m 27s",
-  "gramm": "168.34, 6.89",
-  "meter": "56.44 m, 2.31 m",
+  "zeit": "6h 3m 4s",
+  "gramm": "168.21, 6.89",
+  "meter": "56.40 m, 2.31 m",
   "duese": "210,210",
   "bett": "60,60",
   "schicht": "0.20",
@@ -202,9 +202,9 @@
   "datum": "2026-11-20",
   "ordner": "2026-11-20_drehteller_sockel_c5pro",
   "gcode": "Drehteller_Sockel.gcode",
-  "zeit": "3h 22m 47s",
-  "gramm": "171.40",
-  "meter": "57.47 m",
+  "zeit": "3h 28m 45s",
+  "gramm": "174.39",
+  "meter": "58.47 m",
   "duese": "210",
   "bett": "60",
   "schicht": "0.20",
@@ -243,6 +243,59 @@
   "nr": 1,
   "titel": "Sockel",
   "datei": "Drehteller_Sockel"
+ },
+ {
+  "kopfwechsel": 0,
+  "koepfe_benutzt": [
+   1
+  ],
+  "name": "drehteller_pruefkoerper",
+  "drucker": "c5pro",
+  "drucker_name": "Flashforge Creator 5 Pro",
+  "datum": "2026-11-20",
+  "ordner": "2026-11-20_drehteller_pruefkoerper_c5pro",
+  "gcode": "Drehteller_Pruefkoerper.gcode",
+  "zeit": "39m 7s",
+  "gramm": "16.22",
+  "meter": "5.44 m",
+  "duese": "210",
+  "bett": "60",
+  "schicht": "0.12",
+  "stufe": "Standard",
+  "infill": 30,
+  "duese_mm": "0.4",
+  "waende": 3,
+  "stuetzen": "aus",
+  "brim": "aus",
+  "gemischt": false,
+  "slots": [
+   {
+    "slot": 1,
+    "material": "PLA",
+    "farbe": "weiss"
+   }
+  ],
+  "teile": [
+   {
+    "datei": "scan_pruefkoerper.stl",
+    "slot": 1
+   }
+  ],
+  "quelle": "",
+  "teile_app": [
+   {
+    "datei": "scan_pruefkoerper.stl",
+    "slot": 1
+   }
+  ],
+  "vorschau": "vorschau.png",
+  "bild_im_gcode": true,
+  "projekt": "Drehteller_Pruefkoerper.3mf",
+  "gruppe": "drehteller",
+  "gruppe_titel": "Drehteller Foto-Scan",
+  "nr": 8,
+  "titel": "Prüfkörper",
+  "datei": "Drehteller_Pruefkoerper"
  },
  {
   "kopfwechsel": 0,
@@ -349,6 +402,59 @@
   "nr": 2,
   "titel": "Käfig und Walzen",
   "datei": "Drehteller_Kaefig_Walzen"
+ },
+ {
+  "kopfwechsel": 0,
+  "koepfe_benutzt": [
+   1
+  ],
+  "name": "drehteller_halter",
+  "drucker": "c5pro",
+  "drucker_name": "Flashforge Creator 5 Pro",
+  "datum": "2026-11-20",
+  "ordner": "2026-11-20_drehteller_halter_c5pro",
+  "gcode": "Drehteller_Halter.gcode",
+  "zeit": "1h 4m 22s",
+  "gramm": "12.74",
+  "meter": "4.27 m",
+  "duese": "210",
+  "bett": "60",
+  "schicht": "0.12",
+  "stufe": "Standard",
+  "infill": 40,
+  "duese_mm": "0.4",
+  "waende": 3,
+  "stuetzen": "aus",
+  "brim": "aus",
+  "gemischt": false,
+  "slots": [
+   {
+    "slot": 1,
+    "material": "PLA",
+    "farbe": "weiss"
+   }
+  ],
+  "teile": [
+   {
+    "datei": "scan_halter.stl",
+    "slot": 1
+   }
+  ],
+  "quelle": "",
+  "teile_app": [
+   {
+    "datei": "scan_halter.stl",
+    "slot": 1
+   }
+  ],
+  "vorschau": "vorschau.png",
+  "bild_im_gcode": true,
+  "projekt": "Drehteller_Halter.3mf",
+  "gruppe": "drehteller",
+  "gruppe_titel": "Drehteller Foto-Scan",
+  "nr": 7,
+  "titel": "Halter-Baukasten",
+  "datei": "Drehteller_Halter"
  },
  {
   "kopfwechsel": 0,

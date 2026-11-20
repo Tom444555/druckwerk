@@ -17,7 +17,10 @@ Bei jedem freien Entwurf zuerst lesen, am Ende ergänzen. Kurzfassung in CLAUDE.
 2 Käfig + 48 Walzen (2 h 43 min, 53 g, 0,12 mm, 100 %), 3 Teller Ø226 mit Spülturm, 25 Felder oben und am Rand (4 h 44 min, 170 g weiß + 5 g schwarz),
 4 Kimme und Korn steckbar (15 min, 4 g, Kopf 2 schwarz). Gesamthöhe 28 mm.
 Danach (Toms „Mach alles fertig“): Teller mit Zufallsmuster + 4 CCTag3-Markern + 3 Podest-Löchern (6 h 2 min, 168 g + 7 g), 5 Podest + 8 Stifte (1 h 16 min, 53 g),
-6 Maßwürfel 20 mm mit Ziffern (58 min, 13 g + 2 g). Spickzettel `modelle/drehteller_daten/MESHROOM.md`. Offen: erster echter Scan. Nicht gedruckt – Rückmeldung zu Leichtgängigkeit, Steckpassung (Spiel 0,2) und Visier abwarten.
+6 Maßwürfel 20 mm mit Ziffern (58 min, 13 g + 2 g). Spickzettel `modelle/drehteller_daten/MESHROOM.md`. Offen: erster echter Scan.
+Danach: Rastung (Sockel 3 h 29 min/174 g, Teller 6 h 3 min/168 + 7 g neu), 7 Halter-Baukasten (1 h 4 min, 13 g), 8 Prüfkörper (39 min, 16 g),
+`werkzeug/scan_aufbereiten.py` (nachgestellter Scan: 0,2 mm mittel). Tom will Motor-Teile zum Bestellen – Einkaufsliste im Chat gegeben (NEMA 17, TMC2209, Arduino Nano,
+12-V-Netzteil, Optokoppler + N3-Kabel); Antrieb (Ritzel/Zahnkranz am Teller) erst bauen, wenn die Teile da sind. Nicht gedruckt – Rückmeldung zu Leichtgängigkeit, Steckpassung (Spiel 0,2) und Visier abwarten.
 
 **Als Nächstes**
 1. Toms Fotos vom Lebensbaum (Tageslicht + Licht dahinter) auswerten: kommen Schrift (Strich 0,6 mm), Mond und Tau sauber? Stärken (Himmel 1,5 / dünn 0,85 mm) nachstellen, Ergebnis in

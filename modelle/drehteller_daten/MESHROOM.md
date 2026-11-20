@@ -28,3 +28,14 @@
 - Danach ist das Modell in echten Maßen (Einheit 100 mm → in Druckwerk Faktor 100) und steht gerade auf dem Teller. Der Würfel muss 20 mm messen.
 - Marker sind Ø24 mm; im Foto sollte der äußere Ring mindestens ~30 Pixel Radius haben (bei der 5D Mark IV unproblematisch).
 - Falls die Marker nicht erkannt werden: Meshroom-Wiki „CCTAG scaling“; notfalls Maßstab über die Kreise R50/75/100 oder den Würfel – mache ich dann beim Aufbereiten.
+
+## Rastung
+Der Teller rastet bei jedem Feld ein (leichter Klick). In Rast zeigt das Visier genau auf eine Zahlenmitte.
+
+## Halter und Prüfkörper
+- Halter (Spitzen, Säulen, Klemmen, V-Auflage) stecken in den Löchern des Podests; Säulen sind stapelbar.
+- Prüfkörper einmal drucken, scannen, als ZIP schicken mit „druckwerk: Prüfkörper-Scan“ – ich messe, wie genau die Kette ist.
+
+## Was ich mit deinem ZIP mache
+`python3 werkzeug/scan_aufbereiten.py scan.zip --aus … --podest` (Teller und Podest weg, dicht, Boden plan, echte mm);
+beim Prüfkörper zusätzlich `--vergleich modelle/drehteller_daten/pruefkoerper_bezug.stl`.

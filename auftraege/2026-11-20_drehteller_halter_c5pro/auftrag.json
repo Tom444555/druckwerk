@@ -1,0 +1,53 @@
+{
+ "kopfwechsel": 0,
+ "koepfe_benutzt": [
+  1
+ ],
+ "name": "drehteller_halter",
+ "drucker": "c5pro",
+ "drucker_name": "Flashforge Creator 5 Pro",
+ "datum": "2026-11-20",
+ "ordner": "2026-11-20_drehteller_halter_c5pro",
+ "gcode": "Drehteller_Halter.gcode",
+ "zeit": "1h 4m 22s",
+ "gramm": "12.74",
+ "meter": "4.27 m",
+ "duese": "210",
+ "bett": "60",
+ "schicht": "0.12",
+ "stufe": "Standard",
+ "infill": 40,
+ "duese_mm": "0.4",
+ "waende": 3,
+ "stuetzen": "aus",
+ "brim": "aus",
+ "gemischt": false,
+ "slots": [
+  {
+   "slot": 1,
+   "material": "PLA",
+   "farbe": "weiss"
+  }
+ ],
+ "teile": [
+  {
+   "datei": "scan_halter.stl",
+   "slot": 1
+  }
+ ],
+ "quelle": "",
+ "teile_app": [
+  {
+   "datei": "scan_halter.stl",
+   "slot": 1
+  }
+ ],
+ "vorschau": "vorschau.png",
+ "bild_im_gcode": true,
+ "projekt": "Drehteller_Halter.3mf",
+ "gruppe": "drehteller",
+ "gruppe_titel": "Drehteller Foto-Scan",
+ "nr": 7,
+ "titel": "Halter-Baukasten",
+ "datei": "Drehteller_Halter"
+}

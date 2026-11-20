@@ -59,6 +59,12 @@ PODEST_FELDER = (0, 8, 16)
 STIFT_D = 4.0
 # Visier (Kimme und Korn, steckbar am Sockel, zeigt auf die Zahl am Tellerrand)
 VIS_WINKEL = -90.0    # Lage am Sockel (vorn)
+# Rastung: federnde Brücke am Sockel greift in 25 Kerben unter dem Tellerrand (Kerben in den Feldmitten)
+RAST_WINKEL = -90.0 + 14.4 * 5   # muss -90 + n·14,4 sein, sonst rastet der Teller neben der Zahl ein
+RAST_R = 111.5        # Mitte des Tellerrands (R110–113)
+RAST_L = 46.0         # freie Länge der Brücke (beidseitig eingespannt)
+RAST_T = 1.2          # Dicke der Brücke (federt ~0,6 mm, ~2 N gerechnet)
+KERBE_B, KERBE_T = 2.4, 1.0
 ZAPFEN_Q = 8.0        # Steckzapfen 8 × 8 mm, Loch +0,4
 VIS_R0 = 106.0        # Zapfen von R106 …
 VIS_ARM_B = 8.0       # Armbreite
@@ -124,7 +130,18 @@ def sockel():
     block = m3.Manifold.cube([VIS_R0 + q + 4 - (LIPPE_A[1] + 0.5), 20, Z_LAUF_U]).translate([LIPPE_A[1] + 0.5, -10, 0])
     loch = m3.Manifold.cube([q + 2 * sp, q + 2 * sp, 40]).translate([VIS_R0 - sp, -q / 2 - sp, -5])
     aufnahme = (block - loch).rotate([0, 0, VIS_WINKEL])
-    return k + lauf + lippen + zapfen + m3.Manifold.batch_boolean(speichen, m3.OpType.Add) + aufnahme - loch.rotate([0, 0, VIS_WINKEL])
+    return k + lauf + lippen + zapfen + m3.Manifold.batch_boolean(speichen, m3.OpType.Add) + aufnahme - loch.rotate([0, 0, VIS_WINKEL]) + rastung()
+
+
+def rastung():
+    """Lasche am Sockel mit zwei Pfosten und einer Brücke (Feder), oben ein Nocken (r 1, 0,6 mm in die Kerbe)."""
+    l, t, b = RAST_L, RAST_T, 4.0
+    z_o = Z_TELLER_U - 1.4                     # Brücken-Oberkante 16,6
+    lasche = m3.Manifold.cube([18, l + 12, T_SOCKEL]).translate([R_SOCKEL - 6, -(l + 12) / 2, 0])
+    pfosten = [m3.Manifold.cube([b, 4, z_o - T_SOCKEL + 0.1]).translate([RAST_R - b / 2, y, T_SOCKEL - 0.1]) for y in (-l / 2 - 4, l / 2)]
+    bruecke = m3.Manifold.cube([b, l + 8, t]).translate([RAST_R - b / 2, -l / 2 - 4, z_o - t])
+    nocken = m3.Manifold.cylinder(b, 1.0, 1.0, 32).rotate([0, 90, 0]).translate([RAST_R - b / 2, 0, z_o + 1.0])
+    return (lasche + m3.Manifold.batch_boolean(pfosten, m3.OpType.Add) + bruecke + nocken).rotate([0, 0, RAST_WINKEL])
 
 
 def kaeffig_taschen():
@@ -168,6 +185,9 @@ def teller_koerper():
         b = m3.Manifold.cube([R_TELLER - 2 - 15, B_RIPPE, H_RIPPE + 0.1]).translate([15, -B_RIPPE / 2, Z_TELLER_U])
         rippen.append(b.rotate([0, 0, i * 360 / N_RIPPEN + 360 / N_RIPPEN / 2]))
     t = platte + rand + lauf + nabe + m3.Manifold.batch_boolean(rippen, m3.OpType.Add)
+    kerbe = m3.Manifold.extrude(m3.CrossSection([[(-KERBE_B / 2, -0.01), (KERBE_B / 2, -0.01), (0, KERBE_T)]]), 6.0)  # Dreieck in (y,z), Länge entlang x
+    kerbe = kerbe.rotate([90, 0, 90]).translate([R_TELLER - 5, 0, Z_TELLER_U])
+    t = t - m3.Manifold.batch_boolean([kerbe.rotate([0, 0, math.degrees(feld_mitte(i))]) for i in range(N_FELDER)], m3.OpType.Add)
     loch = revolve([(0, Z_TELLER_U - 1), (R_ZAPFEN + SPIEL_ZAPFEN + 0.6, Z_TELLER_U - 1),
                     (R_ZAPFEN + SPIEL_ZAPFEN, Z_TELLER_U + 0.5), (R_ZAPFEN + SPIEL_ZAPFEN, Z_LOCH), (0, Z_LOCH)])
     stifte = m3.Manifold.batch_boolean([m3.Manifold.extrude(c, 3.2).translate([0, 0, Z_OBEN - 3.0]) for c in podest_loecher_2d()], m3.OpType.Add)
