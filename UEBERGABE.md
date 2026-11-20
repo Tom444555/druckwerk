@@ -13,9 +13,9 @@
 ein Gedanke zieht sich durch, Technik erzählt mit, Runden mit je einem Satz), Fragen zur Ideenfindung, **Ideen-Speicher** und was nach jedem Druck nachzutragen ist.
 Bei jedem freien Entwurf zuerst lesen, am Ende ergänzen. Kurzfassung in CLAUDE.md („Ideengebung bei freien Entwürfen“).
 
-**Neu 20.11. vormittags: Drehteller für Foto-Scans, komplett gedruckt** (Projekt `drehteller`, `modelle/drehteller.py`): 1 Sockel Ø212 (3 h 20 min, 170 g), 2 Käfig + 48 Walzen
-(2 h 43 min, 53 g, 0,12 mm, 100 %), 3 Teller Ø244 mit 25 Feldern oben und auf dem Rand (5 h 6 min, 191 g weiß + 4 g schwarz, Köpfe 1/2, ohne Spülturm, 49 Kopfwechsel).
-Gesamthöhe 28 mm. Nicht gedruckt – Rückmeldung zu Leichtgängigkeit und Fäden am Rand abwarten (ggf. Taschen-Spiel `SPIEL` / Walzen-Ø anpassen).
+**Neu 20.11. vormittags: Drehteller für Foto-Scans, komplett gedruckt** (Projekt `drehteller`, `modelle/drehteller.py`): 1 Sockel Ø212 mit Steckblock (3 h 23 min, 171 g),
+2 Käfig + 48 Walzen (2 h 43 min, 53 g, 0,12 mm, 100 %), 3 Teller Ø226 mit Spülturm, 25 Felder oben und am Rand (4 h 44 min, 170 g weiß + 5 g schwarz),
+4 Kimme und Korn steckbar (15 min, 4 g, Kopf 2 schwarz). Gesamthöhe 28 mm. Nicht gedruckt – Rückmeldung zu Leichtgängigkeit, Steckpassung (Spiel 0,2) und Visier abwarten.
 
 **Als Nächstes**
 1. Toms Fotos vom Lebensbaum (Tageslicht + Licht dahinter) auswerten: kommen Schrift (Strich 0,6 mm), Mond und Tau sauber? Stärken (Himmel 1,5 / dünn 0,85 mm) nachstellen, Ergebnis in

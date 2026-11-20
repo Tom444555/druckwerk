@@ -312,11 +312,12 @@ So kam `modelle/gitarre_rundum.py` zustande; für ähnliche Vorhaben (Instrument
 
 ## Drehteller für Foto-Scans (`modelle/drehteller.py`, 20.11.2026 – nur gerechnet)
 - Alles gedruckt (Toms Wunsch): Sockel Ø212 mit flachem Laufring (Ø160–200), Führungslippen innen/außen und Zapfen · Käfig mit 24 Taschen + 48 Walzen Ø8 × 6,8 mm
-  (je zwei pro Tasche gegen Schlupf, stehend gedruckt, Fasen 0,5) in einem Druck · Teller Ø244 (Ø248 ordnet Orca nicht an), Oberseite nach unten gedruckt.
+  (je zwei pro Tasche gegen Schlupf, stehend gedruckt, Fasen 0,5) in einem Druck · Teller Ø226 (größter Ø mit Spülturm; `--teller <Ø>`), Oberseite nach unten gedruckt ·
+  Visier „Kimme und Korn“ (Kopf 2 schwarz) steckt mit 8×8-Zapfen in einem Block vorn am Sockel; Visierlinie 0,5 mm über Tellerunterkante, Korn zeigt auf die Zahlenmitte am Rand, flache Kimme (1 mm), damit die Zahl darüber sichtbar bleibt.
 - Markierungen als schwarze Einlage 0,6 mm: oben 25 Linien, Zahlen 1–25 (6./9. mit Punkt), Kreise R50/75/100, Mittelkreuz; **auch auf dem Außenrand** Zahlen 1–25 und senkrechte Linien
-  an denselben Stellen (Toms Wunsch, für Kameras von der Seite). Schnittvolumen aller Paare 0. Projekt `drehteller` (1 Sockel, 2 Käfig und Walzen, 3 Teller).
+  an denselben Stellen (Toms Wunsch, für Kameras von der Seite). Schnittvolumen aller Paare 0. Projekt `drehteller` (1 Sockel, 2 Käfig und Walzen, 3 Teller, 4 Kimme und Korn).
 - **Lehren:** Mit `--zusammen` (Orca `--assemble`) werden die Teile nicht verschoben → STL in Bett-Koordinaten legen (Mitte 128/128), sonst „No object is fully inside“.
-  Spülturm geht neben dem Ø244-Teller nicht (auch nicht in die Ecke verschoben, Code -101) → `--extra enable_prime_tower=0`; durch die Rand-Zahlen 49 Kopfwechsel über 10 mm Höhe.
+  Spülturm (Standardlage x165/y250) passt bis Teller Ø226; Ø230 und größer nur ohne Turm (`enable_prime_tower=0`, Verschieben in die Ecke gab Code -101). Rand-Zahlen = ~49 Kopfwechsel.
   `ironing_type=top` bügelt auch die ganze Sockelplatte (3 h 20 → 9 h 40) – weggelassen. Einlage-Körper „roh“ abziehen, nicht den mit dem Körper geschnittenen (sonst undichte Netze).
 
 ## Faustregeln Einstellungen

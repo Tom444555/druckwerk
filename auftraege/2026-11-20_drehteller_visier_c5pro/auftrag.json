@@ -1,0 +1,58 @@
+{
+ "kopfwechsel": 0,
+ "koepfe_benutzt": [
+  2
+ ],
+ "name": "drehteller_visier",
+ "drucker": "c5pro",
+ "drucker_name": "Flashforge Creator 5 Pro",
+ "datum": "2026-11-20",
+ "ordner": "2026-11-20_drehteller_visier_c5pro",
+ "gcode": "Drehteller_Visier.gcode",
+ "zeit": "15m 4s",
+ "gramm": "0.00, 3.70",
+ "meter": "0.00 m, 1.24 m",
+ "duese": "210,210",
+ "bett": "60,60",
+ "schicht": "0.20",
+ "stufe": "Standard",
+ "infill": 40,
+ "duese_mm": "0.4",
+ "waende": 4,
+ "stuetzen": "aus",
+ "brim": "aus",
+ "gemischt": false,
+ "slots": [
+  {
+   "slot": 1,
+   "material": "PLA",
+   "farbe": "schwarz"
+  },
+  {
+   "slot": 2,
+   "material": "PLA",
+   "farbe": ""
+  }
+ ],
+ "teile": [
+  {
+   "datei": "drehteller_visier.stl",
+   "slot": 2
+  }
+ ],
+ "quelle": "",
+ "teile_app": [
+  {
+   "datei": "drehteller_visier.stl",
+   "slot": 2
+  }
+ ],
+ "vorschau": "vorschau.png",
+ "bild_im_gcode": true,
+ "projekt": "Drehteller_Visier.3mf",
+ "gruppe": "drehteller",
+ "gruppe_titel": "Drehteller Foto-Scan",
+ "nr": 4,
+ "titel": "Kimme und Korn",
+ "datei": "Drehteller_Visier"
+}
