@@ -1,6 +1,26 @@
 # Übergabe druckwerk
 
-## STAND 19.11.2026, 20:20 Uhr – hier einsteigen (neuer Chat: „druckwerk: Weiterarbeiten“)
+## STAND 20.11.2026, 06:40 Uhr – hier einsteigen (neuer Chat: „druckwerk: Weiterarbeiten“)
+**Wo wir stehen**
+- Drucker steht, WLAN läuft, **Flash Studio Desktop 1.7.22** ist am Mac installiert und mit dem Creator 5 Pro verbunden (Kopf 1 = PLA weiß, vier 0,4-mm-Düsen, Firmware 2.0.0-1.3.1).
+- **Toms Weg zur Druckdatei, der funktioniert (bestätigt 20.11.):** App → Auftrag → **„Druckdatei laden“** → USB-Stick oder am Mac ins Flash-Studio-Fenster ziehen und senden.
+  Ein direkter Link auf eine .gcode zeigt im Browser nur Text – immer den App-Link `…/#auftrag:<ordner>` oder `…/#projekt:<gruppe>` geben, nie die nackte Datei-Adresse.
+- **Immer die .gcode geben, nicht die 3MF:** in Flash Studio kommen unsere Prozess-Einstellungen aus der .3mf nicht an (Probedruck: Stützen aus). Ursache offen – nächster technischer Punkt.
+- Aktuelles Stück: **Lebensbaum-Lichtbild „Thomas & Sandra“** (`modelle/lebensbaum_licht.py`, Auftrag `2026-11-19_lebensbaum_licht_c5pro`, Projekt `lebensbaum`):
+  stehendes, gebogenes Relief 181 × 41 × 182 mm in Weiß, Kopf 1, 0,12 mm, `--schoen`, Füllung 100 %, ohne Stützen, Brim an → **12 h 6 min, 112 g**. Tom hat die Datei geladen. **Noch nicht gedruckt.**
+
+**Ideengebung (neu, Tom will, dass wir uns da weiterentwickeln):** `wissen/ideengebung.md` – der Weg zum Lebensbaum (vom Rahmen zur Idee, Bedeutung über die Form statt Symbol,
+ein Gedanke zieht sich durch, Technik erzählt mit, Runden mit je einem Satz), Fragen zur Ideenfindung, **Ideen-Speicher** und was nach jedem Druck nachzutragen ist.
+Bei jedem freien Entwurf zuerst lesen, am Ende ergänzen. Kurzfassung in CLAUDE.md („Ideengebung bei freien Entwürfen“).
+
+**Als Nächstes**
+1. Toms Fotos vom Lebensbaum (Tageslicht + Licht dahinter) auswerten: kommen Schrift (Strich 0,6 mm), Mond und Tau sauber? Stärken (Himmel 1,5 / dünn 0,85 mm) nachstellen, Ergebnis in
+   `wissen/ideengebung.md` und `wissen/c5pro.json` (Herkunft „Gerät“) eintragen.
+2. 3MF → Flash Studio: herausfinden, warum die Einstellungen fehlen (Vermutung: Projekt aus OrcaSlicer 2.5 gilt dort als „neuer“ → nur Geometrie), beheben oder den Knopf in der App ehrlich beschriften.
+3. Offen von vorher: Probedruck `Schecter_160_Probe_einfarbig` und Kalibrier-Teile (keine Rückmeldung), ob der Drucker Unterordner auf dem Stick zeigt, 0,25-mm-Düsen für die Gitarre, Zahnrad-Maße.
+4. Einen Einfall aus dem Ideen-Speicher vorschlagen, wenn Tom wieder „hau was raus“ sagt (z. B. Sternenhimmel eines Datums, Sockel mit LED-Teelicht).
+
+## STAND 19.11.2026, 20:20 Uhr
 **Erste Befunde am echten Gerät (Tom, 19.11.):**
 - Mac: Slicer heißt **Flash Studio Desktop** (1.7.22, .pkg von flashforge.com/pages/flash-studio-desktop). Im Mac App Store gibt es nur die iPad-App „Flash Studio“ (= Mobile, kein Slicer);
   beide heißen im Ordner Programme „Flash Studio“ → Mobile-App erst löschen, dann .pkg installieren.

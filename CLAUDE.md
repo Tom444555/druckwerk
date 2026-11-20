@@ -253,6 +253,13 @@ Alte `_kobrax`-Aufträge laufen nicht auf dem Creator 5 Pro – bei Bedarf aus d
 - **Git:** ein zweiter Chat schreibt ins selbe Repo. Reihenfolge: `git add -A && git commit` → `git fetch` → `git rebase origin/main` → **Status prüfen** (Konfliktmarker in
   UEBERGABE.md entfernen, beide Teile behalten) → `druck.index_neu(Path('auftraege'))` → commit → `git push origin HEAD:main`. Nie mitten im Rebase `git add -A`.
 
+## Ideengebung bei freien Entwürfen (seit 20.11.2026) – ausführlich in `wissen/ideengebung.md`
+Sagt Tom „mach dir Gedanken“, „hau was raus“ oder nennt nur Rahmen (Düse, Farbe, Menge): **vor dem Bauen `wissen/ideengebung.md` lesen**, danach arbeiten und am Ende nachtragen.
+- Vom Rahmen zur Idee: Was kann genau dieses Material / diese Farbe / diese Düse am besten? Toms Geschmack + ein bewährter Baustein aus dem Lager als Kern.
+- **Bedeutung über die Form, nicht über das Symbol** (Tom: „kreativ, nicht kitschig“): das Thema wird Teil des Motivs (Wurzeln als gedrehtes Endlos-Tau statt Herz), ein Gedanke kehrt an mehreren Stellen wieder, die Technik erzählt mit (dünn = hell).
+- Erst ein starker, begründeter Vorschlag mit Bild, dann Runden mit je einem Satz von Tom; kommt der nächste Wunsch mitten in der Arbeit, abbrechen und zusammen umsetzen.
+- Grenzen ehrlich nennen (z. B. Strich 0,6 mm ist das Feinste mit 0,4 mm). Liegen gebliebene Einfälle in den Ideen-Speicher der Datei schreiben und Tom gelegentlich einen davon vorschlagen.
+
 ## Stehendes Relief / Lichtbild für die 0,4-mm-Düse (Erfahrung `modelle/lebensbaum_licht.py`, 19.11.2026 – nur gerechnet)
 - **Feinste Details mit der Serien-Düse: Relief STEHEND drucken** (Prinzip Lithophanie): jede 0,12-mm-Schicht zeichnet die Tiefe als Kontur, statt Stufen auf der Deckfläche.
   Platte im Grundriss biegen (Radius 130 mm) → dünne Wand wird steif und steht von selbst; Bild beim Bauen spiegeln und 180° drehen, damit es seitenrichtig nach vorn (−Y) zeigt.
