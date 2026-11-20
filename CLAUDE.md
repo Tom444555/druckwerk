@@ -333,6 +333,16 @@ So kam `modelle/gitarre_rundum.py` zustande; für ähnliche Vorhaben (Instrument
   Spülturm (Standardlage x165/y250) passt bis Teller Ø226; Ø230 und größer nur ohne Turm (`enable_prime_tower=0`, Verschieben in die Ecke gab Code -101). Rand-Zahlen = ~49 Kopfwechsel.
   `ironing_type=top` bügelt auch die ganze Sockelplatte (3 h 20 → 9 h 40) – weggelassen. Einlage-Körper „roh“ abziehen, nicht den mit dem Körper geschnittenen (sonst undichte Netze).
 
+## Messmatte und Makroschlitten (`modelle/foto_helfer.py`, 20.11.2026 – nur gerechnet)
+- **Messmatte** 250 × 180 × 3, weiß, schwarze Einlage: 4 ArUco-Marker (DICT_4X4_50, IDs 0–3, 30 mm, 0 oben links im Uhrzeigersinn) + Messstriche 1/5/10 mm; Lage der
+  Markerecken in `modelle/messmatte.json` (bei Maßänderung neu schreiben: `foto_helfer.py --ziel …` legt sie mit ab). Projekt `messmatte`.
+- **`werkzeug/messmatte.py foto.jpg --aus d [--hell] [--dicke 3] [--hoehe <mm> --kamera-abstand 600]`:** Marker finden → Homographie → 10 px/mm Draufsicht → Otsu im Messfeld →
+  Außenumriss + Löcher in mm → `_umriss.json`, `.svg`, `_entzerrt.jpg`, optional STL. Nachgestelltes Foto (schräg, Rauschen): Maße auf ±0,2 mm, Löcher Ø10/6 → 9,88/5,92,
+  Lochabstand 40 → 39,84. Dicke Teile: Oberkante wirkt größer → `--hoehe`. Für Passteile: Umriss als Vorlage, Bohrungen/Passungen in CAD sauber setzen.
+- **Makroschlitten** (Focus Stacking): Schiene 190 × 70 mit Schwalbenschwanz 30/38 × 6 (45°), Schlitten 70 × 70 (Spiel 0,3), Spindel M6 bei y −27/z 22 mit Mutter im Schlitten,
+  Knopf Ø40 mit 10 Strichen (= 0,1 mm), Stativmutter 1/4" unten, Kameraschraube 1/4" von unten (Senkung im Schwalbenschwanz-Kanal). Kaufteile: M6-Gewindestange 220 mm,
+  4 Muttern M6, Mutter 1/4"-20, Stativschraube 1/4" mit Ring. Projekt `makroschlitten`. Ungetestet, ob der Schlitten unter 1,5 kg Kamera kippelt.
+
 ## Faustregeln Einstellungen
 - Deko/Figur: 0.16–0.20, Infill 10–15 %, Baumstützen bei Überhängen.
 - Funktionsteil/Halter: 0.20, Infill 25–40 %, `--waende 4`.

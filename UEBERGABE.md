@@ -22,6 +22,9 @@ Danach: Rastung (Sockel 3 h 29 min/174 g, Teller 6 h 3 min/168 + 7 g neu), 7 Hal
 `werkzeug/scan_aufbereiten.py` (nachgestellter Scan: 0,2 mm mittel). Tom will Motor-Teile zum Bestellen – Einkaufsliste im Chat gegeben (NEMA 17, TMC2209, Arduino Nano,
 12-V-Netzteil, Optokoppler + N3-Kabel); Antrieb (Ritzel/Zahnkranz am Teller) erst bauen, wenn die Teile da sind. Nicht gedruckt – Rückmeldung zu Leichtgängigkeit, Steckpassung (Spiel 0,2) und Visier abwarten.
 
+**Neu 20.11. mittags: Messmatte + Makroschlitten** (`modelle/foto_helfer.py`): Messmatte (2 h 26 min, 107 + 3 g, Köpfe 1/2) mit `werkzeug/messmatte.py`
+(Foto → Umriss in mm, nachgestellt ±0,2 mm); Makroschlitten Schiene (2 h 18 min, 115 g) + Schlitten/Knopf (1 h 43 min, 69 g), Kaufteile M6/1/4". Nichts gedruckt.
+
 **Als Nächstes**
 1. Toms Fotos vom Lebensbaum (Tageslicht + Licht dahinter) auswerten: kommen Schrift (Strich 0,6 mm), Mond und Tau sauber? Stärken (Himmel 1,5 / dünn 0,85 mm) nachstellen, Ergebnis in
    `wissen/ideengebung.md` und `wissen/c5pro.json` (Herkunft „Gerät“) eintragen.

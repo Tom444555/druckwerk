@@ -1,0 +1,53 @@
+{
+ "kopfwechsel": 0,
+ "koepfe_benutzt": [
+  1
+ ],
+ "name": "makro_schlitten",
+ "drucker": "c5pro",
+ "drucker_name": "Flashforge Creator 5 Pro",
+ "datum": "2026-11-20",
+ "ordner": "2026-11-20_makro_schlitten_c5pro",
+ "gcode": "Makroschlitten_Schlitten_Knopf.gcode",
+ "zeit": "1h 42m 47s",
+ "gramm": "68.67",
+ "meter": "23.02 m",
+ "duese": "210",
+ "bett": "60",
+ "schicht": "0.20",
+ "stufe": "Standard",
+ "infill": 40,
+ "duese_mm": "0.4",
+ "waende": 4,
+ "stuetzen": "aus",
+ "brim": "aus",
+ "gemischt": false,
+ "slots": [
+  {
+   "slot": 1,
+   "material": "PLA",
+   "farbe": "weiss"
+  }
+ ],
+ "teile": [
+  {
+   "datei": "makro_schlitten_knopf.stl",
+   "slot": 1
+  }
+ ],
+ "quelle": "",
+ "teile_app": [
+  {
+   "datei": "makro_schlitten_knopf.stl",
+   "slot": 1
+  }
+ ],
+ "vorschau": "vorschau.png",
+ "bild_im_gcode": true,
+ "projekt": "Makroschlitten_Schlitten_Knopf.3mf",
+ "gruppe": "makroschlitten",
+ "gruppe_titel": "Makroschlitten",
+ "nr": 2,
+ "titel": "Schlitten und Knopf",
+ "datei": "Makroschlitten_Schlitten_Knopf"
+}
