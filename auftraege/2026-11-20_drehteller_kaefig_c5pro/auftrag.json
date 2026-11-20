@@ -1,0 +1,53 @@
+{
+ "kopfwechsel": 0,
+ "koepfe_benutzt": [
+  1
+ ],
+ "name": "drehteller_kaefig",
+ "drucker": "c5pro",
+ "drucker_name": "Flashforge Creator 5 Pro",
+ "datum": "2026-11-20",
+ "ordner": "2026-11-20_drehteller_kaefig_c5pro",
+ "gcode": "Drehteller_Kaefig_Walzen.gcode",
+ "zeit": "2h 42m 57s",
+ "gramm": "52.82",
+ "meter": "17.71 m",
+ "duese": "210",
+ "bett": "60",
+ "schicht": "0.12",
+ "stufe": "Standard",
+ "infill": 100,
+ "duese_mm": "0.4",
+ "waende": 3,
+ "stuetzen": "aus",
+ "brim": "aus",
+ "gemischt": false,
+ "slots": [
+  {
+   "slot": 1,
+   "material": "PLA",
+   "farbe": "weiss"
+  }
+ ],
+ "teile": [
+  {
+   "datei": "drehteller_kaefig_walzen.stl",
+   "slot": 1
+  }
+ ],
+ "quelle": "",
+ "teile_app": [
+  {
+   "datei": "drehteller_kaefig_walzen.app.stl",
+   "slot": 1
+  }
+ ],
+ "vorschau": "vorschau.png",
+ "bild_im_gcode": true,
+ "projekt": "Drehteller_Kaefig_Walzen.3mf",
+ "gruppe": "drehteller",
+ "gruppe_titel": "Drehteller Foto-Scan",
+ "nr": 2,
+ "titel": "Käfig und Walzen",
+ "datei": "Drehteller_Kaefig_Walzen"
+}

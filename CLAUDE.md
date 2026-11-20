@@ -311,10 +311,13 @@ So kam `modelle/gitarre_rundum.py` zustande; für ähnliche Vorhaben (Instrument
 - Scans glänzender/dunkler/dünner Teile (Saiten, Chrom, Lack) haben Löcher und Beulen. Für Maßhaltiges den Scan nur als Vorlage nehmen und das Teil konstruieren.
 
 ## Drehteller für Foto-Scans (`modelle/drehteller.py`, 20.11.2026 – nur gerechnet)
-- Teller Ø244 (Ø248 ordnet Orca nicht mehr an), Oberseite nach unten gedruckt, 25 Linien + Zahlen 1–25 (6./9. mit Punkt) + Kreise R50/75/100 als schwarze Einlage 0,6 mm.
-  Sockel Ø200 mit Zapfen; Kugellauf Ø180 aus zwei 90°-V-Rillen für ~88 Kugeln Ø6 mm (Stahl oder Softair-BB). Projekt `drehteller`.
-- **Lehre:** Mit `--zusammen` (Orca `--assemble`) werden die Teile nicht verschoben → STL in Bett-Koordinaten legen (Mitte 128/128), sonst „No object is fully inside“.
-  Große mehrfarbige Teile: Spülturm passt nicht mehr daneben → `--extra enable_prime_tower=0` (vertretbar, wenn die Kopfwechsel nur in wenigen Schichten liegen).
+- Alles gedruckt (Toms Wunsch): Sockel Ø212 mit flachem Laufring (Ø160–200), Führungslippen innen/außen und Zapfen · Käfig mit 24 Taschen + 48 Walzen Ø8 × 6,8 mm
+  (je zwei pro Tasche gegen Schlupf, stehend gedruckt, Fasen 0,5) in einem Druck · Teller Ø244 (Ø248 ordnet Orca nicht an), Oberseite nach unten gedruckt.
+- Markierungen als schwarze Einlage 0,6 mm: oben 25 Linien, Zahlen 1–25 (6./9. mit Punkt), Kreise R50/75/100, Mittelkreuz; **auch auf dem Außenrand** Zahlen 1–25 und senkrechte Linien
+  an denselben Stellen (Toms Wunsch, für Kameras von der Seite). Schnittvolumen aller Paare 0. Projekt `drehteller` (1 Sockel, 2 Käfig und Walzen, 3 Teller).
+- **Lehren:** Mit `--zusammen` (Orca `--assemble`) werden die Teile nicht verschoben → STL in Bett-Koordinaten legen (Mitte 128/128), sonst „No object is fully inside“.
+  Spülturm geht neben dem Ø244-Teller nicht (auch nicht in die Ecke verschoben, Code -101) → `--extra enable_prime_tower=0`; durch die Rand-Zahlen 49 Kopfwechsel über 10 mm Höhe.
+  `ironing_type=top` bügelt auch die ganze Sockelplatte (3 h 20 → 9 h 40) – weggelassen. Einlage-Körper „roh“ abziehen, nicht den mit dem Körper geschnittenen (sonst undichte Netze).
 
 ## Faustregeln Einstellungen
 - Deko/Figur: 0.16–0.20, Infill 10–15 %, Baumstützen bei Überhängen.

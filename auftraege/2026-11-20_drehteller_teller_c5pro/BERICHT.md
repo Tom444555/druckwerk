@@ -2,8 +2,8 @@
 
 **Drucker:** Flashforge Creator 5 Pro  
 **Datei für USB:** `Drehteller_Teller.gcode`  
-**Druckzeit (geschätzt):** 4h 44m 18s  
-**Filament:** 192.24, 3.52 g (64.46 m, 1.18 m)  
+**Druckzeit (geschätzt):** 5h 5m 32s  
+**Filament:** 190.55, 3.99 g (63.89 m, 1.34 m)  
 
 
 ## Spulen / Köpfe einlegen
@@ -28,7 +28,7 @@
 - `drehteller_teller_weiss.stl` → Slot 1 (PLA)
 - `drehteller_teller_schwarz.stl` → Slot 2 (PLA)
 
-Kopfwechsel in der .gcode: 3, benutzte Köpfe: 1, 2
+Kopfwechsel in der .gcode: 47, benutzte Köpfe: 1, 2
 
 ## Am Drucker
 

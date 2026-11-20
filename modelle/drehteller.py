@@ -2,16 +2,18 @@
 """Drehteller für Foto-Scans (Meshroom) – Creator 5 Pro, 20.11.2026.
 
 Zwei Teile:
-  Sockel  – Platte Ø200 mit Laufring (V-Rille) und Mittelzapfen.
-  Teller  – Ø244 (größter Kreis, den der Slicer auf 256 mm noch anordnet), Unterseite mit Rippen, Laufring (V-Rille) und Nabe.
-Dazwischen laufen 6-mm-Kugeln (Stahlkugeln oder Softair-BBs) in den beiden 90°-V-Rillen auf Ø180.
+  Sockel  – Platte Ø212 mit flachem Laufring, Führungslippen und Mittelzapfen.
+  Käfig   – Ring mit 24 Taschen, dazu 48 Walzen (ein Druck).
+  Teller  – Ø244, Unterseite mit Rippen, flachem Laufring und Nabe.
+Dazwischen laufen 48 gedruckte Walzen (Ø8 × 6,8 mm, je zwei in 24 Taschen) in einem Käfig auf flachen
+Laufringen (Ø160–200); Lippen am Sockel führen den Käfig innen und außen. Alles gedruckt, keine Kaufteile.
 Oberseite: 25 Felder (Linien), Zahlen 1–25 am Rand, Kreise R50/75/100 mm als Maßstab, Mittelkreuz –
 als schwarze Einlage bündig im weißen Teller (Teller wird mit der Oberseite nach unten gedruckt).
 
 Aufruf: python3 modelle/drehteller.py --ziel /tmp/dt [--bild /tmp/dt/v.png]
-Slicen: Sockel 0.20/20 %/3 Wände; Teller --zusammen 0.20/15 %/3 Wände --extra enable_prime_tower=0
-(mit Spülturm passt der Ø244-Teller nicht auf die Platte; Kopfwechsel nur in den ersten 3 Schichten).
-Montage: ~88 Kugeln Ø6 (Stahl oder Softair-BB) in die Sockel-Rille, Teller aufsetzen (Zapfen in die Nabe).
+Slicen: Sockel 0.20/20 %/3 Wände + Bügeln; Käfig+Walzen 0.12/100 %; Teller --zusammen 0.20/15 %/3 Wände + Bügeln
+--extra enable_prime_tower=0 (mit Spülturm passt der Ø244-Teller nicht; Kopfwechsel nur in den ersten 3 Schichten).
+Montage: Käfig zwischen die Lippen legen, in jede Tasche zwei Walzen, Teller aufsetzen (Zapfen in die Nabe).
 """
 import argparse, math, os
 import numpy as np
@@ -21,18 +23,20 @@ from matplotlib.textpath import TextPath
 from matplotlib.font_manager import FontProperties
 
 # ---------- Maße (mm) ----------
-R_TELLER = 122.0      # Teller Ø244 (größter Kreis, den Orca auf der 256er-Platte noch anordnet)
-R_SOCKEL = 100.0      # Sockel Ø200
-R_LAUF = 90.0         # Mitte der Kugelbahn (Ø180)
-B_LAUF = 14.0         # Breite der Laufringe
-KUGEL = 6.0           # Kugel-Ø
-SPALT = 1.5           # Luft zwischen den Laufringen
+R_TELLER = 122.0      # Teller Ø244 (größter Kreis, den der Slicer auf 256 mm noch anordnet)
+R_SOCKEL = 106.0      # Sockel Ø212
+R_I, R_A = 80.0, 100.0  # Laufbahn innen/außen (flache Ringe oben am Sockel, unten am Teller)
+D_WALZE = 8.0         # Walzen-Ø
+L_WALZE = 6.8         # Walzenlänge (zwei Walzen je Tasche -> wenig Schlupf)
+N_TASCHEN = 24
+SPIEL = 0.3           # Luft Walze <-> Käfig je Seite
+T_KAEFIG = 3.0
 T_PLATTE = 4.0        # Tellerplatte
 H_RIPPE = 6.0         # Rippen unter dem Teller
 N_RIPPEN = 16
 B_RIPPE = 3.0
 T_SOCKEL = 4.0
-H_SOCKELRING = 6.0
+H_LAUF = 6.0          # Höhe des Sockel-Laufrings über der Platte
 R_ZAPFEN = 6.0
 SPIEL_ZAPFEN = 0.3
 N_FELDER = 25
@@ -40,17 +44,25 @@ EINLAGE = 0.6         # Tiefe der schwarzen Einlage (3 Schichten à 0,2)
 B_LINIE = 1.2
 B_KREIS = 0.8
 H_ZAHL = 9.0
+H_ZAHL_RAND = 6.5    # Zahlen auf der Seitenfläche (Rand 10 mm hoch)
 SEG = 360
 
 # abgeleitete Höhen (Gebrauchslage, Tisch = z0)
-Z_SOCKELRING = T_SOCKEL + H_SOCKELRING          # 10
-Z_KUGEL = Z_SOCKELRING + SPALT / 2              # Kugelmitte
-V = (KUGEL / 2) * math.sqrt(2)                  # Abstand Kugelmitte -> Rillenspitze bei 90°
-Z_TELLER_U = Z_SOCKELRING + SPALT               # 11.5 Unterkante Rippen/Laufring
-Z_PLATTE_U = Z_TELLER_U + H_RIPPE               # 17.5
-Z_OBEN = Z_PLATTE_U + T_PLATTE                  # 21.5
-Z_ZAPFEN = Z_OBEN - 2.0                         # Zapfenspitze
-Z_LOCH = Z_OBEN - 1.5                           # Sackloch in der Nabe (1,5 mm Deckel)
+Z_LAUF_U = T_SOCKEL + H_LAUF                    # 10  Lauffläche Sockel
+Z_ACHSE = Z_LAUF_U + D_WALZE / 2                # 14  Walzenachse
+Z_TELLER_U = Z_LAUF_U + D_WALZE                 # 18  Lauffläche Teller = Unterkante Rippen
+Z_PLATTE_U = Z_TELLER_U + H_RIPPE               # 24
+Z_OBEN = Z_PLATTE_U + T_PLATTE                  # 28
+Z_LIPPE = Z_ACHSE + 1.0                         # Führungslippen am Sockel (innen/außen) bis 15
+Z_ZAPFEN = Z_OBEN - 2.0
+Z_LOCH = Z_OBEN - 1.5
+# Käfig
+K_I, K_A = R_I - 0.5, R_A + 0.5                 # 79.5 … 100.5
+TASCHE_L = 2 * L_WALZE + 1.4                    # 15 mm radial
+TASCHE_B = D_WALZE + 2 * SPIEL
+R_TASCHE = (R_I + R_A) / 2                      # 90
+LIPPE_I = (K_I - 2.8, K_I - 0.5)                # 76.7 … 79.0
+LIPPE_A = (K_A + 0.5, K_A + 3.0)                # 101 … 103.5
 
 
 def revolve(punkte):
@@ -58,45 +70,62 @@ def revolve(punkte):
     return m3.Manifold.revolve(m3.CrossSection([punkte], m3.FillRule.EvenOdd), SEG)
 
 
-def rille(z_spitze, z_kante, nach_oben):
-    """V-Rille (90°) als Rotationskörper zum Abziehen."""
-    t = abs(z_spitze - z_kante) + 0.01
-    z0 = z_kante - 0.01 if nach_oben else z_kante + 0.01
-    return revolve([(R_LAUF - t, z0), (R_LAUF + t, z0), (R_LAUF, z_spitze)])
+def ring(r0, r1, z0, z1):
+    return revolve([(r0, z0), (r1, z0), (r1, z1), (r0, z1)])
 
 
 def sockel():
     k = revolve([(0, 0), (R_SOCKEL - 1, 0), (R_SOCKEL, 1), (R_SOCKEL, T_SOCKEL), (0, T_SOCKEL)])
-    ring = revolve([(R_LAUF - B_LAUF / 2, T_SOCKEL - 0.1), (R_LAUF + B_LAUF / 2, T_SOCKEL - 0.1),
-                    (R_LAUF + B_LAUF / 2, Z_SOCKELRING), (R_LAUF - B_LAUF / 2, Z_SOCKELRING)])
-    # Zapfen mit Fuß-Kegel und Fase oben
+    lauf = ring(R_I, R_A, T_SOCKEL - 0.1, Z_LAUF_U)
+    lippen = ring(*LIPPE_I, T_SOCKEL - 0.1, Z_LIPPE) + ring(*LIPPE_A, T_SOCKEL - 0.1, Z_LIPPE)
     zapfen = revolve([(0, T_SOCKEL - 0.1), (R_ZAPFEN + 3, T_SOCKEL - 0.1), (R_ZAPFEN, T_SOCKEL + 3),
                       (R_ZAPFEN, Z_ZAPFEN - 1), (R_ZAPFEN - 1, Z_ZAPFEN), (0, Z_ZAPFEN)])
-    # Rippen unter der Platte gibt es nicht (liegt flach auf); dafür Speichen auf der Platte zwischen Zapfen und Ring
-    speichen = []
-    for i in range(8):
-        a = i * 45
-        b = m3.Manifold.cube([R_LAUF - R_ZAPFEN - 3, 3, 3]).translate([R_ZAPFEN + 2, -1.5, T_SOCKEL - 0.1])
-        speichen.append(b.rotate([0, 0, a]))
-    s = k + ring + zapfen + m3.Manifold.batch_boolean(speichen, m3.OpType.Add)
-    s = s - rille(Z_KUGEL - V, Z_SOCKELRING, nach_oben=False)
-    return s
+    speichen = [m3.Manifold.cube([LIPPE_I[0] - R_ZAPFEN - 1, 3, 3]).translate([R_ZAPFEN + 2, -1.5, T_SOCKEL - 0.1]).rotate([0, 0, i * 45])
+                for i in range(8)]
+    return k + lauf + lippen + zapfen + m3.Manifold.batch_boolean(speichen, m3.OpType.Add)
+
+
+def kaeffig_taschen():
+    t = []
+    for i in range(N_TASCHEN):
+        b = m3.Manifold.cube([TASCHE_L, TASCHE_B, 20]).translate([R_TASCHE - TASCHE_L / 2, -TASCHE_B / 2, -10])
+        t.append(b.rotate([0, 0, i * 360 / N_TASCHEN]))
+    return m3.Manifold.batch_boolean(t, m3.OpType.Add)
+
+
+def kaefig():
+    """Käfig in Gebrauchslage (mittig auf der Walzenachse)."""
+    k = ring(K_I, K_A, Z_ACHSE - T_KAEFIG / 2, Z_ACHSE + T_KAEFIG / 2)
+    return k - kaeffig_taschen().translate([0, 0, Z_ACHSE])
+
+
+def walze():
+    """Walze stehend (Achse z), mit Fasen 0,5 gegen Elefantenfuß/Grat."""
+    r, f = D_WALZE / 2, 0.5
+    return revolve([(0, 0), (r - f, 0), (r, f), (r, L_WALZE - f), (r - f, L_WALZE), (0, L_WALZE)])
+
+
+def walzen_gebrauch():
+    """Walzen liegend in den Taschen (für Schnittprüfung und Bild)."""
+    w = walze().translate([0, 0, -L_WALZE / 2]).rotate([0, 90, 0])  # Achse jetzt x
+    teile = []
+    for i in range(N_TASCHEN):
+        for x in (R_TASCHE - L_WALZE / 2 - 0.35, R_TASCHE + L_WALZE / 2 + 0.35):
+            teile.append(w.translate([x, 0, Z_ACHSE]).rotate([0, 0, i * 360 / N_TASCHEN]))
+    return m3.Manifold.batch_boolean(teile, m3.OpType.Add)
 
 
 def teller_koerper():
     platte = revolve([(0, Z_PLATTE_U), (R_TELLER, Z_PLATTE_U), (R_TELLER, Z_OBEN - 0.8),
                       (R_TELLER - 0.8, Z_OBEN), (0, Z_OBEN)])
-    rand = revolve([(R_TELLER - 3, Z_TELLER_U), (R_TELLER, Z_TELLER_U), (R_TELLER, Z_PLATTE_U + 0.1),
-                    (R_TELLER - 3, Z_PLATTE_U + 0.1)])
-    lauf = revolve([(R_LAUF - B_LAUF / 2, Z_TELLER_U), (R_LAUF + B_LAUF / 2, Z_TELLER_U),
-                    (R_LAUF + B_LAUF / 2, Z_PLATTE_U + 0.1), (R_LAUF - B_LAUF / 2, Z_PLATTE_U + 0.1)])
-    nabe = revolve([(0, Z_TELLER_U), (16, Z_TELLER_U), (16, Z_PLATTE_U + 0.1), (0, Z_PLATTE_U + 0.1)])
+    rand = ring(R_TELLER - 3, R_TELLER, Z_TELLER_U, Z_PLATTE_U + 0.1)
+    lauf = ring(R_I, R_A, Z_TELLER_U, Z_PLATTE_U + 0.1)
+    nabe = ring(0, 16, Z_TELLER_U, Z_PLATTE_U + 0.1)
     rippen = []
     for i in range(N_RIPPEN):
         b = m3.Manifold.cube([R_TELLER - 2 - 15, B_RIPPE, H_RIPPE + 0.1]).translate([15, -B_RIPPE / 2, Z_TELLER_U])
         rippen.append(b.rotate([0, 0, i * 360 / N_RIPPEN + 360 / N_RIPPEN / 2]))
     t = platte + rand + lauf + nabe + m3.Manifold.batch_boolean(rippen, m3.OpType.Add)
-    t = t - rille(Z_KUGEL + V, Z_TELLER_U, nach_oben=True)
     loch = revolve([(0, Z_TELLER_U - 1), (R_ZAPFEN + SPIEL_ZAPFEN + 0.6, Z_TELLER_U - 1),
                     (R_ZAPFEN + SPIEL_ZAPFEN, Z_TELLER_U + 0.5), (R_ZAPFEN + SPIEL_ZAPFEN, Z_LOCH), (0, Z_LOCH)])
     return t - loch
@@ -139,16 +168,48 @@ def markierung_2d():
     return m3.CrossSection.batch_boolean(teile, m3.OpType.Add)
 
 
+def rand_markierung(k):
+    """Zahlen 1–25 und senkrechte Linien auf dem Außenrand (Seitenfläche) – für die Kamera von der Seite."""
+    teile = []
+    tiefe, z_mitte = EINLAGE + 0.2, (Z_TELLER_U + Z_OBEN - 0.8) / 2
+    def aussen(cs, winkel):
+        m = m3.Manifold.extrude(cs, tiefe).rotate([90, 0, 0]).translate([0, -(R_TELLER - EINLAGE), 0])
+        return m.rotate([0, 0, winkel + 90])
+    for i in range(N_FELDER):
+        a = 90 - i * 360 / N_FELDER
+        am = a - 180 / N_FELDER
+        teile.append(aussen(zahl(str(i + 1), H_ZAHL_RAND).translate([0, z_mitte]), am))
+        linie = m3.CrossSection([[(-B_LINIE / 2, Z_TELLER_U + 0.4), (B_LINIE / 2, Z_TELLER_U + 0.4),
+                                  (B_LINIE / 2, Z_OBEN - 1.0), (-B_LINIE / 2, Z_OBEN - 1.0)]])
+        teile.append(aussen(linie, a))
+    return m3.Manifold.batch_boolean(teile, m3.OpType.Add)  # roh, ragt 0,2 mm über den Rand
+
+
 def teller():
     k = teller_koerper()
     ein = m3.Manifold.extrude(markierung_2d(), EINLAGE + 0.05).translate([0, 0, Z_OBEN - EINLAGE])
-    ein = ein ^ k
-    return k - ein, ein
+    roh = ein + rand_markierung(k)
+    return k - roh, roh ^ k
 
 
 def nach_trimesh(m):
     g = m.to_mesh()
     return trimesh.Trimesh(np.asarray(g.vert_properties)[:, :3], np.asarray(g.tri_verts), process=True)
+
+
+def druck_kaefig_walzen():
+    """Käfig flach + alle Walzen stehend im Innenraum des Käfigs (ein Druck)."""
+    k = kaefig().translate([0, 0, -(Z_ACHSE - T_KAEFIG / 2)])
+    w = walze()
+    pos, n, a = [], 2 * N_TASCHEN, D_WALZE + 4.0
+    for ix in range(-8, 9):
+        for iy in range(-8, 9):
+            x, y = ix * a, iy * a
+            if math.hypot(x, y) < K_I - 8 and len(pos) < n:
+                pos.append((x, y))
+    assert len(pos) == n, len(pos)
+    alles = k + m3.Manifold.batch_boolean([w.translate([x, y, 0]) for x, y in pos], m3.OpType.Add)
+    return alles.translate([128, 128, 0])
 
 
 def main():
@@ -159,11 +220,12 @@ def main():
     os.makedirs(a.ziel, exist_ok=True)
     s = sockel()
     weiss, schwarz = teller()
-    # Druckglage Teller: Oberseite nach unten (180° um X), auf z=0
-    def kopf(m):
-        return m.rotate([180, 0, 0]).translate([128, 128, Z_OBEN])  # --zusammen (assemble) braucht Bett-Koordinaten
+    k, w = kaefig(), walzen_gebrauch()
+    def kopf(m):  # Teller: Oberseite nach unten, Bett-Koordinaten (für --zusammen)
+        return m.rotate([180, 0, 0]).translate([128, 128, Z_OBEN])
     out = {
         "drehteller_sockel": s,
+        "drehteller_kaefig_walzen": druck_kaefig_walzen(),
         "drehteller_teller_weiss": kopf(weiss),
         "drehteller_teller_schwarz": kopf(schwarz),
     }
@@ -172,15 +234,16 @@ def main():
         t.export(os.path.join(a.ziel, n + ".stl"))
         b = t.bounds
         print(f"{n}: {len(t.faces)} Dreiecke, dicht={t.is_watertight}, Maße {np.round(b[1]-b[0],2)}, Vol {m.volume():.0f} mm³")
-    print("Schnitt weiß/schwarz:", round((weiss ^ schwarz).volume(), 3), "mm³")
-    print("Schnitt Sockel/Teller (Gebrauchslage):", round((s ^ (weiss + schwarz)).volume(), 3), "mm³")
-    n_kugeln = int(2 * math.pi * R_LAUF / KUGEL) - 3
-    print(f"Kugelbahn Ø{2*R_LAUF:.0f} mm: {n_kugeln} Kugeln à {KUGEL} mm; Höhe gesamt {Z_OBEN} mm")
+    teller_ganz = weiss + schwarz
+    for name, x, y in [("weiß/schwarz", weiss, schwarz), ("Sockel/Teller", s, teller_ganz), ("Sockel/Käfig", s, k),
+                       ("Teller/Käfig", teller_ganz, k), ("Walzen/Käfig", w, k), ("Walzen/Sockel", w, s), ("Walzen/Teller", w, teller_ganz)]:
+        print(f"Schnitt {name}: {(x ^ y).volume():.3f} mm³")
+    print(f"Walzen: {2*N_TASCHEN} Stück Ø{D_WALZE} × {L_WALZE} mm, {N_TASCHEN} Taschen; Höhe gesamt {Z_OBEN} mm")
     if a.bild:
-        bild(weiss, schwarz, s, a.bild)
+        bild(weiss, schwarz, s, k, w, a.bild)
 
 
-def bild(weiss, schwarz, s, pfad):
+def bild(weiss, schwarz, s, k, w, pfad):
     import pyvista as pv
     pv.OFF_SCREEN = True
     def pm(m):
@@ -193,10 +256,10 @@ def bild(weiss, schwarz, s, pfad):
     pl.view_xy(); pl.camera.zoom(1.3); pl.add_text("Oberseite", font_size=12)
     pl.subplot(0, 1)
     pl.add_mesh(pm(s), color="#c8c8c8")
-    pl.add_mesh(pm(weiss.translate([0, 0, 60])), color="#f2f2f2")
-    pl.add_mesh(pm(schwarz.translate([0, 0, 60])), color="#111111")
-    pl.camera_position = [(260, -420, -40), (0, 0, 30), (0, 0, 1)]
-    pl.add_text("Unterseite + Sockel", font_size=12)
+    pl.add_mesh(pm(k.translate([0, 0, 25])), color="#e0a040")
+    pl.add_mesh(pm(w.translate([0, 0, 25])), color="#5080c0")
+    pl.camera_position = [(170, -330, 230), (0, 0, 20), (0, 0, 1)]
+    pl.add_text("Sockel mit Führung, Käfig + Walzen (angehoben)", font_size=12)
     pl.screenshot(pfad)
 
 
