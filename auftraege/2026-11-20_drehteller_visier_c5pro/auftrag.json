@@ -6,14 +6,14 @@
  "name": "drehteller_visier",
  "drucker": "c5pro",
  "drucker_name": "Flashforge Creator 5 Pro",
- "datum": "2026-11-20",
+ "datum": "2026-11-21",
  "ordner": "2026-11-20_drehteller_visier_c5pro",
  "gcode": "Drehteller_Visier.gcode",
  "zeit": "15m 4s",
- "gramm": "0.00, 3.70",
- "meter": "0.00 m, 1.24 m",
- "duese": "210,210",
- "bett": "60,60",
+ "gramm": "0.00, 3.71",
+ "meter": "0.00 m, 1.22 m",
+ "duese": "235,235",
+ "bett": "85,85",
  "schicht": "0.20",
  "stufe": "Standard",
  "infill": 40,
@@ -25,13 +25,13 @@
  "slots": [
   {
    "slot": 1,
-   "material": "PLA",
-   "farbe": "schwarz"
+   "material": "PETG",
+   "farbe": "weiss"
   },
   {
    "slot": 2,
-   "material": "PLA",
-   "farbe": ""
+   "material": "PETG",
+   "farbe": "schwarz"
   }
  ],
  "teile": [

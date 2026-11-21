@@ -1,5 +1,5 @@
 {
- "kopfwechsel": 84,
+ "kopfwechsel": 94,
  "koepfe_benutzt": [
   1,
   2
@@ -7,14 +7,14 @@
  "name": "drehteller_wuerfel",
  "drucker": "c5pro",
  "drucker_name": "Flashforge Creator 5 Pro",
- "datum": "2026-11-20",
+ "datum": "2026-11-21",
  "ordner": "2026-11-20_drehteller_wuerfel_c5pro",
  "gcode": "Drehteller_Masswuerfel.gcode",
- "zeit": "58m 19s",
- "gramm": "12.70, 1.83",
- "meter": "4.26 m, 0.61 m",
- "duese": "210,210",
- "bett": "60,60",
+ "zeit": "1h 2m 32s",
+ "gramm": "12.65, 2.16",
+ "meter": "4.24 m, 0.71 m",
+ "duese": "210,235",
+ "bett": "65,65",
  "schicht": "0.12",
  "stufe": "Standard",
  "infill": 100,
@@ -22,7 +22,7 @@
  "waende": 3,
  "stuetzen": "aus",
  "brim": "aus",
- "gemischt": false,
+ "gemischt": true,
  "slots": [
   {
    "slot": 1,
@@ -31,7 +31,7 @@
   },
   {
    "slot": 2,
-   "material": "PLA",
+   "material": "PETG",
    "farbe": "schwarz"
   }
  ],

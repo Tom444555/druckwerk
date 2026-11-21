@@ -320,6 +320,7 @@ So kam `modelle/gitarre_rundum.py` zustande; für ähnliche Vorhaben (Instrument
 - Meshroom-Hilfen: Zufallsmuster (Punkte Ø1,2–2,2, Abstand ≥ 4,2, feste Saat 25) zwischen den Linien, vier **CCTag3-Marker** (IDs 0–3, Ø24, Ringe aus `modelle/drehteller_daten/cctag3.txt`
   = AliceVision/CCTag) auf R75 in Feld 1/7/14/20 mit weißem Rand; drei Löcher Ø4,4 × 3 auf R30 für das Podest (Ø70 × 40, oben 19 Löcher Ø3,3 für Stifte Ø3 × 18).
   Spickzettel für Tom mit Marker-Koordinaten für SfMTransform `from_markers`: `modelle/drehteller_daten/MESHROOM.md`. Mit echten Fotos ungetestet.
+- **Schwarz als PETG (21.11.):** Tom hat nur schwarzes PETG → Teller und Maßwürfel: Kopf 2 PETG; alle Einlagen mit **Hinterschnitt-Anker** (`ANKER`/`ANKER_T` in drehteller.py: 0,2 je Seite breiter, 0,4 tief unter der 0,6-Einlage), weil PLA und PETG kaum aneinander haften. Neuer Schalter **`druck.py --bett <°C>`** setzt alle Platten-Temperaturen aller Filamente (sonst nimmt Orca das Höchste: 85 °C vom PETG) – hier 65. Teller 7 h 20, Würfel 1 h 03. Nicht gedruckt.
 - **Rastung (20.11.):** 25 V-Kerben (2,4 × 1,0) unter dem Tellerrand in den Feldmitten, am Sockel eine beidseitig eingespannte Brücke (46 × 4 × 1,2 mm, gerechnet ~2 N) mit Nocken r 1
   (0,6 mm Eingriff) bei `RAST_WINKEL` = −90 + 5·14,4° → rastet genau, wenn das Visier auf eine Zahlenmitte zeigt. Geprüft: Schnitt 0 in Rast, 2,4 mm³ bei halbem Feld (= Federweg).
 - **Zubehör** `modelle/scan_zubehoer.py`: Halter-Baukasten (3 Spitzen, 2 Säulen stapelbar, 2 Klemmen, V-Auflage; Zapfen Ø3,1 in Podest-Löcher Ø3,3) und **Prüfkörper**

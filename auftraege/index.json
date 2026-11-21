@@ -106,6 +106,198 @@
   "datei": "Drehteller_Grundplatte"
  },
  {
+  "kopfwechsel": 94,
+  "koepfe_benutzt": [
+   1,
+   2
+  ],
+  "name": "drehteller_wuerfel",
+  "drucker": "c5pro",
+  "drucker_name": "Flashforge Creator 5 Pro",
+  "datum": "2026-11-21",
+  "ordner": "2026-11-20_drehteller_wuerfel_c5pro",
+  "gcode": "Drehteller_Masswuerfel.gcode",
+  "zeit": "1h 2m 32s",
+  "gramm": "12.65, 2.16",
+  "meter": "4.24 m, 0.71 m",
+  "duese": "210,235",
+  "bett": "65,65",
+  "schicht": "0.12",
+  "stufe": "Standard",
+  "infill": 100,
+  "duese_mm": "0.4",
+  "waende": 3,
+  "stuetzen": "aus",
+  "brim": "aus",
+  "gemischt": true,
+  "slots": [
+   {
+    "slot": 1,
+    "material": "PLA",
+    "farbe": "weiss"
+   },
+   {
+    "slot": 2,
+    "material": "PETG",
+    "farbe": "schwarz"
+   }
+  ],
+  "teile": [
+   {
+    "datei": "drehteller_wuerfel_weiss.stl",
+    "slot": 1
+   },
+   {
+    "datei": "drehteller_wuerfel_schwarz.stl",
+    "slot": 2
+   }
+  ],
+  "quelle": "",
+  "teile_app": [
+   {
+    "datei": "drehteller_wuerfel_weiss.stl",
+    "slot": 1
+   },
+   {
+    "datei": "drehteller_wuerfel_schwarz.stl",
+    "slot": 2
+   }
+  ],
+  "vorschau": "vorschau.png",
+  "bild_im_gcode": true,
+  "projekt": "Drehteller_Masswuerfel.3mf",
+  "gruppe": "drehteller",
+  "gruppe_titel": "Drehteller Foto-Scan",
+  "nr": 6,
+  "titel": "Maßwürfel 20 mm",
+  "datei": "Drehteller_Masswuerfel"
+ },
+ {
+  "kopfwechsel": 0,
+  "koepfe_benutzt": [
+   2
+  ],
+  "name": "drehteller_visier",
+  "drucker": "c5pro",
+  "drucker_name": "Flashforge Creator 5 Pro",
+  "datum": "2026-11-21",
+  "ordner": "2026-11-20_drehteller_visier_c5pro",
+  "gcode": "Drehteller_Visier.gcode",
+  "zeit": "15m 4s",
+  "gramm": "0.00, 3.71",
+  "meter": "0.00 m, 1.22 m",
+  "duese": "235,235",
+  "bett": "85,85",
+  "schicht": "0.20",
+  "stufe": "Standard",
+  "infill": 40,
+  "duese_mm": "0.4",
+  "waende": 4,
+  "stuetzen": "aus",
+  "brim": "aus",
+  "gemischt": false,
+  "slots": [
+   {
+    "slot": 1,
+    "material": "PETG",
+    "farbe": "weiss"
+   },
+   {
+    "slot": 2,
+    "material": "PETG",
+    "farbe": "schwarz"
+   }
+  ],
+  "teile": [
+   {
+    "datei": "drehteller_visier.stl",
+    "slot": 2
+   }
+  ],
+  "quelle": "",
+  "teile_app": [
+   {
+    "datei": "drehteller_visier.stl",
+    "slot": 2
+   }
+  ],
+  "vorschau": "vorschau.png",
+  "bild_im_gcode": true,
+  "projekt": "Drehteller_Visier.3mf",
+  "gruppe": "drehteller",
+  "gruppe_titel": "Drehteller Foto-Scan",
+  "nr": 4,
+  "titel": "Kimme und Korn",
+  "datei": "Drehteller_Visier"
+ },
+ {
+  "kopfwechsel": 50,
+  "koepfe_benutzt": [
+   1,
+   2
+  ],
+  "name": "drehteller_teller",
+  "drucker": "c5pro",
+  "drucker_name": "Flashforge Creator 5 Pro",
+  "datum": "2026-11-21",
+  "ordner": "2026-11-20_drehteller_teller_c5pro",
+  "gcode": "Drehteller_Teller.gcode",
+  "zeit": "7h 20m 28s",
+  "gramm": "175.49, 11.84",
+  "meter": "58.84 m, 3.88 m",
+  "duese": "210,235",
+  "bett": "65,65",
+  "schicht": "0.20",
+  "stufe": "Standard",
+  "infill": 15,
+  "duese_mm": "0.4",
+  "waende": 3,
+  "stuetzen": "aus",
+  "brim": "aus",
+  "gemischt": true,
+  "slots": [
+   {
+    "slot": 1,
+    "material": "PLA",
+    "farbe": "weiss"
+   },
+   {
+    "slot": 2,
+    "material": "PETG",
+    "farbe": "schwarz"
+   }
+  ],
+  "teile": [
+   {
+    "datei": "drehteller_teller_weiss.stl",
+    "slot": 1
+   },
+   {
+    "datei": "drehteller_teller_schwarz.stl",
+    "slot": 2
+   }
+  ],
+  "quelle": "",
+  "teile_app": [
+   {
+    "datei": "drehteller_teller_weiss.app.stl",
+    "slot": 1
+   },
+   {
+    "datei": "drehteller_teller_schwarz.app.stl",
+    "slot": 2
+   }
+  ],
+  "vorschau": "vorschau.png",
+  "bild_im_gcode": true,
+  "projekt": "Drehteller_Teller.3mf",
+  "gruppe": "drehteller",
+  "gruppe_titel": "Drehteller Foto-Scan",
+  "nr": 3,
+  "titel": "Teller",
+  "datei": "Drehteller_Teller"
+ },
+ {
   "kopfwechsel": 4,
   "koepfe_benutzt": [
    1,
@@ -277,198 +469,6 @@
   "nr": 1,
   "titel": "Schiene",
   "datei": "Makroschlitten_Schiene"
- },
- {
-  "kopfwechsel": 84,
-  "koepfe_benutzt": [
-   1,
-   2
-  ],
-  "name": "drehteller_wuerfel",
-  "drucker": "c5pro",
-  "drucker_name": "Flashforge Creator 5 Pro",
-  "datum": "2026-11-20",
-  "ordner": "2026-11-20_drehteller_wuerfel_c5pro",
-  "gcode": "Drehteller_Masswuerfel.gcode",
-  "zeit": "58m 19s",
-  "gramm": "12.70, 1.83",
-  "meter": "4.26 m, 0.61 m",
-  "duese": "210,210",
-  "bett": "60,60",
-  "schicht": "0.12",
-  "stufe": "Standard",
-  "infill": 100,
-  "duese_mm": "0.4",
-  "waende": 3,
-  "stuetzen": "aus",
-  "brim": "aus",
-  "gemischt": false,
-  "slots": [
-   {
-    "slot": 1,
-    "material": "PLA",
-    "farbe": "weiss"
-   },
-   {
-    "slot": 2,
-    "material": "PLA",
-    "farbe": "schwarz"
-   }
-  ],
-  "teile": [
-   {
-    "datei": "drehteller_wuerfel_weiss.stl",
-    "slot": 1
-   },
-   {
-    "datei": "drehteller_wuerfel_schwarz.stl",
-    "slot": 2
-   }
-  ],
-  "quelle": "",
-  "teile_app": [
-   {
-    "datei": "drehteller_wuerfel_weiss.stl",
-    "slot": 1
-   },
-   {
-    "datei": "drehteller_wuerfel_schwarz.stl",
-    "slot": 2
-   }
-  ],
-  "vorschau": "vorschau.png",
-  "bild_im_gcode": true,
-  "projekt": "Drehteller_Masswuerfel.3mf",
-  "gruppe": "drehteller",
-  "gruppe_titel": "Drehteller Foto-Scan",
-  "nr": 6,
-  "titel": "Maßwürfel 20 mm",
-  "datei": "Drehteller_Masswuerfel"
- },
- {
-  "kopfwechsel": 0,
-  "koepfe_benutzt": [
-   2
-  ],
-  "name": "drehteller_visier",
-  "drucker": "c5pro",
-  "drucker_name": "Flashforge Creator 5 Pro",
-  "datum": "2026-11-20",
-  "ordner": "2026-11-20_drehteller_visier_c5pro",
-  "gcode": "Drehteller_Visier.gcode",
-  "zeit": "15m 4s",
-  "gramm": "0.00, 3.70",
-  "meter": "0.00 m, 1.24 m",
-  "duese": "210,210",
-  "bett": "60,60",
-  "schicht": "0.20",
-  "stufe": "Standard",
-  "infill": 40,
-  "duese_mm": "0.4",
-  "waende": 4,
-  "stuetzen": "aus",
-  "brim": "aus",
-  "gemischt": false,
-  "slots": [
-   {
-    "slot": 1,
-    "material": "PLA",
-    "farbe": "schwarz"
-   },
-   {
-    "slot": 2,
-    "material": "PLA",
-    "farbe": ""
-   }
-  ],
-  "teile": [
-   {
-    "datei": "drehteller_visier.stl",
-    "slot": 2
-   }
-  ],
-  "quelle": "",
-  "teile_app": [
-   {
-    "datei": "drehteller_visier.stl",
-    "slot": 2
-   }
-  ],
-  "vorschau": "vorschau.png",
-  "bild_im_gcode": true,
-  "projekt": "Drehteller_Visier.3mf",
-  "gruppe": "drehteller",
-  "gruppe_titel": "Drehteller Foto-Scan",
-  "nr": 4,
-  "titel": "Kimme und Korn",
-  "datei": "Drehteller_Visier"
- },
- {
-  "kopfwechsel": 48,
-  "koepfe_benutzt": [
-   1,
-   2
-  ],
-  "name": "drehteller_teller",
-  "drucker": "c5pro",
-  "drucker_name": "Flashforge Creator 5 Pro",
-  "datum": "2026-11-20",
-  "ordner": "2026-11-20_drehteller_teller_c5pro",
-  "gcode": "Drehteller_Teller.gcode",
-  "zeit": "6h 3m 4s",
-  "gramm": "168.21, 6.89",
-  "meter": "56.40 m, 2.31 m",
-  "duese": "210,210",
-  "bett": "60,60",
-  "schicht": "0.20",
-  "stufe": "Standard",
-  "infill": 15,
-  "duese_mm": "0.4",
-  "waende": 3,
-  "stuetzen": "aus",
-  "brim": "aus",
-  "gemischt": false,
-  "slots": [
-   {
-    "slot": 1,
-    "material": "PLA",
-    "farbe": "weiss"
-   },
-   {
-    "slot": 2,
-    "material": "PLA",
-    "farbe": "schwarz"
-   }
-  ],
-  "teile": [
-   {
-    "datei": "drehteller_teller_weiss.stl",
-    "slot": 1
-   },
-   {
-    "datei": "drehteller_teller_schwarz.stl",
-    "slot": 2
-   }
-  ],
-  "quelle": "",
-  "teile_app": [
-   {
-    "datei": "drehteller_teller_weiss.app.stl",
-    "slot": 1
-   },
-   {
-    "datei": "drehteller_teller_schwarz.stl",
-    "slot": 2
-   }
-  ],
-  "vorschau": "vorschau.png",
-  "bild_im_gcode": true,
-  "projekt": "Drehteller_Teller.3mf",
-  "gruppe": "drehteller",
-  "gruppe_titel": "Drehteller Foto-Scan",
-  "nr": 3,
-  "titel": "Teller",
-  "datei": "Drehteller_Teller"
  },
  {
   "kopfwechsel": 0,

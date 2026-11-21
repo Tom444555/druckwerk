@@ -3,15 +3,15 @@
 **Drucker:** Flashforge Creator 5 Pro  
 **Datei für USB:** `Drehteller_Visier.gcode`  
 **Druckzeit (geschätzt):** 15m 4s  
-**Filament:** 0.00, 3.70 g (0.00 m, 1.24 m)  
+**Filament:** 0.00, 3.71 g (0.00 m, 1.22 m)  
 
 
 ## Spulen / Köpfe einlegen
 
 | Slot | Material | Farbe | Profil |
 |---|---|---|---|
-| 1 | PLA | schwarz | Flashforge PLA Basic @FF C5P |
-| 2 | PLA | - | Flashforge PLA Basic @FF C5P |
+| 1 | PETG | weiss | Flashforge HS PETG @FF C5P |
+| 2 | PETG | schwarz | Flashforge HS PETG @FF C5P |
 
 ## Einstellungen
 
@@ -21,11 +21,11 @@
 - Wände: 4
 - Stützen: aus
 - Brim: aus
-- Düsentemperatur: 210,210 °C, Bett: 60,60 °C
+- Düsentemperatur: 235,235 °C, Bett: 85,85 °C
 
 ## Teile
 
-- `drehteller_visier.stl` → Slot 2 (PLA)
+- `drehteller_visier.stl` → Slot 2 (PETG)
 
 Kopfwechsel in der .gcode: 0, benutzte Köpfe: 2
 > ⚠ Kopf 1 wird nicht benutzt – Farbe/Slot prüfen.

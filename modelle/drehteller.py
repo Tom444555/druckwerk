@@ -41,6 +41,7 @@ R_ZAPFEN = 6.0
 SPIEL_ZAPFEN = 0.3
 N_FELDER = 25
 EINLAGE = 0.6         # Tiefe der schwarzen Einlage (3 Schichten à 0,2)
+ANKER, ANKER_T = 0.2, 0.4   # Hinterschnitt unter der Einlage: je Seite 0,2 breiter, 0,4 tief – hält PETG-Einlagen im PLA (haften kaum aneinander)
 B_LINIE = 1.2
 B_KREIS = 0.8
 H_ZAHL = 9.0
@@ -283,6 +284,7 @@ def rand_markierung(k):
     tiefe, z_mitte = EINLAGE + 0.2, (Z_TELLER_U + Z_OBEN - 0.8) / 2
     def aussen(cs, winkel):
         m = m3.Manifold.extrude(cs, tiefe).rotate([90, 0, 0]).translate([0, -(R_TELLER - EINLAGE), 0])
+        m = m + m3.Manifold.extrude(cs.offset(ANKER, m3.JoinType.Round, circular_segments=16).simplify(0.01), ANKER_T + 0.02).rotate([90, 0, 0]).translate([0, -(R_TELLER - EINLAGE - ANKER_T), 0])
         return m.rotate([0, 0, winkel + 90])
     for i in range(N_FELDER):
         a = 90 - i * 360 / N_FELDER
@@ -296,7 +298,9 @@ def rand_markierung(k):
 
 def teller():
     k = teller_koerper()
-    ein = m3.Manifold.extrude(markierung_2d(), EINLAGE + 0.05).translate([0, 0, Z_OBEN - EINLAGE])
+    m2 = markierung_2d()
+    ein = m3.Manifold.extrude(m2, EINLAGE + 0.05).translate([0, 0, Z_OBEN - EINLAGE])
+    ein = ein + m3.Manifold.extrude(m2.offset(ANKER, m3.JoinType.Round, circular_segments=16).simplify(0.01), ANKER_T + 0.02).translate([0, 0, Z_OBEN - EINLAGE - ANKER_T])
     roh = ein + rand_markierung(k)
     return k - roh, roh ^ k
 
@@ -325,7 +329,9 @@ def wuerfel():
     seiten = [((0, 0, 0), 1), ((180, 0, 0), 6), ((90, 0, 0), 2), ((-90, 0, 0), 5), ((0, 90, 0), 3), ((0, -90, 0), 4)]
     roh = []
     for rot, n in seiten:
-        e = m3.Manifold.extrude(zahl(str(n), 12.0), t + 0.2).translate([0, 0, a / 2 - t])
+        z = zahl(str(n), 12.0)
+        e = m3.Manifold.extrude(z, t + 0.2).translate([0, 0, a / 2 - t])
+        e = e + m3.Manifold.extrude(z.offset(ANKER, m3.JoinType.Round, circular_segments=16).simplify(0.01), ANKER_T + 0.02).translate([0, 0, a / 2 - t - ANKER_T])
         roh.append(e.rotate(list(rot)))
     roh = m3.Manifold.batch_boolean(roh, m3.OpType.Add)
     w, s = k - roh, roh ^ k

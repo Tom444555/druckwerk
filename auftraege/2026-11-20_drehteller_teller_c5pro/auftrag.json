@@ -1,5 +1,5 @@
 {
- "kopfwechsel": 48,
+ "kopfwechsel": 50,
  "koepfe_benutzt": [
   1,
   2
@@ -7,14 +7,14 @@
  "name": "drehteller_teller",
  "drucker": "c5pro",
  "drucker_name": "Flashforge Creator 5 Pro",
- "datum": "2026-11-20",
+ "datum": "2026-11-21",
  "ordner": "2026-11-20_drehteller_teller_c5pro",
  "gcode": "Drehteller_Teller.gcode",
- "zeit": "6h 3m 4s",
- "gramm": "168.21, 6.89",
- "meter": "56.40 m, 2.31 m",
- "duese": "210,210",
- "bett": "60,60",
+ "zeit": "7h 20m 28s",
+ "gramm": "175.49, 11.84",
+ "meter": "58.84 m, 3.88 m",
+ "duese": "210,235",
+ "bett": "65,65",
  "schicht": "0.20",
  "stufe": "Standard",
  "infill": 15,
@@ -22,7 +22,7 @@
  "waende": 3,
  "stuetzen": "aus",
  "brim": "aus",
- "gemischt": false,
+ "gemischt": true,
  "slots": [
   {
    "slot": 1,
@@ -31,7 +31,7 @@
   },
   {
    "slot": 2,
-   "material": "PLA",
+   "material": "PETG",
    "farbe": "schwarz"
   }
  ],
@@ -52,7 +52,7 @@
    "slot": 1
   },
   {
-   "datei": "drehteller_teller_schwarz.stl",
+   "datei": "drehteller_teller_schwarz.app.stl",
    "slot": 2
   }
  ],

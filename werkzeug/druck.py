@@ -213,6 +213,7 @@ def main():
     ap.add_argument("--schraegnaht", action="store_true",
                     help="Schrägnaht (Scarf Joint) an der Außenwand: Anfang und Ende jeder Runde laufen schräg ineinander statt stumpf aneinander "
                          "(videos/z-naht-bastlwastl.html). Ist in --schoen enthalten. Nur an runden Konturen; Ecken behalten die normale Naht.")
+    ap.add_argument("--bett", type=int, default=None, help="Betttemperatur für ALLE Filamente erzwingen (z. B. 65 bei PLA + PETG gemischt)")
     ap.add_argument("--extra", action="append", default=[], help="Slicer-Einstellung überschreiben: schluessel=wert (mehrfach)")
     ap.add_argument("--duese", default=None, help="Düsengröße in mm für ALLE Köpfe (c5pro: 0.25 | 0.4 | 0.6 | 0.8; Standard 0.4)")
     ap.add_argument("--duesen", default=None,
@@ -394,6 +395,10 @@ def main():
         f = aufloesen("filament", cfg["filamente"][belegt[s]])
         f["compatible_printers"] = []
         f.setdefault("filament_is_support", ["0"])  # fehlt in manchen Herstellerprofilen
+        if a.bett:                        # gemischte Materialien: ein gemeinsamer Bettwert statt des höchsten
+            for k in ("hot_plate_temp", "hot_plate_temp_initial_layer", "textured_plate_temp", "textured_plate_temp_initial_layer",
+                      "cool_plate_temp", "cool_plate_temp_initial_layer", "eng_plate_temp", "eng_plate_temp_initial_layer"):
+                f[k] = [str(a.bett)]
         p = tmp / f"filament{s}.json"
         p.write_text(json.dumps(f), encoding="utf-8")
         fil_pfade.append(str(p))

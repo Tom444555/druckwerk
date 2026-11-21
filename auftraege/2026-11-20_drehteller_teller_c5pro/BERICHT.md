@@ -2,8 +2,8 @@
 
 **Drucker:** Flashforge Creator 5 Pro  
 **Datei für USB:** `Drehteller_Teller.gcode`  
-**Druckzeit (geschätzt):** 6h 3m 4s  
-**Filament:** 168.21, 6.89 g (56.40 m, 2.31 m)  
+**Druckzeit (geschätzt):** 7h 20m 28s  
+**Filament:** 175.49, 11.84 g (58.84 m, 3.88 m)  
 
 
 ## Spulen / Köpfe einlegen
@@ -11,7 +11,7 @@
 | Slot | Material | Farbe | Profil |
 |---|---|---|---|
 | 1 | PLA | weiss | Flashforge PLA Basic @FF C5P |
-| 2 | PLA | schwarz | Flashforge PLA Basic @FF C5P |
+| 2 | PETG | schwarz | Flashforge HS PETG @FF C5P |
 
 ## Einstellungen
 
@@ -21,14 +21,14 @@
 - Wände: 3
 - Stützen: aus
 - Brim: aus
-- Düsentemperatur: 210,210 °C, Bett: 60,60 °C
+- Düsentemperatur: 210,235 °C, Bett: 65,65 °C
 
 ## Teile
 
 - `drehteller_teller_weiss.stl` → Slot 1 (PLA)
-- `drehteller_teller_schwarz.stl` → Slot 2 (PLA)
+- `drehteller_teller_schwarz.stl` → Slot 2 (PETG)
 
-Kopfwechsel in der .gcode: 48, benutzte Köpfe: 1, 2
+Kopfwechsel in der .gcode: 50, benutzte Köpfe: 1, 2
 
 ## Am Drucker
 
@@ -37,3 +37,10 @@ Kopfwechsel in der .gcode: 48, benutzte Köpfe: 1, 2
 - PLA/PETG/TPU: Kammerheizung aus (unter 45 °C), sonst kann die Düse verstopfen.
 - USB: .gcode auf FAT32-Stick, am Drucker unter Dateien/USB auswählen.
 - Vor dem Start: Druckplatte sauber und leer, richtige Spulen in den Slots.
+
+> ⚠ Unterschiedliche Materialien in einem Druck (PETG, PLA) – Haftung zwischen den Materialien und Temperaturen prüfen.
+
+## Schwarz als PETG (21.11.2026)
+- Kopf 2 = schwarzes **PETG** (235 °C), Kopf 1 weißes PLA (210 °C), Bett für beide **65 °C** (`--bett 65`, statt 85 °C aus dem PETG-Profil – das wäre für die große PLA-Fläche zu heiß).
+- PLA und PETG haften schlecht aneinander → jede schwarze Einlage hat unter der Oberfläche einen **Hinterschnitt** (0,2 mm breiter je Seite, 0,4 mm tief) und sitzt dadurch fest wie ein Schwalbenschwanz.
+- Tür beim Druck offen lassen bzw. Kammer nicht heizen (PLA). Nicht gedruckt.
