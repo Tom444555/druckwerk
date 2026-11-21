@@ -1,0 +1,53 @@
+{
+ "kopfwechsel": 0,
+ "koepfe_benutzt": [
+  1
+ ],
+ "name": "drehteller_grundplatte",
+ "drucker": "c5pro",
+ "drucker_name": "Flashforge Creator 5 Pro",
+ "datum": "2026-11-21",
+ "ordner": "2026-11-21_drehteller_grundplatte_c5pro",
+ "gcode": "Drehteller_Grundplatte.gcode",
+ "zeit": "20m 31s",
+ "gramm": "12.11",
+ "meter": "4.06 m",
+ "duese": "210",
+ "bett": "60",
+ "schicht": "0.20",
+ "stufe": "Standard",
+ "infill": 15,
+ "duese_mm": "0.4",
+ "waende": null,
+ "stuetzen": "aus",
+ "brim": "aus",
+ "gemischt": false,
+ "slots": [
+  {
+   "slot": 1,
+   "material": "PLA",
+   "farbe": "weiss"
+  }
+ ],
+ "teile": [
+  {
+   "datei": "drehteller_grundplatte_ok.stl",
+   "slot": 1
+  }
+ ],
+ "quelle": "",
+ "teile_app": [
+  {
+   "datei": "drehteller_grundplatte_ok.stl",
+   "slot": 1
+  }
+ ],
+ "vorschau": "vorschau.png",
+ "bild_im_gcode": true,
+ "projekt": "Drehteller_Grundplatte.3mf",
+ "gruppe": "drehteller",
+ "gruppe_titel": "Drehteller Foto-Scan",
+ "nr": 10,
+ "titel": "Gridfinity-Grundplatte 4x2",
+ "datei": "Drehteller_Grundplatte"
+}

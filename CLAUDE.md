@@ -343,6 +343,14 @@ So kam `modelle/gitarre_rundum.py` zustande; für ähnliche Vorhaben (Instrument
   Knopf Ø40 mit 10 Strichen (= 0,1 mm), Stativmutter 1/4" unten, Kameraschraube 1/4" von unten (Senkung im Schwalbenschwanz-Kanal). Kaufteile: M6-Gewindestange 220 mm,
   4 Muttern M6, Mutter 1/4"-20, Stativschraube 1/4" mit Ring. Projekt `makroschlitten`. Ungetestet, ob der Schlitten unter 1,5 kg Kamera kippelt.
 
+## Gridfinity (`modelle/gridfinity/`, 21.11.2026)
+- Bibliothek gridfinity-rebuilt-openscad (kennetek, **MIT**, `LICENSE` liegt dabei) als Kopie in `modelle/gridfinity/src` + `gridfinity-rebuilt-baseplate.scad`.
+- **OpenSCAD hier ist 2021.01:** `cgs()`/`bin_subdivide` scheitern („No grid element available“, $-Variablen) → Fachgröße selbst rechnen (`bin_get_infill_size_mm` / Zellen,
+  `- d_div/2`), Lage weiter mit `bin_translate`, dann `compartment_cutter(…, center_top=false)`; Muster `drehteller_kiste.scad`. Grundplatte: Datei per `include` und Werte danach überschreiben.
+- OpenSCAD-STL hat Splitter/Nan-Volumen → vor dem Slicen mit pymeshlab säubern (Duplikate, Komponenten < 2 % Diagonale weg, Nicht-Mannigfaltiges, kleine Löcher). `pruefen.py` meldet an der
+  Stapellippe „Wand < 0,8“ – bei Gridfinity normal.
+- Drehteller-Kiste 4 × 2 × 5 (Fächer: Walzen | Stifte | Spitzen+Säulen / Klemmen+V-Auflage | Visier+Würfel, mit Beschriftungslaschen) + Grundplatte 4 × 2 dünn ohne Magnete; Projekt `drehteller` Nr. 9/10.
+
 ## Faustregeln Einstellungen
 - Deko/Figur: 0.16–0.20, Infill 10–15 %, Baumstützen bei Überhängen.
 - Funktionsteil/Halter: 0.20, Infill 25–40 %, `--waende 4`.
