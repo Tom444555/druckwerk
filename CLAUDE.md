@@ -351,6 +351,7 @@ So kam `modelle/gitarre_rundum.py` zustande; für ähnliche Vorhaben (Instrument
 - **Farben aus dunklen Scan-Texturen taugen nicht** (`textur_farben.py` gab 99,8 % schwarz bzw. fleckige Auto-Farben) → Farbbereiche **geometrisch** festlegen
   (Bespannung als Rechteck-Einlage vorn, Knöpfe über Höhenkarte, Keder als 0,4-mm-Rahmen), Muster `amp-plektrumhalter/modell/halter.py`. Bespannungsrelief kam aus dem Scan mit.
 - Keder über die ganze Höhe = viele Kopfwechsel (544 bei 0,08 mm, 8 h 12 min); ohne Keder deutlich weniger.
+- **Detailfotos (21.11.):** Farben danach statt nach Gefühl – Bespannung = schwarzer Grund + creme Noppen (versetztes Raster, als Druckmaß 1,0 × 0,8 mm bei 0,25er, 1,4 × 1,1 bei 0,4er; echt 0,65 × 0,53), Keder gold, Knöpfe schwarz mit goldener Kappe, rotes Schild ohne Schrift, LED rot. Flächen auf schräger Scan-Front über eine Scherungs-Matrix aus der gefitteten Ebene bauen (`front()` in halter.py). Manifold-Ausgabe vor dem Export entarten-frei machen (`nondegenerate_faces`), sonst meldet pruefen.py hunderte Null-Splitter. 0,25er: 7 h 33, 496 Wechsel.
 
 ## Gridfinity (`modelle/gridfinity/`, 21.11.2026)
 - Bibliothek gridfinity-rebuilt-openscad (kennetek, **MIT**, `LICENSE` liegt dabei) als Kopie in `modelle/gridfinity/src` + `gridfinity-rebuilt-baseplate.scad`.
