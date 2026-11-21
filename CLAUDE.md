@@ -343,6 +343,15 @@ So kam `modelle/gitarre_rundum.py` zustande; für ähnliche Vorhaben (Instrument
   Knopf Ø40 mit 10 Strichen (= 0,1 mm), Stativmutter 1/4" unten, Kameraschraube 1/4" von unten (Senkung im Schwalbenschwanz-Kanal). Kaufteile: M6-Gewindestange 220 mm,
   4 Muttern M6, Mutter 1/4"-20, Stativschraube 1/4" mit Ring. Projekt `makroschlitten`. Ungetestet, ob der Schlitten unter 1,5 kg Kamera kippelt.
 
+## Erster echter Scan: Amp-Plektrumhalter (21.11.2026, privat in druckwerk-modelle/amp-plektrumhalter)
+- **FlashBuild (Apple Object Capture) am Mac:** OBJ + 8k-Textur + MTL, Einheit **Meter ohne echten Maßstab** (Amp kam ~2,7× zu groß), Y oben, Vorderseite +Z.
+  8k-PNG nicht mit trimesh-Material laden (Speicher, Prozess abgeschossen) → `skip_materials=True` + Textur vorher auf 4096 verkleinern.
+- Ablauf: Höhenprofil je Schicht → Standfläche/Hocker abtrennen (Flächenmitte über Schnitthöhe) → je Achse auf Toms echte Maße skalieren → GLB mit UV →
+  `ki_rohling.py --voxel 0.1 --boden schnitt:1.5 --aufrichten aus --oben z` (ragged Unterkante weg).
+- **Farben aus dunklen Scan-Texturen taugen nicht** (`textur_farben.py` gab 99,8 % schwarz bzw. fleckige Auto-Farben) → Farbbereiche **geometrisch** festlegen
+  (Bespannung als Rechteck-Einlage vorn, Knöpfe über Höhenkarte, Keder als 0,4-mm-Rahmen), Muster `amp-plektrumhalter/modell/halter.py`. Bespannungsrelief kam aus dem Scan mit.
+- Keder über die ganze Höhe = viele Kopfwechsel (544 bei 0,08 mm, 8 h 12 min); ohne Keder deutlich weniger.
+
 ## Gridfinity (`modelle/gridfinity/`, 21.11.2026)
 - Bibliothek gridfinity-rebuilt-openscad (kennetek, **MIT**, `LICENSE` liegt dabei) als Kopie in `modelle/gridfinity/src` + `gridfinity-rebuilt-baseplate.scad`.
 - **OpenSCAD hier ist 2021.01:** `cgs()`/`bin_subdivide` scheitern („No grid element available“, $-Variablen) → Fachgröße selbst rechnen (`bin_get_infill_size_mm` / Zellen,
