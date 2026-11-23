@@ -116,8 +116,9 @@ function lager(app, kopf){
     <div class="stat"><span class="small">Vorrat</span><b>${(rest / 1000).toFixed(2).replace(".", ",")} kg</b></div>
     <div class="stat"><span class="small">Wert</span><b>${wert.toFixed(0)} €</b></div></div>
   <h2>Köpfe am Creator 5 Pro</h2><div class="card">${[1, 2, 3, 4].map(k => { const s = L.find(x => x.kopf === k);
-    return `<div class="row"><span class="dot" style="background:${s ? C.farbe(s.farbe) : "transparent"};width:22px;height:22px"></span>
+    return `<div class="row chev" data-kopf="${k}" style="cursor:pointer" role="button" tabindex="0"><span class="dot" style="background:${s ? C.farbe(s.farbe) : "transparent"};width:22px;height:22px"></span>
       <div class="grow">Kopf ${k}</div><span class="val">${s ? C.esc(spName(s)) + " · " + zahl(s.rest).toFixed(0) + " g" : "leer"}</span></div>`; }).join("")}</div>
+  <p class="hint">Antippen und die Spule wählen, die in dem Kopf sitzt. Das gilt überall: Druckwerk prüft damit jedes Teil („Meine Köpfe“) und belegt das Material beim Slicen vor.</p>
   <h2>Spulen</h2>`;
   if (!L.length) h += `<div class="empty">Noch keine Spulen eingetragen.<br>Trag deine Spulen ein – dann kannst du nach jedem Auftrag den Verbrauch abbuchen und siehst, was noch reicht.</div>`;
   else h += `<div class="card">${L.map(s => { const p = zahl(s.start) ? Math.max(0, Math.min(100, 100 * zahl(s.rest) / zahl(s.start))) : 0;
@@ -131,10 +132,26 @@ function lager(app, kopf){
   app.innerHTML = h;
   binden(app, () => material(app));
   $("#spNeu").onclick = () => spuleBlatt(null, () => material(app));
+  $$("[data-kopf]", app).forEach(r => r.onclick = r.onkeydown = e => { if (e.type === "keydown" && e.key !== "Enter") return; kopfBlatt(+r.dataset.kopf, () => material(app)); });
   $$("[data-s]", app).forEach(r => r.onclick = () => spuleBlatt(spulen().find(x => x.id === r.dataset.s), () => material(app)));
 }
-function spuleBlatt(s, fertig){
-  const neu = !s; s = s || {id: "s" + Date.now().toString(36), material: "PLA", farbe: "", marke: "", start: 1000, rest: 1000, preis: "", kopf: 0};
+// Welche Spule sitzt in diesem Kopf? (ein Kopf trägt eine Spule, eine Spule sitzt in einem Kopf)
+function kopfBlatt(k, fertig){
+  const L = spulen(), jetzt = L.find(x => x.kopf === k);
+  const d = C.sheet(`<h3>Kopf ${k}</h3><p>${L.length ? "Welche Spule sitzt in diesem Kopf?" : "Noch keine Spulen im Lager – leg zuerst eine an."}</p>
+    ${L.length ? `<div class="card">${L.map(s => `<div class="row" data-w="${s.id}" style="cursor:pointer" role="button" tabindex="0"><span class="dot" style="background:${C.farbe(s.farbe)};width:22px;height:22px"></span>
+      <div class="grow"><b>${C.esc(spName(s))}</b><div class="small">${zahl(s.rest).toFixed(0)} g${s.marke ? " · " + C.esc(s.marke) : ""}${s.kopf && s.kopf !== k ? " · sitzt in Kopf " + s.kopf : ""}</div></div>
+      <span class="val" style="color:var(--blue)">${jetzt && jetzt.id === s.id ? "✓" : ""}</span></div>`).join("")}</div>` : ""}
+    <div style="height:12px"></div><button class="btn grey" id="kNeu">Neue Spule für diesen Kopf anlegen</button>
+    ${jetzt ? `<button class="btn grey" id="kLeer">Kopf ist leer</button>` : ""}<button class="btn grey" id="kZu">Abbrechen</button>`);
+  const setze = id => { const N = spulen(); N.forEach(x => { if (x.kopf === k) x.kopf = 0; }); const s = N.find(x => x.id === id); if (s) s.kopf = k; lsSet(SP, N); d.remove(); C.toast(s ? `Kopf ${k}: ${spName(s)}` : `Kopf ${k} ist leer`); fertig(); };
+  d.querySelectorAll("[data-w]").forEach(r => r.onclick = () => setze(r.dataset.w));
+  const l = d.querySelector("#kLeer"); if (l) l.onclick = () => setze(null);
+  d.querySelector("#kNeu").onclick = () => { d.remove(); spuleBlatt(null, fertig, k); };
+  d.querySelector("#kZu").onclick = () => d.remove();
+}
+function spuleBlatt(s, fertig, kopfVor = 0){
+  const neu = !s; s = s || {id: "s" + Date.now().toString(36), material: "PLA", farbe: "", marke: "", start: 1000, rest: 1000, preis: "", kopf: kopfVor};
   const feld = (l, id, v, ph = "", mode = "text") => `<div class="row"><div class="grow">${l}</div><input type="text" inputmode="${mode}" id="${id}" value="${C.esc(v)}" placeholder="${ph}" style="flex:1"></div>`;
   const d = C.sheet(`<h3>${neu ? "Neue Spule" : C.esc(spName(s))}</h3><p>${neu ? "Was auf der Spule steht, reicht." : "Werte anpassen oder Verbrauch abziehen."}</p>
     <div class="card">

@@ -265,7 +265,7 @@ new MutationObserver(() => { if (!["material","workflow","bibliothek"].includes(
 document.querySelectorAll("nav button").forEach(b => b.onclick = () => { tab = b.dataset.tab; zeige(); });
 
 /* ---------- Projekte (projekte.js) und Wissen (mehr.js) ---------- */
-const sctx = () => ({...kctx(), AUFTRAEGE, LAGER, gedruckt: gedrucktListe, gedrucktSetzen, schoen, deDatum, zeitKurz, minuten, summeGramm,
+const sctx = () => ({...kctx(), fertig: wctx().fertig, AUFTRAEGE, LAGER, gedruckt: gedrucktListe, gedrucktSetzen, schoen, deDatum, zeitKurz, minuten, summeGramm,
   hinzufuegen: l => { hinzufuegen(l); }, neuLaden: () => { laden(); },
   verborgen: () => verborgen().filter(o => LAGER.some(a => a.ordner === o)),
   verbergen: l => { verborgenSetzen([...verborgen(), ...l]); AUFTRAEGE = AUFTRAEGE.filter(a => !l.includes(a.ordner)); meineSichern(AUFTRAEGE); },
@@ -284,7 +284,8 @@ async function mehrTab(){
 
 /* ---------- Bibliothek & Werkstatt (werkstatt.js) ---------- */
 const wctx = () => ({LAGER, DRUCKER, FARBEN, farbe, esc, toast, sheet, go: t => { tab = t; zeige(); },
-  fertig: (ordner, liste) => { LAGER = liste; hinzufuegen(LAGER.filter(a => a.ordner === ordner)); tab = "auftrag:" + ordner; zeige(); toast("Druckdatei ist fertig"); }});
+  fertig: (ordner, liste, ziel) => { LAGER = liste; AUFTRAEGE = AUFTRAEGE.map(x => LAGER.find(l => l.ordner === x.ordner) || x);   // neu gerechnete Teile ersetzen den alten Stand
+    hinzufuegen(LAGER.filter(a => a.ordner === ordner)); tab = ziel || "auftrag:" + ordner; zeige(); toast("Druckdatei ist fertig"); }});
 async function werkstattTab(){
   const meinTab = tab;
   if (!app.querySelector("#wview")) app.innerHTML = `<h1>${tab === "bibliothek" ? "Bibliothek" : "Werkstatt"}</h1><div class="empty">Wird geladen …</div>`;
@@ -322,6 +323,7 @@ function detail(ordner){
   const geschw = AUFTRAEGE.filter(x => gid(x) === gid(a)), imProjekt = geschw.length > 1 || !!a.gruppe;
   const zurueck = imProjekt ? "projekt:" + gid(a) : "projekte";
   const pfad = `auftraege/${a.ordner}/`;
+  const ver = a.angepasst && a.angepasst.id ? "?v=" + encodeURIComponent(a.angepasst.id) : "";   // neu gerechnete Datei nicht aus dem Zwischenspeicher
   const gr = String(a.gramm).split(",");
   app.innerHTML = `
   <button class="back" id="zur">‹ ${imProjekt ? esc(a.gruppe_titel || "Projekt") : "Projekte"}</button>
@@ -346,6 +348,7 @@ function detail(ordner){
       <span class="val">${dez(gr[i])} g</span></div>`).join("")}
   </div>
   ${a.gemischt ? `<div class="warn">⚠ Unterschiedliche Materialien – Haftung und Temperaturen prüfen.</div>` : ""}
+  <div id="kAmpel"></div>
   <div id="fcheck"></div>
   <h2>Einstellungen</h2>
   <div class="card">
@@ -358,7 +361,7 @@ function detail(ordner){
     <div class="row"><div class="grow">Düsen-Größe</div><span class="val">${esc(String(a.duesen_mm ? a.duesen_mm.join(" / ") : a.duese_mm || "0.4").replace(/\./g, ","))} mm</span></div>
   </div>
   <h2>Datei für den USB-Stick</h2>
-  <a class="btn" href="${pfad}${encodeURIComponent(a.gcode)}" download="${esc(a.gcode)}">Druckdatei laden</a>
+  <a class="btn" href="${pfad}${encodeURIComponent(a.gcode)}${ver}" download="${esc(a.gcode)}">Druckdatei laden</a>
   <p class="hint"><b>${esc(a.gcode)}</b> – auf einen FAT32-USB-Stick kopieren → am Drucker unter USB auswählen → Platte frei? → Start.${geschw.length > 1 ? " Alle Teile auf einmal: im Projekt „Alles für den USB-Stick laden“." : ""}</p>
   <div style="height:10px"></div>
   <div id="gdBox"></div>
@@ -379,9 +382,10 @@ function detail(ordner){
   <div style="height:20px"></div>`;
   $("#zur").onclick = () => { tab = zurueck; zeige(); };
   $("#inWerk").onclick = () => { tab = "werkstatt:l:" + a.ordner; zeige(); };
-  $("#schichten").onclick = async () => { try { (await import("./schichten.js")).zeigen(pfad + encodeURIComponent(a.gcode), a.slots.map(s => farbe(s.farbe)), sheet); } catch(e) { toast("Konnte nicht geladen werden"); } };
+  $("#schichten").onclick = async () => { try { (await import("./schichten.js")).zeigen(pfad + encodeURIComponent(a.gcode) + ver, a.slots.map(s => farbe(s.farbe)), sheet); } catch(e) { toast("Konnte nicht geladen werden"); } };
   const check = async () => { try { const el = $("#fcheck"); if (el) el.innerHTML = (await import("./wissen.js")).filamentCheck(a, kctx()); } catch(e) {} };
   check();
+  import("./koepfe.js").then(K => K.ampel($("#kAmpel"), a, {...wctx(), schoen})).catch(() => {});
   $("#buchen").onclick = async () => { try { (await import("./wissen.js")).abbuchen(a, {...kctx(), fertig: check}); } catch(e) { toast("Konnte nicht geladen werden"); } };
   import("./tagebuch.js").then(T => { const el = $("#tbAuf"); if (el) T.imAuftrag(el, a, {...kctx(), nachEintrag: () => gd()}); }).catch(() => {});
   $("#zurueckB").onclick = async () => (await import("./zurueck.js")).hochladen(sctx(), a);

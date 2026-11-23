@@ -141,8 +141,9 @@ export async function bibliothek(app, ctx){
     if (i < 0) lager.push(a); else if (a.drucker === "c5pro" && lager[i].drucker !== "c5pro") lager[i] = a; }
   const schoen = n => { const t = String(n || "").replace(/_/g, " ").trim(); return t.charAt(0).toUpperCase() + t.slice(1); };
   const deD = iso => iso ? String(iso).slice(0, 10).split("-").reverse().join(".") : "";
-  const karte = (id, bild, name, sub, punkte) => `
-    <div class="mk" data-m="${C.esc(id)}" data-n="${C.esc(name.toLowerCase())}">
+  const ORD = await import("./ordnung.js"); await ORD.laden();
+  const karte = (id, bild, name, sub, punkte, key) => `
+    <div class="mk" data-m="${C.esc(id)}" data-n="${C.esc(name.toLowerCase() + (key ? " " + ORD.suchtext(key) : ""))}" ${key ? `data-b="${C.esc(ORD.karte(key).bereich)}"` : ""}>
       <div class="mb">${bild ? `<img src="${C.esc(bild)}" alt="" loading="lazy">` : ""}</div>
       <div class="mt"><b>${C.esc(schoen(name))}</b><div class="small">${C.esc(sub)}</div>
         <div class="dots">${punkte.map(f => `<span class="dot" style="background:${f}"></span>`).join("")}</div></div></div>`;
@@ -158,19 +159,26 @@ export async function bibliothek(app, ctx){
       <div class="grow"><b>„${C.esc(kiLauf.name)}“ wird erzeugt …</b><div class="small">seit ${Math.max(1, Math.round((Date.now() - kiLauf.start) / 60000))} Min. · antippen für den Stand</div></div></div></div>` : ""}
     ${eigene.length ? `<h2>Meine Modelle (auf diesem Gerät)</h2><div class="mgrid">${eigene.map(m =>
       karte("e:" + m.id, m.bild, m.name, `${m.teile.length} Teil${m.teile.length > 1 ? "e" : ""} · ${deD(m.datum)}`, [...new Set(m.teile.map(t => m.slots[t.slot-1]))])).join("")}</div>` : ""}
+    <h2>Aus dem Lager</h2><div id="bibChips"></div>
     <div id="privat"></div>
     <h2>Von Claude erstellt (${lager.length})</h2>
-    <div class="mgrid">${lager.map(a => karte("l:" + a.ordner, a.vorschau ? `auftraege/${a.ordner}/${a.vorschau}` : "", a.name,
-      `${a.teile.length} Teil${a.teile.length > 1 ? "e" : ""} · ${deD(a.datum)}`, a.slots.map(s => C.farbe(s.farbe)))).join("")}</div>`;
-  app.querySelectorAll(".mk").forEach(k => { k.setAttribute("role", "button"); k.tabIndex = 0;
+    <div class="mgrid">${lager.map(a => karte("l:" + a.ordner, a.vorschau ? `auftraege/${a.ordner}/${a.vorschau}` : "", a.gruppe_titel && a.titel ? `${a.titel} – ${a.gruppe_titel}` : a.name,
+      `${a.teile.length} Teil${a.teile.length > 1 ? "e" : ""} · ${deD(a.datum)}`, a.slots.map(s => C.farbe(s.farbe)), ORD.schluessel(a))).join("")}</div>`;
+  // Suche und Bereichs-Filter wirken zusammen; private Modelle kommen nachgeladen dazu
+  const filtern = () => { const q = ($("#suche").value || "").toLowerCase().trim();
+    app.querySelectorAll(".mk").forEach(k => { const b = k.dataset.b;
+      k.style.display = k.dataset.n.includes(q) && (!b || ORD.F.bereich === "alle" || b === ORD.F.bereich) ? "" : "none"; }); };
+  const chipsNeu = () => { const z = {}; let n = 0; app.querySelectorAll(".mk[data-b]").forEach(k => { z[k.dataset.b] = (z[k.dataset.b] || 0) + 1; n++; });
+    const el = $("#bibChips"); if (!el) return; el.innerHTML = ORD.chips(z, n); ORD.chipsBinden(el, chipsNeu); filtern(); };
+  chipsNeu();
+  app.querySelectorAll(".mk[data-m]").forEach(k => { k.setAttribute("role", "button"); k.tabIndex = 0;
     k.onclick = k.onkeydown = e => { if (e.type === "keydown" && e.key !== "Enter") return; C.go("werkstatt:" + k.dataset.m); }; });
   const ki = async () => { try { (await import("./ki.js")).oeffnen(C); } catch (e) { C.toast("Konnte nicht geladen werden"); } };
   $("#kiBtn").onclick = () => C.go("kiweg:1");
-  import("./privat.js").then(m => m.zeigen($("#privat"), C)).catch(() => {});
+  import("./privat.js").then(m => m.zeigen($("#privat"), C, chipsNeu)).catch(() => {});
   const kw = $("#kiWeiter"); if (kw) kw.onclick = kw.onkeydown = e => { if (e.type === "keydown" && e.key !== "Enter") return; C.go("kiweg:" + kwOffen.schritt); };
   const kl = $("#kiLauf"); if (kl) kl.onclick = kl.onkeydown = e => { if (e.type === "keydown" && e.key !== "Enter") return; ki(); };
-  $("#suche").oninput = e => { const q = e.target.value.toLowerCase().trim();
-    app.querySelectorAll(".mk").forEach(k => k.style.display = k.dataset.n.includes(q) ? "" : "none"); };
+  $("#suche").oninput = filtern;
   $("#imp").onchange = async e => {
     const fs = [...e.target.files]; if (!fs.length) return;
     C.toast("Datei wird gelesen …");
@@ -507,6 +515,8 @@ function sliceWahl(){
   try { E = {...E, ...JSON.parse(ls.get(SL) || "{}")}; } catch (e) {}
   if (M.material) M.material.forEach((m, i) => { if (m) E.mat[i] = m; });
   const dr = (C.DRUCKER || {}).c5pro || {}, mats = Object.keys(dr.filamente || {PLA: 1});
+  let ausKoepfen = false;                                  // „Meine Köpfe“ (Material → Mein Lager) geben das Material je Kopf vor
+  try { for (const s of JSON.parse(ls.get("druckwerk_spulen") || "[]")) if (s.kopf >= 1 && s.kopf <= 4 && mats.includes(String(s.material).toUpperCase())) { E.mat[s.kopf - 1] = String(s.material).toUpperCase(); ausKoepfen = true; } } catch (e) {}
   const schichten = dr.schichten || ["0.12", "0.20", "0.24"];
   if (!schichten.includes(E.schicht)) E.schicht = schichten.reduce((b, v) => Math.abs(v - E.schicht) < Math.abs(b - E.schicht) ? v : b, "0.20");
   E.mat = E.mat.map(m => mats.includes(m) ? m : "PLA");
@@ -537,6 +547,7 @@ function sliceWahl(){
     <h2>Material je Kopf</h2><div class="card">${benutzt.map(n => `
       <div class="row"><span class="dot" style="background:${M.slots[n-1]};width:22px;height:22px"></span><div class="grow">Kopf ${n} · ${C.esc(farbName(M.slots[n-1]))}</div>
         <select data-mat="${n-1}">${opt(mats.map(m => [m, m]), E.mat[n-1])}</select></div>`).join("")}</div>
+    <p class="hint">${ausKoepfen ? "Vorbelegt mit dem, was laut „Mein Lager“ in deinen Köpfen sitzt." : "Tipp: Unter Wissen → Material → Mein Lager eintragen, was in welchem Kopf sitzt – dann ist das hier vorbelegt."}</p>
     <button class="btn" id="sLos" style="margin-top:16px">Jetzt slicen</button>
     <button class="btn grey" id="sZu">Abbrechen</button>
     ${ls.get(TOK) ? `<p class="hint" style="text-align:center"><a href="#" id="sTok" style="color:var(--sub)">GitHub-Zugang auf diesem Gerät entfernen</a></p>` : ""}`;
@@ -613,8 +624,26 @@ async function sliceStart(E){
   } catch (e) { console.error(e); sag("Fehler: " + (e.message || e), 0); const b = d.querySelector("#slZu"); if (b) b.textContent = "Schließen"; }
 }
 
+// Allgemeiner Auftrag an den Slicer (z. B. „An meine Köpfe anpassen“, koepfe.js): legt eingang/<id>/auftrag.json ab und wartet auf das Ergebnis
+export async function auftragSenden(ctx, job, o = {}){
+  C = ctx;
+  if (!ls.get(TOK)) return zugang(() => auftragSenden(ctx, job, o));
+  const id = "a" + Date.now().toString(36);
+  const d = C.sheet(`<h3>${C.esc(o.titel || "Slicen läuft")}</h3><p id="slText">Auftrag wird abgeschickt …</p><div class="balken"><i id="slBalken"></i></div>
+    <p class="small" style="margin-top:10px">Dauert meist 1–3 Minuten je Teil. Du kannst die App offen lassen oder später wiederkommen.</p>
+    <button class="btn grey" id="slZu">Im Hintergrund weiter</button>`);
+  d.onclick = null; d.querySelector("#slZu").onclick = () => d.remove();
+  const sag = (t, p) => { const e = d.querySelector("#slText"); if (e) { e.textContent = t; d.querySelector("#slBalken").style.width = p + "%"; } };
+  try {
+    await ablegen(`eingang/${id}/auftrag.json`, btoa(unescape(encodeURIComponent(JSON.stringify(job)))), `App: ${o.name || "Auftrag"} anpassen`);
+    ls.set(OFFEN, JSON.stringify({id, name: o.name || "Auftrag", start: Date.now()}));
+    await warten(id, sag, o.pruef ? l => o.pruef(l, id) : null, o.ziel);
+    d.remove();
+  } catch (e) { console.error(e); sag("Fehler: " + (e.message || e), 0); const b = d.querySelector("#slZu"); if (b) b.textContent = "Schließen"; }
+}
+
 // wartet auf status/<id>.json (vom Slicer) und danach darauf, dass der Auftrag in der App sichtbar ist
-async function warten(id, sag){
+async function warten(id, sag, pruef, ziel){
   const pause = ms => new Promise(r => setTimeout(r, ms));
   let st = null;
   for (let i = 0; i < 150 && !st; i++) {
@@ -628,7 +657,7 @@ async function warten(id, sag){
   for (let i = 0; i < 40; i++) {
     sag("Fertig – Auftrag wird in die App übernommen …", 94);
     try { const l = await (await fetch("auftraege/index.json?t=" + Date.now(), {cache: "no-store"})).json();
-      if (l.some(a => a.ordner === st.ordner)) { C.fertig(st.ordner, l); return; } } catch (e) {}
+      if (pruef ? pruef(l) : l.some(a => a.ordner === st.ordner)) { C.fertig(st.ordner, l, ziel); return; } } catch (e) {}
     await pause(6000);
   }
   throw new Error("Fertig gesliced – erscheint gleich unter „Projekte“.");

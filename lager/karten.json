@@ -1,0 +1,201 @@
+{
+ "hinweis": "Karteikarten je Projekt. Schlüssel = gruppe (oder name bei Einzelteilen). Die App liest diese Datei und schreibt Änderungen von Tom hierher zurück (ordnung.js). Übersicht für Claude: lager/KATALOG.md (python3 werkzeug/katalog.py).",
+ "bereiche": [
+  {
+   "id": "musik",
+   "name": "Gitarre & Musik"
+  },
+  {
+   "id": "foto",
+   "name": "Foto & Scan"
+  },
+  {
+   "id": "werkstatt",
+   "name": "Werkstatt & Ordnung"
+  },
+  {
+   "id": "deko",
+   "name": "Deko & Geschenke"
+  },
+  {
+   "id": "drucker",
+   "name": "Drucker & Kalibrieren"
+  },
+  {
+   "id": "sonstiges",
+   "name": "Unsortiert"
+  }
+ ],
+ "staende": [
+  {
+   "id": "idee",
+   "name": "Idee"
+  },
+  {
+   "id": "gerechnet",
+   "name": "gerechnet"
+  },
+  {
+   "id": "gedruckt",
+   "name": "gedruckt"
+  },
+  {
+   "id": "bewaehrt",
+   "name": "bewährt"
+  }
+ ],
+ "karten": {
+  "drehteller": {
+   "bereich": "foto",
+   "stand": "gerechnet",
+   "herkunft": "eigen",
+   "schlagworte": [
+    "Meshroom",
+    "Scan",
+    "Drehteller",
+    "Gridfinity"
+   ],
+   "modell": [
+    "modelle/drehteller.py",
+    "modelle/scan_zubehoer.py",
+    "modelle/drehteller_daten/",
+    "modelle/gridfinity/"
+   ]
+  },
+  "messmatte": {
+   "bereich": "foto",
+   "stand": "gerechnet",
+   "herkunft": "eigen",
+   "schlagworte": [
+    "Messen",
+    "Foto",
+    "Umriss"
+   ],
+   "modell": [
+    "modelle/foto_helfer.py",
+    "modelle/messmatte.json",
+    "werkzeug/messmatte.py"
+   ]
+  },
+  "makroschlitten": {
+   "bereich": "foto",
+   "stand": "gerechnet",
+   "herkunft": "eigen",
+   "schlagworte": [
+    "Makro",
+    "Focus Stacking",
+    "Kamera"
+   ],
+   "modell": [
+    "modelle/foto_helfer.py"
+   ]
+  },
+  "lebensbaum": {
+   "bereich": "deko",
+   "stand": "gerechnet",
+   "herkunft": "eigen",
+   "schlagworte": [
+    "Lichtbild",
+    "Relief",
+    "Geschenk"
+   ],
+   "modell": [
+    "modelle/lebensbaum_licht.py"
+   ]
+  },
+  "schecter370": {
+   "bereich": "musik",
+   "stand": "gerechnet",
+   "herkunft": "eigen",
+   "schlagworte": [
+    "Gitarre",
+    "Miniatur",
+    "0,25-mm-Düse"
+   ],
+   "modell": [
+    "modelle/gitarre_rundum.py",
+    "modelle/gitarre_rundum_daten.json"
+   ]
+  },
+  "schecter160": {
+   "bereich": "musik",
+   "stand": "gerechnet",
+   "herkunft": "eigen",
+   "schlagworte": [
+    "Gitarre",
+    "Miniatur"
+   ],
+   "modell": [
+    "modelle/gitarre_rundum.py"
+   ]
+  },
+  "schecter200": {
+   "bereich": "musik",
+   "stand": "gerechnet",
+   "herkunft": "eigen",
+   "schlagworte": [
+    "Gitarre",
+    "Miniatur",
+    "alter Stand"
+   ],
+   "archiv": true,
+   "modell": [
+    "modelle/gitarre_rundum.py"
+   ]
+  },
+  "vox_plektrumhalter": {
+   "bereich": "musik",
+   "stand": "gerechnet",
+   "herkunft": "fremd",
+   "schlagworte": [
+    "Plektrum",
+    "Amp"
+   ],
+   "modell": [
+    "modelle/vox_amp_korpus.stl",
+    "modelle/vox_amp_grill.stl",
+    "modelle/vox_amp_regler.stl"
+   ]
+  },
+  "stratocaster": {
+   "bereich": "musik",
+   "stand": "gerechnet",
+   "herkunft": "fremd",
+   "schlagworte": [
+    "Gitarre",
+    "Miniatur"
+   ],
+   "modell": [
+    "modelle/strat_korpus.stl",
+    "modelle/strat_hals.stl",
+    "modelle/strat_metall.stl",
+    "modelle/strat_weiss.stl"
+   ]
+  },
+  "loopsmiths_amp": {
+   "bereich": "musik",
+   "stand": "gerechnet",
+   "herkunft": "eigen",
+   "schlagworte": [
+    "Amp",
+    "Loopsmiths"
+   ],
+   "modell": [
+    "modelle/loopsmiths_amp.scad"
+   ]
+  },
+  "kalibrier": {
+   "bereich": "drucker",
+   "stand": "gerechnet",
+   "herkunft": "eigen",
+   "schlagworte": [
+    "Kalibrieren",
+    "Passung",
+    "Versatz"
+   ],
+   "modell": [
+    "modelle/kalibrier/"
+   ]
+  }
+ }
+}

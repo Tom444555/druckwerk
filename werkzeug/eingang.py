@@ -74,9 +74,90 @@ def zurueck(ordner: Path, j, sid=""):
     return o
 
 
+def anpassen(ordner: Path, j, sid=""):
+    """Ein Teil ({ordner, koepfe}) oder ein ganzes Projekt ({liste: [{ordner, koepfe}, …]}) anpassen."""
+    liste = j.get("liste") or [{"ordner": j.get("ordner"), "koepfe": j.get("koepfe")}]
+    if not 1 <= len(liste) <= 24: raise ValueError("zu viele Teile")
+    fertig, fehler = [], []
+    for e in liste:
+        try: fertig.append(anpassen_einer(e, sid))
+        except Exception as ex: fehler.append(f"{e.get('ordner')}: {str(ex)[-300:]}")
+    if fehler: raise RuntimeError(f"{len(fertig)} von {len(liste)} Teilen angepasst. Nicht gegangen: " + " | ".join(fehler))
+    return fertig[0]
+
+
+def anpassen_einer(j, sid=""):
+    """„An meine Köpfe anpassen“: denselben Auftrag mit anderem Material / anderem Kopf / anderer Farbe neu slicen.
+    Alle Slicer-Einstellungen kommen aus der Projekt-3MF des Auftrags (druck.py --wie); der Auftragsordner wird ersetzt."""
+    o = str(j.get("ordner", ""))
+    if not re.match(r"^[\w\-]+$", o) or not (W / "auftraege" / o / "auftrag.json").exists(): raise ValueError("Auftrag unbekannt")
+    alt = W / "auftraege" / o
+    info = json.loads((alt / "auftrag.json").read_text(encoding="utf-8"))
+    if info.get("bemalt"): raise ValueError("Bemalte Modelle lassen sich so nicht anpassen – in der Werkstatt neu slicen.")
+    if info.get("drucker") != "c5pro": raise ValueError("Nur Aufträge für den Creator 5 Pro lassen sich anpassen.")
+    if info.get("duesen_mm"): raise ValueError("Auftrag mit gemischten Düsen – bitte im Chat anpassen lassen.")
+    if not info.get("projekt") or not (alt / info["projekt"]).exists(): raise ValueError("Zu diesem Auftrag fehlt das Projekt – im Chat neu slicen lassen.")
+    plan = {}                                                    # alter Kopf -> (neuer Kopf, Material, Farbe)
+    for k in (j.get("koepfe") or []):
+        von, nach = int(k.get("von", 0)), int(k.get("kopf", 0)); mat = str(k.get("material", "")).upper()
+        if not (1 <= von <= 4 and 1 <= nach <= 4) or not MAT_OK.match(mat): raise ValueError("Kopf/Material ungültig")
+        plan[von] = (nach, mat, re.sub(r"[^\w#äöüß]+", "", str(k.get("farbe", "")))[:20])
+    alt_slots = {int(s["slot"]): s for s in info.get("slots", [])}
+    benutzt = sorted({int(t["slot"]) for t in info.get("teile", [])})
+    if not benutzt: raise ValueError("keine Teile")
+    for s_ in benutzt:
+        plan.setdefault(s_, (s_, str(alt_slots.get(s_, {}).get("material", "PLA")).upper(), alt_slots.get(s_, {}).get("farbe", "")))
+    ziele = [plan[s_][0] for s_ in benutzt]
+    if len(set(ziele)) != len(ziele): raise ValueError("Zwei Farben liegen auf demselben Kopf – jede Farbe braucht ihren eigenen Kopf.")
+    import tempfile
+    tmp = Path(tempfile.mkdtemp(prefix="anpassen_")) / o
+    shutil.copytree(alt, tmp)
+    cmd = [sys.executable, str(W / "werkzeug" / "druck.py"), "--drucker", "c5pro", "--name", info["name"], "--ausgabe", str(tmp), "--wie", str(tmp)]
+    for t in info["teile"]:
+        q = tmp / t["datei"]
+        if not q.exists(): raise ValueError(f"Modell-Datei fehlt im Lager: {t['datei']} – im Chat neu slicen lassen.")
+        nach, mat, _ = plan[int(t["slot"])]
+        cmd += ["--teil", f"{q}:{mat}:{nach}"]
+    sys.path.insert(0, str(W / "werkzeug")); import druck
+    if druck.wie_zusammen(tmp, info): cmd.append("--zusammen")
+    farben = [""] * max(ziele)
+    for s_ in benutzt: farben[plan[s_][0] - 1] = plan[s_][2] or alt_slots.get(s_, {}).get("farbe", "")
+    for i, f in enumerate(farben):                               # unbenutzte Köpfe dazwischen: Platzhalter, damit die Reihenfolge stimmt
+        if not f: farben[i] = "leer"
+    cmd += ["--farben", ",".join(farben), "--schicht", str(info.get("schicht", "0.20")), "--stufe", str(info.get("stufe", "Standard")),
+            "--infill", str(int(info.get("infill", 15))), "--stuetzen", info.get("stuetzen") if info.get("stuetzen") in ("aus", "auto", "baum") else "aus",
+            "--brim", info.get("brim") if info.get("brim") in ("aus", "auto", "an") else "aus"]
+    if info.get("waende"): cmd += ["--waende", str(int(info["waende"]))]
+    if str(info.get("duese_mm") or "0.4") != "0.4": cmd += ["--duese", str(info["duese_mm"])]
+    if info.get("quelle"): cmd += ["--quelle", info["quelle"]]
+    r = subprocess.run(cmd, capture_output=True, text=True, timeout=2100)
+    neu = tmp / "auftrag.json"
+    ok = r.returncode == 0 and neu.exists() and json.loads(neu.read_text(encoding="utf-8")).get("slots") is not None and "OK  " in r.stdout
+    if not ok:
+        log = (tmp / "slicer.log").read_text(errors="ignore")[-600:] if (tmp / "slicer.log").exists() else ""
+        shutil.rmtree(tmp.parent, ignore_errors=True)
+        raise RuntimeError((r.stdout + r.stderr)[-500:].strip() + "\n" + log)
+    n = json.loads(neu.read_text(encoding="utf-8"))
+    n["ordner"] = o; n["datum"] = info.get("datum", n.get("datum"))
+    n["angepasst"] = {"datum": datetime.date.today().isoformat(), "id": sid,
+                      "koepfe": [{"von": s_, "kopf": plan[s_][0], "material": plan[s_][1], "farbe": plan[s_][2]} for s_ in benutzt],
+                      "vorher": [{"slot": s_, "material": alt_slots.get(s_, {}).get("material", ""), "farbe": alt_slots.get(s_, {}).get("farbe", "")} for s_ in benutzt]}
+    n.pop("geaendert", None)
+    neu.write_text(json.dumps(n, ensure_ascii=False, indent=1), encoding="utf-8")
+    with open(tmp / "BERICHT.md", "a", encoding="utf-8") as f:
+        f.write(f"\n## An meine Köpfe angepasst am {n['angepasst']['datum']} (aus der App)\n"
+                + "".join(f"- Kopf {v['slot']} {v['material']} {v['farbe']} → Kopf {k['kopf']} {k['material']} {k['farbe']}\n" for v, k in zip(n["angepasst"]["vorher"], n["angepasst"]["koepfe"]))
+                + "- Alle übrigen Einstellungen wie vorher (aus dem Projekt übernommen). Das Modell selbst ist unverändert.\n")
+    for f in tmp.iterdir():                                       # liegengebliebene alte Dateinamen entfernen
+        if f.name == "index.json": f.unlink()
+    shutil.rmtree(alt); shutil.move(str(tmp), str(alt)); shutil.rmtree(tmp.parent, ignore_errors=True)
+    return o
+
+
 def einer(ordner: Path):
     j = json.loads((ordner / "auftrag.json").read_text(encoding="utf-8"))
     if j.get("art") == "zurueck": return zurueck(ordner, j, re.sub(r"[^\w\-]+", "", ordner.name))
+    if j.get("art") == "anpassen": return anpassen(ordner, j, re.sub(r"[^\w\-]+", "", ordner.name))
     name = re.sub(r"[^a-z0-9_]+", "_", str(j.get("name", "modell")).lower().replace("ä", "ae").replace("ö", "oe").replace("ü", "ue").replace("ß", "ss")).strip("_")[:40] or "modell"
     drucker = j.get("drucker", "kobrax")
     if drucker not in ("kobrax", "c5pro"): raise ValueError("Drucker unbekannt")

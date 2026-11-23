@@ -36,9 +36,16 @@ const punkte = (t, c = C) => { const g = gramme(t); return `<div class="dots">${
 /* ---------- Liste aller Projekte ---------- */
 export async function liste(app, ctx){
   C = ctx;
-  const P = gruppen(C.AUFTRAEGE), G = C.gedruckt();
+  const ORD = await import("./ordnung.js"); await ORD.laden();
+  const alle = gruppen(C.AUFTRAEGE), G = C.gedruckt();
+  alle.forEach(p => { p.key = ORD.schluessel(p.teile[0]); p.karte = ORD.karte(p.key); });
+  const aktiv = alle.filter(p => !p.karte.archiv), archiv = alle.filter(p => p.karte.archiv);
+  const zaehler = {}; aktiv.forEach(p => zaehler[p.karte.bereich] = (zaehler[p.karte.bereich] || 0) + 1);
+  if (ORD.F.archiv && !archiv.length) ORD.F.archiv = false;
+  const chipsHtml = ORD.F.archiv ? "" : ORD.chips(zaehler, aktiv.length);          // setzt den Filter zurück, wenn der Bereich leer ist
+  const P = ORD.F.archiv ? archiv : aktiv.filter(p => ORD.F.bereich === "alle" || p.karte.bereich === ORD.F.bereich);
   let O = null; try { O = await (await import("./wissen.js")).offen(); } catch (e) {}
-  const offenP = P.find(p => p.fertig < p.teile.length);
+  const offenP = aktiv.find(p => p.fertig < p.teile.length);
   const naechst = offenP && offenP.teile.find(t => !G[t.ordner]);
   const einOffen = O && O.einGesamt && O.einErledigt < O.einGesamt;
   const karte = p => { const k = koepfe(p), fertig = p.fertig === p.teile.length;
@@ -46,22 +53,26 @@ export async function liste(app, ctx){
       ${p.haupt.vorschau ? `<img src="auftraege/${C.esc(p.haupt.ordner)}/${C.esc(p.haupt.vorschau)}" alt="" loading="lazy">` : `<div class="pleer"></div>`}
       <div class="ptext"><div><b>${C.esc(p.titel)}</b></div>
         <div class="small">${p.teile.length === 1 ? "1 Teil" : p.teile.length + " Teile"} · ${dauer(p.min)} · ${dez(p.gramm, 0)} g</div>
-        <div class="pfuss">${fertig ? `<span class="pill gruen">gedruckt</span>` : `<span class="pill">${p.fertig} von ${p.teile.length} gedruckt</span>`}
+        <div class="pfuss">${p.karte.stand === "bewaehrt" ? `<span class="pill gruen">bewährt</span>` : fertig ? `<span class="pill gruen">gedruckt</span>` : `<span class="pill">${p.fertig} von ${p.teile.length} gedruckt</span>`}
           <div class="dots">${k.liste.map(x => `<span class="dot" style="background:${C.farbe(x.farbe)}"></span>`).join("")}</div></div></div></div>`; };
   app.innerHTML = `<h1>Projekte</h1>
   <div class="card"><div class="row"><input type="text" id="pSuch" placeholder="Suchen: Projekt, Material, Fehler …" aria-label="Alles durchsuchen" style="flex:1"></div></div>
   <div id="pFund"></div><div id="pTreffer"></div><div id="pHaupt">
-  ${naechst ? `<h2>Als Nächstes drucken</h2><div class="card"><div class="row oben"><div class="grow"><div><b>${C.esc(teilTitel(naechst))}</b>${offenP.teile.length > 1 ? ` <span class="small">· ${C.esc(offenP.titel)}</span>` : ""}</div>
+  ${naechst && !ORD.F.archiv ? `<h2>Als Nächstes drucken</h2><div class="card"><div class="row oben"><div class="grow"><div><b>${C.esc(teilTitel(naechst))}</b>${offenP.teile.length > 1 ? ` <span class="small">· ${C.esc(offenP.titel)}</span>` : ""}</div>
       <div class="small" style="margin-top:3px">${C.zeitKurz(naechst.zeit)} · ${dez(C.summeGramm(naechst))} g · Düse ${String(naechst.duese_mm || "0.4").replace(".", ",")} mm</div></div>${punkte(naechst)}</div>
     <div style="padding:0 16px 14px"><button class="btn" data-p="${C.esc(offenP.id)}">Zum Projekt</button></div></div>` : ""}
   ${einOffen ? `<div class="card"><div class="row chev" id="pEin" style="cursor:pointer" role="button" tabindex="0"><div class="grow"><b>Drucker einrichten</b>
       <div class="small">${O.einErledigt} von ${O.einGesamt} erledigt · als Nächstes: ${C.esc(O.einNaechster)}</div></div></div></div>` : ""}
-  ${P.length ? `<h2>${P.length} ${P.length === 1 ? "Projekt" : "Projekte"}</h2><div class="pgitter">${P.map(karte).join("")}</div>`
+  ${ORD.F.archiv ? `<h2>Archiv (${archiv.length})</h2><p class="hint">Alte Fassungen und Tests. Im Projekt unter „Einordnen“ holst du eines zurück.</p>` : alle.length ? `<h2>${aktiv.length} ${aktiv.length === 1 ? "Projekt" : "Projekte"}</h2>${chipsHtml}` : ""}
+  ${P.length ? `<div class="pgitter" style="margin-top:10px">${P.map(karte).join("")}</div>`
     : `<div class="empty">Noch keine Projekte.<br>Unter „Neu“ beschreiben, was du drucken willst – Claude schickt die fertigen Druckdateien, sie erscheinen dann hier.</div>`}
+  ${archiv.length ? `<div style="height:14px"></div><button class="btn grey" id="pArchiv">${ORD.F.archiv ? "‹ Zurück zu den Projekten" : `Archiv zeigen (${archiv.length})`}</button>` : ""}
   ${C.verborgen().length ? `<div style="height:14px"></div><button class="btn grey" id="pWeg">Ausgeblendete Teile wieder zeigen (${C.verborgen().length})</button>` : ""}
   <div style="height:20px"></div></div>`;
   const auf = el => el.onclick = el.onkeydown = e => { if (e.type === "keydown" && e.key !== "Enter") return; e.stopPropagation(); C.go("projekt:" + el.dataset.p); };
   app.querySelectorAll("[data-p]").forEach(auf);
+  ORD.chipsBinden(app, () => liste(app, C));
+  const pa = $("#pArchiv"); if (pa) pa.onclick = () => { ORD.F.archiv = !ORD.F.archiv; liste(app, C); window.scrollTo(0, 0); };
   if (amRechner()) import("./zurueck.js").then(async Z => { const f = await Z.ordnerPruefen(C), box = $("#pFund"); if (!box || !f.length) return;
     box.innerHTML = `<div class="card"><div class="row chev" id="pFundR" style="cursor:pointer" role="button" tabindex="0"><div class="grow"><b>In Flash Studio geändert: ${f.length} ${f.length === 1 ? "Teil" : "Teile"}</b>
       <div class="small">${f.map(x => C.esc(teilTitel(x.a))).join(", ")} – antippen zum Hochladen</div></div></div></div>`;
@@ -74,7 +85,7 @@ export async function liste(app, ctx){
     const q = such.value.trim(), t = q.toLowerCase();
     if (q.length < 2) { tr.innerHTML = ""; haupt.style.display = ""; return; }
     const R = [];
-    P.forEach(p => { if (p.titel.toLowerCase().includes(t)) R.push({art: "Projekt", t: p.titel, sub: `${p.teile.length} Teile · ${dauer(p.min)}`, ziel: "projekt:" + p.id});
+    alle.forEach(p => { if (p.titel.toLowerCase().includes(t) || ORD.suchtext(p.key).includes(t)) R.push({art: p.karte.archiv ? "Archiv" : "Projekt", t: p.titel, sub: `${ORD.bereichName(p.karte.bereich)} · ${p.teile.length} ${p.teile.length === 1 ? "Teil" : "Teile"} · ${dauer(p.min)}`, ziel: "projekt:" + p.id});
       p.teile.forEach(a => { if (p.teile.length > 1 && (teilTitel(a) + " " + a.name).toLowerCase().includes(t)) R.push({art: "Teil", t: `${teilTitel(a)} – ${p.titel}`, sub: C.zeitKurz(a.zeit), ziel: "auftrag:" + a.ordner}); }); });
     let K = null, w = []; try { K = await import("./wissen.js"); w = await K.suche(q); } catch (e) {}
     if (such.value.trim() !== q) return;
@@ -96,6 +107,7 @@ export function projekt(app, ctx, id){
   const dz = d => String(d).replace(".", ",");
   app.innerHTML = `<button class="back" id="zur">‹ Projekte</button>
   <h1>${C.esc(p.titel)}</h1>
+  <div id="pOrd" style="margin:-4px 2px 10px"></div>
   ${p.haupt.vorschau ? `<img class="pbild" src="auftraege/${C.esc(p.haupt.ordner)}/${C.esc(p.haupt.vorschau)}" alt="">` : ""}
   <div class="stats">
     <div class="stat"><span class="small">Gedruckt</span><b>${p.fertig} / ${p.teile.length}</b></div>
@@ -108,6 +120,7 @@ export function projekt(app, ctx, id){
     <div class="row"><div class="grow">Düse</div><span class="val">${k.duesen.length === 1 ? dz(k.duesen[0]) + " mm auf allen Köpfen" : k.duesen.map(dz).join(" und ") + " mm – je Teil verschieden"}</span></div></div>
   ${k.duesen.length > 1 ? `<div class="warn">Die Teile brauchen unterschiedliche Düsen – bei jedem Teil steht, welche.</div>` : ""}
   ${!k.einheitlich ? `<div class="warn">Ein Kopf ist je nach Teil anders bestückt – vor jedem Teil im Teil nachsehen.</div>` : ""}
+  <div id="pAmpel"></div>
   <h2>${mehr ? "Teile in Druck-Reihenfolge" : "Druckdatei"}</h2>
   <div class="card">${p.teile.map((t, i) => `<div class="row" data-o="${C.esc(t.ordner)}">
       <button class="haken ${G[t.ordner] ? "on" : ""}" data-hk="${C.esc(t.ordner)}" aria-label="${C.esc(teilTitel(t))} als gedruckt markieren">${G[t.ordner] ? "✓" : ""}</button>
@@ -128,9 +141,16 @@ export function projekt(app, ctx, id){
   <p class="hint">Dieselben Teile als Projekt-Dateien: in Flash Studio Desktop öffnen, ansehen oder ändern und von dort per WLAN an den Drucker senden. Beim Öffnen „Als Projekt öffnen“ wählen, nicht „Nur Geometrie“ – sonst fehlen die Einstellungen. Zum Drucken ohne Änderung ist die fertige .gcode sicherer.</p>` : ""}
   <button class="btn grey" id="teilen">Auf anderes Gerät holen (Link teilen)</button>
   <h2>Verwalten</h2>
+  <button class="btn grey" id="einord">Einordnen (Bereich, Schlagworte, Archiv)</button>
   <button class="btn rot" id="weg">Projekt ausblenden</button>
   <div style="height:20px"></div>`;
   $("#zur").onclick = () => C.go("projekte");
+  import("./koepfe.js").then(K => K.projektAmpel($("#pAmpel"), p, C)).catch(() => {});
+  import("./ordnung.js").then(async ORD => { await ORD.laden(); const key = ORD.schluessel(p.teile[0]);
+    const mal = () => { const k = ORD.karte(key), el = $("#pOrd"); if (!el) return;
+      el.innerHTML = `<span class="pill">${C.esc(ORD.bereichName(k.bereich))}</span>${k.stand === "bewaehrt" ? ` <span class="pill gruen">bewährt</span>` : ""}${k.archiv ? ` <span class="pill">Archiv</span>` : ""}
+        ${(k.schlagworte || []).length ? `<span class="small" style="margin-left:6px">${k.schlagworte.map(C.esc).join(" · ")}</span>` : ""}`; };
+    mal(); const b = $("#einord"); if (b) b.onclick = () => ORD.einordnen(C, key, p.titel, mal); }).catch(() => {});
   app.querySelectorAll("[data-auf]").forEach(r => r.onclick = r.onkeydown = e => { if (e.type === "keydown" && e.key !== "Enter") return; C.go("auftrag:" + r.dataset.auf); });
   app.querySelectorAll("[data-hk]").forEach(b => b.onclick = () => { const an = !C.gedruckt()[b.dataset.hk]; C.gedrucktSetzen(b.dataset.hk, an);
     C.toast(an ? "Als gedruckt markiert" : "Wieder offen"); projekt(app, C, id); });
@@ -206,7 +226,7 @@ async function paket(p, art, fort){
   const ordner = ordnerName(p), mit = p.teile.map((t, i) => [t, i]).filter(([t]) => t[art]), D = [];
   fort(0.03);
   for (let j = 0; j < mit.length; j++) { const [t, i] = mit[j];
-    const r = await fetch(`auftraege/${t.ordner}/${encodeURIComponent(t[art])}`); if (!r.ok) throw new Error("fehlt: " + t[art]);
+    const r = await fetch(`auftraege/${t.ordner}/${encodeURIComponent(t[art])}${t.angepasst && t.angepasst.id ? "?v=" + encodeURIComponent(t.angepasst.id) : ""}`); if (!r.ok) throw new Error("fehlt: " + t[art]);
     D.push({name: `${ordner}/${dateiName(p, t, i, art)}`, daten: new Uint8Array(await r.arrayBuffer())}); fort((j + 1) / (mit.length + 0.5)); }
   D.push({name: `${ordner}/LIESMICH.txt`, daten: new TextEncoder().encode("﻿" + liesmich(p))});
   const url = URL.createObjectURL(zip(D)), a = document.createElement("a");

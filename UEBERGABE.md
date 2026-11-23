@@ -1,5 +1,13 @@
 # Übergabe druckwerk
 
+## STAND 23.11.2026, 08:00 Uhr – Nachtrag (der Block vom 20.11. darunter gilt weiter)
+- **Neu in der App (v21, nachgestellt geprüft, am echten GitHub/Gerät offen):** „Meine Köpfe“ (Ampel im Teil und Projekt, Blatt zum Wählen von Kopf + Material, Knopf „An meine Köpfe anpassen“ →
+  Action slict mit `druck.py --wie` neu) und **Lager-Ordnung** (Karteikarten `lager/karten.json`, Bereichs-Knöpfe, Archiv, Einordnen, `lager/KATALOG.md`). Details: CLAUDE.md „Meine Köpfe und Lager-Ordnung“.
+- Tom hat **nur schwarzes PETG** (kein schwarzes PLA): Drehteller-Teller, Würfel, Visier sind darauf umgestellt (Einlagen verankert, Bett 65 °C). Andere Projekte mit Schwarz kann er jetzt selbst in der App anpassen.
+- Amp-Plektrumhalter (privat): Fassung mit Webmuster, goldenen Kedern, Ledernarbung; 0,4er in feinster Stufe 5 h 03, 0,25er 7 h 43. In der App unter Bibliothek → Private Modelle → „Fertige Druckdateien“.
+- **Als Nächstes prüfen, wenn Tom es benutzt:** erster echter Lauf „anpassen“ (Status/Log der Action ansehen), Einordnen mit Zurückschreiben, Laden privater Druckdateien am iPad.
+- Offen/Ideen: Verankerung für PLA+PETG-Einlagen als allgemeiner Helfer; `modell`-Pfade in neuen Karteikarten pflegen; Stand „gedruckt“ aus dem Geräte-Haken ins Lager zurückschreiben.
+
 ## STAND 20.11.2026, 06:40 Uhr – hier einsteigen (neuer Chat: „druckwerk: Weiterarbeiten“)
 **Wo wir stehen**
 - Drucker steht, WLAN läuft, **Flash Studio Desktop 1.7.22** ist am Mac installiert und mit dem Creator 5 Pro verbunden (Kopf 1 = PLA weiß, vier 0,4-mm-Düsen, Firmware 2.0.0-1.3.1).

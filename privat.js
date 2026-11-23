@@ -12,7 +12,7 @@ const roh = async (pfad, art = "json") => {
 const bilder = new Map();
 const claudeLink = t => "https://claude.ai/code/new?repo=Tom444555%2Fdruckwerk&q=" + encodeURIComponent(t);
 
-export async function zeigen(ziel, C){
+export async function zeigen(ziel, C, danach){
   if (!ziel) return;
   const kopf = `<h2>Private Modelle</h2>`;
   if (!token()) {
@@ -31,10 +31,11 @@ export async function zeigen(ziel, C){
   }
   const P = idx.projekte || [];
   ziel.innerHTML = kopf + `<div class="mgrid">${P.map((p, i) => `
-    <div class="mk" data-i="${i}" data-n="${C.esc((p.titel || p.ordner).toLowerCase())}" role="button" tabindex="0">
+    <div class="mk" data-i="${i}" data-b="${C.esc(p.bereich || "sonstiges")}" data-n="${C.esc(((p.titel || p.ordner) + " " + (p.schlagworte || []).join(" ") + " privat").toLowerCase())}" role="button" tabindex="0">
       <div class="mb"><img data-bild="${C.esc(p.vorschau ? p.ordner + "/" + p.vorschau : "")}" alt="" hidden></div>
-      <div class="mt"><b>${C.esc(p.titel || p.ordner)}</b><div class="small">${p.teile.length} Datei${p.teile.length > 1 ? "en" : ""} · privat</div></div></div>`).join("")}</div>
+      <div class="mt"><b>${C.esc(p.titel || p.ordner)}</b><div class="small">🔒 privat · ${(p.auftraege || []).length ? `${p.auftraege.length} Druckdatei${p.auftraege.length > 1 ? "en" : ""}` : `${p.teile.length} Datei${p.teile.length > 1 ? "en" : ""}`}</div></div></div>`).join("")}</div>
     <div id="pvDetail"></div>`;
+  if (danach) danach();
   // Vorschaubilder nacheinander holen
   (async () => { for (const img of ziel.querySelectorAll("img[data-bild]")) { const p = img.dataset.bild; if (!p) continue;
     try { if (!bilder.has(p)) bilder.set(p, URL.createObjectURL(await roh(p, "blob"))); img.src = bilder.get(p); img.hidden = false; } catch (e) {} } })();
@@ -51,7 +52,10 @@ function detail(box, p, C){
     ${p.teile.map((t, i) => `<div class="row" style="align-items:flex-start;gap:8px;padding:8px 0;border-top:.5px solid var(--sep)">
       <div class="grow"><b>${C.esc(t.datei)}</b><div class="small">${masse(t)}${t.passt === false ? " · größer als der Drucker – Claude teilt es" : t.passt ? " · passt in den Drucker" : ""} · ${t.mb} MB</div></div>
       ${offenbar(t) && t.mb <= 30 ? `<button class="btn grey" data-w="${i}" style="width:auto;padding:6px 12px;margin:0">Werkstatt</button>` : ""}</div>`).join("")}
-    <a class="btn" style="margin-top:10px;display:block;text-align:center" target="_blank" rel="noopener"
+    ${(p.auftraege || []).length ? `<h3 style="margin:14px 0 2px;font-size:15px">Fertige Druckdateien</h3>${p.auftraege.map((a, i) => `<div class="row" style="align-items:flex-start;gap:8px;padding:8px 0;border-top:.5px solid var(--sep)">
+      <div class="grow"><b>${C.esc(a.titel || a.gcode)}</b><div class="small">${C.esc(a.zeit || "")} · Düse ${C.esc(String(a.duese_mm || "0.4").replace(".", ","))} mm · ${C.esc((a.slots || []).filter(s => s.farbe !== "leer").map(s => `Kopf ${s.slot} ${s.material} ${s.farbe}`).join(", "))}</div></div>
+      <button class="btn" data-g="${i}" style="width:auto;padding:6px 12px;margin:0">Laden</button></div>`).join("")}` : ""}
+    <a class="btn grey" style="margin-top:10px;display:block;text-align:center" target="_blank" rel="noopener"
       href="${claudeLink(`druckwerk: Privates Modell „${p.titel || p.ordner}“ (Ordner ${p.ordner} im privaten Lager Tom444555/druckwerk-modelle) für den Creator 5 Pro drucken. Wünsche: `)}">Mit Claude drucken</a>
     <p class="hint">Herkunft: ${C.esc(p.herkunft || "unbekannt")}. Bleibt privat – nur auf deinen Geräten mit deinem Schlüssel sichtbar.</p></div>`;
   box.querySelectorAll("[data-w]").forEach(b => b.onclick = async () => {
@@ -62,6 +66,15 @@ function detail(box, p, C){
       const { dateienImportieren } = await import("./werkstatt.js");
       const id = await dateienImportieren([f], C); C.go("werkstatt:e:" + id);
     } catch (e) { C.toast("Konnte nicht geladen werden"); b.disabled = false; b.textContent = "Werkstatt"; }
+  });
+  box.querySelectorAll("[data-g]").forEach(b => b.onclick = async () => {
+    const a = p.auftraege[+b.dataset.g]; b.disabled = true; b.textContent = "lädt …";
+    try {
+      const blob = await roh(`${p.ordner}/auftraege/${a.ordner}/${a.gcode}`, "blob");
+      const url = URL.createObjectURL(blob), l = document.createElement("a"); l.href = url; l.download = a.gcode; document.body.appendChild(l); l.click(); l.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 60000); C.toast("Geladen – in „Dateien“ unter Downloads", 4000);
+    } catch (e) { C.toast("Konnte nicht geladen werden"); }
+    b.disabled = false; b.textContent = "Laden";
   });
   box.scrollIntoView({behavior: "smooth", block: "start"});
 }

@@ -54,6 +54,36 @@ def aufloesen(typ, name, tiefe=0):
     return basis
 
 
+# ---------- Einstellungen eines fertigen Auftrags wiederverwenden (--wie) ----------
+WIE_NICHT = ("filament", "printer_", "machine_", "nozzle_", "extruder", "default_", "upward_", "bed_", "host", "print_host", "thumbnails",
+             "different_settings", "version", "name", "from", "inherits", "is_custom", "curr_bed_type", "compatible", "print_settings_id",
+             "instantiation", "setting_id", "print_compatible", "wipe_tower_x", "wipe_tower_y", "flush_volumes", "flush_multiplier")
+
+
+def wie_einstellungen(ordner: Path):
+    """Liest Metadata/project_settings.config aus der Projekt-3MF eines Auftrags → (alle Einstellungen, auftrag.json)."""
+    import zipfile
+    info = json.loads((ordner / "auftrag.json").read_text(encoding="utf-8"))
+    pj = ordner / str(info.get("projekt") or "")
+    if not pj.is_file():
+        raise SystemExit(f"--wie: Projekt-3MF fehlt in {ordner}")
+    with zipfile.ZipFile(pj) as z:
+        return json.loads(z.read("Metadata/project_settings.config").decode("utf-8")), info
+
+
+def wie_zusammen(ordner: Path, info) -> bool:
+    """War der Auftrag EIN mehrteiliges Objekt (--zusammen)? Steht in auftrag.json, sonst aus der 3MF gelesen."""
+    import zipfile
+    if "zusammen" in info:
+        return bool(info["zusammen"])
+    try:
+        with zipfile.ZipFile(ordner / info["projekt"]) as z:
+            ms = z.read("Metadata/model_settings.config").decode("utf-8", "ignore")
+        return len(re.findall(r"<object\b", ms)) == 1 and len(re.findall(r"<part\b", ms)) > 1
+    except Exception:
+        return len(info.get("teile", [])) > 1
+
+
 # ---------- Modelle vorbereiten ----------
 def nach_stl(pfad: Path, ziel: Path) -> Path:
     if pfad.suffix.lower() == ".scad":
@@ -214,6 +244,7 @@ def main():
                     help="Schrägnaht (Scarf Joint) an der Außenwand: Anfang und Ende jeder Runde laufen schräg ineinander statt stumpf aneinander "
                          "(videos/z-naht-bastlwastl.html). Ist in --schoen enthalten. Nur an runden Konturen; Ecken behalten die normale Naht.")
     ap.add_argument("--bett", type=int, default=None, help="Betttemperatur für ALLE Filamente erzwingen (z. B. 65 bei PLA + PETG gemischt)")
+    ap.add_argument("--wie", default=None, help="Auftragsordner: ALLE Slicer-Einstellungen aus dessen Projekt-3MF übernehmen (nur Material/Kopf/Farbe neu) – für „An meine Köpfe anpassen“")
     ap.add_argument("--extra", action="append", default=[], help="Slicer-Einstellung überschreiben: schluessel=wert (mehrfach)")
     ap.add_argument("--duese", default=None, help="Düsengröße in mm für ALLE Köpfe (c5pro: 0.25 | 0.4 | 0.6 | 0.8; Standard 0.4)")
     ap.add_argument("--duesen", default=None,
@@ -226,6 +257,8 @@ def main():
     ap.add_argument("--nr", type=int, default=0, help="Druck-Reihenfolge des Teils im Projekt (1, 2, 3 …)")
     ap.add_argument("--titel", default="", help="Anzeigename des Teils (z. B. 'Korpus')")
     ap.add_argument("--datei", default="", help="Dateiname für .gcode/.3mf ohne Endung (z. B. Schecter_370_Korpus); nur Buchstaben, Ziffern, _ und -")
+    ap.add_argument("--bereich", default="", help="Karteikarte fürs Lager (lager/karten.json): musik | foto | werkstatt | deko | drucker – bei jedem NEUEN Projekt angeben")
+    ap.add_argument("--schlagworte", default="", help="Karteikarte: Schlagworte mit Komma, z. B. 'Gitarre,Miniatur'")
     ap.add_argument("--quelle", default="", help="Link zum Original-Modell (MakerWorld, Printables …)")
     ap.add_argument("--ausgabe", default=None, help="Zielordner (Standard: auftraege/<datum>_<name>)")
     ap.add_argument("--bemalt", default=None,
@@ -312,6 +345,9 @@ def main():
         if belegt[s] not in cfg["filamente"]:
             raise SystemExit(f"Material {belegt[s]} unbekannt für {cfg['name']}. Möglich: {list(cfg['filamente'])}")
 
+    bett_auto = False
+    if a.bett is None and any(m_.startswith("PLA") for m_ in belegt.values()) and any(m_.startswith("PETG") for m_ in belegt.values()):
+        a.bett = 65; bett_auto = True          # PLA + PETG: sonst nimmt Orca 85 °C vom PETG – zu heiß für PLA-Flächen
     datum = datetime.date.today().isoformat()
     ziel = Path(a.ausgabe) if a.ausgabe else WURZEL / "auftraege" / f"{datum}_{a.name}_{cfg['kurz']}"
     ziel.mkdir(parents=True, exist_ok=True)
@@ -386,6 +422,17 @@ def main():
                     f"Trägt je Seite bis {staerke} mm auf – Passflächen und Bohrungen werden entsprechend enger. Deckflächen bleiben glatt.")
     for ex in a.extra:
         k, v = ex.split("=", 1); prozess[k.strip()] = v.strip()
+    if a.wie:                                 # alle Prozess-Werte des alten Auftrags übernehmen (Zusätze, „schön“, feine Details …)
+        alt_ps, _ = wie_einstellungen(Path(a.wie))
+        fil_keys = set(aufloesen("filament", cfg["filamente"][belegt[1]]))
+        n_ = 0
+        for k_, v_ in alt_ps.items():
+            if k_ in maschine or k_ in fil_keys or k_.startswith(WIE_NICHT):
+                continue
+            if prozess.get(k_) != v_:
+                prozess[k_] = v_; n_ += 1
+        prozess["compatible_printers"] = []
+        print(f"--wie: {n_} Einstellungen aus {Path(a.wie).name} übernommen")
     # Druckplatte: bestimmt die Betttemperatur (Cool Plate = 35 °C bei PLA!). Kommt aus drucker/*.json.
     platte = cfg.get("platte", "Textured PEI Plate")
     maschine["default_bed_type"] = platte
@@ -519,6 +566,8 @@ def main():
         zeilen.append(f"> ⚠ Kopf {', '.join(map(str, fehlt))} wird nicht benutzt – Farbe/Slot prüfen.")
     zeilen += ["", "## Am Drucker", ""] + [f"- {h}" for h in cfg["hinweise"]] + [
         "- Vor dem Start: Druckplatte sauber und leer, richtige Spulen in den Slots."]
+    if bett_auto:
+        zeilen += ["", "Bett für alle Köpfe auf 65 °C gesetzt (PLA + PETG gemischt; das PETG-Profil allein wollte mehr)."]
     if gemischt:
         zeilen += ["", "> ⚠ Unterschiedliche Materialien in einem Druck "
                    f"({', '.join(sorted(set(belegt.values())))}) – Haftung zwischen den Materialien "
@@ -528,7 +577,7 @@ def main():
     info = {**info_koepfe, "name": a.name, "drucker": cfg["kurz"], "drucker_name": cfg["name"], "datum": datum,
             "ordner": ziel.name, "gcode": gname, "zeit": zeit, "gramm": gramm, "meter": meter,
             "duese": duese, "bett": bett, "schicht": a.schicht, "stufe": a.stufe, "infill": a.infill,
-            "duese_mm": a.duese or "0.4", **({"duesen_mm": duesen_mix[:slots]} if duesen_mix else {}), "waende": a.waende, **({"rau": a.rau} if a.rau else {}), "stuetzen": a.stuetzen, "brim": a.brim, "gemischt": gemischt,
+            "duese_mm": a.duese or "0.4", **({"duesen_mm": duesen_mix[:slots]} if duesen_mix else {}), "waende": a.waende, **({"rau": a.rau} if a.rau else {}), "stuetzen": a.stuetzen, "brim": a.brim, "gemischt": gemischt, "zusammen": bool(a.zusammen and len(teile) > 1),
             "slots": [{"slot": s_, "material": belegt[s_],
                        "farbe": farben[s_ - 1] if s_ - 1 < len(farben) else ""} for s_ in range(1, slots + 1)],
             "teile": [{"datei": Path(st).name, "slot": t[2]} for t, st in zip(teile, stls)],
@@ -585,6 +634,18 @@ def main():
         gname = info["gcode"]
     (ziel / "auftrag.json").write_text(json.dumps(info, ensure_ascii=False, indent=1), encoding="utf-8")
     index_neu(ziel.parent)
+    kp = WURZEL / "lager" / "karten.json"          # Karteikarte anlegen/ergänzen (nur fürs öffentliche Lager)
+    if kp.exists() and ziel.parent.resolve() == (WURZEL / "auftraege").resolve():
+        try:
+            kd = json.loads(kp.read_text(encoding="utf-8")); key = info.get("gruppe") or a.name; karte = kd["karten"].get(key)
+            if a.bereich or a.schlagworte or karte is None:
+                karte = karte or {"bereich": "sonstiges", "stand": "gerechnet", "herkunft": "", "schlagworte": []}
+                if a.bereich: karte["bereich"] = a.bereich
+                if a.schlagworte: karte["schlagworte"] = [x.strip() for x in a.schlagworte.split(",") if x.strip()]
+                kd["karten"][key] = karte; kp.write_text(json.dumps(kd, ensure_ascii=False, indent=1), encoding="utf-8")
+                if karte["bereich"] == "sonstiges": print(f"Hinweis: Projekt „{key}“ ist im Lager noch unsortiert – --bereich angeben oder in lager/karten.json eintragen.")
+        except Exception as ex:
+            print("Karteikarte nicht geschrieben:", ex)
     (ziel / "BERICHT.md").write_text("\n".join(zeilen) + "\n", encoding="utf-8")
     shutil.rmtree(tmp, ignore_errors=True)
     print(f"OK  {ziel/gname}\n    Zeit {zeit} | {gramm} g")

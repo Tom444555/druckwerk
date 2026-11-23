@@ -73,7 +73,7 @@ Alte `_kobrax`-Aufträge laufen nicht auf dem Creator 5 Pro – bei Bedarf aus d
 - Jede Ansicht hat eine Adresse (`#projekte`, `#projekt:<gruppe>`, `#auftrag:<ordner>`, `#werkstatt:…`, `#kiweg:<schritt>`); Zurück/Vor funktionieren.
 - **Sicherung** (`sicherung.js`): alle `druckwerk_*`-Schlüssel + IndexedDB (eigene Modelle, Tagebuch-Fotos) als eine Datei; `druckwerk_gesichert` = Datum.
 - **Offline/PWA**: `manifest.webmanifest`, `symbol-*.png`, `sw.js` (immer zuerst Netz, Zwischenspeicher nur ohne Netz; .gcode/STL nie).
-  **Bei jeder Änderung an App-Dateien `CACHE` in `sw.js` hochzählen** (Stand `druckwerk-v19`) und neue Dateien dort eintragen.
+  **Bei jeder Änderung an App-Dateien `CACHE` in `sw.js` hochzählen** (Stand `druckwerk-v21`) und neue Dateien dort eintragen.
 - „Aus dem Lager hinzufügen“ heißt in der App jetzt „Weitere Aufträge von Claude“. Überall „Kopf 1–4“, nie „Spule“; Werkstatt-Slicen sendet `c5pro`.
 - Aufträge sind wie die Ideen im Looper **pro Gerät gespeichert** (localStorage `druckwerk_meine`): neue Besucher
   sehen eine leere Liste. Tom speichert einen Auftrag über den Link `https://tom444555.github.io/druckwerk/#hinzu=<ordner>`
@@ -94,6 +94,23 @@ Alte `_kobrax`-Aufträge laufen nicht auf dem Creator 5 Pro – bei Bedarf aus d
   (Sammel-Handler in index.html). Neue Claude-Links immer in dieser Form bauen; Preissuche ohne `repo`. Am echten Gerät von Tom noch zu bestätigen.
 - Original-Modell verlinken: `--quelle <URL>` (MakerWorld, Printables …) → Knopf „Original auf … öffnen“ im Auftrag.
 - Nach Änderung an index.html: lokal mit Playwright (390×844) prüfen, dann pushen.
+
+## Meine Köpfe und Lager-Ordnung (seit 23.11.2026)
+- **Meine Köpfe = eine Wahrheit:** Spulen mit Kopf-Zuordnung aus Wissen → Material → Mein Lager (`druckwerk_spulen`; Kopf-Zeile antippen → Spule wählen, `wissen.js → kopfBlatt`).
+  `koepfe.js`: Ampel im Teil (`#kAmpel`) und im Projekt (`#pAmpel`) – passt / anderes Material / andere Farbe / Kopf leer; Blatt „Köpfe für diesen Druck“ (je Druckfarbe Kopf + Material wählbar,
+  Vorschlag: Farbe dorthin, wo sie bei Tom sitzt; zwei Farben auf einem Kopf gesperrt; Misch-Hinweise PLA+PETG, TPU, ABS/ASA). Werkstatt → Slicen belegt „Material je Kopf“ daraus vor.
+- **„An meine Köpfe anpassen“ ohne Chat:** App legt `eingang/<id>/auftrag.json {art:"anpassen", ordner, koepfe:[{von, kopf, material, farbe}]}` bzw. `{liste:[…]}` fürs ganze Projekt ab
+  (`werkstatt.js → auftragSenden`) → `eingang.py → anpassen()` → **`druck.py --wie <ordner>`**: übernimmt ALLE Prozess-Einstellungen aus `Metadata/project_settings.config` der Projekt-3MF
+  (Zusätze, `--schoen`, Detailwerte), nur Material/Kopf/Farbe neu; Ordner und Dateinamen bleiben, `angepasst {datum, id, koepfe, vorher}` in auftrag.json, Abschnitt im BERICHT.md.
+  Gegenprobe 23.11.: sechs Aufträge unverändert neu gerechnet → Zeit und Gramm identisch; Schecter 160 mit Kopftausch + PETG läuft. Nicht anpassbar: bemalte Modelle, gemischte Düsen, private Aufträge (→ Chat).
+  Farbe ändert das Anpassen nicht (nur Hinweis „Spule wechseln“). Neu gerechnete Dateien lädt die App mit `?v=<id>` (kein alter Stand aus dem Zwischenspeicher). **Mit echtem GitHub/Action ungetestet** (nachgestellt geprüft).
+- **`druck.py`: PLA + PETG gemischt → Bett automatisch 65 °C** (ohne `--bett`); `"zusammen"` steht jetzt in auftrag.json. Auch hier im Chat gilt: Material tauschen = `--wie <ordner>` nehmen statt den Aufruf zu rekonstruieren.
+- **Lager-Ordnung:** Karteikarte je Projekt in **`lager/karten.json`** (Schlüssel = `gruppe`, sonst `name`): `bereich` (musik | foto | werkstatt | deko | drucker | sonstiges), `stand` (idee | gerechnet | gedruckt | bewaehrt),
+  `herkunft`, `schlagworte`, `archiv`, `modell` (Pfade der Quell-Skripte). **Bei jedem neuen Projekt `--bereich … --schlagworte "a,b"` beim Slicen angeben** (legt die Karte an) und `modell` von Hand ergänzen.
+  `python3 werkzeug/katalog.py [--privat ../druckwerk-modelle]` → **`lager/KATALOG.md`** (Übersicht Bereich → Projekt → Teile → Modell-Quellen; meldet Projekte ohne Karte) – zuerst dort nachsehen, statt Ordner zu durchsuchen.
+- App (`ordnung.js`): Projekte und Bibliothek haben Bereichs-Knöpfe (ein Filter für beide), Suche findet Schlagworte, Archiv ist ausgeblendet („Archiv zeigen“), Projekt → „Einordnen“ ändert die Karte
+  (sofort auf dem Gerät `druckwerk_karten`, mit GitHub-Zugang auch zurück in `lager/karten.json`; neuere Änderung gewinnt über `t`). Private Modelle: `bereich`/`schlagworte` in `projekt.json`,
+  `katalog.py` dort listet jetzt auch `auftraege` → in der App „Fertige Druckdateien“ mit Laden-Knopf (über die GitHub-API, bleibt privat). Dateien wurden nicht verschoben.
 
 ## Bibliothek & Werkstatt (werkstatt.js, seit 11.11.2026)
 - Tab **Bibliothek**: alle Modelle aus `auftraege/index.json` (je Name einmal) + „Meine Modelle“ (IndexedDB `druckwerk/modelle`
