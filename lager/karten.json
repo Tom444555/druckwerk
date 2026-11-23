@@ -126,13 +126,13 @@
    "herkunft": "fremd",
    "schlagworte": [
     "Gitarre",
-    "Miniatur"
+    "Stratocaster",
+    "Miniatur",
+    "0.25"
    ],
    "modell": [
-    "modelle/strat_korpus.stl",
-    "modelle/strat_hals.stl",
-    "modelle/strat_metall.stl",
-    "modelle/strat_weiss.stl"
+    "werkzeug/gitarre_farben.py",
+    "modelle/quelle/stratocaster_original.stl"
    ]
   },
   "loopsmiths_amp": {

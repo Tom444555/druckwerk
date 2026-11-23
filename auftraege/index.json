@@ -1,5 +1,109 @@
 [
  {
+  "kopfwechsel": 272,
+  "koepfe_benutzt": [
+   1,
+   2,
+   3,
+   4
+  ],
+  "name": "stratocaster190",
+  "drucker": "c5pro",
+  "drucker_name": "Flashforge Creator 5 Pro",
+  "datum": "2026-11-23",
+  "ordner": "2026-11-23_stratocaster190_c5pro",
+  "gcode": "Stratocaster_190_komplett.gcode",
+  "zeit": "6h 12m 8s",
+  "gramm": "17.95, 2.54, 7.16, 7.28",
+  "meter": "6.02 m, 0.85 m, 2.40 m, 2.44 m",
+  "duese": "210,210,210,210",
+  "bett": "60,60,60,60",
+  "schicht": "0.08",
+  "stufe": "Standard",
+  "infill": 15,
+  "duese_mm": "0.25",
+  "waende": null,
+  "stuetzen": "auto",
+  "brim": "auto",
+  "gemischt": false,
+  "zusammen": true,
+  "slots": [
+   {
+    "slot": 1,
+    "material": "PLA",
+    "farbe": "creme"
+   },
+   {
+    "slot": 2,
+    "material": "PLA",
+    "farbe": "weiß"
+   },
+   {
+    "slot": 3,
+    "material": "PLA",
+    "farbe": "holz"
+   },
+   {
+    "slot": 4,
+    "material": "PLA",
+    "farbe": "silber"
+   }
+  ],
+  "teile": [
+   {
+    "datei": "strat_korpus.stl",
+    "slot": 1
+   },
+   {
+    "datei": "strat_weiss.stl",
+    "slot": 2
+   },
+   {
+    "datei": "strat_hals.stl",
+    "slot": 3
+   },
+   {
+    "datei": "strat_metall.stl",
+    "slot": 4
+   },
+   {
+    "datei": "strat_wirbel_platte.stl",
+    "slot": 4
+   }
+  ],
+  "quelle": "",
+  "teile_app": [
+   {
+    "datei": "strat_korpus.stl",
+    "slot": 1
+   },
+   {
+    "datei": "strat_weiss.stl",
+    "slot": 2
+   },
+   {
+    "datei": "strat_hals.stl",
+    "slot": 3
+   },
+   {
+    "datei": "strat_metall.app.stl",
+    "slot": 4
+   },
+   {
+    "datei": "strat_wirbel_platte.stl",
+    "slot": 4
+   }
+  ],
+  "vorschau": "vorschau.png",
+  "bild_im_gcode": true,
+  "projekt": "Stratocaster_190_komplett.3mf",
+  "gruppe": "stratocaster",
+  "gruppe_titel": "Stratocaster 190 mm",
+  "nr": 1,
+  "titel": "Gitarre + Wirbel (ein Druck)",
+  "datei": "Stratocaster_190_komplett"
+ },
+ {
   "kopfwechsel": 236,
   "koepfe_benutzt": [
    1,
@@ -1533,88 +1637,6 @@
   ],
   "vorschau": "vorschau.png",
   "projekt": "vox_plektrumhalter_c5pro.3mf",
-  "bild_im_gcode": true
- },
- {
-  "name": "stratocaster",
-  "drucker": "c5pro",
-  "drucker_name": "Flashforge Creator 5 Pro",
-  "datum": "2026-11-14",
-  "ordner": "2026-11-14_stratocaster_c5pro",
-  "gcode": "stratocaster_c5pro.gcode",
-  "zeit": "1h 55m 31s",
-  "gramm": "21.17, 1.13, 7.20, 2.24",
-  "meter": "7.10 m, 0.38 m, 2.42 m, 0.75 m",
-  "duese": "210,210,210,210",
-  "bett": "60,60,60,60",
-  "schicht": "0.12",
-  "stufe": "Standard",
-  "infill": 15,
-  "waende": 3,
-  "stuetzen": "auto",
-  "brim": "auto",
-  "gemischt": false,
-  "slots": [
-   {
-    "slot": 1,
-    "material": "PLA",
-    "farbe": "creme"
-   },
-   {
-    "slot": 2,
-    "material": "PLA",
-    "farbe": "weiß"
-   },
-   {
-    "slot": 3,
-    "material": "PLA",
-    "farbe": "holz"
-   },
-   {
-    "slot": 4,
-    "material": "PLA",
-    "farbe": "silber"
-   }
-  ],
-  "teile": [
-   {
-    "datei": "strat_korpus.stl",
-    "slot": 1
-   },
-   {
-    "datei": "strat_weiss.stl",
-    "slot": 2
-   },
-   {
-    "datei": "strat_hals.stl",
-    "slot": 3
-   },
-   {
-    "datei": "strat_metall.stl",
-    "slot": 4
-   }
-  ],
-  "quelle": "",
-  "teile_app": [
-   {
-    "datei": "strat_korpus.stl",
-    "slot": 1
-   },
-   {
-    "datei": "strat_weiss.stl",
-    "slot": 2
-   },
-   {
-    "datei": "strat_hals.stl",
-    "slot": 3
-   },
-   {
-    "datei": "strat_metall.app.stl",
-    "slot": 4
-   }
-  ],
-  "vorschau": "vorschau.png",
-  "projekt": "stratocaster_c5pro.3mf",
   "bild_im_gcode": true
  },
  {
