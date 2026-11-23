@@ -2,8 +2,8 @@
 
 **Drucker:** Flashforge Creator 5 Pro  
 **Datei für USB:** `Stratocaster_190_komplett.gcode`  
-**Druckzeit (geschätzt):** 6h 10m 21s  
-**Filament:** 17.60, 2.97, 7.09, 6.16 g (5.90 m, 1.00 m, 2.38 m, 2.07 m)  
+**Druckzeit (geschätzt):** 6h 13m 11s  
+**Filament:** 17.57, 2.97, 7.09, 6.28 g (5.89 m, 1.00 m, 2.38 m, 2.11 m)  
 
 
 ## Spulen / Köpfe einlegen
@@ -58,7 +58,7 @@ Kopfwechsel in der .gcode: 274, benutzte Köpfe: 1, 2, 3, 4
 
 ## Details nach Toms Fotos (23.11.2026)
 
-22. Bund mit Griffbrett-Überstand · Sattel weiß · alle Schrauben, Gurtknöpfe, Halsplatte, Buchsenplatte silber · Zwei-Punkt-Tremolo · zwei Saitenniederhalter (Optik) ·
+22. Bund mit Griffbrett-Überstand · Sattel weiß · alle Schrauben, Gurtknöpfe, Halsplatte, Buchsenplatte samt Mulde (neu geformt, mit Mutter und Loch) silber · Zwei-Punkt-Tremolo · zwei Saitenniederhalter (Optik) ·
 Halsstab-Tropfen als Vertiefung · Federfach-Deckel weiß mit sechs Schrauben · Rückseite liegt plan auf dem Bett.
 Bau: `python3 werkzeug/gitarre_farben.py modelle/quelle/stratocaster_original.stl <ziel> 190 --schnur 1 --details 1`, danach `spulenwechsel.py <gcode> --kopf 1 --min-luecke 0.1 --bei 8.25`
 und in `auftrag.json` beim Teil `strat_schwarz.stl` `"farbe": "schwarz"` eintragen (Anzeige in der App).

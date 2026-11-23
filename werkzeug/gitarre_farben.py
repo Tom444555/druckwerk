@@ -124,6 +124,18 @@ if A.details:
     tr = mf.CrossSection.batch_hull([mf.CrossSection.circle(3.6, 48).translate([52.0, -301.5]), mf.CrossSection.circle(0.9, 24).translate([52.0, -314.0])])
     st = M ^ tr.extrude(40).translate([0, 0, 30])
     M = (M - tr.extrude(40).translate([0, 0, 30.5])) + st.translate([0, 0, -p(0.25)]) - zyl(52.0, -303.5, p(0.38), Z_KT - p(0.8), 60, 24)
+    # Buchsenmulde neu (Toms Foto 23.11.): Hohlraum füllen, saubere Schale (tief am breiten Ende, läuft zur Spitze flach aus), darin schräg Mutter + Hülse + Loch
+    BW, BM, BT = -33.7, (144.5, -1044.0), 11.0                                      # Winkel der Platte, Mitte, Muldentiefe unter der Decke
+    lok = lambda m: m.rotate([0, 0, BW]).translate([BM[0], BM[1], 0])               # lokal (x = Längsachse zur Spitze) → Modell
+    ring_ = lambda pts, z: [[x, y, z] for x, y in pts]
+    oben_ = mf.CrossSection([np.array([[-15.0, -9.0], [21.0, -2.6], [21.0, 2.6], [-15.0, 9.0]])]).offset(2.0, mf.JoinType.Round, 2.0, 32).to_polygons()[0]
+    unten_ = mf.CrossSection.circle(5.6, 32).scale([1.5, 1.0]).translate([-6.5, 0]).to_polygons()[0]
+    M = M + lok(mf.Manifold.cylinder(BT + 3 + 0.7, 1, 1, 96).scale([34.0, 16.5, 1]).translate([0, 0, ZK - BT - 3]))
+    M = M - lok(mf.Manifold.hull_points(np.array(ring_(oben_, 46.5) + ring_(oben_, ZK - 0.6) + ring_(unten_, ZK - BT))))
+    kipp = lambda m: lok(m.rotate([0, 55, 0]).translate([-13.5, 0, ZK - 7.0]))      # Achse 35° über der Waagrechten, zeigt zur Spitze
+    mutter = kipp(mf.Manifold.cylinder(7.0, 6.2, 6.2, 6).translate([0, 0, -4.0]) + mf.Manifold.cylinder(9.0, 4.3, 4.3, 32).translate([0, 0, -4.0]))
+    mutter = mutter ^ lok(mf.Manifold.cylinder(40, 1, 1, 96).scale([33.0, 15.5, 1]).translate([0, 0, ZK - BT - 3])) ^ box(-G, G, -G, G, -G, ZK + 0.5)
+    M = M + mutter - kipp(mf.Manifold.cylinder(14.0, p(0.47), p(0.47), 24).translate([0, 0, -6.0]))
 breiten = [0.6, 0.55, 0.5, 0.42, 0.36, 0.3]   # Stegbreite je Saite im fertigen Modell (mm): E A D dick, g h e dünn
 if not A.schnur: saiten = mf.Manifold()
 y_s0, y_s1 = -996.0, Y_NUT
@@ -168,6 +180,7 @@ if A.details:
     aussen = mf.CrossSection([max(pol, key=lambda P: abs(fl(P)))]).simplify(0.04)
     # Buchsenplatte samt Schrauben und die Brückenplatten-Ecke am Tremolo-Loch ganz silber (Tom 23.11.: Ränder waren weiß) – alles Weiße dort, das nicht Schlagbrett ist
     farbe((ellipse(144.5, -1044, 47, 28, -33.7, ZK + 0.02, 62) + box(84, 104, -1023, -974, ZK + 0.02, 62)) - aussen.offset(0.05).extrude(40).translate([0, 0, 30]), 'metall', ['weiss'])
+    farbe(lok(mf.Manifold.cylinder(BT + 3.2, 1, 1, 96).scale([34.2, 16.7, 1]).translate([0, 0, ZK - BT - 3.1])), 'metall', ['korpus'])   # Buchsenmulde innen silber
     farbe(box(20, 85, -327.5, -316.5, 47.5, G), 'weiss', ['metall', 'hals'])                                   # Sattel hell (Knochen)
     farbe(box(38, 65, -1140, -1130.2, 8, 36) + box(-64, -34, -664.8, -640, 8, 36), 'metall', ['korpus'])  # Gurtknöpfe
     farbe(HPLATTE.extrude(p(0.32)), 'metall', ['korpus', 'hals'])                                       # Halsplatte

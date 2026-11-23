@@ -5,6 +5,7 @@
   Kopf 2 weiß (neu: Sattel, Federfach-Deckel), 3 Holz, 4 silber (neu: alle Schrauben, Gurtknöpfe, Halsplatte, zwei Tremolo-Bolzen, Saitenniederhalter). 22. Bund, Halsstab-Tropfen vertieft, Rückseite plan auf dem Bett.
   **6 h 11, 34 g, 274 Kopfwechsel**, 0,25/0,08 `--detail`. Bau und Lehren: CLAUDE.md „Gitarren 190 mm …“. `spulenwechsel.py` hat neu `--bei <mm>`.
 - **19:40 Nachbesserung (Toms Bildschirmfoto aus der App):** Buchsenplatte und Brückenecke waren am Rand weiß → jetzt ganz silber. Korpus erschien grau, weil der Farbname „creme (dann schwarz)“ der App unbekannt war → Kopf 1 heißt wieder „creme“; neu: **`"farbe"` je Teil in `auftrag.json`** (hier `strat_schwarz.stl` = schwarz) zeigt die App in der Werkstatt statt der Kopf-Farbe (`werkstatt.js`, sw.js v24). Nach jedem Neu-Slicen dieses Auftrags von Hand wieder eintragen (druck.py kennt das Feld nicht). 6 h 10.
+- **20:00 Buchsenmulde neu (Toms Foto):** Hohlraum gefüllt, saubere Schale (tief am breiten Ende, flach zur Spitze), schräge Sechskantmutter + Hülse + Loch, innen komplett silber (`BW/BM/BT` in gitarre_farben.py). 6h 13m 11s, 274 Kopfwechsel.
 - Offen (Tom fragen/Rückmeldung): Spulenwechsel am Gerät unerprobt (ohne Wechsel wird Schwarz creme) · dunkler Halsstreifen hinten fehlt · Reglerzahlen nicht machbar · Blocksättel wie am Original nicht nachgebaut
   (Netz hat Blechreiter) · Rig-Reiter in Loopsmiths nutzt noch das alte Strat-Modell. Nichts gedruckt.
 
