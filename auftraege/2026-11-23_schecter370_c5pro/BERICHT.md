@@ -2,8 +2,8 @@
 
 **Drucker:** Flashforge Creator 5 Pro  
 **Datei für USB:** `Schecter_370_komplett.gcode`  
-**Druckzeit (geschätzt):** 23h 31m 58s  
-**Filament:** 85.45, 18.46, 30.29, 2.89 g (28.65 m, 6.19 m, 10.16 m, 0.97 m)  
+**Druckzeit (geschätzt):** 23h 51m 20s  
+**Filament:** 84.00, 18.24, 29.84, 2.87 g (28.16 m, 6.12 m, 10.01 m, 0.96 m)  
 
 
 ## Spulen / Köpfe einlegen
@@ -21,9 +21,14 @@
 - Schichthöhe: 0.08 mm (Standard)
 - Füllung: 15 %
 - Wände: Profil-Standard
+- Detail-Paket: Arachne (70 %/20 %), Auflösung 0,008, eine Wand oben, Außenwand 30 / Kleinumfang 20 / Oberfläche 40 mm/s, Außenwand-Beschleunigung 3000, 8 Deckschichten, Stützen nur ab Platte.
+- Kopf 1: Hersteller-Filamentprofil für 0,25-mm-Düse (220 °C, höchstens 2.8 mm³/s).
+- Kopf 2: Hersteller-Filamentprofil für 0,25-mm-Düse (220 °C, höchstens 2.8 mm³/s).
+- Kopf 3: Hersteller-Filamentprofil für 0,25-mm-Düse (220 °C, höchstens 2.8 mm³/s).
+- Kopf 4: Hersteller-Filamentprofil für 0,25-mm-Düse (220 °C, höchstens 2.8 mm³/s).
 - Stützen: auto
 - Brim: auto
-- Düsentemperatur: 210,210,210,210 °C, Bett: 60,60,60,60 °C
+- Düsentemperatur: 220,220,220,220 °C, Bett: 55,55,55,55 °C
 
 ## Teile
 

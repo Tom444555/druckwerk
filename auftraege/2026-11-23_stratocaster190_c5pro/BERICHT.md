@@ -2,8 +2,8 @@
 
 **Drucker:** Flashforge Creator 5 Pro  
 **Datei für USB:** `Stratocaster_190_komplett.gcode`  
-**Druckzeit (geschätzt):** 6h 13m 20s  
-**Filament:** 17.95, 2.54, 7.16, 7.32 g (6.02 m, 0.85 m, 2.40 m, 2.46 m)  
+**Druckzeit (geschätzt):** 6h 19m 21s  
+**Filament:** 17.71, 2.53, 7.08, 7.27 g (5.94 m, 0.85 m, 2.37 m, 2.44 m)  
 
 
 ## Spulen / Köpfe einlegen
@@ -21,9 +21,14 @@
 - Schichthöhe: 0.08 mm (Standard)
 - Füllung: 15 %
 - Wände: Profil-Standard
+- Detail-Paket: Arachne (70 %/20 %), Auflösung 0,008, eine Wand oben, Außenwand 30 / Kleinumfang 20 / Oberfläche 40 mm/s, Außenwand-Beschleunigung 3000, 8 Deckschichten, Stützen nur ab Platte.
+- Kopf 1: Hersteller-Filamentprofil für 0,25-mm-Düse (220 °C, höchstens 2.8 mm³/s).
+- Kopf 2: Hersteller-Filamentprofil für 0,25-mm-Düse (220 °C, höchstens 2.8 mm³/s).
+- Kopf 3: Hersteller-Filamentprofil für 0,25-mm-Düse (220 °C, höchstens 2.8 mm³/s).
+- Kopf 4: Hersteller-Filamentprofil für 0,25-mm-Düse (220 °C, höchstens 2.8 mm³/s).
 - Stützen: auto
 - Brim: auto
-- Düsentemperatur: 210,210,210,210 °C, Bett: 60,60,60,60 °C
+- Düsentemperatur: 220,220,220,220 °C, Bett: 55,55,55,55 °C
 
 ## Teile
 

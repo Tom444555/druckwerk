@@ -10,7 +10,7 @@
  "datum": "2026-11-21",
  "ordner": "2026-11-20_drehteller_teller_c5pro",
  "gcode": "Drehteller_Teller.gcode",
- "zeit": "7h 20m 28s",
+ "zeit": "7h 20m 25s",
  "gramm": "175.49, 11.84",
  "meter": "58.84 m, 3.88 m",
  "duese": "210,235",
@@ -23,6 +23,7 @@
  "stuetzen": "aus",
  "brim": "aus",
  "gemischt": true,
+ "zusammen": true,
  "slots": [
   {
    "slot": 1,

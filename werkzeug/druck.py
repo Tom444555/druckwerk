@@ -243,6 +243,13 @@ def main():
     ap.add_argument("--schraegnaht", action="store_true",
                     help="Schrägnaht (Scarf Joint) an der Außenwand: Anfang und Ende jeder Runde laufen schräg ineinander statt stumpf aneinander "
                          "(videos/z-naht-bastlwastl.html). Ist in --schoen enthalten. Nur an runden Konturen; Ecken behalten die normale Naht.")
+    ap.add_argument("--detail", action="store_true",
+                    help="Maximale Details (vor allem 0,25-mm-Düse): Arachne 70 %%/20 %%, resolution 0.008, eine Wand oben, Außenwand 30 / Kleinumfang 20 / Oberfläche 40 mm/s, "
+                         "Außenwand-Beschleunigung 3000, 8 Deckschichten, Stützen nur ab Platte. Ersetzt die bisher von Hand angehängten --extra-Werte.")
+    ap.add_argument("--stuetz-kopf", type=int, default=None,
+                    help="Kopf (1–4) für die KONTAKTSCHICHT der Stützen aus anderem Material (z. B. PETG unter PLA): Abstand 0, 3 Kontaktlagen, "
+                         "Muster verschränkt; der Stützkörper bleibt im Hauptmaterial (Flashforge-Wiki Creator 5). Bei PVA/BVOH auch den Körper: --stuetz-koerper")
+    ap.add_argument("--stuetz-koerper", action="store_true", help="mit --stuetz-kopf: auch der Stützkörper aus diesem Kopf (lösliches PVA/BVOH, HIPS)")
     ap.add_argument("--bett", type=int, default=None, help="Betttemperatur für ALLE Filamente erzwingen (z. B. 65 bei PLA + PETG gemischt)")
     ap.add_argument("--wie", default=None, help="Auftragsordner: ALLE Slicer-Einstellungen aus dessen Projekt-3MF übernehmen (nur Material/Kopf/Farbe neu) – für „An meine Köpfe anpassen“")
     ap.add_argument("--extra", action="append", default=[], help="Slicer-Einstellung überschreiben: schluessel=wert (mehrfach)")
@@ -445,6 +452,33 @@ def main():
                 prozess[k_] = v_; n_ += 1
         prozess["compatible_printers"] = []
         print(f"--wie: {n_} Einstellungen aus {Path(a.wie).name} übernommen")
+    hinweise = []                             # landen im BERICHT.md
+    if cfg.get("kurz") == "c5pro":            # Flash Studio release_0817 (Hersteller, Recherche 23.11.2026): wartende Köpfe −100 °C, Kopfwechsel-Rückzug 2 mm
+        prozess["standby_temperature_delta"] = "-100"; prozess["ooze_prevention"] = "1"; prozess["enable_prime_tower"] = "1"
+        if isinstance(maschine.get("retract_length_toolchange"), list):
+            maschine["retract_length_toolchange"] = ["2"] * len(maschine["retract_length_toolchange"])
+    if a.detail:                              # feinste Details – Werte aus den Gitarren-Miniaturen + Flash-Studio-Feinstufe (Außenwand-Beschleunigung 3000)
+        prozess.update({"wall_generator": "arachne", "min_bead_width": "70%", "min_feature_size": "20%", "resolution": "0.008", "only_one_wall_top": "1",
+                        "outer_wall_speed": "30", "small_perimeter_speed": "20", "top_surface_speed": "40", "outer_wall_acceleration": "3000",
+                        "top_shell_layers": "8", "support_on_build_plate_only": "1"})
+        hinweise.append("Detail-Paket: Arachne (70 %/20 %), Auflösung 0,008, eine Wand oben, Außenwand 30 / Kleinumfang 20 / Oberfläche 40 mm/s, "
+                        "Außenwand-Beschleunigung 3000, 8 Deckschichten, Stützen nur ab Platte.")
+    if a.stuetz_kopf:
+        if not 1 <= a.stuetz_kopf <= slots:
+            raise SystemExit(f"--stuetz-kopf {a.stuetz_kopf}: Kopf ist in diesem Auftrag nicht belegt (1–{slots})")
+        prozess.update({"enable_support": "1", "support_interface_filament": str(a.stuetz_kopf),
+                        "support_filament": str(a.stuetz_kopf) if a.stuetz_koerper else "0",
+                        "support_top_z_distance": "0", "support_bottom_z_distance": "0", "support_interface_top_layers": "3",
+                        "support_interface_bottom_layers": "0", "support_interface_spacing": "0", "support_interface_pattern": "rectilinear_interlaced",
+                        "independent_support_layer_height": "0"})
+        if a.stuetzen == "aus":
+            prozess["support_type"] = "normal(auto)"; a.stuetzen = "auto"
+        sm = belegt[a.stuetz_kopf]
+        if sm in ("PVA", "BVOH") and "tree" in prozess.get("support_type", ""):
+            prozess["support_type"] = "normal(auto)"
+        hinweise.append(f"Stützen-Kontaktschicht aus Kopf {a.stuetz_kopf} ({sm}), Abstand 0, 3 Kontaktlagen, verschränkt; Stützkörper "
+                        f"{'ebenfalls aus Kopf ' + str(a.stuetz_kopf) if a.stuetz_koerper else 'im Hauptmaterial'}. "
+                        "Flashforge: bei PLA/PETG/PVA/TPU Deckel ab, Tür auf, Kammerheizung aus (über 45 °C verstopft die Düse).")
     for ex in a.extra:                        # Zusätze zuletzt: gelten auch gegenüber --wie
         k, v = ex.split("=", 1); prozess[k.strip()] = v.strip()
     # Druckplatte: bestimmt die Betttemperatur (Cool Plate = 35 °C bei PLA!). Kommt aus drucker/*.json.
@@ -456,6 +490,17 @@ def main():
         f = aufloesen("filament", cfg["filamente"][belegt[s]])
         f["compatible_printers"] = []
         f.setdefault("filament_is_support", ["0"])  # fehlt in manchen Herstellerprofilen
+        d_slot = (duesen_mix[s - 1] if duesen_mix and s - 1 < len(duesen_mix) else (a.duese or "0.4"))
+        fs = Path(__file__).resolve().parent.parent / "drucker" / "fs_025" / f"{cfg['filamente'][belegt[s]]} 0.25 nozzle.json"
+        if str(d_slot) == "0.25" and fs.exists():   # Hersteller-Profil nur für 0,25-mm-Düse (Flash Studio release_0817): 220 °C PLA, PA 0.1, max. 2,8 mm³/s
+            for k_, v_ in json.loads(fs.read_text(encoding="utf-8")).items():
+                if k_ not in ("inherits", "name", "setting_id", "filament_settings_id", "from", "instantiation", "version", "is_custom_defined", "compatible_printers"):
+                    f[k_] = v_
+            if f"Kopf {s}: 0,25-Profil" not in " ".join(hinweise):
+                hinweise.append(f"Kopf {s}: Hersteller-Filamentprofil für 0,25-mm-Düse ({f['nozzle_temperature'][0]} °C, höchstens {f['filament_max_volumetric_speed'][0]} mm³/s).")
+        if a.stuetz_kopf and s != a.stuetz_kopf and belegt[s].startswith("PLA") and belegt[a.stuetz_kopf].startswith("PETG"):
+            t_ = max(225, int(float(f["nozzle_temperature"][0])))   # Flashforge-Wiki: PLA auf PETG-Kontaktschicht mit 225–230 °C
+            f["nozzle_temperature"] = [str(t_)]; f["nozzle_temperature_initial_layer"] = [str(t_)]
         if a.bett:                        # gemischte Materialien: ein gemeinsamer Bettwert statt des höchsten
             for k in ("hot_plate_temp", "hot_plate_temp_initial_layer", "textured_plate_temp", "textured_plate_temp_initial_layer",
                       "cool_plate_temp", "cool_plate_temp_initial_layer", "eng_plate_temp", "eng_plate_temp_initial_layer"):
@@ -557,6 +602,7 @@ def main():
                f"- Füllung: {a.infill} %",
                f"- Wände: {a.waende or 'Profil-Standard'}",
                *([f"- {schoen_text}"] if schoen_text else []),
+               *[f"- {h_}" for h_ in hinweise],
                *([f"- {naht_text}"] if naht_text else []),
                *([f"- Raue Oberfläche (Fuzzy Skin): {rau_text}"] if rau_text else []),
                f"- Stützen: {a.stuetzen}",
@@ -591,7 +637,7 @@ def main():
     info = {**info_koepfe, "name": a.name, "drucker": cfg["kurz"], "drucker_name": cfg["name"], "datum": datum,
             "ordner": ziel.name, "gcode": gname, "zeit": zeit, "gramm": gramm, "meter": meter,
             "duese": duese, "bett": bett, "schicht": a.schicht, "stufe": a.stufe, "infill": a.infill,
-            "duese_mm": a.duese or "0.4", **({"duesen_mm": duesen_mix[:slots]} if duesen_mix else {}), "waende": a.waende, **({"rau": a.rau} if a.rau else {}), "stuetzen": a.stuetzen, "brim": a.brim, "gemischt": gemischt, "zusammen": bool(a.zusammen and len(teile) > 1),
+            "duese_mm": a.duese or "0.4", **({"duesen_mm": duesen_mix[:slots]} if duesen_mix else {}), "waende": a.waende, **({"rau": a.rau} if a.rau else {}), "stuetzen": a.stuetzen, "brim": a.brim, "gemischt": gemischt, "zusammen": bool(a.zusammen and len(teile) > 1), **({"detail": True} if a.detail else {}), **({"stuetz_kopf": a.stuetz_kopf} if a.stuetz_kopf else {}),
             "slots": [{"slot": s_, "material": belegt[s_],
                        "farbe": farben[s_ - 1] if s_ - 1 < len(farben) else ""} for s_ in range(1, slots + 1)],
             "teile": [{"datei": Path(st).name, "slot": t[2]} for t, st in zip(teile, stls)],

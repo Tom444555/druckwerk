@@ -1,5 +1,5 @@
 {
- "stand": "20.11.2026",
+ "stand": "23.11.2026",
  "hinweis": "Zusammengetragen aus Herstellerangaben, Flashforge-Wiki und unabhängigen Tests. Am eigenen Gerät noch nicht nachgemessen – eigene Erfahrungen bitte melden, dann trage ich sie hier ein.",
  "steckbrief": [
   [
@@ -360,6 +360,31 @@
    "t": "Schichtlinien auf Rundungen oder streifige Wände stören",
    "u": "Schichten bleiben an flachen Rundungen und Schrägen sichtbar; wechselnde Geschwindigkeit gibt Streifen. Das ist kein Fehler des Druckers.",
    "l": "Raue Oberfläche (Fuzzy Skin) wählen: Werkstatt → Slicen → Detail-Einstellungen → Oberfläche „Fein rau“. Wirkt nur an Seitenwänden und trägt je Seite bis zur Stärke auf (Fein 0,1 mm, Mittel 0,3 mm) – Passflächen glatt lassen. Sichtflächen als Seitenwände legen. Gerechnet, am Gerät noch nicht gedruckt."
+  },
+  {
+   "t": "Feine Details/Schrift werden schlechter oder Farben verschoben",
+   "u": "Häufigste Ursache ist ein veralteter Kopfversatz (nach Firmware-Update, Düsentausch oder Anstoßen). Ein Tester sah genau das nach einem ausgelassenen Abgleich.",
+   "l": "Düsen säubern, Platte abnehmen, Kopfversatz-Kalibrierung laufen lassen (15–20 Min.). Nach jedem Düsentausch zusätzlich neu nivellieren."
+  },
+  {
+   "t": "Riefen in einer Farbe, die nach oben verschwinden",
+   "u": "Laut Flashforge sitzt der Kopf nicht sicher verriegelt.",
+   "l": "„Extruder Position Calibration“ ausführen, Kopf prüfen."
+  },
+  {
+   "t": "Wischturm abschalten?",
+   "u": "Flashforge rät ausdrücklich ab: die wartenden Köpfe tropfen leicht nach, der Turm reinigt vor jedem Wechsel. Druckwerk lässt ihn immer an.",
+   "l": "Turm an lassen; Abfall sparen über kleinere Spülmengen, nicht über Abschalten."
+  },
+  {
+   "t": "Streifen oder Wellen an glatten Wänden",
+   "u": "Einmal nach dem Aufstellen „Vibration Compensation“ und „VFA Vertical Stripe Compensation“ laufen lassen (Handbuch S. 15); erneut nur bei Ringing oder nach Umstellen. Auch ein wackliger Tisch macht Ringing.",
+   "l": "Kalibrierungen am Gerät starten, Drucker auf festen Untergrund."
+  },
+  {
+   "t": "Düse verstopft bei PLA/PETG/TPU",
+   "u": "Über 45 °C in der Kammer werden diese Materialien im Kopf weich.",
+   "l": "Kammerheizung aus, bei Materialmix Deckel ab und Tür auf. Jede Düse möglichst bei einem Material lassen."
   }
  ],
  "firmware": [
@@ -448,6 +473,22 @@
   {
    "titel": "Video: Fuzzy Skin im Bambu Studio (Bastlwastl) – Auswertung",
    "url": "videos/fuzzy-skin-bastlwastl.html"
+  },
+  {
+   "titel": "Flashforge Wiki – Creator 5 FAQ",
+   "url": "https://wiki.flashforge.com/en/creator-series/creator-5-series/faq_c5p"
+  },
+  {
+   "titel": "Flashforge Wiki – Druckqualität Fehlerbehebung",
+   "url": "https://wiki.flashforge.com/en/creator-series/creator-5-series/troubleshooting-print-quality-problems"
+  },
+  {
+   "titel": "Flashforge – Firmware-Verlauf Creator 5",
+   "url": "https://wiki.flashforge.com/en/creator-series/creator-5-series/manual/firmware-release-history"
+  },
+  {
+   "titel": "Flash-Studio-Profile (Orca-Flashforge, Zweig release_0817)",
+   "url": "https://github.com/FlashForge/Orca-Flashforge"
   }
  ]
 }

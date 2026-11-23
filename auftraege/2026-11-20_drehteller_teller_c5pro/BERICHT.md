@@ -2,7 +2,7 @@
 
 **Drucker:** Flashforge Creator 5 Pro  
 **Datei für USB:** `Drehteller_Teller.gcode`  
-**Druckzeit (geschätzt):** 7h 20m 28s  
+**Druckzeit (geschätzt):** 7h 20m 25s  
 **Filament:** 175.49, 11.84 g (58.84 m, 3.88 m)  
 
 
@@ -38,9 +38,6 @@ Kopfwechsel in der .gcode: 50, benutzte Köpfe: 1, 2
 - USB: .gcode auf FAT32-Stick, am Drucker unter Dateien/USB auswählen.
 - Vor dem Start: Druckplatte sauber und leer, richtige Spulen in den Slots.
 
-> ⚠ Unterschiedliche Materialien in einem Druck (PETG, PLA) – Haftung zwischen den Materialien und Temperaturen prüfen.
+Bett für alle Köpfe auf 65 °C gesetzt (PLA + PETG gemischt; das PETG-Profil allein wollte mehr).
 
-## Schwarz als PETG (21.11.2026)
-- Kopf 2 = schwarzes **PETG** (235 °C), Kopf 1 weißes PLA (210 °C), Bett für beide **65 °C** (`--bett 65`, statt 85 °C aus dem PETG-Profil – das wäre für die große PLA-Fläche zu heiß).
-- PLA und PETG haften schlecht aneinander → jede schwarze Einlage hat unter der Oberfläche einen **Hinterschnitt** (0,2 mm breiter je Seite, 0,4 mm tief) und sitzt dadurch fest wie ein Schwalbenschwanz.
-- Tür beim Druck offen lassen bzw. Kammer nicht heizen (PLA). Nicht gedruckt.
+> ⚠ Unterschiedliche Materialien in einem Druck (PETG, PLA) – Haftung zwischen den Materialien und Temperaturen prüfen.

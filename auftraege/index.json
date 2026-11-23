@@ -13,11 +13,11 @@
   "datum": "2026-11-23",
   "ordner": "2026-11-23_stratocaster190_c5pro",
   "gcode": "Stratocaster_190_komplett.gcode",
-  "zeit": "6h 13m 20s",
-  "gramm": "17.95, 2.54, 7.16, 7.32",
-  "meter": "6.02 m, 0.85 m, 2.40 m, 2.46 m",
-  "duese": "210,210,210,210",
-  "bett": "60,60,60,60",
+  "zeit": "6h 19m 21s",
+  "gramm": "17.71, 2.53, 7.08, 7.27",
+  "meter": "5.94 m, 0.85 m, 2.37 m, 2.44 m",
+  "duese": "220,220,220,220",
+  "bett": "55,55,55,55",
   "schicht": "0.08",
   "stufe": "Standard",
   "infill": 15,
@@ -27,6 +27,7 @@
   "brim": "auto",
   "gemischt": false,
   "zusammen": true,
+  "detail": true,
   "slots": [
    {
     "slot": 1,
@@ -117,11 +118,11 @@
   "datum": "2026-11-23",
   "ordner": "2026-11-23_schecter370_c5pro",
   "gcode": "Schecter_370_komplett.gcode",
-  "zeit": "23h 31m 58s",
-  "gramm": "85.45, 18.46, 30.29, 2.89",
-  "meter": "28.65 m, 6.19 m, 10.16 m, 0.97 m",
-  "duese": "210,210,210,210",
-  "bett": "60,60,60,60",
+  "zeit": "23h 51m 20s",
+  "gramm": "84.00, 18.24, 29.84, 2.87",
+  "meter": "28.16 m, 6.12 m, 10.01 m, 0.96 m",
+  "duese": "220,220,220,220",
+  "bett": "55,55,55,55",
   "schicht": "0.08",
   "stufe": "Standard",
   "infill": 15,
@@ -131,6 +132,7 @@
   "brim": "auto",
   "gemischt": false,
   "zusammen": true,
+  "detail": true,
   "slots": [
    {
     "slot": 1,
@@ -261,11 +263,11 @@
   "datum": "2026-11-23",
   "ordner": "2026-11-23_schecter160_c5pro",
   "gcode": "Schecter_160_komplett.gcode",
-  "zeit": "5h 37m 17s",
-  "gramm": "13.20, 3.82, 7.03, 0.97",
-  "meter": "4.43 m, 1.28 m, 2.36 m, 0.33 m",
-  "duese": "210,210,210,210",
-  "bett": "60,60,60,60",
+  "zeit": "5h 41m 6s",
+  "gramm": "13.04, 3.79, 6.95, 0.97",
+  "meter": "4.37 m, 1.27 m, 2.33 m, 0.32 m",
+  "duese": "220,220,220,220",
+  "bett": "55,55,55,55",
   "schicht": "0.08",
   "stufe": "Standard",
   "infill": 15,
@@ -275,6 +277,7 @@
   "brim": "auto",
   "gemischt": false,
   "zusammen": true,
+  "detail": true,
   "slots": [
    {
     "slot": 1,
@@ -365,11 +368,11 @@
   "datum": "2026-11-23",
   "ordner": "2026-11-23_gitarre190_c5pro",
   "gcode": "Schecter_190_komplett.gcode",
-  "zeit": "7h 10m 25s",
-  "gramm": "18.61, 4.80, 9.50, 1.18",
-  "meter": "6.24 m, 1.61 m, 3.18 m, 0.40 m",
-  "duese": "210,210,210,210",
-  "bett": "60,60,60,60",
+  "zeit": "7h 16m 13s",
+  "gramm": "18.36, 4.75, 9.38, 1.18",
+  "meter": "6.16 m, 1.59 m, 3.15 m, 0.39 m",
+  "duese": "220,220,220,220",
+  "bett": "55,55,55,55",
   "schicht": "0.08",
   "stufe": "Standard",
   "infill": 15,
@@ -379,6 +382,7 @@
   "brim": "auto",
   "gemischt": false,
   "zusammen": true,
+  "detail": true,
   "slots": [
    {
     "slot": 1,
@@ -469,11 +473,11 @@
   "datum": "2026-11-23",
   "ordner": "2026-11-14_loopsmiths_amp_c5pro",
   "gcode": "Loopsmiths_Verstaerker_025.gcode",
-  "zeit": "1d 6h 15m 34s",
-  "gramm": "104.09, 11.93, 19.34, 24.17",
-  "meter": "34.90 m, 4.00 m, 6.49 m, 8.10 m",
-  "duese": "210,210,210,230",
-  "bett": "60,60,60,60",
+  "zeit": "1d 6h 36m 19s",
+  "gramm": "102.64, 11.88, 19.25, 24.17",
+  "meter": "34.41 m, 3.98 m, 6.45 m, 8.10 m",
+  "duese": "220,220,220,230",
+  "bett": "55,55,55,60",
   "schicht": "0.08",
   "stufe": "Standard",
   "infill": 15,
@@ -483,6 +487,7 @@
   "brim": "auto",
   "gemischt": true,
   "zusammen": true,
+  "detail": true,
   "slots": [
    {
     "slot": 1,
@@ -669,7 +674,7 @@
   "datum": "2026-11-21",
   "ordner": "2026-11-20_drehteller_wuerfel_c5pro",
   "gcode": "Drehteller_Masswuerfel.gcode",
-  "zeit": "1h 2m 32s",
+  "zeit": "1h 2m 26s",
   "gramm": "12.65, 2.16",
   "meter": "4.24 m, 0.71 m",
   "duese": "210,235",
@@ -682,6 +687,7 @@
   "stuetzen": "aus",
   "brim": "aus",
   "gemischt": true,
+  "zusammen": true,
   "slots": [
    {
     "slot": 1,
@@ -794,7 +800,7 @@
   "datum": "2026-11-21",
   "ordner": "2026-11-20_drehteller_teller_c5pro",
   "gcode": "Drehteller_Teller.gcode",
-  "zeit": "7h 20m 28s",
+  "zeit": "7h 20m 25s",
   "gramm": "175.49, 11.84",
   "meter": "58.84 m, 3.88 m",
   "duese": "210,235",
@@ -807,6 +813,7 @@
   "stuetzen": "aus",
   "brim": "aus",
   "gemischt": true,
+  "zusammen": true,
   "slots": [
    {
     "slot": 1,
@@ -874,6 +881,7 @@
   "stuetzen": "aus",
   "brim": "aus",
   "gemischt": false,
+  "zusammen": true,
   "slots": [
    {
     "slot": 1,
@@ -1439,13 +1447,20 @@
   "datei": "Kalibrier_4_Passung"
  },
  {
+  "kopfwechsel": 9,
+  "koepfe_benutzt": [
+   1,
+   2,
+   3,
+   4
+  ],
   "name": "kalibrier_3_versatz",
   "drucker": "c5pro",
   "drucker_name": "Flashforge Creator 5 Pro",
   "datum": "2026-11-14",
   "ordner": "2026-11-14_kalibrier_3_versatz_c5pro",
   "gcode": "Kalibrier_3_Versatz.gcode",
-  "zeit": "23m 34s",
+  "zeit": "23m 33s",
   "gramm": "14.95, 0.24, 0.19, 0.19",
   "meter": "5.01 m, 0.08 m, 0.06 m, 0.06 m",
   "duese": "210,210,210,210",
@@ -1458,6 +1473,7 @@
   "stuetzen": "aus",
   "brim": "aus",
   "gemischt": false,
+  "zusammen": true,
   "slots": [
    {
     "slot": 1,
@@ -1518,8 +1534,8 @@
    }
   ],
   "vorschau": "vorschau.png",
-  "projekt": "Kalibrier_3_Versatz.3mf",
   "bild_im_gcode": true,
+  "projekt": "Kalibrier_3_Versatz.3mf",
   "gruppe": "kalibrier",
   "gruppe_titel": "Kalibrier-Set",
   "nr": 3,

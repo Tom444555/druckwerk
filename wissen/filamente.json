@@ -1,5 +1,5 @@
 {
- "stand": "14.11.2026",
+ "stand": "23.11.2026",
  "hinweis": "Werte mit „Profil“ stammen aus den Hersteller-Profilen für den Creator 5 Pro (OrcaSlicer 2.5, gleiche Basis wie Flash Studio). „Wiki“ = Flashforge-Wiki/Anleitungen. „Richtwert“ = übliche Erfahrungswerte, auf der Spule gegenprüfen. Am eigenen Gerät noch nicht bestätigt.",
  "gruppen": [
   "Alltag",
@@ -442,7 +442,11 @@
   "Weiches TPU: Kammerheizung aus, Bett unter 70 °C, Deckel ab und Tür auf, Klebestift als Trennschicht.",
   "Zwei Materialien sollen fest halten? Im Slicer „Beam Interlocking“ einschalten (Prozess → Multimaterial); die Teile müssen zu einem Modell gehören.",
   "Flashforge-Filament hat abgestimmte Spülmengen. Bei Fremdmarken die Spülmengen etwa halbieren und testen, Farben von hell nach dunkel ordnen.",
-  "PETG außen + TPU innen (hart + weich in einem Druck): In einem Videotest auf dem Creator 5 Pro ließen sich die Teile von Hand nicht trennen (My Engines DE, Leihgerät). Andere Quellen berichten, dass beide kaum aneinander haften – deshalb große Kontaktfläche und „Beam Interlocking“ einplanen. An deinem Gerät noch nicht bestätigt."
+  "PETG außen + TPU innen (hart + weich in einem Druck): In einem Videotest auf dem Creator 5 Pro ließen sich die Teile von Hand nicht trennen (My Engines DE, Leihgerät). Andere Quellen berichten, dass beide kaum aneinander haften – deshalb große Kontaktfläche und „Beam Interlocking“ einplanen. An deinem Gerät noch nicht bestätigt.",
+  "Stützmaterial – was zu was passt (Flashforge-Leitfaden Stützmaterial): PVA → unter PLA und TPU · BVOH → unter PLA, TPU, PETG · HIPS → unter ABS/ASA · PLA → unter PETG und TPU · PETG → als Kontaktschicht unter PLA.",
+  "Fremdes Stützmaterial nur als Kontaktschicht (Abstand 0, 3 Lagen, Muster verschränkt), der Stützkörper bleibt im Hauptmaterial – spart teures Material und Kopfwechsel. In Druckwerk: druck.py --stuetz-kopf <Kopf>. Lösliches PVA/BVOH auch als Körper (--stuetz-koerper), dann normale Stützen statt Baumstützen, langsam, Kammer unter 45 °C.",
+  "Dein schwarzes PETG taugt als Kontaktschicht unter PLA. Achtung: dunkle Stütze kann auf hellen Flächen Spuren lassen (ein Tester) – unter Weiß lieber helles PETG. An deinem Gerät noch nicht bestätigt.",
+  "PVA zieht Wasser: vor dem Druck trocknen (Flashforge-Tabelle 80 °C / 6 h – vorher prüfen, ob die Spule das aushält) und in der Trockenbox lagern."
  ],
  "starter": [
   {
@@ -523,6 +527,14 @@
   {
    "titel": "3DJake-Ratgeber: TPU und PETG verbinden (Beam Interlocking)",
    "url": "https://www.3djake.com/info/guide/beam-interlocking-in-3d-printing-how-to-combine-tpu-petg-correctly"
+  },
+  {
+   "titel": "Flashforge – Leitfaden Stützmaterial (PDF)",
+   "url": "https://wiki.flashforge.com/resource/pictures/filament/support_filament_usage_guide.pdf"
+  },
+  {
+   "titel": "Flashforge Wiki – Creator 5: Filament-Leitfaden (Materialmix)",
+   "url": "https://wiki.flashforge.com/en/creator-series/creator-5-series/filament_usage_guide"
   }
  ],
  "stabil": {

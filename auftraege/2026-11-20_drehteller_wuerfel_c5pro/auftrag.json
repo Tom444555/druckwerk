@@ -10,7 +10,7 @@
  "datum": "2026-11-21",
  "ordner": "2026-11-20_drehteller_wuerfel_c5pro",
  "gcode": "Drehteller_Masswuerfel.gcode",
- "zeit": "1h 2m 32s",
+ "zeit": "1h 2m 26s",
  "gramm": "12.65, 2.16",
  "meter": "4.24 m, 0.71 m",
  "duese": "210,235",
@@ -23,6 +23,7 @@
  "stuetzen": "aus",
  "brim": "aus",
  "gemischt": true,
+ "zusammen": true,
  "slots": [
   {
    "slot": 1,

@@ -23,6 +23,7 @@
  "stuetzen": "aus",
  "brim": "aus",
  "gemischt": false,
+ "zusammen": true,
  "slots": [
   {
    "slot": 1,

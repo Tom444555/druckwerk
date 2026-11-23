@@ -2,8 +2,8 @@
 
 **Drucker:** Flashforge Creator 5 Pro  
 **Datei für USB:** `Schecter_190_komplett.gcode`  
-**Druckzeit (geschätzt):** 7h 10m 25s  
-**Filament:** 18.61, 4.80, 9.50, 1.18 g (6.24 m, 1.61 m, 3.18 m, 0.40 m)  
+**Druckzeit (geschätzt):** 7h 16m 13s  
+**Filament:** 18.36, 4.75, 9.38, 1.18 g (6.16 m, 1.59 m, 3.15 m, 0.39 m)  
 
 
 ## Spulen / Köpfe einlegen
@@ -21,9 +21,14 @@
 - Schichthöhe: 0.08 mm (Standard)
 - Füllung: 15 %
 - Wände: Profil-Standard
+- Detail-Paket: Arachne (70 %/20 %), Auflösung 0,008, eine Wand oben, Außenwand 30 / Kleinumfang 20 / Oberfläche 40 mm/s, Außenwand-Beschleunigung 3000, 8 Deckschichten, Stützen nur ab Platte.
+- Kopf 1: Hersteller-Filamentprofil für 0,25-mm-Düse (220 °C, höchstens 2.8 mm³/s).
+- Kopf 2: Hersteller-Filamentprofil für 0,25-mm-Düse (220 °C, höchstens 2.8 mm³/s).
+- Kopf 3: Hersteller-Filamentprofil für 0,25-mm-Düse (220 °C, höchstens 2.8 mm³/s).
+- Kopf 4: Hersteller-Filamentprofil für 0,25-mm-Düse (220 °C, höchstens 2.8 mm³/s).
 - Stützen: auto
 - Brim: auto
-- Düsentemperatur: 210,210,210,210 °C, Bett: 60,60,60,60 °C
+- Düsentemperatur: 220,220,220,220 °C, Bett: 55,55,55,55 °C
 
 ## Teile
 

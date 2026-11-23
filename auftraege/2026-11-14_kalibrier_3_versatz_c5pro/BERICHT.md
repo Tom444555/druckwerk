@@ -2,7 +2,7 @@
 
 **Drucker:** Flashforge Creator 5 Pro  
 **Datei für USB:** `Kalibrier_3_Versatz.gcode`  
-**Druckzeit (geschätzt):** 23m 34s  
+**Druckzeit (geschätzt):** 23m 33s  
 **Filament:** 14.95, 0.24, 0.19, 0.19 g (5.01 m, 0.08 m, 0.06 m, 0.06 m)  
 
 
@@ -27,10 +27,12 @@
 
 ## Teile
 
-- `versatz_k1.scad` → Slot 1 (PLA)
-- `versatz_k2.scad` → Slot 2 (PLA)
-- `versatz_k3.scad` → Slot 3 (PLA)
-- `versatz_k4.scad` → Slot 4 (PLA)
+- `versatz_k1.stl` → Slot 1 (PLA)
+- `versatz_k2.stl` → Slot 2 (PLA)
+- `versatz_k3.stl` → Slot 3 (PLA)
+- `versatz_k4.stl` → Slot 4 (PLA)
+
+Kopfwechsel in der .gcode: 9, benutzte Köpfe: 1, 2, 3, 4
 
 ## Am Drucker
 
