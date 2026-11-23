@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """spulenwechsel.py – fünfte Farbe: fügt in eine fertige .gcode eine Pause ein, in der an EINEM Kopf die Spule gewechselt wird.
 
-  python3 werkzeug/spulenwechsel.py auftrag.gcode [--kopf 4] [--text "Kopf 4: Dunkelrot → Weiß"]
+  python3 werkzeug/spulenwechsel.py auftrag.gcode [--kopf 4] [--text "Kopf 4: Dunkelrot → Weiß"] [--bei <mm>] [--min-luecke 0.3]
 
 Voraussetzung: beide Farben liegen beim Slicen auf demselben Kopf (`--teil a.stl:PLA:4 --teil b.stl:PLA:4`) und werden in getrennten Höhen gedruckt.
 Das Skript sucht die größte Höhen-Lücke, in der dieser Kopf am Modell nichts druckt (Reinigungsturm zählt nicht), und setzt den Pausenbefehl
@@ -15,6 +15,7 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("gcode"); ap.add_argument("--kopf", type=int, default=4); ap.add_argument("--text", default="Spule wechseln, dann fortsetzen")
     ap.add_argument("--min-luecke", type=float, default=0.3)
+    ap.add_argument("--bei", type=float, default=None, help="Pause in der Lücke, die diese Höhe (mm) enthält – nötig, wenn die zweite Farbe selbst Lücken hat (Strat 23.11.: sonst wählt das Skript die größere, falsche Lücke)")
     a = ap.parse_args()
     L = open(a.gcode, errors="surrogateescape").read().split("\n")
     pause = next((l.split("=", 1)[1].strip() for l in L if l.startswith("; machine_pause_gcode")), "M25") or "M25"
@@ -26,6 +27,8 @@ def main():
         elif t == a.kopf - 1 and ln.startswith(("G1 ", "G2 ", "G3 ")) and " E" in ln and "prime" not in typ and "tower" not in typ: zs.add(z)
     alle = sorted(zs); luecken = sorted(((b - x, x, b) for x, b in zip(alle[:-1], alle[1:]) if b - x >= a.min_luecke), reverse=True)
     if not luecken: sys.exit(f"Kopf {a.kopf}: keine Höhen-Lücke ≥ {a.min_luecke} mm gefunden – die zwei Farben überschneiden sich in der Höhe.")
+    if a.bei is not None:
+        luecken = [l for l in luecken if l[1] < a.bei < l[2]] or sys.exit(f"Kopf {a.kopf}: bei {a.bei} mm druckt dieser Kopf – keine Lücke dort.")
     _, unten, oben = luecken[0]
     i = next(k for k, ln in enumerate(L) if ln.startswith(";Z:") and float(ln[3:]) > unten + 1e-6)
     L.insert(i + 1, f"{pause} ; druckwerk: PAUSE – {a.text}")

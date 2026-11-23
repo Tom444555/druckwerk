@@ -409,6 +409,13 @@ So kam `modelle/gitarre_rundum.py` zustande; für ähnliche Vorhaben (Instrument
 ## Gitarren 190 mm und ein Druck je Gitarre (23.11.2026 – nur gerechnet)
 - **Schecter:** `modelle/gitarre_rundum.py --laenge 190 --wolken 4 --wirbel 1 --armschraege 0.25` (Rundungen jetzt `SEG` 72 / `KANTE` 14 / Kreise 96); Wirbel neben den Korpus verschieben und mit `--zusammen` in denselben Druck.
 - **Stratocaster:** `werkzeug/gitarre_farben.py modelle/quelle/stratocaster_original.stl <ziel> 190 --schnur 1` → keine festen Saiten, Kerben in Sattel/Reitern, Kegellöcher (Klein-Modus wie Schecter) + `strat_wirbel.stl` (6 Wirbel + 8 Lochkugeln Ø 1,8 × 1,5, Loch 0,5), `strat_wirbel_platte.stl` neben dem Korpus, Saitenlöcher Ø 0,72 durch den Korpus, hinten Rinne 2,0 × 1,6 für die Kugeln (Lochabstand nur 1,94 mm). Rippenbogen/Armauflage unverändert.
+- **Strat mit Details nach Toms Fotos (23.11. abends, seine eigene Strat: cremeweiß, Ahornhals, 22 Bünde, Zwei-Punkt-Tremolo):** zusätzlich `--details 1` → fünftes Teil `strat_schwarz.stl`
+  (Linie der schwarzen Schlagbrett-Mittellage 0,30 breit/0,28 vom Rand, 18 Pole, 10 Griffbrett-Punkte). **Trick fünfte Farbe ohne fünften Kopf:** alles Schwarze liegt über der Korpusdecke (8,15 mm),
+  der Korpus-Kopf ist dort frei → `strat_schwarz.stl` auch auf Kopf 1, danach `spulenwechsel.py <gcode> --kopf 1 --min-luecke 0.1 --bei 8.25` (Pause bei 8,26 mm; **`--bei` angeben**, sonst nimmt das Skript
+  die größere Lücke innerhalb der schwarzen Teile). Dazu: 22. Bund auf Überstand, Sattel weiß, Schrauben/Gurtknöpfe/Halsplatte silber (Zonen-Umfärben `farbe(zone, ziel, von)`), zwei Bolzen statt sechs
+  Brückenschrauben, Saitenniederhalter als Keil (45°, stützfrei), Halsstab-Tropfen 0,25 vertieft. **Rückseite plan:** Deckel/Halsplatte standen im Netz 1,6 mm vor (Korpus schwebte 0,5 mm über dem Bett)
+  → abgeschnitten und als bündige Einlagen 0,32 dick neu gesetzt. Nicht machbar bei 190 mm: Zahlen auf den Reglern, Schriftzug (bewusst weg), dunkler Halsstreifen hinten (liegt unter der Decke, bräuchte zweiten Wechsel).
+  Lage aller Teile per Höhenkarte aus dem Netz gemessen (Punktwolke → max z je 0,5-mm-Zelle → `scipy.ndimage.label` je Höhenband) – so auch bei anderen fremden Netzen vorgehen.
 - **Prüfbilder ohne `smooth_shading`** rendern: geglättete Normalen auf groben Original-Netzen zeigen Streifen/Kanten, die es nicht gibt (Tom hielt die Strat-Rückseite deshalb für „komisch“).
 - Gemeinsamer Druck = gemeinsame Einstellungen (Wirbel dann mit 15 % und Stützen auto statt 100 % / ohne Stützen) – Tom sagen.
 

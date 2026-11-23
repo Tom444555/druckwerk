@@ -1,5 +1,12 @@
 # Übergabe druckwerk
 
+## STAND 23.11.2026, 19:15 Uhr – hier einsteigen (Strat 190 mit Details nach Toms 18 Fotos)
+- **Stratocaster 190** (`2026-11-23_stratocaster190_c5pro`, Ordner/Datei gleich): jetzt fünf Farben auf vier Köpfen – Kopf 1 creme, **Pause bei 8,26 mm → Schwarz** (Schlagbrett-Linie, Pole, Griffbrett-Punkte),
+  Kopf 2 weiß (neu: Sattel, Federfach-Deckel), 3 Holz, 4 silber (neu: alle Schrauben, Gurtknöpfe, Halsplatte, zwei Tremolo-Bolzen, Saitenniederhalter). 22. Bund, Halsstab-Tropfen vertieft, Rückseite plan auf dem Bett.
+  **6 h 11, 34 g, 274 Kopfwechsel**, 0,25/0,08 `--detail`. Bau und Lehren: CLAUDE.md „Gitarren 190 mm …“. `spulenwechsel.py` hat neu `--bei <mm>`.
+- Offen (Tom fragen/Rückmeldung): Spulenwechsel am Gerät unerprobt (ohne Wechsel wird Schwarz creme) · dunkler Halsstreifen hinten fehlt · Reglerzahlen nicht machbar · Blocksättel wie am Original nicht nachgebaut
+  (Netz hat Blechreiter) · Rig-Reiter in Loopsmiths nutzt noch das alte Strat-Modell. Nichts gedruckt.
+
 ## STAND 23.11.2026, 17:30 Uhr – hier einsteigen (Recherche beste Einstellungen Creator 5 Pro, alle Modelle neu gerechnet)
 - **Recherche** (Flash-Studio-Profile `release_0817`, Flashforge-Wiki/FAQ/Handbuch, Tests): Ergebnis und Regeln in CLAUDE.md „Herstellerwerte Creator 5 Pro“, Probleme/Lösungen in `wissen/c5pro.json`, Stützmaterial-Tabelle in `wissen/filamente.json → mischen`.
 - **druck.py neu:** Hersteller-Filamentprofile für die 0,25-Düse (`drucker/fs_025/`, automatisch: PLA 220 °C, max. 2,8 mm³/s, PA 0,1), Kopfwechsel −100 °C / Rückzug 2 mm, `--detail` (Paket maximale Details), `--stuetz-kopf <n>` [`--stuetz-koerper`] (Stützen-Kontaktschicht aus anderem Material). Neues Werkzeug `werkzeug/neu_rechnen.py`.

@@ -2,15 +2,15 @@
 
 **Drucker:** Flashforge Creator 5 Pro  
 **Datei für USB:** `Stratocaster_190_komplett.gcode`  
-**Druckzeit (geschätzt):** 6h 19m 21s  
-**Filament:** 17.71, 2.53, 7.08, 7.27 g (5.94 m, 0.85 m, 2.37 m, 2.44 m)  
+**Druckzeit (geschätzt):** 6h 11m 0s  
+**Filament:** 17.60, 2.97, 7.09, 6.16 g (5.90 m, 1.00 m, 2.38 m, 2.06 m)  
 
 
 ## Spulen / Köpfe einlegen
 
 | Slot | Material | Farbe | Profil |
 |---|---|---|---|
-| 1 | PLA | creme | Flashforge PLA Basic @FF C5P |
+| 1 | PLA | creme (ab 8.3 mm schwarz) | Flashforge PLA Basic @FF C5P |
 | 2 | PLA | weiß | Flashforge PLA Basic @FF C5P |
 | 3 | PLA | holz | Flashforge PLA Basic @FF C5P |
 | 4 | PLA | silber | Flashforge PLA Basic @FF C5P |
@@ -36,9 +36,10 @@
 - `strat_weiss.stl` → Slot 2 (PLA)
 - `strat_hals.stl` → Slot 3 (PLA)
 - `strat_metall.stl` → Slot 4 (PLA)
+- `strat_schwarz.stl` → Slot 1 (PLA)
 - `strat_wirbel_platte.stl` → Slot 4 (PLA)
 
-Kopfwechsel in der .gcode: 272, benutzte Köpfe: 1, 2, 3, 4
+Kopfwechsel in der .gcode: 274, benutzte Köpfe: 1, 2, 3, 4
 
 ## Am Drucker
 
@@ -47,3 +48,16 @@ Kopfwechsel in der .gcode: 272, benutzte Köpfe: 1, 2, 3, 4
 - PLA/PETG/TPU: Kammerheizung aus (unter 45 °C), sonst kann die Düse verstopfen.
 - USB: .gcode auf FAT32-Stick, am Drucker unter Dateien/USB auswählen.
 - Vor dem Start: Druckplatte sauber und leer, richtige Spulen in den Slots.
+
+## Spulenwechsel an Kopf 1 (fünfte Farbe)
+
+- Die Datei hält bei **8,26 mm** von selbst an (`M25`). Dann an **Kopf 1 Creme gegen Schwarz** tauschen, nachschieben, bis rein Schwarz kommt, und fortsetzen.
+- Bis 8,18 mm druckt Kopf 1 den Korpus (creme), ab 8,34 mm nur noch Schwarz: Linie im Schlagbrett-Rand, 18 Tonabnehmer-Pole, 10 Griffbrett-Punkte (zusammen 0,06 g).
+- Ohne Wechsel werden diese Teile creme statt schwarz – der Druck gelingt trotzdem.
+- Am Gerät noch nicht erprobt.
+
+## Details nach Toms Fotos (23.11.2026)
+
+22. Bund mit Griffbrett-Überstand · Sattel weiß · alle Schrauben, Gurtknöpfe, Halsplatte silber · Zwei-Punkt-Tremolo · zwei Saitenniederhalter (Optik) ·
+Halsstab-Tropfen als Vertiefung · Federfach-Deckel weiß mit sechs Schrauben · Rückseite liegt plan auf dem Bett.
+Bau: `python3 werkzeug/gitarre_farben.py modelle/quelle/stratocaster_original.stl <ziel> 190 --schnur 1 --details 1`, danach `spulenwechsel.py <gcode> --kopf 1 --min-luecke 0.1 --bei 8.25`.

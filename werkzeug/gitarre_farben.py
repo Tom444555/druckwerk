@@ -4,11 +4,18 @@ Saiten werden als druckbare Stege (bis auf die Oberfläche) neu aufgebaut, weil 
 Aufruf: python3 gitarre_farben.py <original.stl> <ziel_ordner> <laenge_mm> [--schnur 1]
 --schnur 1 (23.11.2026, Vorbild Schecter `gitarre_rundum.py --wirbel 1`, Klein-Modus): keine festen Saiten, sondern Schnur bis ~0,3 mm einfädeln –
 Saiten aus dem Netz entfernt, Kerben in Sattel und Reiter-Kuppen, sechs Löcher durch den Korpus (string-through, Senkung hinten),
-Kegellöcher statt Mechanik-Achsen und strat_wirbel.stl / strat_wirbel_platte.stl mit sechs Steckwirbeln (Kopf 4). Alle Feinheiten im Druckmaß."""
+Kegellöcher statt Mechanik-Achsen und strat_wirbel.stl / strat_wirbel_platte.stl mit sechs Steckwirbeln (Kopf 4). Alle Feinheiten im Druckmaß.
+--details 1 (23.11.2026 abends, nach Toms 18 Fotos seiner eigenen Strat; nur zusammen mit --schnur 1): fünftes Farbteil strat_schwarz.stl
+(Griffbrett-Punkte, Tonabnehmer-Pole, schwarze Mittellage des Schlagbretts als Linie am Rand – liegt komplett ÜBER der Korpusdecke, deshalb
+auf Kopf 1 mit Spulenwechsel creme → schwarz druckbar), 22. Bund mit Griffbrett-Überstand, Sattel weiß, alle Schrauben und Gurtknöpfe silber,
+Zwei-Punkt-Tremolo (zwei Bolzen statt sechs Schrauben), zwei Saitenniederhalter, Halsstab-Tropfen als Vertiefung, Rückseite plan aufs Bett:
+Federfach-Deckel weiß und Halsplatte silber als bündige Einlagen (vorher standen sie 0,3 mm vor und der Korpus schwebte)."""
 import sys, math, argparse, numpy as np, trimesh, manifold3d as mf
 _ap = argparse.ArgumentParser(); _ap.add_argument('src'); _ap.add_argument('dst'); _ap.add_argument('laenge', type=float)
 _ap.add_argument('--schnur', type=int, default=0, help='1 = Schnur-Saiten mit Steckwirbeln statt fester Saiten-Stege')
+_ap.add_argument('--details', type=int, default=0, help='1 = Details nach Toms Fotos (5. Farbe schwarz, 22. Bund, Schrauben silber, Rückseite plan …)')
 A = _ap.parse_args(); src, dst, laenge = A.src, A.dst, A.laenge
+assert not A.details or A.schnur, '--details braucht --schnur 1'
 t = trimesh.load(src)
 M = mf.Manifold(mf.Mesh(vert_properties=np.asarray(t.vertices, np.float32), tri_verts=np.asarray(t.faces, np.uint32)))
 assert M.status() == mf.Error.NoError, M.status()
@@ -88,6 +95,35 @@ if A.schnur:
     M = M + mf.Manifold.batch_boolean(ringe, mf.OpType.Add) - mf.Manifold.batch_boolean(bohr, mf.OpType.Add)
     saiten = mf.Manifold()
     print(f'Schnur: Kegel hinten Ø {2*WR_H:.2f} → vorn Ø {2*WR_V:.2f}, Lochlänge {H_LOCH:.2f} mm, Klein={KLEIN}; Korpus-Löcher Ø {2*RL*s:.2f}, hinten Rinne {RIN_B} × {RIN_T} tief für Lochkugeln Ø {KUG_D} × {KUG_H}')
+if A.details:
+    # ================= Details nach Toms Fotos (Originalmaß, Feinheiten als Druckmaß p(mm)) =================
+    def rrect(x0, x1, y0, y1, r): return mf.CrossSection.square([x1 - x0 - 2 * r, y1 - y0 - 2 * r]).translate([x0 + r, y0 + r]).offset(r, mf.JoinType.Round, 2.0, 48)
+    def zyl(x, y, r, z0, z1, n=40): return mf.Manifold.cylinder(z1 - z0, r, r, n).translate([x, y, z0])
+    # Rückseite plan: alles unter der Korpus-Rückseite (z 0) weg; Deckel und Halsplatte als 1,6 dicke Platte bündig wieder einsetzen (Farbe weiter unten)
+    DECKEL = rrect(3.0, 102.0, -1030.5, -874.0, 8.0); HPLATTE = rrect(31.0, 71.0, -778.5, -738.5, 5.0)
+    SCHLITZ = box(20, 86, Y_LOCH - p(1.0) - 0.2, Y_LOCH + p(1.0) + 0.2, -G, G)       # Rinne der Lochkugeln bleibt offen
+    M = (M - box(-G, G, -G, G, -G, 0.0)) + (DECKEL.extrude(1.6) - SCHLITZ) + HPLATTE.extrude(1.6)
+    M = M - zyl(51.0, -771.5, p(0.42), -1, p(0.32)) - mf.Manifold.batch_boolean([zyl(x, y, p(0.36), -1, p(0.24), 4) for x in (36.0, 66.0) for y in (-773.6, -743.5)], mf.OpType.Add)   # … und vier Schrauben als Vierkant-Vertiefung
+    #                              # Loch der Halswinkel-Verstellung in der Halsplatte
+    # Zwei-Punkt-Tremolo: die vier inneren Schrauben weg, außen zwei Bolzen
+    BOLZ = [26.5, 78.5]; M = M - mf.Manifold.batch_boolean([zyl(x, -982.8, 3.7, 45.62, 60) for x in (36.5, 47.0, 57.5, 68.0)], mf.OpType.Add)
+    M = M + mf.Manifold.batch_boolean([zyl(x, -982.8, 3.9, 45.5, 47.6) + zyl(x, -982.8, 2.6, 47.5, 47.6 + p(0.12)) for x in BOLZ], mf.OpType.Add)
+    # 22. Bund auf Griffbrett-Überstand (Toms Hals hat 22 Bünde, das Netz 21)
+    Y22, Y_UE = -806.8, -813.4
+    ue = mf.CrossSection([np.array([[24.6, -799.0], [80.3, -799.0], [80.3, Y_UE + 3], [77.3, Y_UE], [27.6, Y_UE], [24.6, Y_UE + 3]])[::-1]])
+    M = M + ue.extrude(48.0 - ZP + 0.3).translate([0, 0, ZP - 0.3])
+    M = M + (mf.Manifold.cylinder(55.0, 1.0, 1.0, 24).scale([1.4, 1, 1]).rotate([0, 90, 0]).translate([24.9, Y22, 48.0]) - box(-G, G, -G, G, -G, 47.5))
+    # Saitenniederhalter (Optik, die Schnur läuft daneben/darunter): Fuß + nach oben breiter werdender Steg (45°, druckt ohne Stütze)
+    def baum(i, j, y):
+        P = lambda k: fx(k, -321.6) + (POSTS[k][0] - fx(k, -321.6)) * (y + 321.6) / (POSTS[k][1] + 321.6)
+        xm = (P(i) + P(j)) / 2; a, b, z = p(0.42), p(1.35), Z_KT
+        e = lambda hx, hy, zz: [[xm - hx, y - hy, zz], [xm + hx, y - hy, zz], [xm + hx, y + hy, zz], [xm - hx, y + hy, zz]]
+        return mf.Manifold.hull_points(np.array(e(a, a, z - 0.5) + e(a, a, z + p(0.30)) + e(b, a, z + p(1.0)) + e(b, a, z + p(1.2))))
+    M = M + baum(4, 5, -243.0) + baum(2, 3, -276.0)
+    # Halsstab-Tropfen hinter dem Sattel: 0,25 mm vertieft (dunkel geht hier nicht – liegt unter der Korpusdecke), in der Mitte das Loch
+    tr = mf.CrossSection.batch_hull([mf.CrossSection.circle(3.6, 48).translate([52.0, -301.5]), mf.CrossSection.circle(0.9, 24).translate([52.0, -314.0])])
+    st = M ^ tr.extrude(40).translate([0, 0, 30])
+    M = (M - tr.extrude(40).translate([0, 0, 30.5])) + st.translate([0, 0, -p(0.25)]) - zyl(52.0, -303.5, p(0.38), Z_KT - p(0.8), 60, 24)
 breiten = [0.6, 0.55, 0.5, 0.42, 0.36, 0.3]   # Stegbreite je Saite im fertigen Modell (mm): E A D dick, g h e dünn
 if not A.schnur: saiten = mf.Manifold()
 y_s0, y_s1 = -996.0, Y_NUT
@@ -99,7 +135,8 @@ for x0, x1, br in ([] if A.schnur else zip(xa, xb, breiten)):
     saiten += st
 if not A.schnur: saiten = saiten - box(NX0, NX1, Y_HEEL, y_s1+1, 0, 47.0)     # am freien Hals nur bis ins Griffbrett
 # --- Metall ---
-metall_zone = (box(NX0, NX1, Y_FB, Y_KOPF, 48.03, G)                 # Bünde, Sattel, Saiten über dem Griffbrett
+_YF = Y_FB - (8.5 if A.details else 0)
+metall_zone = (box(NX0, NX1, _YF, Y_KOPF, 48.03, G)                 # Bünde, Sattel, Saiten über dem Griffbrett
                + box(-G, G, Y_KOPF, G, 38.05, G) + box(-G, G, Y_KOPF, G, -G, 16.95)   # Mechaniken oben/unten
                + box(26, 78, -1000, Y_FB, 49.0, G)                   # Saiten über dem Korpus
                + box(14, 91.5, -1021.5, -975.5, ZK, G) + box(91.5, 101.5, -1021.5, -1003, ZK, G)   # Brücke
@@ -107,16 +144,48 @@ metall_zone = (box(NX0, NX1, Y_FB, Y_KOPF, 48.03, G)                 # Bünde, S
 metall = (M ^ metall_zone) + saiten
 # --- Hals (Ahorn) ---
 hals_zone = (box(NX0, NX1, Y_HEEL, G, -G, G) + box(-G, G, Y_KOPF-30, G, -G, G)
-             + box(NX0, NX1, Y_PG, Y_HEEL, ZK, G) + box(NX0, NX1, Y_FB, Y_PG, ZP, G))
+             + box(NX0, NX1, Y_PG, Y_HEEL, ZK, G) + box(NX0, NX1, _YF, Y_PG, ZP, G))
 hals = (M ^ hals_zone) - metall
 # --- Weiß: alles über der Korpus-Oberseite ---
 weiss = (M ^ box(-G, G, -G, Y_HEEL, ZK, G)) - metall - hals
 korpus = M - metall - hals - weiss
-z0 = t.bounds[0][2]; c = [-(t.bounds[0][0]+t.bounds[1][0])/2, -t.bounds[0][1], -z0]
+F = {'korpus': korpus, 'weiss': weiss, 'hals': hals, 'metall': metall}
+if A.details:
+    F['schwarz'] = mf.Manifold()
+    def farbe(zone, ziel, von=None):
+        for n in list(F):
+            if n == ziel or (von and n not in von): continue
+            st = F[n] ^ zone
+            if st.volume() > 1e-6: F[n] = F[n] - zone; F[ziel] = F[ziel] + st
+    add = lambda L: mf.Manifold.batch_boolean(L, mf.OpType.Add)
+    farbe(box(-G, G, -G, Y_HEEL, ZK + 0.02, G), 'weiss', ['korpus'])                                    # Korpus-Reste über der Decke (Schalter-Innenleben)
+    farbe(box(-G, G, Y_HEEL, G, ZK + 0.02, G), 'hals', ['korpus'])                                      # Splitter an der Halstasche
+    SCHR = [(96.8, -984.7), (2.0, -983.3), (179.0, -967.1), (89.7, -954.8), (162.7, -949.3), (13.7, -940.7), (-14.8, -931.3), (134.9, -918.8), (155.3, -916.3),
+            (90.5, -891.5), (12.6, -890.7), (1.3, -881.0), (13.2, -831.2), (90.5, -830.6), (163.1, -821.7), (86.3, -811.2), (5.8, -779.3), (169.5, -762.2), (189.0, -1022.8)]
+    farbe(add([zyl(x, y, 3.9, ZP + 0.03, 47.2) for x, y in SCHR]), 'metall', ['weiss'])                 # 11 Schlagbrett-, 6 Tonabnehmer-, 2 Schalter-Schrauben
+    farbe(box(20, 85, -327.5, -316.5, 47.5, G), 'weiss', ['metall', 'hals'])                                   # Sattel hell (Knochen)
+    farbe(box(38, 65, -1140, -1130.2, 8, 36) + box(-64, -34, -664.8, -640, 8, 36), 'metall', ['korpus'])  # Gurtknöpfe
+    farbe(HPLATTE.extrude(p(0.32)), 'metall', ['korpus', 'hals'])                                       # Halsplatte
+    DS = [(10.4, -1022.7), (94.7, -1022.7), (10.3, -957.7), (94.7, -957.7), (11.0, -881.5), (94.2, -881.5)]
+    farbe(add([zyl(x, y, 3.0, 0, p(0.32)) for x, y in DS]), 'metall', ['korpus'])                       # sechs Deckelschrauben
+    farbe(DECKEL.extrude(p(0.32)), 'weiss', ['korpus'])                                                 # Federfach-Deckel
+    # --- Schwarz (alles über der Decke) ---
+    farbe(box(20, 82, -840, -821, 46.85, G) + box(20, 82, -900, -881, 46.85, G) + box(20, 82, -962, -934, 46.85, G), 'schwarz', ['weiss'])   # 18 Pole
+    BY = [-321.2, -368.4, -403.9, -437.1, -469.1, -498.1, -526.3, -552.6, -576.7, -599.9, -621.8, -642.4, -662.0, -680.2, -697.7, -714.3, -729.6, -743.8, -757.9, -770.2, -782.8, -794.9, Y22]
+    PKT = [(52.2, (BY[n - 1] + BY[n]) / 2) for n in (3, 5, 7, 9, 15, 17, 19, 21)] + [(52.2 - 11.0, (BY[11] + BY[12]) / 2), (52.2 + 11.0, (BY[11] + BY[12]) / 2)]
+    farbe(add([zyl(x, y, 3.2, 48.0 - p(0.26), 49.0) for x, y in PKT]), 'schwarz', ['hals'])              # Griffbrett-Punkte Ø 1,18 × 0,26 tief
+    # Schlagbrett dreilagig: schwarze Mittellage als Linie 0,30 breit, 0,28 vom Rand, von 0,12 über der Decke bis oben (bei Schicht 0,08: eine Schicht Weiß, zwei Schwarz, dazwischen bleibt Kopf 1 eine Schicht frei für den Spulenwechsel)
+    pol = F['weiss'].slice((ZK + ZP) / 2).to_polygons()
+    fl = lambda P: 0.5 * float(np.sum(P[:, 0] * np.roll(P[:, 1], -1) - np.roll(P[:, 0], -1) * P[:, 1]))
+    aussen = mf.CrossSection([max(pol, key=lambda P: abs(fl(P)))]).simplify(0.04)
+    ring = aussen.offset(-p(0.28), mf.JoinType.Round, 2.0, 32) - aussen.offset(-p(0.58), mf.JoinType.Round, 2.0, 32)
+    farbe(ring.extrude(ZP - ZK - p(0.12) + 0.5).translate([0, 0, ZK + p(0.12)]) ^ box(-G, G, -G, G, -G, ZP + 0.001), 'schwarz', ['weiss'])
+    print(f'Details: Schlagbrett-Umriss {abs(fl(max(pol, key=lambda P: abs(fl(P))))) * s * s:.0f} mm², {len(PKT)} Punkte, {len(SCHR)} Schrauben vorn')
+z0 = 0.0 if A.details else t.bounds[0][2]; c = [-(t.bounds[0][0]+t.bounds[1][0])/2, -t.bounds[0][1], -z0]
 fertig = {}
-for n, m in (('korpus', korpus), ('weiss', weiss), ('hals', hals), ('metall', metall)):
+for n, m in F.items():
     m = m.translate(c).scale([s, s, s])
-    grenze = 3.0 if n in ('korpus', 'hals') else 0.02          # Schnitt-Splitter und lose Innenteile entfernen (mm³)
+    grenze = 3.0 if n in ('korpus', 'hals') else (0.004 if n == 'schwarz' else 0.02)          # Schnitt-Splitter und lose Innenteile entfernen (mm³)
     teile = [k for k in m.decompose() if k.volume() > grenze]
     m = mf.Manifold.compose(teile); r = m.to_mesh(); fertig[n] = m
     o = trimesh.Trimesh(r.vert_properties[:, :3], r.tri_verts); o.export(f'{dst}/strat_{n}.stl')
