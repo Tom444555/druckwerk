@@ -372,6 +372,13 @@ So kam `modelle/gitarre_rundum.py` zustande; für ähnliche Vorhaben (Instrument
 - **Detailfotos (21.11.):** Farben danach statt nach Gefühl – Bespannung = schwarzer Grund + creme Noppen (versetztes Raster, als Druckmaß 1,0 × 0,8 mm bei 0,25er, 1,4 × 1,1 bei 0,4er; echt 0,65 × 0,53), Keder gold, Knöpfe schwarz mit goldener Kappe, rotes Schild ohne Schrift, LED rot. Flächen auf schräger Scan-Front über eine Scherungs-Matrix aus der gefitteten Ebene bauen (`front()` in halter.py). Manifold-Ausgabe vor dem Export entarten-frei machen (`nondegenerate_faces`), sonst meldet pruefen.py hunderte Null-Splitter. 0,25er: 7 h 33, 496 Wechsel.
 - **Ledernarbung, die druckbar ist (21.11.):** keine Fuzzy Skin (wirkt auf alle Köpfe, Noppen würden rau), sondern Worley-Zellen direkt in die Scan-Punkte gerechnet (Rille = Zellgrenze, F2−F1 klein; nur nach innen entlang der Normalen; Bespannung, Bedienfeld und Standfläche per Abstand ausgeblendet) – Scan-Netz ist mit Voxel 0,1 fein genug. Zelle 0,6/Tiefe 0,12 (0,25er), 0,8/0,15 (0,4er). **0,4er feinste Stufe:** Profil 0.12 + `--extra layer_height=0.08` + Detail-Zusätze + `--schoen` (in der .gcode geprüft: 0.08, Arachne, innen-außen-innen); Bericht-Schichthöhe danach von Hand korrigieren. Nicht gedruckt.
 
+- **Fassung 3 (23.11.): konstruiert statt Scan** – Tom wollte den Tragegurt weg und alles detaillierter: der Scan war dafür zu weich. `halter.py <ordner> 0.25|0.4` baut jetzt alles aus Maßen
+  (Kasten mit runden Kanten per `batch_hull` aus Scheiben, Mulden, Knöpfe mit Riffelung/Kappe/Zeiger, Buchsen, Kippschalter, Zierstreifen über die Oberseite), Ledernarbung über `refine_to_length(0.14)` + Worley.
+  Schlitze von vorn nach hinten nebeneinander: außen 3,2 mm (dicke Plektren), innen 1,5 mm, nach unten schmaler, oben Fase. 0,4er 5 h 15, 0,25er 8 h 14. **Lehren:** (1) Bündige Einlage 0,02 über die Fläche
+  ziehen – float32 legt sonst eine hauchdünne Haut darüber und die Einlage wird ein eingeschlossener Hohlraum. (2) `decompose()` liefert Hohlräume als Stücke mit **negativem Volumen**; beim Splitter-Filtern
+  nur kleine positive Stücke abziehen, nie „Summe der großen“ bilden (füllt die Hohlräume → Farben überlappen). (3) `decompose()` auf Netzen mit ~1000 Stücken zweimal = Speicher weg (Prozess abgeschossen).
+  Für reale Geräte künftig gleich so: Scan/Fotos nur zum Vermessen, Modell konstruieren.
+
 ## Gridfinity (`modelle/gridfinity/`, 21.11.2026)
 - Bibliothek gridfinity-rebuilt-openscad (kennetek, **MIT**, `LICENSE` liegt dabei) als Kopie in `modelle/gridfinity/src` + `gridfinity-rebuilt-baseplate.scad`.
 - **OpenSCAD hier ist 2021.01:** `cgs()`/`bin_subdivide` scheitern („No grid element available“, $-Variablen) → Fachgröße selbst rechnen (`bin_get_infill_size_mm` / Zellen,
