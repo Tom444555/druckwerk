@@ -2,7 +2,7 @@
 
 **Drucker:** Flashforge Creator 5 Pro  
 **Datei für USB:** `Schecter_370_Deckel.gcode`  
-**Druckzeit (geschätzt):** 5m 30s  
+**Druckzeit (geschätzt):** 5m 26s  
 **Filament:** 0.00, 0.00, 0.29 g (0.00 m, 0.00 m, 0.10 m)  
 
 
@@ -14,19 +14,12 @@
 | 2 | PLA | leer | Flashforge PLA Basic @FF C5P |
 | 3 | PLA | schwarz | Flashforge PLA Basic @FF C5P |
 
-## Deckel für das Saitenfach und zehn Lochkugeln (Gitarre 370 mm; sechs Kugeln gebraucht)
-
-- Nur Kopf 3 (Schwarz), voll gefüllt, ohne Stützen. Deckel 26,6 × 5,7 × 1,0 mm, liegt flach.
-- Kugeln 2,4 mm dick, 2,0 mm hoch, Loch 0,9 mm – größer als die Saitenlöcher im Korpus (0,72 mm). Saite durchfädeln und verknoten.
-- Deckel sitzt mit 0,08 mm Spiel in der Stufe des Fachs und schließt bündig; an einem Ende ist eine Griffmulde zum Heraushebeln.
-- Nur gerechnet, am Gerät nicht erprobt.
-
 ## Einstellungen
 
 - Düse: 0.25 mm (alle Köpfe)
 - Schichthöhe: 0.08 mm (Standard)
-- Füllung: 100 %
-- Wände: 4
+- Füllung: 15 %
+- Wände: Profil-Standard
 - Stützen: aus
 - Brim: auto
 - Düsentemperatur: 210,210,210 °C, Bett: 60,60,60 °C

@@ -2,8 +2,8 @@
 
 **Drucker:** Flashforge Creator 5 Pro  
 **Datei für USB:** `Schecter_160_Wirbel.gcode`  
-**Druckzeit (geschätzt):** 24m 43s  
-**Filament:** 0.00, 0.00, 0.59 g (0.00 m, 0.00 m, 0.20 m)  
+**Druckzeit (geschätzt):** 22m 48s  
+**Filament:** 0.00, 0.00, 0.60 g (0.00 m, 0.00 m, 0.20 m)  
 
 
 ## Spulen / Köpfe einlegen
@@ -18,10 +18,10 @@
 
 - Düse: 0.25 mm (alle Köpfe)
 - Schichthöhe: 0.08 mm (Standard)
-- Füllung: 100 %
-- Wände: 4
+- Füllung: 15 %
+- Wände: Profil-Standard
 - Stützen: aus
-- Brim: an
+- Brim: auto
 - Düsentemperatur: 210,210,210 °C, Bett: 60,60,60 °C
 
 ## Teile

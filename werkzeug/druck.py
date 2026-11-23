@@ -224,7 +224,7 @@ def main():
     ap.add_argument("--teil", action="append", default=[],
                     help="Datei[:Material[:Slot]]  z. B. modelle/a.scad:PLA:1  (Slot 1–4 = Farbe/Kopf)")
     ap.add_argument("--farben", default="", help="Farbnamen je Slot für den Bericht, z. B. 'schwarz,rot'")
-    ap.add_argument("--schicht", default="0.20")
+    ap.add_argument("--schicht", default=None)
     ap.add_argument("--stufe", default="Standard")
     ap.add_argument("--infill", type=int, default=15, help="Füllung in %%")
     ap.add_argument("--waende", type=int, default=None, help="Anzahl Wände")
@@ -290,6 +290,20 @@ def main():
 
     cfg = json.loads((WURZEL / "drucker" / f"{a.drucker}.json").read_text(encoding="utf-8"))
     duesen_mix = None
+    if a.wie and not a.duese and not a.duesen:    # --wie: Düse des alten Auftrags behalten (sonst rechnet „anpassen“ einen 0,25er-Auftrag mit 0,4)
+        try:
+            _alt = json.loads((Path(a.wie) / "auftrag.json").read_text(encoding="utf-8"))
+            if str(_alt.get("duese_mm") or "0.4") != "0.4":
+                a.duese = str(_alt["duese_mm"]); print(f"--wie: Düse {a.duese} mm übernommen")
+        except (OSError, ValueError):
+            pass
+    if a.schicht is None and a.wie:               # --wie: Schichthöhe des alten Auftrags behalten
+        try:
+            a.schicht = str(json.loads((Path(a.wie) / "auftrag.json").read_text(encoding="utf-8")).get("schicht") or "") or None
+        except (OSError, ValueError):
+            pass
+    if a.schicht is None:
+        a.schicht = "0.20"
     if a.duesen:
         dl = [("%g" % float(x)) for x in a.duesen.split(",") if x.strip()]
         if a.duese:
@@ -420,8 +434,6 @@ def main():
         rau_text = (f"{a.rau} ({ {'kontur': 'nur Außenkontur', 'loecher': 'außen und Bohrungen', 'alle': 'alle Wände'}[a.rau_wo]}) – "
                     f"Stärke {staerke} mm, Punktabstand {abstand} mm, {prozess['wall_loops']} Wände, Außenwand zuletzt. "
                     f"Trägt je Seite bis {staerke} mm auf – Passflächen und Bohrungen werden entsprechend enger. Deckflächen bleiben glatt.")
-    for ex in a.extra:
-        k, v = ex.split("=", 1); prozess[k.strip()] = v.strip()
     if a.wie:                                 # alle Prozess-Werte des alten Auftrags übernehmen (Zusätze, „schön“, feine Details …)
         alt_ps, _ = wie_einstellungen(Path(a.wie))
         fil_keys = set(aufloesen("filament", cfg["filamente"][belegt[1]]))
@@ -433,6 +445,8 @@ def main():
                 prozess[k_] = v_; n_ += 1
         prozess["compatible_printers"] = []
         print(f"--wie: {n_} Einstellungen aus {Path(a.wie).name} übernommen")
+    for ex in a.extra:                        # Zusätze zuletzt: gelten auch gegenüber --wie
+        k, v = ex.split("=", 1); prozess[k.strip()] = v.strip()
     # Druckplatte: bestimmt die Betttemperatur (Cool Plate = 35 °C bei PLA!). Kommt aus drucker/*.json.
     platte = cfg.get("platte", "Textured PEI Plate")
     maschine["default_bed_type"] = platte

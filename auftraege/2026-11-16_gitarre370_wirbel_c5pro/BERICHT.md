@@ -2,7 +2,7 @@
 
 **Drucker:** Flashforge Creator 5 Pro  
 **Datei für USB:** `Schecter_370_Wirbel.gcode`  
-**Druckzeit (geschätzt):** 47m 4s  
+**Druckzeit (geschätzt):** 46m 22s  
 **Filament:** 0.00, 0.00, 1.56 g (0.00 m, 0.00 m, 0.52 m)  
 
 
@@ -14,21 +14,14 @@
 | 2 | PLA | leer | Flashforge PLA Basic @FF C5P |
 | 3 | PLA | schwarz | Flashforge PLA Basic @FF C5P |
 
-## Acht Steckwirbel für die Gitarre 370 mm (sechs gebraucht, zwei Reserve)
-
-- Nur Kopf 3 (Schwarz). Stehend gedruckt: Rändelrad unten, Stift oben, voll gefüllt. PETG wäre zäher als PLA.
-- Kegel 2,84 → 2,16 mm, passend zu den Kegellöchern im Hals (2,70 → 2,10 mm); Stift vorn 1,96 mm mit Querloch 0,76 mm für die Saite.
-- Von hinten in die Kopfplatte stecken und mit leichtem Druck eindrehen (hält durch Reibung wie ein Geigenwirbel). Sitzt er zu tief oder zu lose: nachmessen und melden.
-- Nur gerechnet, am Gerät nicht erprobt.
-
 ## Einstellungen
 
 - Düse: 0.25 mm (alle Köpfe)
 - Schichthöhe: 0.08 mm (Standard)
-- Füllung: 100 %
-- Wände: 4
+- Füllung: 15 %
+- Wände: Profil-Standard
 - Stützen: aus
-- Brim: an
+- Brim: auto
 - Düsentemperatur: 210,210,210 °C, Bett: 60,60,60 °C
 
 ## Teile
