@@ -406,6 +406,12 @@ So kam `modelle/gitarre_rundum.py` zustande; für ähnliche Vorhaben (Instrument
   Stapellippe „Wand < 0,8“ – bei Gridfinity normal.
 - Drehteller-Kiste 4 × 2 × 5 (Fächer: Walzen | Stifte | Spitzen+Säulen / Klemmen+V-Auflage | Visier+Würfel, mit Beschriftungslaschen) + Grundplatte 4 × 2 dünn ohne Magnete; Projekt `drehteller` Nr. 9/10.
 
+## Gitarren 190 mm und ein Druck je Gitarre (23.11.2026 – nur gerechnet)
+- **Schecter:** `modelle/gitarre_rundum.py --laenge 190 --wolken 4 --wirbel 1 --armschraege 0.25` (Rundungen jetzt `SEG` 72 / `KANTE` 14 / Kreise 96); Wirbel neben den Korpus verschieben und mit `--zusammen` in denselben Druck.
+- **Stratocaster:** `werkzeug/gitarre_farben.py modelle/quelle/stratocaster_original.stl <ziel> 190 --schnur 1` → keine festen Saiten, Kerben in Sattel/Reitern, Kegellöcher (Klein-Modus wie Schecter) + `strat_wirbel.stl` (6 Wirbel + 8 Lochkugeln Ø 1,8 × 1,5, Loch 0,5), `strat_wirbel_platte.stl` neben dem Korpus, Saitenlöcher Ø 0,72 durch den Korpus, hinten Rinne 2,0 × 1,6 für die Kugeln (Lochabstand nur 1,94 mm). Rippenbogen/Armauflage unverändert.
+- **Prüfbilder ohne `smooth_shading`** rendern: geglättete Normalen auf groben Original-Netzen zeigen Streifen/Kanten, die es nicht gibt (Tom hielt die Strat-Rückseite deshalb für „komisch“).
+- Gemeinsamer Druck = gemeinsame Einstellungen (Wirbel dann mit 15 % und Stützen auto statt 100 % / ohne Stützen) – Tom sagen.
+
 ## Faustregeln Einstellungen
 - Deko/Figur: 0.16–0.20, Infill 10–15 %, Baumstützen bei Überhängen.
 - Funktionsteil/Halter: 0.20, Infill 25–40 %, `--waende 4`.

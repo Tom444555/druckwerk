@@ -1,6 +1,13 @@
 # Übergabe druckwerk
 
-## STAND 23.11.2026, 13:30 Uhr – Aufräumen (Toms Wunsch: „übersichtlicher, nur noch 0,25 und feinste Details“)
+## STAND 23.11.2026, 15:50 Uhr – hier einsteigen (neuer Chat: „Mach mit Druckwerk weiter“)
+**Gültige Gitarren-Aufträge (alle 0,25/0,08 + Detailwerte, je EIN Druck, nichts gedruckt):**
+- Schecter 370: `2026-11-23_schecter370_c5pro` (23 h 32, alles auf einer Platte) · Schecter 190: `2026-11-23_gitarre190_c5pro` (7 h 10) · Schecter 160: `2026-11-17_gitarre160_c5pro` + `…gitarre160_wirbel_c5pro`
+- Stratocaster 190: `2026-11-23_stratocaster190_c5pro` (6 h 13, Schnur-Saiten, Wirbel, Lochkugeln hinten) · Loopsmiths-Verstärker 0,25 (1 d 6 h) · Amp-Plektrumhalter privat (8 h 05, ohne Beschriftungsbalken)
+**Offen / Ideen:** Ständer für Schecter 190 und Strat 190 (Wirbelräder ragen hinten über die Rückseite → liegend geht nicht) · Strat-Saitenniederhalter als Optik zurück? · Kerbenmaß Strat (0,40 × 0,18) und Kugeln Ø 1,8 erst nach Druck bewerten · Drehteller-Teile bewusst bei 0,4 gelassen · Rest wie in den Blöcken darunter (Lebensbaum-Fotos, Flash-Studio-Bestätigung, Kalibrier-Set, Zahnrad-Maße).
+**Mehrere Aufträge auf eine Platte:** Umrisse per shapely (konvexe Hülle je Teil + 1 mm), Spülturm-Zone x140–195/y215–256 frei lassen, Teile verschieben und mit `--zusammen` in einem Aufruf slicen (Muster: Schecter 370 heute).
+
+### Aufräumen 23.11. (Toms Wunsch: „übersichtlicher, nur noch 0,25 und feinste Details“)
 - **Schecter:** Probefassungen gelöscht (160 einfarbig 0,4, Wirbel aus der App 0,4, Projekt schecter200). Übrig: `schecter370` (1 Wirbel, 2 Deckel, 3 Hals, 4 Korpus) und `schecter160` (1 Gitarre, 2 Wirbel), alle 0,25/0,08 mit den vollen Detailwerten (Wirbel und Deckel neu gerechnet).
 - **Drehteller:** Messmatte und Makroschlitten gehören jetzt zum Projekt `drehteller` „Drehteller & Foto-Scan-Set“ (Nr. 11–13); Karten messmatte/makroschlitten/schecter200 entfernt. Dateien wurden nicht verschoben (Ordner bleiben, Projekt = Gruppe).
 - **Loopsmiths-Verstärker** neu mit 0,25/0,08 und Detailwerten (Projekt `loopsmiths_amp`, Datei `Loopsmiths_Verstaerker_025`).
