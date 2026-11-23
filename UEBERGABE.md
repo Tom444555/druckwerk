@@ -1,5 +1,11 @@
 # Übergabe druckwerk
 
+## STAND 23.11.2026, 09:15 Uhr – Nachtrag 2 (App v22)
+- **Startseite ist jetzt die Bibliothek** (Toms Wunsch: „damit arbeite ich am meisten“): neuer erster Reiter „Bibliothek“, fünf Reiter unten (Bibliothek · Projekte · Neu · Drucker · Wissen), leere Adresse → `#bibliothek`.
+- **Private Modelle lassen sich in 3D ansehen** (vorher nur Druckdatei laden, Scan „ging nicht auf“): im Detail Knopf „In 3D ansehen“ + je Druckdatei „Ansehen“ → holt die leichten `.app.stl`
+  aus `auftrag.json` (`teile_app`) und öffnet sie in der Werkstatt mit den Kopf-Farben (`werkstatt.js privatAblegen`, ID `p_<projekt>_<auftrag>`, nur auf dem Gerät, Flag `privat`).
+  Slicen aus der App ist für private Modelle gesperrt (Action läuft im öffentlichen Lager). Mit nachgestellter GitHub-API geprüft (390×844), am iPad offen.
+
 ## STAND 23.11.2026, 08:00 Uhr – Nachtrag (der Block vom 20.11. darunter gilt weiter)
 - **Neu in der App (v21, nachgestellt geprüft, am echten GitHub/Gerät offen):** „Meine Köpfe“ (Ampel im Teil und Projekt, Blatt zum Wählen von Kopf + Material, Knopf „An meine Köpfe anpassen“ →
   Action slict mit `druck.py --wie` neu) und **Lager-Ordnung** (Karteikarten `lager/karten.json`, Bereichs-Knöpfe, Archiv, Einordnen, `lager/KATALOG.md`). Details: CLAUDE.md „Meine Köpfe und Lager-Ordnung“.

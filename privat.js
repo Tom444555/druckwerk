@@ -46,14 +46,17 @@ export async function zeigen(ziel, C, danach){
 function detail(box, p, C){
   const masse = t => t.masse_mm ? t.masse_mm.map(x => Math.round(x)).join(" × ") + " mm" : "";
   const offenbar = t => /\.(stl|3mf|obj)$/i.test(t.datei);
+  const ansehbar = (p.auftraege || []).length || p.teile.some(t => offenbar(t) && t.mb <= 30);
   box.innerHTML = `<div class="card" style="margin-top:10px"><h3 style="margin:0 0 4px">${C.esc(p.titel || p.ordner)}</h3>
     <div class="small">${C.esc(p.art || "")}</div>
+    ${ansehbar ? `<button class="btn" id="pvAnsehen" style="margin:10px 0 4px">In 3D ansehen</button>` : ""}
     ${p.notiz ? `<p class="small">${C.esc(p.notiz)}</p>` : ""}
     ${p.teile.map((t, i) => `<div class="row" style="align-items:flex-start;gap:8px;padding:8px 0;border-top:.5px solid var(--sep)">
       <div class="grow"><b>${C.esc(t.datei)}</b><div class="small">${masse(t)}${t.passt === false ? " · größer als der Drucker – Claude teilt es" : t.passt ? " · passt in den Drucker" : ""} · ${t.mb} MB</div></div>
       ${offenbar(t) && t.mb <= 30 ? `<button class="btn grey" data-w="${i}" style="width:auto;padding:6px 12px;margin:0">Werkstatt</button>` : ""}</div>`).join("")}
     ${(p.auftraege || []).length ? `<h3 style="margin:14px 0 2px;font-size:15px">Fertige Druckdateien</h3>${p.auftraege.map((a, i) => `<div class="row" style="align-items:flex-start;gap:8px;padding:8px 0;border-top:.5px solid var(--sep)">
       <div class="grow"><b>${C.esc(a.titel || a.gcode)}</b><div class="small">${C.esc(a.zeit || "")} · Düse ${C.esc(String(a.duese_mm || "0.4").replace(".", ","))} mm · ${C.esc((a.slots || []).filter(s => s.farbe !== "leer").map(s => `Kopf ${s.slot} ${s.material} ${s.farbe}`).join(", "))}</div></div>
+      <button class="btn grey" data-a="${i}" style="width:auto;padding:6px 12px;margin:0">Ansehen</button>
       <button class="btn" data-g="${i}" style="width:auto;padding:6px 12px;margin:0">Laden</button></div>`).join("")}` : ""}
     <a class="btn grey" style="margin-top:10px;display:block;text-align:center" target="_blank" rel="noopener"
       href="${claudeLink(`druckwerk: Privates Modell „${p.titel || p.ordner}“ (Ordner ${p.ordner} im privaten Lager Tom444555/druckwerk-modelle) für den Creator 5 Pro drucken. Wünsche: `)}">Mit Claude drucken</a>
@@ -67,6 +70,39 @@ function detail(box, p, C){
       const id = await dateienImportieren([f], C); C.go("werkstatt:e:" + id);
     } catch (e) { C.toast("Konnte nicht geladen werden"); b.disabled = false; b.textContent = "Werkstatt"; }
   });
+  // 3D-Ansicht: Teile einer Druckdatei (leichte .app.stl, wenn vorhanden) holen und in der Werkstatt öffnen
+  const ansehen = async (b, a) => {
+    const alt = b.textContent; b.disabled = true; b.textContent = "lädt …";
+    try {
+      const W = await import("./werkstatt.js");
+      let teile, slots = [], schluessel, name;
+      if (a) {
+        const pfad = `${p.ordner}/auftraege/${a.ordner}`, info = await roh(pfad + "/auftrag.json");
+        const liste = (info.teile_app && info.teile_app.length ? info.teile_app : info.teile) || [];
+        if (!liste.length) throw new Error("keine Teile");
+        teile = [];
+        for (const [k, t] of liste.entries()) { b.textContent = `lädt ${k + 1}/${liste.length} …`;
+          teile.push({name: t.datei.replace(/(\.app)?\.stl$/i, ""), slot: Math.min(t.slot || 1, 4), stl: await (await roh(pfad + "/" + t.datei, "blob")).arrayBuffer()}); }
+        slots = (info.slots || []).filter(s => s.slot <= 4).sort((x, y) => x.slot - y.slot).map(s => C.farbe(s.farbe));
+        schluessel = p.ordner + "_" + a.ordner; name = (p.titel || p.ordner) + (p.auftraege.length > 1 ? " – " + (a.titel || a.ordner) : "");
+      } else {
+        const st = p.teile.filter(t => /\.stl$/i.test(t.datei) && t.mb <= 30);
+        if (!st.length) {   // nur 3MF/OBJ: wie bisher über die Werkstatt-Einfuhr
+          const t = p.teile.find(t => offenbar(t) && t.mb <= 30), blob = await roh(p.ordner + "/" + t.datei, "blob");
+          const id = await W.dateienImportieren([new File([blob], t.datei)], C); return C.go("werkstatt:e:" + id);
+        }
+        teile = [];
+        for (const [k, t] of st.entries()) { b.textContent = `lädt ${k + 1}/${st.length} …`;
+          teile.push({name: t.datei.replace(/\.stl$/i, ""), slot: Math.min(k + 1, 4), stl: await (await roh(p.ordner + "/" + t.datei, "blob")).arrayBuffer()}); }
+        schluessel = p.ordner; name = p.titel || p.ordner;
+      }
+      const id = await W.privatAblegen({schluessel, name, slots, teile}, C);
+      C.go("werkstatt:e:" + id);
+    } catch (e) { console.error(e); C.toast("Konnte nicht geladen werden"); b.disabled = false; b.textContent = alt; }
+  };
+  const gross = box.querySelector("#pvAnsehen");
+  if (gross) gross.onclick = () => ansehen(gross, (p.auftraege || [])[0]);
+  box.querySelectorAll("[data-a]").forEach(b => b.onclick = () => ansehen(b, p.auftraege[+b.dataset.a]));
   box.querySelectorAll("[data-g]").forEach(b => b.onclick = async () => {
     const a = p.auftraege[+b.dataset.g]; b.disabled = true; b.textContent = "lädt …";
     try {

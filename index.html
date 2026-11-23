@@ -152,6 +152,7 @@ details.fein>summary::-webkit-details-marker{display:none}details.fein>summary::
 <main id="app"></main>
 
 <nav aria-label="Bereiche">
+  <button data-tab="bibliothek"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1.5"/></svg>Bibliothek</button>
   <button data-tab="projekte"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 7l8-4 8 4-8 4-8-4z"/><path d="M4 7v10l8 4 8-4V7"/><path d="M12 11v10"/></svg>Projekte</button>
   <button data-tab="neu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>Neu</button>
   <button data-tab="drucker"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M4 8h16M9 13h6M12 8v5"/></svg>Drucker</button>
@@ -173,7 +174,7 @@ const SPEICHER = "druckwerk_meine";
 let _speicherNotfall = null;   // falls das Gerät keinen Speicher erlaubt
 const meineLaden = () => { try { return JSON.parse(localStorage.getItem(SPEICHER) || "[]"); } catch(e) { return _speicherNotfall || []; } };
 const meineSichern = l => { _speicherNotfall = l; try { localStorage.setItem(SPEICHER, JSON.stringify(l)); } catch(e) {} };
-let tab = "projekte";
+let tab = "bibliothek";   // Startseite: Bibliothek (Toms Wunsch 23.11.2026)
 // Ausgeblendete Aufträge (nur auf diesem Gerät). Alles andere aus dem Lager erscheint von selbst.
 const WEG = "druckwerk_weg";
 const verborgen = () => { try { return JSON.parse(localStorage.getItem(WEG) || "[]") || []; } catch(e) { return []; } };
@@ -240,10 +241,11 @@ function hinzufuegen(liste){
 
 // Navigation: jeder Bildschirm hat eine Adresse (#auftraege, #auftrag:<ordner> …) → Zurück-Taste und Links funktionieren
 function zeige(ersetzen){
-  if (["start","auftraege",""].includes(tab)) tab = "projekte";   // alte Adressen
+  if (["start",""].includes(tab)) tab = "bibliothek";             // Startseite
+  if (tab === "auftraege") tab = "projekte";                      // alte Adresse
   if (location.hash.slice(1) !== tab) { try { history[ersetzen === true ? "replaceState" : "pushState"](null, "", "#" + tab); } catch(e) {} }
   const art = tab.split(":")[0];
-  const haupt = {projekt:"projekte", auftrag:"projekte", werkstatt:"wissen", bibliothek:"wissen", kiweg:"wissen", material:"wissen", workflow:"wissen"}[art] || art;
+  const haupt = {projekt:"projekte", auftrag:"projekte", werkstatt:"bibliothek", kiweg:"wissen", material:"wissen", workflow:"wissen"}[art] || art;
   document.querySelectorAll("nav button").forEach(b => { b.classList.toggle("on", b.dataset.tab === haupt);
     if (b.dataset.tab === haupt) b.setAttribute("aria-current", "page"); else b.removeAttribute("aria-current"); });
   document.querySelectorAll(".sheet").forEach(d => d.remove());
@@ -258,7 +260,7 @@ function zeige(ersetzen){
   else { tab = "projekte"; projekteTab(); }
 }
 // Unterseiten von „Wissen“ bekommen einen Zurück-Knopf (die Seiten zeichnen sich selbst neu, deshalb per Beobachter)
-new MutationObserver(() => { if (!["material","workflow","bibliothek"].includes(tab) || app.querySelector("#zurW")) return;
+new MutationObserver(() => { if (!["material","workflow"].includes(tab) || app.querySelector("#zurW")) return;
   const h = app.querySelector("h1"); if (!h) return;
   const b = document.createElement("button"); b.className = "back"; b.id = "zurW"; b.textContent = "‹ Wissen"; b.onclick = () => { tab = "wissen"; zeige(); };
   h.before(b); }).observe(app, {childList: true});
@@ -625,7 +627,7 @@ function lagerZeigen(offen){
 document.addEventListener("visibilitychange", () => { if (!document.hidden && tab === "projekte" && !document.querySelector(".sheet")) zeige(true); });
 window.addEventListener("hashchange", () => { if (/hinzu=/.test(location.hash)) laden(); });
 window.addEventListener("popstate", () => { const h = decodeURIComponent(location.hash.slice(1));
-  if (/hinzu=/.test(h) || h === tab) return; tab = h || "projekte"; zeige(true); });
+  if (/hinzu=/.test(h) || h === tab) return; tab = h || "bibliothek"; zeige(true); });
 // Tastatur: Eingabefeld in die Mitte holen, damit es nicht verdeckt wird
 document.addEventListener("focusin", e => { if (e.target.matches("input[type=text],input:not([type]),textarea"))
   setTimeout(() => { try { e.target.scrollIntoView({block: "center", behavior: "smooth"}); } catch(x) {} }, 350); });

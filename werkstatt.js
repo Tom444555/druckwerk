@@ -234,6 +234,18 @@ async function importieren(files){
 // Dateien (STL/3MF/OBJ) wie „Eigene Datei öffnen“ ablegen – für den KI-Ablauf (kiweg.js); gibt die Modell-ID zurück
 export async function dateienImportieren(files, ctx){ if (!C) C = ctx; const m = await importieren(files); await eigenesSichern(m); return m.id; }
 
+// Privates Modell (privat.js, Lager druckwerk-modelle) zum Ansehen ablegen: gleiche ID je Druckdatei, damit es nicht doppelt landet.
+// Bleibt nur auf diesem Gerät; Slicen aus der App ist dafür gesperrt (die Action läuft im öffentlichen Lager).
+export async function privatAblegen({schluessel, name, slots, teile}, ctx){
+  if (!C) C = ctx;
+  const id = "p_" + String(schluessel).replace(/[^a-z0-9_-]/gi, "_");
+  const alt = await eigenesHolen(id); if (alt) return id;
+  for (const t of teile) new STLLoader().parse(t.stl);   // wirft, wenn eine Datei kaputt ist
+  await eigenesSichern({ id, name: String(name), datum: new Date().toISOString().slice(0, 10), herkunft: "Privat: " + schluessel, privat: true,
+    slots: slots.length ? [...slots, ...STD_FARBEN].slice(0, 4) : [...STD_FARBEN], bild: "", teile });
+  return id;
+}
+
 // KI-Modell (ki.js) als eigenes Modell ablegen – wie ein Import einer STL; gibt die Modell-ID zurück
 export async function kiUebernehmen({name, stl, bild, info}){
   new STLLoader().parse(stl);                        // wirft, wenn die Datei kaputt ist
@@ -392,7 +404,8 @@ function ui(){
     </div>
 
     <h2>Speichern</h2>
-    <button class="btn" id="slice">Slicen – Druckdatei erstellen</button>
+    ${M.eigen && M.eigen.privat ? `<p class="hint">🔒 Privates Modell – Slicen geht hier nicht (es würde im öffentlichen Lager landen). Fertige Druckdateien: Bibliothek → Private Modelle.</p>`
+      : `<button class="btn" id="slice">Slicen – Druckdatei erstellen</button>`}
     <button class="btn grey" id="expo">Speichern / Exportieren …</button>
     <button class="btn grey" id="merken">In „Meine Modelle“ sichern</button>
     <button class="btn grey" id="claude">An Claude zum Slicen schicken</button>
@@ -423,7 +436,7 @@ function ui(){
   u.querySelectorAll("[data-auge]").forEach(b => b.onclick = () => { const t = M.teile[+b.dataset.auge]; t.aus = !t.aus; t.mesh.visible = !t.aus; neu(); });
   u.querySelectorAll("[data-del]").forEach(b => b.onclick = () => { const t = M.teile[+b.dataset.del]; t.weg = true; t.mesh.visible = false; M.ops.push(`Teil „${t.name}“ entfernt`); M.undo.push(new THREE.Matrix4()); setzen(new THREE.Matrix4()); neu(); });
   $("#expo").onclick = exportWahl;
-  $("#slice").onclick = sliceWahl;
+  if ($("#slice")) $("#slice").onclick = sliceWahl;
   $("#merken").onclick = merken;
   $("#claude").onclick = anClaude;
   const w = $("#weg"); if (w) w.onclick = async () => { await eigenesLoeschen(M.eigen.id); C.toast("Gelöscht"); C.go("bibliothek"); };
@@ -473,7 +486,7 @@ async function merken(){
     c.getContext("2d").drawImage(R.r.domElement, 0, 0, 360, 270); bild = c.toDataURL("image/jpeg", .8); } catch (e) {}
   const neuId = M.eigen ? M.eigen.id : "m" + Date.now().toString(36);
   const e = { id: neuId, name: M.eigen ? M.eigen.name : M.name + " (bearbeitet)", datum: new Date().toISOString().slice(0, 10),
-    herkunft: M.lager ? "Lager: " + M.lager.ordner : (M.eigen && M.eigen.herkunft) || "Datei", slots: [...M.slots], bild, ops: [...M.ops],
+    herkunft: M.lager ? "Lager: " + M.lager.ordner : (M.eigen && M.eigen.herkunft) || "Datei", slots: [...M.slots], bild, ops: [...M.ops], ...(M.eigen && M.eigen.privat ? {privat: true} : {}),
     teile: M.teile.filter(t => !t.weg).map(t => ({name: t.name, slot: t.slot, stl: stlBinaer([t.geo])})) };
   if (M.bemalt) { e.bemalt = {daten: M.bemalt.daten, matrix: bemaltMatrix().toArray()}; M.bemalt = e.bemalt; M.kum = new THREE.Matrix4(); }
   await eigenesSichern(e); M.eigen = e; C.toast("In „Meine Modelle“ gesichert"); ui();
