@@ -374,7 +374,7 @@ So kam `modelle/gitarre_rundum.py` zustande; für ähnliche Vorhaben (Instrument
 
 - **Fassung 3 (23.11.): konstruiert statt Scan** – Tom wollte den Tragegurt weg und alles detaillierter: der Scan war dafür zu weich. `halter.py <ordner> 0.25|0.4` baut jetzt alles aus Maßen
   (Kasten mit runden Kanten per `batch_hull` aus Scheiben, Mulden, Knöpfe mit Riffelung/Kappe/Zeiger, Buchsen, Kippschalter, Zierstreifen über die Oberseite), Ledernarbung über `refine_to_length(0.14)` + Worley.
-  Schlitze von vorn nach hinten nebeneinander: außen 3,2 mm (dicke Plektren), innen 1,5 mm, nach unten schmaler, oben Fase. 0,4er 5 h 15, 0,25er 8 h 14. **Lehren:** (1) Bündige Einlage 0,02 über die Fläche
+  Schlitze von vorn nach hinten nebeneinander: außen 2,0 mm (Toms Wunsch, erst 3,2), innen 1,5 mm, nach unten schmaler, oben Fase. **Lehren:** (1) Bündige Einlage 0,02 über die Fläche
   ziehen – float32 legt sonst eine hauchdünne Haut darüber und die Einlage wird ein eingeschlossener Hohlraum. (2) `decompose()` liefert Hohlräume als Stücke mit **negativem Volumen**; beim Splitter-Filtern
   nur kleine positive Stücke abziehen, nie „Summe der großen“ bilden (füllt die Hohlräume → Farben überlappen). (3) `decompose()` auf Netzen mit ~1000 Stücken zweimal = Speicher weg (Prozess abgeschossen).
   Für reale Geräte künftig gleich so: Scan/Fotos nur zum Vermessen, Modell konstruieren.
