@@ -248,6 +248,110 @@
   "datei": "Schecter_370_komplett"
  },
  {
+  "kopfwechsel": 200,
+  "koepfe_benutzt": [
+   1,
+   2,
+   3,
+   4
+  ],
+  "name": "schecter160",
+  "drucker": "c5pro",
+  "drucker_name": "Flashforge Creator 5 Pro",
+  "datum": "2026-11-23",
+  "ordner": "2026-11-23_schecter160_c5pro",
+  "gcode": "Schecter_160_komplett.gcode",
+  "zeit": "5h 37m 17s",
+  "gramm": "13.20, 3.82, 7.03, 0.97",
+  "meter": "4.43 m, 1.28 m, 2.36 m, 0.33 m",
+  "duese": "210,210,210,210",
+  "bett": "60,60,60,60",
+  "schicht": "0.08",
+  "stufe": "Standard",
+  "infill": 15,
+  "duese_mm": "0.25",
+  "waende": null,
+  "stuetzen": "auto",
+  "brim": "auto",
+  "gemischt": false,
+  "zusammen": true,
+  "slots": [
+   {
+    "slot": 1,
+    "material": "PLA",
+    "farbe": "grau"
+   },
+   {
+    "slot": 2,
+    "material": "PLA",
+    "farbe": "weinrot"
+   },
+   {
+    "slot": 3,
+    "material": "PLA",
+    "farbe": "schwarz"
+   },
+   {
+    "slot": 4,
+    "material": "PLA",
+    "farbe": "silber"
+   }
+  ],
+  "teile": [
+   {
+    "datei": "gitarre_rundum_grau.stl",
+    "slot": 1
+   },
+   {
+    "datei": "gitarre_rundum_rot.stl",
+    "slot": 2
+   },
+   {
+    "datei": "gitarre_rundum_schwarz.stl",
+    "slot": 3
+   },
+   {
+    "datei": "gitarre_rundum_weiss.stl",
+    "slot": 4
+   },
+   {
+    "datei": "gitarre160_wirbel_platte.stl",
+    "slot": 3
+   }
+  ],
+  "quelle": "",
+  "teile_app": [
+   {
+    "datei": "gitarre_rundum_grau.app.stl",
+    "slot": 1
+   },
+   {
+    "datei": "gitarre_rundum_rot.app.stl",
+    "slot": 2
+   },
+   {
+    "datei": "gitarre_rundum_schwarz.app.stl",
+    "slot": 3
+   },
+   {
+    "datei": "gitarre_rundum_weiss.stl",
+    "slot": 4
+   },
+   {
+    "datei": "gitarre160_wirbel_platte.stl",
+    "slot": 3
+   }
+  ],
+  "vorschau": "vorschau.png",
+  "bild_im_gcode": true,
+  "projekt": "Schecter_160_komplett.3mf",
+  "gruppe": "schecter160",
+  "gruppe_titel": "Schecter 160 mm",
+  "nr": 1,
+  "titel": "Gitarre + Wirbel (ein Druck)",
+  "datei": "Schecter_160_komplett"
+ },
+ {
   "kopfwechsel": 236,
   "koepfe_benutzt": [
    1,
@@ -350,70 +454,6 @@
   "nr": 1,
   "titel": "Gitarre + Wirbel (ein Druck)",
   "datei": "Schecter_190_komplett"
- },
- {
-  "kopfwechsel": 0,
-  "koepfe_benutzt": [
-   3
-  ],
-  "name": "gitarre160_wirbel",
-  "drucker": "c5pro",
-  "drucker_name": "Flashforge Creator 5 Pro",
-  "datum": "2026-11-23",
-  "ordner": "2026-11-17_gitarre160_wirbel_c5pro",
-  "gcode": "Schecter_160_Wirbel.gcode",
-  "zeit": "22m 48s",
-  "gramm": "0.00, 0.00, 0.60",
-  "meter": "0.00 m, 0.00 m, 0.20 m",
-  "duese": "210,210,210",
-  "bett": "60,60,60",
-  "schicht": "0.08",
-  "stufe": "Standard",
-  "infill": 15,
-  "duese_mm": "0.25",
-  "waende": null,
-  "stuetzen": "aus",
-  "brim": "auto",
-  "gemischt": false,
-  "zusammen": false,
-  "slots": [
-   {
-    "slot": 1,
-    "material": "PLA",
-    "farbe": "leer"
-   },
-   {
-    "slot": 2,
-    "material": "PLA",
-    "farbe": "leer"
-   },
-   {
-    "slot": 3,
-    "material": "PLA",
-    "farbe": "schwarz"
-   }
-  ],
-  "teile": [
-   {
-    "datei": "gitarre_rundum_wirbel.stl",
-    "slot": 3
-   }
-  ],
-  "quelle": "",
-  "teile_app": [
-   {
-    "datei": "gitarre_rundum_wirbel.stl",
-    "slot": 3
-   }
-  ],
-  "vorschau": "vorschau.png",
-  "bild_im_gcode": true,
-  "projekt": "Schecter_160_Wirbel.3mf",
-  "gruppe": "schecter160",
-  "gruppe_titel": "Schecter 160 mm",
-  "nr": 2,
-  "titel": "Wirbel",
-  "datei": "Schecter_160_Wirbel"
  },
  {
   "kopfwechsel": 1268,
@@ -1299,101 +1339,6 @@
   "nr": 1,
   "titel": "Lichtbild Thomas & Sandra",
   "datei": "Lebensbaum_Lichtbild"
- },
- {
-  "kopfwechsel": 200,
-  "koepfe_benutzt": [
-   1,
-   2,
-   3,
-   4
-  ],
-  "name": "gitarre160",
-  "drucker": "c5pro",
-  "drucker_name": "Flashforge Creator 5 Pro",
-  "datum": "2026-11-17",
-  "ordner": "2026-11-17_gitarre160_c5pro",
-  "gcode": "Schecter_160_Gitarre.gcode",
-  "zeit": "5h 17m 4s",
-  "gramm": "13.21, 3.82, 6.44, 0.97",
-  "meter": "4.43 m, 1.28 m, 2.16 m, 0.32 m",
-  "duese": "210,210,210,210",
-  "bett": "60,60,60,60",
-  "schicht": "0.08",
-  "stufe": "Standard",
-  "infill": 15,
-  "duese_mm": "0.25",
-  "waende": null,
-  "stuetzen": "auto",
-  "brim": "auto",
-  "gemischt": false,
-  "slots": [
-   {
-    "slot": 1,
-    "material": "PLA",
-    "farbe": "grau"
-   },
-   {
-    "slot": 2,
-    "material": "PLA",
-    "farbe": "weinrot"
-   },
-   {
-    "slot": 3,
-    "material": "PLA",
-    "farbe": "schwarz"
-   },
-   {
-    "slot": 4,
-    "material": "PLA",
-    "farbe": "silber"
-   }
-  ],
-  "teile": [
-   {
-    "datei": "gitarre_rundum_grau.stl",
-    "slot": 1
-   },
-   {
-    "datei": "gitarre_rundum_rot.stl",
-    "slot": 2
-   },
-   {
-    "datei": "gitarre_rundum_schwarz.stl",
-    "slot": 3
-   },
-   {
-    "datei": "gitarre_rundum_weiss.stl",
-    "slot": 4
-   }
-  ],
-  "quelle": "",
-  "teile_app": [
-   {
-    "datei": "gitarre_rundum_grau.app.stl",
-    "slot": 1
-   },
-   {
-    "datei": "gitarre_rundum_rot.app.stl",
-    "slot": 2
-   },
-   {
-    "datei": "gitarre_rundum_schwarz.app.stl",
-    "slot": 3
-   },
-   {
-    "datei": "gitarre_rundum_weiss.stl",
-    "slot": 4
-   }
-  ],
-  "vorschau": "vorschau.png",
-  "bild_im_gcode": true,
-  "projekt": "Schecter_160_Gitarre.3mf",
-  "gruppe": "schecter160",
-  "gruppe_titel": "Schecter 160 mm",
-  "nr": 1,
-  "titel": "Gitarre",
-  "datei": "Schecter_160_Gitarre"
  },
  {
   "name": "kalibrier_5_bruecke",

@@ -1,8 +1,16 @@
 # Übergabe druckwerk
 
-## STAND 23.11.2026, 15:50 Uhr – hier einsteigen (neuer Chat: „Mach mit Druckwerk weiter“)
+## STAND 23.11.2026, 16:30 Uhr – hier einsteigen (Aufräumen auf Toms Wunsch: „übersichtlicher, alles prüfen“)
+- **Jede Gitarre ist jetzt EIN Druck:** Schecter 160 neu als `2026-11-23_schecter160_c5pro` (`Schecter_160_komplett`, Gitarre + 8 Wirbel auf einer Platte, `--wie` vom alten Auftrag, Wirbel um +36/+12 verschoben): 5 h 37, 25 g, 200 Kopfwechsel, 0,25/0,08, Arachne geprüft. Alte Einzelaufträge `…gitarre160_c5pro` und `…gitarre160_wirbel_c5pro` gelöscht. Wirbel laufen dadurch mit Stützen auto statt aus.
+- **Lager öffentlich:** 8 Projekte, 24 Aufträge (Musik: Schecter 370/190/160, Strat 190, Loopsmiths-Verstärker – alle 0,25; Foto: Drehteller-Set 13 Teile; Deko: Lebensbaum; Drucker: Kalibrier-Set 5 Teile). Drehteller und Kalibrier bleiben bewusst bei 0,4.
+- **Verwaiste Modelldateien gelöscht** (gehörten zu längst gelöschten Aufträgen, stehen in der Git-Geschichte): `ftz_fritz*`, `staender_note*`, `staender_schleife*`, `staender_baum*` (.scad + erzeugte STL), `gitarrenstaender.scad`, `vox_amp_*.stl`, alte `strat_*.stl` (200-mm-Fassung), `result.json`, alte `status/*.json`. Behalten: `ftz_hand_*` (gehört zu `werkzeug/hand`), `test_*`/`gitarre_rotschwarz.py`/`beispiel_winkel.py` (Muster in CLAUDE.md), `vogelring.py` (Toms Rückmeldung offen).
+- **Karteikarten vereinheitlicht:** Schlagwort „0,25-mm-Düse“ überall gleich, „Schecter“ bei allen Schecter-Projekten, Herkunft Schecter 190 = eigen.
+- **Privat (druckwerk-modelle):** 0,4-Fassungen gelöscht (Buddha `…buddha_lotus_c5pro`, Telecaster `…telecaster6cm_04_c5pro`) – dort jetzt nur noch 0,25 außer Albatros-Hueforge (0,4/0,12, Bild). Amp-Plektrumhalter von „Foto“ nach „Musik“. Auftragslisten und Katalog neu gebaut.
+- Offen wie unten: Ständer für Schecter/Strat 190, Druck-Rückmeldungen. Nichts gedruckt.
+
+## STAND 23.11.2026, 15:50 Uhr (neuer Chat: „Mach mit Druckwerk weiter“)
 **Gültige Gitarren-Aufträge (alle 0,25/0,08 + Detailwerte, je EIN Druck, nichts gedruckt):**
-- Schecter 370: `2026-11-23_schecter370_c5pro` (23 h 32, alles auf einer Platte) · Schecter 190: `2026-11-23_gitarre190_c5pro` (7 h 10) · Schecter 160: `2026-11-17_gitarre160_c5pro` + `…gitarre160_wirbel_c5pro`
+- Schecter 370: `2026-11-23_schecter370_c5pro` (23 h 32, alles auf einer Platte) · Schecter 190: `2026-11-23_gitarre190_c5pro` (7 h 10) · Schecter 160: `2026-11-23_schecter160_c5pro` (5 h 37, ein Druck)
 - Stratocaster 190: `2026-11-23_stratocaster190_c5pro` (6 h 13, Schnur-Saiten, Wirbel, Lochkugeln hinten) · Loopsmiths-Verstärker 0,25 (1 d 6 h) · Amp-Plektrumhalter privat (8 h 05, ohne Beschriftungsbalken)
 **Offen / Ideen:** Ständer für Schecter 190 und Strat 190 (Wirbelräder ragen hinten über die Rückseite → liegend geht nicht) · Strat-Saitenniederhalter als Optik zurück? · Kerbenmaß Strat (0,40 × 0,18) und Kugeln Ø 1,8 erst nach Druck bewerten · Drehteller-Teile bewusst bei 0,4 gelassen · Rest wie in den Blöcken darunter (Lebensbaum-Fotos, Flash-Studio-Bestätigung, Kalibrier-Set, Zahnrad-Maße).
 **Mehrere Aufträge auf eine Platte:** Umrisse per shapely (konvexe Hülle je Teil + 1 mm), Spülturm-Zone x140–195/y215–256 frei lassen, Teile verschieben und mit `--zusammen` in einem Aufruf slicen (Muster: Schecter 370 heute).

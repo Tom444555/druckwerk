@@ -1,9 +1,9 @@
-# Druckauftrag: gitarre160
+# Druckauftrag: schecter160
 
 **Drucker:** Flashforge Creator 5 Pro  
-**Datei für USB:** `Schecter_160_Gitarre.gcode`  
-**Druckzeit (geschätzt):** 5h 17m 4s  
-**Filament:** 13.21, 3.82, 6.44, 0.97 g (4.43 m, 1.28 m, 2.16 m, 0.32 m)  
+**Datei für USB:** `Schecter_160_komplett.gcode`  
+**Druckzeit (geschätzt):** 5h 37m 17s  
+**Filament:** 13.20, 3.82, 7.03, 0.97 g (4.43 m, 1.28 m, 2.36 m, 0.33 m)  
 
 
 ## Spulen / Köpfe einlegen
@@ -31,6 +31,7 @@
 - `gitarre_rundum_rot.stl` → Slot 2 (PLA)
 - `gitarre_rundum_schwarz.stl` → Slot 3 (PLA)
 - `gitarre_rundum_weiss.stl` → Slot 4 (PLA)
+- `gitarre160_wirbel_platte.stl` → Slot 3 (PLA)
 
 Kopfwechsel in der .gcode: 200, benutzte Köpfe: 1, 2, 3, 4
 

@@ -6,15 +6,15 @@
   3,
   4
  ],
- "name": "gitarre160",
+ "name": "schecter160",
  "drucker": "c5pro",
  "drucker_name": "Flashforge Creator 5 Pro",
- "datum": "2026-11-17",
- "ordner": "2026-11-17_gitarre160_c5pro",
- "gcode": "Schecter_160_Gitarre.gcode",
- "zeit": "5h 17m 4s",
- "gramm": "13.21, 3.82, 6.44, 0.97",
- "meter": "4.43 m, 1.28 m, 2.16 m, 0.32 m",
+ "datum": "2026-11-23",
+ "ordner": "2026-11-23_schecter160_c5pro",
+ "gcode": "Schecter_160_komplett.gcode",
+ "zeit": "5h 37m 17s",
+ "gramm": "13.20, 3.82, 7.03, 0.97",
+ "meter": "4.43 m, 1.28 m, 2.36 m, 0.33 m",
  "duese": "210,210,210,210",
  "bett": "60,60,60,60",
  "schicht": "0.08",
@@ -25,6 +25,7 @@
  "stuetzen": "auto",
  "brim": "auto",
  "gemischt": false,
+ "zusammen": true,
  "slots": [
   {
    "slot": 1,
@@ -63,6 +64,10 @@
   {
    "datei": "gitarre_rundum_weiss.stl",
    "slot": 4
+  },
+  {
+   "datei": "gitarre160_wirbel_platte.stl",
+   "slot": 3
   }
  ],
  "quelle": "",
@@ -82,14 +87,18 @@
   {
    "datei": "gitarre_rundum_weiss.stl",
    "slot": 4
+  },
+  {
+   "datei": "gitarre160_wirbel_platte.stl",
+   "slot": 3
   }
  ],
  "vorschau": "vorschau.png",
  "bild_im_gcode": true,
- "projekt": "Schecter_160_Gitarre.3mf",
+ "projekt": "Schecter_160_komplett.3mf",
  "gruppe": "schecter160",
  "gruppe_titel": "Schecter 160 mm",
  "nr": 1,
- "titel": "Gitarre",
- "datei": "Schecter_160_Gitarre"
+ "titel": "Gitarre + Wirbel (ein Druck)",
+ "datei": "Schecter_160_komplett"
 }

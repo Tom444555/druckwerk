@@ -86,6 +86,7 @@
    "herkunft": "eigen",
    "schlagworte": [
     "Gitarre",
+    "Schecter",
     "Miniatur",
     "0,25-mm-Düse"
    ],
@@ -100,10 +101,13 @@
    "herkunft": "eigen",
    "schlagworte": [
     "Gitarre",
-    "Miniatur"
+    "Schecter",
+    "Miniatur",
+    "0,25-mm-Düse"
    ],
    "modell": [
-    "modelle/gitarre_rundum.py"
+    "modelle/gitarre_rundum.py",
+    "modelle/gitarre_rundum_daten.json"
    ]
   },
   "stratocaster": {
@@ -114,7 +118,7 @@
     "Gitarre",
     "Stratocaster",
     "Miniatur",
-    "0.25"
+    "0,25-mm-Düse"
    ],
    "modell": [
     "werkzeug/gitarre_farben.py",
@@ -127,7 +131,8 @@
    "herkunft": "eigen",
    "schlagworte": [
     "Amp",
-    "Loopsmiths"
+    "Loopsmiths",
+    "0,25-mm-Düse"
    ],
    "modell": [
     "modelle/loopsmiths_amp.scad"
@@ -149,12 +154,12 @@
   "schecter190": {
    "bereich": "musik",
    "stand": "gerechnet",
-   "herkunft": "",
+   "herkunft": "eigen",
    "schlagworte": [
     "Gitarre",
     "Schecter",
     "Miniatur",
-    "0.25"
+    "0,25-mm-Düse"
    ],
    "modell": [
     "modelle/gitarre_rundum.py",
