@@ -379,6 +379,8 @@ So kam `modelle/gitarre_rundum.py` zustande; für ähnliche Vorhaben (Instrument
   nur kleine positive Stücke abziehen, nie „Summe der großen“ bilden (füllt die Hohlräume → Farben überlappen). (3) `decompose()` auf Netzen mit ~1000 Stücken zweimal = Speicher weg (Prozess abgeschossen).
   Für reale Geräte künftig gleich so: Scan/Fotos nur zum Vermessen, Modell konstruieren.
 
+- **Fassung 4 (23.11.):** Bedienfeld nach Toms Foto der Oberseite neu vermessen (Foto-Breite = 50 mm → Lage aller Regler/Tasten in mm); Linien, Ringe, Balken jetzt gold (wie am Gerät), Schrift als Balken, Zeiger als Kerbe in der Kappe. Neues Teil mit alten Einstellungen slicen: `--wie <alter ordner>` + neue `--teil` + `--ausgabe <neuer ordner>` klappt. Nur noch 0,25er-Fassung im Lager.
+
 ## Fremde Figur nachbearbeiten: Buddha auf Lotus (23.11.2026, privat in druckwerk-modelle/buddha-lotus – nur gerechnet)
 - Toms 3MF (Bambu-Projekt, KI-Modell „tripo_node“, 2 Mio. Dreiecke, nicht mannigfaltig + flacher „Generic-Cylinder“ als Sockel): Netze direkt aus `3D/Objects/object_1.model` lesen (Regex auf vertex/triangle),
   Sockel-Objekt weglassen. Kein Boolean nötig: Figur und neue Teile als zwei STL auf **denselben Kopf mit `--zusammen`** – Orca vereinigt überlappende Teile beim Slicen.
