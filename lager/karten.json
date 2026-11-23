@@ -106,20 +106,6 @@
     "modelle/gitarre_rundum.py"
    ]
   },
-  "vox_plektrumhalter": {
-   "bereich": "musik",
-   "stand": "gerechnet",
-   "herkunft": "fremd",
-   "schlagworte": [
-    "Plektrum",
-    "Amp"
-   ],
-   "modell": [
-    "modelle/vox_amp_korpus.stl",
-    "modelle/vox_amp_grill.stl",
-    "modelle/vox_amp_regler.stl"
-   ]
-  },
   "stratocaster": {
    "bereich": "musik",
    "stand": "gerechnet",

@@ -15,23 +15,20 @@ Stand 2026-11-23 – erzeugt von `werkzeug/katalog.py`, nicht von Hand ändern. 
   - 1. Gitarre → `auftraege/2026-11-17_gitarre160_c5pro/` · 5h 17m 4s · 13.21, 3.82, 6.44, 0.97 g · K1 PLA grau, K2 PLA weinrot, K3 PLA schwarz, K4 PLA silber
   - 2. Wirbel → `auftraege/2026-11-17_gitarre160_wirbel_c5pro/` · 22m 48s · 0.00, 0.00, 0.60 g · K1 PLA leer, K2 PLA leer, K3 PLA schwarz
 
+### Schecter 190 mm (`schecter190`)
+- Stand: gerechnet · Herkunft: – · Schlagworte: Gitarre, Schecter, Miniatur, 0.25
+- Modell: `modelle/gitarre_rundum.py`, `modelle/gitarre_rundum_daten.json`
+  - 1. Gitarre + Wirbel (ein Druck) → `auftraege/2026-11-23_gitarre190_c5pro/` · 7h 10m 25s · 18.61, 4.80, 9.50, 1.18 g · K1 PLA grau, K2 PLA weinrot, K3 PLA schwarz, K4 PLA silber
+
 ### Schecter 370 mm (`schecter370`)
 - Stand: gerechnet · Herkunft: eigen · Schlagworte: Gitarre, Miniatur, 0,25-mm-Düse
 - Modell: `modelle/gitarre_rundum.py`, `modelle/gitarre_rundum_daten.json`
-  - 1. Wirbel → `auftraege/2026-11-16_gitarre370_wirbel_c5pro/` · 46m 22s · 0.00, 0.00, 1.56 g · K1 PLA leer, K2 PLA leer, K3 PLA schwarz
-  - 2. Saitenfach-Deckel → `auftraege/2026-11-16_gitarre370_klappe_c5pro/` · 5m 26s · 0.00, 0.00, 0.29 g · K1 PLA leer, K2 PLA leer, K3 PLA schwarz
-  - 3. Hals → `auftraege/2026-11-16_gitarre370_hals_c5pro/` · 10h 24m 14s · 25.87, 10.04, 17.73, 0.73 g · K1 PLA grau, K2 PLA weinrot, K3 PLA schwarz, K4 PLA silber
-  - 4. Korpus → `auftraege/2026-11-17_gitarre370_korpus_c5pro/` · 15h 19m 29s · 62.89, 7.99, 16.02, 1.27 g · K1 PLA grau, K2 PLA weinrot, K3 PLA schwarz, K4 PLA silber
+  - 1. Alle Teile (ein Druck) → `auftraege/2026-11-23_schecter370_c5pro/` · 23h 31m 58s · 85.45, 18.46, 30.29, 2.89 g · K1 PLA grau, K2 PLA weinrot, K3 PLA schwarz, K4 PLA silber
 
-### stratocaster (`stratocaster`)
-- Stand: gerechnet · Herkunft: fremd · Schlagworte: Gitarre, Miniatur
-- Modell: `modelle/strat_korpus.stl`, `modelle/strat_hals.stl`, `modelle/strat_metall.stl`, `modelle/strat_weiss.stl`
-  - –. stratocaster → `auftraege/2026-11-14_stratocaster_c5pro/` · 1h 55m 31s · 21.17, 1.13, 7.20, 2.24 g · K1 PLA creme, K2 PLA weiß, K3 PLA holz, K4 PLA silber
-
-### vox_plektrumhalter (`vox_plektrumhalter`)
-- Stand: gerechnet · Herkunft: fremd · Schlagworte: Plektrum, Amp
-- Modell: `modelle/vox_amp_korpus.stl`, `modelle/vox_amp_grill.stl`, `modelle/vox_amp_regler.stl`
-  - –. vox_plektrumhalter → `auftraege/2026-11-15_vox_plektrumhalter_c5pro/` · 3h 37m 46s · 60.75, 0.87, 11.41 g · K1 PLA schwarz, K2 PLA rot, K3 PLA weiß
+### Stratocaster 190 mm (`stratocaster`)
+- Stand: gerechnet · Herkunft: fremd · Schlagworte: Gitarre, Stratocaster, Miniatur, 0.25
+- Modell: `werkzeug/gitarre_farben.py`, `modelle/quelle/stratocaster_original.stl`
+  - 1. Gitarre + Wirbel + Kugeln (ein Druck) → `auftraege/2026-11-23_stratocaster190_c5pro/` · 6h 13m 20s · 17.95, 2.54, 7.16, 7.32 g · K1 PLA creme, K2 PLA weiß, K3 PLA holz, K4 PLA silber
 
 ## Foto & Scan
 

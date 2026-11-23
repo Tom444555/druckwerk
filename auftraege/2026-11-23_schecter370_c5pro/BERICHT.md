@@ -1,9 +1,9 @@
-# Druckauftrag: gitarre370_korpus
+# Druckauftrag: schecter370
 
 **Drucker:** Flashforge Creator 5 Pro  
-**Datei für USB:** `Schecter_370_Korpus.gcode`  
-**Druckzeit (geschätzt):** 15h 19m 29s  
-**Filament:** 62.89, 7.99, 16.02, 1.27 g (21.09 m, 2.68 m, 5.37 m, 0.43 m)  
+**Datei für USB:** `Schecter_370_komplett.gcode`  
+**Druckzeit (geschätzt):** 23h 31m 58s  
+**Filament:** 85.45, 18.46, 30.29, 2.89 g (28.65 m, 6.19 m, 10.16 m, 0.97 m)  
 
 
 ## Spulen / Köpfe einlegen
@@ -19,7 +19,7 @@
 
 - Düse: 0.25 mm (alle Köpfe)
 - Schichthöhe: 0.08 mm (Standard)
-- Füllung: 12 %
+- Füllung: 15 %
 - Wände: Profil-Standard
 - Stützen: auto
 - Brim: auto
@@ -27,12 +27,18 @@
 
 ## Teile
 
-- `gitarre_rundum_korpus_grau.stl` → Slot 1 (PLA)
-- `gitarre_rundum_korpus_rot.stl` → Slot 2 (PLA)
-- `gitarre_rundum_korpus_schwarz.stl` → Slot 3 (PLA)
-- `gitarre_rundum_korpus_weiss.stl` → Slot 4 (PLA)
+- `K_gitarre_rundum_korpus_grau.stl` → Slot 1 (PLA)
+- `K_gitarre_rundum_korpus_rot.stl` → Slot 2 (PLA)
+- `K_gitarre_rundum_korpus_schwarz.stl` → Slot 3 (PLA)
+- `K_gitarre_rundum_korpus_weiss.stl` → Slot 4 (PLA)
+- `H_gitarre_rundum_hals_grau.stl` → Slot 1 (PLA)
+- `H_gitarre_rundum_hals_rot.stl` → Slot 2 (PLA)
+- `H_gitarre_rundum_hals_schwarz.stl` → Slot 3 (PLA)
+- `H_gitarre_rundum_hals_weiss.stl` → Slot 4 (PLA)
+- `W_gitarre_rundum_wirbel.stl` → Slot 3 (PLA)
+- `C_gitarre_rundum_klappe.stl` → Slot 3 (PLA)
 
-Kopfwechsel in der .gcode: 312, benutzte Köpfe: 1, 2, 3, 4
+Kopfwechsel in der .gcode: 519, benutzte Köpfe: 1, 2, 3, 4
 
 ## Am Drucker
 
