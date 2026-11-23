@@ -1,9 +1,9 @@
 # Druckauftrag: loopsmiths_amp
 
 **Drucker:** Flashforge Creator 5 Pro  
-**Datei für USB:** `loopsmiths_amp_c5pro.gcode`  
-**Druckzeit (geschätzt):** 9h 25m 30s  
-**Filament:** 103.34, 6.89, 11.00, 17.98 g (34.65 m, 2.31 m, 3.69 m, 6.03 m)  
+**Datei für USB:** `Loopsmiths_Verstaerker_025.gcode`  
+**Druckzeit (geschätzt):** 1d 6h 15m 34s  
+**Filament:** 104.09, 11.93, 19.34, 24.17 g (34.90 m, 4.00 m, 6.49 m, 8.10 m)  
 
 
 ## Spulen / Köpfe einlegen
@@ -17,9 +17,10 @@
 
 ## Einstellungen
 
-- Schichthöhe: 0.12 mm (Standard)
+- Düse: 0.25 mm (alle Köpfe)
+- Schichthöhe: 0.08 mm (Standard)
 - Füllung: 15 %
-- Wände: 3
+- Wände: Profil-Standard
 - Stützen: auto
 - Brim: auto
 - Düsentemperatur: 210,210,210,230 °C, Bett: 60,60,60,60 °C
@@ -31,10 +32,13 @@
 - `loopsmiths_amp_weiss.stl` → Slot 3 (PLA)
 - `loopsmiths_amp_gold.stl` → Slot 4 (PLA-SILK)
 
+Kopfwechsel in der .gcode: 1268, benutzte Köpfe: 1, 2, 3, 4
+
 ## Am Drucker
 
 - Geschlossen + Kammerheizung bis 65 °C: erste Wahl für ABS, ASA, Nylon/CF.
 - 4 echte Druckköpfe: Farbwechsel ohne Spülabfall, Kopf 1–4 = Farbe 1–4.
+- PLA/PETG/TPU: Kammerheizung aus (unter 45 °C), sonst kann die Düse verstopfen.
 - USB: .gcode auf FAT32-Stick, am Drucker unter Dateien/USB auswählen.
 - Vor dem Start: Druckplatte sauber und leer, richtige Spulen in den Slots.
 

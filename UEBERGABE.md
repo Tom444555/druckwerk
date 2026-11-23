@@ -1,5 +1,12 @@
 # Übergabe druckwerk
 
+## STAND 23.11.2026, 13:30 Uhr – Aufräumen (Toms Wunsch: „übersichtlicher, nur noch 0,25 und feinste Details“)
+- **Schecter:** Probefassungen gelöscht (160 einfarbig 0,4, Wirbel aus der App 0,4, Projekt schecter200). Übrig: `schecter370` (1 Wirbel, 2 Deckel, 3 Hals, 4 Korpus) und `schecter160` (1 Gitarre, 2 Wirbel), alle 0,25/0,08 mit den vollen Detailwerten (Wirbel und Deckel neu gerechnet).
+- **Drehteller:** Messmatte und Makroschlitten gehören jetzt zum Projekt `drehteller` „Drehteller & Foto-Scan-Set“ (Nr. 11–13); Karten messmatte/makroschlitten/schecter200 entfernt. Dateien wurden nicht verschoben (Ordner bleiben, Projekt = Gruppe).
+- **Loopsmiths-Verstärker** neu mit 0,25/0,08 und Detailwerten (Projekt `loopsmiths_amp`, Datei `Loopsmiths_Verstaerker_025`).
+- **Amp-Plektrumhalter (privat):** Beschriftungsbalken entfernt (Leiste glatt), neu gerechnet. Schrift ist bei 3,4 mm je Regler nicht machbar.
+- **druck.py:** `--extra` gilt jetzt auch gegen `--wie`; `--wie` behält Düse und Schicht des alten Auftrags (vorher rechnete „An meine Köpfe anpassen“ einen 0,25er-Auftrag mit 0,4!). Nichts gedruckt.
+
 ## STAND 23.11.2026, 09:15 Uhr – Nachtrag 2 (App v22)
 - **23.11. mittags:** Amp-Plektrumhalter **Fassung 4** (privat): Bedienfeld nach Toms Foto der Oberseite (11 Regler, goldene Tastenplatte, Beschriftungsleiste als Stufe, Balken statt Schrift), nur noch 0,25-mm-Düse (8 h 06, 506 Wechsel), alte Aufträge (0,4 und 0,25 alt) auf Toms Wunsch gelöscht. Drachen-Büste nur in 60 % rechenbar (2 d 4 h); volle Größe sprengt hier Speicher/Zeit.
 - **23.11. abends:** `werkzeug/verfeinern.py` neu (fertige Figuren schärfer + Hautkorn, siehe CLAUDE.md); privat: Buddha fein 0,25 (17 h 34, .gcode als ZIP über `gross.py`), neues Projekt `drachen` (Schale, Halter 88 %, Büste) mit 0,25/0,08. App `privat.js` lädt `gcode_zip`. Nichts gedruckt.

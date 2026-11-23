@@ -192,6 +192,102 @@
   "datei": "Schecter_370_Deckel"
  },
  {
+  "kopfwechsel": 1268,
+  "koepfe_benutzt": [
+   1,
+   2,
+   3,
+   4
+  ],
+  "name": "loopsmiths_amp",
+  "drucker": "c5pro",
+  "drucker_name": "Flashforge Creator 5 Pro",
+  "datum": "2026-11-23",
+  "ordner": "2026-11-14_loopsmiths_amp_c5pro",
+  "gcode": "Loopsmiths_Verstaerker_025.gcode",
+  "zeit": "1d 6h 15m 34s",
+  "gramm": "104.09, 11.93, 19.34, 24.17",
+  "meter": "34.90 m, 4.00 m, 6.49 m, 8.10 m",
+  "duese": "210,210,210,230",
+  "bett": "60,60,60,60",
+  "schicht": "0.08",
+  "stufe": "Standard",
+  "infill": 15,
+  "duese_mm": "0.25",
+  "waende": null,
+  "stuetzen": "auto",
+  "brim": "auto",
+  "gemischt": true,
+  "zusammen": true,
+  "slots": [
+   {
+    "slot": 1,
+    "material": "PLA",
+    "farbe": "schwarz"
+   },
+   {
+    "slot": 2,
+    "material": "PLA",
+    "farbe": "rot"
+   },
+   {
+    "slot": 3,
+    "material": "PLA",
+    "farbe": "weiß"
+   },
+   {
+    "slot": 4,
+    "material": "PLA-SILK",
+    "farbe": "gold"
+   }
+  ],
+  "teile": [
+   {
+    "datei": "loopsmiths_amp_schwarz.stl",
+    "slot": 1
+   },
+   {
+    "datei": "loopsmiths_amp_rot.stl",
+    "slot": 2
+   },
+   {
+    "datei": "loopsmiths_amp_weiss.stl",
+    "slot": 3
+   },
+   {
+    "datei": "loopsmiths_amp_gold.stl",
+    "slot": 4
+   }
+  ],
+  "quelle": "",
+  "teile_app": [
+   {
+    "datei": "loopsmiths_amp_schwarz.app.stl",
+    "slot": 1
+   },
+   {
+    "datei": "loopsmiths_amp_rot.stl",
+    "slot": 2
+   },
+   {
+    "datei": "loopsmiths_amp_weiss.app.stl",
+    "slot": 3
+   },
+   {
+    "datei": "loopsmiths_amp_gold.stl",
+    "slot": 4
+   }
+  ],
+  "vorschau": "vorschau.png",
+  "bild_im_gcode": true,
+  "projekt": "Loopsmiths_Verstaerker_025.3mf",
+  "gruppe": "loopsmiths_amp",
+  "gruppe_titel": "Loopsmiths-Verstärker",
+  "nr": 1,
+  "titel": "Verstärker",
+  "datei": "Loopsmiths_Verstaerker_025"
+ },
+ {
   "kopfwechsel": 0,
   "koepfe_benutzt": [
    1
@@ -1415,88 +1511,6 @@
   ],
   "vorschau": "vorschau.png",
   "projekt": "stratocaster_c5pro.3mf",
-  "bild_im_gcode": true
- },
- {
-  "name": "loopsmiths_amp",
-  "drucker": "c5pro",
-  "drucker_name": "Flashforge Creator 5 Pro",
-  "datum": "2026-11-14",
-  "ordner": "2026-11-14_loopsmiths_amp_c5pro",
-  "gcode": "loopsmiths_amp_c5pro.gcode",
-  "zeit": "9h 25m 30s",
-  "gramm": "103.34, 6.89, 11.00, 17.98",
-  "meter": "34.65 m, 2.31 m, 3.69 m, 6.03 m",
-  "duese": "210,210,210,230",
-  "bett": "60,60,60,60",
-  "schicht": "0.12",
-  "stufe": "Standard",
-  "infill": 15,
-  "waende": 3,
-  "stuetzen": "auto",
-  "brim": "auto",
-  "gemischt": true,
-  "slots": [
-   {
-    "slot": 1,
-    "material": "PLA",
-    "farbe": "schwarz"
-   },
-   {
-    "slot": 2,
-    "material": "PLA",
-    "farbe": "rot"
-   },
-   {
-    "slot": 3,
-    "material": "PLA",
-    "farbe": "weiß"
-   },
-   {
-    "slot": 4,
-    "material": "PLA-SILK",
-    "farbe": "gold"
-   }
-  ],
-  "teile": [
-   {
-    "datei": "loopsmiths_amp_schwarz.stl",
-    "slot": 1
-   },
-   {
-    "datei": "loopsmiths_amp_rot.stl",
-    "slot": 2
-   },
-   {
-    "datei": "loopsmiths_amp_weiss.stl",
-    "slot": 3
-   },
-   {
-    "datei": "loopsmiths_amp_gold.stl",
-    "slot": 4
-   }
-  ],
-  "quelle": "",
-  "teile_app": [
-   {
-    "datei": "loopsmiths_amp_schwarz.app.stl",
-    "slot": 1
-   },
-   {
-    "datei": "loopsmiths_amp_rot.stl",
-    "slot": 2
-   },
-   {
-    "datei": "loopsmiths_amp_weiss.app.stl",
-    "slot": 3
-   },
-   {
-    "datei": "loopsmiths_amp_gold.stl",
-    "slot": 4
-   }
-  ],
-  "vorschau": "vorschau.png",
-  "projekt": "loopsmiths_amp_c5pro.3mf",
   "bild_im_gcode": true
  },
  {
