@@ -4,7 +4,7 @@
 - **Recherche** (Flash-Studio-Profile `release_0817`, Flashforge-Wiki/FAQ/Handbuch, Tests): Ergebnis und Regeln in CLAUDE.md „Herstellerwerte Creator 5 Pro“, Probleme/Lösungen in `wissen/c5pro.json`, Stützmaterial-Tabelle in `wissen/filamente.json → mischen`.
 - **druck.py neu:** Hersteller-Filamentprofile für die 0,25-Düse (`drucker/fs_025/`, automatisch: PLA 220 °C, max. 2,8 mm³/s, PA 0,1), Kopfwechsel −100 °C / Rückzug 2 mm, `--detail` (Paket maximale Details), `--stuetz-kopf <n>` [`--stuetz-koerper`] (Stützen-Kontaktschicht aus anderem Material). Neues Werkzeug `werkzeug/neu_rechnen.py`.
 - **Neu gerechnet (Ordner/Dateinamen gleich):** Strat 190 6 h 19 · Schecter 160 5 h 41 · Schecter 190 7 h 16 · Schecter 370 23 h 51 · Loopsmiths-Verstärker 1 d 6 h 36 (resolution 0.012, sonst > 100 MB) · Messmatte, Maßwürfel, Teller, Kalibrier-Versatz (nur Kopfwechsel-Werte, Zeiten gleich). Einkopf-0,4-Aufträge unverändert (betrifft sie nicht).
-- **Privat:** Telecaster, Les Paul, Amp-Plektrumhalter, Drachenschale neu gerechnet (siehe Commit dort). **Nicht neu:** Buddha 0,25, Drachen-Büste und -Halter – Projekt-3MF und volle STL fehlen (gross.py), nur durch Neuaufbau (`buddha.py`, `verfeinern.py`) möglich; Tom gefragt.
+- **Privat:** Telecaster, Les Paul, Amp-Plektrumhalter neu gerechnet (siehe Commit dort). **Nicht neu:** Buddha 0,25, Drachenschale, -Büste und -Halter – Projekt-3MF und volle STL fehlen (gross.py), nur durch Neuaufbau (`buddha.py`, `verfeinern.py`) möglich; Tom gefragt.
 - Offen: App-Werkstatt kennt `--detail`/Stützkopf noch nicht (nur Chat); alles ungedruckt.
 
 ## STAND 23.11.2026, 16:30 Uhr – hier einsteigen (Aufräumen auf Toms Wunsch: „übersichtlicher, alles prüfen“)
