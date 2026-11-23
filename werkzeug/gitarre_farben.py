@@ -70,9 +70,13 @@ if A.schnur:
     RL, RS, TS, Z_HINTEN = p(0.36), p(0.61), p(0.30), 1.2
     bohr = []
     for x in X_LOCH:
-        bohr += [mf.Manifold.cylinder(80, RL, RL, 24).translate([x, Y_LOCH, -15]),
-                 mf.Manifold.cylinder(15 + Z_HINTEN, RS, RS, 32).translate([x, Y_LOCH, -15]),
-                 mf.Manifold.cylinder(TS, RS, RL, 32).translate([x, Y_LOCH, Z_HINTEN - 0.001])]
+        bohr += [mf.Manifold.cylinder(80, RL, RL, 24).translate([x, Y_LOCH, -15])]
+    # Hinten wie bei der Schecter mit Lochkugeln als Saitenanker (Tom, 23.11.): eine Rinne über allen sechs Löchern,
+    # in der sechs Kugeln Ø 1,8 × 1,5 (Loch 0,5) nebeneinander bündig liegen – Lochabstand nur ~1,94 mm, deshalb Rinne statt Einzelsenkungen
+    KUG_D, KUG_H, RIN_B, RIN_T = 1.8, 1.5, 2.0, 1.6                      # Druckmaß
+    rin = mf.CrossSection.square([X_LOCH[5] - X_LOCH[0] + p(RIN_B), p(RIN_B)]).translate([X_LOCH[0] - p(RIN_B) / 2, Y_LOCH - p(RIN_B) / 2])
+    rin = rin.offset(-p(RIN_B) / 2 + 0.01, mf.JoinType.Round, 2.0, 48).offset(p(RIN_B) / 2 - 0.01, mf.JoinType.Round, 2.0, 48)
+    bohr += [rin.extrude(15 + Z_HINTEN + p(RIN_T)).translate([0, 0, -15])]
     # Kegellöcher wie Schecter Klein-Modus (Druckmaß): Gehäuse-Rand ab Achse ≥ 9 mm echt → GH; Kegel hinten WR_H, vorn WR_V
     GH = 9.0 * s; WR_H = min(1.35, GH - 0.45); KLEIN = WR_H < 1.35; WR_V = WR_H - 0.25 if KLEIN else 1.05
     RING_R, RING_H = WR_V + 0.40, 0.20                                            # Hülse (silber) um das Loch auf der Kopfplatte
@@ -83,7 +87,7 @@ if A.schnur:
         bohr.append(mf.Manifold.cylinder(p(lang + 2), p(WR_H + steig), p(WR_V - steig), 48).translate([x, y, Z_HB - p(1)]))
     M = M + mf.Manifold.batch_boolean(ringe, mf.OpType.Add) - mf.Manifold.batch_boolean(bohr, mf.OpType.Add)
     saiten = mf.Manifold()
-    print(f'Schnur: Kegel hinten Ø {2*WR_H:.2f} → vorn Ø {2*WR_V:.2f}, Lochlänge {H_LOCH:.2f} mm, Klein={KLEIN}; Korpus-Löcher Ø {2*RL*s:.2f}, Senkung Ø {2*RS*s:.2f}')
+    print(f'Schnur: Kegel hinten Ø {2*WR_H:.2f} → vorn Ø {2*WR_V:.2f}, Lochlänge {H_LOCH:.2f} mm, Klein={KLEIN}; Korpus-Löcher Ø {2*RL*s:.2f}, hinten Rinne {RIN_B} × {RIN_T} tief für Lochkugeln Ø {KUG_D} × {KUG_H}')
 breiten = [0.6, 0.55, 0.5, 0.42, 0.36, 0.3]   # Stegbreite je Saite im fertigen Modell (mm): E A D dick, g h e dünn
 if not A.schnur: saiten = mf.Manifold()
 y_s0, y_s1 = -996.0, Y_NUT
@@ -144,7 +148,11 @@ if A.schnur:
         o.export(f'{dst}/{name}.stl'); return o
     sp = max(9.0, 2 * RR + 2.0)
     raster = [(wa, wb)[j % 2][0].translate([sp * (j % 3), sp * (j // 3), 0]) for j in range(6)]
-    tw = export(mf.Manifold.batch_boolean(raster, mf.OpType.Add), 'strat_wirbel')
+    k_ = KUG_D / 2 / 0.9 * 0.9                                                       # Form wie die Schecter-Lochkugel (2,4 × 2,0), auf Ø 1,8 × 1,5 verkleinert
+    kugel = (mf.Manifold.cylinder(0.3, 0.64, 0.9, 32) + mf.Manifold.cylinder(0.9, 0.9, 0.9, 32).translate([0, 0, 0.29])
+             + mf.Manifold.cylinder(0.31, 0.9, 0.64, 32).translate([0, 0, 1.18]) - mf.Manifold.cylinder(3, 0.25, 0.25, 16).translate([0, 0, -0.5]))
+    raster += [kugel.translate([-sp / 2 + 3.0 * (j % 4), 2 * sp + 1.5 + 3.0 * (j // 4), 0]) for j in range(8)]   # 6 gebraucht + 2 Ersatz
+    tw = export(mf.Manifold.batch_boolean(raster, mf.OpType.Add), 'strat_wirbel')  # Wirbel + 8 Lochkugeln
     bb = mf.Manifold.batch_boolean(list(fertig.values()), mf.OpType.Add).bounding_box()
     x0p = bb[3] + 6 + RR; y0p = bb[1] + 6 + RR
     tp = export(mf.Manifold.batch_boolean([m.translate([x0p, y0p, 0]) for m in raster], mf.OpType.Add), 'strat_wirbel_platte')

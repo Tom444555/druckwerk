@@ -2,8 +2,8 @@
 
 **Drucker:** Flashforge Creator 5 Pro  
 **Datei für USB:** `Stratocaster_190_komplett.gcode`  
-**Druckzeit (geschätzt):** 6h 12m 8s  
-**Filament:** 17.95, 2.54, 7.16, 7.28 g (6.02 m, 0.85 m, 2.40 m, 2.44 m)  
+**Druckzeit (geschätzt):** 6h 13m 20s  
+**Filament:** 17.95, 2.54, 7.16, 7.32 g (6.02 m, 0.85 m, 2.40 m, 2.46 m)  
 
 
 ## Spulen / Köpfe einlegen
