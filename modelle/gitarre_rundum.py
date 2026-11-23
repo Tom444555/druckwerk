@@ -31,12 +31,16 @@ def bund_s(n): return MENSUR * (1 - 2 ** (-n / 12))
 def halb(s): return 21.0 + 7.25 * s / bund_s(24)            # halbe Griffbrettbreite (42 am Sattel, 56,5 am 24. Bund)
 
 
+SEG = 72     # Kreissegmente für Rundungen (23.11.: 24/40 → 72/96 für „bestmögliche Rundungen“)
+KANTE = 14   # Stützpunkte je Viertelkreis an den gerundeten Korpuskanten (vorher 6/7)
+
+
 def rechteck(b, h, r=0.0, n=0):
     c = CS.square((b, h)).translate((-b / 2, -h / 2))
-    return c.offset(-r, RUND, 2.0, n or 24).offset(r, RUND, 2.0, n or 24) if r > 0 else c
+    return c.offset(-r, RUND, 2.0, n or SEG).offset(r, RUND, 2.0, n or SEG) if r > 0 else c
 
 
-def kreis(r, n=40): return CS.circle(r, n)
+def kreis(r, n=96): return CS.circle(r, n)
 def poly(p): return CS([np.asarray(p, float)], NZ)
 def prisma(cs, z0, z1):
     cs = cs.simplify(0.05)
@@ -47,7 +51,7 @@ def vereint(l):
 def vereint2(l):
     l = [k for k in l if not k.is_empty()]
     return CS.batch_boolean(l, m3.OpType.Add) if l else CS()
-def glatt(cs, r): return cs.offset(-r, RUND, 2.0, 24).offset(2 * r, RUND, 2.0, 24).offset(-r, RUND, 2.0, 24)
+def glatt(cs, r): return cs.offset(-r, RUND, 2.0, SEG).offset(2 * r, RUND, 2.0, SEG).offset(-r, RUND, 2.0, SEG)
 
 
 def band(cs, profil, innen, schritt=1.2):
@@ -176,7 +180,7 @@ def main():
     # ---------------- 2D-Flächen auf der Decke ----------------
     PU_G = min(2.5, max(1.6, p(0.5))); PU_T = 12.0                                    # Luftspalt rund um den Tonabnehmer und Tiefe der Fräsung (echte mm)
     def pu_koerper(s): return (rechteck(70, 38, 3) + rechteck(88, 11, 4)).translate((0, Y(s)))
-    def pu_fuss(s): return pu_koerper(s).offset(PU_G, RUND, 2.0, 24)                     # Fräsung in der Decke
+    def pu_fuss(s): return pu_koerper(s).offset(PU_G, RUND, 2.0, SEG)                     # Fräsung in der Decke
     PU = [D["tonabnehmer"][0][1], D["tonabnehmer"][1][1]]
     steg_fl = rechteck(84, 43, 3).translate((0, Y(MENSUR + 13.5)))
     regler = [(q[0], Y(q[1])) for q in D["regler"]]
@@ -192,7 +196,7 @@ def main():
     koepfe = vereint2([kreis(2.4, 16).translate(((i - 2.5) * 10.5, Y(MENSUR + 36.0))) for i in range(6)])
     pus = vereint2([pu_fuss(s) for s in PU])
     hw = vereint2([pu_fuss(s) for s in PU] + [steg_fl, koepfe] + [kreis(9.5).translate(q) for q in regler] + [schlitz])
-    innen = K.offset(-(p(0.38 + 0.45) if a.duese < 0.3 else SLAB + p(0.9)), RUND, 2.0, 24)
+    innen = K.offset(-(p(0.38 + 0.45) if a.duese < 0.3 else SLAB + p(0.9)), RUND, 2.0, SEG)
     wl = {2: D["wolken_viel"], 3: D["wolken_fein"], 4: D["wolken_max"]}.get(a.wolken, D["wolken"])
     W = CS()
     if a.wolken:
@@ -204,35 +208,35 @@ def main():
     z_slab = T_B - SLAB
     if D25:                                                                           # feine Düse: schmale gerundete Kante als schwarzer Rand, Decke bis dorthin rot
         RK, RB = p(0.30), p(0.38)
-        decke_in = K.offset(-(RB + FUGE), RUND, 2.0, 24) - hw - hals_fl - W.offset(FUGE, RUND)
-        rund = [(0.0, z_slab)] + [(RK * (1 - math.cos(w)), T_B - RK + RK * math.sin(w)) for w in np.linspace(0, math.pi / 2, 6)]
+        decke_in = K.offset(-(RB + FUGE), RUND, 2.0, SEG) - hw - hals_fl - W.offset(FUGE, RUND)
+        rund = [(0.0, z_slab)] + [(RK * (1 - math.cos(w)), T_B - RK + RK * math.sin(w)) for w in np.linspace(0, math.pi / 2, KANTE)]
         rand_k = band(K, rund, RB) - prisma(hals_fl, z_slab - 1, T_B + 1)
         if a.decke == "unter":                                                          # eine Deckfarbe; Muster schwarz darunter, schmaler schwarzer Rand wie am Original
-            HAUT = p(a.haut); voll = K.offset(-(RB + FUGE), RUND, 2.0, 24) - hw - hals_fl
+            HAUT = p(a.haut); voll = K.offset(-(RB + FUGE), RUND, 2.0, SEG) - hw - hals_fl
             rot = [prisma(voll, T_B - HAUT, T_B), prisma(voll.offset(-0.012, m3.JoinType.Miter) - W.offset(FUGE, RUND), z_slab, T_B - HAUT + 0.03)]
             schwarz = [prisma((hw - pus).offset(-FUGE), z_slab, T_B), prisma(W, z_slab, T_B - HAUT), rand_k]; dunkel = []
         else:
             rot = [prisma(decke_in, z_slab, T_B), rand_k]
             schwarz = [prisma((hw - pus).offset(-FUGE), z_slab, T_B)]; dunkel = [prisma(W, z_slab, T_B)]
     else:
-        decke_in = K.offset(-(SLAB + 0.35), RUND, 2.0, 24) - hw - hals_fl - W.offset(FUGE, RUND)
-        rund = [(SLAB * (1 - math.cos(w)), z_slab + SLAB * math.sin(w)) for w in np.linspace(0, math.pi / 2, 7)]
+        decke_in = K.offset(-(SLAB + 0.35), RUND, 2.0, SEG) - hw - hals_fl - W.offset(FUGE, RUND)
+        rund = [(SLAB * (1 - math.cos(w)), z_slab + SLAB * math.sin(w)) for w in np.linspace(0, math.pi / 2, KANTE)]
         rot = [prisma(decke_in, z_slab, T_B), band(K, rund, SLAB + 0.6) - prisma(hals_fl, z_slab - 1, T_B + 1)]
         schwarz = [prisma(W, z_slab, T_B), prisma((hw - pus).offset(-FUGE), z_slab, T_B)]; dunkel = []
     grau, weiss, schneider = [], [], []
 
     # ---------------- Korpus-Kern (grau) mit Fase unten ----------------
     FASE = p(0.6)
-    kern = vereint([prisma(K.offset(-FASE - 0.9, RUND, 2.0, 24), 0, z_slab), band(K, [(FASE, 0.0), (0.0, FASE), (0.0, z_slab)], FASE + 1.5)])
+    kern = vereint([prisma(K.offset(-FASE - 0.9, RUND, 2.0, SEG), 0, z_slab), band(K, [(FASE, 0.0), (0.0, FASE), (0.0, z_slab)], FASE + 1.5)])
     grau.append(prisma(hals_fl, z_slab - 0.5, ZFB))
     # Rückseite: Deckel und sechs Saitenhülsen (schwarz, bündig)
     deckel = rechteck(38, 100, 18).translate((92, Y(661))) - vereint2([kreis(max(2.0, p(0.3)), 14).translate((92 + dx, Y(661) + dy)) for dx in (0,) for dy in (-41, 41)])
-    huelsen = vereint2([kreis(p(0.8), 24).translate(((i - 2.5) * 10.5, Y(MENSUR + 11))) for i in range(6)])
+    huelsen = vereint2([kreis(p(0.8), 48).translate(((i - 2.5) * 10.5, Y(MENSUR + 11))) for i in range(6)])
     if a.klappe:                                                                        # Saitenfach statt Hülsen: Mulde über den sechs Löchern, oben eine Stufe für den Deckel
         KD, KT = 1.0, 3.4                                                               # Deckeldicke und Fachtiefe im Druckmaß
         fach = rechteck(52.5 + p(4.4), p(3.6), p(1.2)).translate((0, Y(MENSUR + 11)))
-        stufe = fach.offset(p(1.1), RUND, 2.0, 24)
-        kerbe = kreis(p(1.7), 24).translate((26.25 + p(2.2) + p(1.1), Y(MENSUR + 11)))                             # Griffmulde zum Heraushebeln
+        stufe = fach.offset(p(1.1), RUND, 2.0, SEG)
+        kerbe = kreis(p(1.7), 48).translate((26.25 + p(2.2) + p(1.1), Y(MENSUR + 11)))                             # Griffmulde zum Heraushebeln
         schneider += [prisma(fach, -5, p(KT)), prisma(stufe, -5, p(KD + 0.06)), prisma(kerbe, -5, p(1.8))]
         huelsen = CS()
     schwarz.append(prisma(deckel + huelsen, 0, E)); schneider.append(prisma(deckel + huelsen, -5, E))
@@ -252,7 +256,7 @@ def main():
         schneider.append(mulde)
 
     # ---------------- Tonabnehmer, Steg, Regler, Schalter ----------------
-    PU_W = p(0.5); futter = pus.offset(PU_W, RUND, 2.0, 24) - hals_fl.offset(0.05, RUND)       # schwarze Auskleidung der Fräsung (zwei Bahnen stark), damit kein Grau zu sehen ist
+    PU_W = p(0.5); futter = pus.offset(PU_W, RUND, 2.0, SEG) - hals_fl.offset(0.05, RUND)       # schwarze Auskleidung der Fräsung (zwei Bahnen stark), damit kein Grau zu sehen ist
     schneider.append(prisma(pus + futter, T_B - PU_T - 1.5, 300))                      # Fräsungen: die Tonabnehmer sitzen versenkt, mit Luft zu den Saiten
     schwarz.append(prisma(futter - pus, T_B - PU_T - 1.5, z_slab))
     for i, s in enumerate(PU):
@@ -264,7 +268,7 @@ def main():
             schwarz.append(M.sphere(2.4, 16).scale((1, 1, 0.5)).translate((sx_, Y(s), T_B - 2.02))); kreuz(sx_, Y(s), T_B - 2.0 + 1.2, 2.4)
         for dy in (-9.6, 9.6):
             sp = rechteck(68, 18.2, 9.0).translate((0, Y(s) + dy))
-            ring = sp.offset(-p(0.5), RUND, 2.0, 24) - sp.offset(-p(1.0), RUND, 2.0, 24)
+            ring = sp.offset(-p(0.5), RUND, 2.0, SEG) - sp.offset(-p(1.0), RUND, 2.0, SEG)
             schwarz += [prisma(sp, T_B + 1.2, hoch - E), prisma(sp.offset(-0.05) - ring.offset(FUGE), hoch - E - 0.3, hoch)]
             rot.append(prisma(ring, hoch - E, hoch))
             pole = vereint2([kreis(max(2.3, p(0.38)), 16).translate(((j - 2.5) * 10.2, Y(s) + dy)) for j in range(6)])
@@ -330,7 +334,7 @@ def main():
     mat = np.column_stack([tg3, [0, 0, 1], n3, b3])
     def ab(cs, t0, t1): return prisma(cs, t0, t1).transform(mat)                        # Fläche liegt an der Zarge, t = nach außen
     LB, LH = 29.0, 11.5; rl = (LB * LB + LH * LH) / (2 * LH)                            # Linse = Schnitt zweier Kreise
-    linse = (kreis(rl, 160).translate((0, rl - LH)) ^ kreis(rl, 160).translate((0, LH - rl))).offset(-1.2, RUND, 2.0, 24).offset(1.2, RUND, 2.0, 24)
+    linse = (kreis(rl, 160).translate((0, rl - LH)) ^ kreis(rl, 160).translate((0, LH - rl))).offset(-1.2, RUND, 2.0, SEG).offset(1.2, RUND, 2.0, SEG)
     tief = 5.0; tp = max(1.0, p(0.25)); ts = max(2.0, p(0.5))                           # Platte steht tp vor; Schale ts tief
     r_s, r_h, r_l = max(9.0, p(1.5)), max(4.6, p(0.75)), max(3.0, p(0.45))              # Schale, Hülse außen, Loch
     sechs = CS([np.array([[(r_s - p(0.35)) * math.cos(j * math.pi / 3 + 0.3), (r_s - p(0.35)) * math.sin(j * math.pi / 3 + 0.3)] for j in range(6)])], NZ)
@@ -389,8 +393,8 @@ def main():
     achse = (mech[-1] - mech[0]) / np.linalg.norm(mech[-1] - mech[0]); raus = np.array([-achse[1], achse[0]])      # zeigt nach links außen
     scheiben = vereint2([kreis(6.0, 6).rotate(15).translate(tuple(m_)) for m_ in mech])
     deckelchen = poly([(-6.5, 7.2), (6.5, 7.2), (4.2, 32), (0, 37), (-4.2, 32)]).offset(-1.5, RUND).offset(1.5, RUND).translate((0.6, 0))
-    k_rot = ko.offset(-p(KR), RUND, 2.0, 24) - CS.square((300, 14.5)).translate((-150, 0)) - scheiben - deckelchen.offset(FUGE, RUND)
-    kg = [prisma(ko, -KOPF_DICKE, -HS), prisma(ko - ko.offset(-p(KR), RUND, 2.0, 24) + (ko ^ CS.square((300, 14.5)).translate((-150, 0))) - deckelchen.offset(FUGE, RUND) - scheiben, -HS - 0.4, 0)]
+    k_rot = ko.offset(-p(KR), RUND, 2.0, SEG) - CS.square((300, 14.5)).translate((-150, 0)) - scheiben - deckelchen.offset(FUGE, RUND)
+    kg = [prisma(ko, -KOPF_DICKE, -HS), prisma(ko - ko.offset(-p(KR), RUND, 2.0, SEG) + (ko ^ CS.square((300, 14.5)).translate((-150, 0))) - deckelchen.offset(FUGE, RUND) - scheiben, -HS - 0.4, 0)]
     kd = []
     if D25 and a.wolken:
         Wk = wolken_rauschen(k_rot.offset(-p(0.3), RUND), 7, 0.42, 9.0)
@@ -478,7 +482,7 @@ def main():
             d = a.armschraege * u * u / (u + 9.0) * aus * aus * (3 - 2 * aus)
             v[:, 2] -= d * np.clip((v[:, 2] - 6.0) / (T_B - 6.0), 0, 1)
             return v
-        if not a.teilen: koerper = {n: k.refine_to_length(3.0).warp_batch(senken) for n, k in koerper.items()}
+        if not a.teilen: koerper = {n: k.refine_to_length(1.5).warp_batch(senken) for n, k in koerper.items()}
     boden = M.cube((2000, 3000, 200)).translate((-1000, -500, -200))                                   # Mechaniken enden plan auf dem Bett
     koerper = {n: k - boden for n, k in koerper.items()}
     alle = vereint(list(koerper.values())); bb = alle.bounding_box()
@@ -490,7 +494,7 @@ def main():
         T = poly([(-halb(360), Y(360)), (halb(360), Y(360)), (halb(gb_ende), Y(gb_ende)), (-halb(gb_ende), Y(gb_ende))])
         aussen = CS.square((120, 900)).translate((-60, 250))
         T = T.offset(0.06, m3.JoinType.Miter)                                              # knapp breiter als das Griffbrett, sonst liegen Schnitt und Halsflanke deckungsgleich
-        N = hoch(T) + hoch(aussen - K.offset(c, RUND, 2.0, 24)); N_fett = hoch(T.offset(c, m3.JoinType.Miter)) + hoch(aussen - K)
+        N = hoch(T) + hoch(aussen - K.offset(c, RUND, 2.0, SEG)); N_fett = hoch(T.offset(c, m3.JoinType.Miter)) + hoch(aussen - K)
         hals = {n: k ^ N for n, k in koerper.items()}; korp = {n: k - N_fett for n, k in koerper.items()}
         sw = SW; dz = p(0.6)                                             # rote Streifen laufen über Halsfuß und Zapfen weiter
         haut = hals["grau"] - hals["grau"].translate((0.013, 0.017, dz))
@@ -519,7 +523,7 @@ def main():
         me = alle_w.to_mesh(); tw = trimesh.Trimesh(np.asarray(me.vert_properties[:, :3], np.float64), me.tri_verts, process=True)
         tw.export(ziel / f"{a.name}_wirbel.stl"); print(f"{a.name}_wirbel.stl: dicht={tw.is_watertight}, 8 Wirbel ({'klein, Rad Ø %.1f, je 4 kurz/lang' % (2 * RR) if KLEIN else 'Rad Ø 6,4'}), Höhe {tw.extents[2]:.1f} mm, Kegel {r0 * 2:.2f} → {(r0 - steig * (lang + 1.2)) * 2:.2f} mm, Stift {rk * 2:.2f} mm")
     if a.klappe:                                                                        # Deckel (liegt flach) und zehn Lochkugeln (sechs gebraucht), alles im Druckmaß
-        dk = (stufe.translate((0, -Y(MENSUR + 11))).scale((f, f))).offset(-0.08, RUND, 2.0, 24)
+        dk = (stufe.translate((0, -Y(MENSUR + 11))).scale((f, f))).offset(-0.08, RUND, 2.0, SEG)
         teile_d = [dk.extrude(KD)]
         kug = M.cylinder(0.4, 0.85, 1.2, 32) + M.cylinder(1.2, 1.2, 1.2, 32).translate((0, 0, 0.39)) + M.cylinder(0.4, 1.2, 0.85, 32).translate((0, 0, 1.58)) - M.cylinder(3, 0.45, 0.45, 16).translate((0, 0, -0.5))
         for j in range(10): teile_d.append(kug.translate((-11.25 + 5.0 * (j % 5), 9.0 + 5.0 * (j // 5), 0)))

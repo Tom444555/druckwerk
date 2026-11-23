@@ -1,0 +1,104 @@
+{
+ "kopfwechsel": 236,
+ "koepfe_benutzt": [
+  1,
+  2,
+  3,
+  4
+ ],
+ "name": "gitarre190",
+ "drucker": "c5pro",
+ "drucker_name": "Flashforge Creator 5 Pro",
+ "datum": "2026-11-23",
+ "ordner": "2026-11-23_gitarre190_c5pro",
+ "gcode": "Schecter_190_komplett.gcode",
+ "zeit": "7h 10m 25s",
+ "gramm": "18.61, 4.80, 9.50, 1.18",
+ "meter": "6.24 m, 1.61 m, 3.18 m, 0.40 m",
+ "duese": "210,210,210,210",
+ "bett": "60,60,60,60",
+ "schicht": "0.08",
+ "stufe": "Standard",
+ "infill": 15,
+ "duese_mm": "0.25",
+ "waende": null,
+ "stuetzen": "auto",
+ "brim": "auto",
+ "gemischt": false,
+ "zusammen": true,
+ "slots": [
+  {
+   "slot": 1,
+   "material": "PLA",
+   "farbe": "grau"
+  },
+  {
+   "slot": 2,
+   "material": "PLA",
+   "farbe": "weinrot"
+  },
+  {
+   "slot": 3,
+   "material": "PLA",
+   "farbe": "schwarz"
+  },
+  {
+   "slot": 4,
+   "material": "PLA",
+   "farbe": "silber"
+  }
+ ],
+ "teile": [
+  {
+   "datei": "gitarre190_grau.stl",
+   "slot": 1
+  },
+  {
+   "datei": "gitarre190_rot.stl",
+   "slot": 2
+  },
+  {
+   "datei": "gitarre190_schwarz.stl",
+   "slot": 3
+  },
+  {
+   "datei": "gitarre190_weiss.stl",
+   "slot": 4
+  },
+  {
+   "datei": "gitarre190_wirbel_platte.stl",
+   "slot": 3
+  }
+ ],
+ "quelle": "",
+ "teile_app": [
+  {
+   "datei": "gitarre190_grau.app.stl",
+   "slot": 1
+  },
+  {
+   "datei": "gitarre190_rot.app.stl",
+   "slot": 2
+  },
+  {
+   "datei": "gitarre190_schwarz.app.stl",
+   "slot": 3
+  },
+  {
+   "datei": "gitarre190_weiss.stl",
+   "slot": 4
+  },
+  {
+   "datei": "gitarre190_wirbel_platte.stl",
+   "slot": 3
+  }
+ ],
+ "vorschau": "vorschau.png",
+ "bild_im_gcode": true,
+ "projekt": "Schecter_190_komplett.3mf",
+ "gruppe": "schecter190",
+ "gruppe_titel": "Schecter 190 mm",
+ "nr": 1,
+ "titel": "Gitarre + Wirbel (ein Druck)",
+ "datei": "Schecter_190_komplett"
+}

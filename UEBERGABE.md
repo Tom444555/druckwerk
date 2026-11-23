@@ -5,6 +5,7 @@
 - **Drehteller:** Messmatte und Makroschlitten gehören jetzt zum Projekt `drehteller` „Drehteller & Foto-Scan-Set“ (Nr. 11–13); Karten messmatte/makroschlitten/schecter200 entfernt. Dateien wurden nicht verschoben (Ordner bleiben, Projekt = Gruppe).
 - **Loopsmiths-Verstärker** neu mit 0,25/0,08 und Detailwerten (Projekt `loopsmiths_amp`, Datei `Loopsmiths_Verstaerker_025`).
 - **Amp-Plektrumhalter (privat):** Beschriftungsbalken entfernt (Leiste glatt), neu gerechnet. Schrift ist bei 3,4 mm je Regler nicht machbar.
+- **Schecter 190 mm** (`2026-11-23_gitarre190_c5pro`, Projekt `schecter190`): Gitarre + 8 Wirbel auf EINER Platte, 0,25/0,08 + Detailwerte, 7 h 10, 34 g, 236 Kopfwechsel. Rundungen feiner (`SEG` 72, `KANTE` 14, Kreise 96), Armschräge 0,25 statt 0,33 (Tom: flacher). Bau: `gitarre_rundum.py --laenge 190 --wolken 4 --wirbel 1 --armschraege 0.25`, Wirbel neben den Korpus verschoben (`_wirbel_platte.stl`). Wirbel im selben Objekt = 15 % Füllung statt 100 % (bei 2,6-mm-Kegeln praktisch nur Wände).
 - **druck.py:** `--extra` gilt jetzt auch gegen `--wie`; `--wie` behält Düse und Schicht des alten Auftrags (vorher rechnete „An meine Köpfe anpassen“ einen 0,25er-Auftrag mit 0,4!). Nichts gedruckt.
 
 ## STAND 23.11.2026, 09:15 Uhr – Nachtrag 2 (App v22)

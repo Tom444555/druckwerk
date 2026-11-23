@@ -159,6 +159,21 @@
    "modell": [
     "modelle/kalibrier/"
    ]
+  },
+  "schecter190": {
+   "bereich": "musik",
+   "stand": "gerechnet",
+   "herkunft": "",
+   "schlagworte": [
+    "Gitarre",
+    "Schecter",
+    "Miniatur",
+    "0.25"
+   ],
+   "modell": [
+    "modelle/gitarre_rundum.py",
+    "modelle/gitarre_rundum_daten.json"
+   ]
   }
  }
 }
