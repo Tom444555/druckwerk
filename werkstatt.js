@@ -125,7 +125,7 @@ function exportObj(M){
 async function exportGlb(M){
   const { GLTFExporter } = await import("three/addons/exporters/GLTFExporter.js");
   const g = new THREE.Group(); g.rotation.x = -Math.PI / 2; g.scale.setScalar(0.001);   // glTF: Y oben, Meter
-  for (const t of M.teile.filter(t => !t.weg)) { const m = new THREE.Mesh(t.geo, new THREE.MeshStandardMaterial({color: M.slots[t.slot-1], roughness: .6})); m.name = t.name; g.add(m); }
+  for (const t of M.teile.filter(t => !t.weg)) { const m = new THREE.Mesh(t.geo, new THREE.MeshStandardMaterial({color: t.farbe || M.slots[t.slot-1], roughness: .6})); m.name = t.name; g.add(m); }
   const sz = new THREE.Scene(); sz.add(g); sz.updateMatrixWorld(true);
   return await new GLTFExporter().parseAsync(sz, {binary: true});
 }
@@ -283,7 +283,7 @@ async function modellLaden(id, fortschritt){
     const ld = new STLLoader();
     for (const [i, t] of a.teile.entries()) {
       const g = await ld.loadAsync(`auftraege/${a.ordner}/${encodeURIComponent(t.datei)}`, ev => { if (ev.total) fortschritt(`Teil ${i+1}/${a.teile.length} · ${Math.round(100*ev.loaded/ev.total)} %`); });
-      m.teile.push({name: t.datei.replace(/\.stl$/i, ""), datei: t.datei, slot: Math.min(t.slot, 4), geo: sauber(g)});
+      m.teile.push({name: t.datei.replace(/\.stl$/i, ""), datei: t.datei, slot: Math.min(t.slot, 4), geo: sauber(g), farbe: t.farbe ? "#" + new THREE.Color(C.farbe(t.farbe)).getHexString() : null});   // farbe = eigene Anzeige-Farbe eines Teils (Spulenwechsel am selben Kopf, z. B. Strat: Kopf 1 creme → schwarz)
     }
   } else {
     const e = await eigenesHolen(id.slice(2)); if (!e) throw new Error("nicht gefunden");
@@ -308,7 +308,7 @@ function szene(){
   const platte = new THREE.Mesh(new THREE.PlaneGeometry(PLATTE, PLATTE), new THREE.MeshBasicMaterial({color: dunkel ? 0x1c1c1e : 0xe9e9ee, transparent: true, opacity: .6, side: THREE.DoubleSide}));
   platte.position.z = -0.05; sc.add(platte);
   const grp = new THREE.Group(); sc.add(grp);
-  for (const t of M.teile) { t.mesh = new THREE.Mesh(t.geo, new THREE.MeshStandardMaterial({color: M.slots[t.slot-1], roughness: .6, emissive: dunkel ? 0x262628 : 0})); grp.add(t.mesh); }
+  for (const t of M.teile) { t.mesh = new THREE.Mesh(t.geo, new THREE.MeshStandardMaterial({color: t.farbe || M.slots[t.slot-1], roughness: .6, emissive: dunkel ? 0x262628 : 0})); grp.add(t.mesh); }
   const ctl = new OrbitControls(cam, r.domElement); ctl.enableDamping = true;
   R = {r, sc, cam, ctl, grp, waehlen: false};
   new ResizeObserver(() => { const w = el.clientWidth, h = el.clientHeight; if (!w || !h) return; r.setSize(w, h); cam.aspect = w / h; cam.updateProjectionMatrix(); }).observe(el);

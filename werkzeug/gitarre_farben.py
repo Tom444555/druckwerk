@@ -163,6 +163,11 @@ if A.details:
     SCHR = [(96.8, -984.7), (2.0, -983.3), (179.0, -967.1), (89.7, -954.8), (162.7, -949.3), (13.7, -940.7), (-14.8, -931.3), (134.9, -918.8), (155.3, -916.3),
             (90.5, -891.5), (12.6, -890.7), (1.3, -881.0), (13.2, -831.2), (90.5, -830.6), (163.1, -821.7), (86.3, -811.2), (5.8, -779.3), (169.5, -762.2), (189.0, -1022.8)]
     farbe(add([zyl(x, y, 3.9, ZP + 0.03, 47.2) for x, y in SCHR]), 'metall', ['weiss'])                 # 11 Schlagbrett-, 6 Tonabnehmer-, 2 Schalter-Schrauben
+    pol = F['weiss'].slice((ZK + ZP) / 2).to_polygons()
+    fl = lambda P: 0.5 * float(np.sum(P[:, 0] * np.roll(P[:, 1], -1) - np.roll(P[:, 0], -1) * P[:, 1]))
+    aussen = mf.CrossSection([max(pol, key=lambda P: abs(fl(P)))]).simplify(0.04)
+    # Buchsenplatte samt Schrauben und die Brückenplatten-Ecke am Tremolo-Loch ganz silber (Tom 23.11.: Ränder waren weiß) – alles Weiße dort, das nicht Schlagbrett ist
+    farbe((ellipse(144.5, -1044, 47, 28, -33.7, ZK + 0.02, 62) + box(84, 104, -1023, -974, ZK + 0.02, 62)) - aussen.offset(0.05).extrude(40).translate([0, 0, 30]), 'metall', ['weiss'])
     farbe(box(20, 85, -327.5, -316.5, 47.5, G), 'weiss', ['metall', 'hals'])                                   # Sattel hell (Knochen)
     farbe(box(38, 65, -1140, -1130.2, 8, 36) + box(-64, -34, -664.8, -640, 8, 36), 'metall', ['korpus'])  # Gurtknöpfe
     farbe(HPLATTE.extrude(p(0.32)), 'metall', ['korpus', 'hals'])                                       # Halsplatte
@@ -175,9 +180,6 @@ if A.details:
     PKT = [(52.2, (BY[n - 1] + BY[n]) / 2) for n in (3, 5, 7, 9, 15, 17, 19, 21)] + [(52.2 - 11.0, (BY[11] + BY[12]) / 2), (52.2 + 11.0, (BY[11] + BY[12]) / 2)]
     farbe(add([zyl(x, y, 3.2, 48.0 - p(0.26), 49.0) for x, y in PKT]), 'schwarz', ['hals'])              # Griffbrett-Punkte Ø 1,18 × 0,26 tief
     # Schlagbrett dreilagig: schwarze Mittellage als Linie 0,30 breit, 0,28 vom Rand, von 0,12 über der Decke bis oben (bei Schicht 0,08: eine Schicht Weiß, zwei Schwarz, dazwischen bleibt Kopf 1 eine Schicht frei für den Spulenwechsel)
-    pol = F['weiss'].slice((ZK + ZP) / 2).to_polygons()
-    fl = lambda P: 0.5 * float(np.sum(P[:, 0] * np.roll(P[:, 1], -1) - np.roll(P[:, 0], -1) * P[:, 1]))
-    aussen = mf.CrossSection([max(pol, key=lambda P: abs(fl(P)))]).simplify(0.04)
     ring = aussen.offset(-p(0.28), mf.JoinType.Round, 2.0, 32) - aussen.offset(-p(0.58), mf.JoinType.Round, 2.0, 32)
     farbe(ring.extrude(ZP - ZK - p(0.12) + 0.5).translate([0, 0, ZK + p(0.12)]) ^ box(-G, G, -G, G, -G, ZP + 0.001), 'schwarz', ['weiss'])
     print(f'Details: Schlagbrett-Umriss {abs(fl(max(pol, key=lambda P: abs(fl(P))))) * s * s:.0f} mm², {len(PKT)} Punkte, {len(SCHR)} Schrauben vorn')

@@ -73,7 +73,7 @@ Alte `_kobrax`-Aufträge laufen nicht auf dem Creator 5 Pro – bei Bedarf aus d
 - Jede Ansicht hat eine Adresse (`#projekte`, `#projekt:<gruppe>`, `#auftrag:<ordner>`, `#werkstatt:…`, `#kiweg:<schritt>`); Zurück/Vor funktionieren.
 - **Sicherung** (`sicherung.js`): alle `druckwerk_*`-Schlüssel + IndexedDB (eigene Modelle, Tagebuch-Fotos) als eine Datei; `druckwerk_gesichert` = Datum.
 - **Offline/PWA**: `manifest.webmanifest`, `symbol-*.png`, `sw.js` (immer zuerst Netz, Zwischenspeicher nur ohne Netz; .gcode/STL nie).
-  **Bei jeder Änderung an App-Dateien `CACHE` in `sw.js` hochzählen** (Stand `druckwerk-v23`) und neue Dateien dort eintragen.
+  **Bei jeder Änderung an App-Dateien `CACHE` in `sw.js` hochzählen** (Stand `druckwerk-v24`) und neue Dateien dort eintragen.
 - „Aus dem Lager hinzufügen“ heißt in der App jetzt „Weitere Aufträge von Claude“. Überall „Kopf 1–4“, nie „Spule“; Werkstatt-Slicen sendet `c5pro`.
 - Aufträge sind wie die Ideen im Looper **pro Gerät gespeichert** (localStorage `druckwerk_meine`): neue Besucher
   sehen eine leere Liste. Tom speichert einen Auftrag über den Link `https://tom444555.github.io/druckwerk/#hinzu=<ordner>`
@@ -415,6 +415,7 @@ So kam `modelle/gitarre_rundum.py` zustande; für ähnliche Vorhaben (Instrument
   die größere Lücke innerhalb der schwarzen Teile). Dazu: 22. Bund auf Überstand, Sattel weiß, Schrauben/Gurtknöpfe/Halsplatte silber (Zonen-Umfärben `farbe(zone, ziel, von)`), zwei Bolzen statt sechs
   Brückenschrauben, Saitenniederhalter als Keil (45°, stützfrei), Halsstab-Tropfen 0,25 vertieft. **Rückseite plan:** Deckel/Halsplatte standen im Netz 1,6 mm vor (Korpus schwebte 0,5 mm über dem Bett)
   → abgeschnitten und als bündige Einlagen 0,32 dick neu gesetzt. Nicht machbar bei 190 mm: Zahlen auf den Reglern, Schriftzug (bewusst weg), dunkler Halsstreifen hinten (liegt unter der Decke, bräuchte zweiten Wechsel).
+  **Farbnamen je Kopf nur aus der App-Palette** (creme, silber, holz …) – „creme (dann schwarz)“ zeigte die App grau. Zweite Farbe am selben Kopf: nach dem Slicen in `auftrag.json` beim Teil `"farbe": "schwarz"` eintragen (teile + teile_app), dann `index_neu`; die Werkstatt zeigt das Teil so.
   Lage aller Teile per Höhenkarte aus dem Netz gemessen (Punktwolke → max z je 0,5-mm-Zelle → `scipy.ndimage.label` je Höhenband) – so auch bei anderen fremden Netzen vorgehen.
 - **Prüfbilder ohne `smooth_shading`** rendern: geglättete Normalen auf groben Original-Netzen zeigen Streifen/Kanten, die es nicht gibt (Tom hielt die Strat-Rückseite deshalb für „komisch“).
 - Gemeinsamer Druck = gemeinsame Einstellungen (Wirbel dann mit 15 % und Stützen auto statt 100 % / ohne Stützen) – Tom sagen.

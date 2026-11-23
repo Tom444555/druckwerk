@@ -12,9 +12,9 @@
  "datum": "2026-11-23",
  "ordner": "2026-11-23_stratocaster190_c5pro",
  "gcode": "Stratocaster_190_komplett.gcode",
- "zeit": "6h 11m 0s",
+ "zeit": "6h 10m 21s",
  "gramm": "17.60, 2.97, 7.09, 6.16",
- "meter": "5.90 m, 1.00 m, 2.38 m, 2.06 m",
+ "meter": "5.90 m, 1.00 m, 2.38 m, 2.07 m",
  "duese": "220,220,220,220",
  "bett": "55,55,55,55",
  "schicht": "0.08",
@@ -31,7 +31,7 @@
   {
    "slot": 1,
    "material": "PLA",
-   "farbe": "creme (ab 8.3 mm schwarz)"
+   "farbe": "creme"
   },
   {
    "slot": 2,
@@ -68,7 +68,8 @@
   },
   {
    "datei": "strat_schwarz.stl",
-   "slot": 1
+   "slot": 1,
+   "farbe": "schwarz"
   },
   {
    "datei": "strat_wirbel_platte.stl",
@@ -95,7 +96,8 @@
   },
   {
    "datei": "strat_schwarz.stl",
-   "slot": 1
+   "slot": 1,
+   "farbe": "schwarz"
   },
   {
    "datei": "strat_wirbel_platte.stl",
