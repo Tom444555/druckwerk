@@ -1,6 +1,7 @@
 # Übergabe druckwerk
 
 ## STAND 23.11.2026, 09:15 Uhr – Nachtrag 2 (App v22)
+- **23.11. abends:** `werkzeug/verfeinern.py` neu (fertige Figuren schärfer + Hautkorn, siehe CLAUDE.md); privat: Buddha fein 0,25 (17 h 34, .gcode als ZIP über `gross.py`), neues Projekt `drachen` (Schale, Halter 88 %, Büste) mit 0,25/0,08. App `privat.js` lädt `gcode_zip`. Nichts gedruckt.
 - **Startseite ist jetzt die Bibliothek** (Toms Wunsch: „damit arbeite ich am meisten“): neuer erster Reiter „Bibliothek“, fünf Reiter unten (Bibliothek · Projekte · Neu · Drucker · Wissen), leere Adresse → `#bibliothek`.
 - **Private Modelle lassen sich in 3D ansehen** (vorher nur Druckdatei laden, Scan „ging nicht auf“): im Detail Knopf „In 3D ansehen“ + je Druckdatei „Ansehen“ → holt die leichten `.app.stl`
   aus `auftrag.json` (`teile_app`) und öffnet sie in der Werkstatt mit den Kopf-Farben (`werkstatt.js privatAblegen`, ID `p_<projekt>_<auftrag>`, nur auf dem Gerät, Flag `privat`).

@@ -73,7 +73,7 @@ Alte `_kobrax`-Aufträge laufen nicht auf dem Creator 5 Pro – bei Bedarf aus d
 - Jede Ansicht hat eine Adresse (`#projekte`, `#projekt:<gruppe>`, `#auftrag:<ordner>`, `#werkstatt:…`, `#kiweg:<schritt>`); Zurück/Vor funktionieren.
 - **Sicherung** (`sicherung.js`): alle `druckwerk_*`-Schlüssel + IndexedDB (eigene Modelle, Tagebuch-Fotos) als eine Datei; `druckwerk_gesichert` = Datum.
 - **Offline/PWA**: `manifest.webmanifest`, `symbol-*.png`, `sw.js` (immer zuerst Netz, Zwischenspeicher nur ohne Netz; .gcode/STL nie).
-  **Bei jeder Änderung an App-Dateien `CACHE` in `sw.js` hochzählen** (Stand `druckwerk-v21`) und neue Dateien dort eintragen.
+  **Bei jeder Änderung an App-Dateien `CACHE` in `sw.js` hochzählen** (Stand `druckwerk-v23`) und neue Dateien dort eintragen.
 - „Aus dem Lager hinzufügen“ heißt in der App jetzt „Weitere Aufträge von Claude“. Überall „Kopf 1–4“, nie „Spule“; Werkstatt-Slicen sendet `c5pro`.
 - Aufträge sind wie die Ideen im Looper **pro Gerät gespeichert** (localStorage `druckwerk_meine`): neue Besucher
   sehen eine leere Liste. Tom speichert einen Auftrag über den Link `https://tom444555.github.io/druckwerk/#hinzu=<ordner>`
@@ -387,6 +387,14 @@ So kam `modelle/gitarre_rundum.py` zustande; für ähnliche Vorhaben (Instrument
 - **Neue Blütenblätter prozedural** (`buddha.py → kranz`): je Blatt lokales Raster (Länge u, Breite q), Umriss `sqrt(u)·(1−u)^0,46`, Mulde, Adern als Linien q = konstant (laufen an Ansatz und Spitze zusammen), Mittelrippe;
   **Unterseite = max(Bett, Oberseite − 0,7 − 1,1·Randabstand)** → dünner Rand, 48°-Schräge bis zum Bett: druckt ohne Stützen und sieht von der Seite wie ein Blatt aus (senkrecht bis zum Bett gezogen wirkte es wie Treppenstufen).
   Blätter einzeln als Manifold, dann `batch_boolean`. 0,12 mm `--schoen`, Stützen auto: 7 h 41, 85 g.
+
+## Fertige Figur schärfer machen: `werkzeug/verfeinern.py` (23.11.2026 – nur gerechnet)
+- Für „maximal feine Details“ an fremden Figuren/Deko (Drachen-Räucherset, privat in druckwerk-modelle/drachen): `xvfb-run -a python3 -I -u werkzeug/verfeinern.py figur.stl|npz --aus x.stl --bild v.png [--skala f] [--bett]`.
+  Verdichtet das Netz (Kante ≤ 0,22 mm bzw. so grob, dass ≤ ~4,5 Mio. Dreiecke bleiben), verstärkt vorhandene Struktur entlang der Normalen (Band bis 0,4 mm × `--fein 1.2`, Band 0,4–1,5 mm × `--mittel 0.6`,
+  höchstens `--grenze 0.45` mm) und legt ein Zellkorn (`--korn 0.06`, Zelle ≥ 2,5 Netzkanten) als Haut darüber; Standfläche bleibt. **Es entsteht keine neue Form** – nur schärfere Schuppen/Fugen und Haut. Bild selbst ansehen.
+- Lehren: nicht-mannigfaltige Netze vor dem Unterteilen reparieren; Taubin-Glättung glättet zu wenig für die Bandtrennung → einfache Laplace-Glättung (Schritte = 2·(Reichweite/Kante)²); Vorher/Nachher nacheinander rendern,
+  sonst reicht der Speicher (7 GB) nicht; über ~5 Mio. Dreiecke wird der Prozess abgeschossen. Slicen mit den 0,25-Detailwerten dauert je Teil 10–40 Min., .gcode 90–300 MB → im privaten Lager `gross.py`.
+- Zeiten 0,25/0,08: Schale 100 mm 14 h 25 / 49 g · Halter 247 mm 29 h 10 / 146 g. Große Figuren mit 0,25 dauern Tage – Tom vorher sagen und 0,4er-Fassung anbieten.
 
 ## Gridfinity (`modelle/gridfinity/`, 21.11.2026)
 - Bibliothek gridfinity-rebuilt-openscad (kennetek, **MIT**, `LICENSE` liegt dabei) als Kopie in `modelle/gridfinity/src` + `gridfinity-rebuilt-baseplate.scad`.

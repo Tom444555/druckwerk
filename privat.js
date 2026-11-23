@@ -55,7 +55,7 @@ function detail(box, p, C){
       <div class="grow"><b>${C.esc(t.datei)}</b><div class="small">${masse(t)}${t.passt === false ? " · größer als der Drucker – Claude teilt es" : t.passt ? " · passt in den Drucker" : ""} · ${t.mb} MB</div></div>
       ${offenbar(t) && t.mb <= 30 ? `<button class="btn grey" data-w="${i}" style="width:auto;padding:6px 12px;margin:0">Werkstatt</button>` : ""}</div>`).join("")}
     ${(p.auftraege || []).length ? `<h3 style="margin:14px 0 2px;font-size:15px">Fertige Druckdateien</h3>${p.auftraege.map((a, i) => `<div class="row" style="align-items:flex-start;gap:8px;padding:8px 0;border-top:.5px solid var(--sep)">
-      <div class="grow"><b>${C.esc(a.titel || a.gcode)}</b><div class="small">${C.esc(a.zeit || "")} · Düse ${C.esc(String(a.duese_mm || "0.4").replace(".", ","))} mm · ${C.esc((a.slots || []).filter(s => s.farbe !== "leer").map(s => `Kopf ${s.slot} ${s.material} ${s.farbe}`).join(", "))}</div></div>
+      <div class="grow"><b>${C.esc(a.titel || a.gcode)}</b><div class="small">${a.gcode_zip ? "als ZIP – nach dem Laden entpacken · " : ""}${C.esc(a.zeit || "")} · Düse ${C.esc(String(a.duese_mm || "0.4").replace(".", ","))} mm · ${C.esc((a.slots || []).filter(s => s.farbe !== "leer").map(s => `Kopf ${s.slot} ${s.material} ${s.farbe}`).join(", "))}</div></div>
       <button class="btn grey" data-a="${i}" style="width:auto;padding:6px 12px;margin:0">Ansehen</button>
       <button class="btn" data-g="${i}" style="width:auto;padding:6px 12px;margin:0">Laden</button></div>`).join("")}` : ""}
     <a class="btn grey" style="margin-top:10px;display:block;text-align:center" target="_blank" rel="noopener"
@@ -106,8 +106,9 @@ function detail(box, p, C){
   box.querySelectorAll("[data-g]").forEach(b => b.onclick = async () => {
     const a = p.auftraege[+b.dataset.g]; b.disabled = true; b.textContent = "lädt …";
     try {
-      const blob = await roh(`${p.ordner}/auftraege/${a.ordner}/${a.gcode}`, "blob");
-      const url = URL.createObjectURL(blob), l = document.createElement("a"); l.href = url; l.download = a.gcode; document.body.appendChild(l); l.click(); l.remove();
+      const datei = a.gcode_zip || a.gcode;                    // sehr große Druckdateien liegen als ZIP im Lager (GitHub-Grenze 100 MB)
+      const blob = await roh(`${p.ordner}/auftraege/${a.ordner}/${datei}`, "blob");
+      const url = URL.createObjectURL(blob), l = document.createElement("a"); l.href = url; l.download = datei; document.body.appendChild(l); l.click(); l.remove();
       setTimeout(() => URL.revokeObjectURL(url), 60000); C.toast("Geladen – in „Dateien“ unter Downloads", 4000);
     } catch (e) { C.toast("Konnte nicht geladen werden"); }
     b.disabled = false; b.textContent = "Laden";
