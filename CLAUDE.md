@@ -379,6 +379,15 @@ So kam `modelle/gitarre_rundum.py` zustande; für ähnliche Vorhaben (Instrument
   nur kleine positive Stücke abziehen, nie „Summe der großen“ bilden (füllt die Hohlräume → Farben überlappen). (3) `decompose()` auf Netzen mit ~1000 Stücken zweimal = Speicher weg (Prozess abgeschossen).
   Für reale Geräte künftig gleich so: Scan/Fotos nur zum Vermessen, Modell konstruieren.
 
+## Fremde Figur nachbearbeiten: Buddha auf Lotus (23.11.2026, privat in druckwerk-modelle/buddha-lotus – nur gerechnet)
+- Toms 3MF (Bambu-Projekt, KI-Modell „tripo_node“, 2 Mio. Dreiecke, nicht mannigfaltig + flacher „Generic-Cylinder“ als Sockel): Netze direkt aus `3D/Objects/object_1.model` lesen (Regex auf vertex/triangle),
+  Sockel-Objekt weglassen. Kein Boolean nötig: Figur und neue Teile als zwei STL auf **denselben Kopf mit `--zusammen`** – Orca vereinigt überlappende Teile beim Slicen.
+- **Mehr Struktur nur in einem Bereich:** weiche Maske über z/r (hier Blüte unten/außen), dann (1) vorhandene Feinstruktur verstärken = Abstand zur Taubin-geglätteten Fläche entlang der Normalen × 1,6,
+  (2) feine Längsadern als Rippen über den Winkel um die Hochachse (104 Stück, 0,24 mm, leicht verwackelt). Figur bleibt unangetastet.
+- **Neue Blütenblätter prozedural** (`buddha.py → kranz`): je Blatt lokales Raster (Länge u, Breite q), Umriss `sqrt(u)·(1−u)^0,46`, Mulde, Adern als Linien q = konstant (laufen an Ansatz und Spitze zusammen), Mittelrippe;
+  **Unterseite = max(Bett, Oberseite − 0,7 − 1,1·Randabstand)** → dünner Rand, 48°-Schräge bis zum Bett: druckt ohne Stützen und sieht von der Seite wie ein Blatt aus (senkrecht bis zum Bett gezogen wirkte es wie Treppenstufen).
+  Blätter einzeln als Manifold, dann `batch_boolean`. 0,12 mm `--schoen`, Stützen auto: 7 h 41, 85 g.
+
 ## Gridfinity (`modelle/gridfinity/`, 21.11.2026)
 - Bibliothek gridfinity-rebuilt-openscad (kennetek, **MIT**, `LICENSE` liegt dabei) als Kopie in `modelle/gridfinity/src` + `gridfinity-rebuilt-baseplate.scad`.
 - **OpenSCAD hier ist 2021.01:** `cgs()`/`bin_subdivide` scheitern („No grid element available“, $-Variablen) → Fachgröße selbst rechnen (`bin_get_infill_size_mm` / Zellen,
