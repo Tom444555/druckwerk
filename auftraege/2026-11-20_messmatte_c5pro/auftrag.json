@@ -59,9 +59,9 @@
  "vorschau": "vorschau.png",
  "bild_im_gcode": true,
  "projekt": "Messmatte.3mf",
- "gruppe": "messmatte",
- "gruppe_titel": "Messmatte",
- "nr": 1,
+ "gruppe": "drehteller",
+ "gruppe_titel": "Drehteller & Foto-Scan-Set",
+ "nr": 11,
  "titel": "Messmatte",
  "datei": "Messmatte"
 }

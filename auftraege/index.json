@@ -47,7 +47,7 @@
   "bild_im_gcode": true,
   "projekt": "Drehteller_Kiste.3mf",
   "gruppe": "drehteller",
-  "gruppe_titel": "Drehteller Foto-Scan",
+  "gruppe_titel": "Drehteller & Foto-Scan-Set",
   "nr": 9,
   "titel": "Kleinteile-Kiste Gridfinity",
   "datei": "Drehteller_Kiste"
@@ -100,7 +100,7 @@
   "bild_im_gcode": true,
   "projekt": "Drehteller_Grundplatte.3mf",
   "gruppe": "drehteller",
-  "gruppe_titel": "Drehteller Foto-Scan",
+  "gruppe_titel": "Drehteller & Foto-Scan-Set",
   "nr": 10,
   "titel": "Gridfinity-Grundplatte 4x2",
   "datei": "Drehteller_Grundplatte"
@@ -167,7 +167,7 @@
   "bild_im_gcode": true,
   "projekt": "Drehteller_Masswuerfel.3mf",
   "gruppe": "drehteller",
-  "gruppe_titel": "Drehteller Foto-Scan",
+  "gruppe_titel": "Drehteller & Foto-Scan-Set",
   "nr": 6,
   "titel": "Maßwürfel 20 mm",
   "datei": "Drehteller_Masswuerfel"
@@ -225,7 +225,7 @@
   "bild_im_gcode": true,
   "projekt": "Drehteller_Visier.3mf",
   "gruppe": "drehteller",
-  "gruppe_titel": "Drehteller Foto-Scan",
+  "gruppe_titel": "Drehteller & Foto-Scan-Set",
   "nr": 4,
   "titel": "Kimme und Korn",
   "datei": "Drehteller_Visier"
@@ -292,7 +292,7 @@
   "bild_im_gcode": true,
   "projekt": "Drehteller_Teller.3mf",
   "gruppe": "drehteller",
-  "gruppe_titel": "Drehteller Foto-Scan",
+  "gruppe_titel": "Drehteller & Foto-Scan-Set",
   "nr": 3,
   "titel": "Teller",
   "datei": "Drehteller_Teller"
@@ -358,9 +358,9 @@
   "vorschau": "vorschau.png",
   "bild_im_gcode": true,
   "projekt": "Messmatte.3mf",
-  "gruppe": "messmatte",
-  "gruppe_titel": "Messmatte",
-  "nr": 1,
+  "gruppe": "drehteller",
+  "gruppe_titel": "Drehteller & Foto-Scan-Set",
+  "nr": 11,
   "titel": "Messmatte",
   "datei": "Messmatte"
  },
@@ -411,10 +411,10 @@
   "vorschau": "vorschau.png",
   "bild_im_gcode": true,
   "projekt": "Makroschlitten_Schlitten_Knopf.3mf",
-  "gruppe": "makroschlitten",
-  "gruppe_titel": "Makroschlitten",
-  "nr": 2,
-  "titel": "Schlitten und Knopf",
+  "gruppe": "drehteller",
+  "gruppe_titel": "Drehteller & Foto-Scan-Set",
+  "nr": 13,
+  "titel": "Makroschlitten Schlitten und Knopf",
   "datei": "Makroschlitten_Schlitten_Knopf"
  },
  {
@@ -464,10 +464,10 @@
   "vorschau": "vorschau.png",
   "bild_im_gcode": true,
   "projekt": "Makroschlitten_Schiene.3mf",
-  "gruppe": "makroschlitten",
-  "gruppe_titel": "Makroschlitten",
-  "nr": 1,
-  "titel": "Schiene",
+  "gruppe": "drehteller",
+  "gruppe_titel": "Drehteller & Foto-Scan-Set",
+  "nr": 12,
+  "titel": "Makroschlitten Schiene",
   "datei": "Makroschlitten_Schiene"
  },
  {
@@ -518,7 +518,7 @@
   "bild_im_gcode": true,
   "projekt": "Drehteller_Sockel.3mf",
   "gruppe": "drehteller",
-  "gruppe_titel": "Drehteller Foto-Scan",
+  "gruppe_titel": "Drehteller & Foto-Scan-Set",
   "nr": 1,
   "titel": "Sockel",
   "datei": "Drehteller_Sockel"
@@ -571,7 +571,7 @@
   "bild_im_gcode": true,
   "projekt": "Drehteller_Pruefkoerper.3mf",
   "gruppe": "drehteller",
-  "gruppe_titel": "Drehteller Foto-Scan",
+  "gruppe_titel": "Drehteller & Foto-Scan-Set",
   "nr": 8,
   "titel": "Prüfkörper",
   "datei": "Drehteller_Pruefkoerper"
@@ -624,7 +624,7 @@
   "bild_im_gcode": true,
   "projekt": "Drehteller_Podest_Stifte.3mf",
   "gruppe": "drehteller",
-  "gruppe_titel": "Drehteller Foto-Scan",
+  "gruppe_titel": "Drehteller & Foto-Scan-Set",
   "nr": 5,
   "titel": "Podest und Stifte",
   "datei": "Drehteller_Podest_Stifte"
@@ -677,7 +677,7 @@
   "bild_im_gcode": true,
   "projekt": "Drehteller_Kaefig_Walzen.3mf",
   "gruppe": "drehteller",
-  "gruppe_titel": "Drehteller Foto-Scan",
+  "gruppe_titel": "Drehteller & Foto-Scan-Set",
   "nr": 2,
   "titel": "Käfig und Walzen",
   "datei": "Drehteller_Kaefig_Walzen"
@@ -730,7 +730,7 @@
   "bild_im_gcode": true,
   "projekt": "Drehteller_Halter.3mf",
   "gruppe": "drehteller",
-  "gruppe_titel": "Drehteller Foto-Scan",
+  "gruppe_titel": "Drehteller & Foto-Scan-Set",
   "nr": 7,
   "titel": "Halter-Baukasten",
   "datei": "Drehteller_Halter"
@@ -947,122 +947,6 @@
   "datei": "Schecter_160_Wirbel"
  },
  {
-  "kopfwechsel": 0,
-  "koepfe_benutzt": [
-   3
-  ],
-  "name": "gitarre160_wirbel_2",
-  "drucker": "c5pro",
-  "drucker_name": "Flashforge Creator 5 Pro",
-  "datum": "2026-11-17",
-  "ordner": "2026-11-17_gitarre160_wirbel_2_c5pro",
-  "gcode": "Schecter_160_Wirbel_App.gcode",
-  "zeit": "7m 54s",
-  "gramm": "0.00, 0.00, 0.68",
-  "meter": "0.00 m, 0.00 m, 0.23 m",
-  "duese": "210,210,210",
-  "bett": "45,45,45",
-  "schicht": "0.20",
-  "stufe": "Standard",
-  "infill": 15,
-  "duese_mm": "0.4",
-  "waende": 2,
-  "stuetzen": "auto",
-  "brim": "auto",
-  "gemischt": false,
-  "slots": [
-   {
-    "slot": 1,
-    "material": "PLA",
-    "farbe": "#9a9aa0"
-   },
-   {
-    "slot": 2,
-    "material": "PLA",
-    "farbe": "#9a9aa0"
-   },
-   {
-    "slot": 3,
-    "material": "PLA",
-    "farbe": "schwarz"
-   }
-  ],
-  "teile": [
-   {
-    "datei": "gitarre_rundum_wirbel.stl",
-    "slot": 3
-   }
-  ],
-  "quelle": "",
-  "teile_app": [
-   {
-    "datei": "gitarre_rundum_wirbel.stl",
-    "slot": 3
-   }
-  ],
-  "vorschau": "vorschau.png",
-  "bild_im_gcode": true,
-  "projekt": "Schecter_160_Wirbel_App.3mf",
-  "gruppe": "schecter160",
-  "gruppe_titel": "Schecter 160 mm",
-  "nr": 4,
-  "titel": "Wirbel (in der App neu gerechnet)",
-  "datei": "Schecter_160_Wirbel_App"
- },
- {
-  "kopfwechsel": 0,
-  "koepfe_benutzt": [
-   1
-  ],
-  "name": "gitarre160_einfarbig",
-  "drucker": "c5pro",
-  "drucker_name": "Flashforge Creator 5 Pro",
-  "datum": "2026-11-17",
-  "ordner": "2026-11-17_gitarre160_einfarbig_c5pro",
-  "gcode": "Schecter_160_Probe_einfarbig.gcode",
-  "zeit": "51m 2s",
-  "gramm": "15.35",
-  "meter": "5.15 m",
-  "duese": "210",
-  "bett": "60",
-  "schicht": "0.12",
-  "stufe": "Standard",
-  "infill": 15,
-  "duese_mm": "0.4",
-  "waende": null,
-  "stuetzen": "auto",
-  "brim": "auto",
-  "gemischt": false,
-  "slots": [
-   {
-    "slot": 1,
-    "material": "PLA",
-    "farbe": "grau"
-   }
-  ],
-  "teile": [
-   {
-    "datei": "gitarre160_einfarbig.stl",
-    "slot": 1
-   }
-  ],
-  "quelle": "",
-  "teile_app": [
-   {
-    "datei": "gitarre160_einfarbig.app.stl",
-    "slot": 1
-   }
-  ],
-  "vorschau": "vorschau.png",
-  "bild_im_gcode": true,
-  "projekt": "Schecter_160_Probe_einfarbig.3mf",
-  "gruppe": "schecter160",
-  "gruppe_titel": "Schecter 160 mm",
-  "nr": 1,
-  "titel": "Probedruck einfarbig (0,4-mm-Düse)",
-  "datei": "Schecter_160_Probe_einfarbig"
- },
- {
   "kopfwechsel": 200,
   "koepfe_benutzt": [
    1,
@@ -1153,112 +1037,9 @@
   "projekt": "Schecter_160_Gitarre.3mf",
   "gruppe": "schecter160",
   "gruppe_titel": "Schecter 160 mm",
-  "nr": 3,
-  "titel": "Gitarre",
-  "datei": "Schecter_160_Gitarre"
- },
- {
-  "kopfwechsel": 231,
-  "koepfe_benutzt": [
-   1,
-   2,
-   3,
-   4
-  ],
-  "name": "gitarre_rundum",
-  "drucker": "c5pro",
-  "drucker_name": "Flashforge Creator 5 Pro",
-  "datum": "2026-11-16",
-  "ordner": "2026-11-16_gitarre_rundum_c5pro",
-  "gcode": "Schecter_200_Gitarre.gcode",
-  "zeit": "6h 25m 44s",
-  "gramm": "20.24, 5.06, 7.88, 1.73",
-  "meter": "6.78 m, 1.70 m, 2.64 m, 0.58 m",
-  "duese": "210,210,210,210",
-  "bett": "60,60,60,60",
-  "schicht": "0.08",
-  "stufe": "Standard",
-  "infill": 15,
-  "duese_mm": "0.25",
-  "waende": null,
-  "stuetzen": "auto",
-  "brim": "auto",
-  "gemischt": false,
-  "slots": [
-   {
-    "slot": 1,
-    "material": "PLA",
-    "farbe": "grau"
-   },
-   {
-    "slot": 2,
-    "material": "PLA",
-    "farbe": "rot"
-   },
-   {
-    "slot": 3,
-    "material": "PLA",
-    "farbe": "schwarz"
-   },
-   {
-    "slot": 4,
-    "material": "PLA",
-    "farbe": "dunkelrot"
-   }
-  ],
-  "teile": [
-   {
-    "datei": "gitarre_rundum_grau.stl",
-    "slot": 1
-   },
-   {
-    "datei": "gitarre_rundum_rot.stl",
-    "slot": 2
-   },
-   {
-    "datei": "gitarre_rundum_schwarz.stl",
-    "slot": 3
-   },
-   {
-    "datei": "gitarre_rundum_dunkelrot.stl",
-    "slot": 4
-   },
-   {
-    "datei": "gitarre_rundum_weiss.stl",
-    "slot": 4
-   }
-  ],
-  "quelle": "",
-  "teile_app": [
-   {
-    "datei": "gitarre_rundum_grau.stl",
-    "slot": 1
-   },
-   {
-    "datei": "gitarre_rundum_rot.stl",
-    "slot": 2
-   },
-   {
-    "datei": "gitarre_rundum_schwarz.stl",
-    "slot": 3
-   },
-   {
-    "datei": "gitarre_rundum_dunkelrot.stl",
-    "slot": 4
-   },
-   {
-    "datei": "gitarre_rundum_weiss.stl",
-    "slot": 4
-   }
-  ],
-  "vorschau": "vorschau.png",
-  "bild_im_gcode": true,
-  "projekt": "Schecter_200_Gitarre.3mf",
-  "gruppe": "schecter200",
-  "gruppe_titel": "Schecter 200 mm (erster Stand)",
   "nr": 1,
   "titel": "Gitarre",
-  "datei": "Schecter_200_Gitarre"
+  "datei": "Schecter_160_Gitarre"
  },
  {
   "kopfwechsel": 0,

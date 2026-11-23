@@ -45,9 +45,9 @@
  "vorschau": "vorschau.png",
  "bild_im_gcode": true,
  "projekt": "Makroschlitten_Schlitten_Knopf.3mf",
- "gruppe": "makroschlitten",
- "gruppe_titel": "Makroschlitten",
- "nr": 2,
- "titel": "Schlitten und Knopf",
+ "gruppe": "drehteller",
+ "gruppe_titel": "Drehteller & Foto-Scan-Set",
+ "nr": 13,
+ "titel": "Makroschlitten Schlitten und Knopf",
  "datei": "Makroschlitten_Schlitten_Knopf"
 }

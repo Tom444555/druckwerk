@@ -50,44 +50,21 @@
    "stand": "gerechnet",
    "herkunft": "eigen",
    "schlagworte": [
-    "Meshroom",
-    "Scan",
     "Drehteller",
-    "Gridfinity"
+    "Focus Stacking",
+    "Gridfinity",
+    "Makroschlitten",
+    "Meshroom",
+    "Messmatte",
+    "Scan"
    ],
    "modell": [
     "modelle/drehteller.py",
     "modelle/scan_zubehoer.py",
     "modelle/drehteller_daten/",
-    "modelle/gridfinity/"
-   ]
-  },
-  "messmatte": {
-   "bereich": "foto",
-   "stand": "gerechnet",
-   "herkunft": "eigen",
-   "schlagworte": [
-    "Messen",
-    "Foto",
-    "Umriss"
-   ],
-   "modell": [
+    "modelle/gridfinity/",
     "modelle/foto_helfer.py",
-    "modelle/messmatte.json",
-    "werkzeug/messmatte.py"
-   ]
-  },
-  "makroschlitten": {
-   "bereich": "foto",
-   "stand": "gerechnet",
-   "herkunft": "eigen",
-   "schlagworte": [
-    "Makro",
-    "Focus Stacking",
-    "Kamera"
-   ],
-   "modell": [
-    "modelle/foto_helfer.py"
+    "modelle/gridfinity/drehteller_kiste.scad"
    ]
   },
   "lebensbaum": {
@@ -125,20 +102,6 @@
     "Gitarre",
     "Miniatur"
    ],
-   "modell": [
-    "modelle/gitarre_rundum.py"
-   ]
-  },
-  "schecter200": {
-   "bereich": "musik",
-   "stand": "gerechnet",
-   "herkunft": "eigen",
-   "schlagworte": [
-    "Gitarre",
-    "Miniatur",
-    "alter Stand"
-   ],
-   "archiv": true,
    "modell": [
     "modelle/gitarre_rundum.py"
    ]

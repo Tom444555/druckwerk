@@ -45,9 +45,9 @@
  "vorschau": "vorschau.png",
  "bild_im_gcode": true,
  "projekt": "Makroschlitten_Schiene.3mf",
- "gruppe": "makroschlitten",
- "gruppe_titel": "Makroschlitten",
- "nr": 1,
- "titel": "Schiene",
+ "gruppe": "drehteller",
+ "gruppe_titel": "Drehteller & Foto-Scan-Set",
+ "nr": 12,
+ "titel": "Makroschlitten Schiene",
  "datei": "Makroschlitten_Schiene"
 }
