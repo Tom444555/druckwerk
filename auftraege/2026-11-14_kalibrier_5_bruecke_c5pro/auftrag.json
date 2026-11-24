@@ -41,9 +41,9 @@
  "vorschau": "vorschau.png",
  "projekt": "Kalibrier_5_Bruecke.3mf",
  "bild_im_gcode": true,
- "gruppe": "kalibrier",
- "gruppe_titel": "Kalibrier-Set",
- "nr": 5,
- "titel": "Brücken und Überhänge",
+ "gruppe": "drehteller",
+ "gruppe_titel": "Drehteller & Foto-Scan-Set",
+ "nr": 18,
+ "titel": "Kalibrieren: Brücken und Überhänge",
  "datei": "Kalibrier_5_Bruecke"
 }

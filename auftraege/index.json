@@ -1713,10 +1713,10 @@
   "vorschau": "vorschau.png",
   "projekt": "Kalibrier_5_Bruecke.3mf",
   "bild_im_gcode": true,
-  "gruppe": "kalibrier",
-  "gruppe_titel": "Kalibrier-Set",
-  "nr": 5,
-  "titel": "Brücken und Überhänge",
+  "gruppe": "drehteller",
+  "gruppe_titel": "Drehteller & Foto-Scan-Set",
+  "nr": 18,
+  "titel": "Kalibrieren: Brücken und Überhänge",
   "datei": "Kalibrier_5_Bruecke"
  },
  {
@@ -1762,10 +1762,10 @@
   "vorschau": "vorschau.png",
   "projekt": "Kalibrier_4_Passung.3mf",
   "bild_im_gcode": true,
-  "gruppe": "kalibrier",
-  "gruppe_titel": "Kalibrier-Set",
-  "nr": 4,
-  "titel": "Passung",
+  "gruppe": "drehteller",
+  "gruppe_titel": "Drehteller & Foto-Scan-Set",
+  "nr": 17,
+  "titel": "Kalibrieren: Passung",
   "datei": "Kalibrier_4_Passung"
  },
  {
@@ -1858,10 +1858,10 @@
   "vorschau": "vorschau.png",
   "bild_im_gcode": true,
   "projekt": "Kalibrier_3_Versatz.3mf",
-  "gruppe": "kalibrier",
-  "gruppe_titel": "Kalibrier-Set",
-  "nr": 3,
-  "titel": "Versatz der Köpfe",
+  "gruppe": "drehteller",
+  "gruppe_titel": "Drehteller & Foto-Scan-Set",
+  "nr": 16,
+  "titel": "Kalibrieren: Versatz der Köpfe",
   "datei": "Kalibrier_3_Versatz"
  },
  {
@@ -1907,10 +1907,10 @@
   "vorschau": "vorschau.png",
   "projekt": "Kalibrier_2_Winkel.3mf",
   "bild_im_gcode": true,
-  "gruppe": "kalibrier",
-  "gruppe_titel": "Kalibrier-Set",
-  "nr": 2,
-  "titel": "Winkel",
+  "gruppe": "drehteller",
+  "gruppe_titel": "Drehteller & Foto-Scan-Set",
+  "nr": 15,
+  "titel": "Kalibrieren: Winkel",
   "datei": "Kalibrier_2_Winkel"
  },
  {
@@ -1956,10 +1956,10 @@
   "vorschau": "vorschau.png",
   "projekt": "Kalibrier_1_Haftung.3mf",
   "bild_im_gcode": true,
-  "gruppe": "kalibrier",
-  "gruppe_titel": "Kalibrier-Set",
-  "nr": 1,
-  "titel": "Haftung",
+  "gruppe": "drehteller",
+  "gruppe_titel": "Drehteller & Foto-Scan-Set",
+  "nr": 14,
+  "titel": "Kalibrieren: Haftung",
   "datei": "Kalibrier_1_Haftung"
  }
 ]

@@ -213,9 +213,10 @@ async function laden(){
     try { DRUCKER[k] = await (await fetch(`drucker/${k}.json`, {cache:"no-store"})).json(); } catch(e) {}
   }
   try { LAGER = await (await fetch("auftraege/index.json", {cache:"no-store"})).json(); } catch(e) { LAGER = []; }
-  // Alles aus dem Lager erscheint von selbst (kein „Speichern“ mehr nötig); dazu eigene Einträge, die es im Lager nicht mehr gibt.
+  // Alles aus dem Lager erscheint von selbst. Alte Einträge vom Gerät, die es im Lager nicht mehr gibt, fallen weg (Tom 24.11.2026: Karten ohne Bild und Datei) –
+  // nur ohne Netz (Lager leer) bleibt die gemerkte Liste stehen.
   const alt = meineLaden(), weg = verborgen();
-  AUFTRAEGE = [...LAGER.filter(a => !weg.includes(a.ordner)), ...alt.filter(a => !LAGER.some(x => x.ordner === a.ordner) && !weg.includes(a.ordner))];
+  AUFTRAEGE = LAGER.length ? LAGER.filter(a => !weg.includes(a.ordner)) : alt.filter(a => !weg.includes(a.ordner));
   AUFTRAEGE.sort((x,y) => (y.datum + y.ordner).localeCompare(x.datum + x.ordner));
   // Link von Claude: …/#hinzu=<ordner>[,<ordner>] → öffnet das Projekt (und holt Ausgeblendetes zurück)
   const m = location.hash.match(/hinzu=([^&]+)/);

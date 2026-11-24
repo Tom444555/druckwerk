@@ -54,6 +54,7 @@ Alte `_kobrax`-Aufträge laufen nicht auf dem Creator 5 Pro – bei Bedarf aus d
 - Projektseite: Köpfe und Düse einmal oben, Teile in Reihenfolge mit Haken, **„Alles für den USB-Stick laden“** = ZIP ohne Kompression, im Browser gebaut (`projekte.js → zip`):
   Ordner `<Projekt>/` mit `1_<datei>.gcode`, `2_…` und `LIESMICH.txt` (Köpfe, Reihenfolge, Zeiten). Zweiter Knopf: dieselben Teile als 3MF für Flash Studio am Mac.
   Ob der Creator 5 Pro am Bildschirm Unterordner des Sticks anzeigt, ist **am Gerät unbestätigt** – die Nummern vorn sortieren auch ohne Ordner.
+- **Seit 24.11.2026:** alte Einträge vom Gerät (`druckwerk_meine`), die es im Lager nicht mehr gibt, zeigt die App nicht mehr (waren Karten ohne Bild); nur ohne Netz gilt die gemerkte Liste. Das Kalibrier-Set gehört jetzt zum Projekt `drehteller` (Nr. 14–18, Titel „Kalibrieren: …“).
 - Alles aus dem Lager erscheint von selbst (kein „Speichern“ per Link mehr nötig); „ausblenden“ merkt sich das Gerät in `druckwerk_weg`, zurückholen unter Projekte ganz unten.
   Der Link `#hinzu=<ordner>[,…]` geht weiter und öffnet das Projekt; neu: `#projekt:<gruppe>`. Alte Adressen `#start`/`#auftraege` führen zu `#projekte`.
 - Direkte Verbindung App ↔ Drucker: geprüft 18.11.2026, **nicht zuverlässig möglich** (Webseite darf nicht ins Heimnetz, keine offizielle Schnittstelle; Tom will nichts Wackeliges).
@@ -73,7 +74,7 @@ Alte `_kobrax`-Aufträge laufen nicht auf dem Creator 5 Pro – bei Bedarf aus d
 - Jede Ansicht hat eine Adresse (`#projekte`, `#projekt:<gruppe>`, `#auftrag:<ordner>`, `#werkstatt:…`, `#kiweg:<schritt>`); Zurück/Vor funktionieren.
 - **Sicherung** (`sicherung.js`): alle `druckwerk_*`-Schlüssel + IndexedDB (eigene Modelle, Tagebuch-Fotos) als eine Datei; `druckwerk_gesichert` = Datum.
 - **Offline/PWA**: `manifest.webmanifest`, `symbol-*.png`, `sw.js` (immer zuerst Netz, Zwischenspeicher nur ohne Netz; .gcode/STL nie).
-  **Bei jeder Änderung an App-Dateien `CACHE` in `sw.js` hochzählen** (Stand `druckwerk-v25`) und neue Dateien dort eintragen.
+  **Bei jeder Änderung an App-Dateien `CACHE` in `sw.js` hochzählen** (Stand `druckwerk-v27`) und neue Dateien dort eintragen.
 - „Aus dem Lager hinzufügen“ heißt in der App jetzt „Weitere Aufträge von Claude“. Überall „Kopf 1–4“, nie „Spule“; Werkstatt-Slicen sendet `c5pro`.
 - Aufträge sind wie die Ideen im Looper **pro Gerät gespeichert** (localStorage `druckwerk_meine`): neue Besucher
   sehen eine leere Liste. Tom speichert einen Auftrag über den Link `https://tom444555.github.io/druckwerk/#hinzu=<ordner>`

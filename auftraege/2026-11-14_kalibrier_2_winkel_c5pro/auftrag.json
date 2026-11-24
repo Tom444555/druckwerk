@@ -41,9 +41,9 @@
  "vorschau": "vorschau.png",
  "projekt": "Kalibrier_2_Winkel.3mf",
  "bild_im_gcode": true,
- "gruppe": "kalibrier",
- "gruppe_titel": "Kalibrier-Set",
- "nr": 2,
- "titel": "Winkel",
+ "gruppe": "drehteller",
+ "gruppe_titel": "Drehteller & Foto-Scan-Set",
+ "nr": 15,
+ "titel": "Kalibrieren: Winkel",
  "datei": "Kalibrier_2_Winkel"
 }

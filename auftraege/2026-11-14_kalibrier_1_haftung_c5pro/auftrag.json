@@ -41,9 +41,9 @@
  "vorschau": "vorschau.png",
  "projekt": "Kalibrier_1_Haftung.3mf",
  "bild_im_gcode": true,
- "gruppe": "kalibrier",
- "gruppe_titel": "Kalibrier-Set",
- "nr": 1,
- "titel": "Haftung",
+ "gruppe": "drehteller",
+ "gruppe_titel": "Drehteller & Foto-Scan-Set",
+ "nr": 14,
+ "titel": "Kalibrieren: Haftung",
  "datei": "Kalibrier_1_Haftung"
 }

@@ -88,9 +88,9 @@
  "vorschau": "vorschau.png",
  "bild_im_gcode": true,
  "projekt": "Kalibrier_3_Versatz.3mf",
- "gruppe": "kalibrier",
- "gruppe_titel": "Kalibrier-Set",
- "nr": 3,
- "titel": "Versatz der Köpfe",
+ "gruppe": "drehteller",
+ "gruppe_titel": "Drehteller & Foto-Scan-Set",
+ "nr": 16,
+ "titel": "Kalibrieren: Versatz der Köpfe",
  "datei": "Kalibrier_3_Versatz"
 }

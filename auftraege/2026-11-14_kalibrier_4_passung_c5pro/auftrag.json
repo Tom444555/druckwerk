@@ -41,9 +41,9 @@
  "vorschau": "vorschau.png",
  "projekt": "Kalibrier_4_Passung.3mf",
  "bild_im_gcode": true,
- "gruppe": "kalibrier",
- "gruppe_titel": "Kalibrier-Set",
- "nr": 4,
- "titel": "Passung",
+ "gruppe": "drehteller",
+ "gruppe_titel": "Drehteller & Foto-Scan-Set",
+ "nr": 17,
+ "titel": "Kalibrieren: Passung",
  "datei": "Kalibrier_4_Passung"
 }
