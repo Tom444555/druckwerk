@@ -1,6 +1,6 @@
 # Lager-Katalog
 
-Stand 2026-11-23 – erzeugt von `werkzeug/katalog.py`, nicht von Hand ändern. Karteikarten: `lager/karten.json`.
+Stand 2026-11-24 – erzeugt von `werkzeug/katalog.py`, nicht von Hand ändern. Karteikarten: `lager/karten.json`.
 
 ## Gitarre & Musik
 
@@ -17,7 +17,7 @@ Stand 2026-11-23 – erzeugt von `werkzeug/katalog.py`, nicht von Hand ändern. 
 ### Schecter 190 mm (`schecter190`)
 - Stand: gerechnet · Herkunft: eigen · Schlagworte: Gitarre, Schecter, Miniatur, 0,25-mm-Düse
 - Modell: `modelle/gitarre_rundum.py`, `modelle/gitarre_rundum_daten.json`
-  - 1. Gitarre + Wirbel (ein Druck) → `auftraege/2026-11-23_gitarre190_c5pro/` · 7h 16m 13s · 18.36, 4.75, 9.38, 1.18 g · K1 PLA grau, K2 PLA weinrot, K3 PLA schwarz, K4 PLA silber
+  - 1. Gitarre + Wirbel (ein Druck) → `auftraege/2026-11-23_gitarre190_c5pro/` · 7h 15m 13s · 18.39, 4.64, 9.44, 1.18 g · K1 PLA grau, K2 PLA weinrot, K3 PLA schwarz, K4 PLA silber
 
 ### Schecter 370 mm (`schecter370`)
 - Stand: gerechnet · Herkunft: eigen · Schlagworte: Gitarre, Schecter, Miniatur, 0,25-mm-Düse
@@ -27,7 +27,12 @@ Stand 2026-11-23 – erzeugt von `werkzeug/katalog.py`, nicht von Hand ändern. 
 ### Stratocaster 190 mm (`stratocaster`)
 - Stand: gerechnet · Herkunft: fremd · Schlagworte: Gitarre, Stratocaster, Miniatur, 0,25-mm-Düse
 - Modell: `werkzeug/gitarre_farben.py`, `modelle/quelle/stratocaster_original.stl`
-  - 1. Gitarre + Wirbel + Kugeln (ein Druck) → `auftraege/2026-11-23_stratocaster190_c5pro/` · 6h 19m 21s · 17.71, 2.53, 7.08, 7.27 g · K1 PLA creme, K2 PLA weiß, K3 PLA holz, K4 PLA silber
+  - 1. Gitarre + Wirbel + Kugeln (ein Druck, Details nach Foto) → `auftraege/2026-11-23_stratocaster190_c5pro/` · 6h 12m 2s · 17.51, 2.98, 7.09, 6.28 g · K1 PLA creme, K2 PLA weiß, K3 PLA holz, K4 PLA silber
+
+### Stratocaster 240 mm (`stratocaster240`)
+- Stand: gerechnet · Herkunft: fremd · Schlagworte: Gitarre, Stratocaster, Miniatur, 0,25-mm-Düse, Steckregler
+- Modell: `werkzeug/gitarre_farben.py`, `modelle/quelle/stratocaster_original.stl`
+  - 1. Gitarre + Wirbel + Regler + Kugeln (ein Druck) → `auftraege/2026-11-24_stratocaster240_c5pro/` · 9h 54m 23s · 27.74, 9.17, 10.92, 8.30 g · K1 PLA creme, K2 PLA weiß, K3 PLA holz, K4 PLA silber
 
 ## Foto & Scan
 

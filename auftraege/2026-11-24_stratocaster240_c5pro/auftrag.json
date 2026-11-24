@@ -1,0 +1,122 @@
+{
+ "kopfwechsel": 427,
+ "koepfe_benutzt": [
+  1,
+  2,
+  3,
+  4
+ ],
+ "name": "stratocaster240",
+ "drucker": "c5pro",
+ "drucker_name": "Flashforge Creator 5 Pro",
+ "datum": "2026-11-24",
+ "ordner": "2026-11-24_stratocaster240_c5pro",
+ "gcode": "Stratocaster_240_komplett.gcode",
+ "zeit": "9h 54m 23s",
+ "gramm": "27.74, 9.17, 10.92, 8.30",
+ "meter": "9.30 m, 3.08 m, 3.66 m, 2.78 m",
+ "duese": "220,220,220,220",
+ "bett": "55,55,55,55",
+ "schicht": "0.08",
+ "stufe": "Standard",
+ "infill": 15,
+ "duese_mm": "0.25",
+ "waende": null,
+ "stuetzen": "aus",
+ "brim": "auto",
+ "gemischt": false,
+ "zusammen": true,
+ "slots": [
+  {
+   "slot": 1,
+   "material": "PLA",
+   "farbe": "creme"
+  },
+  {
+   "slot": 2,
+   "material": "PLA",
+   "farbe": "weiß"
+  },
+  {
+   "slot": 3,
+   "material": "PLA",
+   "farbe": "holz"
+  },
+  {
+   "slot": 4,
+   "material": "PLA",
+   "farbe": "silber"
+  }
+ ],
+ "teile": [
+  {
+   "datei": "strat_korpus.stl",
+   "slot": 1
+  },
+  {
+   "datei": "strat_weiss.stl",
+   "slot": 2
+  },
+  {
+   "datei": "strat_hals.stl",
+   "slot": 3
+  },
+  {
+   "datei": "strat_metall.stl",
+   "slot": 4
+  },
+  {
+   "datei": "strat_schwarz.stl",
+   "slot": 1,
+   "farbe": "schwarz"
+  },
+  {
+   "datei": "strat_wirbel_platte.stl",
+   "slot": 4
+  },
+  {
+   "datei": "strat_regler_platte.stl",
+   "slot": 2
+  }
+ ],
+ "quelle": "",
+ "teile_app": [
+  {
+   "datei": "strat_korpus.stl",
+   "slot": 1
+  },
+  {
+   "datei": "strat_weiss.stl",
+   "slot": 2
+  },
+  {
+   "datei": "strat_hals.stl",
+   "slot": 3
+  },
+  {
+   "datei": "strat_metall.app.stl",
+   "slot": 4
+  },
+  {
+   "datei": "strat_schwarz.stl",
+   "slot": 1,
+   "farbe": "schwarz"
+  },
+  {
+   "datei": "strat_wirbel_platte.stl",
+   "slot": 4
+  },
+  {
+   "datei": "strat_regler_platte.stl",
+   "slot": 2
+  }
+ ],
+ "vorschau": "vorschau.png",
+ "bild_im_gcode": true,
+ "projekt": "Stratocaster_240_komplett.3mf",
+ "gruppe": "stratocaster240",
+ "gruppe_titel": "Stratocaster 240 mm",
+ "nr": 1,
+ "titel": "Gitarre + Wirbel + Regler + Kugeln (ein Druck)",
+ "datei": "Stratocaster_240_komplett"
+}

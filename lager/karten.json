@@ -165,6 +165,22 @@
     "modelle/gitarre_rundum.py",
     "modelle/gitarre_rundum_daten.json"
    ]
+  },
+  "stratocaster240": {
+   "bereich": "musik",
+   "stand": "gerechnet",
+   "herkunft": "fremd",
+   "schlagworte": [
+    "Gitarre",
+    "Stratocaster",
+    "Miniatur",
+    "0,25-mm-Düse",
+    "Steckregler"
+   ],
+   "modell": [
+    "werkzeug/gitarre_farben.py",
+    "modelle/quelle/stratocaster_original.stl"
+   ]
   }
  }
 }

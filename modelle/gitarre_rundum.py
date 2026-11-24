@@ -153,6 +153,7 @@ def main():
     ap.add_argument("--spiel", type=float, default=0.12, help="Spiel der Steckverbindung je Seite im Druckmaß (mm)")
     ap.add_argument("--duese", type=float, default=0.25, help="Düse, auf die die Feinheiten abgestimmt werden: 0.25 (alle Köpfe, Standard seit 16.11.) oder 0.4")
     ap.add_argument("--breite", type=float, default=320.0, help="größte Korpusbreite in echten mm")
+    ap.add_argument("--kante", type=float, default=0.0, help="Rundung der Decken-Kante in echten mm (Tom 24.11.: wie bei der Strat, nur kleiner – 5 nimmt die scharfe Kante weg; 0 = alte schmale Kante 0,30 im Druckmaß). Der schwarze Rand wird so breit wie die Rundung.")
     ap.add_argument("--bauch", type=int, default=1, help="Bauch-Ausfräsung auf der Rückseite (braucht Stützen)")
     ap.add_argument("--pruef", action="store_true"); ap.add_argument("--ziel", default=str(HIER)); ap.add_argument("--name", default="gitarre_rundum")
     a = ap.parse_args()
@@ -196,7 +197,8 @@ def main():
     koepfe = vereint2([kreis(2.4, 16).translate(((i - 2.5) * 10.5, Y(MENSUR + 36.0))) for i in range(6)])
     pus = vereint2([pu_fuss(s) for s in PU])
     hw = vereint2([pu_fuss(s) for s in PU] + [steg_fl, koepfe] + [kreis(9.5).translate(q) for q in regler] + [schlitz])
-    innen = K.offset(-(p(0.38 + 0.45) if a.duese < 0.3 else SLAB + p(0.9)), RUND, 2.0, SEG)
+    RK = max(p(0.30), a.kante); RB = max(p(0.38), RK + p(0.06))                          # Kantenradius und Breite des schwarzen Rands (echte mm)
+    innen = K.offset(-(RB + p(0.45) if a.duese < 0.3 else SLAB + p(0.9)), RUND, 2.0, SEG)
     wl = {2: D["wolken_viel"], 3: D["wolken_fein"], 4: D["wolken_max"]}.get(a.wolken, D["wolken"])
     W = CS()
     if a.wolken:
@@ -207,9 +209,9 @@ def main():
         W = W.offset(0.07, RUND, 2.0, 12).simplify(0.06)                                   # Engstellen ohne Breite verschmelzen (sonst Kanten mit vier Flächen)
     z_slab = T_B - SLAB
     if D25:                                                                           # feine Düse: schmale gerundete Kante als schwarzer Rand, Decke bis dorthin rot
-        RK, RB = p(0.30), p(0.38)
+        w_s = math.asin(max(0.0, (RK - SLAB) / RK)); e_s = RK * (1 - math.cos(w_s))        # Bogen beginnt unter der Deckschicht: unterer Teil gehört zum Kern
         decke_in = K.offset(-(RB + FUGE), RUND, 2.0, SEG) - hw - hals_fl - W.offset(FUGE, RUND)
-        rund = [(0.0, z_slab)] + [(RK * (1 - math.cos(w)), T_B - RK + RK * math.sin(w)) for w in np.linspace(0, math.pi / 2, KANTE)]
+        rund = ([(0.0, z_slab)] if w_s == 0 else []) + [(RK * (1 - math.cos(w)), T_B - RK + RK * math.sin(w)) for w in np.linspace(w_s, math.pi / 2, KANTE)]
         rand_k = band(K, rund, RB) - prisma(hals_fl, z_slab - 1, T_B + 1)
         if a.decke == "unter":                                                          # eine Deckfarbe; Muster schwarz darunter, schmaler schwarzer Rand wie am Original
             HAUT = p(a.haut); voll = K.offset(-(RB + FUGE), RUND, 2.0, SEG) - hw - hals_fl
@@ -227,7 +229,11 @@ def main():
 
     # ---------------- Korpus-Kern (grau) mit Fase unten ----------------
     FASE = p(0.6)
-    kern = vereint([prisma(K.offset(-FASE - 0.9, RUND, 2.0, SEG), 0, z_slab), band(K, [(FASE, 0.0), (0.0, FASE), (0.0, z_slab)], FASE + 1.5)])
+    if D25 and w_s > 0:                                                                # größere Kantenrundung: Kern-Wand läuft oben in den Bogen, bis zur Deckschicht
+        IN = max(FASE, e_s)
+        wand = [(FASE, 0.0), (0.0, FASE), (0.0, T_B - RK)] + [(RK * (1 - math.cos(w)), T_B - RK + RK * math.sin(w)) for w in np.linspace(0, w_s, max(4, KANTE // 2))[1:]]
+    else: IN = FASE; wand = [(FASE, 0.0), (0.0, FASE), (0.0, z_slab)]
+    kern = vereint([prisma(K.offset(-IN - 0.9, RUND, 2.0, SEG), 0, z_slab), band(K, wand, IN + 1.5)])
     grau.append(prisma(hals_fl, z_slab - 0.5, ZFB))
     # Rückseite: Deckel und sechs Saitenhülsen (schwarz, bündig)
     deckel = rechteck(38, 100, 18).translate((92, Y(661))) - vereint2([kreis(max(2.0, p(0.3)), 14).translate((92 + dx, Y(661) + dy)) for dx in (0,) for dy in (-41, 41)])

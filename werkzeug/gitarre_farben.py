@@ -9,13 +9,17 @@ Kegellöcher statt Mechanik-Achsen und strat_wirbel.stl / strat_wirbel_platte.st
 (Griffbrett-Punkte, Tonabnehmer-Pole, schwarze Mittellage des Schlagbretts als Linie am Rand – liegt komplett ÜBER der Korpusdecke, deshalb
 auf Kopf 1 mit Spulenwechsel creme → schwarz druckbar), 22. Bund mit Griffbrett-Überstand, Sattel weiß, alle Schrauben und Gurtknöpfe silber,
 Zwei-Punkt-Tremolo (zwei Bolzen statt sechs Schrauben), zwei Saitenniederhalter, Halsstab-Tropfen als Vertiefung, Rückseite plan aufs Bett:
-Federfach-Deckel weiß und Halsplatte silber als bündige Einlagen (vorher standen sie 0,3 mm vor und der Korpus schwebte)."""
+Federfach-Deckel weiß und Halsplatte silber als bündige Einlagen (vorher standen sie 0,3 mm vor und der Korpus schwebte).
+--regler 1 (24.11.2026, nur mit --details 1, ab ~215 mm, empfohlen 240): die drei Regler als drehbare Steckteile (Zapfen Ø 2,0, Loch Ø 2,3 × 4,0 im Schlagbrett),
+strat_regler.stl / strat_regler_platte.stl mit 3 + 1 Ersatz, kopfüber und stützfrei gedruckt, Kopf 2 (weiß)."""
 import sys, math, argparse, numpy as np, trimesh, manifold3d as mf
 _ap = argparse.ArgumentParser(); _ap.add_argument('src'); _ap.add_argument('dst'); _ap.add_argument('laenge', type=float)
 _ap.add_argument('--schnur', type=int, default=0, help='1 = Schnur-Saiten mit Steckwirbeln statt fester Saiten-Stege')
 _ap.add_argument('--details', type=int, default=0, help='1 = Details nach Toms Fotos (5. Farbe schwarz, 22. Bund, Schrauben silber, Rückseite plan …)')
+_ap.add_argument('--regler', type=int, default=0, help='1 = drei drehbare Steckregler (ab ~215 mm, empfohlen 240): Regler aus dem Netz entfernt, Loch im Schlagbrett, strat_regler.stl / strat_regler_platte.stl (weiß)')
 A = _ap.parse_args(); src, dst, laenge = A.src, A.dst, A.laenge
 assert not A.details or A.schnur, '--details braucht --schnur 1'
+assert not A.regler or A.details, '--regler braucht --details 1'
 t = trimesh.load(src)
 M = mf.Manifold(mf.Mesh(vert_properties=np.asarray(t.vertices, np.float32), tri_verts=np.asarray(t.faces, np.uint32)))
 assert M.status() == mf.Error.NoError, M.status()
@@ -153,6 +157,15 @@ if A.details:
     mutter = kipp(mf.Manifold.cylinder(7.0, 6.2, 6.2, 6).translate([0, 0, -4.0]) + mf.Manifold.cylinder(9.0, 4.3, 4.3, 32).translate([0, 0, -4.0]))
     mutter = mutter ^ lok(mf.Manifold.cylinder(40, 1, 1, 96).scale([33.0, 15.5, 1]).translate([0, 0, ZK - BT - 3])) ^ box(-G, G, -G, G, -G, ZK + 0.5)
     M = M + mutter - kipp(mf.Manifold.cylinder(14.0, p(0.47), p(0.47), 24).translate([0, 0, -6.0]))
+if A.regler:
+    # ================= Drehbare Steckregler (24.11.2026, Tom: „die 240 kannst du fertig machen“) =================
+    # Lage und Form aus dem Netz gemessen (Mitte der Kappe; Rock r 13,4 bei z 45,65 → Kappe r 9,4 ab z 50, Oberkante 59,6)
+    REG = [(107.55, -958.07), (145.94, -979.29), (179.48, -1007.86)]
+    ZAPF_R, ZAPF_SP, ZAPF_L, LOCH_T = 1.0, 0.15, 3.6, 4.0                          # Druckmaß: Zapfen Ø 2,0, Spiel 0,15 je Seite, Loch 4,0 tief
+    assert 9.4 * s >= ZAPF_R + ZAPF_SP + 0.85, f'Regler zu klein für Steckzapfen (Länge {laenge} mm) – ab etwa 215 mm'
+    M = M - mf.Manifold.batch_boolean([zyl(x, y, 13.5, ZP + 0.02, 80) for x, y in REG], mf.OpType.Add)                       # alte Regler weg
+    M = M + mf.Manifold.batch_boolean([zyl(x, y, p(2.4), ZP - p(LOCH_T + 0.8), ZP) for x, y in REG], mf.OpType.Add)          # volles Material um das Loch (Hohlräume unter dem Schlagbrett)
+    M = M - mf.Manifold.batch_boolean([zyl(x, y, p(ZAPF_R + ZAPF_SP), ZP - p(LOCH_T), ZP + 1, 48) for x, y in REG], mf.OpType.Add)
 breiten = [0.6, 0.55, 0.5, 0.42, 0.36, 0.3]   # Stegbreite je Saite im fertigen Modell (mm): E A D dick, g h e dünn
 if not A.schnur: saiten = mf.Manifold()
 y_s0, y_s1 = -996.0, Y_NUT
@@ -258,6 +271,27 @@ if A.schnur:
     bb = mf.Manifold.batch_boolean(list(fertig.values()), mf.OpType.Add).bounding_box()
     x0p = bb[3] + 6 + RR; y0p = bb[1] + 6 + RR
     tp = export(mf.Manifold.batch_boolean([m.translate([x0p, y0p, 0]) for m in raster], mf.OpType.Add), 'strat_wirbel_platte')
+    if A.regler:
+        # Regler kopfüber gedruckt (Kappe auf dem Bett, Rock weitet sich nach oben, Zapfen zeigt nach oben) – stützfrei. Zapfen leicht kegelig:
+        # an der Wurzel 0,01 dicker als das Loch → sitzt mit leichter Reibung, bevor der Rock aufliegt, und lässt sich drehen.
+        RT, RSK, HR, HSK = 9.4 * s, 13.4 * s, (59.6 - 45.65) * s, (50.0 - 45.65) * s
+        nr = max(16, int(round(2 * math.pi * RT / 0.7)))
+        rippe = np.array([[(RT - (0.12 if j % 2 else 0)) * math.cos(j * math.pi / nr), (RT - (0.12 if j % 2 else 0)) * math.sin(j * math.pi / nr)] for j in range(2 * nr)])
+        wz = ZAPF_R + ZAPF_SP + 0.01
+        knopf = (mf.Manifold.cylinder(0.26, RT - 0.3, RT - 0.12, 64) + mf.CrossSection([rippe]).extrude(HR - HSK - 0.25).translate([0, 0, 0.25])
+                 + mf.Manifold.cylinder(HSK - 0.16, RT - 0.12, RSK, 64).translate([0, 0, HR - HSK - 0.01]) + mf.Manifold.cylinder(0.17, RSK, RSK, 64).translate([0, 0, HR - 0.17])
+                 + mf.Manifold.cylinder(ZAPF_L, wz, ZAPF_R, 40).translate([0, 0, HR - 0.01]) + mf.Manifold.cylinder(0.25, ZAPF_R, ZAPF_R - 0.2, 40).translate([0, 0, HR + ZAPF_L - 0.02]))
+        yr = 2 * sp + 4.5 + 3.0 + RSK + 2.0; ar = 2 * RSK + 1.6
+        rr = [knopf.translate([ar * (j % 2), yr + ar * (j // 2), 0]) for j in range(4)]                      # 3 gebraucht + 1 Ersatz
+        tr_ = export(mf.Manifold.batch_boolean(rr, mf.OpType.Add), 'strat_regler')
+        trp = export(mf.Manifold.batch_boolean([m.translate([x0p, y0p, 0]) for m in rr], mf.OpType.Add), 'strat_regler_platte')
+        spalt = ZAPF_L * 0.01 / (wz - ZAPF_R)                                                                # so weit bleibt der Rock über dem Schlagbrett
+        zpd = (ZP + c[2]) * s
+        sr = [knopf.rotate([180, 0, 0]).translate([(x + c[0]) * s, (y + c[1]) * s, zpd + HR + spalt]) for x, y in REG]
+        print(f'strat_regler.stl: dicht={tr_.is_watertight}, 4 Regler (3 + 1 Ersatz), Kappe Ø {2*RT:.2f}, Rock Ø {2*RSK:.2f}, Höhe {HR:.2f}, {nr} Rippen, Zapfen Ø {2*wz:.2f} → {2*ZAPF_R:.2f} × {ZAPF_L}, '
+              f'Loch Ø {2*(ZAPF_R+ZAPF_SP):.2f} × {LOCH_T}, Rock {spalt:.2f} über dem Schlagbrett; Platte bis x {trp.bounds[1][0]:.1f}, y {trp.bounds[1][1]:.1f}')
+        for n_, m_ in fertig.items(): print(f'  Schnitt Regler/{n_}: {(mf.Manifold.batch_boolean(sr, mf.OpType.Add) ^ m_).volume():.3f} mm³')
+        export(mf.Manifold.batch_boolean(sr, mf.OpType.Add), '_regler_steckend')
     print(f'strat_wirbel.stl: dicht={tw.is_watertight}, 6 Wirbel, Rad Ø {2*RR:.1f}, Stufe {TIEF} mm, Höhe {tw.extents[2]:.1f}, Kegel Ø {2*r0:.2f} → {2*(r0 - steig*(lang+1.2)):.2f}, '
           f'Stift Ø {2*rk:.2f} × {KH:.1f}, Querloch Ø {2*QL:.2f}, Mechanik-Abstand {ABST:.2f}')
     print(f'Platte: Gitarre x {bb[0]:.1f}…{bb[3]:.1f}, y {bb[1]:.1f}…{bb[4]:.1f}; mit Wirbeln x {bb[0]:.1f}…{tp.bounds[1][0]:.1f}, y {min(bb[1], tp.bounds[0][1]):.1f}…{max(bb[4], tp.bounds[1][1]):.1f}')
