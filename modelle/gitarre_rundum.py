@@ -153,7 +153,7 @@ def main():
     ap.add_argument("--spiel", type=float, default=0.12, help="Spiel der Steckverbindung je Seite im Druckmaß (mm)")
     ap.add_argument("--duese", type=float, default=0.25, help="Düse, auf die die Feinheiten abgestimmt werden: 0.25 (alle Köpfe, Standard seit 16.11.) oder 0.4")
     ap.add_argument("--breite", type=float, default=320.0, help="größte Korpusbreite in echten mm")
-    ap.add_argument("--kante", type=float, default=0.0, help="Rundung der Decken-Kante in echten mm (Tom 24.11.: wie bei der Strat, nur kleiner – 5 nimmt die scharfe Kante weg; 0 = alte schmale Kante 0,30 im Druckmaß). Der schwarze Rand wird so breit wie die Rundung.")
+    ap.add_argument("--kante", type=float, default=0.0, help="Rundung der Decken-Kante in echten mm (Tom 24.11.: wie bei der Strat, nur kleiner – 5 nimmt die scharfe Kante weg; 0 = alte schmale Kante 0,30 im Druckmaß). Rot läuft bis in die Rundung, Schwarz sitzt als schmales Band an der Seite (Rundung von Rot nach Schwarz).")
     ap.add_argument("--bauch", type=int, default=1, help="Bauch-Ausfräsung auf der Rückseite (braucht Stützen)")
     ap.add_argument("--pruef", action="store_true"); ap.add_argument("--ziel", default=str(HIER)); ap.add_argument("--name", default="gitarre_rundum")
     a = ap.parse_args()
@@ -212,13 +212,19 @@ def main():
         w_s = math.asin(max(0.0, (RK - SLAB) / RK)); e_s = RK * (1 - math.cos(w_s))        # Bogen beginnt unter der Deckschicht: unterer Teil gehört zum Kern
         decke_in = K.offset(-(RB + FUGE), RUND, 2.0, SEG) - hw - hals_fl - W.offset(FUGE, RUND)
         rund = ([(0.0, z_slab)] if w_s == 0 else []) + [(RK * (1 - math.cos(w)), T_B - RK + RK * math.sin(w)) for w in np.linspace(w_s, math.pi / 2, KANTE)]
-        rand_k = band(K, rund, RB) - prisma(hals_fl, z_slab - 1, T_B + 1)
+        rand_k = band(K, rund, RB) - prisma(hals_fl, z_slab - 1, T_B + 1); rot_ring = []
+        if a.kante > 0:                                                                 # Tom 24.11.: Rundung von ROT (Decke) nach SCHWARZ (Zarge) – Schwarz sitzt als Band an der Seite, Rot läuft bis in die Rundung
+            BW = min(p(0.32), 0.9 * RK); ZB = T_B - RK - p(0.6)                            # Bandstärke (schmalster druckbarer Ring) und Unterkante: 0,6 mm (Druck) gerade Zarge unter dem Bogen
+            bogen = lambda e: (e, T_B - RK + math.sqrt(max(0.0, RK * RK - (RK - e) ** 2)))
+            rand_k = band(K, [(0.0, ZB)] + [bogen(e) for e in np.linspace(0, BW - 0.03, KANTE)], BW)
+            rot_ring = [band(K, [(BW, z_slab)] + [bogen(e) for e in np.linspace(BW, RK, KANTE)], RB) - prisma(hals_fl, z_slab - 1, T_B + 1)]
         if a.decke == "unter":                                                          # eine Deckfarbe; Muster schwarz darunter, schmaler schwarzer Rand wie am Original
             HAUT = p(a.haut); voll = K.offset(-(RB + FUGE), RUND, 2.0, SEG) - hw - hals_fl
             rot = [prisma(voll, T_B - HAUT, T_B), prisma(voll.offset(-0.012, m3.JoinType.Miter) - W.offset(FUGE, RUND), z_slab, T_B - HAUT + 0.03)]
             schwarz = [prisma((hw - pus).offset(-FUGE), z_slab, T_B), prisma(W, z_slab, T_B - HAUT), rand_k]; dunkel = []
+            rot += rot_ring
         else:
-            rot = [prisma(decke_in, z_slab, T_B), rand_k]
+            rot = [prisma(decke_in, z_slab, T_B), rand_k] + rot_ring
             schwarz = [prisma((hw - pus).offset(-FUGE), z_slab, T_B)]; dunkel = [prisma(W, z_slab, T_B)]
     else:
         decke_in = K.offset(-(SLAB + 0.35), RUND, 2.0, SEG) - hw - hals_fl - W.offset(FUGE, RUND)
@@ -229,11 +235,14 @@ def main():
 
     # ---------------- Korpus-Kern (grau) mit Fase unten ----------------
     FASE = p(0.6)
-    if D25 and w_s > 0:                                                                # größere Kantenrundung: Kern-Wand läuft oben in den Bogen, bis zur Deckschicht
+    if D25 and a.kante > 0:                                                            # schwarzes Band an der Seite: Kern-Wand außen nur bis ZB, darüber um die Bandstärke eingezogen
+        IN = max(FASE, BW)
+        kern = vereint([prisma(K.offset(-IN - 0.9, RUND, 2.0, SEG), 0, z_slab), band(K, [(FASE, 0.0), (0.0, FASE), (0.0, ZB)], IN + 1.5), band(K, [(BW, ZB), (BW, z_slab)], IN + 1.5)])
+    elif D25 and w_s > 0:                                                              # größere Kantenrundung: Kern-Wand läuft oben in den Bogen, bis zur Deckschicht
         IN = max(FASE, e_s)
         wand = [(FASE, 0.0), (0.0, FASE), (0.0, T_B - RK)] + [(RK * (1 - math.cos(w)), T_B - RK + RK * math.sin(w)) for w in np.linspace(0, w_s, max(4, KANTE // 2))[1:]]
     else: IN = FASE; wand = [(FASE, 0.0), (0.0, FASE), (0.0, z_slab)]
-    kern = vereint([prisma(K.offset(-IN - 0.9, RUND, 2.0, SEG), 0, z_slab), band(K, wand, IN + 1.5)])
+    if not (D25 and a.kante > 0): kern = vereint([prisma(K.offset(-IN - 0.9, RUND, 2.0, SEG), 0, z_slab), band(K, wand, IN + 1.5)])
     grau.append(prisma(hals_fl, z_slab - 0.5, ZFB))
     # Rückseite: Deckel und sechs Saitenhülsen (schwarz, bündig)
     deckel = rechteck(38, 100, 18).translate((92, Y(661))) - vereint2([kreis(max(2.0, p(0.3)), 14).translate((92 + dx, Y(661) + dy)) for dx in (0,) for dy in (-41, 41)])
@@ -463,6 +472,7 @@ def main():
     rot_k, schwarz_k, weiss_k = vereint(rot), vereint(schwarz) - zylinder(RSCH, f0 - 3 * ri3, f0 + 9.5 * ri3, 14), vereint(weiss)
     grau.append(schaft_k - prisma(CS.square((900, 1200)).translate((-450, -100)), -50, z_slab))
     grau_k = vereint([kern - vereint(schneider)] + grau)
+    if D25 and a.kante > 0: schwarz_k = schwarz_k - (rand_k ^ vereint(grau))            # Seitenband weicht dem Hals (grau hat dort Vorrang)
     koerper = {"grau": grau_k, "rot": rot_k, "schwarz": schwarz_k, "weiss": weiss_k}
     if dunkel: koerper["dunkelrot"] = vereint(dunkel)
     koerper = {n: k - bohr for n, k in koerper.items()}
