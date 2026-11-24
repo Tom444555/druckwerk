@@ -130,7 +130,12 @@ if A.details:
     ring_ = lambda pts, z: [[x, y, z] for x, y in pts]
     oben_ = mf.CrossSection([np.array([[-15.0, -9.0], [21.0, -2.6], [21.0, 2.6], [-15.0, 9.0]])]).offset(2.0, mf.JoinType.Round, 2.0, 32).to_polygons()[0]
     unten_ = mf.CrossSection.circle(5.6, 32).scale([1.5, 1.0]).translate([-6.5, 0]).to_polygons()[0]
-    M = M + lok(mf.Manifold.cylinder(BT + 3 + 0.7, 1, 1, 96).scale([34.0, 16.5, 1]).translate([0, 0, ZK - BT - 3]))
+    # Platten-Umriss = Hülle aus neuer Ellipse und alter Platte des Original-Netzes (Tom 24.11.: rechts stand die alte Platte als zweite Kante über) → ein glatter Rand rundum
+    alt_pl = (M ^ ellipse(144.5, -1044, 41, 23, -33.7, ZK - 1, ZK + 2)).slice(ZK + 0.35)
+    neu_pl = mf.CrossSection.circle(1.0, 96).scale([34.0, 16.5]).rotate(BW).translate([BM[0], BM[1]])
+    umriss = mf.CrossSection.batch_hull([alt_pl, neu_pl])
+    PLATTE = umriss.extrude(BT + 3 + 0.8).translate([0, 0, ZK - BT - 3])   # 0,8 über Decke: deckt die alte Platte (Oberkante ZK+0,74) ganz zu
+    M = (M - (ellipse(144.5, -1044, 41, 23, -33.7, ZK + 0.01, 60) - umriss.extrude(40).translate([0, 0, ZK - 5]))) + PLATTE   # Splitter der alten Platte außerhalb des Umrisses weg
     M = M - lok(mf.Manifold.hull_points(np.array(ring_(oben_, 46.5) + ring_(oben_, ZK - 0.6) + ring_(unten_, ZK - BT))))
     kipp = lambda m: lok(m.rotate([0, 55, 0]).translate([-13.5, 0, ZK - 7.0]))      # Achse 35° über der Waagrechten, zeigt zur Spitze
     mutter = kipp(mf.Manifold.cylinder(7.0, 6.2, 6.2, 6).translate([0, 0, -4.0]) + mf.Manifold.cylinder(9.0, 4.3, 4.3, 32).translate([0, 0, -4.0]))
@@ -180,7 +185,7 @@ if A.details:
     aussen = mf.CrossSection([max(pol, key=lambda P: abs(fl(P)))]).simplify(0.04)
     # Buchsenplatte samt Schrauben und die Brückenplatten-Ecke am Tremolo-Loch ganz silber (Tom 23.11.: Ränder waren weiß) – alles Weiße dort, das nicht Schlagbrett ist
     farbe((ellipse(144.5, -1044, 47, 28, -33.7, ZK + 0.02, 62) + box(84, 104, -1023, -974, ZK + 0.02, 62)) - aussen.offset(0.05).extrude(40).translate([0, 0, 30]), 'metall', ['weiss'])
-    farbe(lok(mf.Manifold.cylinder(BT + 3.2, 1, 1, 96).scale([34.2, 16.7, 1]).translate([0, 0, ZK - BT - 3.1])), 'metall', ['korpus'])   # Buchsenmulde innen silber
+    farbe(umriss.extrude(BT + 3.1).translate([0, 0, ZK - BT - 3.1]) ^ lok(mf.Manifold.cylinder(BT + 3.2, 1, 1, 96).scale([34.2, 16.7, 1]).translate([0, 0, ZK - BT - 3.1])), 'metall', ['korpus'])   # Buchsenmulde innen silber
     farbe(box(20, 85, -327.5, -316.5, 47.5, G), 'weiss', ['metall', 'hals'])                                   # Sattel hell (Knochen)
     farbe(box(38, 65, -1140, -1130.2, 8, 36) + box(-64, -34, -664.8, -640, 8, 36), 'metall', ['korpus'])  # Gurtknöpfe
     farbe(HPLATTE.extrude(p(0.32)), 'metall', ['korpus', 'hals'])                                       # Halsplatte
@@ -192,9 +197,10 @@ if A.details:
     BY = [-321.2, -368.4, -403.9, -437.1, -469.1, -498.1, -526.3, -552.6, -576.7, -599.9, -621.8, -642.4, -662.0, -680.2, -697.7, -714.3, -729.6, -743.8, -757.9, -770.2, -782.8, -794.9, Y22]
     PKT = [(52.2, (BY[n - 1] + BY[n]) / 2) for n in (3, 5, 7, 9, 15, 17, 19, 21)] + [(52.2 - 11.0, (BY[11] + BY[12]) / 2), (52.2 + 11.0, (BY[11] + BY[12]) / 2)]
     farbe(add([zyl(x, y, 3.2, 48.0 - p(0.26), 49.0) for x, y in PKT]), 'schwarz', ['hals'])              # Griffbrett-Punkte Ø 1,18 × 0,26 tief
-    # Schlagbrett dreilagig: schwarze Mittellage als Linie 0,30 breit, 0,28 vom Rand, von 0,12 über der Decke bis oben (bei Schicht 0,08: eine Schicht Weiß, zwei Schwarz, dazwischen bleibt Kopf 1 eine Schicht frei für den Spulenwechsel)
-    ring = aussen.offset(-p(0.28), mf.JoinType.Round, 2.0, 32) - aussen.offset(-p(0.58), mf.JoinType.Round, 2.0, 32)
-    farbe(ring.extrude(ZP - ZK - p(0.12) + 0.5).translate([0, 0, ZK + p(0.12)]) ^ box(-G, G, -G, G, -G, ZP + 0.001), 'schwarz', ['weiss'])
+    # Schlagbrett dreilagig wie am Original (Tom 24.11.): an der SENKRECHTEN Außenkante unten Weiß, Mitte Schwarz, oben Weiß – oben auf der Fläche keine Linie.
+    # Schlagbrett = 0,30 mm = 3 Schichten à 0,08 (Mitten 8,22 / 8,30 / 8,38) → schwarzes Band 0,30 breit am Rand von 0,12 bis 0,195 über der Decke = genau die mittlere Schicht.
+    band = aussen - aussen.offset(-p(0.30), mf.JoinType.Round, 2.0, 32)
+    farbe(band.extrude(p(0.075)).translate([0, 0, ZK + p(0.12)]), 'schwarz', ['weiss'])
     print(f'Details: Schlagbrett-Umriss {abs(fl(max(pol, key=lambda P: abs(fl(P))))) * s * s:.0f} mm², {len(PKT)} Punkte, {len(SCHR)} Schrauben vorn')
 z0 = 0.0 if A.details else t.bounds[0][2]; c = [-(t.bounds[0][0]+t.bounds[1][0])/2, -t.bounds[0][1], -z0]
 fertig = {}

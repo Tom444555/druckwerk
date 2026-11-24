@@ -1,5 +1,10 @@
 # Übergabe druckwerk
 
+## STAND 24.11.2026, 06:00 Uhr – hier einsteigen (Strat 190: Schlagbrett-Kante und Buchsenplatte nach Toms App-Bildschirmfotos)
+- **Schlagbrett** (0,30 mm = 3 Schichten): schwarzes Band nur noch an der senkrechten Außenkante in der mittleren Schicht (8,34 mm), oben und unten Weiß; die Linie oben auf der Fläche ist weg (`gitarre_farben.py`, `band`). Geprüft in der .gcode: T0 nur in 8,34.
+- **Buchsenplatte:** Umriss = Hülle aus neuer Ellipse und alter Platte (`umriss`), 0,8 über der Decke, Reste außerhalb weggeschnitten → ein Rand rundum, Schrauben bleiben, Mulde innen silber nur innerhalb des Umrisses.
+- Neu gerechnet `2026-11-23_stratocaster190_c5pro`: **6 h 12, 34 g, 273 Kopfwechsel**, Pause bei 8,26 wie gehabt, `"farbe": "schwarz"` für strat_schwarz.stl wieder eingetragen. Nichts gedruckt.
+
 ## STAND 23.11.2026, 19:15 Uhr – hier einsteigen (Strat 190 mit Details nach Toms 18 Fotos)
 - **Stratocaster 190** (`2026-11-23_stratocaster190_c5pro`, Ordner/Datei gleich): jetzt fünf Farben auf vier Köpfen – Kopf 1 creme, **Pause bei 8,26 mm → Schwarz** (Schlagbrett-Linie, Pole, Griffbrett-Punkte),
   Kopf 2 weiß (neu: Sattel, Federfach-Deckel), 3 Holz, 4 silber (neu: alle Schrauben, Gurtknöpfe, Halsplatte, zwei Tremolo-Bolzen, Saitenniederhalter). 22. Bund, Halsstab-Tropfen vertieft, Rückseite plan auf dem Bett.

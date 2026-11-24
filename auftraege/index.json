@@ -1,6 +1,6 @@
 [
  {
-  "kopfwechsel": 274,
+  "kopfwechsel": 273,
   "koepfe_benutzt": [
    1,
    2,
@@ -10,12 +10,12 @@
   "name": "stratocaster190",
   "drucker": "c5pro",
   "drucker_name": "Flashforge Creator 5 Pro",
-  "datum": "2026-11-23",
+  "datum": "2026-11-24",
   "ordner": "2026-11-23_stratocaster190_c5pro",
   "gcode": "Stratocaster_190_komplett.gcode",
-  "zeit": "6h 13m 11s",
-  "gramm": "17.57, 2.97, 7.09, 6.28",
-  "meter": "5.89 m, 1.00 m, 2.38 m, 2.11 m",
+  "zeit": "6h 11m 35s",
+  "gramm": "17.51, 2.98, 7.09, 6.28",
+  "meter": "5.87 m, 1.00 m, 2.38 m, 2.11 m",
   "duese": "220,220,220,220",
   "bett": "55,55,55,55",
   "schicht": "0.08",
@@ -97,8 +97,7 @@
    },
    {
     "datei": "strat_schwarz.stl",
-    "slot": 1,
-    "farbe": "schwarz"
+    "slot": 1
    },
    {
     "datei": "strat_wirbel_platte.stl",
@@ -112,13 +111,7 @@
   "gruppe_titel": "Stratocaster 190 mm",
   "nr": 1,
   "titel": "Gitarre + Wirbel + Kugeln (ein Druck, Details nach Foto)",
-  "datei": "Stratocaster_190_komplett",
-  "spulenwechsel": {
-   "kopf": 1,
-   "z": 8.26,
-   "von": "creme",
-   "auf": "schwarz"
-  }
+  "datei": "Stratocaster_190_komplett"
  },
  {
   "kopfwechsel": 519,

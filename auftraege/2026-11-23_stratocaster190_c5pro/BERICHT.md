@@ -2,8 +2,8 @@
 
 **Drucker:** Flashforge Creator 5 Pro  
 **Datei für USB:** `Stratocaster_190_komplett.gcode`  
-**Druckzeit (geschätzt):** 6h 13m 11s  
-**Filament:** 17.57, 2.97, 7.09, 6.28 g (5.89 m, 1.00 m, 2.38 m, 2.11 m)  
+**Druckzeit (geschätzt):** 6h 11m 35s  
+**Filament:** 17.51, 2.98, 7.09, 6.28 g (5.87 m, 1.00 m, 2.38 m, 2.11 m)  
 
 
 ## Spulen / Köpfe einlegen
@@ -39,7 +39,7 @@
 - `strat_schwarz.stl` → Slot 1 (PLA)
 - `strat_wirbel_platte.stl` → Slot 4 (PLA)
 
-Kopfwechsel in der .gcode: 274, benutzte Köpfe: 1, 2, 3, 4
+Kopfwechsel in der .gcode: 273, benutzte Köpfe: 1, 2, 3, 4
 
 ## Am Drucker
 
@@ -52,13 +52,12 @@ Kopfwechsel in der .gcode: 274, benutzte Köpfe: 1, 2, 3, 4
 ## Spulenwechsel an Kopf 1 (fünfte Farbe)
 
 - Die Datei hält bei **8,26 mm** von selbst an (`M25`). Dann an **Kopf 1 Creme gegen Schwarz** tauschen, nachschieben, bis rein Schwarz kommt, und fortsetzen.
-- Bis 8,18 mm druckt Kopf 1 den Korpus (creme), ab 8,34 mm nur noch Schwarz: Linie im Schlagbrett-Rand, 18 Tonabnehmer-Pole, 10 Griffbrett-Punkte.
+- Bis 8,18 mm druckt Kopf 1 den Korpus (creme), ab 8,34 mm nur noch Schwarz: schwarze Mittellage an der Schlagbrett-Kante (eine Schicht zwischen Weiß), 18 Tonabnehmer-Pole, 10 Griffbrett-Punkte.
 - Ohne Wechsel werden diese Teile creme statt schwarz – der Druck gelingt trotzdem.
 - Am Gerät noch nicht erprobt.
 
-## Details nach Toms Fotos (23.11.2026)
+- Bau: `python3 werkzeug/gitarre_farben.py modelle/quelle/stratocaster_original.stl <ziel> 190 --schnur 1 --details 1`, danach `spulenwechsel.py <gcode> --kopf 1 --min-luecke 0.1 --bei 8.25`; Teil `strat_schwarz.stl` bekommt in auftrag.json `"farbe": "schwarz"`.
 
-22. Bund mit Griffbrett-Überstand · Sattel weiß · alle Schrauben, Gurtknöpfe, Halsplatte, Buchsenplatte samt Mulde (neu geformt, mit Mutter und Loch) silber · Zwei-Punkt-Tremolo · zwei Saitenniederhalter (Optik) ·
-Halsstab-Tropfen als Vertiefung · Federfach-Deckel weiß mit sechs Schrauben · Rückseite liegt plan auf dem Bett.
-Bau: `python3 werkzeug/gitarre_farben.py modelle/quelle/stratocaster_original.stl <ziel> 190 --schnur 1 --details 1`, danach `spulenwechsel.py <gcode> --kopf 1 --min-luecke 0.1 --bei 8.25`
-und in `auftrag.json` beim Teil `strat_schwarz.stl` `"farbe": "schwarz"` eintragen (Anzeige in der App).
+## Änderung 24.11.2026 (Toms Bildschirmfotos)
+- Schlagbrett dreilagig an der senkrechten Kante: unten Weiß, Mitte Schwarz, oben Weiß – oben auf der Fläche keine schwarze Linie mehr.
+- Buchsenplatte: Umriss rundum gleich (alte Platte des Original-Netzes stand rechts als zweite Kante über), Schrauben bleiben drauf.
