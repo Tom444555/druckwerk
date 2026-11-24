@@ -424,8 +424,8 @@ So kam `modelle/gitarre_rundum.py` zustande; für ähnliche Vorhaben (Instrument
 - **Strat 240 mm mit drehbaren Steckreglern (24.11.2026):** `gitarre_farben.py <orig> <ziel> 240 --schnur 1 --details 1 --regler 1` → Regler aus dem Netz entfernt (Lage gemessen, `REG`), Loch Ø 2,3 × 4,0 im Schlagbrett
   (darunter volles Material), `strat_regler_platte.stl` (3 + 1 Ersatz, kopfüber, stützfrei, Kopf 2 weiß): Kappe Ø 4,4 mit Rippen, Rock Ø 6,3, Zapfen Ø 2,0 leicht kegelig (Wurzel 0,02 über Lochmaß → klemmt leicht, dreht).
   Ab ~215 mm (Assert im Skript). Bei 240 sind die Wirbel im Groß-Modus (Rad Ø 6,4, eine Ebene). Slicen `--wie` vom 190er-Auftrag + Regler-Teil auf Kopf 2; Pause mit `--bei 10.4` (Decke 10,29). Auftrag `2026-11-24_stratocaster240_c5pro`: 9 h 54, 56 g, 427 Kopfwechsel.
-- **Schecter: Decken-Kante gerundet (24.11.2026, Toms Wunsch „wie bei der Strat, etwas minimaler“):** `gitarre_rundum.py --kante 5` (echte mm; 0 = alte Kante 0,30 Druckmaß). Der Bogen läuft durch Kern (grau, unter der Deckschicht) und Rand;
-  der schwarze Rand wird so breit wie die Rundung (bei 190 mm rund 1 mm statt 0,38). Für alle Schecter-Größen jetzt Standard.
+- **Schecter: Decken-Kante gerundet (24.11.2026, Toms Wunsch „wie bei der Strat, etwas minimaler“):** `gitarre_rundum.py --kante 3` (echte mm; 0 = alte Kante 0,30 Druckmaß; erst 5, Tom wollte sie kleiner). Der Bogen läuft durch Kern (grau, unter der Deckschicht) und Rand;
+  der schwarze Rand wird so breit wie die Rundung (bei 190 mm rund 0,65 mm statt 0,38). Für alle Schecter-Größen jetzt Standard.
 - **Prüfbilder ohne `smooth_shading`** rendern: geglättete Normalen auf groben Original-Netzen zeigen Streifen/Kanten, die es nicht gibt (Tom hielt die Strat-Rückseite deshalb für „komisch“).
 - Gemeinsamer Druck = gemeinsame Einstellungen (Wirbel dann mit 15 % und Stützen auto statt 100 % / ohne Stützen) – Tom sagen.
 

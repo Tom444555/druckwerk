@@ -3,8 +3,8 @@
 ## STAND 24.11.2026, 09:45 Uhr – hier einsteigen (Strat 240 mit Steckreglern, Schecter-Kante gerundet)
 - **Stratocaster 240 mm** neu: `2026-11-24_stratocaster240_c5pro` (Projekt `stratocaster240`, `Stratocaster_240_komplett`): Gitarre + 6 Wirbel + 8 Lochkugeln + **4 drehbare Steckregler** (3 + 1 Ersatz, Kopf 2 weiß) in einem Druck,
   0,25/0,08 `--detail`, **9 h 54, 56 g, 427 Kopfwechsel**, Pause bei 10,34 mm (Kopf 1 Creme → Schwarz). Bau: `gitarre_farben.py … 240 --schnur 1 --details 1 --regler 1`. Strat 190 bleibt daneben im Lager.
-- **Schecter-Kante:** `gitarre_rundum.py --kante 5` (echte mm) rundet die Decken-Kante, schwarzer Rand dadurch rund 1 mm breit (190 mm). **Schecter 190 neu gerechnet** (gleicher Ordner `2026-11-23_gitarre190_c5pro`, 7 h 15).
-  **Offen:** Tom hat das Vorher/Nachher-Bild bekommen – nach seinem Ja zur Stärke Schecter 370 und 160 mit `--kante 5` neu bauen und slicen (noch alte Kante!).
+- **Schecter-Kante:** `gitarre_rundum.py --kante 3` (echte mm; 09:50 von 5 auf 3 verkleinert, Toms Wunsch) rundet die Decken-Kante, schwarzer Rand rund 0,65 mm breit (190 mm). **Schecter 190 neu gerechnet** (gleicher Ordner `2026-11-23_gitarre190_c5pro`).
+  **Offen:** Tom hat das Vorher/Nachher-Bild bekommen – nach seinem Ja zur Stärke Schecter 370 und 160 mit `--kante 3` neu bauen und slicen (noch alte Kante!).
 - Offen sonst: Regler-Farbe (jetzt weiß) bestätigen · Ständer für die Gitarren · Druck-Rückmeldungen. Nichts gedruckt.
 
 ## STAND 24.11.2026, 09:00 Uhr – hier einsteigen (App: feinste Details und Stütz-Kopf ohne Chat)
