@@ -3,7 +3,7 @@
 
   python3 modelle/gitarrenhalter190.py --ziel /tmp/h [--bild /tmp/h/v.png] [--winkel 12] [--kanal 9.4]
 
-Idee: zwei Wangen (je 5 mm) im Abstand von 30 mm auf einer Grundplatte. Die Gitarre steht mit der Korpus-Unterkante in einem Kanal
+Idee: zwei Wangen (je 5 mm) im Abstand von 30 mm, verbunden durch drei Querkufen und eine Querwand (keine Grundplatte – Toms Wunsch); in den Flossen ein eingelassenes Lochblech-Muster. Die Gitarre steht mit der Korpus-Unterkante in einem Kanal
 (Boden senkrecht zur Lehne, vorn eine Lippe) und lehnt mit der Korpus-Rückseite um 12° nach hinten an den Lehnen. Sie liegt auf ZWEI Punkten
 (links und rechts der Mitte) auf – der Gurtknopf in der Mitte hängt frei zwischen den Wangen, die Gitarre kippelt nicht.
 Die Lehne endet unter dem Hals: die Wirbelräder hinten an der Kopfplatte bleiben frei (deshalb kann die Gitarre nicht liegen).
@@ -39,12 +39,23 @@ def main():
     kanal = poly(A + 0.02 * u, A + 40 * u, B + 40 * u, B + 0.02 * u)                               # Kanal bleibt frei (Rundung darf ihn nicht zusetzen)
     wange = wange.offset(-0.8, RUND, 2.0, 32).offset(0.8, RUND, 2.0, 32) - kanal.offset(-0.01)
     dreh = np.array([[0, 0, 1, 0], [1, 0, 0, 0], [0, 1, 0, 0]], float)                              # (Tiefe, Höhe, Dicke) → (X, Tiefe, Höhe)
-    def wg(x0): return wange.extrude(5.0).transform(dreh).translate([x0, 0, 0])
     yF = B3[0] - 7
-    platte = CS.square([52 - 16, YR - yF + 4 - 16]).translate([-18, yF - 2 + 8]).offset(8, RUND, 2.0, 48).extrude(FUSS)
     hq = float(np.interp(31.5, [q[0] for q in bez], [q[1] for q in bez])) - 0.6
+    # Tom 24.11.: Grundplatte weg, in der Flosse ein Lochblech-Muster, etwas eingelassen (beidseitig 1 mm vertieft, Löcher Ø 2,4 im Sechseck-Raster 3,6)
+    feld = (poly(Ar, *bez, (YR, 0), (Ar[0], 0)) - poly((yF - 5, -1), (YR + 5, -1), (YR + 5, FUSS), (yF - 5, FUSS))).offset(-2.4, RUND, 2.0, 32)
+    feld = feld - poly((28.6, -1), (34.4, -1), (34.4, hq + 1.2), (28.6, hq + 1.2))                  # an der Querwand bleibt die Wange voll
+    innen = feld.offset(-1.5, RUND, 2.0, 16); b_ = feld.bounds(); loecher = []
+    for j, zz in enumerate(np.arange(b_[1], b_[3], 3.6 * math.sqrt(3) / 2)):
+        for yy in np.arange(b_[0] + (1.8 if j % 2 else 0.0), b_[2], 3.6):
+            if (CS.circle(0.05, 8).translate([yy, zz]) ^ innen).area() > 0: loecher.append(CS.circle(1.2, 24).translate([yy, zz]))
+    loch = CS.batch_boolean(loecher, mf.OpType.Add) if loecher else CS()
+    def wg(x0):
+        k = wange.extrude(5.0) - feld.extrude(1.0) - feld.extrude(1.0).translate([0, 0, 4.0]) - loch.extrude(7.0).translate([0, 0, -1.0])
+        return k.transform(dreh).translate([x0, 0, 0])
+    kufe = lambda y0, t: CS.square([54 - 2 * 1.6, t - 2 * 1.6]).translate([-27 + 1.6, y0 + 1.6]).offset(1.6, RUND, 2.0, 24).extrude(FUSS)   # Querkufen statt Platte: verbinden die Wangen, breiter Stand
     steg = M.cube([40, 3.0, hq]).translate([-20, 30, 0])                                            # Querwand hinten: verbindet die Wangen
-    halter = platte + wg(15.0) + wg(-20.0) + steg
+    halter = wg(15.0) + wg(-20.0) + steg + kufe(yF, 7.0) + kufe(28.0, 7.0) + kufe(YR - 6.0, 6.0)
+    print(f"Lochfeld: {len(loecher)} Löcher Ø 2,4 je Wange, Feld 1,0 mm vertieft (Steg dazwischen 3,0 mm)")
     ziel = Path(a.ziel); ziel.mkdir(parents=True, exist_ok=True)
     me = halter.to_mesh(); t = trimesh.Trimesh(np.asarray(me.vert_properties[:, :3], np.float64), me.tri_verts, process=True); t.export(ziel / "gitarrenhalter190.stl")
     print(f"gitarrenhalter190.stl: dicht={t.is_watertight}, Maße {t.extents.round(1).tolist()} mm, {halter.volume() / 1000:.1f} cm³ (PLA ≈ {halter.volume() * 1.24 / 1000:.0f} g voll)")
@@ -66,7 +77,7 @@ def main():
             mm = M(mf.Mesh(np.asarray(m.vertices, np.float32), np.asarray(m.faces, np.uint32)))
             if mm.status() == mf.Error.NoError: schnitt += (mm.transform(T[:3]) ^ halter).volume()
         zmin = float((np.c_[v, np.ones(len(v))] @ T.T)[:, 2].min()); kopf = (np.c_[v, np.ones(len(v))] @ T.T)
-        print(f"{n}: steht bei y0 {y0:.2f}, Schnittvolumen mit dem Halter {schnitt:.3f} mm³, tiefster Punkt {zmin:.2f} mm über dem Tisch (Platte {FUSS}), "
+        print(f"{n}: steht bei y0 {y0:.2f}, Schnittvolumen mit dem Halter {schnitt:.3f} mm³, tiefster Punkt {zmin:.2f} mm über dem Tisch (Kufen {FUSS}), "
               f"Kopf bei Tiefe {kopf[:, 1].max():.1f} / Höhe {kopf[:, 2].max():.1f} mm, Luft im Kanal {a.kanal - dick:.2f} mm")
     if a.bild and lage:
         import pyvista as pv

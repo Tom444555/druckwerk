@@ -441,6 +441,7 @@ So kam `modelle/gitarre_rundum.py` zustande; für ähnliche Vorhaben (Instrument
   Rückseite des Halses ist dadurch kantig (kein C-Profil), Bauch-Ausfräsung der Schecter bleibt. Nichts gedruckt.
 - **Ständer für die 190-mm-Gitarren (Entwurf 24.11.2026, `modelle/gitarrenhalter190.py`, noch NICHT gesliced – Tom hat erst das Bild):** zwei Wangen (5 mm, Abstand 30) auf Grundplatte 52 × 73, Kanal 9,4 mm für die Korpus-Unterkante,
   Lehne 12° / 66 mm, Gurtknopf hängt frei zwischen den Wangen (Zwei-Punkt-Auflage), Querwand hinten; druckt aufrecht ohne Stützen, ~30 g. Passung per Schnittvolumen: Schecter 0,000, Strat 0,2 mm³ (steht 1,7° schief, weil ihr Korpus unten unsymmetrisch ist).
+  **12:20 Toms Korrektur am Bild:** Grundplatte komplett weg (stattdessen drei Querkufen 54 mm breit + Querwand) und in den Flossen ein Lochblech-Muster, 1 mm je Seite eingelassen (23 Löcher Ø 2,4, Sechseck-Raster 3,6); jetzt ~19 g, 54 × 69 × 72 mm.
 - **Prüfbilder ohne `smooth_shading`** rendern: geglättete Normalen auf groben Original-Netzen zeigen Streifen/Kanten, die es nicht gibt (Tom hielt die Strat-Rückseite deshalb für „komisch“).
 - Gemeinsamer Druck = gemeinsame Einstellungen (Wirbel dann mit 15 % und Stützen auto statt 100 % / ohne Stützen) – Tom sagen.
 

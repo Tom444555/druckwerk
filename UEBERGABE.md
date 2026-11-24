@@ -3,7 +3,7 @@
 ## STAND 24.11.2026, 12:15 Uhr – hier einsteigen (Schlüsselanhänger 50 mm, Halter-Entwurf)
 - **Neu: Projekt `anhaenger` „Schlüsselanhänger 50 mm“** – `2026-11-24_anhaenger_strat_c5pro` (45 min, 3,8 g) und `2026-11-24_anhaenger_schecter_c5pro` (1 h 14, 5,8 g), je ein Teil mit Öse am Korpus-Ende, Hals von unten gefüllt.
   Werkzeug `werkzeug/anhaenger.py`, Strat-Schalter `--saiten 0`. Ablauf in CLAUDE.md. Offen: Tom fragen, ob die Öse unten passt (Gitarre hängt kopfüber) oder ans obere Horn soll.
-- **Halter 190 mm:** nur Entwurf `modelle/gitarrenhalter190.py` + Bild an Tom; nach seinem Ja slicen (Farbe/Material klären: er hat Schwarz nur als PETG), Projekt z. B. `gitarrenhalter190`, Bereich musik.
+- **Halter 190 mm:** Entwurf `modelle/gitarrenhalter190.py`, 12:20 nach Toms Skizze umgebaut (ohne Grundplatte, eingelassenes Lochblech in den Flossen), zweites Bild an Tom; nach seinem Ja slicen (Farbe/Material klären: er hat Schwarz nur als PETG), Projekt z. B. `gitarrenhalter190`, Bereich musik.
 - Weiter offen: Schecter 370/160 mit neuer Kante, Regler-Farbe Strat 240, Druck-Rückmeldungen. Nichts gedruckt.
 
 ## STAND 24.11.2026, 11:30 Uhr – hier einsteigen (Rundungen: Strat umlaufend, Schecter oben/unten)
