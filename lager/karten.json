@@ -181,6 +181,21 @@
     "werkzeug/gitarre_farben.py",
     "modelle/quelle/stratocaster_original.stl"
    ]
+  },
+  "anhaenger": {
+   "bereich": "musik",
+   "stand": "gerechnet",
+   "herkunft": "gemischt",
+   "schlagworte": [
+    "Gitarre",
+    "Schlüsselanhänger",
+    "Miniatur"
+   ],
+   "modell": [
+    "werkzeug/anhaenger.py",
+    "werkzeug/gitarre_farben.py",
+    "modelle/gitarre_rundum.py"
+   ]
   }
  }
 }

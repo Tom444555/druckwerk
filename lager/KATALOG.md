@@ -4,6 +4,12 @@ Stand 2026-11-24 – erzeugt von `werkzeug/katalog.py`, nicht von Hand ändern. 
 
 ## Gitarre & Musik
 
+### Schlüsselanhänger 50 mm (`anhaenger`)
+- Stand: gerechnet · Herkunft: gemischt · Schlagworte: Gitarre, Schlüsselanhänger, Miniatur
+- Modell: `werkzeug/anhaenger.py`, `werkzeug/gitarre_farben.py`, `modelle/gitarre_rundum.py`
+  - 1. Stratocaster → `auftraege/2026-11-24_anhaenger_strat_c5pro/` · 44m 34s · 2.01, 0.24, 1.13, 0.46 g · K1 PLA creme, K2 PLA weiß, K3 PLA holz, K4 PLA silber
+  - 2. Schecter → `auftraege/2026-11-24_anhaenger_schecter_c5pro/` · 1h 13m 54s · 2.44, 1.09, 1.47, 0.75 g · K1 PLA grau, K2 PLA weinrot, K3 PLA schwarz, K4 PLA silber
+
 ### Loopsmiths-Verstärker (`loopsmiths_amp`)
 - Stand: gerechnet · Herkunft: eigen · Schlagworte: Amp, Loopsmiths, 0,25-mm-Düse
 - Modell: `modelle/loopsmiths_amp.scad`
@@ -17,7 +23,7 @@ Stand 2026-11-24 – erzeugt von `werkzeug/katalog.py`, nicht von Hand ändern. 
 ### Schecter 190 mm (`schecter190`)
 - Stand: gerechnet · Herkunft: eigen · Schlagworte: Gitarre, Schecter, Miniatur, 0,25-mm-Düse
 - Modell: `modelle/gitarre_rundum.py`, `modelle/gitarre_rundum_daten.json`
-  - 1. Gitarre + Wirbel (ein Druck) → `auftraege/2026-11-23_gitarre190_c5pro/` · 7h 15m 13s · 18.39, 4.64, 9.44, 1.18 g · K1 PLA grau, K2 PLA weinrot, K3 PLA schwarz, K4 PLA silber
+  - 1. Gitarre + Wirbel (ein Druck) → `auftraege/2026-11-23_gitarre190_c5pro/` · 7h 16m 42s · 18.34, 4.77, 9.40, 1.18 g · K1 PLA grau, K2 PLA weinrot, K3 PLA schwarz, K4 PLA silber
 
 ### Schecter 370 mm (`schecter370`)
 - Stand: gerechnet · Herkunft: eigen · Schlagworte: Gitarre, Schecter, Miniatur, 0,25-mm-Düse
@@ -27,12 +33,12 @@ Stand 2026-11-24 – erzeugt von `werkzeug/katalog.py`, nicht von Hand ändern. 
 ### Stratocaster 190 mm (`stratocaster`)
 - Stand: gerechnet · Herkunft: fremd · Schlagworte: Gitarre, Stratocaster, Miniatur, 0,25-mm-Düse
 - Modell: `werkzeug/gitarre_farben.py`, `modelle/quelle/stratocaster_original.stl`
-  - 1. Gitarre + Wirbel + Kugeln (ein Druck, Details nach Foto) → `auftraege/2026-11-23_stratocaster190_c5pro/` · 6h 12m 2s · 17.51, 2.98, 7.09, 6.28 g · K1 PLA creme, K2 PLA weiß, K3 PLA holz, K4 PLA silber
+  - 1. Gitarre + Wirbel + Kugeln (ein Druck, Details nach Foto) → `auftraege/2026-11-23_stratocaster190_c5pro/` · 6h 12m 22s · 17.50, 2.98, 7.09, 6.28 g · K1 PLA creme, K2 PLA weiß, K3 PLA holz, K4 PLA silber
 
 ### Stratocaster 240 mm (`stratocaster240`)
 - Stand: gerechnet · Herkunft: fremd · Schlagworte: Gitarre, Stratocaster, Miniatur, 0,25-mm-Düse, Steckregler
 - Modell: `werkzeug/gitarre_farben.py`, `modelle/quelle/stratocaster_original.stl`
-  - 1. Gitarre + Wirbel + Regler + Kugeln (ein Druck) → `auftraege/2026-11-24_stratocaster240_c5pro/` · 9h 54m 23s · 27.74, 9.17, 10.92, 8.30 g · K1 PLA creme, K2 PLA weiß, K3 PLA holz, K4 PLA silber
+  - 1. Gitarre + Wirbel + Regler + Kugeln (ein Druck) → `auftraege/2026-11-24_stratocaster240_c5pro/` · 9h 53m 32s · 27.73, 9.17, 10.92, 8.30 g · K1 PLA creme, K2 PLA weiß, K3 PLA holz, K4 PLA silber
 
 ## Foto & Scan
 

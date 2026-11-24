@@ -434,6 +434,13 @@ So kam `modelle/gitarre_rundum.py` zustande; für ähnliche Vorhaben (Instrument
   Erst als ~2300 Einzel-Hüllen gebaut → bei 190 mm wurde der Prozess beim späteren `decompose()` abgeschossen (Speicher). Außerhalb der Abflachung trifft der Abtrag nur Luft. Strat 190 (6 h 12) und 240 (9 h 54) neu gerechnet.
 - **Schecter-Zarge „noch runder“ (24.11.2026):** `fein()` tastet den Umriss alle 0,5 mm neu ab und glättet ihn (Gauß 3 mm; 6 mm machte `schwarz` undicht), `band()` jetzt mit Schritt 0,6 statt 1,2 – Abweichung zur alten Form höchstens 0,14 mm im Druck.
   **Die senkrechten Streifen in Toms Bildschirmfoto waren keine Kanten, sondern Helligkeitsstufen des Bildes** (Grauwert springt je Streifen um genau 1 von 255) – bei solchen Rückfragen erst die Pixelwerte prüfen, dann erklären.
+- **Schlüsselanhänger 50 mm aus beiden Gitarren (24.11.2026, Projekt `anhaenger`, je EIN Teil):** erst klein bauen – Schecter `gitarre_rundum.py --laenge 50 --wolken 4 --armschraege 0.25 --kante 3` (ohne `--wirbel`),
+  Strat `gitarre_farben.py <orig> <ziel> 50 --saiten 0` (neu: ohne Saiten, die Stege verschmelzen bei 50 mm zu einem Band; ohne `--schnur/--details`) – dann **`werkzeug/anhaenger.py --aus <ordner> --teil name=datei.stl … --korpus <farbe> --hals <farbe>`**:
+  füllt Hals und Kopfplatte von unten bis aufs Bett (Strahlen-Raster 0,12 mm → Säulen; aus 1,2 mm Hals wird ein Balken), holt eine schwebende ebene Korpus-Rückseite aufs Bett (Strat: 0,14 mm) und setzt eine Öse (außen Ø 6, Loch Ø 3,2, 2 mm dick)
+  ans Korpus-Ende; Gesamtlänge ~55 mm. Slicen 0,25/0,08 `--detail --infill 100`: Strat 45 min / 3,8 g / 47 Wechsel, Schecter 1 h 14 / 5,8 g / 79 Wechsel. Schecter-Farben überlappen bei 50 mm um ~1 mm³ und `schwarz` ist nicht dicht – der Slicer nahm es an.
+  Rückseite des Halses ist dadurch kantig (kein C-Profil), Bauch-Ausfräsung der Schecter bleibt. Nichts gedruckt.
+- **Ständer für die 190-mm-Gitarren (Entwurf 24.11.2026, `modelle/gitarrenhalter190.py`, noch NICHT gesliced – Tom hat erst das Bild):** zwei Wangen (5 mm, Abstand 30) auf Grundplatte 52 × 73, Kanal 9,4 mm für die Korpus-Unterkante,
+  Lehne 12° / 66 mm, Gurtknopf hängt frei zwischen den Wangen (Zwei-Punkt-Auflage), Querwand hinten; druckt aufrecht ohne Stützen, ~30 g. Passung per Schnittvolumen: Schecter 0,000, Strat 0,2 mm³ (steht 1,7° schief, weil ihr Korpus unten unsymmetrisch ist).
 - **Prüfbilder ohne `smooth_shading`** rendern: geglättete Normalen auf groben Original-Netzen zeigen Streifen/Kanten, die es nicht gibt (Tom hielt die Strat-Rückseite deshalb für „komisch“).
 - Gemeinsamer Druck = gemeinsame Einstellungen (Wirbel dann mit 15 % und Stützen auto statt 100 % / ohne Stützen) – Tom sagen.
 

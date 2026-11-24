@@ -16,6 +16,7 @@ import sys, math, argparse, numpy as np, trimesh, manifold3d as mf
 _ap = argparse.ArgumentParser(); _ap.add_argument('src'); _ap.add_argument('dst'); _ap.add_argument('laenge', type=float)
 _ap.add_argument('--schnur', type=int, default=0, help='1 = Schnur-Saiten mit Steckwirbeln statt fester Saiten-Stege')
 _ap.add_argument('--details', type=int, default=0, help='1 = Details nach Toms Fotos (5. Farbe schwarz, 22. Bund, Schrauben silber, Rückseite plan …)')
+_ap.add_argument('--saiten', type=int, default=1, help='0 = ohne Saiten (für sehr kleine Fassungen wie den 50-mm-Anhänger: die Saitenstege verschmelzen dort zu einem Band)')
 _ap.add_argument('--regler', type=int, default=0, help='1 = drei drehbare Steckregler (ab ~215 mm, empfohlen 240): Regler aus dem Netz entfernt, Loch im Schlagbrett, strat_regler.stl / strat_regler_platte.stl (weiß)')
 A = _ap.parse_args(); src, dst, laenge = A.src, A.dst, A.laenge
 assert not A.details or A.schnur, '--details braucht --schnur 1'
@@ -210,8 +211,9 @@ if A.regler:
     M = M - mf.Manifold.batch_boolean([zyl(x, y, p(ZAPF_R + ZAPF_SP), ZP - p(LOCH_T), ZP + 1, 48) for x, y in REG], mf.OpType.Add)
 breiten = [0.6, 0.55, 0.5, 0.42, 0.36, 0.3]   # Stegbreite je Saite im fertigen Modell (mm): E A D dick, g h e dünn
 if not A.schnur: saiten = mf.Manifold()
+if not A.schnur and not A.saiten: M = M - box(20, 85, -985.9, -323.6, 49.85, G) - box(20, 85, -319.3, Y_KOPF, 40.0, G)   # Saiten aus dem Netz, Mechaniken bleiben
 y_s0, y_s1 = -996.0, Y_NUT
-for x0, x1, br in ([] if A.schnur else zip(xa, xb, breiten)):
+for x0, x1, br in ([] if (A.schnur or not A.saiten) else zip(xa, xb, breiten)):
     bs = br / s
     f = lambda y: x0 + (x1-x0)*(y-ya)/(yb-ya)
     ecken = np.array([[f(y_s0)-bs/2, y_s0], [f(y_s0)+bs/2, y_s0], [f(y_s1)+bs/2, y_s1], [f(y_s1)-bs/2, y_s1]])

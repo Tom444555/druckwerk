@@ -122,6 +122,200 @@
   "datei": "Stratocaster_240_komplett"
  },
  {
+  "kopfwechsel": 47,
+  "koepfe_benutzt": [
+   1,
+   2,
+   3,
+   4
+  ],
+  "name": "anhaenger_strat",
+  "drucker": "c5pro",
+  "drucker_name": "Flashforge Creator 5 Pro",
+  "datum": "2026-11-24",
+  "ordner": "2026-11-24_anhaenger_strat_c5pro",
+  "gcode": "Anhaenger_Stratocaster_50.gcode",
+  "zeit": "44m 34s",
+  "gramm": "2.01, 0.24, 1.13, 0.46",
+  "meter": "0.67 m, 0.08 m, 0.38 m, 0.15 m",
+  "duese": "220,220,220,220",
+  "bett": "55,55,55,55",
+  "schicht": "0.08",
+  "stufe": "Standard",
+  "infill": 100,
+  "duese_mm": "0.25",
+  "waende": null,
+  "stuetzen": "auto",
+  "brim": "auto",
+  "gemischt": false,
+  "zusammen": true,
+  "detail": true,
+  "slots": [
+   {
+    "slot": 1,
+    "material": "PLA",
+    "farbe": "creme"
+   },
+   {
+    "slot": 2,
+    "material": "PLA",
+    "farbe": "weiß"
+   },
+   {
+    "slot": 3,
+    "material": "PLA",
+    "farbe": "holz"
+   },
+   {
+    "slot": 4,
+    "material": "PLA",
+    "farbe": "silber"
+   }
+  ],
+  "teile": [
+   {
+    "datei": "strat_korpus.stl",
+    "slot": 1
+   },
+   {
+    "datei": "strat_weiss.stl",
+    "slot": 2
+   },
+   {
+    "datei": "strat_hals.stl",
+    "slot": 3
+   },
+   {
+    "datei": "strat_metall.stl",
+    "slot": 4
+   }
+  ],
+  "quelle": "",
+  "teile_app": [
+   {
+    "datei": "strat_korpus.app.stl",
+    "slot": 1
+   },
+   {
+    "datei": "strat_weiss.stl",
+    "slot": 2
+   },
+   {
+    "datei": "strat_hals.stl",
+    "slot": 3
+   },
+   {
+    "datei": "strat_metall.app.stl",
+    "slot": 4
+   }
+  ],
+  "vorschau": "vorschau.png",
+  "bild_im_gcode": true,
+  "projekt": "Anhaenger_Stratocaster_50.3mf",
+  "gruppe": "anhaenger",
+  "gruppe_titel": "Schlüsselanhänger 50 mm",
+  "nr": 1,
+  "titel": "Stratocaster",
+  "datei": "Anhaenger_Stratocaster_50"
+ },
+ {
+  "kopfwechsel": 79,
+  "koepfe_benutzt": [
+   1,
+   2,
+   3,
+   4
+  ],
+  "name": "anhaenger_schecter",
+  "drucker": "c5pro",
+  "drucker_name": "Flashforge Creator 5 Pro",
+  "datum": "2026-11-24",
+  "ordner": "2026-11-24_anhaenger_schecter_c5pro",
+  "gcode": "Anhaenger_Schecter_50.gcode",
+  "zeit": "1h 13m 54s",
+  "gramm": "2.44, 1.09, 1.47, 0.75",
+  "meter": "0.82 m, 0.37 m, 0.49 m, 0.25 m",
+  "duese": "220,220,220,220",
+  "bett": "55,55,55,55",
+  "schicht": "0.08",
+  "stufe": "Standard",
+  "infill": 100,
+  "duese_mm": "0.25",
+  "waende": null,
+  "stuetzen": "auto",
+  "brim": "auto",
+  "gemischt": false,
+  "zusammen": true,
+  "detail": true,
+  "slots": [
+   {
+    "slot": 1,
+    "material": "PLA",
+    "farbe": "grau"
+   },
+   {
+    "slot": 2,
+    "material": "PLA",
+    "farbe": "weinrot"
+   },
+   {
+    "slot": 3,
+    "material": "PLA",
+    "farbe": "schwarz"
+   },
+   {
+    "slot": 4,
+    "material": "PLA",
+    "farbe": "silber"
+   }
+  ],
+  "teile": [
+   {
+    "datei": "sch50_grau.stl",
+    "slot": 1
+   },
+   {
+    "datei": "sch50_rot.stl",
+    "slot": 2
+   },
+   {
+    "datei": "sch50_schwarz.stl",
+    "slot": 3
+   },
+   {
+    "datei": "sch50_weiss.stl",
+    "slot": 4
+   }
+  ],
+  "quelle": "",
+  "teile_app": [
+   {
+    "datei": "sch50_grau.app.stl",
+    "slot": 1
+   },
+   {
+    "datei": "sch50_rot.app.stl",
+    "slot": 2
+   },
+   {
+    "datei": "sch50_schwarz.app.stl",
+    "slot": 3
+   },
+   {
+    "datei": "sch50_weiss.stl",
+    "slot": 4
+   }
+  ],
+  "vorschau": "vorschau.png",
+  "bild_im_gcode": true,
+  "projekt": "Anhaenger_Schecter_50.3mf",
+  "gruppe": "anhaenger",
+  "gruppe_titel": "Schlüsselanhänger 50 mm",
+  "nr": 2,
+  "titel": "Schecter",
+  "datei": "Anhaenger_Schecter_50"
+ },
+ {
   "kopfwechsel": 273,
   "koepfe_benutzt": [
    1,

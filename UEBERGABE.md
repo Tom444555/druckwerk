@@ -1,5 +1,11 @@
 # Übergabe druckwerk
 
+## STAND 24.11.2026, 12:15 Uhr – hier einsteigen (Schlüsselanhänger 50 mm, Halter-Entwurf)
+- **Neu: Projekt `anhaenger` „Schlüsselanhänger 50 mm“** – `2026-11-24_anhaenger_strat_c5pro` (45 min, 3,8 g) und `2026-11-24_anhaenger_schecter_c5pro` (1 h 14, 5,8 g), je ein Teil mit Öse am Korpus-Ende, Hals von unten gefüllt.
+  Werkzeug `werkzeug/anhaenger.py`, Strat-Schalter `--saiten 0`. Ablauf in CLAUDE.md. Offen: Tom fragen, ob die Öse unten passt (Gitarre hängt kopfüber) oder ans obere Horn soll.
+- **Halter 190 mm:** nur Entwurf `modelle/gitarrenhalter190.py` + Bild an Tom; nach seinem Ja slicen (Farbe/Material klären: er hat Schwarz nur als PETG), Projekt z. B. `gitarrenhalter190`, Bereich musik.
+- Weiter offen: Schecter 370/160 mit neuer Kante, Regler-Farbe Strat 240, Druck-Rückmeldungen. Nichts gedruckt.
+
 ## STAND 24.11.2026, 11:30 Uhr – hier einsteigen (Rundungen: Strat umlaufend, Schecter oben/unten)
 - **Strat 190 und 240:** Kantenrundung läuft jetzt auch entlang der Armauflage (umlaufend, r 7 wie am Original-Netz); beide neu gerechnet, Ordner gleich, Pausen wie gehabt (8,26 / 10,34 mm), `"farbe": "schwarz"` wieder eingetragen. Helfer für das Neu-Slicen samt Nacharbeit stand nur in /tmp (Ablauf: `--wie` → `spulenwechsel.py` → farbe → BERICHT-Abschnitt anhängen).
 - **Schecter 190:** Kante oben (Rot → schwarzes Seitenband) und unten gerundet (`--kante 3`), Umriss feiner (`fein()`), neu gerechnet 7 h 17. **Schecter 370 und 160 haben noch die ALTE Kante** – Tom wurde zweimal gefragt, Antwort offen; dann mit `--kante 3` neu bauen und slicen.
