@@ -2,8 +2,8 @@
 
 **Drucker:** Flashforge Creator 5 Pro  
 **Datei für USB:** `Stratocaster_240_komplett.gcode`  
-**Druckzeit (geschätzt):** 9h 54m 23s  
-**Filament:** 27.74, 9.17, 10.92, 8.30 g (9.30 m, 3.08 m, 3.66 m, 2.78 m)  
+**Druckzeit (geschätzt):** 9h 53m 32s  
+**Filament:** 27.73, 9.17, 10.92, 8.30 g (9.30 m, 3.08 m, 3.66 m, 2.78 m)  
 
 
 ## Spulen / Köpfe einlegen
@@ -63,3 +63,9 @@ Kopfwechsel in der .gcode: 427, benutzte Köpfe: 1, 2, 3, 4
 - Wirbel bei dieser Größe mit Rädern Ø 6,4 auf einer Ebene (Kegel Ø 2,85 → 2,15). Alles nur gerechnet, nicht gedruckt.
 
 - Bau: `python3 werkzeug/gitarre_farben.py modelle/quelle/stratocaster_original.stl <ziel> 240 --schnur 1 --details 1 --regler 1`, slicen mit `--wie` vom 190er-Auftrag, danach `spulenwechsel.py <gcode> --kopf 1 --min-luecke 0.1 --bei 10.4`; Teil `strat_schwarz.stl` bekommt in auftrag.json `"farbe": "schwarz"`.
+
+## Änderung 24.11.2026, 11 Uhr
+- Kantenrundung läuft jetzt auch entlang der Armauflage weiter (umlaufend, gleicher Radius wie am übrigen Korpus).
+
+## Änderung 24.11.2026, 11 Uhr
+- Kantenrundung läuft jetzt auch entlang der Armauflage weiter (umlaufend, gleicher Radius wie am übrigen Korpus).

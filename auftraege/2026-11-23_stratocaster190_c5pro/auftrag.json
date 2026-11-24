@@ -12,8 +12,8 @@
  "datum": "2026-11-24",
  "ordner": "2026-11-23_stratocaster190_c5pro",
  "gcode": "Stratocaster_190_komplett.gcode",
- "zeit": "6h 12m 2s",
- "gramm": "17.51, 2.98, 7.09, 6.28",
+ "zeit": "6h 12m 22s",
+ "gramm": "17.50, 2.98, 7.09, 6.28",
  "meter": "5.87 m, 1.00 m, 2.38 m, 2.11 m",
  "duese": "220,220,220,220",
  "bett": "55,55,55,55",
@@ -22,11 +22,10 @@
  "infill": 15,
  "duese_mm": "0.25",
  "waende": null,
- "stuetzen": "auto",
+ "stuetzen": "aus",
  "brim": "auto",
  "gemischt": false,
  "zusammen": true,
- "detail": true,
  "slots": [
   {
    "slot": 1,

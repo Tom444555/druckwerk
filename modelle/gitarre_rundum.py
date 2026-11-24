@@ -54,7 +54,19 @@ def vereint2(l):
 def glatt(cs, r): return cs.offset(-r, RUND, 2.0, SEG).offset(2 * r, RUND, 2.0, SEG).offset(-r, RUND, 2.0, SEG)
 
 
-def band(cs, profil, innen, schritt=1.2):
+def fein(cs, schritt=0.5, sigma=3.0):
+    """Umriss gleichmäßig neu abtasten (alle `schritt` mm) und entlang der Kurve weich glätten (Gauß, sigma in mm) – nimmt die kleinen Knicke
+    zwischen den Polygonstücken weg, die an der Zarge als senkrechte Facetten zu sehen waren (Tom 24.11.: „bekommen wir das noch runder“)."""
+    from scipy.ndimage import gaussian_filter1d
+    pts = np.asarray(max(cs.to_polygons(), key=len), float)
+    d = np.linalg.norm(np.roll(pts, -1, 0) - pts, axis=1); L = d.sum(); n = int(L / schritt)
+    u = np.concatenate([[0], np.cumsum(d)]); q = np.linspace(0, L, n, endpoint=False); zu = np.vstack([pts, pts[:1]])
+    P = np.stack([np.interp(q, u, zu[:, 0]), np.interp(q, u, zu[:, 1])], 1)
+    P = gaussian_filter1d(P, sigma / schritt, axis=0, mode="wrap")
+    return CS([P], NZ)
+
+
+def band(cs, profil, innen, schritt=0.6):
     """Geschlossener Ring entlang des Umrisses als EIN Netz: außen folgt er dem Profil [(Einzug, z), …] von unten nach oben,
     innen ist er eine senkrechte Wand beim Einzug `innen`. Alle Linien haben gleich viele Punkte (Versatz je Punkt entlang der Normalen),
     deshalb entstehen keine fast deckungsgleichen Kanten. Der Umriss muss glatter sein als der größte Einzug (Radius > innen)."""
@@ -175,7 +187,7 @@ def main():
     K = (K - unten_r) + unten_l.mirror((1, 0))
     K = glatt(K, 5.0) + rechteck(2 * halb(440), 70).translate((0, Y(440)))            # Halsbereich sicher geschlossen
     K = K.offset(-14, RUND, 2.0, 48).offset(14, RUND, 2.0, 48)                         # Nase vom Gurtknopf im Foto und kleine Wellen weg
-    K = glatt(K, 6.0).simplify(0.05)
+    K = fein(glatt(K, 6.0).simplify(0.05))
     kb = K.bounds(); print(f"Korpus {kb[2] - kb[0]:.0f} × {kb[3] - kb[1]:.0f} mm")
 
     # ---------------- 2D-Flächen auf der Decke ----------------

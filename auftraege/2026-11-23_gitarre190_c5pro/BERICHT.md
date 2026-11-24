@@ -2,8 +2,8 @@
 
 **Drucker:** Flashforge Creator 5 Pro  
 **Datei für USB:** `Schecter_190_komplett.gcode`  
-**Druckzeit (geschätzt):** 7h 16m 29s  
-**Filament:** 18.34, 4.77, 9.41, 1.18 g (6.15 m, 1.60 m, 3.15 m, 0.39 m)  
+**Druckzeit (geschätzt):** 7h 16m 42s  
+**Filament:** 18.34, 4.77, 9.40, 1.18 g (6.15 m, 1.60 m, 3.15 m, 0.39 m)  
 
 
 ## Spulen / Köpfe einlegen

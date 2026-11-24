@@ -429,6 +429,11 @@ So kam `modelle/gitarre_rundum.py` zustande; für ähnliche Vorhaben (Instrument
   Der Kern ist dafür oben um die Bandstärke eingezogen; das Band weicht am Hals dem Grau (`schwarz_k − (rand_k ^ grau)`). Bei 190 mm ist nur die oberste Schicht des Bogens rot, die Schulter druckt schwarz.
   Lehre: Tom benennt eine Rundung nach den Farben der beiden Flächen, die sie verbindet (Decke → Zarge). Für alle Schecter-Größen jetzt Standard.
   **10:52 „gleiche Rundung an der Unterseite“:** statt der 45°-Fase unten derselbe Radius (grau); der Bogen setzt mit 23° an (`T0 = 0.4`), damit die ersten Schichten tragen. Im Slicer geprüft: keine zusätzlichen Stützen am Rand (916 statt 917 Abschnitte), Zeit gleich.
+- **Strat: Kantenrundung umlaufend, auch an der Armauflage (24.11.2026, Toms rot markiertes App-Bild):** der Keil der Armauflage hatte dort die Original-Rundung (r ≈ 7 mm, aus dem Netz gemessen:
+  Einzug des Umrisses je Höhe) weggeschnitten. Neu in `gitarre_farben.py` direkt nach dem Keil: Abtrag mit demselben Radius **relativ zur abgesenkten Fläche** (`_zt`), als EIN Netz je Lauf (Querschnitt × Stationen alle 1,5 mm).
+  Erst als ~2300 Einzel-Hüllen gebaut → bei 190 mm wurde der Prozess beim späteren `decompose()` abgeschossen (Speicher). Außerhalb der Abflachung trifft der Abtrag nur Luft. Strat 190 (6 h 12) und 240 (9 h 54) neu gerechnet.
+- **Schecter-Zarge „noch runder“ (24.11.2026):** `fein()` tastet den Umriss alle 0,5 mm neu ab und glättet ihn (Gauß 3 mm; 6 mm machte `schwarz` undicht), `band()` jetzt mit Schritt 0,6 statt 1,2 – Abweichung zur alten Form höchstens 0,14 mm im Druck.
+  **Die senkrechten Streifen in Toms Bildschirmfoto waren keine Kanten, sondern Helligkeitsstufen des Bildes** (Grauwert springt je Streifen um genau 1 von 255) – bei solchen Rückfragen erst die Pixelwerte prüfen, dann erklären.
 - **Prüfbilder ohne `smooth_shading`** rendern: geglättete Normalen auf groben Original-Netzen zeigen Streifen/Kanten, die es nicht gibt (Tom hielt die Strat-Rückseite deshalb für „komisch“).
 - Gemeinsamer Druck = gemeinsame Einstellungen (Wirbel dann mit 15 % und Stützen auto statt 100 % / ohne Stützen) – Tom sagen.
 

@@ -40,6 +40,48 @@ _recht = mf.CrossSection([np.array([[-_W, -20.0], [120, -20.0], [120, 120], [-_W
 _keil = mf.Manifold.extrude(_recht - _kreis, 800).translate([0, 0, -400])
 _keil = _keil.transform(np.array([[_u[0], 0, _v[0], _P[0]], [_u[1], 0, _v[1], _P[1]], [0, 1, 0, 0]]))
 M = M - _keil
+# Kantenrundung auch entlang der Armauflage (Tom 24.11.: „die Rundung auch bei der Abflachung fortführen, dass es umlaufend ist“):
+# der Keil hatte dort die Original-Rundung (r ≈ 7, aus dem Netz gemessen) weggeschnitten → scharfe Kante. Neu: derselbe Radius, relativ zur abgesenkten Fläche,
+# als Abtrag aus kleinen Hüllkörpern entlang des Umrisses (Stationen alle 1,5 mm, 10 Streifen quer). Außerhalb der Abflachung trifft er nur Luft (dort ist schon rund).
+_RKR = 7.0
+_um = np.asarray(max((M ^ box(-150, 250, -1140, -810, -50, 200)).slice(9.0).to_polygons(), key=len), float)
+if np.sum(_um[:, 0] * np.roll(_um[:, 1], -1) - np.roll(_um[:, 0], -1) * _um[:, 1]) < 0: _um = _um[::-1]
+_dl = np.linalg.norm(np.roll(_um, -1, 0) - _um, axis=1); _L = _dl.sum(); _n = int(_L / 1.5)
+_uu = np.concatenate([[0], np.cumsum(_dl)]); _q = np.linspace(0, _L, _n, endpoint=False); _zu = np.vstack([_um, _um[:1]])
+_S = np.stack([np.interp(_q, _uu, _zu[:, 0]), np.interp(_q, _uu, _zu[:, 1])], 1)
+for _ in range(4): _S = (np.roll(_S, 1, 0) + 2 * _S + np.roll(_S, -1, 0)) / 4
+_tg = np.roll(_S, -1, 0) - np.roll(_S, 1, 0); _tg /= np.linalg.norm(_tg, axis=1)[:, None]; _N = np.stack([-_tg[:, 1], _tg[:, 0]], 1)   # nach innen
+def _zt(pt):
+    a_ = float((pt - _P) @ _u)
+    return 44.02 if a_ <= -_W else min(44.02, 44.0 - _R + math.sqrt(max(_R * _R - (a_ + _W) ** 2, 0.0)))
+def _zc(i, d): return (_zt(_S[i]) - _RKR) if d <= 0 else (_zt(_S[i] + d * _N[i]) - (_RKR - math.sqrt(max(_RKR * _RKR - (_RKR - d) ** 2, 0.0))))
+_D = [-5.0] + [float(x) for x in _RKR * (1 - np.cos(np.linspace(0, np.pi / 2, 10)))]
+_drin = [float((_S[i] - _P) @ _u) > -_W - 12 for i in range(_n)]
+_ab = []                                                       # je zusammenhängendem Lauf EIN Netz (Querschnitt × Stationen) – tausende Einzel-Hüllen sprengten bei 190 mm den Speicher
+_start = [i for i in range(_n) if _drin[i] and not _drin[i - 1]] or ([0] if all(_drin) else [])
+for i0 in _start:
+    lauf = []
+    while _drin[(i0 + len(lauf)) % _n] and len(lauf) < _n: lauf.append((i0 + len(lauf)) % _n)
+    if len(lauf) < 2: continue
+    V, T = [], []; m = len(_D) + 2
+    for ii in lauf:
+        oben = max(_zt(_S[ii] + d * _N[ii]) for d in _D[1:]) + 5.0
+        for d in _D: q2 = _S[ii] + d * _N[ii]; V.append([q2[0], q2[1], _zc(ii, d)])
+        qa, qb = _S[ii] + _D[-1] * _N[ii], _S[ii] + _D[0] * _N[ii]; V += [[qa[0], qa[1], oben], [qb[0], qb[1], oben]]
+    for a_ in range(len(lauf) - 1):
+        for k in range(m):
+            k2 = (k + 1) % m; p0, p1, p2, p3 = a_ * m + k, a_ * m + k2, (a_ + 1) * m + k2, (a_ + 1) * m + k
+            T += [(p0, p1, p2), (p0, p2, p3)]
+    e = (len(lauf) - 1) * m
+    for k in range(1, m - 2): T += [(m - 1, k + 1, k), (e + m - 1, e + k, e + k + 1)]; 
+    T += [(m - 1, 1, 0), (e + m - 1, e, e + 1)]
+    k_ = mf.Manifold(mf.Mesh(np.array(V, np.float32), np.array(T, np.uint32)))
+    if k_.volume() < 0: k_ = mf.Manifold(mf.Mesh(np.array(V, np.float32), np.array(T, np.uint32)[:, ::-1]))
+    assert k_.status() == mf.Error.NoError and k_.volume() > 0, k_.status()
+    _ab.append(k_)
+if _ab:
+    _v0 = M.volume(); M = M - mf.Manifold.batch_boolean(_ab, mf.OpType.Add)
+    print(f'Armauflage: Kantenrundung r {_RKR} über {sum(_drin)} Stationen, Abtrag {(_v0 - M.volume()):.0f} mm³ (Original)')
 # Halsrücken rund (C-Profil): halbe Ellipse unter dem Griffbrett, weiche Übergänge zu Halsfuß und Kopfplatte
 _xc, _a, _zo, _zu = 51.8, 26.6, 41.0, 17.1
 def _ell(y, n=48): return [[_xc + _a*np.cos(t), y, _zo - (_zo-_zu)*np.sin(t)] for t in np.linspace(0, np.pi, n)]

@@ -2,8 +2,8 @@
 
 **Drucker:** Flashforge Creator 5 Pro  
 **Datei für USB:** `Stratocaster_190_komplett.gcode`  
-**Druckzeit (geschätzt):** 6h 12m 2s  
-**Filament:** 17.51, 2.98, 7.09, 6.28 g (5.87 m, 1.00 m, 2.38 m, 2.11 m)  
+**Druckzeit (geschätzt):** 6h 12m 22s  
+**Filament:** 17.50, 2.98, 7.09, 6.28 g (5.87 m, 1.00 m, 2.38 m, 2.11 m)  
 
 
 ## Spulen / Köpfe einlegen
@@ -21,12 +21,11 @@
 - Schichthöhe: 0.08 mm (Standard)
 - Füllung: 15 %
 - Wände: Profil-Standard
-- Detail-Paket: Arachne (70 %/20 %), Auflösung 0,008, eine Wand oben, Außenwand 30 / Kleinumfang 20 / Oberfläche 40 mm/s, Außenwand-Beschleunigung 3000, 8 Deckschichten, Stützen nur ab Platte.
 - Kopf 1: Hersteller-Filamentprofil für 0,25-mm-Düse (220 °C, höchstens 2.8 mm³/s).
 - Kopf 2: Hersteller-Filamentprofil für 0,25-mm-Düse (220 °C, höchstens 2.8 mm³/s).
 - Kopf 3: Hersteller-Filamentprofil für 0,25-mm-Düse (220 °C, höchstens 2.8 mm³/s).
 - Kopf 4: Hersteller-Filamentprofil für 0,25-mm-Düse (220 °C, höchstens 2.8 mm³/s).
-- Stützen: auto
+- Stützen: aus
 - Brim: auto
 - Düsentemperatur: 220,220,220,220 °C, Bett: 55,55,55,55 °C
 
@@ -62,3 +61,6 @@ Kopfwechsel in der .gcode: 273, benutzte Köpfe: 1, 2, 3, 4
 - Schlagbrett dreilagig an der senkrechten Kante: unten Weiß, Mitte Schwarz, oben Weiß – oben auf der Fläche keine schwarze Linie mehr.
 - Buchsenplatte: Umriss rundum gleich (alte Platte des Original-Netzes stand rechts als zweite Kante über), Schrauben bleiben drauf.
 - 06:45 Nachbesserung: Buchsenplatte als spiegelgleiches Oval (15,5 × 6,2 mm), Achse durch beide Schrauben; Reste der schiefen alten Platte unten bündig mit Korpus gefüllt, oben weg (keine Beule rechts unten mehr).
+
+## Änderung 24.11.2026, 11 Uhr
+- Kantenrundung läuft jetzt auch entlang der Armauflage weiter (umlaufend, gleicher Radius wie am übrigen Korpus).

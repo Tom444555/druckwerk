@@ -1,5 +1,10 @@
 # Übergabe druckwerk
 
+## STAND 24.11.2026, 11:30 Uhr – hier einsteigen (Rundungen: Strat umlaufend, Schecter oben/unten)
+- **Strat 190 und 240:** Kantenrundung läuft jetzt auch entlang der Armauflage (umlaufend, r 7 wie am Original-Netz); beide neu gerechnet, Ordner gleich, Pausen wie gehabt (8,26 / 10,34 mm), `"farbe": "schwarz"` wieder eingetragen. Helfer für das Neu-Slicen samt Nacharbeit stand nur in /tmp (Ablauf: `--wie` → `spulenwechsel.py` → farbe → BERICHT-Abschnitt anhängen).
+- **Schecter 190:** Kante oben (Rot → schwarzes Seitenband) und unten gerundet (`--kante 3`), Umriss feiner (`fein()`), neu gerechnet 7 h 17. **Schecter 370 und 160 haben noch die ALTE Kante** – Tom wurde zweimal gefragt, Antwort offen; dann mit `--kante 3` neu bauen und slicen.
+- Offen: Regler-Farbe Strat 240 (weiß gewählt), Ständer, Druck-Rückmeldungen. Nichts gedruckt.
+
 ## STAND 24.11.2026, 09:45 Uhr – hier einsteigen (Strat 240 mit Steckreglern, Schecter-Kante gerundet)
 - **Stratocaster 240 mm** neu: `2026-11-24_stratocaster240_c5pro` (Projekt `stratocaster240`, `Stratocaster_240_komplett`): Gitarre + 6 Wirbel + 8 Lochkugeln + **4 drehbare Steckregler** (3 + 1 Ersatz, Kopf 2 weiß) in einem Druck,
   0,25/0,08 `--detail`, **9 h 54, 56 g, 427 Kopfwechsel**, Pause bei 10,34 mm (Kopf 1 Creme → Schwarz). Bau: `gitarre_farben.py … 240 --schnur 1 --details 1 --regler 1`. Strat 190 bleibt daneben im Lager.
