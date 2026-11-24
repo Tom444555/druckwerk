@@ -10,6 +10,11 @@ Stand 2026-11-24 – erzeugt von `werkzeug/katalog.py`, nicht von Hand ändern. 
   - 1. Stratocaster → `auftraege/2026-11-24_anhaenger_strat_c5pro/` · 43m 58s · 1.97, 0.24, 1.10, 0.46 g · K1 PLA , K2 PLA , K3 PLA , K4 PLA 
   - 2. Schecter → `auftraege/2026-11-24_anhaenger_schecter_c5pro/` · 1h 5m 40s · 2.44, 0.92, 1.29, 0.41 g · K1 PLA , K2 PLA , K3 PLA , K4 PLA 
 
+### gitarrenhalter190 (`gitarrenhalter190`)
+- Stand: gerechnet · Herkunft: – · Schlagworte: Gitarre, Halter, Ständer, Verstärker-Optik
+- Modell: `modelle/gitarrenhalter190.py`
+  - –. Gitarrenhalter 190 mm → `auftraege/2026-11-24_gitarrenhalter190_c5pro/` · 1h 52m 7s · 16.85, 7.55 g · K1 PETG schwarz, K2 PLA-SILK gold
+
 ### Loopsmiths-Verstärker (`loopsmiths_amp`)
 - Stand: gerechnet · Herkunft: eigen · Schlagworte: Amp, Loopsmiths, 0,25-mm-Düse
 - Modell: `modelle/loopsmiths_amp.scad`

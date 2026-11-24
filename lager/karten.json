@@ -188,6 +188,20 @@
     "werkzeug/gitarre_farben.py",
     "modelle/gitarre_rundum.py"
    ]
+  },
+  "gitarrenhalter190": {
+   "bereich": "musik",
+   "stand": "gerechnet",
+   "herkunft": "",
+   "schlagworte": [
+    "Gitarre",
+    "Halter",
+    "Ständer",
+    "Verstärker-Optik"
+   ],
+   "modell": [
+    "modelle/gitarrenhalter190.py"
+   ]
   }
  }
 }

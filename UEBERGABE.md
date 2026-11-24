@@ -1,6 +1,7 @@
 # Übergabe druckwerk
 
 ## STAND 24.11.2026, 12:15 Uhr – hier einsteigen (Schlüsselanhänger 50 mm, Halter-Entwurf)
+- **13:40:** Gitarrenhalter 190 fertig gesliced (schwarz PETG + goldene Blende PLA-Silk, 1 h 52, 24 g) – Tom hat die .gcode; Druck-Rückmeldung offen.
 - **13:10:** App zeigt keine verwaisten Geräte-Karten mehr (index.html, sw.js v27); Kalibrier-Set ins Projekt Drehteller & Foto-Scan-Set verschoben (Nr. 14–18).
 - **12:35 Nachtrag:** Anhänger neu (Öse weg, Loch in der Kopfplatte, Hals als Kiel, Schecter-Buchse klein) – gesliced und im Lager. Halter 190: dritter Entwurf (ohne Platte/Kufen, eine Querstrebe hinten, geschwungene Wangen) als Bild bei Tom, **noch nicht gesliced** – auf sein Ja warten, Material/Farbe fragen (Schwarz hat er nur als PETG).
 - **Neu: Projekt `anhaenger` „Schlüsselanhänger 50 mm“** – `2026-11-24_anhaenger_strat_c5pro` (45 min, 3,8 g) und `2026-11-24_anhaenger_schecter_c5pro` (1 h 14, 5,8 g), je ein Teil mit Öse am Korpus-Ende, Hals von unten gefüllt.

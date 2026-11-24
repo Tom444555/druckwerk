@@ -1,0 +1,65 @@
+{
+ "kopfwechsel": 188,
+ "koepfe_benutzt": [
+  1,
+  2
+ ],
+ "name": "gitarrenhalter190",
+ "drucker": "c5pro",
+ "drucker_name": "Flashforge Creator 5 Pro",
+ "datum": "2026-11-24",
+ "ordner": "2026-11-24_gitarrenhalter190_c5pro",
+ "gcode": "Gitarrenhalter_190.gcode",
+ "zeit": "1h 52m 7s",
+ "gramm": "16.85, 7.55",
+ "meter": "5.52 m, 2.53 m",
+ "duese": "235,230",
+ "bett": "65,65",
+ "schicht": "0.20",
+ "stufe": "Standard",
+ "infill": 30,
+ "duese_mm": "0.4",
+ "waende": 4,
+ "stuetzen": "aus",
+ "brim": "an",
+ "gemischt": true,
+ "zusammen": true,
+ "slots": [
+  {
+   "slot": 1,
+   "material": "PETG",
+   "farbe": "schwarz"
+  },
+  {
+   "slot": 2,
+   "material": "PLA-SILK",
+   "farbe": "gold"
+  }
+ ],
+ "teile": [
+  {
+   "datei": "gitarrenhalter190.stl",
+   "slot": 1
+  },
+  {
+   "datei": "gitarrenhalter190_gold.stl",
+   "slot": 2
+  }
+ ],
+ "quelle": "",
+ "teile_app": [
+  {
+   "datei": "gitarrenhalter190.stl",
+   "slot": 1
+  },
+  {
+   "datei": "gitarrenhalter190_gold.stl",
+   "slot": 2
+  }
+ ],
+ "vorschau": "vorschau.png",
+ "bild_im_gcode": true,
+ "projekt": "Gitarrenhalter_190.3mf",
+ "titel": "Gitarrenhalter 190 mm",
+ "datei": "Gitarrenhalter_190"
+}
