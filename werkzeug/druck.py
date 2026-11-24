@@ -565,7 +565,13 @@ def main():
     gname = f"{a.name}_{cfg['kurz']}.gcode"
     for kandidat in [tmp / "out" / "projekt.3mf", tmp / "projekt.3mf", Path.cwd() / "projekt.3mf"]:
         if kandidat.exists():
-            shutil.move(str(kandidat), ziel / f"{a.name}_{cfg['kurz']}.3mf"); break
+            shutil.move(str(kandidat), ziel / f"{a.name}_{cfg['kurz']}.3mf")
+            try:                          # seit 24.11.2026: 3MF für Flash Studio herrichten (unsere Werte als „abweichend“ melden, eingebettete .gcode heraus)
+                sys.path.insert(0, str(Path(__file__).resolve().parent)); import fs_3mf
+                print("3MF für Flash Studio:", fs_3mf.herrichten(ziel / f"{a.name}_{cfg['kurz']}.3mf"))
+            except Exception as ex:
+                print("WARNUNG: 3MF nicht hergerichtet –", ex)
+            break
     shutil.copy(gcodes[0], ziel / gname)
     stat = {}
     for sf in (tmp / "out").glob("*statistics.json"):
