@@ -44,12 +44,30 @@ def main():
     lehne = poly(A, oben, oben - LD * f, A - LD * f); block = poly((B3[0] - 12, -1), (A[0] + LD, -1), (A[0] + LD, A[1] + 1.5), (B3[0] - 12, A[1] + 1.5))
     feld = (wange - lehne.offset(0.3) - block - poly((-40, -1), (YR + 5, -1), (YR + 5, 3.6), (-40, 3.6)) - poly((30.8, -1), (36.2, -1), (36.2, hq + 1.4), (30.8, hq + 1.4)))
     feld = feld.offset(-2.2, RUND, 2.0, 32).offset(-0.7, RUND, 2.0, 32).offset(0.7, RUND, 2.0, 32)
-    innen = feld.offset(-0.7, RUND, 2.0, 16); b_ = feld.bounds(); loecher = []; zf = max(b_[3] - b_[1], 1.0)
-    for j, zz in enumerate(np.arange(b_[1] + 1.2, b_[3], 3.4 * math.sqrt(3) / 2)):
-        rl = 1.3 - 0.75 * (zz - b_[1]) / zf                                                         # unten Ø 2,6, oben Ø 1,1
-        for yy in np.arange(b_[0] + (1.7 if j % 2 else 0.0), b_[2], 3.4):
-            c = CS.circle(rl, 28).translate([yy, zz])
-            if (c - innen.offset(0.7 - 0.25)).area() < 1e-6: loecher.append(c)
+    innen = feld.offset(-0.7, RUND, 2.0, 16); b_ = innen.bounds(); loecher = []
+    # Tom 24.11., 13:09: „Löcher nicht schön angeordnet“ (Sechseck-Raster wurde vom geschwungenen Rand zerhackt; Reihen von Rand zu Rand wirkten unruhig)
+    # → Lochreihen PARALLEL ZUR LEHNE, wie Saiten neben der Gitarre: jede Reihe beginnt unten mit gleichem Rand und läuft nach oben aus, bis der Bogen sie beendet;
+    #   die Löcher werden entlang jeder Reihe kleiner (Ø 2,3 → 1,1). Alle Reihen beginnen auf gleicher Höhe → unten waagrechte Zeilen, schräge Spalten.
+    wq = np.array([u[1], -u[0]]); wq = wq if wq[0] > 0 else -wq                                    # quer zur Lehne, ins Feld hinein
+    pts = np.vstack([np.asarray(c) for c in innen.to_polygons()]); q0 = float((pts @ wq).min()); q1 = float((pts @ wq).max()); reihen = []
+    D0, D1, STEG, QUER = 2.3, 1.1, 1.0, 3.25
+    nq = max(1, int((q1 - q0 - D0) / QUER) + 1); rand_q = (q1 - q0 - (nq - 1) * QUER) / 2            # letzte Reihe darf kürzer sein, Rand links fest
+    for k in range(nq + 2):
+        qq = q0 + D0 / 2 + 0.35 + k * QUER
+        if qq > q1 - 0.6: break
+        st = innen ^ poly(qq * wq - 200 * u - 0.04 * wq, qq * wq + 200 * u - 0.04 * wq, qq * wq + 200 * u + 0.04 * wq, qq * wq - 200 * u + 0.04 * wq)
+        if st.area() < 1e-6: continue
+        sp = np.vstack([np.asarray(c) for c in st.to_polygons()]) @ u; t0, t1 = float(sp.min()), float(sp.max()); L = t1 - t0
+        if L < D1 + 0.3: continue
+        tt = t0 + D0 / 2 + 0.35; nn = 0
+        while True:
+            d = D0 + (D1 - D0) * min(1.0, max(0.0, (tt - t0) / max(L, 26.0)) * 1.25)
+            if tt + d / 2 + 0.3 > t1: break
+            c = CS.circle(d / 2, 32).translate(tuple(qq * wq + tt * u))
+            if (c - innen.offset(0.2)).area() < 1e-6: loecher.append(c); nn += 1
+            tt += d + STEG
+        reihen.append(nn)
+    print("Lochreihen parallel zur Lehne, Löcher je Reihe:", reihen)
     loch = CS.batch_boolean(loecher, mf.OpType.Add) if loecher else CS()
     def fase(cs, t=5.0, c=0.75, n=5):                                                               # Wange mit gebrochenen Kanten (Fase in feinen Stufen)
         k = cs.extrude(t - 2 * c).translate([0, 0, c])
@@ -71,7 +89,7 @@ def main():
     gipfel = min(12.0, hq - 3.2); bogen = poly((-10.5, -1), (10.5, -1), (10.5, max(1.0, gipfel - 10.5)), (0, gipfel), (-10.5, max(1.0, gipfel - 10.5)))
     strebe = (poly((-16, 0), (16, 0), (16, hq), (-16, hq)) - bogen).extrude(3.2).transform(np.array([[1, 0, 0, 0], [0, 0, 1, 32.0], [0, 1, 0, 0]], float))
     halter = wg(15.0) + wg(-20.0) + strebe
-    print(f"Lochfeld: {len(loecher)} Löcher Ø 2,6 → 1,1 je Wange, 1,0 mm vertieft; Querstrebe {hq:.1f} mm hoch mit Spitzbogen bis {gipfel:.1f} mm")
+    print(f"Lochfeld: {len(loecher)} Löcher je Wange, 1,0 mm vertieft; Querstrebe {hq:.1f} mm hoch mit Spitzbogen bis {gipfel:.1f} mm")
     ziel = Path(a.ziel); ziel.mkdir(parents=True, exist_ok=True)
     me = halter.to_mesh(); t = trimesh.Trimesh(np.asarray(me.vert_properties[:, :3], np.float64), me.tri_verts, process=True); t.export(ziel / "gitarrenhalter190.stl")
     print(f"gitarrenhalter190.stl: dicht={t.is_watertight}, Maße {t.extents.round(1).tolist()} mm, {halter.volume() / 1000:.1f} cm³ (PLA ≈ {halter.volume() * 1.24 / 1000:.0f} g voll)")
