@@ -236,8 +236,10 @@ def main():
     # ---------------- Korpus-Kern (grau) mit Fase unten ----------------
     FASE = p(0.6)
     if D25 and a.kante > 0:                                                            # schwarzes Band an der Seite: Kern-Wand außen nur bis ZB, darüber um die Bandstärke eingezogen
-        IN = max(FASE, BW)
-        kern = vereint([prisma(K.offset(-IN - 0.9, RUND, 2.0, SEG), 0, z_slab), band(K, [(FASE, 0.0), (0.0, FASE), (0.0, ZB)], IN + 1.5), band(K, [(BW, ZB), (BW, z_slab)], IN + 1.5)])
+        IN = max(FASE, BW, RK)
+        T0 = 0.4                                                                        # Tom 24.11.: gleiche Rundung an der Unterseite; der Bogen setzt mit 23° an (nicht waagrecht), damit die ersten Schichten auf dem Bett tragen
+        unten = [(RK * (1 - math.sin(t)), RK * (math.cos(T0) - math.cos(t))) for t in np.linspace(T0, math.pi / 2, KANTE)]
+        kern = vereint([prisma(K.offset(-IN - 0.9, RUND, 2.0, SEG), 0, z_slab), band(K, unten + [(0.0, ZB)], IN + 1.5), band(K, [(BW, ZB), (BW, z_slab)], IN + 1.5)])
     elif D25 and w_s > 0:                                                              # größere Kantenrundung: Kern-Wand läuft oben in den Bogen, bis zur Deckschicht
         IN = max(FASE, e_s)
         wand = [(FASE, 0.0), (0.0, FASE), (0.0, T_B - RK)] + [(RK * (1 - math.cos(w)), T_B - RK + RK * math.sin(w)) for w in np.linspace(0, w_s, max(4, KANTE // 2))[1:]]

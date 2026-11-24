@@ -428,6 +428,7 @@ So kam `modelle/gitarre_rundum.py` zustande; für ähnliche Vorhaben (Instrument
   (Stärke 0,32 Druckmaß, reicht 0,6 mm unter den Bogen), Rot läuft oben bis in die Rundung (`rot_ring`), Grau beginnt erst darunter; kein schwarzer Streifen mehr auf der Decke.
   Der Kern ist dafür oben um die Bandstärke eingezogen; das Band weicht am Hals dem Grau (`schwarz_k − (rand_k ^ grau)`). Bei 190 mm ist nur die oberste Schicht des Bogens rot, die Schulter druckt schwarz.
   Lehre: Tom benennt eine Rundung nach den Farben der beiden Flächen, die sie verbindet (Decke → Zarge). Für alle Schecter-Größen jetzt Standard.
+  **10:52 „gleiche Rundung an der Unterseite“:** statt der 45°-Fase unten derselbe Radius (grau); der Bogen setzt mit 23° an (`T0 = 0.4`), damit die ersten Schichten tragen. Im Slicer geprüft: keine zusätzlichen Stützen am Rand (916 statt 917 Abschnitte), Zeit gleich.
 - **Prüfbilder ohne `smooth_shading`** rendern: geglättete Normalen auf groben Original-Netzen zeigen Streifen/Kanten, die es nicht gibt (Tom hielt die Strat-Rückseite deshalb für „komisch“).
 - Gemeinsamer Druck = gemeinsame Einstellungen (Wirbel dann mit 15 % und Stützen auto statt 100 % / ohne Stützen) – Tom sagen.
 
