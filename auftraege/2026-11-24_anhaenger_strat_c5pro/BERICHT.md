@@ -2,31 +2,30 @@
 
 **Drucker:** Flashforge Creator 5 Pro  
 **Datei für USB:** `Anhaenger_Stratocaster_50.gcode`  
-**Druckzeit (geschätzt):** 44m 34s  
-**Filament:** 2.01, 0.24, 1.13, 0.46 g (0.67 m, 0.08 m, 0.38 m, 0.15 m)  
+**Druckzeit (geschätzt):** 43m 58s  
+**Filament:** 1.97, 0.24, 1.10, 0.46 g (0.66 m, 0.08 m, 0.37 m, 0.15 m)  
 
 
 ## Spulen / Köpfe einlegen
 
 | Slot | Material | Farbe | Profil |
 |---|---|---|---|
-| 1 | PLA | creme | Flashforge PLA Basic @FF C5P |
-| 2 | PLA | weiß | Flashforge PLA Basic @FF C5P |
-| 3 | PLA | holz | Flashforge PLA Basic @FF C5P |
-| 4 | PLA | silber | Flashforge PLA Basic @FF C5P |
+| 1 | PLA | - | Flashforge PLA Basic @FF C5P |
+| 2 | PLA | - | Flashforge PLA Basic @FF C5P |
+| 3 | PLA | - | Flashforge PLA Basic @FF C5P |
+| 4 | PLA | - | Flashforge PLA Basic @FF C5P |
 
 ## Einstellungen
 
 - Düse: 0.25 mm (alle Köpfe)
 - Schichthöhe: 0.08 mm (Standard)
-- Füllung: 100 %
+- Füllung: 15 %
 - Wände: Profil-Standard
-- Detail-Paket: Arachne (70 %/20 %), Auflösung 0,008, eine Wand oben, Außenwand 30 / Kleinumfang 20 / Oberfläche 40 mm/s, Außenwand-Beschleunigung 3000, 8 Deckschichten, Stützen nur ab Platte.
 - Kopf 1: Hersteller-Filamentprofil für 0,25-mm-Düse (220 °C, höchstens 2.8 mm³/s).
 - Kopf 2: Hersteller-Filamentprofil für 0,25-mm-Düse (220 °C, höchstens 2.8 mm³/s).
 - Kopf 3: Hersteller-Filamentprofil für 0,25-mm-Düse (220 °C, höchstens 2.8 mm³/s).
 - Kopf 4: Hersteller-Filamentprofil für 0,25-mm-Düse (220 °C, höchstens 2.8 mm³/s).
-- Stützen: auto
+- Stützen: aus
 - Brim: auto
 - Düsentemperatur: 220,220,220,220 °C, Bett: 55,55,55,55 °C
 

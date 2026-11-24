@@ -12,41 +12,40 @@
  "datum": "2026-11-24",
  "ordner": "2026-11-24_anhaenger_strat_c5pro",
  "gcode": "Anhaenger_Stratocaster_50.gcode",
- "zeit": "44m 34s",
- "gramm": "2.01, 0.24, 1.13, 0.46",
- "meter": "0.67 m, 0.08 m, 0.38 m, 0.15 m",
+ "zeit": "43m 58s",
+ "gramm": "1.97, 0.24, 1.10, 0.46",
+ "meter": "0.66 m, 0.08 m, 0.37 m, 0.15 m",
  "duese": "220,220,220,220",
  "bett": "55,55,55,55",
  "schicht": "0.08",
  "stufe": "Standard",
- "infill": 100,
+ "infill": 15,
  "duese_mm": "0.25",
  "waende": null,
- "stuetzen": "auto",
+ "stuetzen": "aus",
  "brim": "auto",
  "gemischt": false,
  "zusammen": true,
- "detail": true,
  "slots": [
   {
    "slot": 1,
    "material": "PLA",
-   "farbe": "creme"
+   "farbe": ""
   },
   {
    "slot": 2,
    "material": "PLA",
-   "farbe": "weiß"
+   "farbe": ""
   },
   {
    "slot": 3,
    "material": "PLA",
-   "farbe": "holz"
+   "farbe": ""
   },
   {
    "slot": 4,
    "material": "PLA",
-   "farbe": "silber"
+   "farbe": ""
   }
  ],
  "teile": [

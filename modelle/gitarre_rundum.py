@@ -166,6 +166,7 @@ def main():
     ap.add_argument("--duese", type=float, default=0.25, help="Düse, auf die die Feinheiten abgestimmt werden: 0.25 (alle Köpfe, Standard seit 16.11.) oder 0.4")
     ap.add_argument("--breite", type=float, default=320.0, help="größte Korpusbreite in echten mm")
     ap.add_argument("--kante", type=float, default=0.0, help="Rundung der Decken-Kante in echten mm (Tom 24.11.: wie bei der Strat, nur kleiner – 5 nimmt die scharfe Kante weg; 0 = alte schmale Kante 0,30 im Druckmaß). Rot läuft bis in die Rundung, Schwarz sitzt als schmales Band an der Seite (Rundung von Rot nach Schwarz).")
+    ap.add_argument("--buchse", default="voll", help="klein = Buchse an der Zarge nur als flache Linse mit silbernem Punkt (für Anhänger)")
     ap.add_argument("--bauch", type=int, default=1, help="Bauch-Ausfräsung auf der Rückseite (braucht Stützen)")
     ap.add_argument("--pruef", action="store_true"); ap.add_argument("--ziel", default=str(HIER)); ap.add_argument("--name", default="gitarre_rundum")
     a = ap.parse_args()
@@ -362,22 +363,29 @@ def main():
     # Buchsenplatte nach Toms Nahaufnahme (17.11.): Linsenform mit spitzen Enden, zwei Schrauben, in der Mitte eine Schale mit Sechskantmutter und heller Hülse
     mat = np.column_stack([tg3, [0, 0, 1], n3, b3])
     def ab(cs, t0, t1): return prisma(cs, t0, t1).transform(mat)                        # Fläche liegt an der Zarge, t = nach außen
-    LB, LH = 29.0, 11.5; rl = (LB * LB + LH * LH) / (2 * LH)                            # Linse = Schnitt zweier Kreise
-    linse = (kreis(rl, 160).translate((0, rl - LH)) ^ kreis(rl, 160).translate((0, LH - rl))).offset(-1.2, RUND, 2.0, SEG).offset(1.2, RUND, 2.0, SEG)
-    tief = 5.0; tp = max(1.0, p(0.25)); ts = max(2.0, p(0.5))                           # Platte steht tp vor; Schale ts tief
-    r_s, r_h, r_l = max(9.0, p(1.5)), max(4.6, p(0.75)), max(3.0, p(0.45))              # Schale, Hülse außen, Loch
-    sechs = CS([np.array([[(r_s - p(0.35)) * math.cos(j * math.pi / 3 + 0.3), (r_s - p(0.35)) * math.sin(j * math.pi / 3 + 0.3)] for j in range(6)])], NZ)
-    ring_h = kreis(r_h, 40) - kreis(r_l, 32)
-    # Platte folgt der Rundung der Zarge und liegt rundum auf (laut Tom 17.11.: steht nirgends ab, nur minimal erhöht); eben ist nur die Schale in der Mitte
-    schale = prisma(K.offset(tp, RUND, 2.0, 48) - K.offset(-max(2.4, p(0.3)), RUND, 2.0, 48), 0, T_B) ^ ab(linse, -40, 40)
-    buchse = (schale - ab(kreis(r_s, 48), tp - ts, 40) - ab(kreis(r_h + FUGE, 40), -40, 40)) + ab(kreis(r_s, 48) - kreis(r_h + FUGE, 40), -tief, tp - ts)
-    buchse = buchse + ab(sechs - kreis(r_h + FUGE, 40), tp - ts - 0.05, tp - ts + max(1.0, p(0.25)))               # Mutter sitzt in der Schale
-    weiss.append(ab(ring_h, -tief, tp - ts + max(1.6, p(0.4))))                                                     # Hülse (silber), ragt aus der Mutter
-    schwarz.append(ab(kreis(r_l, 32), -tief, tp - ts - max(3.0, p(0.6))))                                           # dunkler Grund im Loch
-    for sg in (-1, 1):
-        rk_ = max(2.0, p(0.35)); q_ = am_rand((b3 + sg * 21.5 * tg3)[:2])                                           # Schraube sitzt auf der gewölbten Platte
-        buchse = buchse + M.sphere(rk_, 16).scale((1, 1, 0.5)).transform(np.column_stack([tg3, [0, 0, 1], n3, [q_[0], q_[1], T_B / 2]])).translate(tuple(tp * n3))
-    schwarz.append(buchse); schneider += [schale, ab(kreis(r_s, 48), -tief, 40)]
+    if a.buchse == "klein":                                                             # Tom 24.11. (Anhänger 50 mm): Buchse nur klein andeuten – flache Linse, die der Zarge folgt, mit silbernem Punkt
+        LB, LH = max(14.0, p(1.0)), max(6.0, p(0.42)); rl = (LB * LB + LH * LH) / (2 * LH); tp = p(0.10); r_h = max(3.0, p(0.24))
+        linse = kreis(rl, 96).translate((0, rl - LH)) ^ kreis(rl, 96).translate((0, LH - rl))
+        schale = prisma(K.offset(tp, RUND, 2.0, 48) - K.offset(-p(0.3), RUND, 2.0, 48), 0, T_B) ^ ab(linse, -40, 40)
+        schwarz.append(schale - ab(kreis(r_h + FUGE, 32), -40, 40)); weiss.append(ab(kreis(r_h, 32), -p(0.3), tp + p(0.06)))
+        schneider += [schale, ab(kreis(r_h + FUGE, 32), -p(0.3), 40)]
+    else:
+        LB, LH = 29.0, 11.5; rl = (LB * LB + LH * LH) / (2 * LH)                            # Linse = Schnitt zweier Kreise
+        linse = (kreis(rl, 160).translate((0, rl - LH)) ^ kreis(rl, 160).translate((0, LH - rl))).offset(-1.2, RUND, 2.0, SEG).offset(1.2, RUND, 2.0, SEG)
+        tief = 5.0; tp = max(1.0, p(0.25)); ts = max(2.0, p(0.5))                           # Platte steht tp vor; Schale ts tief
+        r_s, r_h, r_l = max(9.0, p(1.5)), max(4.6, p(0.75)), max(3.0, p(0.45))              # Schale, Hülse außen, Loch
+        sechs = CS([np.array([[(r_s - p(0.35)) * math.cos(j * math.pi / 3 + 0.3), (r_s - p(0.35)) * math.sin(j * math.pi / 3 + 0.3)] for j in range(6)])], NZ)
+        ring_h = kreis(r_h, 40) - kreis(r_l, 32)
+        # Platte folgt der Rundung der Zarge und liegt rundum auf (laut Tom 17.11.: steht nirgends ab, nur minimal erhöht); eben ist nur die Schale in der Mitte
+        schale = prisma(K.offset(tp, RUND, 2.0, 48) - K.offset(-max(2.4, p(0.3)), RUND, 2.0, 48), 0, T_B) ^ ab(linse, -40, 40)
+        buchse = (schale - ab(kreis(r_s, 48), tp - ts, 40) - ab(kreis(r_h + FUGE, 40), -40, 40)) + ab(kreis(r_s, 48) - kreis(r_h + FUGE, 40), -tief, tp - ts)
+        buchse = buchse + ab(sechs - kreis(r_h + FUGE, 40), tp - ts - 0.05, tp - ts + max(1.0, p(0.25)))               # Mutter sitzt in der Schale
+        weiss.append(ab(ring_h, -tief, tp - ts + max(1.6, p(0.4))))                                                     # Hülse (silber), ragt aus der Mutter
+        schwarz.append(ab(kreis(r_l, 32), -tief, tp - ts - max(3.0, p(0.6))))                                           # dunkler Grund im Loch
+        for sg in (-1, 1):
+            rk_ = max(2.0, p(0.35)); q_ = am_rand((b3 + sg * 21.5 * tg3)[:2])                                           # Schraube sitzt auf der gewölbten Platte
+            buchse = buchse + M.sphere(rk_, 16).scale((1, 1, 0.5)).transform(np.column_stack([tg3, [0, 0, 1], n3, [q_[0], q_[1], T_B / 2]])).translate(tuple(tp * n3))
+        schwarz.append(buchse); schneider += [schale, ab(kreis(r_s, 48), -tief, 40)]
 
     # ---------------- Griffbrett, Bünde, Ziffern, Sattel ----------------
     wb = max(2.8, p(0.3)); bund_fl = []

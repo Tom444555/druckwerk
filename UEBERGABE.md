@@ -1,6 +1,7 @@
 # Übergabe druckwerk
 
 ## STAND 24.11.2026, 12:15 Uhr – hier einsteigen (Schlüsselanhänger 50 mm, Halter-Entwurf)
+- **12:35 Nachtrag:** Anhänger neu (Öse weg, Loch in der Kopfplatte, Hals als Kiel, Schecter-Buchse klein) – gesliced und im Lager. Halter 190: dritter Entwurf (ohne Platte/Kufen, eine Querstrebe hinten, geschwungene Wangen) als Bild bei Tom, **noch nicht gesliced** – auf sein Ja warten, Material/Farbe fragen (Schwarz hat er nur als PETG).
 - **Neu: Projekt `anhaenger` „Schlüsselanhänger 50 mm“** – `2026-11-24_anhaenger_strat_c5pro` (45 min, 3,8 g) und `2026-11-24_anhaenger_schecter_c5pro` (1 h 14, 5,8 g), je ein Teil mit Öse am Korpus-Ende, Hals von unten gefüllt.
   Werkzeug `werkzeug/anhaenger.py`, Strat-Schalter `--saiten 0`. Ablauf in CLAUDE.md. Offen: Tom fragen, ob die Öse unten passt (Gitarre hängt kopfüber) oder ans obere Horn soll.
 - **Halter 190 mm:** Entwurf `modelle/gitarrenhalter190.py`, 12:20 nach Toms Skizze umgebaut (ohne Grundplatte, eingelassenes Lochblech in den Flossen), zweites Bild an Tom; nach seinem Ja slicen (Farbe/Material klären: er hat Schwarz nur als PETG), Projekt z. B. `gitarrenhalter190`, Bereich musik.

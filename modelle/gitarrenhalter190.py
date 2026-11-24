@@ -3,7 +3,7 @@
 
   python3 modelle/gitarrenhalter190.py --ziel /tmp/h [--bild /tmp/h/v.png] [--winkel 12] [--kanal 9.4]
 
-Idee: zwei Wangen (je 5 mm) im Abstand von 30 mm, verbunden durch drei Querkufen und eine Querwand (keine Grundplatte – Toms Wunsch); in den Flossen ein eingelassenes Lochblech-Muster. Die Gitarre steht mit der Korpus-Unterkante in einem Kanal
+Idee: zwei Wangen (je 5 mm) im Abstand von 30 mm, verbunden nur durch EINE Querstrebe hinten (Spitzbogen) – keine Grundplatte, keine Kufen (Toms Wunsch); jede Wange ist eine geschwungene Linie mit eingelassenem Lochblech-Muster. Die Gitarre steht mit der Korpus-Unterkante in einem Kanal
 (Boden senkrecht zur Lehne, vorn eine Lippe) und lehnt mit der Korpus-Rückseite um 12° nach hinten an den Lehnen. Sie liegt auf ZWEI Punkten
 (links und rechts der Mitte) auf – der Gurtknopf in der Mitte hängt frei zwischen den Wangen, die Gitarre kippelt nicht.
 Die Lehne endet unter dem Hals: die Wirbelräder hinten an der Kopfplatte bleiben frei (deshalb kann die Gitarre nicht liegen).
@@ -24,38 +24,46 @@ def main():
     ap.add_argument("--lehne", type=float, default=66.0, help="Länge der Lehne ab Kanalboden")
     a = ap.parse_args()
     w = math.radians(a.winkel); u = np.array([math.sin(w), math.cos(w)]); f = np.array([-math.cos(w), math.sin(w)])   # (Tiefe, Höhe): u = an der Lehne hoch, f = nach vorn
-    A = np.array([0.0, 7.5]); B = A + a.kanal * f; B3 = B + 3.2 * f; Ar = A - 4.5 * f; LIP = 5.5; YR = 50.0; FUSS = 3.2
+    A = np.array([0.0, 7.5]); B = A + a.kanal * f; B3 = B + 3.0 * f; LIP = 5.5; YR = 52.0; LD = 3.6      # LD = Stärke der Lehne
     P = lambda *q: CS([np.array([list(map(float, x)) for x in q])], mf.FillRule.Positive)
     def poly(*q):
         c = P(*q)
         return c if c.area() > 0 else P(*q[::-1])
-    oben = Ar + (a.lehne - 6) * u
-    bez = [((1 - t) ** 2) * oben + 2 * (1 - t) * t * np.array([Ar[0] + 7.0, 13.0]) + t * t * np.array([YR, FUSS]) for t in np.linspace(0, 1, 40)]   # geschwungene Rückenlinie
-    wange = (poly((B3[0] - 7, 0), (YR, 0), (YR, FUSS), (B3[0] - 7, FUSS))                       # Fuß
-             + poly((B3[0], 0), (Ar[0], 0), Ar, A, B, B3)                                           # Block unter dem Kanal
-             + poly(A, A + a.lehne * u, Ar + a.lehne * u, Ar)                                       # Lehne
-             + poly(B, B + LIP * u, B3 + LIP * u, B3)                                               # Lippe vorn
-             + poly(Ar, *bez, (YR, 0), (Ar[0], 0)))                                                 # Rückenflosse
+    bz = lambda p0, p1, p2, n=48: [((1 - t) ** 2) * np.asarray(p0, float) + 2 * (1 - t) * t * np.asarray(p1, float) + t * t * np.asarray(p2, float) for t in np.linspace(0, 1, n)]
+    # Tom 24.11., 12:25: „unten die Querstreben weg, nur hinten eine, und alles etwas eleganter“ → eine Wange = EINE geschwungene Linie:
+    # vorn läuft die Lippe in einem Bogen in die Zehe aus, hinten schwingt die Lehne von der Spitze in einem Zug bis zur Ferse.
+    oben = A + a.lehne * u; ruecken = bz(oben - LD * f, (A[0] + LD + 6.0, 15.0), (YR, 0.0)); zehe = bz((B3[0] - 10.0, 0.0), (B3[0] - 1.2, 1.6), B3 + LIP * u, 24)
+    wange = poly(*zehe, B + LIP * u, B, A, oben, *ruecken)
     kanal = poly(A + 0.02 * u, A + 40 * u, B + 40 * u, B + 0.02 * u)                               # Kanal bleibt frei (Rundung darf ihn nicht zusetzen)
-    wange = wange.offset(-0.8, RUND, 2.0, 32).offset(0.8, RUND, 2.0, 32) - kanal.offset(-0.01)
+    wange = wange.offset(-0.9, RUND, 2.0, 32).offset(0.9, RUND, 2.0, 32) - kanal.offset(-0.01)
     dreh = np.array([[0, 0, 1, 0], [1, 0, 0, 0], [0, 1, 0, 0]], float)                              # (Tiefe, Höhe, Dicke) → (X, Tiefe, Höhe)
-    yF = B3[0] - 7
-    hq = float(np.interp(31.5, [q[0] for q in bez], [q[1] for q in bez])) - 0.6
-    # Tom 24.11.: Grundplatte weg, in der Flosse ein Lochblech-Muster, etwas eingelassen (beidseitig 1 mm vertieft, Löcher Ø 2,4 im Sechseck-Raster 3,6)
-    feld = (poly(Ar, *bez, (YR, 0), (Ar[0], 0)) - poly((yF - 5, -1), (YR + 5, -1), (YR + 5, FUSS), (yF - 5, FUSS))).offset(-2.4, RUND, 2.0, 32)
-    feld = feld - poly((28.6, -1), (34.4, -1), (34.4, hq + 1.2), (28.6, hq + 1.2))                  # an der Querwand bleibt die Wange voll
-    innen = feld.offset(-1.5, RUND, 2.0, 16); b_ = feld.bounds(); loecher = []
-    for j, zz in enumerate(np.arange(b_[1], b_[3], 3.6 * math.sqrt(3) / 2)):
-        for yy in np.arange(b_[0] + (1.8 if j % 2 else 0.0), b_[2], 3.6):
-            if (CS.circle(0.05, 8).translate([yy, zz]) ^ innen).area() > 0: loecher.append(CS.circle(1.2, 24).translate([yy, zz]))
+    _s = (wange ^ poly((33.3, -1), (33.7, -1), (33.7, 80), (33.3, 80))).bounds()                 # Wange bei Tiefe 33,5 senkrecht schneiden (Bezier ist in der Tiefe nicht monoton)
+    hq = float(_s[3]) - 0.9                                                                        # Höhe der Wange an der Querstrebe
+    # Lochblech-Feld: hinter der Lehne, mit Rahmen; 1 mm je Seite eingelassen; Löcher werden nach oben kleiner
+    lehne = poly(A, oben, oben - LD * f, A - LD * f); block = poly((B3[0] - 12, -1), (A[0] + LD, -1), (A[0] + LD, A[1] + 1.5), (B3[0] - 12, A[1] + 1.5))
+    feld = (wange - lehne.offset(0.3) - block - poly((-40, -1), (YR + 5, -1), (YR + 5, 3.6), (-40, 3.6)) - poly((30.8, -1), (36.2, -1), (36.2, hq + 1.4), (30.8, hq + 1.4)))
+    feld = feld.offset(-2.2, RUND, 2.0, 32).offset(-0.7, RUND, 2.0, 32).offset(0.7, RUND, 2.0, 32)
+    innen = feld.offset(-0.7, RUND, 2.0, 16); b_ = feld.bounds(); loecher = []; zf = max(b_[3] - b_[1], 1.0)
+    for j, zz in enumerate(np.arange(b_[1] + 1.2, b_[3], 3.4 * math.sqrt(3) / 2)):
+        rl = 1.3 - 0.75 * (zz - b_[1]) / zf                                                         # unten Ø 2,6, oben Ø 1,1
+        for yy in np.arange(b_[0] + (1.7 if j % 2 else 0.0), b_[2], 3.4):
+            c = CS.circle(rl, 28).translate([yy, zz])
+            if (c - innen.offset(0.7 - 0.25)).area() < 1e-6: loecher.append(c)
     loch = CS.batch_boolean(loecher, mf.OpType.Add) if loecher else CS()
+    def fase(cs, t=5.0, c=0.75, n=5):                                                               # Wange mit gebrochenen Kanten (Fase in feinen Stufen)
+        k = cs.extrude(t - 2 * c).translate([0, 0, c])
+        for i in range(n):
+            e = cs.offset(-c * (n - i) / n, RUND, 2.0, 16); h = c / n
+            k = k + e.extrude(h + 0.001).translate([0, 0, i * h]) + e.extrude(h + 0.001).translate([0, 0, t - (i + 1) * h - 0.001])
+        return k
     def wg(x0):
-        k = wange.extrude(5.0) - feld.extrude(1.0) - feld.extrude(1.0).translate([0, 0, 4.0]) - loch.extrude(7.0).translate([0, 0, -1.0])
+        k = fase(wange) - feld.extrude(1.0) - feld.extrude(1.0).translate([0, 0, 4.0]) - loch.extrude(7.0).translate([0, 0, -1.0])
         return k.transform(dreh).translate([x0, 0, 0])
-    kufe = lambda y0, t: CS.square([54 - 2 * 1.6, t - 2 * 1.6]).translate([-27 + 1.6, y0 + 1.6]).offset(1.6, RUND, 2.0, 24).extrude(FUSS)   # Querkufen statt Platte: verbinden die Wangen, breiter Stand
-    steg = M.cube([40, 3.0, hq]).translate([-20, 30, 0])                                            # Querwand hinten: verbindet die Wangen
-    halter = wg(15.0) + wg(-20.0) + steg + kufe(yF, 7.0) + kufe(28.0, 7.0) + kufe(YR - 6.0, 6.0)
-    print(f"Lochfeld: {len(loecher)} Löcher Ø 2,4 je Wange, Feld 1,0 mm vertieft (Steg dazwischen 3,0 mm)")
+    # die EINE Querstrebe hinten: Wand zwischen den Wangen mit Spitzbogen (45°, druckt ohne Stützen)
+    gipfel = min(12.0, hq - 3.2); bogen = poly((-10.5, -1), (10.5, -1), (10.5, max(1.0, gipfel - 10.5)), (0, gipfel), (-10.5, max(1.0, gipfel - 10.5)))
+    strebe = (poly((-16, 0), (16, 0), (16, hq), (-16, hq)) - bogen).extrude(3.2).transform(np.array([[1, 0, 0, 0], [0, 0, 1, 32.0], [0, 1, 0, 0]], float))
+    halter = wg(15.0) + wg(-20.0) + strebe
+    print(f"Lochfeld: {len(loecher)} Löcher Ø 2,6 → 1,1 je Wange, 1,0 mm vertieft; Querstrebe {hq:.1f} mm hoch mit Spitzbogen bis {gipfel:.1f} mm")
     ziel = Path(a.ziel); ziel.mkdir(parents=True, exist_ok=True)
     me = halter.to_mesh(); t = trimesh.Trimesh(np.asarray(me.vert_properties[:, :3], np.float64), me.tri_verts, process=True); t.export(ziel / "gitarrenhalter190.stl")
     print(f"gitarrenhalter190.stl: dicht={t.is_watertight}, Maße {t.extents.round(1).tolist()} mm, {halter.volume() / 1000:.1f} cm³ (PLA ≈ {halter.volume() * 1.24 / 1000:.0f} g voll)")
@@ -77,7 +85,7 @@ def main():
             mm = M(mf.Mesh(np.asarray(m.vertices, np.float32), np.asarray(m.faces, np.uint32)))
             if mm.status() == mf.Error.NoError: schnitt += (mm.transform(T[:3]) ^ halter).volume()
         zmin = float((np.c_[v, np.ones(len(v))] @ T.T)[:, 2].min()); kopf = (np.c_[v, np.ones(len(v))] @ T.T)
-        print(f"{n}: steht bei y0 {y0:.2f}, Schnittvolumen mit dem Halter {schnitt:.3f} mm³, tiefster Punkt {zmin:.2f} mm über dem Tisch (Kufen {FUSS}), "
+        print(f"{n}: steht bei y0 {y0:.2f}, Schnittvolumen mit dem Halter {schnitt:.3f} mm³, tiefster Punkt {zmin:.2f} mm über dem Tisch, "
               f"Kopf bei Tiefe {kopf[:, 1].max():.1f} / Höhe {kopf[:, 2].max():.1f} mm, Luft im Kanal {a.kanal - dick:.2f} mm")
     if a.bild and lage:
         import pyvista as pv
