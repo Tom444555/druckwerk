@@ -1,7 +1,7 @@
 // sw.js – Offline-Grundlage für Druckwerk (GitHub Pages unter /druckwerk/)
 // Immer zuerst das Netz (Updates kommen sofort an); nur ohne Netz oder nach 5 s Funkstille aus dem Zwischenspeicher.
 // Große Dateien (gcode, stl, 3mf) werden nie zwischengespeichert. three.js vom CDN (feste Version) einmal speichern.
-const CACHE = "druckwerk-v25", CDN = "druckwerk-cdn-v1";
+const CACHE = "druckwerk-v26", CDN = "druckwerk-cdn-v1";
 const HUELLE = ["./", "index.html", "projekte.js", "zurueck.js", "privat.js", "mehr.js", "sicherung.js", "werkstatt.js", "ki.js", "kiweg.js", "wissen.js", "tagebuch.js", "schichten.js", "koepfe.js", "ordnung.js", "lager/karten.json",
   "wissen/filamente.json", "wissen/zubehoer.json", "wissen/c5pro.json", "wissen/workflow.json", "videos/index.html", "videos/fuzzy-skin-bastlwastl.html", "videos/ki-stl-bastlwastl.html", "videos/foto-in-3d-bastlwastl.html", "videos/technische-filamente-myengines.html", "videos/meshy-3d-agent-ddsw.html", "videos/aimia-makerlab-bastlwastl.html",
   "drucker/c5pro.json", "drucker/kobrax.json", "auftraege/index.json", "manifest.webmanifest", "symbol-180.png", "symbol-192.png"];

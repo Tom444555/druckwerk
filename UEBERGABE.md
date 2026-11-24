@@ -1,5 +1,12 @@
 # Übergabe druckwerk
 
+## STAND 24.11.2026, 09:00 Uhr – hier einsteigen (App: feinste Details und Stütz-Kopf ohne Chat)
+- **Werkstatt → Slicen (`werkstatt.js`, sw v26):** neu „Düse“ 0,4 / 0,25 (0,25 stellt Schicht 0,08 und „Maximale Details“ ein), Haken „Maximale Details“ (= `--detail`, blendet „Schön“ aus),
+  unter Stützen „Kontaktschicht aus anderem Material“ (Kopf wählen; freier Kopf erscheint als „nur Stützen“ mit Materialwahl, vorbelegt aus „Meine Köpfe“).
+- **`eingang.py`** reicht `duese` (nur 0.4/0.25), `detail`, `stuetz_kopf`, `stuetz_material` durch; **`druck.py --stuetz-material`** neu (Stütz-Kopf ohne eigenes Teil).
+- Geprüft: Playwright 390×844 (Blatt, abgeschickter Auftrag) und Probe durch `eingang.py` (Werte in der .gcode nachgewiesen, Probe wieder gelöscht). Echte Action und Druck offen.
+- Weiter offen von Tom: Strat 240 mm mit drehbaren Steckreglern? · Ständer für Schecter/Strat 190 · Druck-Rückmeldungen.
+
 ## STAND 24.11.2026, 08:10 Uhr – hier einsteigen (Aufräumen nach Toms Bildschirmfoto der Bibliothek)
 - **Privat:** `lespaul-komplett` + `lespaul-bausatz` → ein Ordner **`les-paul`** (les_paul.stl, bausatz_hals/halsfuss/korpus.stl, Auftrag Les Paul 6 cm, gruppe jetzt `les-paul`); **Kork-Diorama gelöscht**. Katalog neu.
 - **App (`werkstatt.js`, sw v25):** einmaliges Aufräumen „Meine Modelle“ (Flag `druckwerk_aufr_2411`): vom Amp-Plektrumhalter nur die neueste Kopie, alte Kopien „Les paul“/„Bruecke“/„Korpus“ (vor 22.11.) weg; neu Knopf **Bearbeiten** → rotes ✕ je Modell löscht es vom Gerät. Mit Playwright 390×844 geprüft (nachgestellte Modelle); am iPad unbestätigt.

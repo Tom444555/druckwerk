@@ -543,14 +543,19 @@ const ablegen = async (pfad, inhalt, text) => { const r = await gh("/contents/" 
 const VOREIN = { deko: {schicht: "0.20", infill: 15, waende: 2, decke: 4, muster: "gyroid"}, funktion: {schicht: "0.20", infill: 30, waende: 4, decke: 5, muster: "gyroid"},
   stabil: {schicht: "0.20", infill: 50, waende: 5, decke: 6, muster: "cubic"}, fein: {schicht: "0.12", infill: 15, waende: 3, decke: 6, muster: "gyroid"} };
 function sliceWahl(){
-  let E = {vor: "deko", ...VOREIN.deko, stuetzen: "auto", brim: "auto", naht: "aligned", glaetten: false, rau: "aus", mat: ["PLA","PLA","PLA","PLA"]};
+  let E = {vor: "deko", ...VOREIN.deko, stuetzen: "auto", brim: "auto", naht: "aligned", glaetten: false, rau: "aus", duese: "0.4", detail: false, sk: 0, mat: ["PLA","PLA","PLA","PLA"]};
   try { E = {...E, ...JSON.parse(ls.get(SL) || "{}")}; } catch (e) {}
   if (M.material) M.material.forEach((m, i) => { if (m) E.mat[i] = m; });
   const dr = (C.DRUCKER || {}).c5pro || {}, mats = Object.keys(dr.filamente || {PLA: 1});
   let ausKoepfen = false;                                  // „Meine Köpfe“ (Material → Mein Lager) geben das Material je Kopf vor
   try { for (const s of JSON.parse(ls.get("druckwerk_spulen") || "[]")) if (s.kopf >= 1 && s.kopf <= 4 && mats.includes(String(s.material).toUpperCase())) { E.mat[s.kopf - 1] = String(s.material).toUpperCase(); ausKoepfen = true; } } catch (e) {}
-  const schichten = dr.schichten || ["0.12", "0.20", "0.24"];
-  if (!schichten.includes(E.schicht)) E.schicht = schichten.reduce((b, v) => Math.abs(v - E.schicht) < Math.abs(b - E.schicht) ? v : b, "0.20");
+  const fein = (dr.duesen || {})["0.25"];                  // 0,25-mm-Düse: eigene Schichthöhen, Hersteller-Filamentprofile legt druck.py selbst darüber
+  if (!fein) E.duese = "0.4";
+  let schichten;
+  const schichtFest = () => { schichten = (E.duese === "0.25" && fein.schichten) || dr.schichten || ["0.12", "0.20", "0.24"];
+    if (!schichten.includes(E.schicht)) E.schicht = schichten.reduce((b, v) => Math.abs(v - E.schicht) < Math.abs(b - E.schicht) ? v : b, schichten[0]); };
+  schichtFest();
+  E.sk = +E.sk || 0;
   E.mat = E.mat.map(m => mats.includes(m) ? m : "PLA");
   const benutzt = M.bemalt ? [1, 2, 3, 4] : [...new Set(M.teile.filter(t => !t.weg).map(t => t.slot))].sort();
   const d = C.sheet(""), box = d.firstElementChild;
@@ -561,23 +566,29 @@ function sliceWahl(){
     box.innerHTML = `<h3>„${C.esc(M.name)}“ slicen</h3><p>Flashforge Creator 5 Pro · fertige Datei für den USB-Stick</p>
     ${M.bemalt ? `<p class="hint">Bemaltes Modell: Die Farben aus der Datei bleiben erhalten (in der 3D-Ansicht sind sie nicht zu sehen). Größe und Drehung aus der Werkstatt werden übernommen. Welche Köpfe wirklich drucken, steht danach im Bericht.</p>` : ""}
     <h2>Voreinstellung</h2>${seg("vor", [["deko","Deko"],["fein","Fein"],["funktion","Funktion"],["stabil","Stabil"]])}
+    ${fein ? `<h2>Düse</h2>${seg("duese", [["0.4","0,4 mm (Serie)"],["0.25","0,25 mm (fein)"]])}
+    <p class="hint">Muss zu den Düsen passen, die gerade in den Köpfen sitzen – alle Köpfe gleich.</p>` : ""}
     <h2>Qualität &amp; Festigkeit</h2><div class="card">
       <div class="row"><div class="grow">Schichthöhe</div><select data-e="schicht">${opt(schichten.map(v => [v, v.replace(".", ",") + " mm"]), E.schicht)}</select></div>
       <div class="row"><div class="grow">Wände</div><select data-e="waende">${opt([2,3,4,5,6,8].map(v => [v, v]), E.waende)}</select></div>
       <div class="row"><div class="grow">Füllung</div><input type="range" min="0" max="100" step="5" value="${E.infill}" data-e="infill"><span class="val" id="sInf">${E.infill} %</span></div>
       <div class="row"><div class="grow">Füllmuster</div><select data-e="muster">${opt([["gyroid","Gyroid"],["grid","Gitter"],["cubic","Würfel"],["honeycomb","Waben"],["triangles","Dreiecke"],["line","Linien"],["lightning","Blitz (nur für hohle Deko)"]], E.muster)}</select></div>
-      <label class="row" style="cursor:pointer"><div class="grow">Schön (langsam)<div class="small">Für Sichtteile aus PLA: 3 Wände innen-außen-innen, langsame Außenwand, Überhänge und Brücken, Naht läuft schräg aus. Dauert etwa ein Drittel länger.</div></div><input type="checkbox" data-e="schoen" ${E.schoen ? "checked" : ""}></label>
+      <label class="row" style="cursor:pointer"><div class="grow">Maximale Details<div class="small">Feinste Stege und Schrift bleiben erhalten, langsame Außenwand, 8 Deckschichten, Stützen nur ab Platte. Dauert deutlich länger. Mit der 0,25-mm-Düse immer sinnvoll.</div></div><input type="checkbox" data-e="detail" ${E.detail ? "checked" : ""}></label>
+      ${E.detail ? "" : `<label class="row" style="cursor:pointer"><div class="grow">Schön (langsam)<div class="small">Für Sichtteile aus PLA: 3 Wände innen-außen-innen, langsame Außenwand, Überhänge und Brücken, Naht läuft schräg aus. Dauert etwa ein Drittel länger.</div></div><input type="checkbox" data-e="schoen" ${E.schoen ? "checked" : ""}></label>`}
       <div class="row"><div class="grow">Deck- / Bodenschichten</div><select data-e="decke">${opt([3,4,5,6,8].map(v => [v, v]), E.decke)}</select></div>
     </div>
     <h2>Stützen</h2>${seg("stuetzen", [["aus","Keine"],["auto","Automatisch"],["baum","Baum"]])}
+    <div class="card" style="margin-top:10px"><div class="row"><div class="grow">Kontaktschicht aus anderem Material<div class="small">Die Stütze berührt das Teil mit einem Material, das nicht daran haftet (z. B. PETG unter PLA) – löst sich sauber, Unterseite wird glatt. Braucht einen eigenen Kopf.</div></div>
+      <select data-e="sk">${opt([[0,"Aus"],[1,"Kopf 1"],[2,"Kopf 2"],[3,"Kopf 3"],[4,"Kopf 4"]], E.sk)}</select></div></div>
+    ${E.sk ? `<p class="hint">${benutzt.includes(E.sk) ? `Kopf ${E.sk} druckt auch am Modell mit – besser einen freien Kopf nehmen.` : `Material für Kopf ${E.sk} unten wählen.`} Stützen werden eingeschaltet. Beim Drucken: Deckel ab, Tür auf, Kammerheizung aus.</p>` : ""}
     <h2>Brim (Haftrand)</h2>${seg("brim", [["aus","Aus"],["auto","Automatisch"],["an","An"]])}
     <h2>Oberfläche</h2><div class="card">
       <div class="row"><div class="grow">Oberfläche<div class="small">Rau = „Fuzzy Skin“ an den Seitenwänden: kaschiert Schichtlinien, wirkt wie Stein, gibt Griff. Trägt etwas auf – nichts für Passteile.</div></div><select data-e="rau">${opt([["aus","Glatt"],["fein","Fein rau"],["mittel","Mittel rau"],["grob","Grob rau"]], E.rau)}</select></div>
       <div class="row"><div class="grow">Naht</div><select data-e="naht">${opt([["aligned","Ausgerichtet"],["back","Hinten"],["nearest","Nächste"],["random","Zufällig"]], E.naht)}</select></div>
       <div class="row"><div class="grow">Oberseite glätten (Bügeln)</div><input type="checkbox" data-e="glaetten" ${E.glaetten ? "checked" : ""}></div>
     </div>
-    <h2>Material je Kopf</h2><div class="card">${benutzt.map(n => `
-      <div class="row"><span class="dot" style="background:${M.slots[n-1]};width:22px;height:22px"></span><div class="grow">Kopf ${n} · ${C.esc(farbName(M.slots[n-1]))}</div>
+    <h2>Material je Kopf</h2><div class="card">${(E.sk && !benutzt.includes(E.sk) && !M.bemalt ? [...benutzt, E.sk] : benutzt).map(n => `
+      <div class="row"><span class="dot" style="background:${M.slots[n-1]};width:22px;height:22px"></span><div class="grow">Kopf ${n} · ${benutzt.includes(n) ? C.esc(farbName(M.slots[n-1])) : "nur Stützen"}</div>
         <select data-mat="${n-1}">${opt(mats.map(m => [m, m]), E.mat[n-1])}</select></div>`).join("")}</div>
     <p class="hint">${ausKoepfen ? "Vorbelegt mit dem, was laut „Mein Lager“ in deinen Köpfen sitzt." : "Tipp: Unter Wissen → Material → Mein Lager eintragen, was in welchem Kopf sitzt – dann ist das hier vorbelegt."}</p>
     <button class="btn" id="sLos" style="margin-top:16px">Jetzt slicen</button>
@@ -585,10 +596,11 @@ function sliceWahl(){
     ${ls.get(TOK) ? `<p class="hint" style="text-align:center"><a href="#" id="sTok" style="color:var(--sub)">GitHub-Zugang auf diesem Gerät entfernen</a></p>` : ""}`;
     box.scrollTop = y;
     box.querySelectorAll(".seg button").forEach(b => b.onclick = () => { E[b.dataset.k] = b.dataset.v; if (b.dataset.k === "vor") Object.assign(E, VOREIN[E.vor]);
-      if (!schichten.includes(E.schicht)) E.schicht = "0.20"; mal(); });
+      if (b.dataset.k === "duese") { E.detail = E.duese === "0.25"; E.schicht = E.duese === "0.25" ? "0.08" : "0.20"; }
+      schichtFest(); mal(); });
     box.querySelectorAll("[data-e]").forEach(e => { const k = e.dataset.e;
       if (e.type === "range") e.oninput = () => { E[k] = +e.value; box.querySelector("#sInf").textContent = e.value + " %"; };
-      else e.onchange = () => { E[k] = e.type === "checkbox" ? e.checked : (isNaN(+e.value) || k === "schicht" ? e.value : +e.value); }; });
+      else e.onchange = () => { E[k] = e.type === "checkbox" ? e.checked : (isNaN(+e.value) || k === "schicht" ? e.value : +e.value); if (k === "detail" || k === "sk") mal(); }; });
     box.querySelectorAll("[data-mat]").forEach(e => e.onchange = () => { E.mat[+e.dataset.mat] = e.value; });
     box.querySelector("#sZu").onclick = () => d.remove();
     const t = box.querySelector("#sTok"); if (t) t.onclick = ev => { ev.preventDefault(); ls.set(TOK, null); C.toast("Zugang entfernt"); mal(); };
@@ -629,8 +641,9 @@ async function sliceStart(E){
   const sag = (t, p) => { const e = d.querySelector("#slText"); if (e) { e.textContent = t; d.querySelector("#slBalken").style.width = p + "%"; } };
   try {
     const max = Math.max(...teile.map(t => t.slot));
-    const job = { name: M.name.replace(/\s*\(bearbeitet\)$/, ""), drucker: "c5pro", schicht: +E.schicht, infill: E.infill, waende: E.schoen ? Math.max(3, E.waende) : E.waende, ...(E.schoen ? {schoen: true} : {}), stuetzen: E.stuetzen, brim: E.brim, ...(E.rau !== "aus" ? {rau: E.rau} : {}),
-      extra: {sparse_infill_pattern: E.muster, top_shell_layers: E.schoen ? Math.max(5, E.decke) : E.decke, bottom_shell_layers: E.schoen ? Math.max(5, E.decke) : E.decke, seam_position: E.naht, ironing_type: E.glaetten ? "top" : "no ironing"},
+    const job = { name: M.name.replace(/\s*\(bearbeitet\)$/, ""), drucker: "c5pro", schicht: +E.schicht, infill: E.infill, waende: E.schoen && !E.detail ? Math.max(3, E.waende) : E.waende, ...(E.schoen && !E.detail ? {schoen: true} : {}),
+      ...(E.duese === "0.25" ? {duese: "0.25"} : {}), ...(E.detail ? {detail: true} : {}), ...(E.sk ? {stuetz_kopf: E.sk, stuetz_material: E.mat[E.sk - 1]} : {}), stuetzen: E.stuetzen, brim: E.brim, ...(E.rau !== "aus" ? {rau: E.rau} : {}),
+      extra: {sparse_infill_pattern: E.muster, top_shell_layers: E.detail ? Math.max(8, E.decke) : E.schoen ? Math.max(5, E.decke) : E.decke, bottom_shell_layers: E.schoen ? Math.max(5, E.decke) : E.decke, seam_position: E.naht, ironing_type: E.glaetten ? "top" : "no ironing"},
       farben: M.slots.slice(0, max).map(farbName), quelle: (M.lager && M.lager.quelle) || "", teile: [] };
     if (M.bemalt) {                                        // bemalte 3MF: Original + Umbau-Matrix, Farben bleiben
       const e = bemaltMatrix().elements; job.matrix = [0,1,2].flatMap(r => [0,1,2,3].map(c => e[c*4+r]));

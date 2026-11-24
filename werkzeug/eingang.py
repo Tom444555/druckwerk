@@ -207,7 +207,18 @@ def einer(ordner: Path):
     if j.get("waende"): cmd += ["--waende", str(max(1, min(12, int(j["waende"]))))]
     if j.get("rau") in ("fein", "mittel", "grob"):
         cmd += ["--rau", j["rau"]] + (["--rau-wo", j["rau_wo"]] if j.get("rau_wo") in ("kontur", "loecher", "alle") else [])
-    if j.get("schoen") is True: cmd.append("--schoen")
+    duese = str(j.get("duese", "0.4"))
+    if duese not in ("0.4", "0.25"): raise ValueError("Düse ungültig")
+    if duese != "0.4":
+        if drucker != "c5pro": raise ValueError("Andere Düsen gibt es nur für den Creator 5 Pro")
+        cmd += ["--duese", duese]
+    if j.get("detail") is True: cmd.append("--detail")
+    if j.get("schoen") is True and j.get("detail") is not True: cmd.append("--schoen")
+    if j.get("stuetz_kopf"):                                     # Stützen-Kontaktschicht aus anderem Material (eigener Kopf)
+        sk = int(j["stuetz_kopf"]); smat = str(j.get("stuetz_material", "")).upper()
+        if not 1 <= sk <= 4 or (smat and not MAT_OK.match(smat)): raise ValueError("Stütz-Kopf ungültig")
+        cmd += ["--stuetz-kopf", str(sk)] + (["--stuetz-material", smat] if smat and not j.get("bemalt") else [])
+        if smat in ("PVA", "BVOH", "HIPS"): cmd.append("--stuetz-koerper")
     if j.get("stuetzen") in ("aus", "auto", "baum"): cmd += ["--stuetzen", j["stuetzen"]]
     if j.get("brim") in ("aus", "auto", "an"): cmd += ["--brim", j["brim"]]
     for kx, wx in (j.get("extra") or {}).items():

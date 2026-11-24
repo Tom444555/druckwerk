@@ -130,6 +130,10 @@ Alte `_kobrax`-Aufträge laufen nicht auf dem Creator 5 Pro – bei Bedarf aus d
   `.github/workflows/slicen.yml` startet `werkzeug/eingang.py` → `druck.py` → Ergebnis in `auftraege/`, Rückmeldung in
   `status/<id>.json`, App übernimmt den Auftrag automatisch (~1–3 Min.). Token (Fine-grained, Contents RW) liegt nur
   im Gerät (localStorage `druckwerk_token`). Erlaubte Extra-Schlüssel stehen in `EXTRA_OK` (eingang.py) – dort erweitern.
+- **Seit 24.11.2026 im Slicen-Blatt der Werkstatt:** „Düse“ (0,4 Serie / 0,25 fein → Schichten 0,08–0,14, schaltet „Maximale Details“ ein), Haken „Maximale Details“ (`detail` → `druck.py --detail`,
+  ersetzt „Schön“) und unter Stützen „Kontaktschicht aus anderem Material“ (Kopf 1–4; liegt dort kein Teil, erscheint der Kopf als „nur Stützen“ bei „Material je Kopf“).
+  Auftrag: `duese`, `detail`, `stuetz_kopf`, `stuetz_material` → `eingang.py` → `--duese`, `--detail`, `--stuetz-kopf`, neu **`--stuetz-material <MAT>`** (belegt einen sonst leeren Kopf; PVA/BVOH/HIPS → auch `--stuetz-koerper`).
+  Probe über `eingang.py` (Brücken-Teil, 0,25/0,08, PETG-Kontakt Kopf 2): in der .gcode Düse 0,25, Arachne, `support_interface_filament = 2`, PLA 225 / PETG 235, Bett 65. Mit echter Action und am Gerät ungetestet.
 - Schichtvorschau: `schichten.js` (Knopf „Schichten ansehen“ im Auftrag) liest die .gcode und zeichnet jede Schicht.
 - **Bemalte 3MF in der Werkstatt (seit 15.11.2026):** Beim Import erkennt die App `paint_color` und hebt das Original auf (`bemalt: {daten, matrix}` am eigenen Modell,
   höchstens 25 MB). Slicen schickt `eingang/<id>/bemalt.3mf` + `bemalt`/`matrix`/`materialien` in `auftrag.json`; `eingang.py` ruft `druck.py --bemalt … --matrix …`.

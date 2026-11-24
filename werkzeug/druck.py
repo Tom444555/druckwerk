@@ -249,6 +249,7 @@ def main():
     ap.add_argument("--stuetz-kopf", type=int, default=None,
                     help="Kopf (1–4) für die KONTAKTSCHICHT der Stützen aus anderem Material (z. B. PETG unter PLA): Abstand 0, 3 Kontaktlagen, "
                          "Muster verschränkt; der Stützkörper bleibt im Hauptmaterial (Flashforge-Wiki Creator 5). Bei PVA/BVOH auch den Körper: --stuetz-koerper")
+    ap.add_argument("--stuetz-material", default="", help="mit --stuetz-kopf: Material in diesem Kopf, wenn dort kein Teil des Modells liegt (z. B. PETG unter PLA)")
     ap.add_argument("--stuetz-koerper", action="store_true", help="mit --stuetz-kopf: auch der Stützkörper aus diesem Kopf (lösliches PVA/BVOH, HIPS)")
     ap.add_argument("--bett", type=int, default=None, help="Betttemperatur für ALLE Filamente erzwingen (z. B. 65 bei PLA + PETG gemischt)")
     ap.add_argument("--wie", default=None, help="Auftragsordner: ALLE Slicer-Einstellungen aus dessen Projekt-3MF übernehmen (nur Material/Kopf/Farbe neu) – für „An meine Köpfe anpassen“")
@@ -355,6 +356,12 @@ def main():
             raise SystemExit(f"Slot {t[2]} ist schon mit {belegt[t[2]]} belegt, nicht {t[1]}.")
         belegt[t[2]] = t[1]
     slots = max(belegt)
+    if a.stuetz_kopf and a.stuetz_material and not bemalt:   # Stütz-Kopf ohne eigenes Teil: Material dort festlegen (App-Werkstatt)
+        sm_ = a.stuetz_material.strip().upper()
+        if a.stuetz_kopf in belegt and belegt[a.stuetz_kopf] != sm_:
+            raise SystemExit(f"--stuetz-material {sm_}: Kopf {a.stuetz_kopf} druckt schon {belegt[a.stuetz_kopf]}.")
+        if 1 <= a.stuetz_kopf <= cfg["farben_max"]:
+            belegt[a.stuetz_kopf] = sm_; slots = max(slots, a.stuetz_kopf)
     if bemalt:
         for s_ in range(1, bemalt["koepfe"] + 1):
             belegt[s_] = bemalt["mat"][s_ - 1]
