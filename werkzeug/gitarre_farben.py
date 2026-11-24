@@ -133,9 +133,21 @@ if A.details:
     # Platten-Umriss = Hülle aus neuer Ellipse und alter Platte des Original-Netzes (Tom 24.11.: rechts stand die alte Platte als zweite Kante über) → ein glatter Rand rundum
     alt_pl = (M ^ ellipse(144.5, -1044, 41, 23, -33.7, ZK - 1, ZK + 2)).slice(ZK + 0.35)
     neu_pl = mf.CrossSection.circle(1.0, 96).scale([34.0, 16.5]).rotate(BW).translate([BM[0], BM[1]])
-    umriss = mf.CrossSection.batch_hull([alt_pl, neu_pl])
+    # Echte Ovalform, spiegelgleich (Tom 24.11.: die alte Platte des Original-Netzes ist schief – oben links und unten rechts ausgebeult):
+    # Länge aus der alten Platte, Breite aus ihrer Mitte; was von der alten Platte außerhalb liegt, wird unten bündig mit Korpus gefüllt und oben weggeschnitten.
+    # Achse durch die beiden Schraubenköpfe (wie am echten Teil), Mitte = zwischen den Schrauben
+    _kp = [np.asarray(q).mean(0) for q in ((M ^ ellipse(144.5, -1044, 45, 26, -33.7, ZK + 1.6, ZK + 2.4)).slice(ZK + 2.0)).to_polygons() if len(q) > 8]
+    _kp = sorted(_kp, key=lambda q: q[0]); _s1, _s2 = np.array(_kp[0]), np.array(_kp[-1])
+    PM = (_s1 + _s2) / 2; PW = float(np.degrees(np.arctan2(*(_s2 - _s1)[::-1])))
+    _lp = np.vstack([np.asarray(q) for q in alt_pl.translate([-PM[0], -PM[1]]).rotate(-PW).to_polygons()])
+    _a = max(float(np.abs(_lp[:, 0]).max()), np.linalg.norm(_s2 - _s1) / 2 + 6.5); _b = float(np.abs(_lp[np.abs(_lp[:, 0]) < 4.0, 1]).max())
+    umriss = mf.CrossSection.circle(1.0, 128).scale([_a, _b]).rotate(PW).translate([PM[0], PM[1]])
+    print(f'Buchsenplatte: Schrauben {_s1.round(1)} / {_s2.round(1)}, Achse {PW:.1f}° (Mulde {BW}°)')
+    alt_huelle = mf.CrossSection.hull(alt_pl).offset(0.3, mf.JoinType.Round, 2.0, 32)
+    M = M - (alt_huelle.offset(2.0, mf.JoinType.Round, 2.0, 32) - umriss).extrude(40).translate([0, 0, ZK]) + (alt_huelle - umriss).extrude(3.0).translate([0, 0, ZK - 3.0])   # ab genau ZK schneiden: sonst bleibt eine hauchdünne alte Platte, die die App grau zeigt
+    print(f'Buchsenplatte: Oval {2*_a*s:.2f} × {2*_b*s:.2f} mm (Druckmaß)')
     PLATTE = umriss.extrude(BT + 3 + 0.8).translate([0, 0, ZK - BT - 3])   # 0,8 über Decke: deckt die alte Platte (Oberkante ZK+0,74) ganz zu
-    M = (M - (ellipse(144.5, -1044, 41, 23, -33.7, ZK + 0.01, 60) - umriss.extrude(40).translate([0, 0, ZK - 5]))) + PLATTE   # Splitter der alten Platte außerhalb des Umrisses weg
+    M = M + PLATTE
     M = M - lok(mf.Manifold.hull_points(np.array(ring_(oben_, 46.5) + ring_(oben_, ZK - 0.6) + ring_(unten_, ZK - BT))))
     kipp = lambda m: lok(m.rotate([0, 55, 0]).translate([-13.5, 0, ZK - 7.0]))      # Achse 35° über der Waagrechten, zeigt zur Spitze
     mutter = kipp(mf.Manifold.cylinder(7.0, 6.2, 6.2, 6).translate([0, 0, -4.0]) + mf.Manifold.cylinder(9.0, 4.3, 4.3, 32).translate([0, 0, -4.0]))

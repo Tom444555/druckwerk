@@ -2,7 +2,7 @@
 
 ## STAND 24.11.2026, 06:00 Uhr – hier einsteigen (Strat 190: Schlagbrett-Kante und Buchsenplatte nach Toms App-Bildschirmfotos)
 - **Schlagbrett** (0,30 mm = 3 Schichten): schwarzes Band nur noch an der senkrechten Außenkante in der mittleren Schicht (8,34 mm), oben und unten Weiß; die Linie oben auf der Fläche ist weg (`gitarre_farben.py`, `band`). Geprüft in der .gcode: T0 nur in 8,34.
-- **Buchsenplatte:** Umriss = Hülle aus neuer Ellipse und alter Platte (`umriss`), 0,8 über der Decke, Reste außerhalb weggeschnitten → ein Rand rundum, Schrauben bleiben, Mulde innen silber nur innerhalb des Umrisses.
+- **Buchsenplatte (06:45, Toms zweites Foto: rechts unten Beule):** echtes spiegelgleiches Oval (`umriss`, 15,5 × 6,2 mm), Achse durch beide Schraubenköpfe; die alte Platte des Netzes ist schief → außerhalb unten bündig mit Korpus gefüllt, ab genau ZK weggeschnitten (ab ZK+0,01 blieb eine hauchdünne Haut, die die App grau zeigte). 6 h 12.
 - Neu gerechnet `2026-11-23_stratocaster190_c5pro`: **6 h 12, 34 g, 273 Kopfwechsel**, Pause bei 8,26 wie gehabt, `"farbe": "schwarz"` für strat_schwarz.stl wieder eingetragen. Nichts gedruckt.
 
 ## STAND 23.11.2026, 19:15 Uhr – hier einsteigen (Strat 190 mit Details nach Toms 18 Fotos)

@@ -2,7 +2,7 @@
 
 **Drucker:** Flashforge Creator 5 Pro  
 **Datei für USB:** `Stratocaster_190_komplett.gcode`  
-**Druckzeit (geschätzt):** 6h 11m 35s  
+**Druckzeit (geschätzt):** 6h 12m 2s  
 **Filament:** 17.51, 2.98, 7.09, 6.28 g (5.87 m, 1.00 m, 2.38 m, 2.11 m)  
 
 
@@ -61,3 +61,4 @@ Kopfwechsel in der .gcode: 273, benutzte Köpfe: 1, 2, 3, 4
 ## Änderung 24.11.2026 (Toms Bildschirmfotos)
 - Schlagbrett dreilagig an der senkrechten Kante: unten Weiß, Mitte Schwarz, oben Weiß – oben auf der Fläche keine schwarze Linie mehr.
 - Buchsenplatte: Umriss rundum gleich (alte Platte des Original-Netzes stand rechts als zweite Kante über), Schrauben bleiben drauf.
+- 06:45 Nachbesserung: Buchsenplatte als spiegelgleiches Oval (15,5 × 6,2 mm), Achse durch beide Schrauben; Reste der schiefen alten Platte unten bündig mit Korpus gefüllt, oben weg (keine Beule rechts unten mehr).
