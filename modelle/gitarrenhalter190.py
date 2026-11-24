@@ -19,6 +19,7 @@ HIER = Path(__file__).resolve().parent.parent
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--ziel", default="/tmp/halter190"); ap.add_argument("--bild", default="")
+    ap.add_argument("--zwei", type=int, default=1, help="1 = zweifarbig: Lochfeld als goldene Blende (gitarrenhalter190_gold.stl)")
     ap.add_argument("--winkel", type=float, default=12.0, help="Neigung der Gitarre nach hinten (Grad)")
     ap.add_argument("--kanal", type=float, default=9.4, help="lichte Weite des Kanals (dickster Korpus 8,74 + Luft)")
     ap.add_argument("--lehne", type=float, default=66.0, help="Länge der Lehne ab Kanalboden")
@@ -58,7 +59,14 @@ def main():
         return k
     def wg(x0):
         k = fase(wange) - feld.extrude(1.0) - feld.extrude(1.0).translate([0, 0, 4.0]) - loch.extrude(7.0).translate([0, 0, -1.0])
+        if a.zwei: k = k - scheibe.extrude(3.0).translate([0, 0, 1.0])
         return k.transform(dreh).translate([x0, 0, 0])
+    # Zweifarbig (Tom 24.11., „denk dir was aus“): der Halter als kleiner Verstärker – schwarzes Gehäuse, das eingelassene Lochfeld ist die goldene
+    # Lautsprecher-Blende. Die Blende ist eine 3 mm starke Scheibe MITTEN in der Wange und greift ringsum 0,6 mm unter den schwarzen Rahmen (Nut):
+    # sie hält durch die Form, auch wenn Gold (PLA) und Schwarz (PETG) kaum aneinander haften.
+    scheibe = feld.offset(0.6, RUND, 2.0, 16)
+    gold_w = (scheibe.offset(-0.02, RUND, 2.0, 16) - loch).extrude(2.96).translate([0, 0, 1.02])
+    gold = gold_w.transform(dreh).translate([15.0, 0, 0]) + gold_w.transform(dreh).translate([-20.0, 0, 0]) if a.zwei else None
     # die EINE Querstrebe hinten: Wand zwischen den Wangen mit Spitzbogen (45°, druckt ohne Stützen)
     gipfel = min(12.0, hq - 3.2); bogen = poly((-10.5, -1), (10.5, -1), (10.5, max(1.0, gipfel - 10.5)), (0, gipfel), (-10.5, max(1.0, gipfel - 10.5)))
     strebe = (poly((-16, 0), (16, 0), (16, hq), (-16, hq)) - bogen).extrude(3.2).transform(np.array([[1, 0, 0, 0], [0, 0, 1, 32.0], [0, 1, 0, 0]], float))
@@ -67,6 +75,10 @@ def main():
     ziel = Path(a.ziel); ziel.mkdir(parents=True, exist_ok=True)
     me = halter.to_mesh(); t = trimesh.Trimesh(np.asarray(me.vert_properties[:, :3], np.float64), me.tri_verts, process=True); t.export(ziel / "gitarrenhalter190.stl")
     print(f"gitarrenhalter190.stl: dicht={t.is_watertight}, Maße {t.extents.round(1).tolist()} mm, {halter.volume() / 1000:.1f} cm³ (PLA ≈ {halter.volume() * 1.24 / 1000:.0f} g voll)")
+    tg = None
+    if gold is not None:
+        mg = gold.to_mesh(); tg = trimesh.Trimesh(np.asarray(mg.vert_properties[:, :3], np.float64), mg.tri_verts, process=True); tg.export(ziel / "gitarrenhalter190_gold.stl")
+        print(f"gitarrenhalter190_gold.stl: dicht={tg.is_watertight}, {gold.volume() / 1000:.2f} cm³, Schnitt mit Schwarz {(gold ^ halter).volume():.3f} mm³"); halter = halter + gold
     # ---- Passung mit beiden Gitarren ----
     G = {"schecter": ("auftraege/2026-11-23_gitarre190_c5pro", ["gitarre190_grau", "gitarre190_rot", "gitarre190_schwarz", "gitarre190_weiss"], 8.74),
          "strat": ("auftraege/2026-11-23_stratocaster190_c5pro", ["strat_korpus", "strat_weiss", "strat_hals", "strat_metall", "strat_schwarz"], 8.15)}
@@ -96,13 +108,14 @@ def main():
         def szene(dx_liste, mit=True):
             for dx, n in dx_liste:
                 pl.add_mesh(pv.wrap(t.copy().apply_translation([dx, 0, 0])), color="#1c1c1e", smooth_shading=False)
+                if tg is not None: pl.add_mesh(pv.wrap(tg.copy().apply_translation([dx, 0, 0])), color="#c9a227", smooth_shading=False)
                 if mit and n in lage:
                     for k, m in lage[n][0].items():
                         c = m.copy(); c.apply_transform(lage[n][1]); c.apply_translation([dx, 0, 0]); pl.add_mesh(pv.wrap(c), color=FARBE.get(k, "#999999"), smooth_shading=False)
         paar = [(-40, "schecter"), (40, "strat")]
         pl.subplot(0, 0); szene(paar); pl.camera.position = (-190, -420, 190); pl.camera.focal_point = (0, 15, 88); pl.camera.up = (0, 0, 1); pl.camera.view_angle = 24; pl.add_text("beide Gitarren im Halter", font_size=12, color="black")
         pl.subplot(0, 1); szene([(0, "schecter")]); pl.camera.position = (420, 15, 90); pl.camera.focal_point = (0, 15, 88); pl.camera.up = (0, 0, 1); pl.camera.view_angle = 26; pl.add_text("von der Seite (12° Neigung)", font_size=12, color="black")
-        pl.subplot(0, 2); pl.add_mesh(pv.wrap(t), color="#6b6f76", smooth_shading=False); pl.camera.position = (150, -190, 130); pl.camera.focal_point = (0, 15, 28); pl.camera.up = (0, 0, 1); pl.camera.view_angle = 26; pl.add_text("Halter allein", font_size=12, color="black")
+        pl.subplot(0, 2); pl.add_mesh(pv.wrap(t), color="#26262a", smooth_shading=False); tg is not None and pl.add_mesh(pv.wrap(tg), color="#c9a227", smooth_shading=False); pl.camera.position = (150, -190, 130); pl.camera.focal_point = (0, 15, 28); pl.camera.up = (0, 0, 1); pl.camera.view_angle = 26; pl.add_text("Halter allein", font_size=12, color="black")
         pl.screenshot(a.bild); print("Bild:", a.bild)
 
 

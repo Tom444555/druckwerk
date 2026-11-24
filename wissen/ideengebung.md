@@ -31,6 +31,10 @@ kurz eintragen, was die Idee getragen hat, was Tom geändert haben wollte und we
 - Was wäre die naheliegende, abgegriffene Lösung – und was ist ihr Gegenteil?
 - Woran sieht man in zwei Sekunden, dass es für genau diesen Menschen gemacht ist?
 
+## Gitarrenhalter 190 (24.11.2026)
+- Rahmen: „zweifarbig, denk dir was aus“. Idee aus dem, was schon da war: das eingelassene Lochfeld wird zur goldenen Lautsprecher-Blende, der Halter zum kleinen Verstärker (Toms Farben schwarz/gold). Die zweite Farbe ist kein Aufkleber, sondern ein Bauteil – und hält durch die Form (Nut), weil Schwarz nur als PETG da ist.
+- Liegen geblieben: goldener Keder entlang der Rückenlinie; Auflage im Kanal aus TPU.
+
 ## Ideen-Speicher (noch nicht gebaut – bei Gelegenheit vorschlagen)
 - **Sternenhimmel eines Datums:** die Sterne im Lichtbild nicht zufällig, sondern wie am Abend eines bestimmten Tages über einem Ort; Mondphase dieses Tages.
 - **Datum als Jahresringe** oder als Kerben in der Borke statt als Schrift.
