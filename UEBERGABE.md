@@ -1,5 +1,10 @@
 # Übergabe druckwerk
 
+## STAND 24.11.2026, 08:10 Uhr – hier einsteigen (Aufräumen nach Toms Bildschirmfoto der Bibliothek)
+- **Privat:** `lespaul-komplett` + `lespaul-bausatz` → ein Ordner **`les-paul`** (les_paul.stl, bausatz_hals/halsfuss/korpus.stl, Auftrag Les Paul 6 cm, gruppe jetzt `les-paul`); **Kork-Diorama gelöscht**. Katalog neu.
+- **App (`werkstatt.js`, sw v25):** einmaliges Aufräumen „Meine Modelle“ (Flag `druckwerk_aufr_2411`): vom Amp-Plektrumhalter nur die neueste Kopie, alte Kopien „Les paul“/„Bruecke“/„Korpus“ (vor 22.11.) weg; neu Knopf **Bearbeiten** → rotes ✕ je Modell löscht es vom Gerät. Mit Playwright 390×844 geprüft (nachgestellte Modelle); am iPad unbestätigt.
+- Offen von Tom: Strat 240 mm mit drehbaren Steckreglern? (Minimum 215, Empfehlung 240, Regler-Farbe offen).
+
 ## STAND 24.11.2026, 06:00 Uhr – hier einsteigen (Strat 190: Schlagbrett-Kante und Buchsenplatte nach Toms App-Bildschirmfotos)
 - **Schlagbrett** (0,30 mm = 3 Schichten): schwarzes Band nur noch an der senkrechten Außenkante in der mittleren Schicht (8,34 mm), oben und unten Weiß; die Linie oben auf der Fläche ist weg (`gitarre_farben.py`, `band`). Geprüft in der .gcode: T0 nur in 8,34.
 - **Buchsenplatte (06:45, Toms zweites Foto: rechts unten Beule):** echtes spiegelgleiches Oval (`umriss`, 15,5 × 6,2 mm), Achse durch beide Schraubenköpfe; die alte Platte des Netzes ist schief → außerhalb unten bündig mit Korpus gefüllt, ab genau ZK weggeschnitten (ab ZK+0,01 blieb eine hauchdünne Haut, die die App grau zeigte). 6 h 12.

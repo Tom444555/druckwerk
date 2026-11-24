@@ -135,6 +135,16 @@ export async function bibliothek(app, ctx){
   C = ctx;
   let kiLauf = null; try { const o = JSON.parse(localStorage.getItem("druckwerk_ki") || "null"); if (o && Date.now() - o.start < 2 * 3600e3) kiLauf = o; } catch (e) {}
   let kwOffen = null; try { kwOffen = (await import("./kiweg.js")).offen(); } catch (e) {}
+  // Einmaliges Aufräumen (Tom 24.11.2026): vom Amp-Plektrumhalter nur die neueste Kopie, alte Kopien Les Paul/Brücke/Korpus weg (Originale liegen im privaten Lager)
+  try { if (!localStorage.getItem("druckwerk_aufr_2411")) {
+    const alle = (await eigeneAlle()).sort((a, b) => (b.datum || "").localeCompare(a.datum || "")); const weg = []; let amp = false;
+    for (const m of alle) { const n = String(m.name || "").toLowerCase().replace(/_/g, " ").trim();
+      if (n.startsWith("amp-plektrumh")) { if (amp) weg.push(m); amp = true; }
+      else if (["les paul", "bruecke", "korpus"].includes(n) && (m.datum || "") < "2026-11-22") weg.push(m); }
+    for (const m of weg) await eigenesLoeschen(m.id);
+    localStorage.setItem("druckwerk_aufr_2411", String(weg.length));
+    if (weg.length) setTimeout(() => C.toast(`Aufgeräumt: ${weg.length} doppelte oder alte Modelle entfernt`), 400);
+  } } catch (e) {}
   const eigene = (await eigeneAlle()).sort((a, b) => (b.datum || "").localeCompare(a.datum || ""));
   // Lager: je Modellname nur einmal (Creator 5 Pro bevorzugt)
   const lager = []; for (const a of C.LAGER) { const i = lager.findIndex(x => x.name === a.name);
@@ -157,7 +167,7 @@ export async function bibliothek(app, ctx){
       <div class="grow"><b>KI-Ablauf fortsetzen</b><div class="small">Schritt ${kwOffen.schritt} von 6 · ${C.esc(kwOffen.titel)}</div></div></div></div>` : ""}
     ${kiLauf ? `<div class="card" style="margin-top:10px"><div class="row chev" id="kiLauf" style="cursor:pointer" role="button" tabindex="0">
       <div class="grow"><b>„${C.esc(kiLauf.name)}“ wird erzeugt …</b><div class="small">seit ${Math.max(1, Math.round((Date.now() - kiLauf.start) / 60000))} Min. · antippen für den Stand</div></div></div></div>` : ""}
-    ${eigene.length ? `<h2>Meine Modelle (auf diesem Gerät)</h2><div class="mgrid">${eigene.map(m =>
+    ${eigene.length ? `<div style="display:flex;align-items:center;gap:8px"><h2 style="flex:1">Meine Modelle (auf diesem Gerät)</h2><button class="btn grey" id="eigBearb" style="width:auto;margin:0;padding:6px 14px">Bearbeiten</button></div><div class="mgrid" id="eigGrid">${eigene.map(m =>
       karte("e:" + m.id, m.bild, m.name, `${m.teile.length} Teil${m.teile.length > 1 ? "e" : ""} · ${deD(m.datum)}`, [...new Set(m.teile.map(t => m.slots[t.slot-1]))])).join("")}</div>` : ""}
     <h2>Aus dem Lager</h2><div id="bibChips"></div>
     <div id="privat"></div>
@@ -179,6 +189,15 @@ export async function bibliothek(app, ctx){
   const kw = $("#kiWeiter"); if (kw) kw.onclick = kw.onkeydown = e => { if (e.type === "keydown" && e.key !== "Enter") return; C.go("kiweg:" + kwOffen.schritt); };
   const kl = $("#kiLauf"); if (kl) kl.onclick = kl.onkeydown = e => { if (e.type === "keydown" && e.key !== "Enter") return; ki(); };
   $("#suche").oninput = filtern;
+  // Bearbeiten: rotes ✕ je eigenem Modell, Antippen löscht es von diesem Gerät
+  const eb = $("#eigBearb"); if (eb) { let an = false;
+    app.querySelectorAll('#eigGrid .mk').forEach(k => { k.style.position = "relative";
+      const x = document.createElement("button"); x.textContent = "✕"; x.className = "mx"; x.hidden = true; x.setAttribute("aria-label", "Löschen");
+      x.style.cssText = "position:absolute;top:6px;right:6px;width:30px;height:30px;border-radius:15px;border:0;background:var(--red);color:#fff;font-size:15px;z-index:2";
+      x.onclick = async e => { e.stopPropagation(); const id = k.dataset.m.slice(2); await eigenesLoeschen(id); k.remove(); C.toast("Gelöscht");
+        if (!app.querySelector('#eigGrid .mk')) C.go("bibliothek"); };
+      k.appendChild(x); });
+    eb.onclick = () => { an = !an; eb.textContent = an ? "Fertig" : "Bearbeiten"; app.querySelectorAll('#eigGrid .mx').forEach(x => x.hidden = !an); }; }
   $("#imp").onchange = async e => {
     const fs = [...e.target.files]; if (!fs.length) return;
     C.toast("Datei wird gelesen …");
