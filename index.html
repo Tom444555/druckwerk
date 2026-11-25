@@ -366,6 +366,12 @@ function detail(ordner){
   <h2>Datei für den USB-Stick</h2>
   <a class="btn" href="${pfad}${encodeURIComponent(a.gcode)}${ver}" download="${esc(a.gcode)}">Druckdatei laden</a>
   <p class="hint"><b>${esc(a.gcode)}</b> – auf einen FAT32-USB-Stick kopieren → am Drucker unter USB auswählen → Platte frei? → Start.${geschw.length > 1 ? " Alle Teile auf einmal: im Projekt „Alles für den USB-Stick laden“." : ""}</p>
+  ${(() => { let br = ""; try { br = localStorage.getItem("druckwerk_bruecke") || ""; } catch (e) {}
+    const rechner = !/iPhone|iPad|iPod|Android/i.test(navigator.userAgent) && !(navigator.maxTouchPoints > 1);
+    if (!br && !rechner) return "";
+    const ziel = (br || "http://localhost:8787").replace(/\/+$/, "") + "/?datei=" + encodeURIComponent(new URL(pfad + encodeURIComponent(a.gcode) + ver, location.href).href) + "&name=" + encodeURIComponent(a.gcode) + "&titel=" + encodeURIComponent(a.titel || a.name || a.gcode);
+    return `<a class="btn grey" id="bruecke" href="${esc(ziel)}" target="_blank" rel="noopener">Direkt an den Drucker senden</a>
+  <p class="hint">Versuch, am echten Drucker noch ungetestet: braucht die <a href="werkzeug/bruecke.py" download>Druckwerk-Brücke</a> auf dem Mac (Terminal: <b>python3 bruecke.py</b>). Die Datei wird erst hochgeladen; gestartet wird mit einem eigenen Knopf. Kopf 1–4 druckt fest wie im Bericht.</p>`; })()}
   <div style="height:10px"></div>
   <div id="gdBox"></div>
   <button class="btn grey" id="schichten">Schichten ansehen</button>

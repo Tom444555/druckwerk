@@ -59,6 +59,12 @@ Alte `_kobrax`-Aufträge laufen nicht auf dem Creator 5 Pro – bei Bedarf aus d
   Der Link `#hinzu=<ordner>[,…]` geht weiter und öffnet das Projekt; neu: `#projekt:<gruppe>`. Alte Adressen `#start`/`#auftraege` führen zu `#projekte`.
 - Direkte Verbindung App ↔ Drucker: geprüft 18.11.2026, **nicht zuverlässig möglich** (Webseite darf nicht ins Heimnetz, keine offizielle Schnittstelle; Tom will nichts Wackeliges).
   Kabellos nur über Flash Studio Desktop am Mac (3MF), sonst USB.
+- **Druckwerk-Brücke (seit 25.11.2026, `werkzeug/bruecke.py`, Versuch – am echten Drucker UNGETESTET):** kleines Programm auf Toms Mac (nur Python-Standardbibliothek, `python3 bruecke.py` → http://localhost:8787),
+  spricht die HTTP-Schnittstelle des Creator 5 Pro auf Port 8898 (Doku Parallel-7/flashforge-api-docs: `/detail`, `/gcodeList`, `/uploadGcode` multipart `gcodeFile` mit `printNow "false"`, `/printGcode`, `/control`).
+  Im Auftrag am Rechner Knopf „Direkt an den Drucker senden“ = Link zur Brücke mit `?datei=<Pages-Adresse>&name=&titel=` (Adresse änderbar über localStorage `druckwerk_bruecke`; `--netz` macht die Brücke im Heimnetz erreichbar, dann ginge auch das iPad).
+  Brücke holt die .gcode nur von Toms Pages/GitHub, lädt hoch OHNE zu starten; Start ist ein eigener Knopf mit Haken „Platte leer, Köpfe bestückt“. Bei reiner .gcode druckt Filament n fest aus Kopf n (keine Farb-Zuordnung wie beim Senden aus Flash Studio).
+  POST nur von der eigenen Seite (Origin = Host). **Seriennummer und Check Code liegen nur in `~/.druckwerk/drucker.json` auf dem Mac – nie ins Lager.** Geprüft nur gegen nachgestellten Drucker (Playwright). Offen: Firmware 2.0.0 (laut Doku API auch ohne „Nur LAN“, unbestätigt),
+  ob der Upload ohne `Expect: 100-continue` angenommen wird, Dateien ~100 MB, ob Python 3 auf Toms Mac da ist (sonst fragt macOS nach den Command Line Tools).
 - **Mac ↔ Flash Studio (seit 18.11.2026):** Am Rechner (nicht iPhone/iPad) zeigt die Projektseite „Direkt in Flash Studio öffnen“ und das Teil den Knopf „In Flash Studio öffnen“:
   Link `orcaslicer://open?file=<Adresse der .3mf auf Pages, URL-kodiert>` (`projekte.js → studioLink`). Das Schema steht in der Info.plist des öffentlichen Flash-Studio-Quelltexts
   (FlashForge/Orca-Flashforge: `orcaslicer`, `orcasliceropen`, `bambustudioopen`); Flash Studio braucht einen Download-Ordner in den Einstellungen. **Auf Toms Mac ungetestet**
@@ -74,7 +80,7 @@ Alte `_kobrax`-Aufträge laufen nicht auf dem Creator 5 Pro – bei Bedarf aus d
 - Jede Ansicht hat eine Adresse (`#projekte`, `#projekt:<gruppe>`, `#auftrag:<ordner>`, `#werkstatt:…`, `#kiweg:<schritt>`); Zurück/Vor funktionieren.
 - **Sicherung** (`sicherung.js`): alle `druckwerk_*`-Schlüssel + IndexedDB (eigene Modelle, Tagebuch-Fotos) als eine Datei; `druckwerk_gesichert` = Datum.
 - **Offline/PWA**: `manifest.webmanifest`, `symbol-*.png`, `sw.js` (immer zuerst Netz, Zwischenspeicher nur ohne Netz; .gcode/STL nie).
-  **Bei jeder Änderung an App-Dateien `CACHE` in `sw.js` hochzählen** (Stand `druckwerk-v27`) und neue Dateien dort eintragen.
+  **Bei jeder Änderung an App-Dateien `CACHE` in `sw.js` hochzählen** (Stand `druckwerk-v28`) und neue Dateien dort eintragen.
 - „Aus dem Lager hinzufügen“ heißt in der App jetzt „Weitere Aufträge von Claude“. Überall „Kopf 1–4“, nie „Spule“; Werkstatt-Slicen sendet `c5pro`.
 - Aufträge sind wie die Ideen im Looper **pro Gerät gespeichert** (localStorage `druckwerk_meine`): neue Besucher
   sehen eine leere Liste. Tom speichert einen Auftrag über den Link `https://tom444555.github.io/druckwerk/#hinzu=<ordner>`
