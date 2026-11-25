@@ -12,14 +12,17 @@ Schnittstelle des Druckers: HTTP auf Port 8898 (Beschreibung: Parallel-7/flashfo
 Zugangsdaten liegen NUR auf diesem Rechner in ~/.druckwerk/drucker.json – nie im Lager.
 Stand 25.11.2026: nur gegen einen nachgestellten Drucker geprüft, am echten Gerät ungetestet.
 """
-import argparse, http.client, json, os, re, sys, tempfile, threading, time, urllib.parse, urllib.request, uuid, webbrowser
+import argparse, http.client, json, os, re, socket, sys, tempfile, threading, time, urllib.parse, urllib.request, uuid, webbrowser
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
 ORDNER = Path(os.environ.get("DRUCKWERK_ORDNER", Path.home() / ".druckwerk"))
 DATEI = ORDNER / "drucker.json"
 # Von hier darf die Brücke Druckdateien holen (sonst könnte eine fremde Seite beliebige Dateien einschleusen).
-QUELLEN = ("https://tom444555.github.io/druckwerk/", "https://raw.githubusercontent.com/Tom444555/") + tuple(filter(None, os.environ.get("DRUCKWERK_QUELLEN", "").split(",")))
+QUELLEN_FEST = ("https://tom444555.github.io/druckwerk/", "https://raw.githubusercontent.com/Tom444555/")
+PAGES = os.environ.get("DRUCKWERK_PAGES", "https://tom444555.github.io/druckwerk/")   # zum Testen umstellbar
+LAGER = {"t": 0, "liste": []}
+NETZ = {"an": False, "port": 8787}
 LAUF = {}      # id -> {stufe, anteil, text, fertig, fehler, name}
 
 
@@ -59,6 +62,42 @@ def drucker(pfad, daten=None, zeit=8):
     return json.loads(roh)      # Kopfzeile der Firmware ist falsch geschrieben, Inhalt ist JSON
 
 
+def lager():
+    """Auftragsliste aus dem öffentlichen Lager (60 s gemerkt)."""
+    if time.time() - LAGER["t"] > 60 or not LAGER["liste"]:
+        with urllib.request.urlopen(PAGES + "auftraege/index.json", timeout=20) as q:
+            roh = json.loads(q.read())
+        aus = []
+        for a in roh:
+            if a.get("drucker") != "c5pro" or not a.get("gcode"):
+                continue
+            aus.append({"ordner": a["ordner"], "titel": a.get("titel") or a.get("name") or a["gcode"], "projekt": a.get("gruppe_titel") or "",
+                        "nr": a.get("nr") or 0, "gcode": a["gcode"], "zeit": a.get("zeit", ""), "datum": a.get("datum", ""),
+                        "bild": PAGES + "auftraege/" + a["ordner"] + "/" + a["vorschau"] if a.get("vorschau") else "",
+                        "koepfe": [f"Kopf {k.get('slot')}: {k.get('material', '')} {k.get('farbe', '')}".strip() for k in a.get("slots") or []]})
+        aus.sort(key=lambda a: (a["datum"], a["projekt"], -a["nr"]), reverse=True)
+        LAGER.update(t=time.time(), liste=aus)
+    return LAGER["liste"]
+
+
+def adressen():
+    """Unter welchen Adressen andere Geräte im Heimnetz die Brücke erreichen."""
+    if not NETZ["an"]:
+        return []
+    aus = []
+    name = socket.gethostname().split(".")[0]
+    if name:
+        aus.append(f"http://{name}.local:{NETZ['port']}")
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.connect(("192.0.2.1", 9))          # schickt nichts, verrät nur die eigene Netz-Adresse
+        aus.append(f"http://{s.getsockname()[0]}:{NETZ['port']}")
+        s.close()
+    except OSError:
+        pass
+    return aus
+
+
 FEHLER = {-2: "Der Drucker lehnt ab: „Nur LAN“-Modus am Drucker einschalten (Netzwerk-Einstellungen).",
           1: "Seriennummer oder Check Code stimmen nicht.",
           2: "Der Drucker ist beschäftigt.", 3: "Die Datei liegt nicht auf dem Drucker."}
@@ -82,7 +121,8 @@ def status():
             "rest_s": d.get("estimatedTime") or 0, "schicht": d.get("printLayer"), "schichten": d.get("targetPrintLayer"),
             "koepfe": d.get("nozzleTemps") or [], "koepfe_soll": d.get("nozzleTargetTemps") or [],
             "bett": d.get("platTemp"), "bett_soll": d.get("platTargetTemp"), "kammer": d.get("chamberTemp"),
-            "fehler": d.get("errorCode", "")}
+            "fehler": d.get("errorCode", ""),
+            "kamera": d.get("cameraStreamUrl") or f"http://{lade()['ip'].partition(':')[0]}:8080/?action=stream"}
 
 
 def hochladen(lid, url, name):
@@ -90,7 +130,7 @@ def hochladen(lid, url, name):
     L = LAUF[lid]
     tmp = None
     try:
-        if not url.startswith(QUELLEN):
+        if not url.startswith(QUELLEN_FEST + (PAGES,)):
             raise RuntimeError("Diese Adresse ist keine Druckwerk-Datei.")
         name = re.sub(r"[^A-Za-z0-9._-]", "_", name or url.rsplit("/", 1)[-1].split("?")[0])
         if not name.lower().endswith((".gcode", ".3mf")):
@@ -166,9 +206,10 @@ button{font:inherit;font-weight:600;border:0;border-radius:11px;padding:11px 14p
 button.z{background:#e5e5ea;color:#1c1c1e}button.r{background:#ff3b30}button:disabled{opacity:.4}
 .b{height:8px;background:#e5e5ea;border-radius:4px;overflow:hidden;margin:8px 0}.b i{display:block;height:100%;background:#0a84ff;width:0}
 .t{display:flex;gap:8px;flex-wrap:wrap;font-size:14px}.t span{background:#f2f2f7;border-radius:8px;padding:5px 8px}
+.z2{display:flex;gap:10px;align-items:center;padding:8px 0;border-top:1px solid #e5e5ea;cursor:pointer}.z2 img{width:54px;height:42px;object-fit:contain;background:#f2f2f7;border-radius:8px}.z2 b{display:block;color:#1c1c1e;font-size:15px}
 .h{font-size:13px;color:#6b6b70;margin:6px 0 0}.f{color:#c0271d}.g{color:#1c7c3a}
 </style><main><h1>Druckwerk-Brücke</h1>
-<div class="k" id="auftrag" hidden><h2>Druckdatei</h2><div id="aName" style="font-weight:600"></div>
+<div class="k" id="auftrag" hidden><h2>Druckdatei</h2><div id="aName" style="font-weight:600"></div><div id="aKopf" class="h"></div>
 <div class="b"><i id="aBalken"></i></div><div id="aText" class="h"></div>
 <button id="aHoch">Auf den Drucker laden</button>
 <div id="aStart" hidden><label><input type="checkbox" id="aNiv" checked> vorher nivellieren</label>
@@ -176,7 +217,10 @@ button.z{background:#e5e5ea;color:#1c1c1e}button.r{background:#ff3b30}button:dis
 <button id="aDruck" disabled>Jetzt drucken</button></div></div>
 <div class="k"><h2>Drucker</h2><div id="sText">…</div><div class="b"><i id="sBalken"></i></div><div class="t" id="sTemp"></div>
 <div id="sKnopf" hidden><button class="z" data-a="pause">Pause</button><button class="z" data-a="continue">Weiter</button><button class="r" data-a="cancel">Abbrechen</button></div></div>
+<div class="k"><h2>Kamera</h2><button class="z" id="kAn" style="margin-top:0">Kamera zeigen</button><img id="kBild" hidden style="width:100%;border-radius:10px;margin-top:8px" alt=""></div>
+<div class="k"><h2>Aus dem Lager</h2><input type="text" id="lSuch" placeholder="Suchen …"><div id="lager" class="h">…</div></div>
 <div class="k"><h2>Auf dem Drucker</h2><div id="liste" class="h">…</div></div>
+<div class="k" id="andere" hidden><h2>Auf iPad und iPhone öffnen</h2><div id="aAdr"></div><p class="h">Im selben WLAN in Safari öffnen und „Zum Home-Bildschirm“ wählen. Der Mac muss an sein.</p><a id="aApp" class="h" target="_blank" rel="noopener">Diese Brücke in der Druckwerk-App merken</a></div>
 <details class="k" id="ein"><summary><b>Einrichten</b></summary>
 <label>Adresse des Druckers (IP)</label><input type="text" id="eIp" placeholder="192.168.178.50">
 <label>Seriennummer</label><input type="text" id="eSn"><label>Check Code</label><input type="text" id="eCc">
@@ -186,13 +230,25 @@ button.z{background:#e5e5ea;color:#1c1c1e}button.r{background:#ff3b30}button:dis
 const $=i=>document.getElementById(i),P=new URLSearchParams(location.search);
 const ruf=(p,d)=>fetch(p,{method:d?"POST":"GET",headers:{"Content-Type":"application/json"},body:d?JSON.stringify(d):undefined}).then(r=>r.json());
 const zeit=s=>{s=Math.round(s/60);return s>=60?Math.floor(s/60)+" h "+(s%60)+" min":s+" min"};
-let datei=P.get("datei"),name=P.get("name")||"",oben="";
+let datei=P.get("datei"),name=P.get("name")||"",oben="",ordner="",LG=[],kam="";
+function waehle(a){ordner=a.ordner;datei="";name=a.gcode;oben="";$("auftrag").hidden=false;$("aName").textContent=a.titel+(a.zeit?" · "+a.zeit:"");$("aKopf").textContent=a.koepfe.join(" · ");
+ $("aBalken").style.width="0";$("aText").textContent="";$("aText").className="h";$("aHoch").disabled=false;$("aStart").hidden=true;$("aFrei").checked=false;$("aDruck").disabled=true;scrollTo({top:0,behavior:"smooth"})}
+function zeige(){const q=$("lSuch").value.toLowerCase(),z=$("lager");z.textContent="";
+ LG.filter(a=>(a.titel+" "+a.projekt+" "+a.ordner).toLowerCase().includes(q)).slice(0,40).forEach(a=>{const d=document.createElement("div");d.className="z2";
+  const i=document.createElement("img");i.loading="lazy";i.src=a.bild;i.alt="";const t=document.createElement("div"),b=document.createElement("b");b.textContent=a.titel;
+  t.append(b,document.createTextNode([a.projekt,a.zeit,a.datum].filter(Boolean).join(" · ")));d.append(i,t);d.onclick=()=>waehle(a);z.append(d)})}
+$("lSuch").oninput=zeige;
+ruf("/api/lager").then(l=>{if(l.adressen&&l.adressen.length){$("andere").hidden=false;l.adressen.forEach(x=>{const d=document.createElement("div");d.style.fontWeight="600";d.textContent=x;$("aAdr").append(d)});
+  $("aApp").href="https://tom444555.github.io/druckwerk/#bruecke="+encodeURIComponent(l.adressen[0])}
+ if(!l.ok){$("lager").textContent=l.text;return}LG=l.liste;zeige()});
+$("kAn").onclick=()=>{const b=$("kBild");if(b.hidden){b.src=kam;b.hidden=false;$("kAn").textContent="Kamera aus"}else{b.removeAttribute("src");b.hidden=true;$("kAn").textContent="Kamera zeigen"}};
+$("kBild").onerror=()=>{if(!$("kBild").hidden){$("kBild").hidden=true;$("kAn").textContent="Kamera nicht erreichbar – nochmal"}};
 if(datei){$("auftrag").hidden=false;$("aName").textContent=P.get("titel")||name||datei}
 async function stand(){try{const s=await ruf("/api/status");
  if(!s.ok){$("sText").innerHTML='<span class="f"></span>';$("sText").firstChild.textContent=s.text;$("sKnopf").hidden=true;if(s.leer)$("ein").open=true;return}
  const laeuft=s.zustand&&!/ready|idle|completed|cancel/i.test(s.zustand);
  $("sText").textContent=s.name+" · "+(s.zustand||"?")+(laeuft&&s.datei?" · "+s.datei+" · "+Math.round(s.anteil*100)+" %"+(s.rest_s?" · noch "+zeit(s.rest_s):""):"");
- $("sBalken").style.width=(laeuft?s.anteil*100:0)+"%";$("sKnopf").hidden=!laeuft;
+ kam=s.kamera||"";$("sBalken").style.width=(laeuft?s.anteil*100:0)+"%";$("sKnopf").hidden=!laeuft;
  const t=$("sTemp");t.textContent="";(s.koepfe||[]).forEach((w,i)=>{const e=document.createElement("span");e.textContent="Kopf "+(i+1)+": "+Math.round(w)+"° / "+Math.round((s.koepfe_soll||[])[i]||0)+"°";t.append(e)});
  if(s.bett!=null){const e=document.createElement("span");e.textContent="Bett: "+Math.round(s.bett)+"° / "+Math.round(s.bett_soll||0)+"°";t.append(e)}
  if(s.kammer!=null&&s.kammer>-50){const e=document.createElement("span");e.textContent="Kammer: "+Math.round(s.kammer)+"°";t.append(e)}
@@ -200,7 +256,7 @@ async function stand(){try{const s=await ruf("/api/status");
 async function liste(){try{const l=await ruf("/api/liste");const z=$("liste");z.textContent="";
  if(!l.ok){z.textContent=l.text;return}if(!l.dateien.length){z.textContent="Keine Dateien.";return}
  l.dateien.slice(0,12).forEach(n=>{const d=document.createElement("div");d.textContent=n;z.append(d)})}catch(e){}}
-$("aHoch").onclick=async()=>{$("aHoch").disabled=true;const a=await ruf("/api/hochladen",{url:datei,name});
+$("aHoch").onclick=async()=>{$("aHoch").disabled=true;const a=await ruf("/api/hochladen",ordner?{ordner}:{url:datei,name});
  if(!a.ok){$("aText").textContent=a.text;$("aText").className="h f";$("aHoch").disabled=false;return}
  const t=setInterval(async()=>{const l=await ruf("/api/lauf?id="+a.id);$("aBalken").style.width=(l.anteil*100)+"%";$("aText").textContent=l.text;
   if(l.fertig){clearInterval(t);if(l.fehler){$("aText").className="h f";$("aHoch").disabled=false}else{$("aText").className="h g";oben=l.name;$("aStart").hidden=false;liste()}}},500)};
@@ -253,6 +309,11 @@ class Anfrage(BaseHTTPRequestHandler):
                 if a.get("code") != 0:
                     return self.antwort({"ok": False, "text": klartext(a)})
                 return self.antwort({"ok": True, "dateien": a.get("gcodeList") or []})
+            if u.path == "/api/lager":
+                try:
+                    return self.antwort({"ok": True, "liste": lager(), "adressen": adressen()})
+                except Exception as e:
+                    return self.antwort({"ok": False, "text": f"Lager nicht erreichbar ({e}).", "adressen": adressen()})
             if u.path == "/api/lauf":
                 return self.antwort(LAUF.get(q.get("id", [""])[0], {"fertig": True, "fehler": "unbekannt", "text": "Unbekannter Lauf", "anteil": 0}))
             self.antwort({"ok": False, "text": "Gibt es nicht."}, 404)
@@ -278,7 +339,13 @@ class Anfrage(BaseHTTPRequestHandler):
                     return self.antwort({"ok": False, "text": "Erst den Drucker einrichten."})
                 lid = uuid.uuid4().hex[:10]
                 LAUF[lid] = {"stufe": "start", "anteil": 0, "text": "…", "fertig": False, "fehler": "", "name": ""}
-                threading.Thread(target=hochladen, args=(lid, d.get("url", ""), d.get("name", "")), daemon=True).start()
+                url, name = d.get("url", ""), d.get("name", "")
+                if d.get("ordner"):
+                    a = next((x for x in lager() if x["ordner"] == d["ordner"]), None)
+                    if not a:
+                        return self.antwort({"ok": False, "text": "Diesen Auftrag gibt es im Lager nicht."})
+                    url, name = PAGES + "auftraege/" + a["ordner"] + "/" + urllib.parse.quote(a["gcode"]), a["gcode"]
+                threading.Thread(target=hochladen, args=(lid, url, name), daemon=True).start()
                 return self.antwort({"ok": True, "id": lid})
             if p == "/api/drucken":
                 a = drucker("/printGcode", {"fileName": d.get("name", ""), "levelingBeforePrint": bool(d.get("nivellieren", True)),
@@ -301,8 +368,13 @@ def main():
     ap.add_argument("--netz", action="store_true", help="auch für andere Geräte im Heimnetz (iPad) erreichbar machen")
     ap.add_argument("--still", action="store_true", help="keinen Browser öffnen")
     a = ap.parse_args()
+    NETZ.update(an=a.netz, port=a.port)
     srv = ThreadingHTTPServer(("0.0.0.0" if a.netz else "127.0.0.1", a.port), Anfrage)
     print(f"Druckwerk-Brücke läuft: http://localhost:{a.port}   (beenden mit Ctrl+C)")
+    for x in adressen():
+        print(f"  iPad / iPhone im selben WLAN: {x}")
+    if not a.netz:
+        print("  Nur an diesem Rechner. Für iPad und iPhone mit --netz starten.")
     if not a.still:
         threading.Timer(0.6, lambda: webbrowser.open(f"http://localhost:{a.port}")).start()
     try:

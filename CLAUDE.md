@@ -65,6 +65,12 @@ Alte `_kobrax`-Aufträge laufen nicht auf dem Creator 5 Pro – bei Bedarf aus d
   Brücke holt die .gcode nur von Toms Pages/GitHub, lädt hoch OHNE zu starten; Start ist ein eigener Knopf mit Haken „Platte leer, Köpfe bestückt“. Bei reiner .gcode druckt Filament n fest aus Kopf n (keine Farb-Zuordnung wie beim Senden aus Flash Studio).
   POST nur von der eigenen Seite (Origin = Host). **Seriennummer und Check Code liegen nur in `~/.druckwerk/drucker.json` auf dem Mac – nie ins Lager.** Geprüft nur gegen nachgestellten Drucker (Playwright). Offen: Firmware 2.0.0 (laut Doku API auch ohne „Nur LAN“, unbestätigt),
   ob der Upload ohne `Expect: 100-continue` angenommen wird, Dateien ~100 MB, ob Python 3 auf Toms Mac da ist (sonst fragt macOS nach den Command Line Tools).
+  **Für alle Geräte (25.11. nachmittags):** `python3 bruecke.py --netz` → die Brücke nennt im Terminal und auf der Seite ihre Adressen (`http://<mac>.local:8787`, IP); iPad/iPhone öffnen sie in Safari (http-Seite, daher kein Mixed-Content-Problem).
+  Die Brücken-Seite hat jetzt selbst „Aus dem Lager“ (liest `auftraege/index.json` von Pages, Suche, Antippen → hochladen → starten; `/api/hochladen {ordner}`), Köpfe des Auftrags, Kamera (MJPEG `http://<drucker>:8080/?action=stream` bzw. `cameraStreamUrl`, Pfad UNBESTÄTIGT)
+  und den Link „Diese Brücke in der Druckwerk-App merken“ (`#bruecke=<Adresse>` → localStorage `druckwerk_bruecke`; in der App auch von Hand über `#brSetz`). Ist die Adresse gemerkt, zeigt die App den Sende-Knopf auf jedem Gerät. Private Aufträge kennt die Brücke nicht.
+  **Auf GitHub gefunden (25.11., nicht eingebaut, nicht ausprobiert):** `Parallel-7/FlashForgeWebUI` (fertige Web-Oberfläche für Mac/Raspberry Pi/Docker, Creator 5 „neu“, vom Autor der API-Doku; jetzt auf GitLab) – Alternative fürs reine Überwachen/Steuern, falls ein Dauer-Rechner da ist;
+  `varavut/FlashforgeCreator5WebUI` (kleines Python-Dashboard, gleiche Bauart wie unsere Brücke); `GhsVilela/FF-3MF-Converter` (wandelt Orca/Bambu-3MF in Flash-Studio-Projekte für den Creator 5 – **bei Gelegenheit mit `fs_3mf.py` vergleichen**); `ben0551/orca-flashforge-c5` (Senden aus OrcaSlicer);
+  `ghzserg/zmod`, OpenCreator (fremde Firmware – nicht ohne Toms ausdrücklichen Wunsch). Immer-an-Lösung: dieselbe `bruecke.py` läuft auch auf einem Raspberry Pi. Von unterwegs geht nichts (bewusst: Platte muss ohnehin leer sein).
 - **Mac ↔ Flash Studio (seit 18.11.2026):** Am Rechner (nicht iPhone/iPad) zeigt die Projektseite „Direkt in Flash Studio öffnen“ und das Teil den Knopf „In Flash Studio öffnen“:
   Link `orcaslicer://open?file=<Adresse der .3mf auf Pages, URL-kodiert>` (`projekte.js → studioLink`). Das Schema steht in der Info.plist des öffentlichen Flash-Studio-Quelltexts
   (FlashForge/Orca-Flashforge: `orcaslicer`, `orcasliceropen`, `bambustudioopen`); Flash Studio braucht einen Download-Ordner in den Einstellungen. **Auf Toms Mac ungetestet**
@@ -80,7 +86,7 @@ Alte `_kobrax`-Aufträge laufen nicht auf dem Creator 5 Pro – bei Bedarf aus d
 - Jede Ansicht hat eine Adresse (`#projekte`, `#projekt:<gruppe>`, `#auftrag:<ordner>`, `#werkstatt:…`, `#kiweg:<schritt>`); Zurück/Vor funktionieren.
 - **Sicherung** (`sicherung.js`): alle `druckwerk_*`-Schlüssel + IndexedDB (eigene Modelle, Tagebuch-Fotos) als eine Datei; `druckwerk_gesichert` = Datum.
 - **Offline/PWA**: `manifest.webmanifest`, `symbol-*.png`, `sw.js` (immer zuerst Netz, Zwischenspeicher nur ohne Netz; .gcode/STL nie).
-  **Bei jeder Änderung an App-Dateien `CACHE` in `sw.js` hochzählen** (Stand `druckwerk-v28`) und neue Dateien dort eintragen.
+  **Bei jeder Änderung an App-Dateien `CACHE` in `sw.js` hochzählen** (Stand `druckwerk-v29`) und neue Dateien dort eintragen.
 - „Aus dem Lager hinzufügen“ heißt in der App jetzt „Weitere Aufträge von Claude“. Überall „Kopf 1–4“, nie „Spule“; Werkstatt-Slicen sendet `c5pro`.
 - Aufträge sind wie die Ideen im Looper **pro Gerät gespeichert** (localStorage `druckwerk_meine`): neue Besucher
   sehen eine leere Liste. Tom speichert einen Auftrag über den Link `https://tom444555.github.io/druckwerk/#hinzu=<ordner>`

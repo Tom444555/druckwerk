@@ -165,6 +165,14 @@ details.fein>summary::-webkit-details-marker{display:none}details.fein>summary::
 "three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}
 </script>
 <script type="module">
+// Druckwerk-Brücke: Adresse merken (Link #bruecke=… von der Brücken-Seite) oder von Hand eintragen
+const brMerk = () => { try { const m = location.hash.match(/^#bruecke=(.+)$/); if (m) { const u = decodeURIComponent(m[1]); if (/^http:\/\/[\w.\-]+(:\d+)?\/?$/.test(u)) { localStorage.setItem("druckwerk_bruecke", u); alert("Brücke gemerkt: " + u); } history.replaceState(null, "", "#projekte"); } } catch (e) {} };
+brMerk(); addEventListener("hashchange", brMerk);
+document.addEventListener("click", e => { const t = e.target.closest && e.target.closest("#brSetz"); if (!t) return; e.preventDefault();
+  let alt = ""; try { alt = localStorage.getItem("druckwerk_bruecke") || ""; } catch (x) {}
+  const u = prompt("Adresse der Druckwerk-Brücke (steht im Terminal am Mac und auf der Brücken-Seite), z. B. http://macbook.local:8787 – leer = nur am Mac", alt);
+  if (u === null) return; try { u.trim() ? localStorage.setItem("druckwerk_bruecke", u.trim()) : localStorage.removeItem("druckwerk_bruecke"); } catch (x) {} location.reload(); });
+
 const $ = s => document.querySelector(s);
 const app = $("#app");
 const DRUCKER = {};
@@ -368,10 +376,10 @@ function detail(ordner){
   <p class="hint"><b>${esc(a.gcode)}</b> – auf einen FAT32-USB-Stick kopieren → am Drucker unter USB auswählen → Platte frei? → Start.${geschw.length > 1 ? " Alle Teile auf einmal: im Projekt „Alles für den USB-Stick laden“." : ""}</p>
   ${(() => { let br = ""; try { br = localStorage.getItem("druckwerk_bruecke") || ""; } catch (e) {}
     const rechner = !/iPhone|iPad|iPod|Android/i.test(navigator.userAgent) && !(navigator.maxTouchPoints > 1);
-    if (!br && !rechner) return "";
+    if (!br && !rechner) return `<p class="hint"><a href="#" id="brSetz">Vom iPad oder iPhone direkt an den Drucker senden: Adresse der Druckwerk-Brücke eintragen</a></p>`;
     const ziel = (br || "http://localhost:8787").replace(/\/+$/, "") + "/?datei=" + encodeURIComponent(new URL(pfad + encodeURIComponent(a.gcode) + ver, location.href).href) + "&name=" + encodeURIComponent(a.gcode) + "&titel=" + encodeURIComponent(a.titel || a.name || a.gcode);
     return `<a class="btn grey" id="bruecke" href="${esc(ziel)}" target="_blank" rel="noopener">Direkt an den Drucker senden</a>
-  <p class="hint">Versuch, am echten Drucker noch ungetestet: braucht die <a href="werkzeug/bruecke.py" download>Druckwerk-Brücke</a> auf dem Mac (Terminal: <b>python3 bruecke.py</b>). Die Datei wird erst hochgeladen; gestartet wird mit einem eigenen Knopf. Kopf 1–4 druckt fest wie im Bericht.</p>`; })()}
+  <p class="hint">Versuch, am echten Drucker noch ungetestet: braucht die <a href="werkzeug/bruecke.py" download>Druckwerk-Brücke</a> auf dem Mac (Terminal: <b>python3 bruecke.py</b>). Die Datei wird erst hochgeladen; gestartet wird mit einem eigenen Knopf. Kopf 1–4 druckt fest wie im Bericht. <a href="#" id="brSetz">Adresse der Brücke ändern</a></p>`; })()}
   <div style="height:10px"></div>
   <div id="gdBox"></div>
   <button class="btn grey" id="schichten">Schichten ansehen</button>
