@@ -1,6 +1,7 @@
 # Übergabe druckwerk
 
 ## STAND 24.11.2026, 12:15 Uhr – hier einsteigen (Schlüsselanhänger 50 mm, Halter-Entwurf)
+- **25.11. 08:15 ERSTER ECHTER DRUCK (Schecter 190, Toms Flash-Studio-Schnitt) misslungen:** alles rot/weiß statt vier Farben (Kopf 1 und 3 nie benutzt – vermutlich Farb-Zuordnung beim Senden), Fäden, Wirbel nur Knäuel, Buchse ein Klumpen. Befund und Lehren in CLAUDE.md „Erster echter Druck“. Nächste Schritte mit Tom: Zuordnung im Sende-Dialog klären, Kalibrier-Set/kleines Teil zuerst, Buchse 190 vereinfachen, Wirbel getrennt.
 - **18:45 Flash Studio:** Tom druckt die Schecter 190 aus Flash Studio (eigene Einstellungen von Hand nachgetragen). Ursache der verlorenen Einstellungen gefunden (`different_settings_to_system` leer) und mit `werkzeug/fs_3mf.py` behoben; sechs Gitarren-Aufträge umgestellt. **Offen: Tom testet die neue 3MF (Stützen da? ~33,7 g? „Print plate“ blau?)**, danach alle übrigen Aufträge nachziehen und den Hinweis in der App-Anleitung anpassen.
 - **13:40:** Gitarrenhalter 190 fertig gesliced (schwarz PETG + goldene Blende PLA-Silk, 1 h 52, 24 g) – Tom hat die .gcode; Druck-Rückmeldung offen.
 - **13:10:** App zeigt keine verwaisten Geräte-Karten mehr (index.html, sw.js v27); Kalibrier-Set ins Projekt Drehteller & Foto-Scan-Set verschoben (Nr. 14–18).

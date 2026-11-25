@@ -459,6 +459,17 @@ So kam `modelle/gitarre_rundum.py` zustande; für ähnliche Vorhaben (Instrument
 - **Prüfbilder ohne `smooth_shading`** rendern: geglättete Normalen auf groben Original-Netzen zeigen Streifen/Kanten, die es nicht gibt (Tom hielt die Strat-Rückseite deshalb für „komisch“).
 - Gemeinsamer Druck = gemeinsame Einstellungen (Wirbel dann mit 15 % und Stützen auto statt 100 % / ohne Stützen) – Tom sagen.
 
+## Erster echter Druck: Schecter 190 aus Flash Studio (24./25.11.2026) – Befund von Toms Fotos, Ursachen teils Vermutung
+- Gedruckt wurde Toms eigener Flash-Studio-Schnitt (Geometrie importiert, Stützen/Arachne/Fein-Werte von Hand, 28,32 g, 6 h 45), kabellos gesendet; nach ~6 h abgebrochen.
+- **Farben falsch: Korpus komplett rot, alles Übrige weiß; Grau (Kopf 1) und Schwarz (Kopf 3) haben nie gedruckt** (im Gerätebild standen T1/T3 auf Soll 0 °C, nur T2 220 und T4 120).
+  Wahrscheinliche Ursache: beim Geometrie-Import gingen die Filamentfarben verloren (Flash Studio zeigte 1 = orange, 2–4 = weiß); beim Senden ordnet Flash Studio die Schnitt-Filamente den Köpfen
+  nach Farbe/Material zu → orange → roter Kopf 2, alle weißen → weißer Kopf 4. **Vor jedem Senden die Zuordnung Filament → Kopf im Sende-Dialog prüfen (1→1 … 4→4)**; unsere .gcode per USB hat die Köpfe fest.
+- **Fäden von Anfang an**, Stützen an der Kopfplatte mit dem Teil verklebt und verfilzt; **Steckwirbel nur ein weißes Knäuel** (winzige stehende Teile, lösten sich/kippten); Düse T2 anfangs einmal verstopft.
+  Noch ohne jede Kalibrierung gedruckt (Kalibrier-Set, Kopfversatz, trockenes Filament offen) – erst das klären, dann wieder lange Drucke.
+- **Buchse an der Zarge (190 mm): weißer Klumpen in der Aussparung** – die seitliche Buchsenplatte hängt in der Luft und ist für diese Größe zu fein → wie beim Anhänger vereinfachen (`--buchse klein`) oder als Farbfläche bündig.
+- Unterseite (strukturierte Platte), Bodenrundung, Deckel-Einlage und Saitenlöcher hinten kamen sauber. Decke fehlt wegen Abbruch (Füllmuster sichtbar).
+- Lehren fürs Vorgehen: erster Druck eines neuen Aufbaus = kleines Teil (Anhänger 45 min, Kalibrier-Teile), nicht 7 h vierfarbig; Wirbel als eigenen kleinen Druck anbieten; Tom nach dem Sende-Dialog fragen.
+
 ## Herstellerwerte Creator 5 Pro (Recherche 23.11.2026) – in `druck.py` eingebaut, nichts davon gedruckt
 - **Quelle:** Flash-Studio-Profile im Zweig `release_0817` von FlashForge/Orca-Flashforge (neuer als unsere Orca-2.5-Profile), Flashforge-Wiki (FAQ, Filament-Leitfaden, Stützmaterial-PDF), Handbuch, Tests (Notebookcheck, Anton Mansson).
 - **0,25-mm-Filamentprofile** (`drucker/fs_025/*.json`, 1:1 vom Hersteller): `druck.py` legt sie automatisch über das Filament, sobald der Kopf eine 0,25er-Düse hat. PLA 220 °C, PLA-Silk 230, HS-PETG 235 / Bett 70, PA 0,1, Fluss 0,98, **höchstens 2,8 mm³/s (PETG 2)** – vorher galten die 0,4er-Werte (210 °C, 18 mm³/s → Innenwände/Füllung konnten zu wenig Material bekommen). Neue Profile nachziehen: Datei aus `resources/profiles/Flashforge/filament/<Name> @FF C5P 0.25 nozzle.json` kopieren.
