@@ -1,5 +1,5 @@
 {
- "stand": "23.11.2026",
+ "stand": "25.11.2026",
  "hinweis": "Zusammengetragen aus Herstellerangaben, Flashforge-Wiki und unabhängigen Tests. Am eigenen Gerät noch nicht nachgemessen – eigene Erfahrungen bitte melden, dann trage ich sie hier ein.",
  "steckbrief": [
   [
@@ -144,13 +144,13 @@
   },
   {
    "id": "e6",
-   "t": "Kopf-Versatz kalibrieren",
-   "d": "Vorher die PEI-Platte abnehmen und alle Düsen säubern – die Mess-Scheibe liegt unter der Platte. Dauert 15–20 Minuten."
+   "t": "Köpfe abstimmen (Kopf-Versatz)",
+   "d": "Am Bildschirm: Start → „Move & Calibrate“ → „Calibrate“ → Kopf-Versatz (Toolhead Offset). Vorher: Filament aus allen Köpfen zurückziehen oder Düsenspitzen sauber machen, PEI-Platte abnehmen – die Mess-Scheibe liegt darunter (mit Platte stößt die Düse auf: Fehler E0147). Deckel und Tür zu. Läuft allein für alle vier Köpfe in X, Y und Z, 15–20 Minuten. Wiederholen nach Düsen- oder Kopftausch (z. B. Umbau auf 0,25 mm), nach Firmware-Update, nach einem Crash und wenn Farbgrenzen versetzt sind."
   },
   {
    "id": "e7",
-   "t": "Leveling und Schwingungs-Ausgleich",
-   "d": "Beides einmal bei der Einrichtung. Leveling danach nur bei schlechter erster Schicht, nach Düsenwechsel oder Umstellen; Schwingungs-Ausgleich nur bei Geisterbildern oder lockeren Riemen."
+   "t": "Nivellieren und Schwingungs-Ausgleich",
+   "d": "Gleiches Menü („Move & Calibrate“ → „Calibrate“), nach dem Kopf-Versatz: PEI-Platte wieder sauber auflegen, dann Nivellieren (Auto Leveling) starten – der Drucker tastet das Bett selbst ab. Schwingungs-Ausgleich einmal bei der Einrichtung. Nivellieren danach nur bei schlechter erster Schicht, nach Düsenwechsel oder Umstellen; Schwingungs-Ausgleich nur bei Geisterbildern oder lockeren Riemen. Vor jedem Druck ist nichts davon nötig."
   },
   {
    "id": "e8",
@@ -489,6 +489,10 @@
   {
    "titel": "Flash-Studio-Profile (Orca-Flashforge, Zweig release_0817)",
    "url": "https://github.com/FlashForge/Orca-Flashforge"
+  },
+  {
+   "titel": "Flashforge-Wiki: Drucker kalibrieren (Menü „Move & Calibrate“)",
+   "url": "https://wiki.flashforge.com/en/creator-series/creator-5-series/manual/cal_printer"
   }
  ]
 }
