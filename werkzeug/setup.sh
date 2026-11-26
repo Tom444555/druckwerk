@@ -16,8 +16,18 @@ fi
 # 2) OrcaSlicer (AppImage entpacken)
 if [ ! -x squashfs-root/AppRun ]; then
   N="${VER#v}"
-  curl -sL -o orca.AppImage \
+  curl -sL --fail -o orca.AppImage \
     "https://github.com/SoftFever/OrcaSlicer/releases/download/${VER}/OrcaSlicer_Linux_AppImage_Ubuntu2404_V${N}.AppImage"
+  # Prüfsumme: nur die bekannte Datei wird ausgeführt (bei neuer Version hier die neue Summe eintragen)
+  case "$VER" in
+    v2.5.0) SUMME="d13eb0a9cd618ed080ab6b82c64c0a60c4501aac91e88d5ac2c3b526fb141a7c" ;;
+    *) SUMME="" ;;
+  esac
+  if [ -n "$SUMME" ]; then
+    echo "$SUMME  orca.AppImage" | sha256sum -c - >/dev/null 2>&1 || { echo "FEHLER: OrcaSlicer-Download hat eine falsche Prüfsumme – abgebrochen."; rm -f orca.AppImage; exit 1; }
+  else
+    echo "Hinweis: für OrcaSlicer $VER ist keine Prüfsumme hinterlegt (werkzeug/setup.sh)."
+  fi
   chmod +x orca.AppImage && ./orca.AppImage --appimage-extract >/dev/null && rm orca.AppImage
 fi
 
