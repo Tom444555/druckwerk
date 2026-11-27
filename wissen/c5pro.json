@@ -1,5 +1,5 @@
 {
- "stand": "25.11.2026",
+ "stand": "27.11.2026",
  "hinweis": "Zusammengetragen aus Herstellerangaben, Flashforge-Wiki und unabhängigen Tests. Am eigenen Gerät noch nicht nachgemessen – eigene Erfahrungen bitte melden, dann trage ich sie hier ein.",
  "steckbrief": [
   [
@@ -242,6 +242,11 @@
  ],
  "probleme": [
   {
+   "t": "USB vom Mac: Heizfehler (E0063) oder Datei ohne Vorschaubild",
+   "u": "Der Mac legt auf FAT32-Sticks neben jede Datei eine unsichtbare Begleitdatei „._Name“. Der Drucker zeigt sie in der Liste; sie enthält keine Druckbefehle. Am Gerät bestätigt 27.11.2026.",
+   "l": "Am Drucker die Datei OHNE „._“ am Anfang wählen. Dauerhaft: am Mac im Terminal „dot_clean /Volumes/STICKNAME“, dann auswerfen."
+  },
+  {
    "t": "3MF aus Druckwerk in Flash Studio: Stützen/Einstellungen fehlen",
    "u": "Beim Öffnen auf eine nicht leere Platte fragt Flash Studio „Als Projekt öffnen“ oder „Nur Geometrie importieren“ – vorausgewählt ist Geometrie. Auch „Importieren“ (⌘I) und jede weitere 3MF beim Öffnen mehrerer Dateien laden nur die Form (Quelltext Orca-Flashforge, Plater.cpp, geprüft 20.11.2026).",
    "l": "„Als Projekt öffnen“ wählen bzw. Datei → Projekt öffnen (⌘O) auf leerer Platte; einmalig Einstellungen → Ladeverhalten → „Alles laden“. Zum reinen Drucken die fertige .gcode nehmen."
@@ -427,7 +432,8 @@
  "usb": [
   "Projekt öffnen → „Alles für den USB-Stick laden“ → die ZIP in „Dateien“ antippen (es entsteht ein Ordner).",
   "USB-C-Stick (FAT32) anstecken, Datei in „Dateien“ auf den Stick bewegen.",
-  "Stick in den Drucker → Dateien/USB → Datei wählen → Start."
+  "Stick in den Drucker → Dateien/USB → Datei wählen → Start.",
+  "Vom Mac kopiert? Am Drucker nie die Datei mit „._“ am Anfang wählen – das ist nur eine Begleitdatei des Mac (führt zu Heizfehler E0063)."
  ],
  "quellen": [
   {
