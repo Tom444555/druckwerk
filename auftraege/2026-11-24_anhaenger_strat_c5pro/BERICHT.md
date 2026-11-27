@@ -10,10 +10,10 @@
 
 | Slot | Material | Farbe | Profil |
 |---|---|---|---|
-| 1 | PLA | - | Flashforge PLA Basic @FF C5P |
-| 2 | PLA | - | Flashforge PLA Basic @FF C5P |
-| 3 | PLA | - | Flashforge PLA Basic @FF C5P |
-| 4 | PLA | - | Flashforge PLA Basic @FF C5P |
+| 1 | PLA | leer | Flashforge PLA Basic @FF C5P |
+| 2 | PLA | leer | Flashforge PLA Basic @FF C5P |
+| 3 | PLA | leer | Flashforge PLA Basic @FF C5P |
+| 4 | PLA | leer | Flashforge PLA Basic @FF C5P |
 
 ## Einstellungen
 

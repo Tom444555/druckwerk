@@ -218,22 +218,22 @@
    {
     "slot": 1,
     "material": "PLA",
-    "farbe": ""
+    "farbe": "leer"
    },
    {
     "slot": 2,
     "material": "PLA",
-    "farbe": ""
+    "farbe": "leer"
    },
    {
     "slot": 3,
     "material": "PLA",
-    "farbe": ""
+    "farbe": "leer"
    },
    {
     "slot": 4,
     "material": "PLA",
-    "farbe": ""
+    "farbe": "leer"
    }
   ],
   "teile": [
