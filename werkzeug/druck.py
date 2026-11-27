@@ -491,6 +491,10 @@ def main():
     # Druckplatte: bestimmt die Betttemperatur (Cool Plate = 35 °C bei PLA!). Kommt aus drucker/*.json.
     platte = cfg.get("platte", "Textured PEI Plate")
     maschine["default_bed_type"] = platte
+    if cfg.get("kurz") == "c5pro" and isinstance(maschine.get("machine_start_gcode"), str):
+        # Orca-2.5-Profil heizt mit "M104 S…" ohne Kopf-Nummer, bevor ein Kopf aufgenommen ist; das aktuelle
+        # Flash-Studio-Profil (release_0817) hat die Zeile nicht mehr. Verdacht 27.11.2026: Aufheizfehler am Gerät.
+        maschine["machine_start_gcode"] = re.sub(r"(?m)^M104 S\[nozzle_temperature_initial_layer\]\s*\n", "", maschine["machine_start_gcode"])
     prozess["curr_bed_type"] = platte
     fil_pfade = []
     for s in range(1, slots + 1):

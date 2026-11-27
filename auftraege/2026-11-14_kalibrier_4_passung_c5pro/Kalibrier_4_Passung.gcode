@@ -93,7 +93,6 @@ M106 P101 S0 ; L+R_PLA_Turbo_Fan_0-255
 M106 P2 S0 ; Center_Fresch_Air_Input_Fan_for_PLA30%_(80_0-255) 
 M106 S0 ; Model_Fan_(Heat_Break_Cooler_80-255)100%=255
 M106 P3 S0 ; Filter_Unit_Fan_0-255(ABS=255)
-M104 S205
 G90
 M83
 G1 Z5 F2400
