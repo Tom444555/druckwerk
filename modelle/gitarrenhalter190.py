@@ -19,6 +19,7 @@ HIER = Path(__file__).resolve().parent.parent
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--ziel", default="/tmp/halter190"); ap.add_argument("--bild", default="")
+    ap.add_argument("--auch160", type=int, default=0, help="1 = Passung nur mit der Schecter 160 prüfen (hochgerechnet); Halter danach mit 160/190 verkleinern")
     ap.add_argument("--zwei", type=int, default=1, help="1 = zweifarbig: Lochfeld als goldene Blende (gitarrenhalter190_gold.stl)")
     ap.add_argument("--winkel", type=float, default=12.0, help="Neigung der Gitarre nach hinten (Grad)")
     ap.add_argument("--kanal", type=float, default=9.4, help="lichte Weite des Kanals (dickster Korpus 8,74 + Luft)")
@@ -100,12 +101,16 @@ def main():
     # ---- Passung mit beiden Gitarren ----
     G = {"schecter": ("auftraege/2026-11-23_gitarre190_c5pro", ["gitarre190_grau", "gitarre190_rot", "gitarre190_schwarz", "gitarre190_weiss"], 8.74),
          "strat": ("auftraege/2026-11-23_stratocaster190_c5pro", ["strat_korpus", "strat_weiss", "strat_hals", "strat_metall", "strat_schwarz"], 8.15)}
+    if a.auch160:   # Schecter 160 auf 190 hochgerechnet prüfen: passt sie, passt der mit 160/190 verkleinerte Halter zur echten 160er
+        G = {"schecter160 (×190/160)": ("auftraege/2026-11-23_schecter160_c5pro", ["gitarre_rundum_grau", "gitarre_rundum_rot", "gitarre_rundum_schwarz", "gitarre_rundum_weiss"], 8.74)}
     lage = {}
     for n, (ordner, teile, dick) in G.items():
         ms = {}
         for k in teile:
             pf = HIER / ordner / f"{k}.stl"
-            if pf.exists(): ms[k] = trimesh.load(pf, process=True)
+            if pf.exists():
+                ms[k] = trimesh.load(pf, process=True)
+                if a.auch160: ms[k].apply_scale(190 / 160)
         if not ms: print(f"{n}: Dateien fehlen – Passung nicht geprüft"); continue
         v = np.vstack([m.vertices for m in ms.values()]); kz = v[(v[:, 2] < dick + 0.05) & (np.abs(np.abs(v[:, 0]) - 17.5) <= 2.5)]
         y0 = float(kz[:, 1].min())                                                                  # tiefster Korpuspunkt über den Wangen → liegt auf dem Kanalboden

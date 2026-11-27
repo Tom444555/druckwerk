@@ -1,0 +1,73 @@
+{
+ "kopfwechsel": 264,
+ "koepfe_benutzt": [
+  2,
+  3
+ ],
+ "name": "gitarrenhalter160",
+ "drucker": "c5pro",
+ "drucker_name": "Flashforge Creator 5 Pro",
+ "datum": "2026-11-27",
+ "ordner": "2026-11-27_gitarrenhalter160_c5pro",
+ "gcode": "Schecter_160_Halter.gcode",
+ "zeit": "4h 32m 39s",
+ "gramm": "0.00, 8.97, 14.65",
+ "meter": "0.00 m, 3.01 m, 4.80 m",
+ "duese": "235,220,235",
+ "bett": "65,65,65",
+ "schicht": "0.12",
+ "stufe": "Standard",
+ "infill": 30,
+ "duese_mm": "0.25",
+ "waende": 5,
+ "stuetzen": "aus",
+ "brim": "an",
+ "gemischt": true,
+ "zusammen": true,
+ "slots": [
+  {
+   "slot": 1,
+   "material": "PETG",
+   "farbe": ""
+  },
+  {
+   "slot": 2,
+   "material": "PLA",
+   "farbe": "gelb"
+  },
+  {
+   "slot": 3,
+   "material": "PETG",
+   "farbe": "schwarz"
+  }
+ ],
+ "teile": [
+  {
+   "datei": "gitarrenhalter160.stl",
+   "slot": 3
+  },
+  {
+   "datei": "gitarrenhalter160_gelb.stl",
+   "slot": 2
+  }
+ ],
+ "quelle": "",
+ "teile_app": [
+  {
+   "datei": "gitarrenhalter160.stl",
+   "slot": 3
+  },
+  {
+   "datei": "gitarrenhalter160_gelb.stl",
+   "slot": 2
+  }
+ ],
+ "vorschau": "vorschau.png",
+ "bild_im_gcode": true,
+ "projekt": "Schecter_160_Halter.3mf",
+ "gruppe": "schecter160",
+ "gruppe_titel": "Schecter 160 mm",
+ "nr": 2,
+ "titel": "Halter",
+ "datei": "Schecter_160_Halter"
+}

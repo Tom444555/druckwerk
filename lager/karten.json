@@ -105,10 +105,10 @@
    "stand": "gerechnet",
    "herkunft": "eigen",
    "schlagworte": [
-    "Gitarre",
-    "Schecter",
-    "Miniatur",
-    "0,25-mm-Düse"
+    "gitarre",
+    "halter",
+    "staender",
+    "schecter"
    ],
    "modell": [
     "modelle/gitarre_rundum.py",
