@@ -10,11 +10,11 @@
  "datum": "2026-11-27",
  "ordner": "2026-11-27_gitarrenhalter160_c5pro",
  "gcode": "Schecter_160_Halter.gcode",
- "zeit": "4h 32m 39s",
- "gramm": "0.00, 8.97, 14.65",
+ "zeit": "4h 13m 27s",
+ "gramm": "0.00, 8.97, 14.31",
  "meter": "0.00 m, 3.01 m, 4.80 m",
- "duese": "235,220,235",
- "bett": "65,65,65",
+ "duese": "220,220,220",
+ "bett": "55,55,55",
  "schicht": "0.12",
  "stufe": "Standard",
  "infill": 30,
@@ -22,12 +22,12 @@
  "waende": 5,
  "stuetzen": "aus",
  "brim": "an",
- "gemischt": true,
+ "gemischt": false,
  "zusammen": true,
  "slots": [
   {
    "slot": 1,
-   "material": "PETG",
+   "material": "PLA",
    "farbe": ""
   },
   {
@@ -37,7 +37,7 @@
   },
   {
    "slot": 3,
-   "material": "PETG",
+   "material": "PLA",
    "farbe": "schwarz"
   }
  ],
