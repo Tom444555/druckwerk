@@ -411,7 +411,9 @@ def main():
                         prozess[k_] = f"{pz}%"
                 except ValueError:
                     pass
-    if bemalt:   # Farbe nur als Schale (1,2 mm) statt keilförmig bis in den Kern – spart Farbfilament, sauberere Kanten
+    if bemalt and not any(str(e_).startswith("mmu_segmented_region_max_width=") for e_ in (a.extra or [])):
+        # Farbe nur als Schale (1,2 mm) statt keilförmig bis in den Kern – spart Farbfilament, sauberere Kanten.
+        # Ganze Körper je Farbe (z. B. Figur schwarz auf grauem Sockel): --extra mmu_segmented_region_max_width=0
         prozess["mmu_segmented_region_max_width"] = "1.2"
     schoen_text = None
     if a.schoen:                          # langsam und sauber: Außenwand ungestört, Wände kühlen zwischen den Bahnen aus (videos/pla-einstellungen-bastlwastl.html)
