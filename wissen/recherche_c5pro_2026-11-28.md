@@ -41,7 +41,7 @@ entscheiden.
   Dateiliste, fünf neue Materialarten, verstecktes WLAN, stabileres WLAN, überarbeiteter Reste-Abwurf und Heizregelung,
   **bessere Druckqualität bei 0,08 / 0,10 / 0,12 mm Schicht und bessere Haftung der ersten Schicht**, Schutz gegen
   unbeabsichtigtes Aufheizen nach dem Einschalten. **Kein Zurück auf 1.9.8 oder älter.**
-- Welche Fassung auf Toms Gerät läuft, ist offen. Nie während eines Drucks einspielen; danach Kopf-Versatz neu
+- Tom hat laut eigener Aussage (28.11.) gleich nach der Lieferung Mitte November aktualisiert → sehr wahrscheinlich 2.0.0 (Versionsnummer nicht abgelesen). Der Buddha 150 läuft also vermutlich schon damit. Künftige Updates nie während eines Drucks einspielen; danach Kopf-Versatz neu
   kalibrieren. Die Druckwerk-Brücke ist mit 2.0.0 ungeprüft.
 
 ## 3. Fluss-Kalibrierung vor dem Druck
