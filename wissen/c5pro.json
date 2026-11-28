@@ -395,6 +395,16 @@
    "t": "Düse verstopft bei PLA/PETG/TPU",
    "u": "Über 45 °C in der Kammer werden diese Materialien im Kopf weich.",
    "l": "Kammerheizung aus, bei Materialmix Deckel ab und Tür auf. Jede Düse möglichst bei einem Material lassen."
+  },
+  {
+   "t": "Eine Farbe schmiert oder zieht Fäden, die anderen drucken sauber",
+   "u": "Fast immer liegt es an dieser einen Spule oder diesem einen Kopf, nicht an den Einstellungen insgesamt. Mögliche Gründe: Fremd-Filament ist beim Profilwert zu heiß (das 0,25-mm-Profil druckt PLA mit 220 °C – bei Professional-Lab-PLA das obere Ende der Spanne 190–220 °C vom Etikett), die Spule ist feucht, oder die Düse dieses Kopfes ist teilweise zu. Farbstoffe verändern das Fließverhalten: jede Farbe kann sich wie ein eigenes Filament verhalten.",
+   "l": "1. Aus diesem Kopf von Hand fördern: Der Faden soll gerade und glatt nach unten laufen. Läuft er schief oder dünn → Düse säubern. Knistert es oder sind Bläschen zu sehen → Spule trocknen. 2. Temperatur nur für diesen Kopf um 10–15 °C senken (Claude: --temp 2=205) und ein kleines Teil drucken. 3. Hilft das nicht: Spule in einen anderen Kopf legen. Wandert der Fehler mit, ist es das Filament; bleibt er, der Kopf (Düse, Kopf-Position). Stand 28.11.2026: bei Tom am Schlüsselanhänger gesehen (Kopf 2, Rot), Ursache noch nicht bestätigt."
+  },
+  {
+   "t": "Fluss-Kalibrierung vor dem Druck zeigt keine Wirkung",
+   "u": "Die Kalibrierung am Gerät stimmt je Kopf auch den Druckvorschub (Pressure Advance) ab. Steht in der Druckdatei ein eigener Wert – bei unseren Dateien 0,1 aus dem Hersteller-Profil für die 0,25-mm-Düse –, überschreibt er das Ergebnis wieder (Befund eines Testers am Creator 5 mit Firmware 1.9.6).",
+   "l": "Mit Flashforge-Filament passt der Profilwert. Bei Fremd-Filament als Versuch: Druckvorschub in der Datei abschalten und am Gerät die Fluss-Kalibrierung anhaken (bei vier Köpfen rund 15 Minuten länger). In Druckwerk noch nicht eingebaut, nichts davon gedruckt."
   }
  ],
  "firmware": [
@@ -432,6 +442,11 @@
    "1.9.9",
    "07.09.2026",
    "Bildschirm reagiert besser (laut Test)"
+  ],
+  [
+   "2.0.0",
+   "22.10.2026",
+   "exFAT/NTFS-Sticks, Objekt überspringen (App), bessere Druckqualität bei 0,08–0,12 mm Schicht, WLAN stabiler, Reste-Abwurf und Heizregelung überarbeitet. Danach kein Zurück auf 1.9.8 oder älter."
   ]
  ],
  "usb": [
@@ -504,6 +519,22 @@
   {
    "titel": "Flashforge-Wiki: Drucker kalibrieren (Menü „Move & Calibrate“)",
    "url": "https://wiki.flashforge.com/en/creator-series/creator-5-series/manual/cal_printer"
+  },
+  {
+   "titel": "Firmware Creator 5 Pro 2.0.0 – Änderungsliste (Sammlung Parallel-7)",
+   "url": "https://github.com/Parallel-7/FlashForge-Firmware-Updates/releases/tag/creator-5-pro/2.0.0-1.3.0"
+  },
+  {
+   "titel": "OrcaSlicer #14933: Fluss-Kalibrierung des Creator 5 und Druckvorschub",
+   "url": "https://github.com/OrcaSlicer/OrcaSlicer/pull/14933"
+  },
+  {
+   "titel": "Flashforge-Wiki: Druckqualität und Material – Ursachen und Lösungen",
+   "url": "https://wiki.flashforge.com/en/filaments_and_accessories/resolution_of_issues_related_to_print_quality_materials"
+  },
+  {
+   "titel": "Nachrecherche 28.11.2026: unsere Werte gegen Flash Studio 1.7.15",
+   "url": "https://github.com/Tom444555/druckwerk/blob/main/wissen/recherche_c5pro_2026-11-28.md"
   }
  ]
 }

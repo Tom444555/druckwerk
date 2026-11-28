@@ -244,13 +244,15 @@ def main():
                     help="Schrägnaht (Scarf Joint) an der Außenwand: Anfang und Ende jeder Runde laufen schräg ineinander statt stumpf aneinander "
                          "(videos/z-naht-bastlwastl.html). Ist in --schoen enthalten. Nur an runden Konturen; Ecken behalten die normale Naht.")
     ap.add_argument("--detail", action="store_true",
-                    help="Maximale Details (vor allem 0,25-mm-Düse): Arachne 70 %%/20 %%, resolution 0.008, eine Wand oben, Außenwand 30 / Kleinumfang 20 / Oberfläche 40 mm/s, "
+                    help="Maximale Details (vor allem 0,25-mm-Düse): Arachne 70 %%/20 %%, resolution 0.012, eine Wand oben, Außenwand 30 / Kleinumfang 20 / Oberfläche 40 mm/s, "
                          "Außenwand-Beschleunigung 3000, 8 Deckschichten, Stützen nur ab Platte. Ersetzt die bisher von Hand angehängten --extra-Werte.")
     ap.add_argument("--stuetz-kopf", type=int, default=None,
                     help="Kopf (1–4) für die KONTAKTSCHICHT der Stützen aus anderem Material (z. B. PETG unter PLA): Abstand 0, 3 Kontaktlagen, "
                          "Muster verschränkt; der Stützkörper bleibt im Hauptmaterial (Flashforge-Wiki Creator 5). Bei PVA/BVOH auch den Körper: --stuetz-koerper")
     ap.add_argument("--stuetz-material", default="", help="mit --stuetz-kopf: Material in diesem Kopf, wenn dort kein Teil des Modells liegt (z. B. PETG unter PLA)")
     ap.add_argument("--stuetz-koerper", action="store_true", help="mit --stuetz-kopf: auch der Stützkörper aus diesem Kopf (lösliches PVA/BVOH, HIPS)")
+    ap.add_argument("--temp", action="append", default=[],
+                    help="Düsentemperatur je Kopf von Hand: kopf=°C (mehrfach), z. B. --temp 2=205 für ein Filament, das beim Profilwert Fäden zieht oder schmiert")
     ap.add_argument("--bett", type=int, default=None, help="Betttemperatur für ALLE Filamente erzwingen (z. B. 65 bei PLA + PETG gemischt)")
     ap.add_argument("--wie", default=None, help="Auftragsordner: ALLE Slicer-Einstellungen aus dessen Projekt-3MF übernehmen (nur Material/Kopf/Farbe neu) – für „An meine Köpfe anpassen“")
     ap.add_argument("--extra", action="append", default=[], help="Slicer-Einstellung überschreiben: schluessel=wert (mehrfach)")
@@ -476,10 +478,10 @@ def main():
         if isinstance(maschine.get("retract_length_toolchange"), list):
             maschine["retract_length_toolchange"] = ["2"] * len(maschine["retract_length_toolchange"])
     if a.detail:                              # feinste Details – Werte aus den Gitarren-Miniaturen + Flash-Studio-Feinstufe (Außenwand-Beschleunigung 3000)
-        prozess.update({"wall_generator": "arachne", "min_bead_width": "70%", "min_feature_size": "20%", "resolution": "0.008", "only_one_wall_top": "1",
+        prozess.update({"wall_generator": "arachne", "min_bead_width": "70%", "min_feature_size": "20%", "resolution": "0.012", "only_one_wall_top": "1",
                         "outer_wall_speed": "30", "small_perimeter_speed": "20", "top_surface_speed": "40", "outer_wall_acceleration": "3000",
                         "top_shell_layers": "8", "support_on_build_plate_only": "1"})
-        hinweise.append("Detail-Paket: Arachne (70 %/20 %), Auflösung 0,008, eine Wand oben, Außenwand 30 / Kleinumfang 20 / Oberfläche 40 mm/s, "
+        hinweise.append("Detail-Paket: Arachne (70 %/20 %), Auflösung 0,012 (Herstellerwert), eine Wand oben, Außenwand 30 / Kleinumfang 20 / Oberfläche 40 mm/s, "
                         "Außenwand-Beschleunigung 3000, 8 Deckschichten, Stützen nur ab Platte.")
     if a.stuetz_kopf:
         if not 1 <= a.stuetz_kopf <= slots:
@@ -523,6 +525,13 @@ def main():
         if a.stuetz_kopf and s != a.stuetz_kopf and belegt[s].startswith("PLA") and belegt[a.stuetz_kopf].startswith("PETG"):
             t_ = max(225, int(float(f["nozzle_temperature"][0])))   # Flashforge-Wiki: PLA auf PETG-Kontaktschicht mit 225–230 °C
             f["nozzle_temperature"] = [str(t_)]; f["nozzle_temperature_initial_layer"] = [str(t_)]
+        for t_ in (a.temp or []):         # Düsentemperatur je Kopf von Hand (Fremdfilament, das beim Profilwert Fäden zieht)
+            k_, _, v_ = str(t_).partition("=")
+            if k_.strip() == str(s) and v_.strip():
+                g_ = int(float(v_))
+                if not 170 <= g_ <= 320: sys.exit(f"--temp {t_}: {g_} °C liegt außerhalb 170–320")
+                f["nozzle_temperature"] = [str(g_)]; f["nozzle_temperature_initial_layer"] = [str(g_)]
+                hinweise.append(f"Kopf {s}: Düsentemperatur von Hand auf {g_} °C gesetzt (--temp).")
         if a.bett:                        # gemischte Materialien: ein gemeinsamer Bettwert statt des höchsten
             for k in ("hot_plate_temp", "hot_plate_temp_initial_layer", "textured_plate_temp", "textured_plate_temp_initial_layer",
                       "cool_plate_temp", "cool_plate_temp_initial_layer", "eng_plate_temp", "eng_plate_temp_initial_layer"):
