@@ -11,9 +11,9 @@
   "datum": "2026-11-27",
   "ordner": "2026-11-27_gitarrenhalter160_c5pro",
   "gcode": "Schecter_160_Halter.gcode",
-  "zeit": "4h 13m 27s",
-  "gramm": "0.00, 8.97, 14.31",
-  "meter": "0.00 m, 3.01 m, 4.80 m",
+  "zeit": "3h 14m 7s",
+  "gramm": "0.00, 5.21, 10.29",
+  "meter": "0.00 m, 1.75 m, 3.45 m",
   "duese": "220,220,220",
   "bett": "55,55,55",
   "schicht": "0.12",
@@ -29,7 +29,7 @@
    {
     "slot": 1,
     "material": "PLA",
-    "farbe": ""
+    "farbe": "leer"
    },
    {
     "slot": 2,
@@ -86,9 +86,9 @@
   "datum": "2026-11-27",
   "ordner": "2026-11-27_anhaenger_strat_c5pro",
   "gcode": "Anhaenger_Stratocaster_50.gcode",
-  "zeit": "43m 3s",
-  "gramm": "1.82, 0.24, 1.10, 0.46",
-  "meter": "0.61 m, 0.08 m, 0.37 m, 0.15 m",
+  "zeit": "29m 5s",
+  "gramm": "1.10, 0.11, 0.63, 0.21",
+  "meter": "0.37 m, 0.04 m, 0.21 m, 0.07 m",
   "duese": "220,220,220,220",
   "bett": "55,55,55,55",
   "schicht": "0.08",
@@ -100,7 +100,6 @@
   "brim": "auto",
   "gemischt": false,
   "zusammen": true,
-  "detail": true,
   "slots": [
    {
     "slot": 1,
@@ -183,9 +182,9 @@
   "datum": "2026-11-27",
   "ordner": "2026-11-27_anhaenger_strat_2_c5pro",
   "gcode": "anhaenger_strat_2_c5pro.gcode",
-  "zeit": "43m 3s",
-  "gramm": "1.82, 0.24, 1.10, 0.46",
-  "meter": "0.61 m, 0.08 m, 0.37 m, 0.15 m",
+  "zeit": "29m 5s",
+  "gramm": "1.10, 0.11, 0.63, 0.21",
+  "meter": "0.37 m, 0.04 m, 0.21 m, 0.07 m",
   "duese": "220,220,220,220",
   "bett": "55,55,55,55",
   "schicht": "0.08",
@@ -197,7 +196,6 @@
   "brim": "auto",
   "gemischt": false,
   "zusammen": true,
-  "detail": true,
   "slots": [
    {
     "slot": 1,
@@ -395,9 +393,9 @@
   "datum": "2026-11-24",
   "ordner": "2026-11-24_gitarrenhalter190_c5pro",
   "gcode": "Gitarrenhalter_190.gcode",
-  "zeit": "1h 52m 7s",
-  "gramm": "16.85, 7.55",
-  "meter": "5.52 m, 2.53 m",
+  "zeit": "1h 46m 8s",
+  "gramm": "15.17, 6.08",
+  "meter": "4.97 m, 2.04 m",
   "duese": "235,230",
   "bett": "65,65",
   "schicht": "0.20",
@@ -462,9 +460,9 @@
   "datum": "2026-11-24",
   "ordner": "2026-11-24_anhaenger_strat_c5pro",
   "gcode": "Anhaenger_Stratocaster_50.gcode",
-  "zeit": "43m 58s",
-  "gramm": "1.97, 0.24, 1.10, 0.46",
-  "meter": "0.66 m, 0.08 m, 0.37 m, 0.15 m",
+  "zeit": "30m 3s",
+  "gramm": "1.25, 0.11, 0.64, 0.21",
+  "meter": "0.42 m, 0.04 m, 0.21 m, 0.07 m",
   "duese": "220,220,220,220",
   "bett": "55,55,55,55",
   "schicht": "0.08",
@@ -480,22 +478,22 @@
    {
     "slot": 1,
     "material": "PLA",
-    "farbe": ""
+    "farbe": "leer"
    },
    {
     "slot": 2,
     "material": "PLA",
-    "farbe": ""
+    "farbe": "leer"
    },
    {
     "slot": 3,
     "material": "PLA",
-    "farbe": ""
+    "farbe": "leer"
    },
    {
     "slot": 4,
     "material": "PLA",
-    "farbe": ""
+    "farbe": "leer"
    }
   ],
   "teile": [
@@ -558,9 +556,9 @@
   "datum": "2026-11-24",
   "ordner": "2026-11-24_anhaenger_schecter_c5pro",
   "gcode": "Anhaenger_Schecter_50.gcode",
-  "zeit": "1h 5m 40s",
-  "gramm": "2.44, 0.92, 1.29, 0.41",
-  "meter": "0.82 m, 0.31 m, 0.43 m, 0.14 m",
+  "zeit": "45m 36s",
+  "gramm": "1.47, 0.48, 0.67, 0.19",
+  "meter": "0.49 m, 0.16 m, 0.23 m, 0.06 m",
   "duese": "220,220,220,220",
   "bett": "55,55,55,55",
   "schicht": "0.08",
@@ -576,22 +574,22 @@
    {
     "slot": 1,
     "material": "PLA",
-    "farbe": ""
+    "farbe": "leer"
    },
    {
     "slot": 2,
     "material": "PLA",
-    "farbe": ""
+    "farbe": "leer"
    },
    {
     "slot": 3,
     "material": "PLA",
-    "farbe": ""
+    "farbe": "leer"
    },
    {
     "slot": 4,
     "material": "PLA",
-    "farbe": ""
+    "farbe": "leer"
    }
   ],
   "teile": [
@@ -768,9 +766,9 @@
   "datum": "2026-11-24",
   "ordner": "2026-11-23_gitarre190_c5pro",
   "gcode": "Schecter_190_komplett.gcode",
-  "zeit": "7h 16m 42s",
-  "gramm": "18.34, 4.77, 9.40, 1.18",
-  "meter": "6.15 m, 1.60 m, 3.15 m, 0.39 m",
+  "zeit": "6h 12m 2s",
+  "gramm": "15.05, 3.27, 7.35, 0.68",
+  "meter": "5.05 m, 1.10 m, 2.47 m, 0.23 m",
   "duese": "220,220,220,220",
   "bett": "55,55,55,55",
   "schicht": "0.08",
@@ -872,9 +870,9 @@
   "datum": "2026-11-23",
   "ordner": "2026-11-23_schecter370_c5pro",
   "gcode": "Schecter_370_komplett.gcode",
-  "zeit": "23h 51m 20s",
-  "gramm": "84.00, 18.24, 29.84, 2.87",
-  "meter": "28.16 m, 6.12 m, 10.01 m, 0.96 m",
+  "zeit": "21h 29m 54s",
+  "gramm": "76.99, 14.19, 25.69, 2.02",
+  "meter": "25.81 m, 4.76 m, 8.61 m, 0.68 m",
   "duese": "220,220,220,220",
   "bett": "55,55,55,55",
   "schicht": "0.08",
@@ -886,7 +884,6 @@
   "brim": "auto",
   "gemischt": false,
   "zusammen": true,
-  "detail": true,
   "slots": [
    {
     "slot": 1,
@@ -1017,9 +1014,9 @@
   "datum": "2026-11-23",
   "ordner": "2026-11-23_schecter160_c5pro",
   "gcode": "Schecter_160_komplett.gcode",
-  "zeit": "5h 41m 6s",
-  "gramm": "13.04, 3.79, 6.95, 0.97",
-  "meter": "4.37 m, 1.27 m, 2.33 m, 0.32 m",
+  "zeit": "4h 45m 28s",
+  "gramm": "10.27, 2.48, 5.23, 0.53",
+  "meter": "3.44 m, 0.83 m, 1.75 m, 0.18 m",
   "duese": "220,220,220,220",
   "bett": "55,55,55,55",
   "schicht": "0.08",
@@ -1031,7 +1028,6 @@
   "brim": "auto",
   "gemischt": false,
   "zusammen": true,
-  "detail": true,
   "slots": [
    {
     "slot": 1,
@@ -1122,9 +1118,9 @@
   "datum": "2026-11-23",
   "ordner": "2026-11-14_loopsmiths_amp_c5pro",
   "gcode": "Loopsmiths_Verstaerker_025.gcode",
-  "zeit": "1d 6h 36m 19s",
-  "gramm": "102.64, 11.88, 19.25, 24.17",
-  "meter": "34.41 m, 3.98 m, 6.45 m, 8.10 m",
+  "zeit": "1d 0h 56m 27s",
+  "gramm": "86.05, 6.66, 11.36, 14.97",
+  "meter": "28.85 m, 2.23 m, 3.81 m, 5.02 m",
   "duese": "220,220,220,230",
   "bett": "55,55,55,60",
   "schicht": "0.08",
@@ -1136,7 +1132,6 @@
   "brim": "auto",
   "gemischt": true,
   "zusammen": true,
-  "detail": true,
   "slots": [
    {
     "slot": 1,
@@ -1323,9 +1318,9 @@
   "datum": "2026-11-21",
   "ordner": "2026-11-20_drehteller_wuerfel_c5pro",
   "gcode": "Drehteller_Masswuerfel.gcode",
-  "zeit": "1h 2m 26s",
-  "gramm": "12.65, 2.16",
-  "meter": "4.24 m, 0.71 m",
+  "zeit": "1h 1m 5s",
+  "gramm": "12.56, 2.11",
+  "meter": "4.21 m, 0.69 m",
   "duese": "210,235",
   "bett": "65,65",
   "schicht": "0.12",
@@ -1449,9 +1444,9 @@
   "datum": "2026-11-21",
   "ordner": "2026-11-20_drehteller_teller_c5pro",
   "gcode": "Drehteller_Teller.gcode",
-  "zeit": "7h 20m 25s",
-  "gramm": "175.49, 11.84",
-  "meter": "58.84 m, 3.88 m",
+  "zeit": "7h 18m 5s",
+  "gramm": "175.10, 11.31",
+  "meter": "58.71 m, 3.70 m",
   "duese": "210,235",
   "bett": "65,65",
   "schicht": "0.20",
@@ -1517,9 +1512,9 @@
   "datum": "2026-11-20",
   "ordner": "2026-11-20_messmatte_c5pro",
   "gcode": "Messmatte.gcode",
-  "zeit": "2h 26m 14s",
-  "gramm": "107.03, 3.39",
-  "meter": "35.88 m, 1.14 m",
+  "zeit": "2h 25m 39s",
+  "gramm": "107.00, 3.21",
+  "meter": "35.87 m, 1.07 m",
   "duese": "210,210",
   "bett": "60,60",
   "schicht": "0.20",
@@ -2109,9 +2104,9 @@
   "datum": "2026-11-14",
   "ordner": "2026-11-14_kalibrier_3_versatz_c5pro",
   "gcode": "Kalibrier_3_Versatz.gcode",
-  "zeit": "23m 33s",
-  "gramm": "14.95, 0.24, 0.19, 0.19",
-  "meter": "5.01 m, 0.08 m, 0.06 m, 0.06 m",
+  "zeit": "22m 35s",
+  "gramm": "14.63, 0.20, 0.17, 0.17",
+  "meter": "4.91 m, 0.07 m, 0.06 m, 0.06 m",
   "duese": "210,210,210,210",
   "bett": "60,60,60,60",
   "schicht": "0.20",
