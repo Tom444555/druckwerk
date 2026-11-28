@@ -131,7 +131,7 @@ export function projekt(app, ctx, id){
   <h2>Auf den USB-Stick</h2>
   <button class="btn" id="usb">Alles für den USB-Stick laden</button>
   <div class="balken" id="usbB" style="display:none;margin:8px 2px"><i></i></div>
-  <p class="hint">Lädt <b>${C.esc(ordnerName(p))}.zip</b>. In „Dateien“ antippen → es entsteht der Ordner <b>${C.esc(ordnerName(p))}</b> mit ${mehr ? "allen Druckdateien in Reihenfolge (1_, 2_ …)" : "der Druckdatei"} und LIESMICH.txt. Den Ordner auf den USB-Stick bewegen.</p>
+  <p class="hint">Lädt <b>${C.esc(ordnerName(p))}.zip</b>. In „Dateien“ antippen → es entsteht der Ordner <b>${C.esc(ordnerName(p))}</b> mit ${mehr ? "allen Druckdateien in Reihenfolge (1_, 2_ …)" : "der Druckdatei"} und LIESMICH.txt. Den Ordner auf den USB-Stick bewegen. <b>Vom Mac kopiert?</b> Am Drucker die Datei ohne „._“ am Anfang wählen – „._Name“ ist nur eine Begleitdatei des Mac (Fehler E0063). Eine .zip erst entpacken, eine .3mf ist für Flash Studio (am Drucker: E0166).</p>
   ${amRechner() && p.teile.some(t => t.projekt) ? `<h2>Direkt in Flash Studio öffnen</h2>
   <div class="card">${p.teile.filter(t => t.projekt).map(t => `<a class="row chev" href="${C.esc(studioLink(t))}" style="color:inherit;text-decoration:none"><div class="grow"><b>${mehr ? (p.teile.indexOf(t) + 1) + ". " : ""}${C.esc(teilTitel(t))}</b>
       <div class="small">öffnet das Projekt mit allen Einstellungen in Flash Studio Desktop</div></div></a>`).join("")}</div>

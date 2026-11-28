@@ -2,8 +2,8 @@
 
 **Drucker:** Flashforge Creator 5 Pro  
 **Datei für USB:** `Kalibrier_3_Versatz.gcode`  
-**Druckzeit (geschätzt):** 23m 33s  
-**Filament:** 14.95, 0.24, 0.19, 0.19 g (5.01 m, 0.08 m, 0.06 m, 0.06 m)  
+**Druckzeit (geschätzt):** 22m 35s  
+**Filament:** 14.63, 0.20, 0.17, 0.17 g (4.91 m, 0.07 m, 0.06 m, 0.06 m)  
 
 
 ## Spulen / Köpfe einlegen

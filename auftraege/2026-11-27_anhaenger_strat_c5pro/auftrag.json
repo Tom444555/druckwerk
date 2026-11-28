@@ -12,9 +12,9 @@
  "datum": "2026-11-27",
  "ordner": "2026-11-27_anhaenger_strat_c5pro",
  "gcode": "Anhaenger_Stratocaster_50.gcode",
- "zeit": "43m 3s",
- "gramm": "1.82, 0.24, 1.10, 0.46",
- "meter": "0.61 m, 0.08 m, 0.37 m, 0.15 m",
+ "zeit": "29m 5s",
+ "gramm": "1.10, 0.11, 0.63, 0.21",
+ "meter": "0.37 m, 0.04 m, 0.21 m, 0.07 m",
  "duese": "220,220,220,220",
  "bett": "55,55,55,55",
  "schicht": "0.08",
@@ -26,7 +26,6 @@
  "brim": "auto",
  "gemischt": false,
  "zusammen": true,
- "detail": true,
  "slots": [
   {
    "slot": 1,

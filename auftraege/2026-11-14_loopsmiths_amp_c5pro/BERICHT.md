@@ -2,8 +2,8 @@
 
 **Drucker:** Flashforge Creator 5 Pro  
 **Datei für USB:** `Loopsmiths_Verstaerker_025.gcode`  
-**Druckzeit (geschätzt):** 1d 6h 36m 19s  
-**Filament:** 102.64, 11.88, 19.25, 24.17 g (34.41 m, 3.98 m, 6.45 m, 8.10 m)  
+**Druckzeit (geschätzt):** 1d 0h 56m 27s  
+**Filament:** 86.05, 6.66, 11.36, 14.97 g (28.85 m, 2.23 m, 3.81 m, 5.02 m)  
 
 
 ## Spulen / Köpfe einlegen
@@ -21,7 +21,6 @@
 - Schichthöhe: 0.08 mm (Standard)
 - Füllung: 15 %
 - Wände: Profil-Standard
-- Detail-Paket: Arachne (70 %/20 %), Auflösung 0,008, eine Wand oben, Außenwand 30 / Kleinumfang 20 / Oberfläche 40 mm/s, Außenwand-Beschleunigung 3000, 8 Deckschichten, Stützen nur ab Platte.
 - Kopf 1: Hersteller-Filamentprofil für 0,25-mm-Düse (220 °C, höchstens 2.8 mm³/s).
 - Kopf 2: Hersteller-Filamentprofil für 0,25-mm-Düse (220 °C, höchstens 2.8 mm³/s).
 - Kopf 3: Hersteller-Filamentprofil für 0,25-mm-Düse (220 °C, höchstens 2.8 mm³/s).

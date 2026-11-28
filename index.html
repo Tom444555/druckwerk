@@ -373,7 +373,7 @@ function detail(ordner){
   </div>
   <h2>Datei für den USB-Stick</h2>
   <a class="btn" href="${pfad}${encodeURIComponent(a.gcode)}${ver}" download="${esc(a.gcode)}">Druckdatei laden</a>
-  <p class="hint"><b>${esc(a.gcode)}</b> – auf einen FAT32-USB-Stick kopieren → am Drucker unter USB auswählen → Platte frei? → Start.${geschw.length > 1 ? " Alle Teile auf einmal: im Projekt „Alles für den USB-Stick laden“." : ""}</p>
+  <p class="hint"><b>${esc(a.gcode)}</b> – auf einen FAT32-USB-Stick kopieren → am Drucker unter USB auswählen → Platte frei? → Start. <b>Vom Mac kopiert?</b> Am Drucker die Datei ohne „._“ am Anfang wählen – „._Name“ ist nur eine Begleitdatei des Mac (Fehler E0063). Eine .zip erst entpacken, eine .3mf ist für Flash Studio (am Drucker: E0166).${geschw.length > 1 ? " Alle Teile auf einmal: im Projekt „Alles für den USB-Stick laden“." : ""}</p>
   ${(() => { let br = ""; try { br = localStorage.getItem("druckwerk_bruecke") || ""; } catch (e) {}
     const rechner = !/iPhone|iPad|iPod|Android/i.test(navigator.userAgent) && !(navigator.maxTouchPoints > 1);
     if (!br && !rechner) return `<p class="hint"><a href="#" id="brSetz">Vom iPad oder iPhone direkt an den Drucker senden: Adresse der Druckwerk-Brücke eintragen</a></p>`;

@@ -2,8 +2,8 @@
 
 **Drucker:** Flashforge Creator 5 Pro  
 **Datei für USB:** `Gitarrenhalter_190.gcode`  
-**Druckzeit (geschätzt):** 1h 52m 7s  
-**Filament:** 16.85, 7.55 g (5.52 m, 2.53 m)  
+**Druckzeit (geschätzt):** 1h 46m 8s  
+**Filament:** 15.17, 6.08 g (4.97 m, 2.04 m)  
 
 
 ## Spulen / Köpfe einlegen

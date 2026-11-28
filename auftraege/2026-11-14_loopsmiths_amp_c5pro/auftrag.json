@@ -12,9 +12,9 @@
  "datum": "2026-11-23",
  "ordner": "2026-11-14_loopsmiths_amp_c5pro",
  "gcode": "Loopsmiths_Verstaerker_025.gcode",
- "zeit": "1d 6h 36m 19s",
- "gramm": "102.64, 11.88, 19.25, 24.17",
- "meter": "34.41 m, 3.98 m, 6.45 m, 8.10 m",
+ "zeit": "1d 0h 56m 27s",
+ "gramm": "86.05, 6.66, 11.36, 14.97",
+ "meter": "28.85 m, 2.23 m, 3.81 m, 5.02 m",
  "duese": "220,220,220,230",
  "bett": "55,55,55,60",
  "schicht": "0.08",
@@ -26,7 +26,6 @@
  "brim": "auto",
  "gemischt": true,
  "zusammen": true,
- "detail": true,
  "slots": [
   {
    "slot": 1,

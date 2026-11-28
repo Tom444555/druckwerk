@@ -2,8 +2,8 @@
 
 **Drucker:** Flashforge Creator 5 Pro  
 **Datei für USB:** `anhaenger_strat_2_c5pro.gcode`  
-**Druckzeit (geschätzt):** 43m 3s  
-**Filament:** 1.82, 0.24, 1.10, 0.46 g (0.61 m, 0.08 m, 0.37 m, 0.15 m)  
+**Druckzeit (geschätzt):** 29m 5s  
+**Filament:** 1.10, 0.11, 0.63, 0.21 g (0.37 m, 0.04 m, 0.21 m, 0.07 m)  
 
 
 ## Spulen / Köpfe einlegen
@@ -21,7 +21,6 @@
 - Schichthöhe: 0.08 mm (Standard)
 - Füllung: 15 %
 - Wände: 3
-- Detail-Paket: Arachne (70 %/20 %), Auflösung 0,008, eine Wand oben, Außenwand 30 / Kleinumfang 20 / Oberfläche 40 mm/s, Außenwand-Beschleunigung 3000, 8 Deckschichten, Stützen nur ab Platte.
 - Kopf 1: Hersteller-Filamentprofil für 0,25-mm-Düse (220 °C, höchstens 2.8 mm³/s).
 - Kopf 2: Hersteller-Filamentprofil für 0,25-mm-Düse (220 °C, höchstens 2.8 mm³/s).
 - Kopf 3: Hersteller-Filamentprofil für 0,25-mm-Düse (220 °C, höchstens 2.8 mm³/s).

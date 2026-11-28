@@ -10,9 +10,9 @@
  "datum": "2026-11-27",
  "ordner": "2026-11-27_gitarrenhalter160_c5pro",
  "gcode": "Schecter_160_Halter.gcode",
- "zeit": "4h 13m 27s",
- "gramm": "0.00, 8.97, 14.31",
- "meter": "0.00 m, 3.01 m, 4.80 m",
+ "zeit": "3h 14m 7s",
+ "gramm": "0.00, 5.21, 10.29",
+ "meter": "0.00 m, 1.75 m, 3.45 m",
  "duese": "220,220,220",
  "bett": "55,55,55",
  "schicht": "0.12",
@@ -28,7 +28,7 @@
   {
    "slot": 1,
    "material": "PLA",
-   "farbe": ""
+   "farbe": "leer"
   },
   {
    "slot": 2,

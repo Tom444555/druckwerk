@@ -2,8 +2,8 @@
 
 **Drucker:** Flashforge Creator 5 Pro  
 **Datei für USB:** `Drehteller_Masswuerfel.gcode`  
-**Druckzeit (geschätzt):** 1h 2m 26s  
-**Filament:** 12.65, 2.16 g (4.24 m, 0.71 m)  
+**Druckzeit (geschätzt):** 1h 1m 5s  
+**Filament:** 12.56, 2.11 g (4.21 m, 0.69 m)  
 
 
 ## Spulen / Köpfe einlegen

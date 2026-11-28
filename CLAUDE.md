@@ -86,7 +86,7 @@ Alte `_kobrax`-Aufträge laufen nicht auf dem Creator 5 Pro – bei Bedarf aus d
 - Jede Ansicht hat eine Adresse (`#projekte`, `#projekt:<gruppe>`, `#auftrag:<ordner>`, `#werkstatt:…`, `#kiweg:<schritt>`); Zurück/Vor funktionieren.
 - **Sicherung** (`sicherung.js`): alle `druckwerk_*`-Schlüssel + IndexedDB (eigene Modelle, Tagebuch-Fotos) als eine Datei; `druckwerk_gesichert` = Datum.
 - **Offline/PWA**: `manifest.webmanifest`, `symbol-*.png`, `sw.js` (immer zuerst Netz, Zwischenspeicher nur ohne Netz; .gcode/STL nie).
-  **Bei jeder Änderung an App-Dateien `CACHE` in `sw.js` hochzählen** (Stand `druckwerk-v31`) und neue Dateien dort eintragen.
+  **Bei jeder Änderung an App-Dateien `CACHE` in `sw.js` hochzählen** (Stand `druckwerk-v32`) und neue Dateien dort eintragen.
 - „Aus dem Lager hinzufügen“ heißt in der App jetzt „Weitere Aufträge von Claude“. Überall „Kopf 1–4“, nie „Spule“; Werkstatt-Slicen sendet `c5pro`.
 - Aufträge sind wie die Ideen im Looper **pro Gerät gespeichert** (localStorage `druckwerk_meine`): neue Besucher
   sehen eine leere Liste. Tom speichert einen Auftrag über den Link `https://tom444555.github.io/druckwerk/#hinzu=<ordner>`
@@ -490,7 +490,12 @@ So kam `modelle/gitarre_rundum.py` zustande; für ähnliche Vorhaben (Instrument
 - **`--stuetz-kopf <n>`** = Kontaktschicht der Stützen aus anderem Material (Flashforge-Wiki Creator 5): Abstand oben/unten 0, 3 Kontaktlagen oben, 0 unten, Muster `rectilinear_interlaced`, Kontakt-Abstand 0, Stützkörper bleibt im Hauptmaterial; PLA-Köpfe werden bei PETG-Kontakt auf ≥ 225 °C gesetzt, Bett 65 (PLA+PETG automatisch). `--stuetz-koerper` = auch der Körper (PVA/BVOH/HIPS); bei PVA/BVOH normale statt Baumstützen. Bericht nennt: Deckel ab, Tür auf, Kammerheizung aus.
 - **Was zu was:** PVA → PLA/TPU · BVOH → PLA/TPU/PETG · HIPS → ABS/ASA · PLA → PETG/TPU · PETG → Kontakt unter PLA (Toms schwarzes PETG passt; dunkel unter weiß kann Spuren lassen). Steht in `wissen/filamente.json → mischen`.
 - **Am Gerät:** Kopfversatz nach jedem Firmware-Update/Düsentausch neu (sonst leidet feine Schrift), Düsen vorher säubern; einmal Vibration- und VFA-Kompensation; jede Düse möglichst bei einem Material. In `wissen/c5pro.json → probleme`.
-- **Nicht übernommen:** 0,08-Stufe für 0,4-Düse aus Flash Studio (fehlt in Orca 2.5; weiter Profil 0.12 + `--extra layer_height=0.08`), kleinerer Wischturm (35 mm, `rib`) und kleinere Spülmengen (Plattenlayouts sind um den Turm gepackt), gemischte Düsen in Flash Studio laut einem Tester nicht unterstützt → `--duesen` bleibt Versuch.
+- **Wischturm wie der Hersteller (seit 28.11.2026, Toms Wunsch „so klein, dass er noch sauber druckt“):** `druck.py` setzt für c5pro Breite 35 mm (vorher 45), Menge je Kopfwechsel
+  `prime_volume` 20 mm³ bei 0,25-mm-Düse bzw. 30 mm³ sonst (vorher 45), Abstand 165 %, `rib`-Wand, Rand automatisch – Werte aus Flash Studio `release_0817`
+  („0.10mm Standard @FF AD5X 0.25 nozzle“ bzw. „0.20mm Standard @FF C5“). Wirkt auch bei `--wie`/`neu_rechnen.py`; `--extra prime_volume=<mm³>` überschreibt (kleiner = Versuch, am Gerät unbestätigt).
+  Gemessen: Strat-Anhänger 43 → 29 min, 3,6 → 2,1 g · Halter 160 4 h 13 → 3 h 14 · Schecter 190 7 h 17 → 6 h 12 · Verstärker 1 d 6 h 36 → 1 d 0 h 56. Alle Mehrkopf-Aufträge neu gerechnet
+  **außer Strat 190/240** (brauchen danach `spulenwechsel.py` und die Farbe „schwarz“ in auftrag.json – beim nächsten Anfassen mitziehen) und den privaten Aufträgen.
+- **Nicht übernommen:** 0,08-Stufe für 0,4-Düse aus Flash Studio (fehlt in Orca 2.5; weiter Profil 0.12 + `--extra layer_height=0.08`), gemischte Düsen in Flash Studio laut einem Tester nicht unterstützt → `--duesen` bleibt Versuch.
 - **Neu rechnen:** `python3 werkzeug/neu_rechnen.py <ordner…> [--detail-025]` rechnet Aufträge mit allen alten Einstellungen (über `--wie`) und den neuen Herstellerwerten neu; Ordner/Dateinamen/Projekt bleiben. Aufträge ohne Projekt-3MF (zu groß, `gross.py`) gehen so nicht.
 
 ## Faustregeln Einstellungen

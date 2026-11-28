@@ -12,9 +12,9 @@
  "datum": "2026-11-24",
  "ordner": "2026-11-24_anhaenger_schecter_c5pro",
  "gcode": "Anhaenger_Schecter_50.gcode",
- "zeit": "1h 5m 40s",
- "gramm": "2.44, 0.92, 1.29, 0.41",
- "meter": "0.82 m, 0.31 m, 0.43 m, 0.14 m",
+ "zeit": "45m 36s",
+ "gramm": "1.47, 0.48, 0.67, 0.19",
+ "meter": "0.49 m, 0.16 m, 0.23 m, 0.06 m",
  "duese": "220,220,220,220",
  "bett": "55,55,55,55",
  "schicht": "0.08",
@@ -30,22 +30,22 @@
   {
    "slot": 1,
    "material": "PLA",
-   "farbe": ""
+   "farbe": "leer"
   },
   {
    "slot": 2,
    "material": "PLA",
-   "farbe": ""
+   "farbe": "leer"
   },
   {
    "slot": 3,
    "material": "PLA",
-   "farbe": ""
+   "farbe": "leer"
   },
   {
    "slot": 4,
    "material": "PLA",
-   "farbe": ""
+   "farbe": "leer"
   }
  ],
  "teile": [

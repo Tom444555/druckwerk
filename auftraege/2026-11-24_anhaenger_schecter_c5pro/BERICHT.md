@@ -2,18 +2,18 @@
 
 **Drucker:** Flashforge Creator 5 Pro  
 **Datei für USB:** `Anhaenger_Schecter_50.gcode`  
-**Druckzeit (geschätzt):** 1h 5m 40s  
-**Filament:** 2.44, 0.92, 1.29, 0.41 g (0.82 m, 0.31 m, 0.43 m, 0.14 m)  
+**Druckzeit (geschätzt):** 45m 36s  
+**Filament:** 1.47, 0.48, 0.67, 0.19 g (0.49 m, 0.16 m, 0.23 m, 0.06 m)  
 
 
 ## Spulen / Köpfe einlegen
 
 | Slot | Material | Farbe | Profil |
 |---|---|---|---|
-| 1 | PLA | - | Flashforge PLA Basic @FF C5P |
-| 2 | PLA | - | Flashforge PLA Basic @FF C5P |
-| 3 | PLA | - | Flashforge PLA Basic @FF C5P |
-| 4 | PLA | - | Flashforge PLA Basic @FF C5P |
+| 1 | PLA | leer | Flashforge PLA Basic @FF C5P |
+| 2 | PLA | leer | Flashforge PLA Basic @FF C5P |
+| 3 | PLA | leer | Flashforge PLA Basic @FF C5P |
+| 4 | PLA | leer | Flashforge PLA Basic @FF C5P |
 
 ## Einstellungen
 

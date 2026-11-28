@@ -12,9 +12,9 @@
  "datum": "2026-11-23",
  "ordner": "2026-11-23_schecter370_c5pro",
  "gcode": "Schecter_370_komplett.gcode",
- "zeit": "23h 51m 20s",
- "gramm": "84.00, 18.24, 29.84, 2.87",
- "meter": "28.16 m, 6.12 m, 10.01 m, 0.96 m",
+ "zeit": "21h 29m 54s",
+ "gramm": "76.99, 14.19, 25.69, 2.02",
+ "meter": "25.81 m, 4.76 m, 8.61 m, 0.68 m",
  "duese": "220,220,220,220",
  "bett": "55,55,55,55",
  "schicht": "0.08",
@@ -26,7 +26,6 @@
  "brim": "auto",
  "gemischt": false,
  "zusammen": true,
- "detail": true,
  "slots": [
   {
    "slot": 1,

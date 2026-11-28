@@ -2,15 +2,15 @@
 
 **Drucker:** Flashforge Creator 5 Pro  
 **Datei für USB:** `Schecter_160_Halter.gcode`  
-**Druckzeit (geschätzt):** 4h 13m 27s  
-**Filament:** 0.00, 8.97, 14.31 g (0.00 m, 3.01 m, 4.80 m)  
+**Druckzeit (geschätzt):** 3h 14m 7s  
+**Filament:** 0.00, 5.21, 10.29 g (0.00 m, 1.75 m, 3.45 m)  
 
 
 ## Spulen / Köpfe einlegen
 
 | Slot | Material | Farbe | Profil |
 |---|---|---|---|
-| 1 | PLA |  | Flashforge PLA Basic @FF C5P |
+| 1 | PLA | leer | Flashforge PLA Basic @FF C5P |
 | 2 | PLA | gelb | Flashforge PLA Basic @FF C5P |
 | 3 | PLA | schwarz | Flashforge PLA Basic @FF C5P |
 

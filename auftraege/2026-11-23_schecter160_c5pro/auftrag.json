@@ -12,9 +12,9 @@
  "datum": "2026-11-23",
  "ordner": "2026-11-23_schecter160_c5pro",
  "gcode": "Schecter_160_komplett.gcode",
- "zeit": "5h 41m 6s",
- "gramm": "13.04, 3.79, 6.95, 0.97",
- "meter": "4.37 m, 1.27 m, 2.33 m, 0.32 m",
+ "zeit": "4h 45m 28s",
+ "gramm": "10.27, 2.48, 5.23, 0.53",
+ "meter": "3.44 m, 0.83 m, 1.75 m, 0.18 m",
  "duese": "220,220,220,220",
  "bett": "55,55,55,55",
  "schicht": "0.08",
@@ -26,7 +26,6 @@
  "brim": "auto",
  "gemischt": false,
  "zusammen": true,
- "detail": true,
  "slots": [
   {
    "slot": 1,

@@ -2,18 +2,18 @@
 
 **Drucker:** Flashforge Creator 5 Pro  
 **Datei für USB:** `Anhaenger_Stratocaster_50.gcode`  
-**Druckzeit (geschätzt):** 43m 58s  
-**Filament:** 1.97, 0.24, 1.10, 0.46 g (0.66 m, 0.08 m, 0.37 m, 0.15 m)  
+**Druckzeit (geschätzt):** 30m 3s  
+**Filament:** 1.25, 0.11, 0.64, 0.21 g (0.42 m, 0.04 m, 0.21 m, 0.07 m)  
 
 
 ## Spulen / Köpfe einlegen
 
 | Slot | Material | Farbe | Profil |
 |---|---|---|---|
-| 1 | PLA | - | Flashforge PLA Basic @FF C5P |
-| 2 | PLA | - | Flashforge PLA Basic @FF C5P |
-| 3 | PLA | - | Flashforge PLA Basic @FF C5P |
-| 4 | PLA | - | Flashforge PLA Basic @FF C5P |
+| 1 | PLA | leer | Flashforge PLA Basic @FF C5P |
+| 2 | PLA | leer | Flashforge PLA Basic @FF C5P |
+| 3 | PLA | leer | Flashforge PLA Basic @FF C5P |
+| 4 | PLA | leer | Flashforge PLA Basic @FF C5P |
 
 ## Einstellungen
 

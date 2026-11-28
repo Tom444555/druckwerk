@@ -2,8 +2,8 @@
 
 **Drucker:** Flashforge Creator 5 Pro  
 **Datei für USB:** `Messmatte.gcode`  
-**Druckzeit (geschätzt):** 2h 26m 14s  
-**Filament:** 107.03, 3.39 g (35.88 m, 1.14 m)  
+**Druckzeit (geschätzt):** 2h 25m 39s  
+**Filament:** 107.00, 3.21 g (35.87 m, 1.07 m)  
 
 
 ## Spulen / Köpfe einlegen

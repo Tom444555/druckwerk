@@ -464,6 +464,15 @@ def main():
     hinweise = []                             # landen im BERICHT.md
     if cfg.get("kurz") == "c5pro":            # Flash Studio release_0817 (Hersteller, Recherche 23.11.2026): wartende Köpfe −100 °C, Kopfwechsel-Rückzug 2 mm
         prozess["standby_temperature_delta"] = "-100"; prozess["ooze_prevention"] = "1"; prozess["enable_prime_tower"] = "1"
+        # Wischturm wie Flash Studio release_0817 (28.11.2026, Toms Wunsch „so klein, dass er noch sauber druckt“):
+        # Breite 35 statt 45 mm, Menge je Kopfwechsel 20 mm³ (0,25-mm-Düse) bzw. 30 mm³ statt 45. Kleiner nur als Versuch: --extra prime_volume=<mm³>.
+        fein_ = min([float(x_) for x_ in (maschine.get("nozzle_diameter") or ["0.4"])] or [0.4]) < 0.3
+        turm_ = {"prime_tower_width": "35", "prime_volume": "20" if fein_ else "30", "prime_tower_infill_gap": "165%", "prime_tower_skip_points": "0",
+                 "prime_tower_brim_width": "-1", "wipe_tower_wall_type": "rib", "wipe_tower_extra_rib_length": "0",
+                 "wipe_tower_extra_spacing": "110%" if fein_ else "120%", "wipe_tower_cone_angle": "10" if fein_ else "12"}
+        gesetzt_ = {str(e_).split("=")[0] for e_ in (a.extra or [])}
+        for k_, v_ in turm_.items():
+            if k_ not in gesetzt_: prozess[k_] = v_
         if isinstance(maschine.get("retract_length_toolchange"), list):
             maschine["retract_length_toolchange"] = ["2"] * len(maschine["retract_length_toolchange"])
     if a.detail:                              # feinste Details – Werte aus den Gitarren-Miniaturen + Flash-Studio-Feinstufe (Außenwand-Beschleunigung 3000)
