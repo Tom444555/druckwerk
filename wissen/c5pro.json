@@ -1,5 +1,5 @@
 {
- "stand": "27.11.2026",
+ "stand": "28.11.2026",
  "hinweis": "Zusammengetragen aus Herstellerangaben, Flashforge-Wiki und unabhängigen Tests. Am eigenen Gerät noch nicht nachgemessen – eigene Erfahrungen bitte melden, dann trage ich sie hier ein.",
  "steckbrief": [
   [
@@ -245,6 +245,11 @@
    "t": "USB vom Mac: Heizfehler (E0063) oder Datei ohne Vorschaubild",
    "u": "Der Mac legt auf FAT32-Sticks neben jede Datei eine unsichtbare Begleitdatei „._Name“. Der Drucker zeigt sie in der Liste; sie enthält keine Druckbefehle. Am Gerät bestätigt 27.11.2026.",
    "l": "Am Drucker die Datei OHNE „._“ am Anfang wählen. Dauerhaft: am Mac im Terminal „dot_clean /Volumes/STICKNAME“, dann auswerfen."
+  },
+  {
+   "t": "E0166 „Fehler in der Druckdatei“",
+   "u": "Am Drucker wurde keine Druckdatei gewählt, sondern z. B. die .3mf (Projekt für Flash Studio), eine .zip oder die Mac-Begleitdatei „._Name“. Am Gerät erlebt 27.11.2026.",
+   "l": "Auf den Stick gehört die .gcode (ZIP vorher entpacken). Mit der richtigen Datei zeigt der Drucker Vorschaubild, Zeit und Filament – bestätigt 28.11.2026."
   },
   {
    "t": "3MF aus Druckwerk in Flash Studio: Stützen/Einstellungen fehlen",

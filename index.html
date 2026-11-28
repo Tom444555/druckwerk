@@ -168,6 +168,21 @@ details.fein>summary::-webkit-details-marker{display:none}details.fein>summary::
 // Druckwerk-Brücke: Adresse merken (Link #bruecke=… von der Brücken-Seite) oder von Hand eintragen
 const brMerk = () => { try { const m = location.hash.match(/^#bruecke=(.+)$/); if (m) { const u = decodeURIComponent(m[1]); if (/^http:\/\/[\w.\-]+(:\d+)?\/?$/.test(u)) { localStorage.setItem("druckwerk_bruecke", u); alert("Brücke gemerkt: " + u); } history.replaceState(null, "", "#projekte"); } } catch (e) {} };
 brMerk(); addEventListener("hashchange", brMerk);
+// Köpfe per Link setzen (Claude schickt ihn im Chat): #koepfe=1:PLA:grau,2:PLA:bordeaux,3:PLA:schwarz,4:PLA:weiss → „Mein Lager“ auf diesem Gerät
+const kpMerk = () => { try { const m = location.hash.match(/^#koepfe=(.+)$/); if (!m) return;
+  const W = decodeURIComponent(m[1]).split(",").map(x => x.split(":")).filter(x => x.length === 3 && /^[1-4]$/.test(x[0]) && /^[\w .\-äöüÄÖÜß]{1,24}$/.test(x[1]) && /^[\w .\-äöüÄÖÜß#]{1,24}$/.test(x[2]))
+    .map(x => ({kopf: +x[0], material: x[1].trim(), farbe: x[2].trim()}));
+  history.replaceState(null, "", "#projekte");
+  if (!W.length || !confirm("Köpfe so eintragen?\n\n" + W.map(w => "Kopf " + w.kopf + ": " + w.material + " " + w.farbe).join("\n"))) return;
+  let L = []; try { L = JSON.parse(localStorage.getItem("druckwerk_spulen")) || []; } catch (e) {}
+  const gl = (x, y) => String(x || "").toLowerCase().trim() === String(y || "").toLowerCase().trim();
+  for (const w of W) { for (const sp of L) if (sp.kopf === w.kopf) sp.kopf = 0;
+    let sp = L.find(x => gl(x.material, w.material) && gl(x.farbe, w.farbe) && !(x.kopf >= 1 && x.kopf <= 4));
+    if (!sp) { sp = {id: "s" + Date.now().toString(36) + w.kopf, material: w.material, farbe: w.farbe, marke: "", start: 1000, rest: 1000, preis: ""}; L.push(sp); }
+    sp.kopf = w.kopf; }
+  localStorage.setItem("druckwerk_spulen", JSON.stringify(L)); location.hash = "#projekte"; location.reload();
+} catch (e) {} };
+kpMerk(); addEventListener("hashchange", kpMerk);
 document.addEventListener("click", e => { const t = e.target.closest && e.target.closest("#brSetz"); if (!t) return; e.preventDefault();
   let alt = ""; try { alt = localStorage.getItem("druckwerk_bruecke") || ""; } catch (x) {}
   const u = prompt("Adresse der Druckwerk-Brücke (steht im Terminal am Mac und auf der Brücken-Seite), z. B. http://macbook.local:8787 – leer = nur am Mac", alt);
@@ -196,7 +211,7 @@ const gedrucktSetzen = (ordner, an) => { const G = gedrucktListe(); if (an) G[or
   try { localStorage.setItem(GEDRUCKT, JSON.stringify(G)); } catch(e) {} };
 
 // Farbnamen -> Farbe (für Punkte und 3D-Vorschau)
-const FARBEN = {weiss:"#f5f5f5",weiß:"#f5f5f5",schwarz:"#222",rot:"#e0352b",dunkelrot:"#6a0d16",weinrot:"#73121f",blau:"#2563eb",gruen:"#22a447",grün:"#22a447",
+const FARBEN = {weiss:"#f5f5f5",weiß:"#f5f5f5",schwarz:"#222",rot:"#e0352b",dunkelrot:"#6a0d16",weinrot:"#73121f",bordeaux:"#6d1a2c",blau:"#2563eb",gruen:"#22a447",grün:"#22a447",
   gelb:"#f5c518",orange:"#f97316",grau:"#8e8e93",silber:"#c0c0c0",gold:"#d4a017",lila:"#8b5cf6",violett:"#8b5cf6",
   pink:"#ec4899",rosa:"#f9a8d4",braun:"#8b5a2b",tuerkis:"#14b8a6",türkis:"#14b8a6",natur:"#efe6d2",creme:"#f3e9c6",holz:"#b98a4e",transparent:"#cfe8ff"};
 const farbe = n => FARBEN[(n||"").toLowerCase().trim()] || (/^#/.test(n||"") ? n : "#9a9aa0");

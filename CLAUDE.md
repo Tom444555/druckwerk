@@ -86,7 +86,7 @@ Alte `_kobrax`-Aufträge laufen nicht auf dem Creator 5 Pro – bei Bedarf aus d
 - Jede Ansicht hat eine Adresse (`#projekte`, `#projekt:<gruppe>`, `#auftrag:<ordner>`, `#werkstatt:…`, `#kiweg:<schritt>`); Zurück/Vor funktionieren.
 - **Sicherung** (`sicherung.js`): alle `druckwerk_*`-Schlüssel + IndexedDB (eigene Modelle, Tagebuch-Fotos) als eine Datei; `druckwerk_gesichert` = Datum.
 - **Offline/PWA**: `manifest.webmanifest`, `symbol-*.png`, `sw.js` (immer zuerst Netz, Zwischenspeicher nur ohne Netz; .gcode/STL nie).
-  **Bei jeder Änderung an App-Dateien `CACHE` in `sw.js` hochzählen** (Stand `druckwerk-v32`) und neue Dateien dort eintragen.
+  **Bei jeder Änderung an App-Dateien `CACHE` in `sw.js` hochzählen** (Stand `druckwerk-v33`) und neue Dateien dort eintragen.
 - „Aus dem Lager hinzufügen“ heißt in der App jetzt „Weitere Aufträge von Claude“. Überall „Kopf 1–4“, nie „Spule“; Werkstatt-Slicen sendet `c5pro`.
 - Aufträge sind wie die Ideen im Looper **pro Gerät gespeichert** (localStorage `druckwerk_meine`): neue Besucher
   sehen eine leere Liste. Tom speichert einen Auftrag über den Link `https://tom444555.github.io/druckwerk/#hinzu=<ordner>`
@@ -109,6 +109,9 @@ Alte `_kobrax`-Aufträge laufen nicht auf dem Creator 5 Pro – bei Bedarf aus d
 - Nach Änderung an index.html: lokal mit Playwright (390×844) prüfen, dann pushen.
 
 ## Meine Köpfe und Lager-Ordnung (seit 23.11.2026)
+- **Toms Köpfe, Stand 28.11.2026 (von ihm genannt): Kopf 1 grau · Kopf 2 bordeaux · Kopf 3 schwarz · Kopf 4 weiß – überall PLA, alle mit 0,25-mm-Düse.** Neue Aufträge ohne andere Ansage so belegen
+  (Schwarz ist PLA, nicht mehr PETG). Die Belegung ändert sich mit jedem Spulenwechsel – bei mehrfarbigen Aufträgen kurz fragen, wenn der Stand älter als ein paar Tage ist, und hier nachtragen.
+  In die App kommt sie über einen Link, den Tom antippt: `https://tom444555.github.io/druckwerk/#koepfe=1:PLA:grau,2:PLA:bordeaux,3:PLA:schwarz,4:PLA:weiss` (fragt nach, schreibt „Mein Lager“ auf dem Gerät; `index.html → kpMerk`).
 - **Meine Köpfe = eine Wahrheit:** Spulen mit Kopf-Zuordnung aus Wissen → Material → Mein Lager (`druckwerk_spulen`; Kopf-Zeile antippen → Spule wählen, `wissen.js → kopfBlatt`).
   `koepfe.js`: Ampel im Teil (`#kAmpel`) und im Projekt (`#pAmpel`) – passt / anderes Material / andere Farbe / Kopf leer; Blatt „Köpfe für diesen Druck“ (je Druckfarbe Kopf + Material wählbar,
   Vorschlag: Farbe dorthin, wo sie bei Tom sitzt; zwei Farben auf einem Kopf gesperrt; Misch-Hinweise PLA+PETG, TPU, ABS/ASA). Werkstatt → Slicen belegt „Material je Kopf“ daraus vor.
@@ -515,7 +518,7 @@ So kam `modelle/gitarre_rundum.py` zustande; für ähnliche Vorhaben (Instrument
 - `druck.py` rendert automatisch `vorschau.png` (OpenSCAD, Farben je Spule) → App zeigt es sofort, 3D lädt dahinter nach.
 - Große Netze bekommen eine leichte Kopie `*.app.stl` (~60.000 Dreiecke, Feld `teile_app`) nur für die 3D-Ansicht am Handy.
 - Vorschaubild für die Drucker-Anzeige (seit 15.11.2026): `druck.py` schreibt `vorschau.png` als Thumbnail-Block (Größe aus dem Maschinenprofil, 140×110 PNG)
-  hinter den Kopfblock der .gcode (`bild_in_gcode`, Feld `bild_im_gcode`). Format wie OrcaSlicer; **ob der Creator 5 Pro es anzeigt, ist am Gerät noch nicht bestätigt**.
+  hinter den Kopfblock der .gcode (`bild_in_gcode`, Feld `bild_im_gcode`). Format wie OrcaSlicer; **am Gerät bestätigt 28.11.2026** (Buddha 150 per USB: Bild zu sehen, Druck läuft – erster USB-Druck einer Druckwerk-.gcode).
   Ältere Aufträge haben es erst nach neuem Slicen.
 - `druck.py --bemalt` mit `--groesse`/`--skala`/`--matrix` (`bemalt_umformen`): schreibt nur die Eckpunkte neu, die Bemalung bleibt unverändert; von der Matrix zählt
   nur der 3×3-Teil (Lage bestimmt der Slicer). Spiegeln geht nur bei einfacher Bemalung (ein Farbcode je Dreieck).
